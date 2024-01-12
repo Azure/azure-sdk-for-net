@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Response for ListAdaptiveNetworkHardenings API service call
-    /// Serialized Name: AdaptiveNetworkHardeningsList
-    /// </summary>
+    /// <summary> Response for ListAdaptiveNetworkHardenings API service call. </summary>
     internal partial class AdaptiveNetworkHardeningsList
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningsList"/>. </summary>
-        /// <param name="value">
-        /// A list of Adaptive Network Hardenings resources
-        /// Serialized Name: AdaptiveNetworkHardeningsList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results
-        /// Serialized Name: AdaptiveNetworkHardeningsList.nextLink
-        /// </param>
+        /// <param name="value"> A list of Adaptive Network Hardenings resources. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdaptiveNetworkHardeningsList(IReadOnlyList<AdaptiveNetworkHardeningData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of Adaptive Network Hardenings resources
-        /// Serialized Name: AdaptiveNetworkHardeningsList.value
-        /// </summary>
+        /// <summary> A list of Adaptive Network Hardenings resources. </summary>
         public IReadOnlyList<AdaptiveNetworkHardeningData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results
-        /// Serialized Name: AdaptiveNetworkHardeningsList.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

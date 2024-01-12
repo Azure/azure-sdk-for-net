@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features.
-    /// Serialized Name: PricingTier
-    /// </summary>
+    /// <summary> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
     public readonly partial struct SecurityCenterPricingTier : IEquatable<SecurityCenterPricingTier>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string FreeValue = "Free";
         private const string StandardValue = "Standard";
 
-        /// <summary>
-        /// Get free Microsoft Defender for Cloud experience with basic security features
-        /// Serialized Name: PricingTier.Free
-        /// </summary>
+        /// <summary> Get free Microsoft Defender for Cloud experience with basic security features. </summary>
         public static SecurityCenterPricingTier Free { get; } = new SecurityCenterPricingTier(FreeValue);
-        /// <summary>
-        /// Get the standard Microsoft Defender for Cloud experience with advanced security features
-        /// Serialized Name: PricingTier.Standard
-        /// </summary>
+        /// <summary> Get the standard Microsoft Defender for Cloud experience with advanced security features. </summary>
         public static SecurityCenterPricingTier Standard { get; } = new SecurityCenterPricingTier(StandardValue);
         /// <summary> Determines if two <see cref="SecurityCenterPricingTier"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterPricingTier left, SecurityCenterPricingTier right) => left.Equals(right);

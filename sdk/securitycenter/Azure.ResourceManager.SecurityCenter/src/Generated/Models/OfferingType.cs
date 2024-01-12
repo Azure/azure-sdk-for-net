@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The type of the security offering.
-    /// Serialized Name: OfferingType
-    /// </summary>
+    /// <summary> The type of the security offering. </summary>
     internal readonly partial struct OfferingType : IEquatable<OfferingType>
     {
         private readonly string _value;
@@ -43,90 +40,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string CspmMonitorGitLabValue = "CspmMonitorGitLab";
         private const string DefenderForDevOpsGitLabValue = "DefenderForDevOpsGitLab";
 
-        /// <summary>
-        /// CspmMonitorAws
-        /// Serialized Name: OfferingType.CspmMonitorAws
-        /// </summary>
+        /// <summary> CspmMonitorAws. </summary>
         public static OfferingType CspmMonitorAws { get; } = new OfferingType(CspmMonitorAwsValue);
-        /// <summary>
-        /// DefenderForContainersAws
-        /// Serialized Name: OfferingType.DefenderForContainersAws
-        /// </summary>
+        /// <summary> DefenderForContainersAws. </summary>
         public static OfferingType DefenderForContainersAws { get; } = new OfferingType(DefenderForContainersAwsValue);
-        /// <summary>
-        /// DefenderForServersAws
-        /// Serialized Name: OfferingType.DefenderForServersAws
-        /// </summary>
+        /// <summary> DefenderForServersAws. </summary>
         public static OfferingType DefenderForServersAws { get; } = new OfferingType(DefenderForServersAwsValue);
-        /// <summary>
-        /// DefenderForDatabasesAws
-        /// Serialized Name: OfferingType.DefenderForDatabasesAws
-        /// </summary>
+        /// <summary> DefenderForDatabasesAws. </summary>
         public static OfferingType DefenderForDatabasesAws { get; } = new OfferingType(DefenderForDatabasesAwsValue);
-        /// <summary>
-        /// InformationProtectionAws
-        /// Serialized Name: OfferingType.InformationProtectionAws
-        /// </summary>
+        /// <summary> InformationProtectionAws. </summary>
         public static OfferingType InformationProtectionAws { get; } = new OfferingType(InformationProtectionAwsValue);
-        /// <summary>
-        /// CspmMonitorGcp
-        /// Serialized Name: OfferingType.CspmMonitorGcp
-        /// </summary>
+        /// <summary> CspmMonitorGcp. </summary>
         public static OfferingType CspmMonitorGcp { get; } = new OfferingType(CspmMonitorGcpValue);
-        /// <summary>
-        /// CspmMonitorGithub
-        /// Serialized Name: OfferingType.CspmMonitorGithub
-        /// </summary>
+        /// <summary> CspmMonitorGithub. </summary>
         public static OfferingType CspmMonitorGithub { get; } = new OfferingType(CspmMonitorGithubValue);
-        /// <summary>
-        /// CspmMonitorAzureDevOps
-        /// Serialized Name: OfferingType.CspmMonitorAzureDevOps
-        /// </summary>
+        /// <summary> CspmMonitorAzureDevOps. </summary>
         public static OfferingType CspmMonitorAzureDevOps { get; } = new OfferingType(CspmMonitorAzureDevOpsValue);
-        /// <summary>
-        /// DefenderForServersGcp
-        /// Serialized Name: OfferingType.DefenderForServersGcp
-        /// </summary>
+        /// <summary> DefenderForServersGcp. </summary>
         public static OfferingType DefenderForServersGcp { get; } = new OfferingType(DefenderForServersGcpValue);
-        /// <summary>
-        /// DefenderForContainersGcp
-        /// Serialized Name: OfferingType.DefenderForContainersGcp
-        /// </summary>
+        /// <summary> DefenderForContainersGcp. </summary>
         public static OfferingType DefenderForContainersGcp { get; } = new OfferingType(DefenderForContainersGcpValue);
-        /// <summary>
-        /// DefenderForDatabasesGcp
-        /// Serialized Name: OfferingType.DefenderForDatabasesGcp
-        /// </summary>
+        /// <summary> DefenderForDatabasesGcp. </summary>
         public static OfferingType DefenderForDatabasesGcp { get; } = new OfferingType(DefenderForDatabasesGcpValue);
-        /// <summary>
-        /// DefenderCspmAws
-        /// Serialized Name: OfferingType.DefenderCspmAws
-        /// </summary>
+        /// <summary> DefenderCspmAws. </summary>
         public static OfferingType DefenderCspmAws { get; } = new OfferingType(DefenderCspmAwsValue);
-        /// <summary>
-        /// DefenderCspmGcp
-        /// Serialized Name: OfferingType.DefenderCspmGcp
-        /// </summary>
+        /// <summary> DefenderCspmGcp. </summary>
         public static OfferingType DefenderCspmGcp { get; } = new OfferingType(DefenderCspmGcpValue);
-        /// <summary>
-        /// DefenderForDevOpsGithub
-        /// Serialized Name: OfferingType.DefenderForDevOpsGithub
-        /// </summary>
+        /// <summary> DefenderForDevOpsGithub. </summary>
         public static OfferingType DefenderForDevOpsGithub { get; } = new OfferingType(DefenderForDevOpsGithubValue);
-        /// <summary>
-        /// DefenderForDevOpsAzureDevOps
-        /// Serialized Name: OfferingType.DefenderForDevOpsAzureDevOps
-        /// </summary>
+        /// <summary> DefenderForDevOpsAzureDevOps. </summary>
         public static OfferingType DefenderForDevOpsAzureDevOps { get; } = new OfferingType(DefenderForDevOpsAzureDevOpsValue);
-        /// <summary>
-        /// CspmMonitorGitLab
-        /// Serialized Name: OfferingType.CspmMonitorGitLab
-        /// </summary>
+        /// <summary> CspmMonitorGitLab. </summary>
         public static OfferingType CspmMonitorGitLab { get; } = new OfferingType(CspmMonitorGitLabValue);
-        /// <summary>
-        /// DefenderForDevOpsGitLab
-        /// Serialized Name: OfferingType.DefenderForDevOpsGitLab
-        /// </summary>
+        /// <summary> DefenderForDevOpsGitLab. </summary>
         public static OfferingType DefenderForDevOpsGitLab { get; } = new OfferingType(DefenderForDevOpsGitLabValue);
         /// <summary> Determines if two <see cref="OfferingType"/> values are the same. </summary>
         public static bool operator ==(OfferingType left, OfferingType right) => left.Equals(right);

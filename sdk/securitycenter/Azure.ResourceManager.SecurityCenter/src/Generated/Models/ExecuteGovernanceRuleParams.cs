@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Governance rule execution parameters
-    /// Serialized Name: ExecuteGovernanceRuleParams
-    /// </summary>
+    /// <summary> Governance rule execution parameters. </summary>
     public partial class ExecuteGovernanceRuleParams
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteGovernanceRuleParams"/>. </summary>
-        /// <param name="override">
-        /// Describe if governance rule should be override
-        /// Serialized Name: ExecuteGovernanceRuleParams.override
-        /// </param>
+        /// <param name="override"> Describe if governance rule should be override. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExecuteGovernanceRuleParams(bool? @override, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Describe if governance rule should be override
-        /// Serialized Name: ExecuteGovernanceRuleParams.override
-        /// </summary>
+        /// <summary> Describe if governance rule should be override. </summary>
         public bool? Override { get; set; }
     }
 }

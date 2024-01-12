@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Source source = "Unknown";
+            HealthReportSource source = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = new Source(property.Value.GetString());
+                    source = new HealthReportSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

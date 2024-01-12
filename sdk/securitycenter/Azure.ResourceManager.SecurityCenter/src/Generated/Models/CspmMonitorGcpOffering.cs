@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The CSPM monitoring for GCP offering
-    /// Serialized Name: CspmMonitorGcpOffering
-    /// </summary>
+    /// <summary> The CSPM monitoring for GCP offering. </summary>
     public partial class CspmMonitorGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOffering"/>. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="nativeCloudConnection">
-        /// The native cloud connection configuration
-        /// Serialized Name: CspmMonitorGcpOffering.nativeCloudConnection
-        /// </param>
+        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
         internal CspmMonitorGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection) : base(offeringType, description, serializedAdditionalRawData)
         {
             NativeCloudConnection = nativeCloudConnection;
             OfferingType = offeringType;
         }
 
-        /// <summary>
-        /// The native cloud connection configuration
-        /// Serialized Name: CspmMonitorGcpOffering.nativeCloudConnection
-        /// </summary>
+        /// <summary> The native cloud connection configuration. </summary>
         public CspmMonitorGcpOfferingNativeCloudConnection NativeCloudConnection { get; set; }
     }
 }

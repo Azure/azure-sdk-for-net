@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Assessed alert severity.
-    /// Serialized Name: ReportedSeverity
-    /// </summary>
+    /// <summary> Assessed alert severity. </summary>
     public readonly partial struct ReportedSeverity : IEquatable<ReportedSeverity>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary>
-        /// Informational
-        /// Serialized Name: ReportedSeverity.Informational
-        /// </summary>
+        /// <summary> Informational. </summary>
         public static ReportedSeverity Informational { get; } = new ReportedSeverity(InformationalValue);
-        /// <summary>
-        /// Low
-        /// Serialized Name: ReportedSeverity.Low
-        /// </summary>
+        /// <summary> Low. </summary>
         public static ReportedSeverity Low { get; } = new ReportedSeverity(LowValue);
-        /// <summary>
-        /// Medium
-        /// Serialized Name: ReportedSeverity.Medium
-        /// </summary>
+        /// <summary> Medium. </summary>
         public static ReportedSeverity Medium { get; } = new ReportedSeverity(MediumValue);
-        /// <summary>
-        /// High
-        /// Serialized Name: ReportedSeverity.High
-        /// </summary>
+        /// <summary> High. </summary>
         public static ReportedSeverity High { get; } = new ReportedSeverity(HighValue);
         /// <summary> Determines if two <see cref="ReportedSeverity"/> values are the same. </summary>
         public static bool operator ==(ReportedSeverity left, ReportedSeverity right) => left.Equals(right);

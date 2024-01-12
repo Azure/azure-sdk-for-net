@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SoftwareInventory data model.
     /// Represents a software data
-    /// Serialized Name: Software
     /// </summary>
     public partial class SoftwareInventoryData : ResourceData
     {
@@ -62,42 +61,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deviceId">
-        /// Unique identifier for the virtual machine in the service.
-        /// Serialized Name: Software.properties.deviceId
-        /// </param>
-        /// <param name="osPlatform">
-        /// Platform of the operating system running on the device.
-        /// Serialized Name: Software.properties.osPlatform
-        /// </param>
-        /// <param name="vendor">
-        /// Name of the software vendor.
-        /// Serialized Name: Software.properties.vendor
-        /// </param>
-        /// <param name="softwareName">
-        /// Name of the software product.
-        /// Serialized Name: Software.properties.softwareName
-        /// </param>
-        /// <param name="version">
-        /// Version number of the software product.
-        /// Serialized Name: Software.properties.version
-        /// </param>
-        /// <param name="endOfSupportStatus">
-        /// End of support status.
-        /// Serialized Name: Software.properties.endOfSupportStatus
-        /// </param>
-        /// <param name="endOfSupportDate">
-        /// The end of support date in case the product is upcoming end of support.
-        /// Serialized Name: Software.properties.endOfSupportDate
-        /// </param>
-        /// <param name="numberOfKnownVulnerabilities">
-        /// Number of weaknesses.
-        /// Serialized Name: Software.properties.numberOfKnownVulnerabilities
-        /// </param>
-        /// <param name="firstSeenOn">
-        /// First time that the software was seen in the device.
-        /// Serialized Name: Software.properties.firstSeenAt
-        /// </param>
+        /// <param name="deviceId"> Unique identifier for the virtual machine in the service. </param>
+        /// <param name="osPlatform"> Platform of the operating system running on the device. </param>
+        /// <param name="vendor"> Name of the software vendor. </param>
+        /// <param name="softwareName"> Name of the software product. </param>
+        /// <param name="version"> Version number of the software product. </param>
+        /// <param name="endOfSupportStatus"> End of support status. </param>
+        /// <param name="endOfSupportDate"> The end of support date in case the product is upcoming end of support. </param>
+        /// <param name="numberOfKnownVulnerabilities"> Number of weaknesses. </param>
+        /// <param name="firstSeenOn"> First time that the software was seen in the device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SoftwareInventoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string osPlatform, string vendor, string softwareName, string version, EndOfSupportStatus? endOfSupportStatus, string endOfSupportDate, int? numberOfKnownVulnerabilities, DateTimeOffset? firstSeenOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -113,50 +85,23 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Unique identifier for the virtual machine in the service.
-        /// Serialized Name: Software.properties.deviceId
-        /// </summary>
+        /// <summary> Unique identifier for the virtual machine in the service. </summary>
         public string DeviceId { get; set; }
-        /// <summary>
-        /// Platform of the operating system running on the device.
-        /// Serialized Name: Software.properties.osPlatform
-        /// </summary>
+        /// <summary> Platform of the operating system running on the device. </summary>
         public string OSPlatform { get; set; }
-        /// <summary>
-        /// Name of the software vendor.
-        /// Serialized Name: Software.properties.vendor
-        /// </summary>
+        /// <summary> Name of the software vendor. </summary>
         public string Vendor { get; set; }
-        /// <summary>
-        /// Name of the software product.
-        /// Serialized Name: Software.properties.softwareName
-        /// </summary>
+        /// <summary> Name of the software product. </summary>
         public string SoftwareName { get; set; }
-        /// <summary>
-        /// Version number of the software product.
-        /// Serialized Name: Software.properties.version
-        /// </summary>
+        /// <summary> Version number of the software product. </summary>
         public string Version { get; set; }
-        /// <summary>
-        /// End of support status.
-        /// Serialized Name: Software.properties.endOfSupportStatus
-        /// </summary>
+        /// <summary> End of support status. </summary>
         public EndOfSupportStatus? EndOfSupportStatus { get; set; }
-        /// <summary>
-        /// The end of support date in case the product is upcoming end of support.
-        /// Serialized Name: Software.properties.endOfSupportDate
-        /// </summary>
+        /// <summary> The end of support date in case the product is upcoming end of support. </summary>
         public string EndOfSupportDate { get; set; }
-        /// <summary>
-        /// Number of weaknesses.
-        /// Serialized Name: Software.properties.numberOfKnownVulnerabilities
-        /// </summary>
+        /// <summary> Number of weaknesses. </summary>
         public int? NumberOfKnownVulnerabilities { get; set; }
-        /// <summary>
-        /// First time that the software was seen in the device.
-        /// Serialized Name: Software.properties.firstSeenAt
-        /// </summary>
+        /// <summary> First time that the software was seen in the device. </summary>
         public DateTimeOffset? FirstSeenOn { get; set; }
     }
 }

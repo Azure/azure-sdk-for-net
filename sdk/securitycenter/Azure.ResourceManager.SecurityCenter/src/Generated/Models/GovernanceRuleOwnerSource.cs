@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describe the owner source of governance rule
-    /// Serialized Name: GovernanceRuleOwnerSource
-    /// </summary>
+    /// <summary> Describe the owner source of governance rule. </summary>
     public partial class GovernanceRuleOwnerSource
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleOwnerSource"/>. </summary>
-        /// <param name="sourceType">
-        /// The owner type for the governance rule owner source
-        /// Serialized Name: GovernanceRuleOwnerSource.type
-        /// </param>
-        /// <param name="value">
-        /// The source value e.g. tag key like owner name or email address
-        /// Serialized Name: GovernanceRuleOwnerSource.value
-        /// </param>
+        /// <param name="sourceType"> The owner type for the governance rule owner source. </param>
+        /// <param name="value"> The source value e.g. tag key like owner name or email address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The owner type for the governance rule owner source
-        /// Serialized Name: GovernanceRuleOwnerSource.type
-        /// </summary>
+        /// <summary> The owner type for the governance rule owner source. </summary>
         public GovernanceRuleOwnerSourceType? SourceType { get; set; }
-        /// <summary>
-        /// The source value e.g. tag key like owner name or email address
-        /// Serialized Name: GovernanceRuleOwnerSource.value
-        /// </summary>
+        /// <summary> The source value e.g. tag key like owner name or email address. </summary>
         public string Value { get; set; }
     }
 }

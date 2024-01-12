@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The security automation model state property bag.
-    /// Serialized Name: AutomationValidationStatus
-    /// </summary>
+    /// <summary> The security automation model state property bag. </summary>
     public partial class SecurityAutomationValidationStatus
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationValidationStatus"/>. </summary>
-        /// <param name="isValid">
-        /// Indicates whether the model is valid or not.
-        /// Serialized Name: AutomationValidationStatus.isValid
-        /// </param>
-        /// <param name="message">
-        /// The validation message.
-        /// Serialized Name: AutomationValidationStatus.message
-        /// </param>
+        /// <param name="isValid"> Indicates whether the model is valid or not. </param>
+        /// <param name="message"> The validation message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAutomationValidationStatus(bool? isValid, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates whether the model is valid or not.
-        /// Serialized Name: AutomationValidationStatus.isValid
-        /// </summary>
+        /// <summary> Indicates whether the model is valid or not. </summary>
         public bool? IsValid { get; }
-        /// <summary>
-        /// The validation message.
-        /// Serialized Name: AutomationValidationStatus.message
-        /// </summary>
+        /// <summary> The validation message. </summary>
         public string Message { get; }
     }
 }

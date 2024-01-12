@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The type of IoT Security recommendation.
-    /// Serialized Name: RecommendationConfigurationProperties
-    /// </summary>
+    /// <summary> The type of IoT Security recommendation. </summary>
     public partial class RecommendationConfigurationProperties
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RecommendationConfigurationProperties"/>. </summary>
-        /// <param name="recommendationType">
-        /// The type of IoT Security recommendation.
-        /// Serialized Name: RecommendationConfigurationProperties.recommendationType
-        /// </param>
-        /// <param name="status">
-        /// Recommendation status. When the recommendation status is disabled recommendations are not generated.
-        /// Serialized Name: RecommendationConfigurationProperties.status
-        /// </param>
+        /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
+        /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
         public RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType, RecommendationConfigStatus status)
         {
             RecommendationType = recommendationType;
@@ -64,15 +55,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendationConfigurationProperties"/>. </summary>
-        /// <param name="recommendationType">
-        /// The type of IoT Security recommendation.
-        /// Serialized Name: RecommendationConfigurationProperties.recommendationType
-        /// </param>
-        /// <param name="name"> Serialized Name: RecommendationConfigurationProperties.name. </param>
-        /// <param name="status">
-        /// Recommendation status. When the recommendation status is disabled recommendations are not generated.
-        /// Serialized Name: RecommendationConfigurationProperties.status
-        /// </param>
+        /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
+        /// <param name="name"></param>
+        /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType, string name, RecommendationConfigStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,17 +72,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The type of IoT Security recommendation.
-        /// Serialized Name: RecommendationConfigurationProperties.recommendationType
-        /// </summary>
+        /// <summary> The type of IoT Security recommendation. </summary>
         public IotSecurityRecommendationType RecommendationType { get; set; }
-        /// <summary> Serialized Name: RecommendationConfigurationProperties.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Recommendation status. When the recommendation status is disabled recommendations are not generated.
-        /// Serialized Name: RecommendationConfigurationProperties.status
-        /// </summary>
+        /// <summary> Recommendation status. When the recommendation status is disabled recommendations are not generated. </summary>
         public RecommendationConfigStatus Status { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SecuritySettingName.
-    /// Serialized Name: SettingName
-    /// </summary>
+    /// <summary> The SecuritySettingName. </summary>
     public readonly partial struct SecuritySettingName : IEquatable<SecuritySettingName>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string WdatpUnifiedSolutionValue = "WDATP_UNIFIED_SOLUTION";
         private const string SentinelValue = "Sentinel";
 
-        /// <summary>
-        /// MCAS
-        /// Serialized Name: SettingName.MCAS
-        /// </summary>
+        /// <summary> MCAS. </summary>
         public static SecuritySettingName Mcas { get; } = new SecuritySettingName(McasValue);
-        /// <summary>
-        /// WDATP
-        /// Serialized Name: SettingName.WDATP
-        /// </summary>
+        /// <summary> WDATP. </summary>
         public static SecuritySettingName Wdatp { get; } = new SecuritySettingName(WdatpValue);
-        /// <summary>
-        /// WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW
-        /// Serialized Name: SettingName.WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW
-        /// </summary>
+        /// <summary> WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW. </summary>
         public static SecuritySettingName WdatpExcludeLinuxPublicPreview { get; } = new SecuritySettingName(WdatpExcludeLinuxPublicPreviewValue);
-        /// <summary>
-        /// WDATP_UNIFIED_SOLUTION
-        /// Serialized Name: SettingName.WDATP_UNIFIED_SOLUTION
-        /// </summary>
+        /// <summary> WDATP_UNIFIED_SOLUTION. </summary>
         public static SecuritySettingName WdatpUnifiedSolution { get; } = new SecuritySettingName(WdatpUnifiedSolutionValue);
-        /// <summary>
-        /// Sentinel
-        /// Serialized Name: SettingName.Sentinel
-        /// </summary>
+        /// <summary> Sentinel. </summary>
         public static SecuritySettingName Sentinel { get; } = new SecuritySettingName(SentinelValue);
         /// <summary> Determines if two <see cref="SecuritySettingName"/> values are the same. </summary>
         public static bool operator ==(SecuritySettingName left, SecuritySettingName right) => left.Equals(right);

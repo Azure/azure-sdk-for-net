@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
-            Source source = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            HealthReportSource source = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = new Source(property.Value.GetString());
+                    source = new HealthReportSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<Source> source = default;
-            Optional<string> id = default;
+            Optional<HealthReportSource> source = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> connectorId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,12 +92,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    source = new Source(property.Value.GetString());
+                    source = new HealthReportSource(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectorId"u8))

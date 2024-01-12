@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a GetSensitivitySettingsResponseResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="GetSensitivitySettingsResponseResource"/> object. </returns>
-        public virtual GetSensitivitySettingsResponseResource GetGetSensitivitySettingsResponse()
+        /// <summary> Gets an object representing a SensitivitySettingResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <returns> Returns a <see cref="SensitivitySettingResource"/> object. </returns>
+        public virtual SensitivitySettingResource GetSensitivitySetting()
         {
-            return new GetSensitivitySettingsResponseResource(Client, Id.AppendProviderResource("Microsoft.Security", "sensitivitySettings", "current"));
+            return new SensitivitySettingResource(Client, Id.AppendProviderResource("Microsoft.Security", "sensitivitySettings", "current"));
         }
 
         /// <summary> Gets a collection of TenantAssessmentMetadataResources in the TenantResource. </summary>

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The ARC autoprovisioning configuration
-    /// Serialized Name: DefenderForDatabasesGcpOfferingArcAutoProvisioning
-    /// </summary>
+    /// <summary> The ARC autoprovisioning configuration. </summary>
     public partial class DefenderForDatabasesGcpOfferingArcAutoProvisioning
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesGcpOfferingArcAutoProvisioning"/>. </summary>
-        /// <param name="isEnabled">
-        /// Is arc auto provisioning enabled
-        /// Serialized Name: DefenderForDatabasesGcpOfferingArcAutoProvisioning.enabled
-        /// </param>
-        /// <param name="configuration">
-        /// Configuration for servers Arc auto provisioning
-        /// Serialized Name: DefenderForDatabasesGcpOfferingArcAutoProvisioning.configuration
-        /// </param>
+        /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
+        /// <param name="configuration"> Configuration for servers Arc auto provisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForDatabasesGcpOfferingArcAutoProvisioning(bool? isEnabled, DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is arc auto provisioning enabled
-        /// Serialized Name: DefenderForDatabasesGcpOfferingArcAutoProvisioning.enabled
-        /// </summary>
+        /// <summary> Is arc auto provisioning enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Configuration for servers Arc auto provisioning
-        /// Serialized Name: DefenderForDatabasesGcpOfferingArcAutoProvisioning.configuration
-        /// </summary>
+        /// <summary> Configuration for servers Arc auto provisioning. </summary>
         public DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration Configuration { get; set; }
     }
 }

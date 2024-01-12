@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The resource of the configuration or data needed to onboard the machine to MDE
-    /// Serialized Name: MdeOnboardingData
-    /// </summary>
+    /// <summary> The resource of the configuration or data needed to onboard the machine to MDE. </summary>
     public partial class MdeOnboarding : ResourceData
     {
         /// <summary>
@@ -60,14 +57,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="onboardingPackageWindows">
-        /// The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension
-        /// Serialized Name: MdeOnboardingData.properties.onboardingPackageWindows
-        /// </param>
-        /// <param name="onboardingPackageLinux">
-        /// The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension
-        /// Serialized Name: MdeOnboardingData.properties.onboardingPackageLinux
-        /// </param>
+        /// <param name="onboardingPackageWindows"> The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
+        /// <param name="onboardingPackageLinux"> The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MdeOnboarding(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] onboardingPackageWindows, byte[] onboardingPackageLinux, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,15 +67,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension
-        /// Serialized Name: MdeOnboardingData.properties.onboardingPackageWindows
-        /// </summary>
+        /// <summary> The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </summary>
         public byte[] OnboardingPackageWindows { get; set; }
-        /// <summary>
-        /// The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension
-        /// Serialized Name: MdeOnboardingData.properties.onboardingPackageLinux
-        /// </summary>
+        /// <summary> The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </summary>
         public byte[] OnboardingPackageLinux { get; set; }
     }
 }

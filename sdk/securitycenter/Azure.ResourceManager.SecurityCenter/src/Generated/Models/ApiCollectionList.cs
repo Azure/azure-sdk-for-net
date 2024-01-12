@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Page of a list of API collections as represented by Microsoft Defender for APIs.
-    /// Serialized Name: ApiCollectionList
-    /// </summary>
+    /// <summary> Page of a list of API collections as represented by Microsoft Defender for APIs. </summary>
     internal partial class ApiCollectionList
     {
         /// <summary>
@@ -53,35 +50,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="ApiCollectionList"/>. </summary>
         internal ApiCollectionList()
         {
-            Value = new ChangeTrackingList<ApiCollectionData>();
+            Value = new ChangeTrackingList<SecurityCenterApiCollectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiCollectionList"/>. </summary>
-        /// <param name="value">
-        /// API collections in this page.
-        /// Serialized Name: ApiCollectionList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: ApiCollectionList.nextLink
-        /// </param>
+        /// <param name="value"> API collections in this page. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCollectionList(IReadOnlyList<ApiCollectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiCollectionList(IReadOnlyList<SecurityCenterApiCollectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// API collections in this page.
-        /// Serialized Name: ApiCollectionList.value
-        /// </summary>
-        public IReadOnlyList<ApiCollectionData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: ApiCollectionList.nextLink
-        /// </summary>
+        /// <summary> API collections in this page. </summary>
+        public IReadOnlyList<SecurityCenterApiCollectionData> Value { get; }
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

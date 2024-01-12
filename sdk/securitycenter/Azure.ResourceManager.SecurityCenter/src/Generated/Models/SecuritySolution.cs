@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SecuritySolution.
-    /// Serialized Name: SecuritySolution
-    /// </summary>
+    /// <summary> The SecuritySolution. </summary>
     public partial class SecuritySolution : ResourceData
     {
         /// <summary>
@@ -60,26 +57,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="securityFamily">
-        /// The security family of the security solution
-        /// Serialized Name: SecuritySolution.properties.securityFamily
-        /// </param>
-        /// <param name="provisioningState">
-        /// The security family provisioning State
-        /// Serialized Name: SecuritySolution.properties.provisioningState
-        /// </param>
-        /// <param name="template">
-        /// The security solutions' template
-        /// Serialized Name: SecuritySolution.properties.template
-        /// </param>
-        /// <param name="protectionStatus">
-        /// The security solutions' status
-        /// Serialized Name: SecuritySolution.properties.protectionStatus
-        /// </param>
-        /// <param name="location">
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </param>
+        /// <param name="securityFamily"> The security family of the security solution. </param>
+        /// <param name="provisioningState"> The security family provisioning State. </param>
+        /// <param name="template"> The security solutions' template. </param>
+        /// <param name="protectionStatus"> The security solutions' status. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -91,30 +73,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The security family of the security solution
-        /// Serialized Name: SecuritySolution.properties.securityFamily
-        /// </summary>
+        /// <summary> The security family of the security solution. </summary>
         public SecurityFamily? SecurityFamily { get; set; }
-        /// <summary>
-        /// The security family provisioning State
-        /// Serialized Name: SecuritySolution.properties.provisioningState
-        /// </summary>
+        /// <summary> The security family provisioning State. </summary>
         public SecurityFamilyProvisioningState? ProvisioningState { get; set; }
-        /// <summary>
-        /// The security solutions' template
-        /// Serialized Name: SecuritySolution.properties.template
-        /// </summary>
+        /// <summary> The security solutions' template. </summary>
         public string Template { get; set; }
-        /// <summary>
-        /// The security solutions' status
-        /// Serialized Name: SecuritySolution.properties.protectionStatus
-        /// </summary>
+        /// <summary> The security solutions' status. </summary>
         public string ProtectionStatus { get; set; }
-        /// <summary>
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </summary>
+        /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }
 }

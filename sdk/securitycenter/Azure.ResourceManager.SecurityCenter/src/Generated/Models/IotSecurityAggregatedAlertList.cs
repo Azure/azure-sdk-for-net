@@ -13,10 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of IoT Security solution aggregated alert data.
-    /// Serialized Name: IoTSecurityAggregatedAlertList
-    /// </summary>
+    /// <summary> List of IoT Security solution aggregated alert data. </summary>
     internal partial class IotSecurityAggregatedAlertList
     {
         /// <summary>
@@ -52,10 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertList"/>. </summary>
-        /// <param name="value">
-        /// List of aggregated alerts data.
-        /// Serialized Name: IoTSecurityAggregatedAlertList.value
-        /// </param>
+        /// <param name="value"> List of aggregated alerts data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IotSecurityAggregatedAlertList(IEnumerable<IotSecurityAggregatedAlertData> value)
         {
@@ -65,14 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertList"/>. </summary>
-        /// <param name="value">
-        /// List of aggregated alerts data.
-        /// Serialized Name: IoTSecurityAggregatedAlertList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// When there is too much alert data for one page, use this URI to fetch the next page.
-        /// Serialized Name: IoTSecurityAggregatedAlertList.nextLink
-        /// </param>
+        /// <param name="value"> List of aggregated alerts data. </param>
+        /// <param name="nextLink"> When there is too much alert data for one page, use this URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecurityAggregatedAlertList(IReadOnlyList<IotSecurityAggregatedAlertData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,15 +74,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// List of aggregated alerts data.
-        /// Serialized Name: IoTSecurityAggregatedAlertList.value
-        /// </summary>
+        /// <summary> List of aggregated alerts data. </summary>
         public IReadOnlyList<IotSecurityAggregatedAlertData> Value { get; }
-        /// <summary>
-        /// When there is too much alert data for one page, use this URI to fetch the next page.
-        /// Serialized Name: IoTSecurityAggregatedAlertList.nextLink
-        /// </summary>
+        /// <summary> When there is too much alert data for one page, use this URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

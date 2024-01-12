@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Defender for Servers AWS offering
-    /// Serialized Name: DefenderForServersAwsOffering
-    /// </summary>
+    /// <summary> The Defender for Servers AWS offering. </summary>
     public partial class DefenderForServersAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOffering"/>. </summary>
@@ -23,39 +20,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="defenderForServers">
-        /// The Defender for servers connection configuration
-        /// Serialized Name: DefenderForServersAwsOffering.defenderForServers
-        /// </param>
-        /// <param name="arcAutoProvisioning">
-        /// The ARC autoprovisioning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.arcAutoProvisioning
-        /// </param>
-        /// <param name="vaAutoProvisioning">
-        /// The Vulnerability Assessment autoprovisioning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.vaAutoProvisioning
-        /// </param>
-        /// <param name="mdeAutoProvisioning">
-        /// The Microsoft Defender for Endpoint autoprovisioning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.mdeAutoProvisioning
-        /// </param>
-        /// <param name="subPlan">
-        /// configuration for the servers offering subPlan
-        /// Serialized Name: DefenderForServersAwsOffering.subPlan
-        /// </param>
-        /// <param name="vmScanners">
-        /// The Microsoft Defender for Server VM scanning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.vmScanners
-        /// </param>
+        /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
+        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
+        /// <param name="vaAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
+        /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
+        /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
         internal DefenderForServersAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, AwsDefenderForServersInfo defenderForServers, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersAwsOfferingSubPlan subPlan, DefenderForServersAwsOfferingVmScanners vmScanners) : base(offeringType, description, serializedAdditionalRawData)
         {
             DefenderForServers = defenderForServers;
@@ -67,15 +40,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OfferingType = offeringType;
         }
 
-        /// <summary>
-        /// The Defender for servers connection configuration
-        /// Serialized Name: DefenderForServersAwsOffering.defenderForServers
-        /// </summary>
+        /// <summary> The Defender for servers connection configuration. </summary>
         internal AwsDefenderForServersInfo DefenderForServers { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderForServersAwsOfferingDefenderForServers.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string DefenderForServersCloudRoleArn
         {
             get => DefenderForServers is null ? default : DefenderForServers.CloudRoleArn;
@@ -87,30 +54,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary>
-        /// The ARC autoprovisioning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.arcAutoProvisioning
-        /// </summary>
+        /// <summary> The ARC autoprovisioning configuration. </summary>
         public DefenderForServersAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
-        /// <summary>
-        /// The Vulnerability Assessment autoprovisioning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.vaAutoProvisioning
-        /// </summary>
+        /// <summary> The Vulnerability Assessment autoprovisioning configuration. </summary>
         public DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning VaAutoProvisioning { get; set; }
-        /// <summary>
-        /// The Microsoft Defender for Endpoint autoprovisioning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.mdeAutoProvisioning
-        /// </summary>
+        /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
         public DefenderForServersAwsOfferingMdeAutoProvisioning MdeAutoProvisioning { get; set; }
-        /// <summary>
-        /// configuration for the servers offering subPlan
-        /// Serialized Name: DefenderForServersAwsOffering.subPlan
-        /// </summary>
+        /// <summary> configuration for the servers offering subPlan. </summary>
         internal DefenderForServersAwsOfferingSubPlan SubPlan { get; set; }
-        /// <summary>
-        /// The available sub plans
-        /// Serialized Name: DefenderForServersAwsOfferingSubPlan.type
-        /// </summary>
+        /// <summary> The available sub plans. </summary>
         public AvailableSubPlanType? AvailableSubPlanType
         {
             get => SubPlan is null ? default : SubPlan.AvailableSubPlanType;
@@ -122,10 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary>
-        /// The Microsoft Defender for Server VM scanning configuration
-        /// Serialized Name: DefenderForServersAwsOffering.vmScanners
-        /// </summary>
+        /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
         public DefenderForServersAwsOfferingVmScanners VmScanners { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A rule which is evaluated upon event interception. The rule is configured by comparing a specific value from the event model to an expected value. This comparison is done by using one of the supported operators set.
-    /// Serialized Name: AutomationTriggeringRule
-    /// </summary>
+    /// <summary> A rule which is evaluated upon event interception. The rule is configured by comparing a specific value from the event model to an expected value. This comparison is done by using one of the supported operators set. </summary>
     public partial class SecurityAutomationTriggeringRule
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationTriggeringRule"/>. </summary>
-        /// <param name="propertyJPath">
-        /// The JPath of the entity model property that should be checked.
-        /// Serialized Name: AutomationTriggeringRule.propertyJPath
-        /// </param>
-        /// <param name="propertyType">
-        /// The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]
-        /// Serialized Name: AutomationTriggeringRule.propertyType
-        /// </param>
-        /// <param name="expectedValue">
-        /// The expected value.
-        /// Serialized Name: AutomationTriggeringRule.expectedValue
-        /// </param>
-        /// <param name="operator">
-        /// A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType.
-        /// Serialized Name: AutomationTriggeringRule.operator
-        /// </param>
+        /// <param name="propertyJPath"> The JPath of the entity model property that should be checked. </param>
+        /// <param name="propertyType"> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </param>
+        /// <param name="expectedValue"> The expected value. </param>
+        /// <param name="operator"> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAutomationTriggeringRule(string propertyJPath, AutomationTriggeringRulePropertyType? propertyType, string expectedValue, AutomationTriggeringRuleOperator? @operator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The JPath of the entity model property that should be checked.
-        /// Serialized Name: AutomationTriggeringRule.propertyJPath
-        /// </summary>
+        /// <summary> The JPath of the entity model property that should be checked. </summary>
         public string PropertyJPath { get; set; }
-        /// <summary>
-        /// The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]
-        /// Serialized Name: AutomationTriggeringRule.propertyType
-        /// </summary>
+        /// <summary> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </summary>
         public AutomationTriggeringRulePropertyType? PropertyType { get; set; }
-        /// <summary>
-        /// The expected value.
-        /// Serialized Name: AutomationTriggeringRule.expectedValue
-        /// </summary>
+        /// <summary> The expected value. </summary>
         public string ExpectedValue { get; set; }
-        /// <summary>
-        /// A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType.
-        /// Serialized Name: AutomationTriggeringRule.operator
-        /// </summary>
+        /// <summary> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </summary>
         public AutomationTriggeringRuleOperator? Operator { get; set; }
     }
 }

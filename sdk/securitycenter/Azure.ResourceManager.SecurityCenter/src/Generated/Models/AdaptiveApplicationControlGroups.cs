@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Represents a list of VM/server groups and set of rules that are Recommended by Microsoft Defender for Cloud to be allowed
-    /// Serialized Name: AdaptiveApplicationControlGroups
-    /// </summary>
+    /// <summary> Represents a list of VM/server groups and set of rules that are Recommended by Microsoft Defender for Cloud to be allowed. </summary>
     internal partial class AdaptiveApplicationControlGroups
     {
         /// <summary>
@@ -57,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroups"/>. </summary>
-        /// <param name="value"> Serialized Name: AdaptiveApplicationControlGroups.value. </param>
+        /// <param name="value"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdaptiveApplicationControlGroups(IReadOnlyList<AdaptiveApplicationControlGroupData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: AdaptiveApplicationControlGroups.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<AdaptiveApplicationControlGroupData> Value { get; }
     }
 }

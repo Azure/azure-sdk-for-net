@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The governance rule source, what the rule affects, e.g. Assessments
-    /// Serialized Name: GovernanceRuleSourceResourceType
-    /// </summary>
+    /// <summary> The governance rule source, what the rule affects, e.g. Assessments. </summary>
     public readonly partial struct GovernanceRuleSourceResourceType : IEquatable<GovernanceRuleSourceResourceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string AssessmentsValue = "Assessments";
 
-        /// <summary>
-        /// The source of the governance rule is assessments
-        /// Serialized Name: GovernanceRuleSourceResourceType.Assessments
-        /// </summary>
+        /// <summary> The source of the governance rule is assessments. </summary>
         public static GovernanceRuleSourceResourceType Assessments { get; } = new GovernanceRuleSourceResourceType(AssessmentsValue);
         /// <summary> Determines if two <see cref="GovernanceRuleSourceResourceType"/> values are the same. </summary>
         public static bool operator ==(GovernanceRuleSourceResourceType left, GovernanceRuleSourceResourceType right) => left.Equals(right);

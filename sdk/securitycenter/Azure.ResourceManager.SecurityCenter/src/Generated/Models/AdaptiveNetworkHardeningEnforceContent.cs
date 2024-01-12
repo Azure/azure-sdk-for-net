@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The AdaptiveNetworkHardeningEnforceRequest.
-    /// Serialized Name: AdaptiveNetworkHardeningEnforceRequest
-    /// </summary>
+    /// <summary> The AdaptiveNetworkHardeningEnforceContent. </summary>
     public partial class AdaptiveNetworkHardeningEnforceContent
     {
         /// <summary>
@@ -51,14 +48,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningEnforceContent"/>. </summary>
-        /// <param name="rules">
-        /// The rules to enforce
-        /// Serialized Name: AdaptiveNetworkHardeningEnforceRequest.rules
-        /// </param>
-        /// <param name="networkSecurityGroups">
-        /// The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules
-        /// Serialized Name: AdaptiveNetworkHardeningEnforceRequest.networkSecurityGroups
-        /// </param>
+        /// <param name="rules"> The rules to enforce. </param>
+        /// <param name="networkSecurityGroups"> The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> or <paramref name="networkSecurityGroups"/> is null. </exception>
         public AdaptiveNetworkHardeningEnforceContent(IEnumerable<RecommendedSecurityRule> rules, IEnumerable<string> networkSecurityGroups)
         {
@@ -70,14 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdaptiveNetworkHardeningEnforceContent"/>. </summary>
-        /// <param name="rules">
-        /// The rules to enforce
-        /// Serialized Name: AdaptiveNetworkHardeningEnforceRequest.rules
-        /// </param>
-        /// <param name="networkSecurityGroups">
-        /// The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules
-        /// Serialized Name: AdaptiveNetworkHardeningEnforceRequest.networkSecurityGroups
-        /// </param>
+        /// <param name="rules"> The rules to enforce. </param>
+        /// <param name="networkSecurityGroups"> The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdaptiveNetworkHardeningEnforceContent(IList<RecommendedSecurityRule> rules, IList<string> networkSecurityGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,15 +76,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The rules to enforce
-        /// Serialized Name: AdaptiveNetworkHardeningEnforceRequest.rules
-        /// </summary>
+        /// <summary> The rules to enforce. </summary>
         public IList<RecommendedSecurityRule> Rules { get; }
-        /// <summary>
-        /// The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules
-        /// Serialized Name: AdaptiveNetworkHardeningEnforceRequest.networkSecurityGroups
-        /// </summary>
+        /// <summary> The Azure resource IDs of the effective network security groups that will be updated with the created security rules from the Adaptive Network Hardening rules. </summary>
         public IList<string> NetworkSecurityGroups { get; }
     }
 }

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the AutoProvisioningSetting data model.
     /// Auto provisioning setting
-    /// Serialized Name: AutoProvisioningSetting
     /// </summary>
     public partial class AutoProvisioningSettingData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="autoProvision">
-        /// Describes what kind of security agent provisioning action to take
-        /// Serialized Name: AutoProvisioningSetting.properties.autoProvision
-        /// </param>
+        /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutoProvisioningSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutoProvisionState? autoProvision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Describes what kind of security agent provisioning action to take
-        /// Serialized Name: AutoProvisioningSetting.properties.autoProvision
-        /// </summary>
+        /// <summary> Describes what kind of security agent provisioning action to take. </summary>
         public AutoProvisionState? AutoProvision { get; set; }
     }
 }

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityTask data model.
     /// Security task that we recommend to do in order to strengthen security
-    /// Serialized Name: SecurityTask
     /// </summary>
     public partial class SecurityTaskData : ResourceData
     {
@@ -62,26 +61,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state">
-        /// State of the task (Active, Resolved etc.)
-        /// Serialized Name: SecurityTask.properties.state
-        /// </param>
-        /// <param name="createdOn">
-        /// The time this task was discovered in UTC
-        /// Serialized Name: SecurityTask.properties.creationTimeUtc
-        /// </param>
-        /// <param name="securityTaskParameters">
-        /// Changing set of properties, depending on the task type that is derived from the name field
-        /// Serialized Name: SecurityTask.properties.securityTaskParameters
-        /// </param>
-        /// <param name="lastStateChangedOn">
-        /// The time this task's details were last changed in UTC
-        /// Serialized Name: SecurityTask.properties.lastStateChangeTimeUtc
-        /// </param>
-        /// <param name="subState">
-        /// Additional data on the state of the task
-        /// Serialized Name: SecurityTask.properties.subState
-        /// </param>
+        /// <param name="state"> State of the task (Active, Resolved etc.). </param>
+        /// <param name="createdOn"> The time this task was discovered in UTC. </param>
+        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
+        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
+        /// <param name="subState"> Additional data on the state of the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string state, DateTimeOffset? createdOn, SecurityTaskProperties securityTaskParameters, DateTimeOffset? lastStateChangedOn, string subState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -93,30 +77,15 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// State of the task (Active, Resolved etc.)
-        /// Serialized Name: SecurityTask.properties.state
-        /// </summary>
+        /// <summary> State of the task (Active, Resolved etc.). </summary>
         public string State { get; }
-        /// <summary>
-        /// The time this task was discovered in UTC
-        /// Serialized Name: SecurityTask.properties.creationTimeUtc
-        /// </summary>
+        /// <summary> The time this task was discovered in UTC. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Changing set of properties, depending on the task type that is derived from the name field
-        /// Serialized Name: SecurityTask.properties.securityTaskParameters
-        /// </summary>
+        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
         public SecurityTaskProperties SecurityTaskParameters { get; set; }
-        /// <summary>
-        /// The time this task's details were last changed in UTC
-        /// Serialized Name: SecurityTask.properties.lastStateChangeTimeUtc
-        /// </summary>
+        /// <summary> The time this task's details were last changed in UTC. </summary>
         public DateTimeOffset? LastStateChangedOn { get; }
-        /// <summary>
-        /// Additional data on the state of the task
-        /// Serialized Name: SecurityTask.properties.subState
-        /// </summary>
+        /// <summary> Additional data on the state of the task. </summary>
         public string SubState { get; }
     }
 }

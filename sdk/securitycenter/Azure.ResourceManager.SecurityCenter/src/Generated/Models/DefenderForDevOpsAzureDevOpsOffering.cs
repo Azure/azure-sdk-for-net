@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Defender for DevOps for Azure DevOps offering
-    /// Serialized Name: DefenderForDevOpsAzureDevOpsOffering
-    /// </summary>
+    /// <summary> The Defender for DevOps for Azure DevOps offering. </summary>
     public partial class DefenderForDevOpsAzureDevOpsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForDevOpsAzureDevOpsOffering"/>. </summary>
@@ -23,14 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForDevOpsAzureDevOpsOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForDevOpsAzureDevOpsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(offeringType, description, serializedAdditionalRawData)
         {

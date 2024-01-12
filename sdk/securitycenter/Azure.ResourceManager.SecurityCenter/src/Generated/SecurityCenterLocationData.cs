@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityCenterLocation data model.
     /// The ASC location of the subscription is in the "name" field
-    /// Serialized Name: AscLocation
     /// </summary>
     public partial class SecurityCenterLocationData : ResourceData
     {
@@ -61,10 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// An empty set of properties
-        /// Serialized Name: AscLocation.properties
-        /// </param>
+        /// <param name="properties"> An empty set of properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCenterLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,7 +70,6 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// An empty set of properties
-        /// Serialized Name: AscLocation.properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

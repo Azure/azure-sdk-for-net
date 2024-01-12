@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The solution properties (correspond to the solution kind)
-    /// Serialized Name: ExternalSecuritySolutionProperties
-    /// </summary>
+    /// <summary> The solution properties (correspond to the solution kind). </summary>
     public partial class ExternalSecuritySolutionProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionProperties"/>. </summary>
@@ -25,12 +22,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionProperties"/>. </summary>
-        /// <param name="deviceVendor"> Serialized Name: ExternalSecuritySolutionProperties.deviceVendor. </param>
-        /// <param name="deviceType"> Serialized Name: ExternalSecuritySolutionProperties.deviceType. </param>
-        /// <param name="workspace">
-        /// Represents an OMS workspace to which the solution is connected
-        /// Serialized Name: ExternalSecuritySolutionProperties.workspace
-        /// </param>
+        /// <param name="deviceVendor"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ExternalSecuritySolutionProperties(string deviceVendor, string deviceType, WritableSubResource workspace, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -40,14 +34,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Serialized Name: ExternalSecuritySolutionProperties.deviceVendor. </summary>
+        /// <summary> Gets or sets the device vendor. </summary>
         public string DeviceVendor { get; set; }
-        /// <summary> Serialized Name: ExternalSecuritySolutionProperties.deviceType. </summary>
+        /// <summary> Gets or sets the device type. </summary>
         public string DeviceType { get; set; }
-        /// <summary>
-        /// Represents an OMS workspace to which the solution is connected
-        /// Serialized Name: ExternalSecuritySolutionProperties.workspace
-        /// </summary>
+        /// <summary> Represents an OMS workspace to which the solution is connected. </summary>
         internal WritableSubResource Workspace { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier WorkspaceId

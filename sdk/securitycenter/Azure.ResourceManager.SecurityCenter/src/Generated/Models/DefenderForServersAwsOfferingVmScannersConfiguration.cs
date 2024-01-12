@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// configuration for Microsoft Defender for Server VM scanning
-    /// Serialized Name: DefenderForServersAwsOfferingVmScannersConfiguration
-    /// </summary>
+    /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
     public partial class DefenderForServersAwsOfferingVmScannersConfiguration
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingVmScannersConfiguration"/>. </summary>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderForServersAwsOfferingVmScannersConfiguration.cloudRoleArn
-        /// </param>
-        /// <param name="scanningMode">
-        /// The scanning mode for the VM scan.
-        /// Serialized Name: DefenderForServersAwsOfferingVmScannersConfiguration.scanningMode
-        /// </param>
-        /// <param name="exclusionTags">
-        /// VM tags that indicates that VM should not be scanned
-        /// Serialized Name: DefenderForServersAwsOfferingVmScannersConfiguration.exclusionTags
-        /// </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
+        /// <param name="scanningMode"> The scanning mode for the VM scan. </param>
+        /// <param name="exclusionTags"> VM tags that indicates that VM should not be scanned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForServersAwsOfferingVmScannersConfiguration(string cloudRoleArn, DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,20 +65,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderForServersAwsOfferingVmScannersConfiguration.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
-        /// <summary>
-        /// The scanning mode for the VM scan.
-        /// Serialized Name: DefenderForServersAwsOfferingVmScannersConfiguration.scanningMode
-        /// </summary>
+        /// <summary> The scanning mode for the VM scan. </summary>
         public DefenderForServersScanningMode? ScanningMode { get; set; }
-        /// <summary>
-        /// VM tags that indicates that VM should not be scanned
-        /// Serialized Name: DefenderForServersAwsOfferingVmScannersConfiguration.exclusionTags
-        /// </summary>
+        /// <summary> VM tags that indicates that VM should not be scanned. </summary>
         public IDictionary<string, string> ExclusionTags { get; }
     }
 }

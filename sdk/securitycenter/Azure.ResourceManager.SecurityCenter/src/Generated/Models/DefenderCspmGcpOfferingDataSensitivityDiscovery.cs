@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender Data Sensitivity discovery configuration
-    /// Serialized Name: DefenderCspmGcpOfferingDataSensitivityDiscovery
-    /// </summary>
+    /// <summary> The Microsoft Defender Data Sensitivity discovery configuration. </summary>
     public partial class DefenderCspmGcpOfferingDataSensitivityDiscovery
     {
         /// <summary>
@@ -54,41 +51,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOfferingDataSensitivityDiscovery"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender Data Sensitivity discovery enabled
-        /// Serialized Name: DefenderCspmGcpOfferingDataSensitivityDiscovery.enabled
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The workload identity provider id in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingDataSensitivityDiscovery.workloadIdentityProviderId
-        /// </param>
-        /// <param name="serviceAccountEmailAddress">
-        /// The service account email address in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingDataSensitivityDiscovery.serviceAccountEmailAddress
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender Data Sensitivity discovery enabled. </param>
+        /// <param name="workloadIdentityProviderId"> The workload identity provider id in GCP for this feature. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmGcpOfferingDataSensitivityDiscovery(bool? enabled, string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderCspmGcpOfferingDataSensitivityDiscovery(bool? isEnabled, string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender Data Sensitivity discovery enabled
-        /// Serialized Name: DefenderCspmGcpOfferingDataSensitivityDiscovery.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The workload identity provider id in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingDataSensitivityDiscovery.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> Is Microsoft Defender Data Sensitivity discovery enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The workload identity provider id in GCP for this feature. </summary>
         public string WorkloadIdentityProviderId { get; set; }
-        /// <summary>
-        /// The service account email address in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingDataSensitivityDiscovery.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The service account email address in GCP for this feature. </summary>
         public string ServiceAccountEmailAddress { get; set; }
     }
 }

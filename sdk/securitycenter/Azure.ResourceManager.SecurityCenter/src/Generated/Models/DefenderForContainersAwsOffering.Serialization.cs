@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<long> kubeAuditRetentionTime = default;
             Optional<string> scubaExternalId = default;
             Optional<DefenderForContainersAwsOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8s = default;
+            Optional<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8s = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersAwsOffering(offeringType, description.Value, serializedAdditionalRawData, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8s.Value);
+            return new DefenderForContainersAwsOffering(offeringType, description.Value, serializedAdditionalRawData, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
         BinaryData IPersistableModel<DefenderForContainersAwsOffering>.Write(ModelReaderWriterOptions options)

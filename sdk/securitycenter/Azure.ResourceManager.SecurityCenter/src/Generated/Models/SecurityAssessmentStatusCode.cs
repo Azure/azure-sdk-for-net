@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Programmatic code for the status of the assessment
-    /// Serialized Name: AssessmentStatusCode
-    /// </summary>
+    /// <summary> Programmatic code for the status of the assessment. </summary>
     public readonly partial struct SecurityAssessmentStatusCode : IEquatable<SecurityAssessmentStatusCode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string UnhealthyValue = "Unhealthy";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary>
-        /// The resource is healthy
-        /// Serialized Name: AssessmentStatusCode.Healthy
-        /// </summary>
+        /// <summary> The resource is healthy. </summary>
         public static SecurityAssessmentStatusCode Healthy { get; } = new SecurityAssessmentStatusCode(HealthyValue);
-        /// <summary>
-        /// The resource has a security issue that needs to be addressed
-        /// Serialized Name: AssessmentStatusCode.Unhealthy
-        /// </summary>
+        /// <summary> The resource has a security issue that needs to be addressed. </summary>
         public static SecurityAssessmentStatusCode Unhealthy { get; } = new SecurityAssessmentStatusCode(UnhealthyValue);
-        /// <summary>
-        /// Assessment for this resource did not happen
-        /// Serialized Name: AssessmentStatusCode.NotApplicable
-        /// </summary>
+        /// <summary> Assessment for this resource did not happen. </summary>
         public static SecurityAssessmentStatusCode NotApplicable { get; } = new SecurityAssessmentStatusCode(NotApplicableValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentStatusCode"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentStatusCode left, SecurityAssessmentStatusCode right) => left.Equals(right);

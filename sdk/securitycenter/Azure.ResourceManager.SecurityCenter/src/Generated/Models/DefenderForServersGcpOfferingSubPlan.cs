@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// configuration for the servers offering subPlan
-    /// Serialized Name: DefenderForServersGcpOfferingSubPlan
-    /// </summary>
+    /// <summary> configuration for the servers offering subPlan. </summary>
     internal partial class DefenderForServersGcpOfferingSubPlan
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingSubPlan"/>. </summary>
-        /// <param name="availableSubPlanType">
-        /// The available sub plans
-        /// Serialized Name: DefenderForServersGcpOfferingSubPlan.type
-        /// </param>
+        /// <param name="availableSubPlanType"> The available sub plans. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForServersGcpOfferingSubPlan(AvailableSubPlanType? availableSubPlanType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The available sub plans
-        /// Serialized Name: DefenderForServersGcpOfferingSubPlan.type
-        /// </summary>
+        /// <summary> The available sub plans. </summary>
         public AvailableSubPlanType? AvailableSubPlanType { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The classification of the health report
-    /// Serialized Name: HealthDataClassification
-    /// </summary>
+    /// <summary> The classification of the health report. </summary>
     public partial class HealthDataClassification
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthDataClassification"/>. </summary>
-        /// <param name="component">
-        /// The component describes the name of the agent/service that scans the issue
-        /// Serialized Name: HealthDataClassification.component
-        /// </param>
-        /// <param name="scenario">
-        /// The scenario describes the health scenario issue of the component
-        /// Serialized Name: HealthDataClassification.scenario
-        /// </param>
-        /// <param name="scope">
-        /// The resource scope of the health report
-        /// Serialized Name: HealthDataClassification.scope
-        /// </param>
+        /// <param name="component"> The component describes the name of the agent/service that scans the issue. </param>
+        /// <param name="scenario"> The scenario describes the health scenario issue of the component. </param>
+        /// <param name="scope"> The resource scope of the health report. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HealthDataClassification(string component, string scenario, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The component describes the name of the agent/service that scans the issue
-        /// Serialized Name: HealthDataClassification.component
-        /// </summary>
+        /// <summary> The component describes the name of the agent/service that scans the issue. </summary>
         public string Component { get; set; }
-        /// <summary>
-        /// The scenario describes the health scenario issue of the component
-        /// Serialized Name: HealthDataClassification.scenario
-        /// </summary>
+        /// <summary> The scenario describes the health scenario issue of the component. </summary>
         public string Scenario { get; set; }
-        /// <summary>
-        /// The resource scope of the health report
-        /// Serialized Name: HealthDataClassification.scope
-        /// </summary>
+        /// <summary> The resource scope of the health report. </summary>
         public string Scope { get; set; }
     }
 }

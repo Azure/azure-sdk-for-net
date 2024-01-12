@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A single automation scope.
-    /// Serialized Name: AutomationScope
-    /// </summary>
+    /// <summary> A single automation scope. </summary>
     public partial class SecurityAutomationScope
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationScope"/>. </summary>
-        /// <param name="description">
-        /// The resources scope description.
-        /// Serialized Name: AutomationScope.description
-        /// </param>
-        /// <param name="scopePath">
-        /// The resources scope path. Can be the subscription on which the automation is defined on or a resource group under that subscription (fully qualified Azure resource IDs).
-        /// Serialized Name: AutomationScope.scopePath
-        /// </param>
+        /// <param name="description"> The resources scope description. </param>
+        /// <param name="scopePath"> The resources scope path. Can be the subscription on which the automation is defined on or a resource group under that subscription (fully qualified Azure resource IDs). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAutomationScope(string description, string scopePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resources scope description.
-        /// Serialized Name: AutomationScope.description
-        /// </summary>
+        /// <summary> The resources scope description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The resources scope path. Can be the subscription on which the automation is defined on or a resource group under that subscription (fully qualified Azure resource IDs).
-        /// Serialized Name: AutomationScope.scopePath
-        /// </summary>
+        /// <summary> The resources scope path. Can be the subscription on which the automation is defined on or a resource group under that subscription (fully qualified Azure resource IDs). </summary>
         public string ScopePath { get; set; }
     }
 }

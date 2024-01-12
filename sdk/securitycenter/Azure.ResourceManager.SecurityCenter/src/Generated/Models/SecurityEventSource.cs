@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A valid event source type.
-    /// Serialized Name: EventSource
-    /// </summary>
+    /// <summary> A valid event source type. </summary>
     public readonly partial struct SecurityEventSource : IEquatable<SecurityEventSource>
     {
         private readonly string _value;
@@ -37,60 +34,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string RegulatoryComplianceAssessmentValue = "RegulatoryComplianceAssessment";
         private const string RegulatoryComplianceAssessmentSnapshotValue = "RegulatoryComplianceAssessmentSnapshot";
 
-        /// <summary>
-        /// Assessments
-        /// Serialized Name: EventSource.Assessments
-        /// </summary>
+        /// <summary> Assessments. </summary>
         public static SecurityEventSource Assessments { get; } = new SecurityEventSource(AssessmentsValue);
-        /// <summary>
-        /// AssessmentsSnapshot
-        /// Serialized Name: EventSource.AssessmentsSnapshot
-        /// </summary>
+        /// <summary> AssessmentsSnapshot. </summary>
         public static SecurityEventSource AssessmentsSnapshot { get; } = new SecurityEventSource(AssessmentsSnapshotValue);
-        /// <summary>
-        /// SubAssessments
-        /// Serialized Name: EventSource.SubAssessments
-        /// </summary>
+        /// <summary> SubAssessments. </summary>
         public static SecurityEventSource SubAssessments { get; } = new SecurityEventSource(SubAssessmentsValue);
-        /// <summary>
-        /// SubAssessmentsSnapshot
-        /// Serialized Name: EventSource.SubAssessmentsSnapshot
-        /// </summary>
+        /// <summary> SubAssessmentsSnapshot. </summary>
         public static SecurityEventSource SubAssessmentsSnapshot { get; } = new SecurityEventSource(SubAssessmentsSnapshotValue);
-        /// <summary>
-        /// Alerts
-        /// Serialized Name: EventSource.Alerts
-        /// </summary>
+        /// <summary> Alerts. </summary>
         public static SecurityEventSource Alerts { get; } = new SecurityEventSource(AlertsValue);
-        /// <summary>
-        /// SecureScores
-        /// Serialized Name: EventSource.SecureScores
-        /// </summary>
+        /// <summary> SecureScores. </summary>
         public static SecurityEventSource SecureScores { get; } = new SecurityEventSource(SecureScoresValue);
-        /// <summary>
-        /// SecureScoresSnapshot
-        /// Serialized Name: EventSource.SecureScoresSnapshot
-        /// </summary>
+        /// <summary> SecureScoresSnapshot. </summary>
         public static SecurityEventSource SecureScoresSnapshot { get; } = new SecurityEventSource(SecureScoresSnapshotValue);
-        /// <summary>
-        /// SecureScoreControls
-        /// Serialized Name: EventSource.SecureScoreControls
-        /// </summary>
+        /// <summary> SecureScoreControls. </summary>
         public static SecurityEventSource SecureScoreControls { get; } = new SecurityEventSource(SecureScoreControlsValue);
-        /// <summary>
-        /// SecureScoreControlsSnapshot
-        /// Serialized Name: EventSource.SecureScoreControlsSnapshot
-        /// </summary>
+        /// <summary> SecureScoreControlsSnapshot. </summary>
         public static SecurityEventSource SecureScoreControlsSnapshot { get; } = new SecurityEventSource(SecureScoreControlsSnapshotValue);
-        /// <summary>
-        /// RegulatoryComplianceAssessment
-        /// Serialized Name: EventSource.RegulatoryComplianceAssessment
-        /// </summary>
+        /// <summary> RegulatoryComplianceAssessment. </summary>
         public static SecurityEventSource RegulatoryComplianceAssessment { get; } = new SecurityEventSource(RegulatoryComplianceAssessmentValue);
-        /// <summary>
-        /// RegulatoryComplianceAssessmentSnapshot
-        /// Serialized Name: EventSource.RegulatoryComplianceAssessmentSnapshot
-        /// </summary>
+        /// <summary> RegulatoryComplianceAssessmentSnapshot. </summary>
         public static SecurityEventSource RegulatoryComplianceAssessmentSnapshot { get; } = new SecurityEventSource(RegulatoryComplianceAssessmentSnapshotValue);
         /// <summary> Determines if two <see cref="SecurityEventSource"/> values are the same. </summary>
         public static bool operator ==(SecurityEventSource left, SecurityEventSource right) => left.Equals(right);

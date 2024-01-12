@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Configuration for servers Arc auto provisioning
-    /// Serialized Name: DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration
-    /// </summary>
+    /// <summary> Configuration for servers Arc auto provisioning. </summary>
     public partial class DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration"/>. </summary>
-        /// <param name="proxy">
-        /// Optional http proxy endpoint to use for the Arc agent
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration.proxy
-        /// </param>
-        /// <param name="privateLinkScope">
-        /// Optional Arc private link scope resource id to link the Arc agent
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration.privateLinkScope
-        /// </param>
+        /// <param name="proxy"> Optional http proxy endpoint to use for the Arc agent. </param>
+        /// <param name="privateLinkScope"> Optional Arc private link scope resource id to link the Arc agent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration(string proxy, string privateLinkScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Optional http proxy endpoint to use for the Arc agent
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration.proxy
-        /// </summary>
+        /// <summary> Optional http proxy endpoint to use for the Arc agent. </summary>
         public string Proxy { get; set; }
-        /// <summary>
-        /// Optional Arc private link scope resource id to link the Arc agent
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration.privateLinkScope
-        /// </summary>
+        /// <summary> Optional Arc private link scope resource id to link the Arc agent. </summary>
         public string PrivateLinkScope { get; set; }
     }
 }

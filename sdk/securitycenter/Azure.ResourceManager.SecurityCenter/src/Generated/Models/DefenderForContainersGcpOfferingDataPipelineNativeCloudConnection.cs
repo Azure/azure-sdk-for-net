@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The native cloud connection configuration
-    /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection
-    /// </summary>
+    /// <summary> The native cloud connection configuration. </summary>
     public partial class DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection"/>. </summary>
-        /// <param name="serviceAccountEmailAddress">
-        /// The data collection service account email address in GCP for this offering
-        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.serviceAccountEmailAddress
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The data collection GCP workload identity provider id for this offering
-        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.workloadIdentityProviderId
-        /// </param>
+        /// <param name="serviceAccountEmailAddress"> The data collection service account email address in GCP for this offering. </param>
+        /// <param name="workloadIdentityProviderId"> The data collection GCP workload identity provider id for this offering. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(string serviceAccountEmailAddress, string workloadIdentityProviderId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The data collection service account email address in GCP for this offering
-        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The data collection service account email address in GCP for this offering. </summary>
         public string ServiceAccountEmailAddress { get; set; }
-        /// <summary>
-        /// The data collection GCP workload identity provider id for this offering
-        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> The data collection GCP workload identity provider id for this offering. </summary>
         public string WorkloadIdentityProviderId { get; set; }
     }
 }

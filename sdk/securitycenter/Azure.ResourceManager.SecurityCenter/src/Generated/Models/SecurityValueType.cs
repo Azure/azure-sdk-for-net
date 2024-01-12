@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The value type of the items in the list.
-    /// Serialized Name: ValueType
-    /// </summary>
+    /// <summary> The value type of the items in the list. </summary>
     public readonly partial struct SecurityValueType : IEquatable<SecurityValueType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string IPCidrValue = "IpCidr";
         private const string StringValue = "String";
 
-        /// <summary>
-        /// An IP range in CIDR format (e.g. '192.168.0.1/8').
-        /// Serialized Name: ValueType.IpCidr
-        /// </summary>
+        /// <summary> An IP range in CIDR format (e.g. '192.168.0.1/8'). </summary>
         public static SecurityValueType IPCidr { get; } = new SecurityValueType(IPCidrValue);
-        /// <summary>
-        /// Any string value.
-        /// Serialized Name: ValueType.String
-        /// </summary>
+        /// <summary> Any string value. </summary>
         public static SecurityValueType String { get; } = new SecurityValueType(StringValue);
         /// <summary> Determines if two <see cref="SecurityValueType"/> values are the same. </summary>
         public static bool operator ==(SecurityValueType left, SecurityValueType right) => left.Equals(right);

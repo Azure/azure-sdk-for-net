@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The security family provisioning State
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The security family provisioning State. </summary>
     public readonly partial struct SecurityFamilyProvisioningState : IEquatable<SecurityFamilyProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string FailedValue = "Failed";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static SecurityFamilyProvisioningState Succeeded { get; } = new SecurityFamilyProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static SecurityFamilyProvisioningState Failed { get; } = new SecurityFamilyProvisioningState(FailedValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static SecurityFamilyProvisioningState Updating { get; } = new SecurityFamilyProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="SecurityFamilyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SecurityFamilyProvisioningState left, SecurityFamilyProvisioningState right) => left.Equals(right);

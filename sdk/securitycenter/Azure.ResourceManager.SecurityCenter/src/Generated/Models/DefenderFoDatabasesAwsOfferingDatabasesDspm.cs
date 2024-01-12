@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The databases data security posture management (DSPM) configuration
-    /// Serialized Name: DefenderFoDatabasesAwsOfferingDatabasesDspm
-    /// </summary>
+    /// <summary> The databases data security posture management (DSPM) configuration. </summary>
     public partial class DefenderFoDatabasesAwsOfferingDatabasesDspm
     {
         /// <summary>
@@ -54,31 +51,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingDatabasesDspm"/>. </summary>
-        /// <param name="enabled">
-        /// Is databases data security posture management (DSPM) protection enabled
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingDatabasesDspm.enabled
-        /// </param>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingDatabasesDspm.cloudRoleArn
-        /// </param>
+        /// <param name="isEnabled"> Is databases data security posture management (DSPM) protection enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderFoDatabasesAwsOfferingDatabasesDspm(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderFoDatabasesAwsOfferingDatabasesDspm(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is databases data security posture management (DSPM) protection enabled
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingDatabasesDspm.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingDatabasesDspm.cloudRoleArn
-        /// </summary>
+        /// <summary> Is databases data security posture management (DSPM) protection enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

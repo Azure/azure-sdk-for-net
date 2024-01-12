@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The TopologySingleResourceChild.
-    /// Serialized Name: TopologySingleResourceChild
-    /// </summary>
+    /// <summary> The TopologySingleResourceChild. </summary>
     public partial class TopologySingleResourceChild
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TopologySingleResourceChild"/>. </summary>
-        /// <param name="resourceId">
-        /// Azure resource id which serves as child resource in topology view
-        /// Serialized Name: TopologySingleResourceChild.resourceId
-        /// </param>
+        /// <param name="resourceId"> Azure resource id which serves as child resource in topology view. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TopologySingleResourceChild(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Azure resource id which serves as child resource in topology view
-        /// Serialized Name: TopologySingleResourceChild.resourceId
-        /// </summary>
+        /// <summary> Azure resource id which serves as child resource in topology view. </summary>
         public ResourceIdentifier ResourceId { get; }
     }
 }

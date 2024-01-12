@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of security task recommendations
-    /// Serialized Name: SecurityTaskList
-    /// </summary>
+    /// <summary> List of security task recommendations. </summary>
     internal partial class SecurityTaskList
     {
         /// <summary>
@@ -57,11 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskList"/>. </summary>
-        /// <param name="value"> Serialized Name: SecurityTaskList.value. </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: SecurityTaskList.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityTaskList(IReadOnlyList<SecurityTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,12 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: SecurityTaskList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<SecurityTaskData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: SecurityTaskList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

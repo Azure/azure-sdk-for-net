@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The information type.
-    /// Serialized Name: InformationType
-    /// </summary>
+    /// <summary> The information type. </summary>
     public partial class SecurityInformationTypeInfo
     {
         /// <summary>
@@ -56,34 +53,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInformationTypeInfo"/>. </summary>
-        /// <param name="displayName">
-        /// The name of the information type.
-        /// Serialized Name: InformationType.displayName
-        /// </param>
-        /// <param name="description">
-        /// The description of the information type.
-        /// Serialized Name: InformationType.description
-        /// </param>
-        /// <param name="order">
-        /// The order of the information type.
-        /// Serialized Name: InformationType.order
-        /// </param>
-        /// <param name="recommendedLabelId">
-        /// The recommended label id to be associated with this information type.
-        /// Serialized Name: InformationType.recommendedLabelId
-        /// </param>
-        /// <param name="isEnabled">
-        /// Indicates whether the information type is enabled or not.
-        /// Serialized Name: InformationType.enabled
-        /// </param>
-        /// <param name="custom">
-        /// Indicates whether the information type is custom or not.
-        /// Serialized Name: InformationType.custom
-        /// </param>
-        /// <param name="keywords">
-        /// The information type keywords.
-        /// Serialized Name: InformationType.keywords
-        /// </param>
+        /// <param name="displayName"> The name of the information type. </param>
+        /// <param name="description"> The description of the information type. </param>
+        /// <param name="order"> The order of the information type. </param>
+        /// <param name="recommendedLabelId"> The recommended label id to be associated with this information type. </param>
+        /// <param name="isEnabled"> Indicates whether the information type is enabled or not. </param>
+        /// <param name="custom"> Indicates whether the information type is custom or not. </param>
+        /// <param name="keywords"> The information type keywords. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInformationTypeInfo(string displayName, string description, int? order, Guid? recommendedLabelId, bool? isEnabled, bool? custom, IList<InformationProtectionKeyword> keywords, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -97,40 +73,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the information type.
-        /// Serialized Name: InformationType.displayName
-        /// </summary>
+        /// <summary> The name of the information type. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The description of the information type.
-        /// Serialized Name: InformationType.description
-        /// </summary>
+        /// <summary> The description of the information type. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The order of the information type.
-        /// Serialized Name: InformationType.order
-        /// </summary>
+        /// <summary> The order of the information type. </summary>
         public int? Order { get; set; }
-        /// <summary>
-        /// The recommended label id to be associated with this information type.
-        /// Serialized Name: InformationType.recommendedLabelId
-        /// </summary>
+        /// <summary> The recommended label id to be associated with this information type. </summary>
         public Guid? RecommendedLabelId { get; set; }
-        /// <summary>
-        /// Indicates whether the information type is enabled or not.
-        /// Serialized Name: InformationType.enabled
-        /// </summary>
+        /// <summary> Indicates whether the information type is enabled or not. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Indicates whether the information type is custom or not.
-        /// Serialized Name: InformationType.custom
-        /// </summary>
+        /// <summary> Indicates whether the information type is custom or not. </summary>
         public bool? Custom { get; set; }
-        /// <summary>
-        /// The information type keywords.
-        /// Serialized Name: InformationType.keywords
-        /// </summary>
+        /// <summary> The information type keywords. </summary>
         public IList<InformationProtectionKeyword> Keywords { get; }
     }
 }

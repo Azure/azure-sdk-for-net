@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Defender CSPM CIEM AWS OIDC (open id connect) configuration
-    /// Serialized Name: DefenderCspmAwsOfferingCiemOidc
-    /// </summary>
+    /// <summary> Defender CSPM CIEM AWS OIDC (open id connect) configuration. </summary>
     public partial class DefenderCspmAwsOfferingCiemOidc
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingCiemOidc"/>. </summary>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for CIEM oidc connection
-        /// Serialized Name: DefenderCspmAwsOfferingCiemOidc.cloudRoleArn
-        /// </param>
-        /// <param name="azureActiveDirectoryAppName">
-        /// the azure active directory app name used of authenticating against AWS
-        /// Serialized Name: DefenderCspmAwsOfferingCiemOidc.azureActiveDirectoryAppName
-        /// </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for CIEM oidc connection. </param>
+        /// <param name="azureActiveDirectoryAppName"> the azure active directory app name used of authenticating against AWS. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderCspmAwsOfferingCiemOidc(string cloudRoleArn, string azureActiveDirectoryAppName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The cloud role ARN in AWS for CIEM oidc connection
-        /// Serialized Name: DefenderCspmAwsOfferingCiemOidc.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for CIEM oidc connection. </summary>
         public string CloudRoleArn { get; set; }
-        /// <summary>
-        /// the azure active directory app name used of authenticating against AWS
-        /// Serialized Name: DefenderCspmAwsOfferingCiemOidc.azureActiveDirectoryAppName
-        /// </summary>
+        /// <summary> the azure active directory app name used of authenticating against AWS. </summary>
         public string AzureActiveDirectoryAppName { get; set; }
     }
 }

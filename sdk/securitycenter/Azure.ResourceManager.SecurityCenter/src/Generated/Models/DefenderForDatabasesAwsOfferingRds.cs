@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The RDS configuration
-    /// Serialized Name: DefenderFoDatabasesAwsOfferingRds
-    /// </summary>
+    /// <summary> The RDS configuration. </summary>
     public partial class DefenderForDatabasesAwsOfferingRds
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingRds"/>. </summary>
-        /// <param name="isEnabled">
-        /// Is RDS protection enabled
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingRds.enabled
-        /// </param>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingRds.cloudRoleArn
-        /// </param>
+        /// <param name="isEnabled"> Is RDS protection enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForDatabasesAwsOfferingRds(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is RDS protection enabled
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingRds.enabled
-        /// </summary>
+        /// <summary> Is RDS protection enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderFoDatabasesAwsOfferingRds.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

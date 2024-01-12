@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
             DefenderForStorageSettingData data = new DefenderForStorageSettingData()
             {
-                IsEnabledPropertiesIsEnabled = true,
-                OverrideSubscriptionLevelSettings = true,
-                IsEnabledPropertiesSensitiveDataDiscoveryIsEnabled = true,
+                IsEnabled = true,
+                IsOverrideSubscriptionLevelSettingsEnabled = true,
+                IsSensitiveDataDiscoveryEnabled = true,
                 ScanResultsEventGridTopicResourceId = new ResourceIdentifier("/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.EventGrid/topics/sampletopic"),
-                IsEnabledPropertiesMalwareScanningOnUploadIsEnabled = true,
+                IsMalwareScanningOnUploadEnabled = true,
                 CapGBPerMonth = -1,
             };
             ArmOperation<DefenderForStorageSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, data);

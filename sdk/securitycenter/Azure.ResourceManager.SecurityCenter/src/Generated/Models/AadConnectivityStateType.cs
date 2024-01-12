@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The connectivity state of the external AAD solution
-    /// Serialized Name: AadConnectivityStateType
-    /// </summary>
+    /// <summary> The connectivity state of the external AAD solution. </summary>
     public readonly partial struct AadConnectivityStateType : IEquatable<AadConnectivityStateType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NotLicensedValue = "NotLicensed";
         private const string ConnectedValue = "Connected";
 
-        /// <summary>
-        /// Discovered
-        /// Serialized Name: AadConnectivityStateType.Discovered
-        /// </summary>
+        /// <summary> Discovered. </summary>
         public static AadConnectivityStateType Discovered { get; } = new AadConnectivityStateType(DiscoveredValue);
-        /// <summary>
-        /// NotLicensed
-        /// Serialized Name: AadConnectivityStateType.NotLicensed
-        /// </summary>
+        /// <summary> NotLicensed. </summary>
         public static AadConnectivityStateType NotLicensed { get; } = new AadConnectivityStateType(NotLicensedValue);
-        /// <summary>
-        /// Connected
-        /// Serialized Name: AadConnectivityStateType.Connected
-        /// </summary>
+        /// <summary> Connected. </summary>
         public static AadConnectivityStateType Connected { get; } = new AadConnectivityStateType(ConnectedValue);
         /// <summary> Determines if two <see cref="AadConnectivityStateType"/> values are the same. </summary>
         public static bool operator ==(AadConnectivityStateType left, AadConnectivityStateType right) => left.Equals(right);

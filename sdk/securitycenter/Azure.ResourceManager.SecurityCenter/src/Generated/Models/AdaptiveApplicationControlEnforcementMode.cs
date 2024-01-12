@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The application control policy enforcement/protection mode of the machine group
-    /// Serialized Name: EnforcementMode
-    /// </summary>
+    /// <summary> The application control policy enforcement/protection mode of the machine group. </summary>
     public readonly partial struct AdaptiveApplicationControlEnforcementMode : IEquatable<AdaptiveApplicationControlEnforcementMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string EnforceValue = "Enforce";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// Audit
-        /// Serialized Name: EnforcementMode.Audit
-        /// </summary>
+        /// <summary> Audit. </summary>
         public static AdaptiveApplicationControlEnforcementMode Audit { get; } = new AdaptiveApplicationControlEnforcementMode(AuditValue);
-        /// <summary>
-        /// Enforce
-        /// Serialized Name: EnforcementMode.Enforce
-        /// </summary>
+        /// <summary> Enforce. </summary>
         public static AdaptiveApplicationControlEnforcementMode Enforce { get; } = new AdaptiveApplicationControlEnforcementMode(EnforceValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: EnforcementMode.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static AdaptiveApplicationControlEnforcementMode None { get; } = new AdaptiveApplicationControlEnforcementMode(NoneValue);
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlEnforcementMode"/> values are the same. </summary>
         public static bool operator ==(AdaptiveApplicationControlEnforcementMode left, AdaptiveApplicationControlEnforcementMode right) => left.Equals(right);

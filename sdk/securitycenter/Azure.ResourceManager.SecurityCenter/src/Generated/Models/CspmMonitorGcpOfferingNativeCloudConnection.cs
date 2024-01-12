@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The native cloud connection configuration
-    /// Serialized Name: CspmMonitorGcpOfferingNativeCloudConnection
-    /// </summary>
+    /// <summary> The native cloud connection configuration. </summary>
     public partial class CspmMonitorGcpOfferingNativeCloudConnection
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOfferingNativeCloudConnection"/>. </summary>
-        /// <param name="workloadIdentityProviderId">
-        /// The GCP workload identity provider id for the offering
-        /// Serialized Name: CspmMonitorGcpOfferingNativeCloudConnection.workloadIdentityProviderId
-        /// </param>
-        /// <param name="serviceAccountEmailAddress">
-        /// The service account email address in GCP for this offering
-        /// Serialized Name: CspmMonitorGcpOfferingNativeCloudConnection.serviceAccountEmailAddress
-        /// </param>
+        /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for the offering. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CspmMonitorGcpOfferingNativeCloudConnection(string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The GCP workload identity provider id for the offering
-        /// Serialized Name: CspmMonitorGcpOfferingNativeCloudConnection.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> The GCP workload identity provider id for the offering. </summary>
         public string WorkloadIdentityProviderId { get; set; }
-        /// <summary>
-        /// The service account email address in GCP for this offering
-        /// Serialized Name: CspmMonitorGcpOfferingNativeCloudConnection.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The service account email address in GCP for this offering. </summary>
         public string ServiceAccountEmailAddress { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Statistical information about the number of alerts per device during last set number of days.
-    /// Serialized Name: IoTSecurityAlertedDevice
-    /// </summary>
+    /// <summary> Statistical information about the number of alerts per device during last set number of days. </summary>
     public partial class IotSecurityAlertedDevice
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAlertedDevice"/>. </summary>
-        /// <param name="deviceId">
-        /// Device identifier.
-        /// Serialized Name: IoTSecurityAlertedDevice.deviceId
-        /// </param>
-        /// <param name="alertsCount">
-        /// Number of alerts raised for this device.
-        /// Serialized Name: IoTSecurityAlertedDevice.alertsCount
-        /// </param>
+        /// <param name="deviceId"> Device identifier. </param>
+        /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecurityAlertedDevice(string deviceId, long? alertsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Device identifier.
-        /// Serialized Name: IoTSecurityAlertedDevice.deviceId
-        /// </summary>
+        /// <summary> Device identifier. </summary>
         public string DeviceId { get; }
-        /// <summary>
-        /// Number of alerts raised for this device.
-        /// Serialized Name: IoTSecurityAlertedDevice.alertsCount
-        /// </summary>
+        /// <summary> Number of alerts raised for this device. </summary>
         public long? AlertsCount { get; }
     }
 }

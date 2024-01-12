@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the RegulatoryComplianceStandard data model.
     /// Regulatory compliance standard details and state
-    /// Serialized Name: RegulatoryComplianceStandard
     /// </summary>
     public partial class RegulatoryComplianceStandardData : ResourceData
     {
@@ -62,26 +61,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state">
-        /// Aggregative state based on the standard's supported controls states
-        /// Serialized Name: RegulatoryComplianceStandard.properties.state
-        /// </param>
-        /// <param name="passedControls">
-        /// The number of supported regulatory compliance controls of the given standard with a passed state
-        /// Serialized Name: RegulatoryComplianceStandard.properties.passedControls
-        /// </param>
-        /// <param name="failedControls">
-        /// The number of supported regulatory compliance controls of the given standard with a failed state
-        /// Serialized Name: RegulatoryComplianceStandard.properties.failedControls
-        /// </param>
-        /// <param name="skippedControls">
-        /// The number of supported regulatory compliance controls of the given standard with a skipped state
-        /// Serialized Name: RegulatoryComplianceStandard.properties.skippedControls
-        /// </param>
-        /// <param name="unsupportedControls">
-        /// The number of regulatory compliance controls of the given standard which are unsupported by automated assessments
-        /// Serialized Name: RegulatoryComplianceStandard.properties.unsupportedControls
-        /// </param>
+        /// <param name="state"> Aggregative state based on the standard's supported controls states. </param>
+        /// <param name="passedControls"> The number of supported regulatory compliance controls of the given standard with a passed state. </param>
+        /// <param name="failedControls"> The number of supported regulatory compliance controls of the given standard with a failed state. </param>
+        /// <param name="skippedControls"> The number of supported regulatory compliance controls of the given standard with a skipped state. </param>
+        /// <param name="unsupportedControls"> The number of regulatory compliance controls of the given standard which are unsupported by automated assessments. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegulatoryComplianceStandardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegulatoryComplianceState? state, int? passedControls, int? failedControls, int? skippedControls, int? unsupportedControls, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -93,30 +77,15 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Aggregative state based on the standard's supported controls states
-        /// Serialized Name: RegulatoryComplianceStandard.properties.state
-        /// </summary>
+        /// <summary> Aggregative state based on the standard's supported controls states. </summary>
         public RegulatoryComplianceState? State { get; set; }
-        /// <summary>
-        /// The number of supported regulatory compliance controls of the given standard with a passed state
-        /// Serialized Name: RegulatoryComplianceStandard.properties.passedControls
-        /// </summary>
+        /// <summary> The number of supported regulatory compliance controls of the given standard with a passed state. </summary>
         public int? PassedControls { get; }
-        /// <summary>
-        /// The number of supported regulatory compliance controls of the given standard with a failed state
-        /// Serialized Name: RegulatoryComplianceStandard.properties.failedControls
-        /// </summary>
+        /// <summary> The number of supported regulatory compliance controls of the given standard with a failed state. </summary>
         public int? FailedControls { get; }
-        /// <summary>
-        /// The number of supported regulatory compliance controls of the given standard with a skipped state
-        /// Serialized Name: RegulatoryComplianceStandard.properties.skippedControls
-        /// </summary>
+        /// <summary> The number of supported regulatory compliance controls of the given standard with a skipped state. </summary>
         public int? SkippedControls { get; }
-        /// <summary>
-        /// The number of regulatory compliance controls of the given standard which are unsupported by automated assessments
-        /// Serialized Name: RegulatoryComplianceStandard.properties.unsupportedControls
-        /// </summary>
+        /// <summary> The number of regulatory compliance controls of the given standard which are unsupported by automated assessments. </summary>
         public int? UnsupportedControls { get; }
     }
 }

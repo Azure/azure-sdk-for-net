@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityAutomation data model.
     /// The security automation resource.
-    /// Serialized Name: Automation
     /// </summary>
     public partial class SecurityAutomationData : TrackedResourceData
     {
@@ -69,36 +68,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="description">
-        /// The security automation description.
-        /// Serialized Name: Automation.properties.description
-        /// </param>
-        /// <param name="isEnabled">
-        /// Indicates whether the security automation is enabled.
-        /// Serialized Name: Automation.properties.isEnabled
-        /// </param>
-        /// <param name="scopes">
-        /// A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes.
-        /// Serialized Name: Automation.properties.scopes
-        /// </param>
-        /// <param name="sources">
-        /// A collection of the source event types which evaluate the security automation set of rules.
-        /// Serialized Name: Automation.properties.sources
-        /// </param>
+        /// <param name="description"> The security automation description. </param>
+        /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
+        /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
+        /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions">
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Serialized Name: Automation.properties.actions
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
-        /// <param name="kind">
-        /// Kind of the resource
-        /// Serialized Name: ResourceKind.kind
-        /// </param>
-        /// <param name="eTag">
-        /// Entity tag is used for comparing two or more entities from the same requested resource.
-        /// Serialized Name: ETag.etag
-        /// </param>
+        /// <param name="kind"> Kind of the resource. </param>
+        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, string kind, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -117,42 +97,23 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary>
-        /// The security automation description.
-        /// Serialized Name: Automation.properties.description
-        /// </summary>
+        /// <summary> The security automation description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Indicates whether the security automation is enabled.
-        /// Serialized Name: Automation.properties.isEnabled
-        /// </summary>
+        /// <summary> Indicates whether the security automation is enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes.
-        /// Serialized Name: Automation.properties.scopes
-        /// </summary>
+        /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
         public IList<SecurityAutomationScope> Scopes { get; }
-        /// <summary>
-        /// A collection of the source event types which evaluate the security automation set of rules.
-        /// Serialized Name: Automation.properties.sources
-        /// </summary>
+        /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
         public IList<SecurityAutomationSource> Sources { get; }
         /// <summary>
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Serialized Name: Automation.properties.actions
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </summary>
         public IList<SecurityAutomationAction> Actions { get; }
-        /// <summary>
-        /// Kind of the resource
-        /// Serialized Name: ResourceKind.kind
-        /// </summary>
+        /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }
-        /// <summary>
-        /// Entity tag is used for comparing two or more entities from the same requested resource.
-        /// Serialized Name: ETag.etag
-        /// </summary>
+        /// <summary> Entity tag is used for comparing two or more entities from the same requested resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

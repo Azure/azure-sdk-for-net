@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityAssessmentMetadata data model.
     /// Security assessment metadata response
-    /// Serialized Name: SecurityAssessmentMetadataResponse
     /// </summary>
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
@@ -66,52 +65,22 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// User friendly display name of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.displayName
-        /// </param>
-        /// <param name="policyDefinitionId">
-        /// Azure resource ID of the policy definition that turns this assessment calculation on
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.policyDefinitionId
-        /// </param>
-        /// <param name="description">
-        /// Human readable description of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.description
-        /// </param>
-        /// <param name="remediationDescription">
-        /// Human readable description of what you should do to mitigate this security issue
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.remediationDescription
-        /// </param>
-        /// <param name="categories"> Serialized Name: SecurityAssessmentMetadataResponse.properties.categories. </param>
-        /// <param name="severity">
-        /// The severity level of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.severity
-        /// </param>
-        /// <param name="userImpact">
-        /// The user impact of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.userImpact
-        /// </param>
-        /// <param name="implementationEffort">
-        /// The implementation effort required to remediate this assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.implementationEffort
-        /// </param>
-        /// <param name="threats"> Serialized Name: SecurityAssessmentMetadataResponse.properties.threats. </param>
-        /// <param name="isPreview">
-        /// True if this assessment is in preview release status
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.preview
-        /// </param>
-        /// <param name="assessmentType">
-        /// BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.assessmentType
-        /// </param>
-        /// <param name="partnerData">
-        /// Describes the partner that created the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.partnerData
-        /// </param>
-        /// <param name="publishDates"> Serialized Name: SecurityAssessmentMetadataResponse.properties.publishDates. </param>
-        /// <param name="plannedDeprecationDate"> Serialized Name: SecurityAssessmentMetadataResponse.properties.plannedDeprecationDate. </param>
-        /// <param name="tactics"> Serialized Name: SecurityAssessmentMetadataResponse.properties.tactics. </param>
-        /// <param name="techniques"> Serialized Name: SecurityAssessmentMetadataResponse.properties.techniques. </param>
+        /// <param name="displayName"> User friendly display name of the assessment. </param>
+        /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
+        /// <param name="description"> Human readable description of the assessment. </param>
+        /// <param name="remediationDescription"> Human readable description of what you should do to mitigate this security issue. </param>
+        /// <param name="categories"></param>
+        /// <param name="severity"> The severity level of the assessment. </param>
+        /// <param name="userImpact"> The user impact of the assessment. </param>
+        /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
+        /// <param name="threats"></param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
+        /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
+        /// <param name="partnerData"> Describes the partner that created the assessment. </param>
+        /// <param name="publishDates"></param>
+        /// <param name="plannedDeprecationDate"></param>
+        /// <param name="tactics"></param>
+        /// <param name="techniques"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity? severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType? assessmentType, SecurityAssessmentMetadataPartner partnerData, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -134,62 +103,35 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User friendly display name of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.displayName
-        /// </summary>
+        /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Human readable description of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.description
-        /// </summary>
+        /// <summary> Human readable description of the assessment. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Human readable description of what you should do to mitigate this security issue
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.remediationDescription
-        /// </summary>
+        /// <summary> Human readable description of what you should do to mitigate this security issue. </summary>
         public string RemediationDescription { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataResponse.properties.categories. </summary>
+        /// <summary> Gets the categories. </summary>
         public IList<SecurityAssessmentResourceCategory> Categories { get; }
-        /// <summary>
-        /// The severity level of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.severity
-        /// </summary>
+        /// <summary> The severity level of the assessment. </summary>
         public SecurityAssessmentSeverity? Severity { get; set; }
-        /// <summary>
-        /// The user impact of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.userImpact
-        /// </summary>
+        /// <summary> The user impact of the assessment. </summary>
         public SecurityAssessmentUserImpact? UserImpact { get; set; }
-        /// <summary>
-        /// The implementation effort required to remediate this assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.implementationEffort
-        /// </summary>
+        /// <summary> The implementation effort required to remediate this assessment. </summary>
         public ImplementationEffort? ImplementationEffort { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataResponse.properties.threats. </summary>
+        /// <summary> Gets the threats. </summary>
         public IList<SecurityThreat> Threats { get; }
-        /// <summary>
-        /// True if this assessment is in preview release status
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.preview
-        /// </summary>
+        /// <summary> True if this assessment is in preview release status. </summary>
         public bool? IsPreview { get; set; }
-        /// <summary>
-        /// BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.assessmentType
-        /// </summary>
+        /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
         public SecurityAssessmentType? AssessmentType { get; set; }
-        /// <summary>
-        /// Describes the partner that created the assessment
-        /// Serialized Name: SecurityAssessmentMetadataResponse.properties.partnerData
-        /// </summary>
+        /// <summary> Describes the partner that created the assessment. </summary>
         public SecurityAssessmentMetadataPartner PartnerData { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataResponse.properties.publishDates. </summary>
+        /// <summary> Gets or sets the publish dates. </summary>
         public SecurityAssessmentPublishDates PublishDates { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataResponse.properties.plannedDeprecationDate. </summary>
+        /// <summary> Gets or sets the planned deprecation date. </summary>
         public string PlannedDeprecationDate { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataResponse.properties.tactics. </summary>
+        /// <summary> Gets the tactics. </summary>
         public IList<SecurityAssessmentTactic> Tactics { get; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataResponse.properties.techniques. </summary>
+        /// <summary> Gets the techniques. </summary>
         public IList<SecurityAssessmentTechnique> Techniques { get; }
     }
 }

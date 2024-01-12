@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The JitNetworkAccessRequestInfo.
-    /// Serialized Name: JitNetworkAccessRequest
-    /// </summary>
+    /// <summary> The JitNetworkAccessRequestInfo. </summary>
     public partial class JitNetworkAccessRequestInfo
     {
         /// <summary>
@@ -51,15 +48,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
-        /// <param name="virtualMachines"> Serialized Name: JitNetworkAccessRequest.virtualMachines. </param>
-        /// <param name="startOn">
-        /// The start time of the request in UTC
-        /// Serialized Name: JitNetworkAccessRequest.startTimeUtc
-        /// </param>
-        /// <param name="requestor">
-        /// The identity of the person who made the request
-        /// Serialized Name: JitNetworkAccessRequest.requestor
-        /// </param>
+        /// <param name="virtualMachines"></param>
+        /// <param name="startOn"> The start time of the request in UTC. </param>
+        /// <param name="requestor"> The identity of the person who made the request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> or <paramref name="requestor"/> is null. </exception>
         public JitNetworkAccessRequestInfo(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startOn, string requestor)
         {
@@ -72,19 +63,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
-        /// <param name="virtualMachines"> Serialized Name: JitNetworkAccessRequest.virtualMachines. </param>
-        /// <param name="startOn">
-        /// The start time of the request in UTC
-        /// Serialized Name: JitNetworkAccessRequest.startTimeUtc
-        /// </param>
-        /// <param name="requestor">
-        /// The identity of the person who made the request
-        /// Serialized Name: JitNetworkAccessRequest.requestor
-        /// </param>
-        /// <param name="justification">
-        /// The justification for making the initiate request
-        /// Serialized Name: JitNetworkAccessRequest.justification
-        /// </param>
+        /// <param name="virtualMachines"></param>
+        /// <param name="startOn"> The start time of the request in UTC. </param>
+        /// <param name="requestor"> The identity of the person who made the request. </param>
+        /// <param name="justification"> The justification for making the initiate request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal JitNetworkAccessRequestInfo(IList<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startOn, string requestor, string justification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,22 +82,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary> Serialized Name: JitNetworkAccessRequest.virtualMachines. </summary>
+        /// <summary> Gets the virtual machines. </summary>
         public IList<JitNetworkAccessRequestVirtualMachine> VirtualMachines { get; }
-        /// <summary>
-        /// The start time of the request in UTC
-        /// Serialized Name: JitNetworkAccessRequest.startTimeUtc
-        /// </summary>
+        /// <summary> The start time of the request in UTC. </summary>
         public DateTimeOffset StartOn { get; set; }
-        /// <summary>
-        /// The identity of the person who made the request
-        /// Serialized Name: JitNetworkAccessRequest.requestor
-        /// </summary>
+        /// <summary> The identity of the person who made the request. </summary>
         public string Requestor { get; set; }
-        /// <summary>
-        /// The justification for making the initiate request
-        /// Serialized Name: JitNetworkAccessRequest.justification
-        /// </summary>
+        /// <summary> The justification for making the initiate request. </summary>
         public string Justification { get; set; }
     }
 }

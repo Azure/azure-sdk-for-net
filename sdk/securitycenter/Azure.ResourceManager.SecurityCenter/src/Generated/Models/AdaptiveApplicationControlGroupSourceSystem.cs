@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The source type of the machine group
-    /// Serialized Name: SourceSystem
-    /// </summary>
+    /// <summary> The source type of the machine group. </summary>
     public readonly partial struct AdaptiveApplicationControlGroupSourceSystem : IEquatable<AdaptiveApplicationControlGroupSourceSystem>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NonAzureAuditDValue = "NonAzure_AuditD";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// Azure_AppLocker
-        /// Serialized Name: SourceSystem.Azure_AppLocker
-        /// </summary>
+        /// <summary> Azure_AppLocker. </summary>
         public static AdaptiveApplicationControlGroupSourceSystem AzureAppLocker { get; } = new AdaptiveApplicationControlGroupSourceSystem(AzureAppLockerValue);
-        /// <summary>
-        /// Azure_AuditD
-        /// Serialized Name: SourceSystem.Azure_AuditD
-        /// </summary>
+        /// <summary> Azure_AuditD. </summary>
         public static AdaptiveApplicationControlGroupSourceSystem AzureAuditD { get; } = new AdaptiveApplicationControlGroupSourceSystem(AzureAuditDValue);
-        /// <summary>
-        /// NonAzure_AppLocker
-        /// Serialized Name: SourceSystem.NonAzure_AppLocker
-        /// </summary>
+        /// <summary> NonAzure_AppLocker. </summary>
         public static AdaptiveApplicationControlGroupSourceSystem NonAzureAppLocker { get; } = new AdaptiveApplicationControlGroupSourceSystem(NonAzureAppLockerValue);
-        /// <summary>
-        /// NonAzure_AuditD
-        /// Serialized Name: SourceSystem.NonAzure_AuditD
-        /// </summary>
+        /// <summary> NonAzure_AuditD. </summary>
         public static AdaptiveApplicationControlGroupSourceSystem NonAzureAuditD { get; } = new AdaptiveApplicationControlGroupSourceSystem(NonAzureAuditDValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: SourceSystem.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static AdaptiveApplicationControlGroupSourceSystem None { get; } = new AdaptiveApplicationControlGroupSourceSystem(NoneValue);
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlGroupSourceSystem"/> values are the same. </summary>
         public static bool operator ==(AdaptiveApplicationControlGroupSourceSystem left, AdaptiveApplicationControlGroupSourceSystem right) => left.Equals(right);

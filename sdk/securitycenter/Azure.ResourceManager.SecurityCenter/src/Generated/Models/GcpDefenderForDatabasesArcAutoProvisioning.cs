@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The native cloud connection configuration
-    /// Serialized Name: DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning
-    /// </summary>
+    /// <summary> The native cloud connection configuration. </summary>
     public partial class GcpDefenderForDatabasesArcAutoProvisioning
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpDefenderForDatabasesArcAutoProvisioning"/>. </summary>
-        /// <param name="serviceAccountEmailAddress">
-        /// The service account email address in GCP for this offering
-        /// Serialized Name: DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning.serviceAccountEmailAddress
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The GCP workload identity provider id for this offering
-        /// Serialized Name: DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning.workloadIdentityProviderId
-        /// </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
+        /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for this offering. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GcpDefenderForDatabasesArcAutoProvisioning(string serviceAccountEmailAddress, string workloadIdentityProviderId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The service account email address in GCP for this offering
-        /// Serialized Name: DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The service account email address in GCP for this offering. </summary>
         public string ServiceAccountEmailAddress { get; set; }
-        /// <summary>
-        /// The GCP workload identity provider id for this offering
-        /// Serialized Name: DefenderForDatabasesGcpOfferingDefenderForDatabasesArcAutoProvisioning.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> The GCP workload identity provider id for this offering. </summary>
         public string WorkloadIdentityProviderId { get; set; }
     }
 }

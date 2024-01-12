@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitLabProjectData>> value = default;
+            Optional<IReadOnlyList<SecurityConnectorGitLabProjectData>> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<GitLabProjectData> array = new List<GitLabProjectData>();
+                    List<SecurityConnectorGitLabProjectData> array = new List<SecurityConnectorGitLabProjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitLabProjectData.DeserializeGitLabProjectData(item));
+                        array.Add(SecurityConnectorGitLabProjectData.DeserializeSecurityConnectorGitLabProjectData(item));
                     }
                     value = array;
                     continue;

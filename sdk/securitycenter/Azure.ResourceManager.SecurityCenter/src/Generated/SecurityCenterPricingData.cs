@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityCenterPricing data model.
     /// Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features.
-    /// Serialized Name: Pricing
     /// </summary>
     public partial class SecurityCenterPricingData : ResourceData
     {
@@ -64,34 +63,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="pricingTier">
-        /// The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features.
-        /// Serialized Name: Pricing.properties.pricingTier
-        /// </param>
-        /// <param name="subPlan">
-        /// The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied.
-        /// Serialized Name: Pricing.properties.subPlan
-        /// </param>
-        /// <param name="freeTrialRemainingTime">
-        /// The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S).
-        /// Serialized Name: Pricing.properties.freeTrialRemainingTime
-        /// </param>
-        /// <param name="enabledOn">
-        /// Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z).
-        /// Serialized Name: Pricing.properties.enablementTime
-        /// </param>
-        /// <param name="isDeprecated">
-        /// Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property
-        /// Serialized Name: Pricing.properties.deprecated
-        /// </param>
-        /// <param name="replacedBy">
-        /// Optional. List of plans that replace this plan. This property exists only if this plan is deprecated.
-        /// Serialized Name: Pricing.properties.replacedBy
-        /// </param>
-        /// <param name="extensions">
-        /// Optional. List of extensions offered under a plan.
-        /// Serialized Name: Pricing.properties.extensions
-        /// </param>
+        /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
+        /// <param name="subPlan"> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. </param>
+        /// <param name="freeTrialRemainingTime"> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </param>
+        /// <param name="enabledOn"> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </param>
+        /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
+        /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
+        /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterPricingTier? pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enabledOn, bool? isDeprecated, IReadOnlyList<string> replacedBy, IList<PlanExtension> extensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -105,40 +83,19 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features.
-        /// Serialized Name: Pricing.properties.pricingTier
-        /// </summary>
+        /// <summary> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
         public SecurityCenterPricingTier? PricingTier { get; set; }
-        /// <summary>
-        /// The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied.
-        /// Serialized Name: Pricing.properties.subPlan
-        /// </summary>
+        /// <summary> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. </summary>
         public string SubPlan { get; set; }
-        /// <summary>
-        /// The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S).
-        /// Serialized Name: Pricing.properties.freeTrialRemainingTime
-        /// </summary>
+        /// <summary> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </summary>
         public TimeSpan? FreeTrialRemainingTime { get; }
-        /// <summary>
-        /// Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z).
-        /// Serialized Name: Pricing.properties.enablementTime
-        /// </summary>
+        /// <summary> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </summary>
         public DateTimeOffset? EnabledOn { get; }
-        /// <summary>
-        /// Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property
-        /// Serialized Name: Pricing.properties.deprecated
-        /// </summary>
+        /// <summary> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </summary>
         public bool? IsDeprecated { get; }
-        /// <summary>
-        /// Optional. List of plans that replace this plan. This property exists only if this plan is deprecated.
-        /// Serialized Name: Pricing.properties.replacedBy
-        /// </summary>
+        /// <summary> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </summary>
         public IReadOnlyList<string> ReplacedBy { get; }
-        /// <summary>
-        /// Optional. List of extensions offered under a plan.
-        /// Serialized Name: Pricing.properties.extensions
-        /// </summary>
+        /// <summary> Optional. List of extensions offered under a plan. </summary>
         public IList<PlanExtension> Extensions { get; }
     }
 }

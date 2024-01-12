@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/>, <paramref name="groupFQName"/> or <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/>, <paramref name="groupFQName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GitLabProjectData>> GetAsync(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, string projectName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityConnectorGitLabProjectData>> GetAsync(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        GitLabProjectData value = default;
+                        SecurityConnectorGitLabProjectData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GitLabProjectData.DeserializeGitLabProjectData(document.RootElement);
+                        value = SecurityConnectorGitLabProjectData.DeserializeSecurityConnectorGitLabProjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GitLabProjectData)null, message.Response);
+                    return Response.FromValue((SecurityConnectorGitLabProjectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/>, <paramref name="groupFQName"/> or <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/>, <paramref name="groupFQName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GitLabProjectData> Get(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, string projectName, CancellationToken cancellationToken = default)
+        public Response<SecurityConnectorGitLabProjectData> Get(string subscriptionId, string resourceGroupName, string securityConnectorName, string groupFQName, string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,13 +204,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        GitLabProjectData value = default;
+                        SecurityConnectorGitLabProjectData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GitLabProjectData.DeserializeGitLabProjectData(document.RootElement);
+                        value = SecurityConnectorGitLabProjectData.DeserializeSecurityConnectorGitLabProjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GitLabProjectData)null, message.Response);
+                    return Response.FromValue((SecurityConnectorGitLabProjectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Properties of the IoT Security solution's user defined resources.
-    /// Serialized Name: UserDefinedResourcesProperties
-    /// </summary>
+    /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
     public partial class UserDefinedResourcesProperties
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UserDefinedResourcesProperties"/>. </summary>
-        /// <param name="query">
-        /// Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs""
-        /// Serialized Name: UserDefinedResourcesProperties.query
-        /// </param>
-        /// <param name="querySubscriptions">
-        /// List of Azure subscription ids on which the user defined resources query should be executed.
-        /// Serialized Name: UserDefinedResourcesProperties.querySubscriptions
-        /// </param>
+        /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
+        /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
         public UserDefinedResourcesProperties(string query, IEnumerable<string> querySubscriptions)
         {
             Query = query;
@@ -65,14 +56,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserDefinedResourcesProperties"/>. </summary>
-        /// <param name="query">
-        /// Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs""
-        /// Serialized Name: UserDefinedResourcesProperties.query
-        /// </param>
-        /// <param name="querySubscriptions">
-        /// List of Azure subscription ids on which the user defined resources query should be executed.
-        /// Serialized Name: UserDefinedResourcesProperties.querySubscriptions
-        /// </param>
+        /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
+        /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserDefinedResourcesProperties(string query, IList<string> querySubscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,15 +71,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs""
-        /// Serialized Name: UserDefinedResourcesProperties.query
-        /// </summary>
+        /// <summary> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </summary>
         public string Query { get; set; }
-        /// <summary>
-        /// List of Azure subscription ids on which the user defined resources query should be executed.
-        /// Serialized Name: UserDefinedResourcesProperties.querySubscriptions
-        /// </summary>
+        /// <summary> List of Azure subscription ids on which the user defined resources query should be executed. </summary>
         public IList<string> QuerySubscriptions { get; set; }
     }
 }

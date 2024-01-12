@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HealthReportData>> value = default;
+            Optional<IReadOnlyList<SecurityHealthReportData>> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<HealthReportData> array = new List<HealthReportData>();
+                    List<SecurityHealthReportData> array = new List<SecurityHealthReportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthReportData.DeserializeHealthReportData(item));
+                        array.Add(SecurityHealthReportData.DeserializeSecurityHealthReportData(item));
                     }
                     value = array;
                     continue;

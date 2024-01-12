@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<StatusName> code = default;
+            Optional<HealthReportStatusName> code = default;
             Optional<string> reason = default;
             Optional<DateTimeOffset> lastScannedDate = default;
             Optional<DateTimeOffset> statusChangeDate = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    code = new StatusName(property.Value.GetString());
+                    code = new HealthReportStatusName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reason"u8))

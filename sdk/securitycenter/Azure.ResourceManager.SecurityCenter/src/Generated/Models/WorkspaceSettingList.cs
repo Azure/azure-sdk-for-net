@@ -13,10 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of workspace settings response
-    /// Serialized Name: WorkspaceSettingList
-    /// </summary>
+    /// <summary> List of workspace settings response. </summary>
     internal partial class WorkspaceSettingList
     {
         /// <summary>
@@ -52,10 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceSettingList"/>. </summary>
-        /// <param name="value">
-        /// List of workspace settings
-        /// Serialized Name: WorkspaceSettingList.value
-        /// </param>
+        /// <param name="value"> List of workspace settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkspaceSettingList(IEnumerable<SecurityWorkspaceSettingData> value)
         {
@@ -65,14 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceSettingList"/>. </summary>
-        /// <param name="value">
-        /// List of workspace settings
-        /// Serialized Name: WorkspaceSettingList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: WorkspaceSettingList.nextLink
-        /// </param>
+        /// <param name="value"> List of workspace settings. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceSettingList(IReadOnlyList<SecurityWorkspaceSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,15 +74,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// List of workspace settings
-        /// Serialized Name: WorkspaceSettingList.value
-        /// </summary>
+        /// <summary> List of workspace settings. </summary>
         public IReadOnlyList<SecurityWorkspaceSettingData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: WorkspaceSettingList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The initial recommendation status of the machine group or machine
-    /// Serialized Name: RecommendationStatus
-    /// </summary>
+    /// <summary> The initial recommendation status of the machine group or machine. </summary>
     public readonly partial struct RecommendationStatus : IEquatable<RecommendationStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NotAvailableValue = "NotAvailable";
         private const string NoStatusValue = "NoStatus";
 
-        /// <summary>
-        /// Recommended
-        /// Serialized Name: RecommendationStatus.Recommended
-        /// </summary>
+        /// <summary> Recommended. </summary>
         public static RecommendationStatus Recommended { get; } = new RecommendationStatus(RecommendedValue);
-        /// <summary>
-        /// NotRecommended
-        /// Serialized Name: RecommendationStatus.NotRecommended
-        /// </summary>
+        /// <summary> NotRecommended. </summary>
         public static RecommendationStatus NotRecommended { get; } = new RecommendationStatus(NotRecommendedValue);
-        /// <summary>
-        /// NotAvailable
-        /// Serialized Name: RecommendationStatus.NotAvailable
-        /// </summary>
+        /// <summary> NotAvailable. </summary>
         public static RecommendationStatus NotAvailable { get; } = new RecommendationStatus(NotAvailableValue);
-        /// <summary>
-        /// NoStatus
-        /// Serialized Name: RecommendationStatus.NoStatus
-        /// </summary>
+        /// <summary> NoStatus. </summary>
         public static RecommendationStatus NoStatus { get; } = new RecommendationStatus(NoStatusValue);
         /// <summary> Determines if two <see cref="RecommendationStatus"/> values are the same. </summary>
         public static bool operator ==(RecommendationStatus left, RecommendationStatus right) => left.Equals(right);

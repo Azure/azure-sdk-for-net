@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// State of the multi-cloud connector
-    /// Serialized Name: AuthenticationProvisioningState
-    /// </summary>
+    /// <summary> State of the multi-cloud connector. </summary>
     public readonly partial struct AuthenticationProvisioningState : IEquatable<AuthenticationProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ExpiredValue = "Expired";
         private const string IncorrectPolicyValue = "IncorrectPolicy";
 
-        /// <summary>
-        /// Valid connector
-        /// Serialized Name: AuthenticationProvisioningState.Valid
-        /// </summary>
+        /// <summary> Valid connector. </summary>
         public static AuthenticationProvisioningState Valid { get; } = new AuthenticationProvisioningState(ValidValue);
-        /// <summary>
-        /// Invalid connector
-        /// Serialized Name: AuthenticationProvisioningState.Invalid
-        /// </summary>
+        /// <summary> Invalid connector. </summary>
         public static AuthenticationProvisioningState Invalid { get; } = new AuthenticationProvisioningState(InvalidValue);
-        /// <summary>
-        /// the connection has expired
-        /// Serialized Name: AuthenticationProvisioningState.Expired
-        /// </summary>
+        /// <summary> the connection has expired. </summary>
         public static AuthenticationProvisioningState Expired { get; } = new AuthenticationProvisioningState(ExpiredValue);
-        /// <summary>
-        /// Incorrect policy of the connector
-        /// Serialized Name: AuthenticationProvisioningState.IncorrectPolicy
-        /// </summary>
+        /// <summary> Incorrect policy of the connector. </summary>
         public static AuthenticationProvisioningState IncorrectPolicy { get; } = new AuthenticationProvisioningState(IncorrectPolicyValue);
         /// <summary> Determines if two <see cref="AuthenticationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AuthenticationProvisioningState left, AuthenticationProvisioningState right) => left.Equals(right);

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The AWS connector environment data
-    /// Serialized Name: AwsEnvironmentData
-    /// </summary>
+    /// <summary> The AWS connector environment data. </summary>
     public partial class AwsEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
@@ -25,29 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
-        /// <param name="environmentType">
-        /// The type of the environment data.
-        /// Serialized Name: EnvironmentData.environmentType
-        /// </param>
+        /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="organizationalData">
         /// The AWS account's organizational data
-        /// Serialized Name: AwsEnvironmentData.organizationalData
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </param>
-        /// <param name="regions">
-        /// list of regions to scan
-        /// Serialized Name: AwsEnvironmentData.regions
-        /// </param>
-        /// <param name="accountName">
-        /// The AWS account name
-        /// Serialized Name: AwsEnvironmentData.accountName
-        /// </param>
-        /// <param name="scanInterval">
-        /// Scan interval in hours (value should be between 1-hour to 24-hours)
-        /// Serialized Name: AwsEnvironmentData.scanInterval
-        /// </param>
+        /// <param name="regions"> list of regions to scan. </param>
+        /// <param name="accountName"> The AWS account name. </param>
+        /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
         internal AwsEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData, AwsOrganizationalInfo organizationalData, IList<string> regions, string accountName, long? scanInterval) : base(environmentType, serializedAdditionalRawData)
         {
             OrganizationalData = organizationalData;
@@ -59,25 +43,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The AWS account's organizational data
-        /// Serialized Name: AwsEnvironmentData.organizationalData
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </summary>
         public AwsOrganizationalInfo OrganizationalData { get; set; }
-        /// <summary>
-        /// list of regions to scan
-        /// Serialized Name: AwsEnvironmentData.regions
-        /// </summary>
+        /// <summary> list of regions to scan. </summary>
         public IList<string> Regions { get; }
-        /// <summary>
-        /// The AWS account name
-        /// Serialized Name: AwsEnvironmentData.accountName
-        /// </summary>
+        /// <summary> The AWS account name. </summary>
         public string AccountName { get; }
-        /// <summary>
-        /// Scan interval in hours (value should be between 1-hour to 24-hours)
-        /// Serialized Name: AwsEnvironmentData.scanInterval
-        /// </summary>
+        /// <summary> Scan interval in hours (value should be between 1-hour to 24-hours). </summary>
         public long? ScanInterval { get; set; }
     }
 }

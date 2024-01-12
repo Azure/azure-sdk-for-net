@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Data regarding 3rd party partner integration
-    /// Serialized Name: SecurityAssessmentPartnerData
-    /// </summary>
+    /// <summary> Data regarding 3rd party partner integration. </summary>
     public partial class SecurityAssessmentPartner
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPartner"/>. </summary>
-        /// <param name="partnerName">
-        /// Name of the company of the partner
-        /// Serialized Name: SecurityAssessmentPartnerData.partnerName
-        /// </param>
-        /// <param name="secret">
-        /// secret to authenticate the partner - write only
-        /// Serialized Name: SecurityAssessmentPartnerData.secret
-        /// </param>
+        /// <param name="partnerName"> Name of the company of the partner. </param>
+        /// <param name="secret"> secret to authenticate the partner - write only. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> or <paramref name="secret"/> is null. </exception>
         public SecurityAssessmentPartner(string partnerName, string secret)
         {
@@ -69,14 +60,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPartner"/>. </summary>
-        /// <param name="partnerName">
-        /// Name of the company of the partner
-        /// Serialized Name: SecurityAssessmentPartnerData.partnerName
-        /// </param>
-        /// <param name="secret">
-        /// secret to authenticate the partner - write only
-        /// Serialized Name: SecurityAssessmentPartnerData.secret
-        /// </param>
+        /// <param name="partnerName"> Name of the company of the partner. </param>
+        /// <param name="secret"> secret to authenticate the partner - write only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAssessmentPartner(string partnerName, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,15 +75,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// Name of the company of the partner
-        /// Serialized Name: SecurityAssessmentPartnerData.partnerName
-        /// </summary>
+        /// <summary> Name of the company of the partner. </summary>
         public string PartnerName { get; set; }
-        /// <summary>
-        /// secret to authenticate the partner - write only
-        /// Serialized Name: SecurityAssessmentPartnerData.secret
-        /// </summary>
+        /// <summary> secret to authenticate the partner - write only. </summary>
         public string Secret { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The scanning mode for the VM scan.
-    /// Serialized Name: ScanningMode
-    /// </summary>
+    /// <summary> The scanning mode for the VM scan. </summary>
     public readonly partial struct DefenderForServersScanningMode : IEquatable<DefenderForServersScanningMode>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string DefaultValue = "Default";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: ScanningMode.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static DefenderForServersScanningMode Default { get; } = new DefenderForServersScanningMode(DefaultValue);
         /// <summary> Determines if two <see cref="DefenderForServersScanningMode"/> values are the same. </summary>
         public static bool operator ==(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => left.Equals(right);

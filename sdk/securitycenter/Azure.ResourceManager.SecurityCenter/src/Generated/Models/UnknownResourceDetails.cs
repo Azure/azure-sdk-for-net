@@ -10,19 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The UnknownResourceDetails.
-    /// Serialized Name: UnknownResourceDetails
-    /// </summary>
+    /// <summary> The UnknownResourceDetails. </summary>
     internal partial class UnknownResourceDetails : SecurityCenterResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResourceDetails"/>. </summary>
-        /// <param name="source">
-        /// The platform where the assessed resource resides
-        /// Serialized Name: ResourceDetails.source
-        /// </param>
+        /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResourceDetails(Source source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(source, serializedAdditionalRawData)
+        internal UnknownResourceDetails(HealthReportSource source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(source, serializedAdditionalRawData)
         {
             Source = source;
         }

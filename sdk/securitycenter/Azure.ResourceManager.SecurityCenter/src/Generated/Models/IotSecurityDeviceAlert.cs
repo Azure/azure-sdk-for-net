@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Statistical information about the number of alerts per alert type during last set number of days
-    /// Serialized Name: IoTSecurityDeviceAlert
-    /// </summary>
+    /// <summary> Statistical information about the number of alerts per alert type during last set number of days. </summary>
     public partial class IotSecurityDeviceAlert
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceAlert"/>. </summary>
-        /// <param name="alertDisplayName">
-        /// Display name of the alert
-        /// Serialized Name: IoTSecurityDeviceAlert.alertDisplayName
-        /// </param>
-        /// <param name="reportedSeverity">
-        /// Assessed Alert severity.
-        /// Serialized Name: IoTSecurityDeviceAlert.reportedSeverity
-        /// </param>
-        /// <param name="alertsCount">
-        /// Number of alerts raised for this alert type.
-        /// Serialized Name: IoTSecurityDeviceAlert.alertsCount
-        /// </param>
+        /// <param name="alertDisplayName"> Display name of the alert. </param>
+        /// <param name="reportedSeverity"> Assessed Alert severity. </param>
+        /// <param name="alertsCount"> Number of alerts raised for this alert type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecurityDeviceAlert(string alertDisplayName, ReportedSeverity? reportedSeverity, long? alertsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Display name of the alert
-        /// Serialized Name: IoTSecurityDeviceAlert.alertDisplayName
-        /// </summary>
+        /// <summary> Display name of the alert. </summary>
         public string AlertDisplayName { get; }
-        /// <summary>
-        /// Assessed Alert severity.
-        /// Serialized Name: IoTSecurityDeviceAlert.reportedSeverity
-        /// </summary>
+        /// <summary> Assessed Alert severity. </summary>
         public ReportedSeverity? ReportedSeverity { get; }
-        /// <summary>
-        /// Number of alerts raised for this alert type.
-        /// Serialized Name: IoTSecurityDeviceAlert.alertsCount
-        /// </summary>
+        /// <summary> Number of alerts raised for this alert type. </summary>
         public long? AlertsCount { get; }
     }
 }

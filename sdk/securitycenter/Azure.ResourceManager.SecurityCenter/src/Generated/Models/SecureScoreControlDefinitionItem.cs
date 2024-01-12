@@ -13,10 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Information about the security control.
-    /// Serialized Name: SecureScoreControlDefinitionItem
-    /// </summary>
+    /// <summary> Information about the security control. </summary>
     public partial class SecureScoreControlDefinitionItem : ResourceData
     {
         /// <summary>
@@ -62,26 +59,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// User friendly display name of the control
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// User friendly description of the control
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.description
-        /// </param>
-        /// <param name="maxScore">
-        /// Maximum control score (0..10)
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.maxScore
-        /// </param>
-        /// <param name="source">
-        /// Source object from which the control was created
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.source
-        /// </param>
-        /// <param name="assessmentDefinitions">
-        /// Array of assessments metadata IDs that are included in this security control
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.assessmentDefinitions
-        /// </param>
+        /// <param name="displayName"> User friendly display name of the control. </param>
+        /// <param name="description"> User friendly description of the control. </param>
+        /// <param name="maxScore"> Maximum control score (0..10). </param>
+        /// <param name="source"> Source object from which the control was created. </param>
+        /// <param name="assessmentDefinitions"> Array of assessments metadata IDs that are included in this security control. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecureScoreControlDefinitionItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, int? maxScore, SecureScoreControlDefinitionSource source, IReadOnlyList<SubResource> assessmentDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -93,39 +75,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User friendly display name of the control
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.displayName
-        /// </summary>
+        /// <summary> User friendly display name of the control. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// User friendly description of the control
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.description
-        /// </summary>
+        /// <summary> User friendly description of the control. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Maximum control score (0..10)
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.maxScore
-        /// </summary>
+        /// <summary> Maximum control score (0..10). </summary>
         public int? MaxScore { get; }
-        /// <summary>
-        /// Source object from which the control was created
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.source
-        /// </summary>
+        /// <summary> Source object from which the control was created. </summary>
         internal SecureScoreControlDefinitionSource Source { get; }
-        /// <summary>
-        /// The type of security control (for example, BuiltIn)
-        /// Serialized Name: SecureScoreControlDefinitionSource.sourceType
-        /// </summary>
+        /// <summary> The type of security control (for example, BuiltIn). </summary>
         public SecurityControlType? SourceType
         {
             get => Source?.SourceType;
         }
 
-        /// <summary>
-        /// Array of assessments metadata IDs that are included in this security control
-        /// Serialized Name: SecureScoreControlDefinitionItem.properties.assessmentDefinitions
-        /// </summary>
+        /// <summary> Array of assessments metadata IDs that are included in this security control. </summary>
         public IReadOnlyList<SubResource> AssessmentDefinitions { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender Container agentless discovery configuration
-    /// Serialized Name: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S
-    /// </summary>
+    /// <summary> The Microsoft Defender Container agentless discovery configuration. </summary>
     public partial class DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S
     {
         /// <summary>
@@ -54,41 +51,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender container agentless discovery enabled
-        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.enabled
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The workload identity provider id in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.workloadIdentityProviderId
-        /// </param>
-        /// <param name="serviceAccountEmailAddress">
-        /// The service account email address in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.serviceAccountEmailAddress
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender container agentless discovery enabled. </param>
+        /// <param name="workloadIdentityProviderId"> The workload identity provider id in GCP for this feature. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(bool? enabled, string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(bool? isEnabled, string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender container agentless discovery enabled
-        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The workload identity provider id in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> Is Microsoft Defender container agentless discovery enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The workload identity provider id in GCP for this feature. </summary>
         public string WorkloadIdentityProviderId { get; set; }
-        /// <summary>
-        /// The service account email address in GCP for this feature
-        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The service account email address in GCP for this feature. </summary>
         public string ServiceAccountEmailAddress { get; set; }
     }
 }

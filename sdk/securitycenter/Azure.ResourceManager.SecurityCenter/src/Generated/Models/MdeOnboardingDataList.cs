@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of all MDE onboarding data resources
-    /// Serialized Name: MdeOnboardingDataList
-    /// </summary>
+    /// <summary> List of all MDE onboarding data resources. </summary>
     internal partial class MdeOnboardingDataList
     {
         /// <summary>
@@ -56,10 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MdeOnboardingDataList"/>. </summary>
-        /// <param name="value">
-        /// List of the resources of the configuration or data needed to onboard the machine to MDE
-        /// Serialized Name: MdeOnboardingDataList.value
-        /// </param>
+        /// <param name="value"> List of the resources of the configuration or data needed to onboard the machine to MDE. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MdeOnboardingDataList(IReadOnlyList<MdeOnboarding> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of the resources of the configuration or data needed to onboard the machine to MDE
-        /// Serialized Name: MdeOnboardingDataList.value
-        /// </summary>
+        /// <summary> List of the resources of the configuration or data needed to onboard the machine to MDE. </summary>
         public IReadOnlyList<MdeOnboarding> Value { get; }
     }
 }

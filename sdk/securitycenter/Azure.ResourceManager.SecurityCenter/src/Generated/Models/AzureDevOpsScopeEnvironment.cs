@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The AzureDevOps scope connector's environment data
-    /// Serialized Name: AzureDevOpsScopeEnvironmentData
-    /// </summary>
+    /// <summary> The AzureDevOps scope connector's environment data. </summary>
     public partial class AzureDevOpsScopeEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsScopeEnvironment"/>. </summary>
@@ -23,10 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsScopeEnvironment"/>. </summary>
-        /// <param name="environmentType">
-        /// The type of the environment data.
-        /// Serialized Name: EnvironmentData.environmentType
-        /// </param>
+        /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AzureDevOpsScopeEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(environmentType, serializedAdditionalRawData)
         {

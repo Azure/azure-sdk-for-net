@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the IotSecuritySolution data model.
     /// IoT Security solution configuration and resource information.
-    /// Serialized Name: IoTSecuritySolutionModel
     /// </summary>
     public partial class IotSecuritySolutionData : TrackedResourceData
     {
@@ -71,50 +70,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="workspace">
-        /// Workspace resource ID
-        /// Serialized Name: IoTSecuritySolutionModel.properties.workspace
-        /// </param>
-        /// <param name="displayName">
-        /// Resource display name.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.displayName
-        /// </param>
-        /// <param name="status">
-        /// Status of the IoT Security solution.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.status
-        /// </param>
-        /// <param name="export">
-        /// List of additional options for exporting to workspace data.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.export
-        /// </param>
-        /// <param name="disabledDataSources">
-        /// Disabled data sources. Disabling these data sources compromises the system.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.disabledDataSources
-        /// </param>
-        /// <param name="iotHubs">
-        /// IoT Hub resource IDs
-        /// Serialized Name: IoTSecuritySolutionModel.properties.iotHubs
-        /// </param>
-        /// <param name="userDefinedResources">
-        /// Properties of the IoT Security solution's user defined resources.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.userDefinedResources
-        /// </param>
-        /// <param name="autoDiscoveredResources">
-        /// List of resources that were automatically discovered as relevant to the security solution.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.autoDiscoveredResources
-        /// </param>
-        /// <param name="recommendationsConfiguration">
-        /// List of the configuration status for each recommendation type.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.recommendationsConfiguration
-        /// </param>
-        /// <param name="unmaskedIPLoggingStatus">
-        /// Unmasked IP address logging status
-        /// Serialized Name: IoTSecuritySolutionModel.properties.unmaskedIpLoggingStatus
-        /// </param>
-        /// <param name="additionalWorkspaces">
-        /// List of additional workspaces
-        /// Serialized Name: IoTSecuritySolutionModel.properties.additionalWorkspaces
-        /// </param>
+        /// <param name="workspace"> Workspace resource ID. </param>
+        /// <param name="displayName"> Resource display name. </param>
+        /// <param name="status"> Status of the IoT Security solution. </param>
+        /// <param name="export"> List of additional options for exporting to workspace data. </param>
+        /// <param name="disabledDataSources"> Disabled data sources. Disabling these data sources compromises the system. </param>
+        /// <param name="iotHubs"> IoT Hub resource IDs. </param>
+        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
+        /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
+        /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
+        /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
+        /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string workspace, string displayName, SecuritySolutionStatus? status, IList<IotSecuritySolutionExportOption> export, IList<IotSecuritySolutionDataSource> disabledDataSources, IList<string> iotHubs, UserDefinedResourcesProperties userDefinedResources, IReadOnlyList<string> autoDiscoveredResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus, IList<AdditionalWorkspacesProperties> additionalWorkspaces, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -137,60 +103,27 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
-        /// <summary>
-        /// Workspace resource ID
-        /// Serialized Name: IoTSecuritySolutionModel.properties.workspace
-        /// </summary>
+        /// <summary> Workspace resource ID. </summary>
         public string Workspace { get; set; }
-        /// <summary>
-        /// Resource display name.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.displayName
-        /// </summary>
+        /// <summary> Resource display name. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Status of the IoT Security solution.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.status
-        /// </summary>
+        /// <summary> Status of the IoT Security solution. </summary>
         public SecuritySolutionStatus? Status { get; set; }
-        /// <summary>
-        /// List of additional options for exporting to workspace data.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.export
-        /// </summary>
+        /// <summary> List of additional options for exporting to workspace data. </summary>
         public IList<IotSecuritySolutionExportOption> Export { get; }
-        /// <summary>
-        /// Disabled data sources. Disabling these data sources compromises the system.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.disabledDataSources
-        /// </summary>
+        /// <summary> Disabled data sources. Disabling these data sources compromises the system. </summary>
         public IList<IotSecuritySolutionDataSource> DisabledDataSources { get; }
-        /// <summary>
-        /// IoT Hub resource IDs
-        /// Serialized Name: IoTSecuritySolutionModel.properties.iotHubs
-        /// </summary>
+        /// <summary> IoT Hub resource IDs. </summary>
         public IList<string> IotHubs { get; }
-        /// <summary>
-        /// Properties of the IoT Security solution's user defined resources.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.userDefinedResources
-        /// </summary>
+        /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
         public UserDefinedResourcesProperties UserDefinedResources { get; set; }
-        /// <summary>
-        /// List of resources that were automatically discovered as relevant to the security solution.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.autoDiscoveredResources
-        /// </summary>
+        /// <summary> List of resources that were automatically discovered as relevant to the security solution. </summary>
         public IReadOnlyList<string> AutoDiscoveredResources { get; }
-        /// <summary>
-        /// List of the configuration status for each recommendation type.
-        /// Serialized Name: IoTSecuritySolutionModel.properties.recommendationsConfiguration
-        /// </summary>
+        /// <summary> List of the configuration status for each recommendation type. </summary>
         public IList<RecommendationConfigurationProperties> RecommendationsConfiguration { get; }
-        /// <summary>
-        /// Unmasked IP address logging status
-        /// Serialized Name: IoTSecuritySolutionModel.properties.unmaskedIpLoggingStatus
-        /// </summary>
+        /// <summary> Unmasked IP address logging status. </summary>
         public UnmaskedIPLoggingStatus? UnmaskedIPLoggingStatus { get; set; }
-        /// <summary>
-        /// List of additional workspaces
-        /// Serialized Name: IoTSecuritySolutionModel.properties.additionalWorkspaces
-        /// </summary>
+        /// <summary> List of additional workspaces. </summary>
         public IList<AdditionalWorkspacesProperties> AdditionalWorkspaces { get; }
     }
 }

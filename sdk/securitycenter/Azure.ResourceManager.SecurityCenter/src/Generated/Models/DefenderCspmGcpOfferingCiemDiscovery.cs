@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// GCP Defenders CSPM Cloud infrastructure entitlement management (CIEM) discovery offering configurations
-    /// Serialized Name: DefenderCspmGcpOfferingCiemDiscovery
-    /// </summary>
+    /// <summary> GCP Defenders CSPM Cloud infrastructure entitlement management (CIEM) discovery offering configurations. </summary>
     public partial class DefenderCspmGcpOfferingCiemDiscovery
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOfferingCiemDiscovery"/>. </summary>
-        /// <param name="workloadIdentityProviderId">
-        /// The GCP workload identity provider id for CIEM discovery offering
-        /// Serialized Name: DefenderCspmGcpOfferingCiemDiscovery.workloadIdentityProviderId
-        /// </param>
-        /// <param name="serviceAccountEmailAddress">
-        /// The service account email address in GCP for CIEM discovery offering
-        /// Serialized Name: DefenderCspmGcpOfferingCiemDiscovery.serviceAccountEmailAddress
-        /// </param>
-        /// <param name="azureActiveDirectoryAppName">
-        /// the azure active directory app name used of authenticating against GCP workload identity federation
-        /// Serialized Name: DefenderCspmGcpOfferingCiemDiscovery.azureActiveDirectoryAppName
-        /// </param>
+        /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for CIEM discovery offering. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for CIEM discovery offering. </param>
+        /// <param name="azureActiveDirectoryAppName"> the azure active directory app name used of authenticating against GCP workload identity federation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderCspmGcpOfferingCiemDiscovery(string workloadIdentityProviderId, string serviceAccountEmailAddress, string azureActiveDirectoryAppName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The GCP workload identity provider id for CIEM discovery offering
-        /// Serialized Name: DefenderCspmGcpOfferingCiemDiscovery.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> The GCP workload identity provider id for CIEM discovery offering. </summary>
         public string WorkloadIdentityProviderId { get; set; }
-        /// <summary>
-        /// The service account email address in GCP for CIEM discovery offering
-        /// Serialized Name: DefenderCspmGcpOfferingCiemDiscovery.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The service account email address in GCP for CIEM discovery offering. </summary>
         public string ServiceAccountEmailAddress { get; set; }
-        /// <summary>
-        /// the azure active directory app name used of authenticating against GCP workload identity federation
-        /// Serialized Name: DefenderCspmGcpOfferingCiemDiscovery.azureActiveDirectoryAppName
-        /// </summary>
+        /// <summary> the azure active directory app name used of authenticating against GCP workload identity federation. </summary>
         public string AzureActiveDirectoryAppName { get; set; }
     }
 }

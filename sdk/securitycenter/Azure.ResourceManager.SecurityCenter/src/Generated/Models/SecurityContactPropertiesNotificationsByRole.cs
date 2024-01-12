@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription.
-    /// Serialized Name: SecurityContactPropertiesNotificationsByRole
-    /// </summary>
+    /// <summary> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
     public partial class SecurityContactPropertiesNotificationsByRole
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesNotificationsByRole"/>. </summary>
-        /// <param name="state">
-        /// Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription.
-        /// Serialized Name: SecurityContactPropertiesNotificationsByRole.state
-        /// </param>
-        /// <param name="roles">
-        /// Defines which RBAC roles will get email notifications from Microsoft Defender for Cloud. List of allowed RBAC roles:
-        /// Serialized Name: SecurityContactPropertiesNotificationsByRole.roles
-        /// </param>
+        /// <param name="state"> Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
+        /// <param name="roles"> Defines which RBAC roles will get email notifications from Microsoft Defender for Cloud. List of allowed RBAC roles:. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityContactPropertiesNotificationsByRole(SecurityAlertNotificationByRoleState? state, IList<SecurityAlertReceivingRole> roles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription.
-        /// Serialized Name: SecurityContactPropertiesNotificationsByRole.state
-        /// </summary>
+        /// <summary> Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
         public SecurityAlertNotificationByRoleState? State { get; set; }
-        /// <summary>
-        /// Defines which RBAC roles will get email notifications from Microsoft Defender for Cloud. List of allowed RBAC roles:
-        /// Serialized Name: SecurityContactPropertiesNotificationsByRole.roles
-        /// </summary>
+        /// <summary> Defines which RBAC roles will get email notifications from Microsoft Defender for Cloud. List of allowed RBAC roles:. </summary>
         public IList<SecurityAlertReceivingRole> Roles { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The external security solution properties for CEF solutions
-    /// Serialized Name: CefSolutionProperties
-    /// </summary>
+    /// <summary> The external security solution properties for CEF solutions. </summary>
     public partial class CefSolutionProperties : ExternalSecuritySolutionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CefSolutionProperties"/>. </summary>
@@ -23,16 +20,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CefSolutionProperties"/>. </summary>
-        /// <param name="deviceVendor"> Serialized Name: ExternalSecuritySolutionProperties.deviceVendor. </param>
-        /// <param name="deviceType"> Serialized Name: ExternalSecuritySolutionProperties.deviceType. </param>
-        /// <param name="workspace">
-        /// Represents an OMS workspace to which the solution is connected
-        /// Serialized Name: ExternalSecuritySolutionProperties.workspace
-        /// </param>
+        /// <param name="deviceVendor"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="hostname"> Serialized Name: CefSolutionProperties.hostname. </param>
-        /// <param name="agent"> Serialized Name: CefSolutionProperties.agent. </param>
-        /// <param name="lastEventReceived"> Serialized Name: CefSolutionProperties.lastEventReceived. </param>
+        /// <param name="hostname"></param>
+        /// <param name="agent"></param>
+        /// <param name="lastEventReceived"></param>
         internal CefSolutionProperties(string deviceVendor, string deviceType, WritableSubResource workspace, IDictionary<string, BinaryData> additionalProperties, string hostname, string agent, string lastEventReceived) : base(deviceVendor, deviceType, workspace, additionalProperties)
         {
             Hostname = hostname;
@@ -40,11 +34,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             LastEventReceived = lastEventReceived;
         }
 
-        /// <summary> Serialized Name: CefSolutionProperties.hostname. </summary>
+        /// <summary> Gets or sets the hostname. </summary>
         public string Hostname { get; set; }
-        /// <summary> Serialized Name: CefSolutionProperties.agent. </summary>
+        /// <summary> Gets or sets the agent. </summary>
         public string Agent { get; set; }
-        /// <summary> Serialized Name: CefSolutionProperties.lastEventReceived. </summary>
+        /// <summary> Gets or sets the last event received. </summary>
         public string LastEventReceived { get; set; }
     }
 }

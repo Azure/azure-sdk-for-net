@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Properties of the additional workspaces.
-    /// Serialized Name: AdditionalWorkspacesProperties
-    /// </summary>
+    /// <summary> Properties of the additional workspaces. </summary>
     public partial class AdditionalWorkspacesProperties
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdditionalWorkspacesProperties"/>. </summary>
-        /// <param name="workspace">
-        /// Workspace resource id
-        /// Serialized Name: AdditionalWorkspacesProperties.workspace
-        /// </param>
-        /// <param name="workspaceType">
-        /// Workspace type.
-        /// Serialized Name: AdditionalWorkspacesProperties.type
-        /// </param>
-        /// <param name="dataTypes">
-        /// List of data types sent to workspace
-        /// Serialized Name: AdditionalWorkspacesProperties.dataTypes
-        /// </param>
+        /// <param name="workspace"> Workspace resource id. </param>
+        /// <param name="workspaceType"> Workspace type. </param>
+        /// <param name="dataTypes"> List of data types sent to workspace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdditionalWorkspacesProperties(string workspace, AdditionalWorkspaceType? workspaceType, IList<AdditionalWorkspaceDataType> dataTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,20 +65,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Workspace resource id
-        /// Serialized Name: AdditionalWorkspacesProperties.workspace
-        /// </summary>
+        /// <summary> Workspace resource id. </summary>
         public string Workspace { get; set; }
-        /// <summary>
-        /// Workspace type.
-        /// Serialized Name: AdditionalWorkspacesProperties.type
-        /// </summary>
+        /// <summary> Workspace type. </summary>
         public AdditionalWorkspaceType? WorkspaceType { get; set; }
-        /// <summary>
-        /// List of data types sent to workspace
-        /// Serialized Name: AdditionalWorkspacesProperties.dataTypes
-        /// </summary>
+        /// <summary> List of data types sent to workspace. </summary>
         public IList<AdditionalWorkspaceDataType> DataTypes { get; }
     }
 }

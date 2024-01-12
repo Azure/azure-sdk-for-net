@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecuritySetting data model.
     /// The kind of the security setting
-    /// Serialized Name: Setting
     /// Please note <see cref="SecuritySettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityAlertSyncSettings"/> and <see cref="DataExportSettings"/>.
     /// </summary>
@@ -64,10 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// the kind of the settings string
-        /// Serialized Name: Setting.kind
-        /// </param>
+        /// <param name="kind"> the kind of the settings string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecuritySettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,10 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// the kind of the settings string
-        /// Serialized Name: Setting.kind
-        /// </summary>
+        /// <summary> the kind of the settings string. </summary>
         internal SettingKind Kind { get; set; }
     }
 }

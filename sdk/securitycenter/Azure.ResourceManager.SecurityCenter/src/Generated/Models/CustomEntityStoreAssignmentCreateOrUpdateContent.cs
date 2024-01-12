@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// describes the custom entity store assignment request
-    /// Serialized Name: CustomEntityStoreAssignmentRequest
-    /// </summary>
+    /// <summary> describes the custom entity store assignment request. </summary>
     public partial class CustomEntityStoreAssignmentCreateOrUpdateContent
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentCreateOrUpdateContent"/>. </summary>
-        /// <param name="principal">
-        /// The principal assigned with entity store. If not provided, will use caller principal. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]
-        /// Serialized Name: CustomEntityStoreAssignmentRequest.properties.principal
-        /// </param>
+        /// <param name="principal"> The principal assigned with entity store. If not provided, will use caller principal. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomEntityStoreAssignmentCreateOrUpdateContent(string principal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The principal assigned with entity store. If not provided, will use caller principal. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]
-        /// Serialized Name: CustomEntityStoreAssignmentRequest.properties.principal
-        /// </summary>
+        /// <summary> The principal assigned with entity store. If not provided, will use caller principal. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]. </summary>
         public string Principal { get; set; }
     }
 }

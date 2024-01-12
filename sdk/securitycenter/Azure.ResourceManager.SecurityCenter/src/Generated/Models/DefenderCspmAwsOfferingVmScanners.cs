@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender for Server VM scanning configuration
-    /// Serialized Name: DefenderCspmAwsOfferingVmScanners
-    /// </summary>
+    /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
     public partial class DefenderCspmAwsOfferingVmScanners
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScanners"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender for Server VM scanning enabled
-        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.enabled
-        /// </param>
-        /// <param name="configuration">
-        /// configuration for Microsoft Defender for Server VM scanning
-        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.configuration
-        /// </param>
+        /// <param name="enabled"> Is Microsoft Defender for Server VM scanning enabled. </param>
+        /// <param name="configuration"> configuration for Microsoft Defender for Server VM scanning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderCspmAwsOfferingVmScanners(bool? enabled, DefenderCspmAwsOfferingVmScannersConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender for Server VM scanning enabled
-        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.enabled
-        /// </summary>
+        /// <summary> Is Microsoft Defender for Server VM scanning enabled. </summary>
         public bool? Enabled { get; set; }
-        /// <summary>
-        /// configuration for Microsoft Defender for Server VM scanning
-        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.configuration
-        /// </summary>
+        /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
         public DefenderCspmAwsOfferingVmScannersConfiguration Configuration { get; set; }
     }
 }

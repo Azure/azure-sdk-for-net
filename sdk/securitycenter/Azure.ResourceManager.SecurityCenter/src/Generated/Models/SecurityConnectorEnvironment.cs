@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security connector environment data.
-    /// Serialized Name: EnvironmentData
     /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
     /// </summary>
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
-        /// <param name="environmentType">
-        /// The type of the environment data.
-        /// Serialized Name: EnvironmentData.environmentType
-        /// </param>
+        /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityConnectorEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of the environment data.
-        /// Serialized Name: EnvironmentData.environmentType
-        /// </summary>
+        /// <summary> The type of the environment data. </summary>
         internal EnvironmentType EnvironmentType { get; set; }
     }
 }

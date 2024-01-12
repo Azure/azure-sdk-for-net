@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Data types sent to workspace.
-    /// Serialized Name: AdditionalWorkspaceDataType
-    /// </summary>
+    /// <summary> Data types sent to workspace. </summary>
     public readonly partial struct AdditionalWorkspaceDataType : IEquatable<AdditionalWorkspaceDataType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AlertsValue = "Alerts";
         private const string RawEventsValue = "RawEvents";
 
-        /// <summary>
-        /// Alerts
-        /// Serialized Name: AdditionalWorkspaceDataType.Alerts
-        /// </summary>
+        /// <summary> Alerts. </summary>
         public static AdditionalWorkspaceDataType Alerts { get; } = new AdditionalWorkspaceDataType(AlertsValue);
-        /// <summary>
-        /// RawEvents
-        /// Serialized Name: AdditionalWorkspaceDataType.RawEvents
-        /// </summary>
+        /// <summary> RawEvents. </summary>
         public static AdditionalWorkspaceDataType RawEvents { get; } = new AdditionalWorkspaceDataType(RawEventsValue);
         /// <summary> Determines if two <see cref="AdditionalWorkspaceDataType"/> values are the same. </summary>
         public static bool operator ==(AdditionalWorkspaceDataType left, AdditionalWorkspaceDataType right) => left.Equals(right);

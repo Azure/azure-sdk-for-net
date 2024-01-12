@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The kind of the external solution
-    /// Serialized Name: ExternalSecuritySolutionKind
-    /// </summary>
+    /// <summary> The kind of the external solution. </summary>
     public readonly partial struct ExternalSecuritySolutionKind : IEquatable<ExternalSecuritySolutionKind>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AtaValue = "ATA";
         private const string AadValue = "AAD";
 
-        /// <summary>
-        /// CEF
-        /// Serialized Name: ExternalSecuritySolutionKind.CEF
-        /// </summary>
+        /// <summary> CEF. </summary>
         public static ExternalSecuritySolutionKind Cef { get; } = new ExternalSecuritySolutionKind(CefValue);
-        /// <summary>
-        /// ATA
-        /// Serialized Name: ExternalSecuritySolutionKind.ATA
-        /// </summary>
+        /// <summary> ATA. </summary>
         public static ExternalSecuritySolutionKind Ata { get; } = new ExternalSecuritySolutionKind(AtaValue);
-        /// <summary>
-        /// AAD
-        /// Serialized Name: ExternalSecuritySolutionKind.AAD
-        /// </summary>
+        /// <summary> AAD. </summary>
         public static ExternalSecuritySolutionKind Aad { get; } = new ExternalSecuritySolutionKind(AadValue);
         /// <summary> Determines if two <see cref="ExternalSecuritySolutionKind"/> values are the same. </summary>
         public static bool operator ==(ExternalSecuritySolutionKind left, ExternalSecuritySolutionKind right) => left.Equals(right);

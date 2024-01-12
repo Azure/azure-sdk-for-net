@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// End of support status.
-    /// Serialized Name: EndOfSupportStatus
-    /// </summary>
+    /// <summary> End of support status. </summary>
     public readonly partial struct EndOfSupportStatus : IEquatable<EndOfSupportStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string UpcomingNoLongerSupportedValue = "upcomingNoLongerSupported";
         private const string UpcomingVersionNoLongerSupportedValue = "upcomingVersionNoLongerSupported";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: EndOfSupportStatus.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static EndOfSupportStatus None { get; } = new EndOfSupportStatus(NoneValue);
-        /// <summary>
-        /// noLongerSupported
-        /// Serialized Name: EndOfSupportStatus.noLongerSupported
-        /// </summary>
+        /// <summary> noLongerSupported. </summary>
         public static EndOfSupportStatus NoLongerSupported { get; } = new EndOfSupportStatus(NoLongerSupportedValue);
-        /// <summary>
-        /// versionNoLongerSupported
-        /// Serialized Name: EndOfSupportStatus.versionNoLongerSupported
-        /// </summary>
+        /// <summary> versionNoLongerSupported. </summary>
         public static EndOfSupportStatus VersionNoLongerSupported { get; } = new EndOfSupportStatus(VersionNoLongerSupportedValue);
-        /// <summary>
-        /// upcomingNoLongerSupported
-        /// Serialized Name: EndOfSupportStatus.upcomingNoLongerSupported
-        /// </summary>
+        /// <summary> upcomingNoLongerSupported. </summary>
         public static EndOfSupportStatus UpcomingNoLongerSupported { get; } = new EndOfSupportStatus(UpcomingNoLongerSupportedValue);
-        /// <summary>
-        /// upcomingVersionNoLongerSupported
-        /// Serialized Name: EndOfSupportStatus.upcomingVersionNoLongerSupported
-        /// </summary>
+        /// <summary> upcomingVersionNoLongerSupported. </summary>
         public static EndOfSupportStatus UpcomingVersionNoLongerSupported { get; } = new EndOfSupportStatus(UpcomingVersionNoLongerSupportedValue);
         /// <summary> Determines if two <see cref="EndOfSupportStatus"/> values are the same. </summary>
         public static bool operator ==(EndOfSupportStatus left, EndOfSupportStatus right) => left.Equals(right);

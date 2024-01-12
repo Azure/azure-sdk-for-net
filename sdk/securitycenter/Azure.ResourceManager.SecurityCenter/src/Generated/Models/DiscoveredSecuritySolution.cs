@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The DiscoveredSecuritySolution.
-    /// Serialized Name: DiscoveredSecuritySolution
-    /// </summary>
+    /// <summary> The DiscoveredSecuritySolution. </summary>
     public partial class DiscoveredSecuritySolution : ResourceData
     {
         /// <summary>
@@ -51,22 +48,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolution"/>. </summary>
-        /// <param name="securityFamily">
-        /// The security family of the discovered solution
-        /// Serialized Name: DiscoveredSecuritySolution.properties.securityFamily
-        /// </param>
-        /// <param name="offer">
-        /// The security solutions' image offer
-        /// Serialized Name: DiscoveredSecuritySolution.properties.offer
-        /// </param>
-        /// <param name="publisher">
-        /// The security solutions' image publisher
-        /// Serialized Name: DiscoveredSecuritySolution.properties.publisher
-        /// </param>
-        /// <param name="sku">
-        /// The security solutions' image sku
-        /// Serialized Name: DiscoveredSecuritySolution.properties.sku
-        /// </param>
+        /// <param name="securityFamily"> The security family of the discovered solution. </param>
+        /// <param name="offer"> The security solutions' image offer. </param>
+        /// <param name="publisher"> The security solutions' image publisher. </param>
+        /// <param name="sku"> The security solutions' image sku. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/>, <paramref name="publisher"/> or <paramref name="sku"/> is null. </exception>
         public DiscoveredSecuritySolution(SecurityFamily securityFamily, string offer, string publisher, string sku)
         {
@@ -85,26 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="securityFamily">
-        /// The security family of the discovered solution
-        /// Serialized Name: DiscoveredSecuritySolution.properties.securityFamily
-        /// </param>
-        /// <param name="offer">
-        /// The security solutions' image offer
-        /// Serialized Name: DiscoveredSecuritySolution.properties.offer
-        /// </param>
-        /// <param name="publisher">
-        /// The security solutions' image publisher
-        /// Serialized Name: DiscoveredSecuritySolution.properties.publisher
-        /// </param>
-        /// <param name="sku">
-        /// The security solutions' image sku
-        /// Serialized Name: DiscoveredSecuritySolution.properties.sku
-        /// </param>
-        /// <param name="location">
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </param>
+        /// <param name="securityFamily"> The security family of the discovered solution. </param>
+        /// <param name="offer"> The security solutions' image offer. </param>
+        /// <param name="publisher"> The security solutions' image publisher. </param>
+        /// <param name="sku"> The security solutions' image sku. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiscoveredSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily securityFamily, string offer, string publisher, string sku, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -121,30 +91,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The security family of the discovered solution
-        /// Serialized Name: DiscoveredSecuritySolution.properties.securityFamily
-        /// </summary>
+        /// <summary> The security family of the discovered solution. </summary>
         public SecurityFamily SecurityFamily { get; set; }
-        /// <summary>
-        /// The security solutions' image offer
-        /// Serialized Name: DiscoveredSecuritySolution.properties.offer
-        /// </summary>
+        /// <summary> The security solutions' image offer. </summary>
         public string Offer { get; set; }
-        /// <summary>
-        /// The security solutions' image publisher
-        /// Serialized Name: DiscoveredSecuritySolution.properties.publisher
-        /// </summary>
+        /// <summary> The security solutions' image publisher. </summary>
         public string Publisher { get; set; }
-        /// <summary>
-        /// The security solutions' image sku
-        /// Serialized Name: DiscoveredSecuritySolution.properties.sku
-        /// </summary>
+        /// <summary> The security solutions' image sku. </summary>
         public string Sku { get; set; }
-        /// <summary>
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </summary>
+        /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }
 }

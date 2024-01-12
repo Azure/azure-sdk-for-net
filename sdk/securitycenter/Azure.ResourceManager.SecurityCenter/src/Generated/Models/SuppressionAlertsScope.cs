@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SuppressionAlertsScope.
-    /// Serialized Name: SuppressionAlertsScope
-    /// </summary>
+    /// <summary> The SuppressionAlertsScope. </summary>
     internal partial class SuppressionAlertsScope
     {
         /// <summary>
@@ -51,10 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScope"/>. </summary>
-        /// <param name="allOf">
-        /// All the conditions inside need to be true in order to suppress the alert
-        /// Serialized Name: SuppressionAlertsScope.allOf
-        /// </param>
+        /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
         public SuppressionAlertsScope(IEnumerable<SuppressionAlertsScopeElement> allOf)
         {
@@ -64,10 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScope"/>. </summary>
-        /// <param name="allOf">
-        /// All the conditions inside need to be true in order to suppress the alert
-        /// Serialized Name: SuppressionAlertsScope.allOf
-        /// </param>
+        /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SuppressionAlertsScope(IList<SuppressionAlertsScopeElement> allOf, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,10 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// All the conditions inside need to be true in order to suppress the alert
-        /// Serialized Name: SuppressionAlertsScope.allOf
-        /// </summary>
+        /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
         public IList<SuppressionAlertsScopeElement> AllOf { get; }
     }
 }

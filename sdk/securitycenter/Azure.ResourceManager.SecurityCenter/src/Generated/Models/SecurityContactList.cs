@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of security contacts response
-    /// Serialized Name: SecurityContactList
-    /// </summary>
+    /// <summary> List of security contacts response. </summary>
     internal partial class SecurityContactList
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityContactList"/>. </summary>
-        /// <param name="value">
-        /// List of security contacts
-        /// Serialized Name: SecurityContactList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: SecurityContactList.nextLink
-        /// </param>
+        /// <param name="value"> List of security contacts. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityContactList(IReadOnlyList<SecurityContactData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of security contacts
-        /// Serialized Name: SecurityContactList.value
-        /// </summary>
+        /// <summary> List of security contacts. </summary>
         public IReadOnlyList<SecurityContactData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: SecurityContactList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

@@ -12,21 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A custom alert rule that checks if a value (depends on the custom alert type) is denied.
-    /// Serialized Name: DenylistCustomAlertRule
-    /// </summary>
+    /// <summary> A custom alert rule that checks if a value (depends on the custom alert type) is denied. </summary>
     public partial class DenylistCustomAlertRule : ListCustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="DenylistCustomAlertRule"/>. </summary>
-        /// <param name="isEnabled">
-        /// Status of the custom alert.
-        /// Serialized Name: CustomAlertRule.isEnabled
-        /// </param>
-        /// <param name="denylistValues">
-        /// The values to deny. The format of the values depends on the rule type.
-        /// Serialized Name: DenylistCustomAlertRule.denylistValues
-        /// </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="denylistValues"> The values to deny. The format of the values depends on the rule type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="denylistValues"/> is null. </exception>
         public DenylistCustomAlertRule(bool isEnabled, IEnumerable<string> denylistValues) : base(isEnabled)
         {
@@ -37,31 +28,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DenylistCustomAlertRule"/>. </summary>
-        /// <param name="displayName">
-        /// The display name of the custom alert.
-        /// Serialized Name: CustomAlertRule.displayName
-        /// </param>
-        /// <param name="description">
-        /// The description of the custom alert.
-        /// Serialized Name: CustomAlertRule.description
-        /// </param>
-        /// <param name="isEnabled">
-        /// Status of the custom alert.
-        /// Serialized Name: CustomAlertRule.isEnabled
-        /// </param>
-        /// <param name="ruleType">
-        /// The type of the custom alert rule.
-        /// Serialized Name: CustomAlertRule.ruleType
-        /// </param>
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="valueType">
-        /// The value type of the items in the list.
-        /// Serialized Name: ListCustomAlertRule.valueType
-        /// </param>
-        /// <param name="denylistValues">
-        /// The values to deny. The format of the values depends on the rule type.
-        /// Serialized Name: DenylistCustomAlertRule.denylistValues
-        /// </param>
+        /// <param name="valueType"> The value type of the items in the list. </param>
+        /// <param name="denylistValues"> The values to deny. The format of the values depends on the rule type. </param>
         internal DenylistCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, SecurityValueType? valueType, IList<string> denylistValues) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData, valueType)
         {
             DenylistValues = denylistValues;
@@ -73,10 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The values to deny. The format of the values depends on the rule type.
-        /// Serialized Name: DenylistCustomAlertRule.denylistValues
-        /// </summary>
+        /// <summary> The values to deny. The format of the values depends on the rule type. </summary>
         public IList<string> DenylistValues { get; }
     }
 }

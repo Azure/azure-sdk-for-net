@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Vendor reference
-    /// Serialized Name: VendorReference
-    /// </summary>
+    /// <summary> Vendor reference. </summary>
     public partial class VendorReference
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VendorReference"/>. </summary>
-        /// <param name="title">
-        /// Link title
-        /// Serialized Name: VendorReference.title
-        /// </param>
-        /// <param name="link">
-        /// Link url
-        /// Serialized Name: VendorReference.link
-        /// </param>
+        /// <param name="title"> Link title. </param>
+        /// <param name="link"> Link url. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VendorReference(string title, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Link title
-        /// Serialized Name: VendorReference.title
-        /// </summary>
+        /// <summary> Link title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// Link url
-        /// Serialized Name: VendorReference.link
-        /// </summary>
+        /// <summary> Link url. </summary>
         public string Link { get; }
     }
 }

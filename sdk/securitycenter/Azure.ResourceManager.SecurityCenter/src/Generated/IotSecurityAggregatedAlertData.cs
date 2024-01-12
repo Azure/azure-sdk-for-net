@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the IotSecurityAggregatedAlert data model.
     /// Security Solution Aggregated Alert information
-    /// Serialized Name: IoTSecurityAggregatedAlert
     /// </summary>
     public partial class IotSecurityAggregatedAlertData : ResourceData
     {
@@ -64,62 +63,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertType">
-        /// Name of the alert type.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.alertType
-        /// </param>
-        /// <param name="alertDisplayName">
-        /// Display name of the alert type.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.alertDisplayName
-        /// </param>
-        /// <param name="aggregatedOn">
-        /// Date of detection.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.aggregatedDateUtc
-        /// </param>
-        /// <param name="vendorName">
-        /// Name of the organization that raised the alert.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.vendorName
-        /// </param>
-        /// <param name="reportedSeverity">
-        /// Assessed alert severity.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.reportedSeverity
-        /// </param>
-        /// <param name="remediationSteps">
-        /// Recommended steps for remediation.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.remediationSteps
-        /// </param>
-        /// <param name="description">
-        /// Description of the suspected vulnerability and meaning.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.description
-        /// </param>
-        /// <param name="count">
-        /// Number of alerts occurrences within the aggregated time window.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.count
-        /// </param>
-        /// <param name="effectedResourceType">
-        /// Azure resource ID of the resource that received the alerts.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.effectedResourceType
-        /// </param>
-        /// <param name="systemSource">
-        /// The type of the alerted resource (Azure, Non-Azure).
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.systemSource
-        /// </param>
-        /// <param name="actionTaken">
-        /// IoT Security solution alert response.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.actionTaken
-        /// </param>
-        /// <param name="logAnalyticsQuery">
-        /// Log analytics query for getting the list of affected devices/alerts.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.logAnalyticsQuery
-        /// </param>
-        /// <param name="topDevicesList">
-        /// 10 devices with the highest number of occurrences of this alert type, on this day.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.topDevicesList
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags
-        /// Serialized Name: TagsResource.tags
-        /// </param>
+        /// <param name="alertType"> Name of the alert type. </param>
+        /// <param name="alertDisplayName"> Display name of the alert type. </param>
+        /// <param name="aggregatedOn"> Date of detection. </param>
+        /// <param name="vendorName"> Name of the organization that raised the alert. </param>
+        /// <param name="reportedSeverity"> Assessed alert severity. </param>
+        /// <param name="remediationSteps"> Recommended steps for remediation. </param>
+        /// <param name="description"> Description of the suspected vulnerability and meaning. </param>
+        /// <param name="count"> Number of alerts occurrences within the aggregated time window. </param>
+        /// <param name="effectedResourceType"> Azure resource ID of the resource that received the alerts. </param>
+        /// <param name="systemSource"> The type of the alerted resource (Azure, Non-Azure). </param>
+        /// <param name="actionTaken"> IoT Security solution alert response. </param>
+        /// <param name="logAnalyticsQuery"> Log analytics query for getting the list of affected devices/alerts. </param>
+        /// <param name="topDevicesList"> 10 devices with the highest number of occurrences of this alert type, on this day. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecurityAggregatedAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, string alertDisplayName, DateTimeOffset? aggregatedOn, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -140,75 +97,33 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the alert type.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.alertType
-        /// </summary>
+        /// <summary> Name of the alert type. </summary>
         public string AlertType { get; }
-        /// <summary>
-        /// Display name of the alert type.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.alertDisplayName
-        /// </summary>
+        /// <summary> Display name of the alert type. </summary>
         public string AlertDisplayName { get; }
-        /// <summary>
-        /// Date of detection.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.aggregatedDateUtc
-        /// </summary>
+        /// <summary> Date of detection. </summary>
         public DateTimeOffset? AggregatedOn { get; }
-        /// <summary>
-        /// Name of the organization that raised the alert.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.vendorName
-        /// </summary>
+        /// <summary> Name of the organization that raised the alert. </summary>
         public string VendorName { get; }
-        /// <summary>
-        /// Assessed alert severity.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.reportedSeverity
-        /// </summary>
+        /// <summary> Assessed alert severity. </summary>
         public ReportedSeverity? ReportedSeverity { get; }
-        /// <summary>
-        /// Recommended steps for remediation.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.remediationSteps
-        /// </summary>
+        /// <summary> Recommended steps for remediation. </summary>
         public string RemediationSteps { get; }
-        /// <summary>
-        /// Description of the suspected vulnerability and meaning.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.description
-        /// </summary>
+        /// <summary> Description of the suspected vulnerability and meaning. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Number of alerts occurrences within the aggregated time window.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.count
-        /// </summary>
+        /// <summary> Number of alerts occurrences within the aggregated time window. </summary>
         public long? Count { get; }
-        /// <summary>
-        /// Azure resource ID of the resource that received the alerts.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.effectedResourceType
-        /// </summary>
+        /// <summary> Azure resource ID of the resource that received the alerts. </summary>
         public string EffectedResourceType { get; }
-        /// <summary>
-        /// The type of the alerted resource (Azure, Non-Azure).
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.systemSource
-        /// </summary>
+        /// <summary> The type of the alerted resource (Azure, Non-Azure). </summary>
         public string SystemSource { get; }
-        /// <summary>
-        /// IoT Security solution alert response.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.actionTaken
-        /// </summary>
+        /// <summary> IoT Security solution alert response. </summary>
         public string ActionTaken { get; }
-        /// <summary>
-        /// Log analytics query for getting the list of affected devices/alerts.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.logAnalyticsQuery
-        /// </summary>
+        /// <summary> Log analytics query for getting the list of affected devices/alerts. </summary>
         public string LogAnalyticsQuery { get; }
-        /// <summary>
-        /// 10 devices with the highest number of occurrences of this alert type, on this day.
-        /// Serialized Name: IoTSecurityAggregatedAlert.properties.topDevicesList
-        /// </summary>
+        /// <summary> 10 devices with the highest number of occurrences of this alert type, on this day. </summary>
         public IReadOnlyList<IotSecurityAggregatedAlertTopDevice> TopDevicesList { get; }
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: TagsResource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

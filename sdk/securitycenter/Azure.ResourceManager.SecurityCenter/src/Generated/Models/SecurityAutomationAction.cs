@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The action that should be triggered.
-    /// Serialized Name: AutomationAction
     /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
     /// </summary>
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationAction"/>. </summary>
-        /// <param name="actionType">
-        /// The type of the action that will be triggered by the Automation
-        /// Serialized Name: AutomationAction.actionType
-        /// </param>
+        /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAutomationAction(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of the action that will be triggered by the Automation
-        /// Serialized Name: AutomationAction.actionType
-        /// </summary>
+        /// <summary> The type of the action that will be triggered by the Automation. </summary>
         internal ActionType ActionType { get; set; }
     }
 }

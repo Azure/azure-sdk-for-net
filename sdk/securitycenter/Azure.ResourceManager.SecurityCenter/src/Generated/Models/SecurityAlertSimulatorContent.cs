@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Alert Simulator request body.
-    /// Serialized Name: AlertSimulatorRequestBody
-    /// </summary>
+    /// <summary> Alert Simulator request body. </summary>
     public partial class SecurityAlertSimulatorContent
     {
         /// <summary>
@@ -56,7 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorContent"/>. </summary>
         /// <param name="properties">
         /// Alert Simulator request body data.
-        /// Serialized Name: AlertSimulatorRequestBody.properties
         /// Please note <see cref="SecurityAlertSimulatorRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>.
         /// </param>
@@ -69,7 +65,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// Alert Simulator request body data.
-        /// Serialized Name: AlertSimulatorRequestBody.properties
         /// Please note <see cref="SecurityAlertSimulatorRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>.
         /// </summary>

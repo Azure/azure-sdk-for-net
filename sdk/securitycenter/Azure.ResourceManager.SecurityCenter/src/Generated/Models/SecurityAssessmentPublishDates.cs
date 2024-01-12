@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SecurityAssessmentPublishDates.
-    /// Serialized Name: SecurityAssessmentMetadataPropertiesResponsePublishDates
-    /// </summary>
+    /// <summary> The SecurityAssessmentPublishDates. </summary>
     public partial class SecurityAssessmentPublishDates
     {
         /// <summary>
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
-        /// <param name="public"> Serialized Name: SecurityAssessmentMetadataPropertiesResponsePublishDates.public. </param>
+        /// <param name="public"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="public"/> is null. </exception>
         public SecurityAssessmentPublishDates(string @public)
         {
@@ -60,8 +57,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
-        /// <param name="ga"> Serialized Name: SecurityAssessmentMetadataPropertiesResponsePublishDates.GA. </param>
-        /// <param name="public"> Serialized Name: SecurityAssessmentMetadataPropertiesResponsePublishDates.public. </param>
+        /// <param name="ga"></param>
+        /// <param name="public"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAssessmentPublishDates(string ga, string @public, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,9 +72,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary> Serialized Name: SecurityAssessmentMetadataPropertiesResponsePublishDates.GA. </summary>
+        /// <summary> Gets or sets the ga. </summary>
         public string GA { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataPropertiesResponsePublishDates.public. </summary>
+        /// <summary> Gets or sets the public. </summary>
         public string Public { get; set; }
     }
 }

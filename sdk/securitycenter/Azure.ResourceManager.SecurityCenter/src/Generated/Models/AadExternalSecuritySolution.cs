@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Represents an AAD identity protection solution which sends logs to an OMS workspace.
-    /// Serialized Name: AadExternalSecuritySolution
-    /// </summary>
+    /// <summary> Represents an AAD identity protection solution which sends logs to an OMS workspace. </summary>
     public partial class AadExternalSecuritySolution : ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="AadExternalSecuritySolution"/>. </summary>
@@ -29,29 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the external solution
-        /// Serialized Name: ExternalSecuritySolution.kind
-        /// </param>
-        /// <param name="location">
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </param>
+        /// <param name="kind"> The kind of the external solution. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// The external security solution properties for AAD solutions
-        /// Serialized Name: AadExternalSecuritySolution.properties
-        /// </param>
+        /// <param name="properties"> The external security solution properties for AAD solutions. </param>
         internal AadExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, AadSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location, serializedAdditionalRawData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary>
-        /// The external security solution properties for AAD solutions
-        /// Serialized Name: AadExternalSecuritySolution.properties
-        /// </summary>
+        /// <summary> The external security solution properties for AAD solutions. </summary>
         public AadSolutionProperties Properties { get; set; }
     }
 }

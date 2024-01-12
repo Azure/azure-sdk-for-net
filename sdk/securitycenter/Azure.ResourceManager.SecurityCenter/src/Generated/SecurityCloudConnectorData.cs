@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityCloudConnector data model.
     /// The connector setting
-    /// Serialized Name: ConnectorSetting
     /// </summary>
     public partial class SecurityCloudConnectorData : ResourceData
     {
@@ -62,13 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="hybridComputeSettings">
-        /// Settings for hybrid compute management. These settings are relevant only for Arc autoProvision (Hybrid Compute).
-        /// Serialized Name: ConnectorSetting.properties.hybridComputeSettings
-        /// </param>
+        /// <param name="hybridComputeSettings"> Settings for hybrid compute management. These settings are relevant only for Arc autoProvision (Hybrid Compute). </param>
         /// <param name="authenticationDetails">
         /// Settings for authentication management, these settings are relevant only for the cloud connector.
-        /// Serialized Name: ConnectorSetting.properties.authenticationDetails
         /// Please note <see cref="AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="AwsCredsAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
         /// </param>
@@ -80,14 +75,10 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Settings for hybrid compute management. These settings are relevant only for Arc autoProvision (Hybrid Compute).
-        /// Serialized Name: ConnectorSetting.properties.hybridComputeSettings
-        /// </summary>
+        /// <summary> Settings for hybrid compute management. These settings are relevant only for Arc autoProvision (Hybrid Compute). </summary>
         public HybridComputeSettingsProperties HybridComputeSettings { get; set; }
         /// <summary>
         /// Settings for authentication management, these settings are relevant only for the cloud connector.
-        /// Serialized Name: ConnectorSetting.properties.authenticationDetails
         /// Please note <see cref="AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="AwsCredsAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
         /// </summary>

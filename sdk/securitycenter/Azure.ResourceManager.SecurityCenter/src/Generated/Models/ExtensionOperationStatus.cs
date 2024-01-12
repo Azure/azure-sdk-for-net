@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A status describing the success/failure of the enablement/disablement operation.
-    /// Serialized Name: OperationStatus
-    /// </summary>
+    /// <summary> A status describing the success/failure of the enablement/disablement operation. </summary>
     public partial class ExtensionOperationStatus
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtensionOperationStatus"/>. </summary>
-        /// <param name="code">
-        /// The operation status code.
-        /// Serialized Name: OperationStatus.code
-        /// </param>
-        /// <param name="message">
-        /// Additional information regarding the success/failure of the operation.
-        /// Serialized Name: OperationStatus.message
-        /// </param>
+        /// <param name="code"> The operation status code. </param>
+        /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtensionOperationStatus(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The operation status code.
-        /// Serialized Name: OperationStatus.code
-        /// </summary>
+        /// <summary> The operation status code. </summary>
         public string Code { get; }
-        /// <summary>
-        /// Additional information regarding the success/failure of the operation.
-        /// Serialized Name: OperationStatus.message
-        /// </summary>
+        /// <summary> Additional information regarding the success/failure of the operation. </summary>
         public string Message { get; }
     }
 }

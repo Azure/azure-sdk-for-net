@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The benchmark references.
-    /// Serialized Name: BenchmarkReference
-    /// </summary>
+    /// <summary> The benchmark references. </summary>
     public partial class BenchmarkReference
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
-        /// <param name="benchmark">
-        /// The benchmark name.
-        /// Serialized Name: BenchmarkReference.benchmark
-        /// </param>
-        /// <param name="reference">
-        /// The benchmark reference.
-        /// Serialized Name: BenchmarkReference.reference
-        /// </param>
+        /// <param name="benchmark"> The benchmark name. </param>
+        /// <param name="reference"> The benchmark reference. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BenchmarkReference(string benchmark, string reference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The benchmark name.
-        /// Serialized Name: BenchmarkReference.benchmark
-        /// </summary>
+        /// <summary> The benchmark name. </summary>
         public string Benchmark { get; set; }
-        /// <summary>
-        /// The benchmark reference.
-        /// Serialized Name: BenchmarkReference.reference
-        /// </summary>
+        /// <summary> The benchmark reference. </summary>
         public string Reference { get; set; }
     }
 }

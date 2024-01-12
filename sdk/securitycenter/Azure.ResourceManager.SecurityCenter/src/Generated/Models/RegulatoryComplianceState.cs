@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Aggregative state based on the standard's supported controls states
-    /// Serialized Name: State
-    /// </summary>
+    /// <summary> Aggregative state based on the standard's supported controls states. </summary>
     public readonly partial struct RegulatoryComplianceState : IEquatable<RegulatoryComplianceState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string SkippedValue = "Skipped";
         private const string UnsupportedValue = "Unsupported";
 
-        /// <summary>
-        /// All supported regulatory compliance controls in the given standard have a passed state
-        /// Serialized Name: State.Passed
-        /// </summary>
+        /// <summary> All supported regulatory compliance controls in the given standard have a passed state. </summary>
         public static RegulatoryComplianceState Passed { get; } = new RegulatoryComplianceState(PassedValue);
-        /// <summary>
-        /// At least one supported regulatory compliance control in the given standard has a state of failed
-        /// Serialized Name: State.Failed
-        /// </summary>
+        /// <summary> At least one supported regulatory compliance control in the given standard has a state of failed. </summary>
         public static RegulatoryComplianceState Failed { get; } = new RegulatoryComplianceState(FailedValue);
-        /// <summary>
-        /// All supported regulatory compliance controls in the given standard have a state of skipped
-        /// Serialized Name: State.Skipped
-        /// </summary>
+        /// <summary> All supported regulatory compliance controls in the given standard have a state of skipped. </summary>
         public static RegulatoryComplianceState Skipped { get; } = new RegulatoryComplianceState(SkippedValue);
-        /// <summary>
-        /// No supported regulatory compliance data for the given standard
-        /// Serialized Name: State.Unsupported
-        /// </summary>
+        /// <summary> No supported regulatory compliance data for the given standard. </summary>
         public static RegulatoryComplianceState Unsupported { get; } = new RegulatoryComplianceState(UnsupportedValue);
         /// <summary> Determines if two <see cref="RegulatoryComplianceState"/> values are the same. </summary>
         public static bool operator ==(RegulatoryComplianceState left, RegulatoryComplianceState right) => left.Equals(right);

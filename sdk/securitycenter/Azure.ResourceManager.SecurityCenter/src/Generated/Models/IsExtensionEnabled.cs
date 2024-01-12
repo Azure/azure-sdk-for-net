@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Indicates whether the extension is enabled.
-    /// Serialized Name: IsEnabled
-    /// </summary>
+    /// <summary> Indicates whether the extension is enabled. </summary>
     public readonly partial struct IsExtensionEnabled : IEquatable<IsExtensionEnabled>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary>
-        /// Indicates the extension is enabled
-        /// Serialized Name: IsEnabled.True
-        /// </summary>
+        /// <summary> Indicates the extension is enabled. </summary>
         public static IsExtensionEnabled True { get; } = new IsExtensionEnabled(TrueValue);
-        /// <summary>
-        /// Indicates the extension is disabled
-        /// Serialized Name: IsEnabled.False
-        /// </summary>
+        /// <summary> Indicates the extension is disabled. </summary>
         public static IsExtensionEnabled False { get; } = new IsExtensionEnabled(FalseValue);
         /// <summary> Determines if two <see cref="IsExtensionEnabled"/> values are the same. </summary>
         public static bool operator ==(IsExtensionEnabled left, IsExtensionEnabled right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// IoT Security solution analytics severity metrics.
-    /// Serialized Name: IoTSeverityMetrics
-    /// </summary>
+    /// <summary> IoT Security solution analytics severity metrics. </summary>
     public partial class IotSeverityMetrics
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSeverityMetrics"/>. </summary>
-        /// <param name="high">
-        /// Count of high severity alerts/recommendations.
-        /// Serialized Name: IoTSeverityMetrics.high
-        /// </param>
-        /// <param name="medium">
-        /// Count of medium severity alerts/recommendations.
-        /// Serialized Name: IoTSeverityMetrics.medium
-        /// </param>
-        /// <param name="low">
-        /// Count of low severity alerts/recommendations.
-        /// Serialized Name: IoTSeverityMetrics.low
-        /// </param>
+        /// <param name="high"> Count of high severity alerts/recommendations. </param>
+        /// <param name="medium"> Count of medium severity alerts/recommendations. </param>
+        /// <param name="low"> Count of low severity alerts/recommendations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSeverityMetrics(long? high, long? medium, long? low, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Count of high severity alerts/recommendations.
-        /// Serialized Name: IoTSeverityMetrics.high
-        /// </summary>
+        /// <summary> Count of high severity alerts/recommendations. </summary>
         public long? High { get; }
-        /// <summary>
-        /// Count of medium severity alerts/recommendations.
-        /// Serialized Name: IoTSeverityMetrics.medium
-        /// </summary>
+        /// <summary> Count of medium severity alerts/recommendations. </summary>
         public long? Medium { get; }
-        /// <summary>
-        /// Count of low severity alerts/recommendations.
-        /// Serialized Name: IoTSeverityMetrics.low
-        /// </summary>
+        /// <summary> Count of low severity alerts/recommendations. </summary>
         public long? Low { get; }
     }
 }

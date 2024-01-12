@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Changing set of properties depending on the supportingEvidence type.
-    /// Serialized Name: AlertPropertiesSupportingEvidence
-    /// </summary>
+    /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
     public partial class SecurityAlertSupportingEvidence
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSupportingEvidence"/>. </summary>
@@ -24,10 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSupportingEvidence"/>. </summary>
-        /// <param name="securityAlertSupportingEvidenceType">
-        /// Type of the supportingEvidence
-        /// Serialized Name: AlertPropertiesSupportingEvidence.type
-        /// </param>
+        /// <param name="securityAlertSupportingEvidenceType"> Type of the supportingEvidence. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityAlertSupportingEvidence(string securityAlertSupportingEvidenceType, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -35,10 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Type of the supportingEvidence
-        /// Serialized Name: AlertPropertiesSupportingEvidence.type
-        /// </summary>
+        /// <summary> Type of the supportingEvidence. </summary>
         public string SecurityAlertSupportingEvidenceType { get; }
         /// <summary>
         /// Additional Properties

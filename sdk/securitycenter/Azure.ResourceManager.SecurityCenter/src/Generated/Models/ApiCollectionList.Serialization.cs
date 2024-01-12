@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiCollectionData>> value = default;
+            Optional<IReadOnlyList<SecurityCenterApiCollectionData>> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<ApiCollectionData> array = new List<ApiCollectionData>();
+                    List<SecurityCenterApiCollectionData> array = new List<SecurityCenterApiCollectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiCollectionData.DeserializeApiCollectionData(item));
+                        array.Add(SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(item));
                     }
                     value = array;
                     continue;

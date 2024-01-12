@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security offering details
-    /// Serialized Name: CloudOffering
     /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGitLabOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
     /// </summary>
@@ -56,14 +55,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCenterCloudOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +65,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </summary>
+        /// <summary> The type of the security offering. </summary>
         internal OfferingType OfferingType { get; set; }
-        /// <summary>
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </summary>
+        /// <summary> The offering description. </summary>
         public string Description { get; }
     }
 }

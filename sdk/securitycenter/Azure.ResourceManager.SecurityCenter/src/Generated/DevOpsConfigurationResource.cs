@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.SecurityCenter
 
         private readonly ClientDiagnostics _devOpsConfigurationClientDiagnostics;
         private readonly DevOpsConfigurationsRestOperations _devOpsConfigurationRestClient;
-        private readonly ClientDiagnostics _azureDevOpsOrgClientDiagnostics;
-        private readonly AzureDevOpsOrgsRestOperations _azureDevOpsOrgRestClient;
-        private readonly ClientDiagnostics _gitHubOwnerClientDiagnostics;
-        private readonly GitHubOwnersRestOperations _gitHubOwnerRestClient;
-        private readonly ClientDiagnostics _gitLabGroupClientDiagnostics;
-        private readonly GitLabGroupsRestOperations _gitLabGroupRestClient;
+        private readonly ClientDiagnostics _devOpsOrgAzureDevOpsOrgsClientDiagnostics;
+        private readonly AzureDevOpsOrgsRestOperations _devOpsOrgAzureDevOpsOrgsRestClient;
+        private readonly ClientDiagnostics _securityConnectorGitHubOwnerGitHubOwnersClientDiagnostics;
+        private readonly GitHubOwnersRestOperations _securityConnectorGitHubOwnerGitHubOwnersRestClient;
+        private readonly ClientDiagnostics _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics;
+        private readonly GitLabGroupsRestOperations _securityConnectorGitLabGroupGitLabGroupsRestClient;
         private readonly ClientDiagnostics _devOpsOperationResultsClientDiagnostics;
         private readonly DevOpsOperationResultsRestOperations _devOpsOperationResultsRestClient;
         private readonly DevOpsConfigurationData _data;
@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.SecurityCenter
             _devOpsConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string devOpsConfigurationApiVersion);
             _devOpsConfigurationRestClient = new DevOpsConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsConfigurationApiVersion);
-            _azureDevOpsOrgClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AzureDevOpsOrgResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AzureDevOpsOrgResource.ResourceType, out string azureDevOpsOrgApiVersion);
-            _azureDevOpsOrgRestClient = new AzureDevOpsOrgsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureDevOpsOrgApiVersion);
-            _gitHubOwnerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitHubOwnerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GitHubOwnerResource.ResourceType, out string gitHubOwnerApiVersion);
-            _gitHubOwnerRestClient = new GitHubOwnersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gitHubOwnerApiVersion);
-            _gitLabGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitLabGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GitLabGroupResource.ResourceType, out string gitLabGroupApiVersion);
-            _gitLabGroupRestClient = new GitLabGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gitLabGroupApiVersion);
+            _devOpsOrgAzureDevOpsOrgsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DevOpsOrgResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevOpsOrgResource.ResourceType, out string devOpsOrgAzureDevOpsOrgsApiVersion);
+            _devOpsOrgAzureDevOpsOrgsRestClient = new AzureDevOpsOrgsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsOrgAzureDevOpsOrgsApiVersion);
+            _securityConnectorGitHubOwnerGitHubOwnersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorGitHubOwnerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityConnectorGitHubOwnerResource.ResourceType, out string securityConnectorGitHubOwnerGitHubOwnersApiVersion);
+            _securityConnectorGitHubOwnerGitHubOwnersRestClient = new GitHubOwnersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorGitHubOwnerGitHubOwnersApiVersion);
+            _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorGitLabGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityConnectorGitLabGroupResource.ResourceType, out string securityConnectorGitLabGroupGitLabGroupsApiVersion);
+            _securityConnectorGitLabGroupGitLabGroupsRestClient = new GitLabGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorGitLabGroupGitLabGroupsApiVersion);
             _devOpsOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _devOpsOperationResultsRestClient = new DevOpsOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.SecurityCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AzureDevOpsOrgResources in the DevOpsConfiguration. </summary>
-        /// <returns> An object representing collection of AzureDevOpsOrgResources and their operations over a AzureDevOpsOrgResource. </returns>
-        public virtual AzureDevOpsOrgCollection GetAzureDevOpsOrgs()
+        /// <summary> Gets a collection of DevOpsOrgResources in the DevOpsConfiguration. </summary>
+        /// <returns> An object representing collection of DevOpsOrgResources and their operations over a DevOpsOrgResource. </returns>
+        public virtual DevOpsOrgCollection GetDevOpsOrgs()
         {
-            return GetCachedClient(client => new AzureDevOpsOrgCollection(client, Id));
+            return GetCachedClient(client => new DevOpsOrgCollection(client, Id));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureDevOpsOrgResource"/></description>
+        /// <description><see cref="DevOpsOrgResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="orgName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="orgName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AzureDevOpsOrgResource>> GetAzureDevOpsOrgAsync(string orgName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevOpsOrgResource>> GetDevOpsOrgAsync(string orgName, CancellationToken cancellationToken = default)
         {
-            return await GetAzureDevOpsOrgs().GetAsync(orgName, cancellationToken).ConfigureAwait(false);
+            return await GetDevOpsOrgs().GetAsync(orgName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureDevOpsOrgResource"/></description>
+        /// <description><see cref="DevOpsOrgResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,47 +174,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="orgName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="orgName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AzureDevOpsOrgResource> GetAzureDevOpsOrg(string orgName, CancellationToken cancellationToken = default)
+        public virtual Response<DevOpsOrgResource> GetDevOpsOrg(string orgName, CancellationToken cancellationToken = default)
         {
-            return GetAzureDevOpsOrgs().Get(orgName, cancellationToken);
+            return GetDevOpsOrgs().Get(orgName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GitHubOwnerResources in the DevOpsConfiguration. </summary>
-        /// <returns> An object representing collection of GitHubOwnerResources and their operations over a GitHubOwnerResource. </returns>
-        public virtual GitHubOwnerCollection GetGitHubOwners()
+        /// <summary> Gets a collection of SecurityConnectorGitHubOwnerResources in the DevOpsConfiguration. </summary>
+        /// <returns> An object representing collection of SecurityConnectorGitHubOwnerResources and their operations over a SecurityConnectorGitHubOwnerResource. </returns>
+        public virtual SecurityConnectorGitHubOwnerCollection GetSecurityConnectorGitHubOwners()
         {
-            return GetCachedClient(client => new GitHubOwnerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns a monitored GitHub owner.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/gitHubOwners/{ownerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GitHubOwners_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GitHubOwnerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ownerName"> The GitHub owner name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ownerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ownerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GitHubOwnerResource>> GetGitHubOwnerAsync(string ownerName, CancellationToken cancellationToken = default)
-        {
-            return await GetGitHubOwners().GetAsync(ownerName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new SecurityConnectorGitHubOwnerCollection(client, Id));
         }
 
         /// <summary>
@@ -234,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// <description><see cref="SecurityConnectorGitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,16 +212,47 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ownerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ownerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GitHubOwnerResource> GetGitHubOwner(string ownerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityConnectorGitHubOwnerResource>> GetSecurityConnectorGitHubOwnerAsync(string ownerName, CancellationToken cancellationToken = default)
         {
-            return GetGitHubOwners().Get(ownerName, cancellationToken);
+            return await GetSecurityConnectorGitHubOwners().GetAsync(ownerName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of GitLabGroupResources in the DevOpsConfiguration. </summary>
-        /// <returns> An object representing collection of GitLabGroupResources and their operations over a GitLabGroupResource. </returns>
-        public virtual GitLabGroupCollection GetGitLabGroups()
+        /// <summary>
+        /// Returns a monitored GitHub owner.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/gitHubOwners/{ownerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubOwners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityConnectorGitHubOwnerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ownerName"> The GitHub owner name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ownerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ownerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityConnectorGitHubOwnerResource> GetSecurityConnectorGitHubOwner(string ownerName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new GitLabGroupCollection(client, Id));
+            return GetSecurityConnectorGitHubOwners().Get(ownerName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityConnectorGitLabGroupResources in the DevOpsConfiguration. </summary>
+        /// <returns> An object representing collection of SecurityConnectorGitLabGroupResources and their operations over a SecurityConnectorGitLabGroupResource. </returns>
+        public virtual SecurityConnectorGitLabGroupCollection GetSecurityConnectorGitLabGroups()
+        {
+            return GetCachedClient(client => new SecurityConnectorGitLabGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GitLabGroupResource"/></description>
+        /// <description><see cref="SecurityConnectorGitLabGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupFQName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GitLabGroupResource>> GetGitLabGroupAsync(string groupFQName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityConnectorGitLabGroupResource>> GetSecurityConnectorGitLabGroupAsync(string groupFQName, CancellationToken cancellationToken = default)
         {
-            return await GetGitLabGroups().GetAsync(groupFQName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityConnectorGitLabGroups().GetAsync(groupFQName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GitLabGroupResource"/></description>
+        /// <description><see cref="SecurityConnectorGitLabGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupFQName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupFQName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GitLabGroupResource> GetGitLabGroup(string groupFQName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityConnectorGitLabGroupResource> GetSecurityConnectorGitLabGroup(string groupFQName, CancellationToken cancellationToken = default)
         {
-            return GetGitLabGroups().Get(groupFQName, cancellationToken);
+            return GetSecurityConnectorGitLabGroups().Get(groupFQName, cancellationToken);
         }
 
         /// <summary>
@@ -682,16 +682,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureDevOpsOrgResource"/></description>
+        /// <description><see cref="DevOpsOrgResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsOrgResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureDevOpsOrgResource> GetAvailableAzureDevOpsOrgsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevOpsOrgResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevOpsOrgResource> GetAvailableDevOpsOrgsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableAzureDevOpsOrgs", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devOpsOrgAzureDevOpsOrgsRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DevOpsOrgResource(Client, DevOpsOrgData.DeserializeDevOpsOrgData(e)), _devOpsOrgAzureDevOpsOrgsClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableDevOpsOrgs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -711,16 +711,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureDevOpsOrgResource"/></description>
+        /// <description><see cref="DevOpsOrgResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsOrgResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureDevOpsOrgResource> GetAvailableAzureDevOpsOrgs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevOpsOrgResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevOpsOrgResource> GetAvailableDevOpsOrgs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableAzureDevOpsOrgs", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devOpsOrgAzureDevOpsOrgsRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DevOpsOrgResource(Client, DevOpsOrgData.DeserializeDevOpsOrgData(e)), _devOpsOrgAzureDevOpsOrgsClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableDevOpsOrgs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -740,16 +740,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// <description><see cref="SecurityConnectorGitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitHubOwnerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GitHubOwnerResource> GetAvailableGitHubOwnersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityConnectorGitHubOwnerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityConnectorGitHubOwnerResource> GetAvailableGitHubOwnersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitHubOwners", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorGitHubOwnerGitHubOwnersRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityConnectorGitHubOwnerResource(Client, SecurityConnectorGitHubOwnerData.DeserializeSecurityConnectorGitHubOwnerData(e)), _securityConnectorGitHubOwnerGitHubOwnersClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitHubOwners", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -769,16 +769,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// <description><see cref="SecurityConnectorGitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitHubOwnerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GitHubOwnerResource> GetAvailableGitHubOwners(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityConnectorGitHubOwnerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityConnectorGitHubOwnerResource> GetAvailableGitHubOwners(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitHubOwners", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorGitHubOwnerGitHubOwnersRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityConnectorGitHubOwnerResource(Client, SecurityConnectorGitHubOwnerData.DeserializeSecurityConnectorGitHubOwnerData(e)), _securityConnectorGitHubOwnerGitHubOwnersClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitHubOwners", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -798,16 +798,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GitLabGroupResource"/></description>
+        /// <description><see cref="SecurityConnectorGitLabGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitLabGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GitLabGroupResource> GetAvailableGitLabGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityConnectorGitLabGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityConnectorGitLabGroupResource> GetAvailableGitLabGroupsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitLabGroupRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GitLabGroupResource(Client, GitLabGroupData.DeserializeGitLabGroupData(e)), _gitLabGroupClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitLabGroups", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorGitLabGroupGitLabGroupsRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityConnectorGitLabGroupResource(Client, SecurityConnectorGitLabGroupData.DeserializeSecurityConnectorGitLabGroupData(e)), _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitLabGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -827,16 +827,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GitLabGroupResource"/></description>
+        /// <description><see cref="SecurityConnectorGitLabGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitLabGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GitLabGroupResource> GetAvailableGitLabGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityConnectorGitLabGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityConnectorGitLabGroupResource> GetAvailableGitLabGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitLabGroupRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new GitLabGroupResource(Client, GitLabGroupData.DeserializeGitLabGroupData(e)), _gitLabGroupClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitLabGroups", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorGitLabGroupGitLabGroupsRestClient.CreateListAvailableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityConnectorGitLabGroupResource(Client, SecurityConnectorGitLabGroupData.DeserializeSecurityConnectorGitLabGroupData(e)), _securityConnectorGitLabGroupGitLabGroupsClientDiagnostics, Pipeline, "DevOpsConfigurationResource.GetAvailableGitLabGroups", "value", null, cancellationToken);
         }
 
         /// <summary>

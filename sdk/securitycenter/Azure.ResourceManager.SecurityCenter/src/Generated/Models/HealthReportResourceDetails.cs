@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The resource details of the health report
-    /// Serialized Name: HealthReportResourceDetails
-    /// </summary>
+    /// <summary> The resource details of the health report. </summary>
     public partial class HealthReportResourceDetails
     {
         /// <summary>
@@ -54,20 +52,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthReportResourceDetails"/>. </summary>
-        /// <param name="source">
-        /// The status of the health report
-        /// Serialized Name: HealthReportResourceDetails.source
-        /// </param>
-        /// <param name="id">
-        /// The azure id of the resource
-        /// Serialized Name: HealthReportResourceDetails.id
-        /// </param>
-        /// <param name="connectorId">
-        /// The id of the connector
-        /// Serialized Name: HealthReportResourceDetails.connectorId
-        /// </param>
+        /// <param name="source"> The status of the health report. </param>
+        /// <param name="id"> The azure id of the resource. </param>
+        /// <param name="connectorId"> The id of the connector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportResourceDetails(Source? source, string id, string connectorId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HealthReportResourceDetails(HealthReportSource? source, ResourceIdentifier id, string connectorId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             Id = id;
@@ -75,20 +64,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The status of the health report
-        /// Serialized Name: HealthReportResourceDetails.source
-        /// </summary>
-        public Source? Source { get; set; }
-        /// <summary>
-        /// The azure id of the resource
-        /// Serialized Name: HealthReportResourceDetails.id
-        /// </summary>
-        public string Id { get; }
-        /// <summary>
-        /// The id of the connector
-        /// Serialized Name: HealthReportResourceDetails.connectorId
-        /// </summary>
+        /// <summary> The status of the health report. </summary>
+        public HealthReportSource? Source { get; set; }
+        /// <summary> The azure id of the resource. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> The id of the connector. </summary>
         public string ConnectorId { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender for Server VM scanning configuration
-    /// Serialized Name: DefenderForServersGcpOfferingVmScanners
-    /// </summary>
+    /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
     public partial class DefenderForServersGcpOfferingVmScanners
     {
         /// <summary>
@@ -54,31 +51,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingVmScanners"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender for Server VM scanning enabled
-        /// Serialized Name: DefenderForServersGcpOfferingVmScanners.enabled
-        /// </param>
-        /// <param name="configuration">
-        /// configuration for Microsoft Defender for Server VM scanning
-        /// Serialized Name: DefenderForServersGcpOfferingVmScanners.configuration
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender for Server VM scanning enabled. </param>
+        /// <param name="configuration"> configuration for Microsoft Defender for Server VM scanning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForServersGcpOfferingVmScanners(bool? enabled, DefenderForServersGcpOfferingVmScannersConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderForServersGcpOfferingVmScanners(bool? isEnabled, DefenderForServersGcpOfferingVmScannersConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Configuration = configuration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender for Server VM scanning enabled
-        /// Serialized Name: DefenderForServersGcpOfferingVmScanners.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// configuration for Microsoft Defender for Server VM scanning
-        /// Serialized Name: DefenderForServersGcpOfferingVmScanners.configuration
-        /// </summary>
+        /// <summary> Is Microsoft Defender for Server VM scanning enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
         public DefenderForServersGcpOfferingVmScannersConfiguration Configuration { get; set; }
     }
 }

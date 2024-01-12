@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A list of rules results.
-    /// Serialized Name: RulesResults
-    /// </summary>
+    /// <summary> A list of rules results. </summary>
     internal partial class RulesResults
     {
         /// <summary>
@@ -57,10 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RulesResults"/>. </summary>
-        /// <param name="value">
-        /// List of rule results.
-        /// Serialized Name: RulesResults.value
-        /// </param>
+        /// <param name="value"> List of rule results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RulesResults(IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of rule results.
-        /// Serialized Name: RulesResults.value
-        /// </summary>
+        /// <summary> List of rule results. </summary>
         public IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData> Value { get; }
     }
 }

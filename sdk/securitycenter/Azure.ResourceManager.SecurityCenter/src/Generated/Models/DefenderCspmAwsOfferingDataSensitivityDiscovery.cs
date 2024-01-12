@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender Data Sensitivity discovery configuration
-    /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery
-    /// </summary>
+    /// <summary> The Microsoft Defender Data Sensitivity discovery configuration. </summary>
     public partial class DefenderCspmAwsOfferingDataSensitivityDiscovery
     {
         /// <summary>
@@ -54,31 +51,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingDataSensitivityDiscovery"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender Data Sensitivity discovery enabled
-        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.enabled
-        /// </param>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.cloudRoleArn
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender Data Sensitivity discovery enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmAwsOfferingDataSensitivityDiscovery(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderCspmAwsOfferingDataSensitivityDiscovery(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender Data Sensitivity discovery enabled
-        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.cloudRoleArn
-        /// </summary>
+        /// <summary> Is Microsoft Defender Data Sensitivity discovery enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

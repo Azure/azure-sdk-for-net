@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials.
-    /// Serialized Name: AuthenticationType
-    /// </summary>
+    /// <summary> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </summary>
     internal readonly partial struct AuthenticationType : IEquatable<AuthenticationType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AwsAssumeRoleValue = "awsAssumeRole";
         private const string GcpCredentialsValue = "gcpCredentials";
 
-        /// <summary>
-        /// AWS cloud account connector user credentials authentication
-        /// Serialized Name: AuthenticationType.awsCreds
-        /// </summary>
+        /// <summary> AWS cloud account connector user credentials authentication. </summary>
         public static AuthenticationType AwsCreds { get; } = new AuthenticationType(AwsCredsValue);
-        /// <summary>
-        /// AWS account connector assume role authentication
-        /// Serialized Name: AuthenticationType.awsAssumeRole
-        /// </summary>
+        /// <summary> AWS account connector assume role authentication. </summary>
         public static AuthenticationType AwsAssumeRole { get; } = new AuthenticationType(AwsAssumeRoleValue);
-        /// <summary>
-        /// GCP account connector service to service authentication
-        /// Serialized Name: AuthenticationType.gcpCredentials
-        /// </summary>
+        /// <summary> GCP account connector service to service authentication. </summary>
         public static AuthenticationType GcpCredentials { get; } = new AuthenticationType(GcpCredentialsValue);
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);

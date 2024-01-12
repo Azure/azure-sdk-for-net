@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of RP resources which supports pagination.
-    /// Serialized Name: DevOpsConfigurationListResponse
-    /// </summary>
+    /// <summary> List of RP resources which supports pagination. </summary>
     internal partial class DevOpsConfigurationListResponse
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsConfigurationListResponse"/>. </summary>
-        /// <param name="value">
-        /// Gets or sets list of resources.
-        /// Serialized Name: DevOpsConfigurationListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: DevOpsConfigurationListResponse.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets list of resources. </param>
+        /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DevOpsConfigurationListResponse(IReadOnlyList<DevOpsConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets list of resources.
-        /// Serialized Name: DevOpsConfigurationListResponse.value
-        /// </summary>
+        /// <summary> Gets or sets list of resources. </summary>
         public IReadOnlyList<DevOpsConfigurationData> Value { get; }
-        /// <summary>
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: DevOpsConfigurationListResponse.nextLink
-        /// </summary>
+        /// <summary> Gets or sets next link to scroll over the results. </summary>
         public string NextLink { get; }
     }
 }

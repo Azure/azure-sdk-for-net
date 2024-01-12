@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The type of IoT Security recommendation.
-    /// Serialized Name: RecommendationType
-    /// </summary>
+    /// <summary> The type of IoT Security recommendation. </summary>
     public readonly partial struct IotSecurityRecommendationType : IEquatable<IotSecurityRecommendationType>
     {
         private readonly string _value;
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string IotSharedCredentialsValue = "IoT_SharedCredentials";
         private const string IotVulnerableTlsCipherSuiteValue = "IoT_VulnerableTLSCipherSuite";
 
-        /// <summary>
-        /// Authentication schema used for pull an edge module from an ACR repository does not use Service Principal Authentication.
-        /// Serialized Name: RecommendationType.IoT_ACRAuthentication
-        /// </summary>
+        /// <summary> Authentication schema used for pull an edge module from an ACR repository does not use Service Principal Authentication. </summary>
         public static IotSecurityRecommendationType IotAcrAuthentication { get; } = new IotSecurityRecommendationType(IotAcrAuthenticationValue);
-        /// <summary>
-        /// IoT agent message size capacity is currently underutilized, causing an increase in the number of sent messages. Adjust message intervals for better utilization.
-        /// Serialized Name: RecommendationType.IoT_AgentSendsUnutilizedMessages
-        /// </summary>
+        /// <summary> IoT agent message size capacity is currently underutilized, causing an increase in the number of sent messages. Adjust message intervals for better utilization. </summary>
         public static IotSecurityRecommendationType IotAgentSendsUnutilizedMessages { get; } = new IotSecurityRecommendationType(IotAgentSendsUnutilizedMessagesValue);
-        /// <summary>
-        /// Identified security related system configuration issues.
-        /// Serialized Name: RecommendationType.IoT_Baseline
-        /// </summary>
+        /// <summary> Identified security related system configuration issues. </summary>
         public static IotSecurityRecommendationType IotBaseline { get; } = new IotSecurityRecommendationType(IotBaselineValue);
-        /// <summary>
-        /// You can optimize Edge Hub memory usage by turning off protocol heads for any protocols not used by Edge modules in your solution.
-        /// Serialized Name: RecommendationType.IoT_EdgeHubMemOptimize
-        /// </summary>
+        /// <summary> You can optimize Edge Hub memory usage by turning off protocol heads for any protocols not used by Edge modules in your solution. </summary>
         public static IotSecurityRecommendationType IotEdgeHubMemOptimize { get; } = new IotSecurityRecommendationType(IotEdgeHubMemOptimizeValue);
-        /// <summary>
-        /// Logging is disabled for this edge module.
-        /// Serialized Name: RecommendationType.IoT_EdgeLoggingOptions
-        /// </summary>
+        /// <summary> Logging is disabled for this edge module. </summary>
         public static IotSecurityRecommendationType IotEdgeLoggingOptions { get; } = new IotSecurityRecommendationType(IotEdgeLoggingOptionsValue);
-        /// <summary>
-        /// A minority within a device security group has inconsistent Edge Module settings with the rest of their group.
-        /// Serialized Name: RecommendationType.IoT_InconsistentModuleSettings
-        /// </summary>
+        /// <summary> A minority within a device security group has inconsistent Edge Module settings with the rest of their group. </summary>
         public static IotSecurityRecommendationType IotInconsistentModuleSettings { get; } = new IotSecurityRecommendationType(IotInconsistentModuleSettingsValue);
-        /// <summary>
-        /// Install the Azure Security of Things Agent.
-        /// Serialized Name: RecommendationType.IoT_InstallAgent
-        /// </summary>
+        /// <summary> Install the Azure Security of Things Agent. </summary>
         public static IotSecurityRecommendationType IotInstallAgent { get; } = new IotSecurityRecommendationType(IotInstallAgentValue);
-        /// <summary>
-        /// IP Filter Configuration should have rules defined for allowed traffic and should deny all other traffic by default.
-        /// Serialized Name: RecommendationType.IoT_IPFilter_DenyAll
-        /// </summary>
+        /// <summary> IP Filter Configuration should have rules defined for allowed traffic and should deny all other traffic by default. </summary>
         public static IotSecurityRecommendationType IotIPFilterDenyAll { get; } = new IotSecurityRecommendationType(IotIPFilterDenyAllValue);
-        /// <summary>
-        /// An Allow IP Filter rules source IP range is too large. Overly permissive rules might expose your IoT hub to malicious intenders.
-        /// Serialized Name: RecommendationType.IoT_IPFilter_PermissiveRule
-        /// </summary>
+        /// <summary> An Allow IP Filter rules source IP range is too large. Overly permissive rules might expose your IoT hub to malicious intenders. </summary>
         public static IotSecurityRecommendationType IotIPFilterPermissiveRule { get; } = new IotSecurityRecommendationType(IotIPFilterPermissiveRuleValue);
-        /// <summary>
-        /// A listening endpoint was found on the device.
-        /// Serialized Name: RecommendationType.IoT_OpenPorts
-        /// </summary>
+        /// <summary> A listening endpoint was found on the device. </summary>
         public static IotSecurityRecommendationType IotOpenPorts { get; } = new IotSecurityRecommendationType(IotOpenPortsValue);
-        /// <summary>
-        /// An Allowed firewall policy was found (INPUT/OUTPUT). The policy should Deny all traffic by default and define rules to allow necessary communication to/from the device.
-        /// Serialized Name: RecommendationType.IoT_PermissiveFirewallPolicy
-        /// </summary>
+        /// <summary> An Allowed firewall policy was found (INPUT/OUTPUT). The policy should Deny all traffic by default and define rules to allow necessary communication to/from the device. </summary>
         public static IotSecurityRecommendationType IotPermissiveFirewallPolicy { get; } = new IotSecurityRecommendationType(IotPermissiveFirewallPolicyValue);
-        /// <summary>
-        /// A rule in the firewall has been found that contains a permissive pattern for a wide range of IP addresses or Ports.
-        /// Serialized Name: RecommendationType.IoT_PermissiveInputFirewallRules
-        /// </summary>
+        /// <summary> A rule in the firewall has been found that contains a permissive pattern for a wide range of IP addresses or Ports. </summary>
         public static IotSecurityRecommendationType IotPermissiveInputFirewallRules { get; } = new IotSecurityRecommendationType(IotPermissiveInputFirewallRulesValue);
-        /// <summary>
-        /// A rule in the firewall has been found that contains a permissive pattern for a wide range of IP addresses or Ports.
-        /// Serialized Name: RecommendationType.IoT_PermissiveOutputFirewallRules
-        /// </summary>
+        /// <summary> A rule in the firewall has been found that contains a permissive pattern for a wide range of IP addresses or Ports. </summary>
         public static IotSecurityRecommendationType IotPermissiveOutputFirewallRules { get; } = new IotSecurityRecommendationType(IotPermissiveOutputFirewallRulesValue);
-        /// <summary>
-        /// Edge module is configured to run in privileged mode, with extensive Linux capabilities or with host-level network access (send/receive data to host machine).
-        /// Serialized Name: RecommendationType.IoT_PrivilegedDockerOptions
-        /// </summary>
+        /// <summary> Edge module is configured to run in privileged mode, with extensive Linux capabilities or with host-level network access (send/receive data to host machine). </summary>
         public static IotSecurityRecommendationType IotPrivilegedDockerOptions { get; } = new IotSecurityRecommendationType(IotPrivilegedDockerOptionsValue);
-        /// <summary>
-        /// Same authentication credentials to the IoT Hub used by multiple devices. This could indicate an illegitimate device impersonating a legitimate device. It also exposes the risk of device impersonation by an attacker.
-        /// Serialized Name: RecommendationType.IoT_SharedCredentials
-        /// </summary>
+        /// <summary> Same authentication credentials to the IoT Hub used by multiple devices. This could indicate an illegitimate device impersonating a legitimate device. It also exposes the risk of device impersonation by an attacker. </summary>
         public static IotSecurityRecommendationType IotSharedCredentials { get; } = new IotSecurityRecommendationType(IotSharedCredentialsValue);
-        /// <summary>
-        /// Insecure TLS configurations detected. Immediate upgrade recommended.
-        /// Serialized Name: RecommendationType.IoT_VulnerableTLSCipherSuite
-        /// </summary>
+        /// <summary> Insecure TLS configurations detected. Immediate upgrade recommended. </summary>
         public static IotSecurityRecommendationType IotVulnerableTlsCipherSuite { get; } = new IotSecurityRecommendationType(IotVulnerableTlsCipherSuiteValue);
         /// <summary> Determines if two <see cref="IotSecurityRecommendationType"/> values are the same. </summary>
         public static bool operator ==(IotSecurityRecommendationType left, IotSecurityRecommendationType right) => left.Equals(right);

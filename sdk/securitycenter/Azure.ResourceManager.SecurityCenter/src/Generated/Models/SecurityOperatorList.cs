@@ -13,10 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of SecurityOperator response.
-    /// Serialized Name: SecurityOperatorList
-    /// </summary>
+    /// <summary> List of SecurityOperator response. </summary>
     internal partial class SecurityOperatorList
     {
         /// <summary>
@@ -52,10 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityOperatorList"/>. </summary>
-        /// <param name="value">
-        /// List of SecurityOperator configurations
-        /// Serialized Name: SecurityOperatorList.value
-        /// </param>
+        /// <param name="value"> List of SecurityOperator configurations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SecurityOperatorList(IEnumerable<SecurityOperatorData> value)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityOperatorList"/>. </summary>
-        /// <param name="value">
-        /// List of SecurityOperator configurations
-        /// Serialized Name: SecurityOperatorList.value
-        /// </param>
+        /// <param name="value"> List of SecurityOperator configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityOperatorList(IReadOnlyList<SecurityOperatorData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,10 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// List of SecurityOperator configurations
-        /// Serialized Name: SecurityOperatorList.value
-        /// </summary>
+        /// <summary> List of SecurityOperator configurations. </summary>
         public IReadOnlyList<SecurityOperatorData> Value { get; }
     }
 }

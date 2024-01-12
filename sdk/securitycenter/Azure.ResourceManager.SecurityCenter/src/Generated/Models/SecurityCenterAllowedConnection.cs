@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The resource whose properties describes the allowed traffic between Azure resources
-    /// Serialized Name: AllowedConnectionsResource
-    /// </summary>
+    /// <summary> The resource whose properties describes the allowed traffic between Azure resources. </summary>
     public partial class SecurityCenterAllowedConnection : ResourceData
     {
         /// <summary>
@@ -61,18 +58,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="calculatedOn">
-        /// The UTC time on which the allowed connections resource was calculated
-        /// Serialized Name: AllowedConnectionsResource.properties.calculatedDateTime
-        /// </param>
-        /// <param name="connectableResources">
-        /// List of connectable resources
-        /// Serialized Name: AllowedConnectionsResource.properties.connectableResources
-        /// </param>
-        /// <param name="location">
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </param>
+        /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
+        /// <param name="connectableResources"> List of connectable resources. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCenterAllowedConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<ConnectableResourceInfo> connectableResources, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -82,20 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The UTC time on which the allowed connections resource was calculated
-        /// Serialized Name: AllowedConnectionsResource.properties.calculatedDateTime
-        /// </summary>
+        /// <summary> The UTC time on which the allowed connections resource was calculated. </summary>
         public DateTimeOffset? CalculatedOn { get; }
-        /// <summary>
-        /// List of connectable resources
-        /// Serialized Name: AllowedConnectionsResource.properties.connectableResources
-        /// </summary>
+        /// <summary> List of connectable resources. </summary>
         public IReadOnlyList<ConnectableResourceInfo> ConnectableResources { get; }
-        /// <summary>
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </summary>
+        /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }
 }

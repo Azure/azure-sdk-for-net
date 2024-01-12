@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describe the additional data of governance assignment - optional
-    /// Serialized Name: GovernanceAssignmentAdditionalData
-    /// </summary>
+    /// <summary> Describe the additional data of governance assignment - optional. </summary>
     public partial class GovernanceAssignmentAdditionalInfo
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentAdditionalInfo"/>. </summary>
-        /// <param name="ticketNumber">
-        /// Ticket number associated with this governance assignment
-        /// Serialized Name: GovernanceAssignmentAdditionalData.ticketNumber
-        /// </param>
-        /// <param name="ticketLink">
-        /// Ticket link associated with this governance assignment - for example: https://snow.com
-        /// Serialized Name: GovernanceAssignmentAdditionalData.ticketLink
-        /// </param>
-        /// <param name="ticketStatus">
-        /// The ticket status associated with this governance assignment - for example: Active
-        /// Serialized Name: GovernanceAssignmentAdditionalData.ticketStatus
-        /// </param>
+        /// <param name="ticketNumber"> Ticket number associated with this governance assignment. </param>
+        /// <param name="ticketLink"> Ticket link associated with this governance assignment - for example: https://snow.com. </param>
+        /// <param name="ticketStatus"> The ticket status associated with this governance assignment - for example: Active. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GovernanceAssignmentAdditionalInfo(int? ticketNumber, string ticketLink, string ticketStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Ticket number associated with this governance assignment
-        /// Serialized Name: GovernanceAssignmentAdditionalData.ticketNumber
-        /// </summary>
+        /// <summary> Ticket number associated with this governance assignment. </summary>
         public int? TicketNumber { get; set; }
-        /// <summary>
-        /// Ticket link associated with this governance assignment - for example: https://snow.com
-        /// Serialized Name: GovernanceAssignmentAdditionalData.ticketLink
-        /// </summary>
+        /// <summary> Ticket link associated with this governance assignment - for example: https://snow.com. </summary>
         public string TicketLink { get; set; }
-        /// <summary>
-        /// The ticket status associated with this governance assignment - for example: Active
-        /// Serialized Name: GovernanceAssignmentAdditionalData.ticketStatus
-        /// </summary>
+        /// <summary> The ticket status associated with this governance assignment - for example: Active. </summary>
         public string TicketStatus { get; set; }
     }
 }

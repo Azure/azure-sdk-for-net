@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Severity level per category configuration for PR Annotations.
-    /// Serialized Name: CategoryConfiguration
-    /// </summary>
+    /// <summary> Severity level per category configuration for PR Annotations. </summary>
     public partial class CategoryConfiguration
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CategoryConfiguration"/>. </summary>
-        /// <param name="minimumSeverityLevel">
-        /// Gets or sets minimum severity level for a given category.
-        /// Serialized Name: CategoryConfiguration.minimumSeverityLevel
-        /// </param>
+        /// <param name="minimumSeverityLevel"> Gets or sets minimum severity level for a given category. </param>
         /// <param name="category">
         /// Rule categories.
         /// Code - code scanning results.
@@ -66,7 +60,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// IaC results.
         /// Secrets scanning results.
         /// Container scanning results.
-        /// Serialized Name: CategoryConfiguration.category
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CategoryConfiguration(string minimumSeverityLevel, RuleCategory? category, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -76,10 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets minimum severity level for a given category.
-        /// Serialized Name: CategoryConfiguration.minimumSeverityLevel
-        /// </summary>
+        /// <summary> Gets or sets minimum severity level for a given category. </summary>
         public string MinimumSeverityLevel { get; set; }
         /// <summary>
         /// Rule categories.
@@ -89,7 +79,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// IaC results.
         /// Secrets scanning results.
         /// Container scanning results.
-        /// Serialized Name: CategoryConfiguration.category
         /// </summary>
         public RuleCategory? Category { get; set; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The governance email weekly notification configuration.
-    /// Serialized Name: GovernanceEmailNotification
-    /// </summary>
+    /// <summary> The governance email weekly notification configuration. </summary>
     public partial class GovernanceEmailNotification
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GovernanceEmailNotification"/>. </summary>
-        /// <param name="isManagerEmailNotificationDisabled">
-        /// Exclude manager from weekly email notification.
-        /// Serialized Name: GovernanceEmailNotification.disableManagerEmailNotification
-        /// </param>
-        /// <param name="isOwnerEmailNotificationDisabled">
-        /// Exclude  owner from weekly email notification.
-        /// Serialized Name: GovernanceEmailNotification.disableOwnerEmailNotification
-        /// </param>
+        /// <param name="isManagerEmailNotificationDisabled"> Exclude manager from weekly email notification. </param>
+        /// <param name="isOwnerEmailNotificationDisabled"> Exclude  owner from weekly email notification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GovernanceEmailNotification(bool? isManagerEmailNotificationDisabled, bool? isOwnerEmailNotificationDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Exclude manager from weekly email notification.
-        /// Serialized Name: GovernanceEmailNotification.disableManagerEmailNotification
-        /// </summary>
+        /// <summary> Exclude manager from weekly email notification. </summary>
         public bool? IsManagerEmailNotificationDisabled { get; set; }
-        /// <summary>
-        /// Exclude  owner from weekly email notification.
-        /// Serialized Name: GovernanceEmailNotification.disableOwnerEmailNotification
-        /// </summary>
+        /// <summary> Exclude  owner from weekly email notification. </summary>
         public bool? IsOwnerEmailNotificationDisabled { get; set; }
     }
 }

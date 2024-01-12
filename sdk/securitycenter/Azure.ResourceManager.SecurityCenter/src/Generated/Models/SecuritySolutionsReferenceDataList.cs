@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SecuritySolutionsReferenceDataList.
-    /// Serialized Name: SecuritySolutionsReferenceDataList
-    /// </summary>
+    /// <summary> The SecuritySolutionsReferenceDataList. </summary>
     internal partial class SecuritySolutionsReferenceDataList
     {
         /// <summary>
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceDataList"/>. </summary>
-        /// <param name="value"> Serialized Name: SecuritySolutionsReferenceDataList.value. </param>
+        /// <param name="value"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecuritySolutionsReferenceDataList(IReadOnlyList<SecuritySolutionsReferenceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: SecuritySolutionsReferenceDataList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<SecuritySolutionsReferenceData> Value { get; }
     }
 }

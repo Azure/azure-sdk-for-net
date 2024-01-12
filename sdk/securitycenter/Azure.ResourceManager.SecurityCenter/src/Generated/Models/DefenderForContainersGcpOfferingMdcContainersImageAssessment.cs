@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender Container image assessment configuration
-    /// Serialized Name: DefenderForContainersGcpOfferingMdcContainersImageAssessment
-    /// </summary>
+    /// <summary> The Microsoft Defender Container image assessment configuration. </summary>
     public partial class DefenderForContainersGcpOfferingMdcContainersImageAssessment
     {
         /// <summary>
@@ -54,41 +51,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingMdcContainersImageAssessment"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender container image assessment enabled
-        /// Serialized Name: DefenderForContainersGcpOfferingMdcContainersImageAssessment.enabled
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The workload identity provider id in GCP for this feature
-        /// Serialized Name: DefenderForContainersGcpOfferingMdcContainersImageAssessment.workloadIdentityProviderId
-        /// </param>
-        /// <param name="serviceAccountEmailAddress">
-        /// The service account email address in GCP for this feature
-        /// Serialized Name: DefenderForContainersGcpOfferingMdcContainersImageAssessment.serviceAccountEmailAddress
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender container image assessment enabled. </param>
+        /// <param name="workloadIdentityProviderId"> The workload identity provider id in GCP for this feature. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForContainersGcpOfferingMdcContainersImageAssessment(bool? enabled, string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderForContainersGcpOfferingMdcContainersImageAssessment(bool? isEnabled, string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender container image assessment enabled
-        /// Serialized Name: DefenderForContainersGcpOfferingMdcContainersImageAssessment.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The workload identity provider id in GCP for this feature
-        /// Serialized Name: DefenderForContainersGcpOfferingMdcContainersImageAssessment.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> Is Microsoft Defender container image assessment enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The workload identity provider id in GCP for this feature. </summary>
         public string WorkloadIdentityProviderId { get; set; }
-        /// <summary>
-        /// The service account email address in GCP for this feature
-        /// Serialized Name: DefenderForContainersGcpOfferingMdcContainersImageAssessment.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The service account email address in GCP for this feature. </summary>
         public string ServiceAccountEmailAddress { get; set; }
     }
 }

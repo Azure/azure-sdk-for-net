@@ -27,8 +27,8 @@ modelerfour:
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 keep-orphaned-models:
   - ExternalSecuritySolutionKind
@@ -249,6 +249,55 @@ rename-mapping:
   OperationStatus: ExtensionOperationStatus
   IsEnabled: IsExtensionEnabled
   GitlabScopeEnvironmentData: GitlabScopeEnvironment
+  AzureDevOpsOrg: DevOpsOrg
+  AzureDevOpsOrgProperties: DevOpsOrgProperties
+  AzureDevOpsOrgProperties.provisioningStatusUpdateTimeUtc: ProvisioningStatusUpdatedOn
+  AzureDevOpsProject: DevOpsProject
+  AzureDevOpsProjectProperties: DevOpsProjectProperties
+  AzureDevOpsProjectProperties.provisioningStatusUpdateTimeUtc: ProvisioningStatusUpdatedOn
+  AzureDevOpsRepository: DevOpsRepository
+  AzureDevOpsRepositoryProperties: DevOpsRepositoryProperties
+  AzureDevOpsRepositoryProperties.provisioningStatusUpdateTimeUtc: ProvisioningStatusUpdatedOn
+  OnboardingState: ResourceOnboardingState
+  DefenderForStorageSetting.properties.isEnabled: IsEnabled
+  DefenderForStorageSetting.properties.overrideSubscriptionLevelSettings: IsOverrideSubscriptionLevelSettingsEnabled
+  DefenderForStorageSetting.properties.sensitiveDataDiscovery.isEnabled: IsSensitiveDataDiscoveryEnabled
+  DefenderForStorageSetting.properties.sensitiveDataDiscovery.operationStatus: SensitiveDataDiscoveryOperationStatus
+  DefenderForStorageSetting.properties.malwareScanning.operationStatus: MalwareScanningOperationStatus
+  DefenderForStorageSetting.properties.malwareScanning.onUpload.isEnabled: IsMalwareScanningOnUploadEnabled
+  GetSensitivitySettingsResponse: SensitivitySettings
+  GetSensitivitySettingsResponseProperties: SensitivitySettingsProperties
+  GitHubOwner: SecurityConnectorGitHubOwner
+  GitHubOwnerProperties: SecurityConnectorGitHubOwnerProperties
+  GitHubRepository: SecurityConnectorGitHubRepository
+  GitHubRepositoryProperties: SecurityConnectorGitHubRepositoryProperties
+  GitLabGroup: SecurityConnectorGitLabGroup
+  GitLabGroupProperties: SecurityConnectorGitLabGroupProperties
+  GitLabProject: SecurityConnectorGitLabProject
+  GitLabProjectProperties: SecurityConnectorGitLabProjectProperties
+  HealthReport: SecurityHealthReport
+  Issue: SecurityHealthReportIssue
+  AutoDiscovery: DevOpsAutoDiscovery
+  DefenderCspmAwsOfferingDatabasesDspm.enabled: IsEnabled
+  DefenderCspmAwsOfferingDataSensitivityDiscovery.enabled: IsEnabled
+  DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderCspmAwsOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderCspmGcpOfferingDataSensitivityDiscovery.enabled: IsEnabled
+  DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderCspmGcpOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderCspmGcpOfferingVmScanners.enabled: IsEnabled
+  DefenderFoDatabasesAwsOfferingDatabasesDspm.enabled: IsEnabled
+  DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderForContainersAwsOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderForContainersGcpOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderForServersGcpOfferingVmScanners.enabled: IsEnabled
+  SensitivityLabel.enabled: IsEnabled
+  Label: MipSensitivityLabel
+  Source: HealthReportSource
+  HealthReportResourceDetails.id: -|arm-id
+  StatusName: HealthReportStatusName
+  Authorization: DevOpsAuthorization
 
 prepend-rp-prefix:
   - CloudName
@@ -258,6 +307,7 @@ prepend-rp-prefix:
   - CloudOffering
   - ConnectionType
   - PublisherInfo
+  - ApiCollection
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -302,6 +352,7 @@ acronym-mapping:
   ATA: Ata
   CEF: Cef
   SSM: Ssm
+  K8s: K8S
 
 override-operation-name:
   Alerts_UpdateResourceGroupLevelStateToResolve: Resolve
@@ -317,6 +368,8 @@ override-operation-name:
   GovernanceRules_RuleIdExecuteSingleSubscription: ExecuteRule
   SubscriptionGovernanceRulesExecuteStatus_Get: GetRuleExecutionStatus
   ExternalSecuritySolutions_List: GetExternalSecuritySolutions
+  AzureDevOpsOrgs_Get: GetDevOpsOrg
+  AzureDevOpsOrgs_ListAvailable: GetAvailableDevOpsOrgs
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}: SubscriptionSecurityAlert

@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of RP resources which supports pagination.
-    /// Serialized Name: GitLabGroupListResponse
-    /// </summary>
+    /// <summary> List of RP resources which supports pagination. </summary>
     internal partial class GitLabGroupListResponse
     {
         /// <summary>
@@ -53,35 +50,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="GitLabGroupListResponse"/>. </summary>
         internal GitLabGroupListResponse()
         {
-            Value = new ChangeTrackingList<GitLabGroupData>();
+            Value = new ChangeTrackingList<SecurityConnectorGitLabGroupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GitLabGroupListResponse"/>. </summary>
-        /// <param name="value">
-        /// Gets or sets list of resources.
-        /// Serialized Name: GitLabGroupListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: GitLabGroupListResponse.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets list of resources. </param>
+        /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GitLabGroupListResponse(IReadOnlyList<GitLabGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GitLabGroupListResponse(IReadOnlyList<SecurityConnectorGitLabGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets list of resources.
-        /// Serialized Name: GitLabGroupListResponse.value
-        /// </summary>
-        public IReadOnlyList<GitLabGroupData> Value { get; }
-        /// <summary>
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: GitLabGroupListResponse.nextLink
-        /// </summary>
+        /// <summary> Gets or sets list of resources. </summary>
+        public IReadOnlyList<SecurityConnectorGitLabGroupData> Value { get; }
+        /// <summary> Gets or sets next link to scroll over the results. </summary>
         public string NextLink { get; }
     }
 }

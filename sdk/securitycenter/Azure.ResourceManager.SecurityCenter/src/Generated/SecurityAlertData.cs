@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityAlert data model.
     /// Security alert
-    /// Serialized Name: Alert
     /// </summary>
     public partial class SecurityAlertData : ResourceData
     {
@@ -69,116 +68,37 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="version">
-        /// Schema version.
-        /// Serialized Name: Alert.properties.version
-        /// </param>
-        /// <param name="alertType">
-        /// Unique identifier for the detection logic (all alert instances from the same detection logic will have the same alertType).
-        /// Serialized Name: Alert.properties.alertType
-        /// </param>
-        /// <param name="systemAlertId">
-        /// Unique identifier for the alert.
-        /// Serialized Name: Alert.properties.systemAlertId
-        /// </param>
-        /// <param name="productComponentName">
-        /// The name of Azure Security Center pricing tier which powering this alert. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing
-        /// Serialized Name: Alert.properties.productComponentName
-        /// </param>
-        /// <param name="alertDisplayName">
-        /// The display name of the alert.
-        /// Serialized Name: Alert.properties.alertDisplayName
-        /// </param>
-        /// <param name="description">
-        /// Description of the suspicious activity that was detected.
-        /// Serialized Name: Alert.properties.description
-        /// </param>
-        /// <param name="severity">
-        /// The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified.
-        /// Serialized Name: Alert.properties.severity
-        /// </param>
-        /// <param name="intent">
-        /// The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents.
-        /// Serialized Name: Alert.properties.intent
-        /// </param>
-        /// <param name="startOn">
-        /// The UTC time of the first event or activity included in the alert in ISO8601 format.
-        /// Serialized Name: Alert.properties.startTimeUtc
-        /// </param>
-        /// <param name="endOn">
-        /// The UTC time of the last event or activity included in the alert in ISO8601 format.
-        /// Serialized Name: Alert.properties.endTimeUtc
-        /// </param>
+        /// <param name="version"> Schema version. </param>
+        /// <param name="alertType"> Unique identifier for the detection logic (all alert instances from the same detection logic will have the same alertType). </param>
+        /// <param name="systemAlertId"> Unique identifier for the alert. </param>
+        /// <param name="productComponentName"> The name of Azure Security Center pricing tier which powering this alert. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing. </param>
+        /// <param name="alertDisplayName"> The display name of the alert. </param>
+        /// <param name="description"> Description of the suspicious activity that was detected. </param>
+        /// <param name="severity"> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </param>
+        /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </param>
+        /// <param name="startOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
+        /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers">
         /// The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert.
-        /// Serialized Name: Alert.properties.resourceIdentifiers
         /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceIdentifier"/> and <see cref="LogAnalyticsIdentifier"/>.
         /// </param>
-        /// <param name="remediationSteps">
-        /// Manual action items to take to remediate the alert.
-        /// Serialized Name: Alert.properties.remediationSteps
-        /// </param>
-        /// <param name="vendorName">
-        /// The name of the vendor that raises the alert.
-        /// Serialized Name: Alert.properties.vendorName
-        /// </param>
-        /// <param name="status">
-        /// The life cycle status of the alert.
-        /// Serialized Name: Alert.properties.status
-        /// </param>
-        /// <param name="extendedLinks">
-        /// Links related to the alert
-        /// Serialized Name: Alert.properties.extendedLinks
-        /// </param>
-        /// <param name="alertUri">
-        /// A direct link to the alert page in Azure Portal.
-        /// Serialized Name: Alert.properties.alertUri
-        /// </param>
-        /// <param name="generatedOn">
-        /// The UTC time the alert was generated in ISO8601 format.
-        /// Serialized Name: Alert.properties.timeGeneratedUtc
-        /// </param>
-        /// <param name="productName">
-        /// The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on).
-        /// Serialized Name: Alert.properties.productName
-        /// </param>
-        /// <param name="processingEndOn">
-        /// The UTC processing end time of the alert in ISO8601 format.
-        /// Serialized Name: Alert.properties.processingEndTimeUtc
-        /// </param>
-        /// <param name="entities">
-        /// A list of entities related to the alert.
-        /// Serialized Name: Alert.properties.entities
-        /// </param>
-        /// <param name="isIncident">
-        /// This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert.
-        /// Serialized Name: Alert.properties.isIncident
-        /// </param>
-        /// <param name="correlationKey">
-        /// Key for corelating related alerts. Alerts with the same correlation key considered to be related.
-        /// Serialized Name: Alert.properties.correlationKey
-        /// </param>
-        /// <param name="extendedProperties">
-        /// Custom properties for the alert.
-        /// Serialized Name: Alert.properties.extendedProperties
-        /// </param>
-        /// <param name="compromisedEntity">
-        /// The display name of the resource most related to this alert.
-        /// Serialized Name: Alert.properties.compromisedEntity
-        /// </param>
-        /// <param name="techniques">
-        /// kill chain related techniques behind the alert.
-        /// Serialized Name: Alert.properties.techniques
-        /// </param>
-        /// <param name="subTechniques">
-        /// Kill chain related sub-techniques behind the alert.
-        /// Serialized Name: Alert.properties.subTechniques
-        /// </param>
-        /// <param name="supportingEvidence">
-        /// Changing set of properties depending on the supportingEvidence type.
-        /// Serialized Name: Alert.properties.supportingEvidence
-        /// </param>
+        /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
+        /// <param name="vendorName"> The name of the vendor that raises the alert. </param>
+        /// <param name="status"> The life cycle status of the alert. </param>
+        /// <param name="extendedLinks"> Links related to the alert. </param>
+        /// <param name="alertUri"> A direct link to the alert page in Azure Portal. </param>
+        /// <param name="generatedOn"> The UTC time the alert was generated in ISO8601 format. </param>
+        /// <param name="productName"> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </param>
+        /// <param name="processingEndOn"> The UTC processing end time of the alert in ISO8601 format. </param>
+        /// <param name="entities"> A list of entities related to the alert. </param>
+        /// <param name="isIncident"> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </param>
+        /// <param name="correlationKey"> Key for corelating related alerts. Alerts with the same correlation key considered to be related. </param>
+        /// <param name="extendedProperties"> Custom properties for the alert. </param>
+        /// <param name="compromisedEntity"> The display name of the resource most related to this alert. </param>
+        /// <param name="techniques"> kill chain related techniques behind the alert. </param>
+        /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
+        /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, SecurityAlertSeverity? severity, KillChainIntent? intent, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, SecurityAlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, Uri alertUri, DateTimeOffset? generatedOn, string productName, DateTimeOffset? processingEndOn, IReadOnlyList<SecurityAlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, SecurityAlertSupportingEvidence supportingEvidence, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -212,142 +132,63 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Schema version.
-        /// Serialized Name: Alert.properties.version
-        /// </summary>
+        /// <summary> Schema version. </summary>
         public string Version { get; }
-        /// <summary>
-        /// Unique identifier for the detection logic (all alert instances from the same detection logic will have the same alertType).
-        /// Serialized Name: Alert.properties.alertType
-        /// </summary>
+        /// <summary> Unique identifier for the detection logic (all alert instances from the same detection logic will have the same alertType). </summary>
         public string AlertType { get; }
-        /// <summary>
-        /// Unique identifier for the alert.
-        /// Serialized Name: Alert.properties.systemAlertId
-        /// </summary>
+        /// <summary> Unique identifier for the alert. </summary>
         public string SystemAlertId { get; }
-        /// <summary>
-        /// The name of Azure Security Center pricing tier which powering this alert. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing
-        /// Serialized Name: Alert.properties.productComponentName
-        /// </summary>
+        /// <summary> The name of Azure Security Center pricing tier which powering this alert. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-pricing. </summary>
         public string ProductComponentName { get; }
-        /// <summary>
-        /// The display name of the alert.
-        /// Serialized Name: Alert.properties.alertDisplayName
-        /// </summary>
+        /// <summary> The display name of the alert. </summary>
         public string AlertDisplayName { get; }
-        /// <summary>
-        /// Description of the suspicious activity that was detected.
-        /// Serialized Name: Alert.properties.description
-        /// </summary>
+        /// <summary> Description of the suspicious activity that was detected. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified.
-        /// Serialized Name: Alert.properties.severity
-        /// </summary>
+        /// <summary> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </summary>
         public SecurityAlertSeverity? Severity { get; }
-        /// <summary>
-        /// The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents.
-        /// Serialized Name: Alert.properties.intent
-        /// </summary>
+        /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </summary>
         public KillChainIntent? Intent { get; }
-        /// <summary>
-        /// The UTC time of the first event or activity included in the alert in ISO8601 format.
-        /// Serialized Name: Alert.properties.startTimeUtc
-        /// </summary>
+        /// <summary> The UTC time of the first event or activity included in the alert in ISO8601 format. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// The UTC time of the last event or activity included in the alert in ISO8601 format.
-        /// Serialized Name: Alert.properties.endTimeUtc
-        /// </summary>
+        /// <summary> The UTC time of the last event or activity included in the alert in ISO8601 format. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary>
         /// The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert.
-        /// Serialized Name: Alert.properties.resourceIdentifiers
         /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceIdentifier"/> and <see cref="LogAnalyticsIdentifier"/>.
         /// </summary>
         public IReadOnlyList<SecurityAlertResourceIdentifier> ResourceIdentifiers { get; }
-        /// <summary>
-        /// Manual action items to take to remediate the alert.
-        /// Serialized Name: Alert.properties.remediationSteps
-        /// </summary>
+        /// <summary> Manual action items to take to remediate the alert. </summary>
         public IReadOnlyList<string> RemediationSteps { get; }
-        /// <summary>
-        /// The name of the vendor that raises the alert.
-        /// Serialized Name: Alert.properties.vendorName
-        /// </summary>
+        /// <summary> The name of the vendor that raises the alert. </summary>
         public string VendorName { get; }
-        /// <summary>
-        /// The life cycle status of the alert.
-        /// Serialized Name: Alert.properties.status
-        /// </summary>
+        /// <summary> The life cycle status of the alert. </summary>
         public SecurityAlertStatus? Status { get; }
-        /// <summary>
-        /// Links related to the alert
-        /// Serialized Name: Alert.properties.extendedLinks
-        /// </summary>
+        /// <summary> Links related to the alert. </summary>
         public IReadOnlyList<IDictionary<string, string>> ExtendedLinks { get; }
-        /// <summary>
-        /// A direct link to the alert page in Azure Portal.
-        /// Serialized Name: Alert.properties.alertUri
-        /// </summary>
+        /// <summary> A direct link to the alert page in Azure Portal. </summary>
         public Uri AlertUri { get; }
-        /// <summary>
-        /// The UTC time the alert was generated in ISO8601 format.
-        /// Serialized Name: Alert.properties.timeGeneratedUtc
-        /// </summary>
+        /// <summary> The UTC time the alert was generated in ISO8601 format. </summary>
         public DateTimeOffset? GeneratedOn { get; }
-        /// <summary>
-        /// The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on).
-        /// Serialized Name: Alert.properties.productName
-        /// </summary>
+        /// <summary> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </summary>
         public string ProductName { get; }
-        /// <summary>
-        /// The UTC processing end time of the alert in ISO8601 format.
-        /// Serialized Name: Alert.properties.processingEndTimeUtc
-        /// </summary>
+        /// <summary> The UTC processing end time of the alert in ISO8601 format. </summary>
         public DateTimeOffset? ProcessingEndOn { get; }
-        /// <summary>
-        /// A list of entities related to the alert.
-        /// Serialized Name: Alert.properties.entities
-        /// </summary>
+        /// <summary> A list of entities related to the alert. </summary>
         public IReadOnlyList<SecurityAlertEntity> Entities { get; }
-        /// <summary>
-        /// This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert.
-        /// Serialized Name: Alert.properties.isIncident
-        /// </summary>
+        /// <summary> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </summary>
         public bool? IsIncident { get; }
-        /// <summary>
-        /// Key for corelating related alerts. Alerts with the same correlation key considered to be related.
-        /// Serialized Name: Alert.properties.correlationKey
-        /// </summary>
+        /// <summary> Key for corelating related alerts. Alerts with the same correlation key considered to be related. </summary>
         public string CorrelationKey { get; }
-        /// <summary>
-        /// Custom properties for the alert.
-        /// Serialized Name: Alert.properties.extendedProperties
-        /// </summary>
+        /// <summary> Custom properties for the alert. </summary>
         public IDictionary<string, string> ExtendedProperties { get; }
-        /// <summary>
-        /// The display name of the resource most related to this alert.
-        /// Serialized Name: Alert.properties.compromisedEntity
-        /// </summary>
+        /// <summary> The display name of the resource most related to this alert. </summary>
         public string CompromisedEntity { get; }
-        /// <summary>
-        /// kill chain related techniques behind the alert.
-        /// Serialized Name: Alert.properties.techniques
-        /// </summary>
+        /// <summary> kill chain related techniques behind the alert. </summary>
         public IReadOnlyList<string> Techniques { get; }
-        /// <summary>
-        /// Kill chain related sub-techniques behind the alert.
-        /// Serialized Name: Alert.properties.subTechniques
-        /// </summary>
+        /// <summary> Kill chain related sub-techniques behind the alert. </summary>
         public IReadOnlyList<string> SubTechniques { get; }
-        /// <summary>
-        /// Changing set of properties depending on the supportingEvidence type.
-        /// Serialized Name: Alert.properties.supportingEvidence
-        /// </summary>
+        /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
         public SecurityAlertSupportingEvidence SupportingEvidence { get; set; }
     }
 }

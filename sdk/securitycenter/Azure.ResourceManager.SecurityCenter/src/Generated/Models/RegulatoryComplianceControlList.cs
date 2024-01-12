@@ -13,10 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of regulatory compliance controls response
-    /// Serialized Name: RegulatoryComplianceControlList
-    /// </summary>
+    /// <summary> List of regulatory compliance controls response. </summary>
     internal partial class RegulatoryComplianceControlList
     {
         /// <summary>
@@ -52,10 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlList"/>. </summary>
-        /// <param name="value">
-        /// List of regulatory compliance controls
-        /// Serialized Name: RegulatoryComplianceControlList.value
-        /// </param>
+        /// <param name="value"> List of regulatory compliance controls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RegulatoryComplianceControlList(IEnumerable<RegulatoryComplianceControlData> value)
         {
@@ -65,14 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlList"/>. </summary>
-        /// <param name="value">
-        /// List of regulatory compliance controls
-        /// Serialized Name: RegulatoryComplianceControlList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: RegulatoryComplianceControlList.nextLink
-        /// </param>
+        /// <param name="value"> List of regulatory compliance controls. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegulatoryComplianceControlList(IReadOnlyList<RegulatoryComplianceControlData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,15 +74,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// List of regulatory compliance controls
-        /// Serialized Name: RegulatoryComplianceControlList.value
-        /// </summary>
+        /// <summary> List of regulatory compliance controls. </summary>
         public IReadOnlyList<RegulatoryComplianceControlData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: RegulatoryComplianceControlList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

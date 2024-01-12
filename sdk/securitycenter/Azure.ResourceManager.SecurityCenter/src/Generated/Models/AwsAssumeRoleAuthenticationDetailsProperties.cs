@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// AWS cloud account connector based assume role, the role enables delegating access to your AWS resources. The role is composed of role Amazon Resource Name (ARN) and external ID. For more details, refer to &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html"&gt;Creating a Role to Delegate Permissions to an IAM User (write only)&lt;/a&gt;
-    /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties
-    /// </summary>
+    /// <summary> AWS cloud account connector based assume role, the role enables delegating access to your AWS resources. The role is composed of role Amazon Resource Name (ARN) and external ID. For more details, refer to &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html"&gt;Creating a Role to Delegate Permissions to an IAM User (write only)&lt;/a&gt;. </summary>
     public partial class AwsAssumeRoleAuthenticationDetailsProperties : AuthenticationDetailsProperties
     {
         /// <summary> Initializes a new instance of <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>. </summary>
-        /// <param name="awsAssumeRoleArn">
-        /// Assumed role ID is an identifier that you can use to create temporary security credentials.
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.awsAssumeRoleArn
-        /// </param>
-        /// <param name="awsExternalId">
-        /// A unique identifier that is required when you assume a role in another account.
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.awsExternalId
-        /// </param>
+        /// <param name="awsAssumeRoleArn"> Assumed role ID is an identifier that you can use to create temporary security credentials. </param>
+        /// <param name="awsExternalId"> A unique identifier that is required when you assume a role in another account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="awsAssumeRoleArn"/> is null. </exception>
         public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, Guid awsExternalId)
         {
@@ -37,31 +28,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>. </summary>
-        /// <param name="authenticationProvisioningState">
-        /// State of the multi-cloud connector
-        /// Serialized Name: AuthenticationDetailsProperties.authenticationProvisioningState
-        /// </param>
-        /// <param name="grantedPermissions">
-        /// The permissions detected in the cloud account.
-        /// Serialized Name: AuthenticationDetailsProperties.grantedPermissions
-        /// </param>
-        /// <param name="authenticationType">
-        /// Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials.
-        /// Serialized Name: AuthenticationDetailsProperties.authenticationType
-        /// </param>
+        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
+        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
+        /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="accountId">
-        /// The ID of the cloud account
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.accountId
-        /// </param>
-        /// <param name="awsAssumeRoleArn">
-        /// Assumed role ID is an identifier that you can use to create temporary security credentials.
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.awsAssumeRoleArn
-        /// </param>
-        /// <param name="awsExternalId">
-        /// A unique identifier that is required when you assume a role in another account.
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.awsExternalId
-        /// </param>
+        /// <param name="accountId"> The ID of the cloud account. </param>
+        /// <param name="awsAssumeRoleArn"> Assumed role ID is an identifier that you can use to create temporary security credentials. </param>
+        /// <param name="awsExternalId"> A unique identifier that is required when you assume a role in another account. </param>
         internal AwsAssumeRoleAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountId, string awsAssumeRoleArn, Guid awsExternalId) : base(authenticationProvisioningState, grantedPermissions, authenticationType, serializedAdditionalRawData)
         {
             AccountId = accountId;
@@ -75,20 +48,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The ID of the cloud account
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.accountId
-        /// </summary>
+        /// <summary> The ID of the cloud account. </summary>
         public string AccountId { get; }
-        /// <summary>
-        /// Assumed role ID is an identifier that you can use to create temporary security credentials.
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.awsAssumeRoleArn
-        /// </summary>
+        /// <summary> Assumed role ID is an identifier that you can use to create temporary security credentials. </summary>
         public string AwsAssumeRoleArn { get; set; }
-        /// <summary>
-        /// A unique identifier that is required when you assume a role in another account.
-        /// Serialized Name: AwAssumeRoleAuthenticationDetailsProperties.awsExternalId
-        /// </summary>
+        /// <summary> A unique identifier that is required when you assume a role in another account. </summary>
         public Guid AwsExternalId { get; set; }
     }
 }

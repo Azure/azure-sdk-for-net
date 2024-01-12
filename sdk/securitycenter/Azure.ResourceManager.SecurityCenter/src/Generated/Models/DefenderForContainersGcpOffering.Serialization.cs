@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> defenderAgentAutoProvisioningFlag = default;
             Optional<bool> policyAgentAutoProvisioningFlag = default;
             Optional<DefenderForContainersGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8s = default;
+            Optional<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8s = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag), mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8s.Value);
+            return new DefenderForContainersGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag), mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
         BinaryData IPersistableModel<DefenderForContainersGcpOffering>.Write(ModelReaderWriterOptions options)

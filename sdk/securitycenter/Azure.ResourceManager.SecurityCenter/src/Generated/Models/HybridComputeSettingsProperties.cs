@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Settings for hybrid compute management
-    /// Serialized Name: HybridComputeSettingsProperties
-    /// </summary>
+    /// <summary> Settings for hybrid compute management. </summary>
     public partial class HybridComputeSettingsProperties
     {
         /// <summary>
@@ -49,40 +46,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsProperties"/>. </summary>
-        /// <param name="autoProvision">
-        /// Whether or not to automatically install Azure Arc (hybrid compute) agents on machines
-        /// Serialized Name: HybridComputeSettingsProperties.autoProvision
-        /// </param>
+        /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
         public HybridComputeSettingsProperties(AutoProvisionState autoProvision)
         {
             AutoProvision = autoProvision;
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsProperties"/>. </summary>
-        /// <param name="hybridComputeProvisioningState">
-        /// State of the service principal and its secret
-        /// Serialized Name: HybridComputeSettingsProperties.hybridComputeProvisioningState
-        /// </param>
-        /// <param name="autoProvision">
-        /// Whether or not to automatically install Azure Arc (hybrid compute) agents on machines
-        /// Serialized Name: HybridComputeSettingsProperties.autoProvision
-        /// </param>
-        /// <param name="resourceGroupName">
-        /// The name of the resource group where Arc (Hybrid Compute) connectors are connected.
-        /// Serialized Name: HybridComputeSettingsProperties.resourceGroupName
-        /// </param>
-        /// <param name="region">
-        /// The location where the metadata of machines will be stored
-        /// Serialized Name: HybridComputeSettingsProperties.region
-        /// </param>
-        /// <param name="proxyServer">
-        /// For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use.
-        /// Serialized Name: HybridComputeSettingsProperties.proxyServer
-        /// </param>
-        /// <param name="servicePrincipal">
-        /// An object to access resources that are secured by an Azure AD tenant.
-        /// Serialized Name: HybridComputeSettingsProperties.servicePrincipal
-        /// </param>
+        /// <param name="hybridComputeProvisioningState"> State of the service principal and its secret. </param>
+        /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
+        /// <param name="resourceGroupName"> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </param>
+        /// <param name="region"> The location where the metadata of machines will be stored. </param>
+        /// <param name="proxyServer"> For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use. </param>
+        /// <param name="servicePrincipal"> An object to access resources that are secured by an Azure AD tenant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HybridComputeSettingsProperties(HybridComputeProvisioningState? hybridComputeProvisioningState, AutoProvisionState autoProvision, string resourceGroupName, string region, ProxyServerProperties proxyServer, ServicePrincipalProperties servicePrincipal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,35 +76,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// State of the service principal and its secret
-        /// Serialized Name: HybridComputeSettingsProperties.hybridComputeProvisioningState
-        /// </summary>
+        /// <summary> State of the service principal and its secret. </summary>
         public HybridComputeProvisioningState? HybridComputeProvisioningState { get; }
-        /// <summary>
-        /// Whether or not to automatically install Azure Arc (hybrid compute) agents on machines
-        /// Serialized Name: HybridComputeSettingsProperties.autoProvision
-        /// </summary>
+        /// <summary> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </summary>
         public AutoProvisionState AutoProvision { get; set; }
-        /// <summary>
-        /// The name of the resource group where Arc (Hybrid Compute) connectors are connected.
-        /// Serialized Name: HybridComputeSettingsProperties.resourceGroupName
-        /// </summary>
+        /// <summary> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </summary>
         public string ResourceGroupName { get; set; }
-        /// <summary>
-        /// The location where the metadata of machines will be stored
-        /// Serialized Name: HybridComputeSettingsProperties.region
-        /// </summary>
+        /// <summary> The location where the metadata of machines will be stored. </summary>
         public string Region { get; set; }
-        /// <summary>
-        /// For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use.
-        /// Serialized Name: HybridComputeSettingsProperties.proxyServer
-        /// </summary>
+        /// <summary> For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use. </summary>
         public ProxyServerProperties ProxyServer { get; set; }
-        /// <summary>
-        /// An object to access resources that are secured by an Azure AD tenant.
-        /// Serialized Name: HybridComputeSettingsProperties.servicePrincipal
-        /// </summary>
+        /// <summary> An object to access resources that are secured by an Azure AD tenant. </summary>
         public ServicePrincipalProperties ServicePrincipal { get; set; }
     }
 }

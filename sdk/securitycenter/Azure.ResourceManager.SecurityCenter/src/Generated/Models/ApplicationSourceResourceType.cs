@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The application source, what it affects, e.g. Assessments
-    /// Serialized Name: ApplicationSourceResourceType
-    /// </summary>
+    /// <summary> The application source, what it affects, e.g. Assessments. </summary>
     public readonly partial struct ApplicationSourceResourceType : IEquatable<ApplicationSourceResourceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string AssessmentsValue = "Assessments";
 
-        /// <summary>
-        /// The source of the application is assessments
-        /// Serialized Name: ApplicationSourceResourceType.Assessments
-        /// </summary>
+        /// <summary> The source of the application is assessments. </summary>
         public static ApplicationSourceResourceType Assessments { get; } = new ApplicationSourceResourceType(AssessmentsValue);
         /// <summary> Determines if two <see cref="ApplicationSourceResourceType"/> values are the same. </summary>
         public static bool operator ==(ApplicationSourceResourceType left, ApplicationSourceResourceType right) => left.Equals(right);

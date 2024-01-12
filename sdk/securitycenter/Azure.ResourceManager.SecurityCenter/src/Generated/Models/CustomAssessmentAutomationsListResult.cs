@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A list of Custom Assessment Automations
-    /// Serialized Name: CustomAssessmentAutomationsListResult
-    /// </summary>
+    /// <summary> A list of Custom Assessment Automations. </summary>
     internal partial class CustomAssessmentAutomationsListResult
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomAssessmentAutomationsListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of Custom Assessment Automations
-        /// Serialized Name: CustomAssessmentAutomationsListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link used to get the next page of operations.
-        /// Serialized Name: CustomAssessmentAutomationsListResult.nextLink
-        /// </param>
+        /// <param name="value"> Collection of Custom Assessment Automations. </param>
+        /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomAssessmentAutomationsListResult(IReadOnlyList<CustomAssessmentAutomationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Collection of Custom Assessment Automations
-        /// Serialized Name: CustomAssessmentAutomationsListResult.value
-        /// </summary>
+        /// <summary> Collection of Custom Assessment Automations. </summary>
         public IReadOnlyList<CustomAssessmentAutomationData> Value { get; }
-        /// <summary>
-        /// The link used to get the next page of operations.
-        /// Serialized Name: CustomAssessmentAutomationsListResult.nextLink
-        /// </summary>
+        /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }
 }

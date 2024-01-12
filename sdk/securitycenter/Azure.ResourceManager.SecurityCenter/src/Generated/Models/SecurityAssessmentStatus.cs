@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The result of the assessment
-    /// Serialized Name: AssessmentStatus
-    /// </summary>
+    /// <summary> The result of the assessment. </summary>
     public partial class SecurityAssessmentStatus
     {
         /// <summary>
@@ -49,28 +46,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatus"/>. </summary>
-        /// <param name="code">
-        /// Programmatic code for the status of the assessment
-        /// Serialized Name: AssessmentStatus.code
-        /// </param>
+        /// <param name="code"> Programmatic code for the status of the assessment. </param>
         public SecurityAssessmentStatus(SecurityAssessmentStatusCode code)
         {
             Code = code;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatus"/>. </summary>
-        /// <param name="code">
-        /// Programmatic code for the status of the assessment
-        /// Serialized Name: AssessmentStatus.code
-        /// </param>
-        /// <param name="cause">
-        /// Programmatic code for the cause of the assessment status
-        /// Serialized Name: AssessmentStatus.cause
-        /// </param>
-        /// <param name="description">
-        /// Human readable description of the assessment status
-        /// Serialized Name: AssessmentStatus.description
-        /// </param>
+        /// <param name="code"> Programmatic code for the status of the assessment. </param>
+        /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
+        /// <param name="description"> Human readable description of the assessment status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAssessmentStatus(SecurityAssessmentStatusCode code, string cause, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,20 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// Programmatic code for the status of the assessment
-        /// Serialized Name: AssessmentStatus.code
-        /// </summary>
+        /// <summary> Programmatic code for the status of the assessment. </summary>
         public SecurityAssessmentStatusCode Code { get; set; }
-        /// <summary>
-        /// Programmatic code for the cause of the assessment status
-        /// Serialized Name: AssessmentStatus.cause
-        /// </summary>
+        /// <summary> Programmatic code for the cause of the assessment status. </summary>
         public string Cause { get; set; }
-        /// <summary>
-        /// Human readable description of the assessment status
-        /// Serialized Name: AssessmentStatus.description
-        /// </summary>
+        /// <summary> Human readable description of the assessment status. </summary>
         public string Description { get; set; }
     }
 }

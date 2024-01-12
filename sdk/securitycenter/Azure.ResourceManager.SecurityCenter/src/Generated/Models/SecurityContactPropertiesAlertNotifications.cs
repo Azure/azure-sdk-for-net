@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Defines whether to send email notifications about new security alerts
-    /// Serialized Name: SecurityContactPropertiesAlertNotifications
-    /// </summary>
+    /// <summary> Defines whether to send email notifications about new security alerts. </summary>
     public partial class SecurityContactPropertiesAlertNotifications
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesAlertNotifications"/>. </summary>
-        /// <param name="state">
-        /// Defines if email notifications will be sent about new security alerts
-        /// Serialized Name: SecurityContactPropertiesAlertNotifications.state
-        /// </param>
-        /// <param name="minimalSeverity">
-        /// Defines the minimal alert severity which will be sent as email notifications
-        /// Serialized Name: SecurityContactPropertiesAlertNotifications.minimalSeverity
-        /// </param>
+        /// <param name="state"> Defines if email notifications will be sent about new security alerts. </param>
+        /// <param name="minimalSeverity"> Defines the minimal alert severity which will be sent as email notifications. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityContactPropertiesAlertNotifications(SecurityAlertNotificationState? state, SecurityAlertMinimalSeverity? minimalSeverity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Defines if email notifications will be sent about new security alerts
-        /// Serialized Name: SecurityContactPropertiesAlertNotifications.state
-        /// </summary>
+        /// <summary> Defines if email notifications will be sent about new security alerts. </summary>
         public SecurityAlertNotificationState? State { get; set; }
-        /// <summary>
-        /// Defines the minimal alert severity which will be sent as email notifications
-        /// Serialized Name: SecurityContactPropertiesAlertNotifications.minimalSeverity
-        /// </summary>
+        /// <summary> Defines the minimal alert severity which will be sent as email notifications. </summary>
         public SecurityAlertMinimalSeverity? MinimalSeverity { get; set; }
     }
 }

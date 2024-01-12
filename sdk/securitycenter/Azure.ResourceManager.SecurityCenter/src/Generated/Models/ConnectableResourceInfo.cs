@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describes the allowed inbound and outbound traffic of an Azure resource
-    /// Serialized Name: ConnectableResource
-    /// </summary>
+    /// <summary> Describes the allowed inbound and outbound traffic of an Azure resource. </summary>
     public partial class ConnectableResourceInfo
     {
         /// <summary>
@@ -57,18 +54,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectableResourceInfo"/>. </summary>
-        /// <param name="id">
-        /// The Azure resource id
-        /// Serialized Name: ConnectableResource.id
-        /// </param>
-        /// <param name="inboundConnectedResources">
-        /// The list of Azure resources that the resource has inbound allowed connection from
-        /// Serialized Name: ConnectableResource.inboundConnectedResources
-        /// </param>
-        /// <param name="outboundConnectedResources">
-        /// The list of Azure resources that the resource has outbound allowed connection to
-        /// Serialized Name: ConnectableResource.outboundConnectedResources
-        /// </param>
+        /// <param name="id"> The Azure resource id. </param>
+        /// <param name="inboundConnectedResources"> The list of Azure resources that the resource has inbound allowed connection from. </param>
+        /// <param name="outboundConnectedResources"> The list of Azure resources that the resource has outbound allowed connection to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectableResourceInfo(ResourceIdentifier id, IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources, IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,20 +66,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Azure resource id
-        /// Serialized Name: ConnectableResource.id
-        /// </summary>
+        /// <summary> The Azure resource id. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// The list of Azure resources that the resource has inbound allowed connection from
-        /// Serialized Name: ConnectableResource.inboundConnectedResources
-        /// </summary>
+        /// <summary> The list of Azure resources that the resource has inbound allowed connection from. </summary>
         public IReadOnlyList<ConnectedResourceInfo> InboundConnectedResources { get; }
-        /// <summary>
-        /// The list of Azure resources that the resource has outbound allowed connection to
-        /// Serialized Name: ConnectableResource.outboundConnectedResources
-        /// </summary>
+        /// <summary> The list of Azure resources that the resource has outbound allowed connection to. </summary>
         public IReadOnlyList<ConnectedResourceInfo> OutboundConnectedResources { get; }
     }
 }

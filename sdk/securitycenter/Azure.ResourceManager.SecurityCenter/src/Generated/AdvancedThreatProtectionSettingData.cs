@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the AdvancedThreatProtectionSetting data model.
     /// The Advanced Threat Protection resource.
-    /// Serialized Name: AdvancedThreatProtectionSetting
     /// </summary>
     public partial class AdvancedThreatProtectionSettingData : ResourceData
     {
@@ -61,10 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isEnabled">
-        /// Indicates whether Advanced Threat Protection is enabled.
-        /// Serialized Name: AdvancedThreatProtectionSetting.properties.isEnabled
-        /// </param>
+        /// <param name="isEnabled"> Indicates whether Advanced Threat Protection is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdvancedThreatProtectionSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,10 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates whether Advanced Threat Protection is enabled.
-        /// Serialized Name: AdvancedThreatProtectionSetting.properties.isEnabled
-        /// </summary>
+        /// <summary> Indicates whether Advanced Threat Protection is enabled. </summary>
         public bool? IsEnabled { get; set; }
     }
 }

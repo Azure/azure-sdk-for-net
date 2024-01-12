@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SecurityTopologyResource.
-    /// Serialized Name: TopologyResource
-    /// </summary>
+    /// <summary> The SecurityTopologyResource. </summary>
     public partial class SecurityTopologyResource : ResourceData
     {
         /// <summary>
@@ -61,18 +58,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="calculatedOn">
-        /// The UTC time on which the topology was calculated
-        /// Serialized Name: TopologyResource.properties.calculatedDateTime
-        /// </param>
-        /// <param name="topologyResources">
-        /// Azure resources which are part of this topology resource
-        /// Serialized Name: TopologyResource.properties.topologyResources
-        /// </param>
-        /// <param name="location">
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </param>
+        /// <param name="calculatedOn"> The UTC time on which the topology was calculated. </param>
+        /// <param name="topologyResources"> Azure resources which are part of this topology resource. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityTopologyResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? calculatedOn, IReadOnlyList<TopologySingleResource> topologyResources, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -82,20 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The UTC time on which the topology was calculated
-        /// Serialized Name: TopologyResource.properties.calculatedDateTime
-        /// </summary>
+        /// <summary> The UTC time on which the topology was calculated. </summary>
         public DateTimeOffset? CalculatedOn { get; }
-        /// <summary>
-        /// Azure resources which are part of this topology resource
-        /// Serialized Name: TopologyResource.properties.topologyResources
-        /// </summary>
+        /// <summary> Azure resources which are part of this topology resource. </summary>
         public IReadOnlyList<TopologySingleResource> TopologyResources { get; }
-        /// <summary>
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </summary>
+        /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }
 }

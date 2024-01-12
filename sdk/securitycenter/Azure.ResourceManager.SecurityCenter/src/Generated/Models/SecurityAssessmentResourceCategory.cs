@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The categories of resource that is at risk when the assessment is unhealthy
-    /// Serialized Name: Categories
-    /// </summary>
+    /// <summary> The categories of resource that is at risk when the assessment is unhealthy. </summary>
     public readonly partial struct SecurityAssessmentResourceCategory : IEquatable<SecurityAssessmentResourceCategory>
     {
         private readonly string _value;
@@ -31,25 +28,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string IdentityAndAccessValue = "IdentityAndAccess";
         private const string IotValue = "IoT";
 
-        /// <summary>
-        /// Compute
-        /// Serialized Name: Categories.Compute
-        /// </summary>
+        /// <summary> Compute. </summary>
         public static SecurityAssessmentResourceCategory Compute { get; } = new SecurityAssessmentResourceCategory(ComputeValue);
-        /// <summary>
-        /// Networking
-        /// Serialized Name: Categories.Networking
-        /// </summary>
+        /// <summary> Networking. </summary>
         public static SecurityAssessmentResourceCategory Networking { get; } = new SecurityAssessmentResourceCategory(NetworkingValue);
-        /// <summary>
-        /// Data
-        /// Serialized Name: Categories.Data
-        /// </summary>
+        /// <summary> Data. </summary>
         public static SecurityAssessmentResourceCategory Data { get; } = new SecurityAssessmentResourceCategory(DataValue);
-        /// <summary>
-        /// IdentityAndAccess
-        /// Serialized Name: Categories.IdentityAndAccess
-        /// </summary>
+        /// <summary> IdentityAndAccess. </summary>
         public static SecurityAssessmentResourceCategory IdentityAndAccess { get; } = new SecurityAssessmentResourceCategory(IdentityAndAccessValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceCategory"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentResourceCategory left, SecurityAssessmentResourceCategory right) => left.Equals(right);

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Configuration payload for PR Annotations.
-    /// Serialized Name: ActionableRemediation
-    /// </summary>
+    /// <summary> Configuration payload for PR Annotations. </summary>
     public partial class ActionableRemediation
     {
         /// <summary>
@@ -61,22 +58,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// None - the setting was never set.
         /// Enabled - ActionableRemediation is enabled.
         /// Disabled - ActionableRemediation is disabled.
-        /// Serialized Name: ActionableRemediation.state
         /// </param>
-        /// <param name="categoryConfigurations">
-        /// Gets or sets list of categories and severity levels.
-        /// Serialized Name: ActionableRemediation.categoryConfigurations
-        /// </param>
-        /// <param name="branchConfiguration">
-        /// Repository branch configuration for PR Annotations.
-        /// Serialized Name: ActionableRemediation.branchConfiguration
-        /// </param>
+        /// <param name="categoryConfigurations"> Gets or sets list of categories and severity levels. </param>
+        /// <param name="branchConfiguration"> Repository branch configuration for PR Annotations. </param>
         /// <param name="inheritFromParentState">
         /// Update Settings.
         ///
         /// Enabled - Resource should inherit configurations from parent.
         /// Disabled - Resource should not inherit configurations from parent.
-        /// Serialized Name: ActionableRemediation.inheritFromParentState
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ActionableRemediation(ActionableRemediationState? state, IList<CategoryConfiguration> categoryConfigurations, TargetBranchConfiguration branchConfiguration, InheritFromParentState? inheritFromParentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -93,25 +82,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// None - the setting was never set.
         /// Enabled - ActionableRemediation is enabled.
         /// Disabled - ActionableRemediation is disabled.
-        /// Serialized Name: ActionableRemediation.state
         /// </summary>
         public ActionableRemediationState? State { get; set; }
-        /// <summary>
-        /// Gets or sets list of categories and severity levels.
-        /// Serialized Name: ActionableRemediation.categoryConfigurations
-        /// </summary>
+        /// <summary> Gets or sets list of categories and severity levels. </summary>
         public IList<CategoryConfiguration> CategoryConfigurations { get; }
-        /// <summary>
-        /// Repository branch configuration for PR Annotations.
-        /// Serialized Name: ActionableRemediation.branchConfiguration
-        /// </summary>
+        /// <summary> Repository branch configuration for PR Annotations. </summary>
         public TargetBranchConfiguration BranchConfiguration { get; set; }
         /// <summary>
         /// Update Settings.
         ///
         /// Enabled - Resource should inherit configurations from parent.
         /// Disabled - Resource should not inherit configurations from parent.
-        /// Serialized Name: ActionableRemediation.inheritFromParentState
         /// </summary>
         public InheritFromParentState? InheritFromParentState { get; set; }
     }

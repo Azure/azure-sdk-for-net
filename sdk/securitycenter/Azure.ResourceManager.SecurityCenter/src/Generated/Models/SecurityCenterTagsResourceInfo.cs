@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A container holding only the Tags for a resource, allowing the user to update the tags.
-    /// Serialized Name: TagsResource
-    /// </summary>
+    /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags. </summary>
     public partial class SecurityCenterTagsResourceInfo
     {
         /// <summary>
@@ -56,10 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterTagsResourceInfo"/>. </summary>
-        /// <param name="tags">
-        /// Resource tags
-        /// Serialized Name: TagsResource.tags
-        /// </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCenterTagsResourceInfo(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: TagsResource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

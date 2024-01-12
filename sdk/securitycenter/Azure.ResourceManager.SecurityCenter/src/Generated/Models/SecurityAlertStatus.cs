@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The life cycle status of the alert.
-    /// Serialized Name: AlertStatus
-    /// </summary>
+    /// <summary> The life cycle status of the alert. </summary>
     public readonly partial struct SecurityAlertStatus : IEquatable<SecurityAlertStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ResolvedValue = "Resolved";
         private const string DismissedValue = "Dismissed";
 
-        /// <summary>
-        /// An alert which doesn't specify a value is assigned the status 'Active'
-        /// Serialized Name: AlertStatus.Active
-        /// </summary>
+        /// <summary> An alert which doesn't specify a value is assigned the status 'Active'. </summary>
         public static SecurityAlertStatus Active { get; } = new SecurityAlertStatus(ActiveValue);
-        /// <summary>
-        /// An alert which is in handling state
-        /// Serialized Name: AlertStatus.InProgress
-        /// </summary>
+        /// <summary> An alert which is in handling state. </summary>
         public static SecurityAlertStatus InProgress { get; } = new SecurityAlertStatus(InProgressValue);
-        /// <summary>
-        /// Alert closed after handling
-        /// Serialized Name: AlertStatus.Resolved
-        /// </summary>
+        /// <summary> Alert closed after handling. </summary>
         public static SecurityAlertStatus Resolved { get; } = new SecurityAlertStatus(ResolvedValue);
-        /// <summary>
-        /// Alert dismissed as false positive
-        /// Serialized Name: AlertStatus.Dismissed
-        /// </summary>
+        /// <summary> Alert dismissed as false positive. </summary>
         public static SecurityAlertStatus Dismissed { get; } = new SecurityAlertStatus(DismissedValue);
         /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertStatus left, SecurityAlertStatus right) => left.Equals(right);

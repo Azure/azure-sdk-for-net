@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitHubOwnerData>> value = default;
+            Optional<IReadOnlyList<SecurityConnectorGitHubOwnerData>> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<GitHubOwnerData> array = new List<GitHubOwnerData>();
+                    List<SecurityConnectorGitHubOwnerData> array = new List<SecurityConnectorGitHubOwnerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubOwnerData.DeserializeGitHubOwnerData(item));
+                        array.Add(SecurityConnectorGitHubOwnerData.DeserializeSecurityConnectorGitHubOwnerData(item));
                     }
                     value = array;
                     continue;

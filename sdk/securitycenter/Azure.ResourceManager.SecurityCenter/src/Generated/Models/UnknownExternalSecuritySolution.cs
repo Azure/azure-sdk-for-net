@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The UnknownExternalSecuritySolution.
-    /// Serialized Name: UnknownExternalSecuritySolution
-    /// </summary>
+    /// <summary> The UnknownExternalSecuritySolution. </summary>
     internal partial class UnknownExternalSecuritySolution : ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExternalSecuritySolution"/>. </summary>
@@ -23,14 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the external solution
-        /// Serialized Name: ExternalSecuritySolution.kind
-        /// </param>
-        /// <param name="location">
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </param>
+        /// <param name="kind"> The kind of the external solution. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, location, serializedAdditionalRawData)
         {

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The CSPM P1 for AWS offering
-    /// Serialized Name: DefenderCspmAwsOffering
-    /// </summary>
+    /// <summary> The CSPM P1 for AWS offering. </summary>
     public partial class DefenderCspmAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOffering"/>. </summary>
@@ -23,39 +20,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="vmScanners">
-        /// The Microsoft Defender for Server VM scanning configuration
-        /// Serialized Name: DefenderCspmAwsOffering.vmScanners
-        /// </param>
-        /// <param name="dataSensitivityDiscovery">
-        /// The Microsoft Defender Data Sensitivity discovery configuration
-        /// Serialized Name: DefenderCspmAwsOffering.dataSensitivityDiscovery
-        /// </param>
-        /// <param name="databasesDspm">
-        /// The databases DSPM configuration
-        /// Serialized Name: DefenderCspmAwsOffering.databasesDspm
-        /// </param>
-        /// <param name="ciem">
-        /// Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations
-        /// Serialized Name: DefenderCspmAwsOffering.ciem
-        /// </param>
-        /// <param name="mdcContainersImageAssessment">
-        /// The Microsoft Defender container image assessment configuration
-        /// Serialized Name: DefenderCspmAwsOffering.mdcContainersImageAssessment
-        /// </param>
-        /// <param name="mdcContainersAgentlessDiscoveryK8S">
-        /// The Microsoft Defender container agentless discovery K8s configuration
-        /// Serialized Name: DefenderCspmAwsOffering.mdcContainersAgentlessDiscoveryK8s
-        /// </param>
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
+        /// <param name="dataSensitivityDiscovery"> The Microsoft Defender Data Sensitivity discovery configuration. </param>
+        /// <param name="databasesDspm"> The databases DSPM configuration. </param>
+        /// <param name="ciem"> Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations. </param>
+        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
         internal DefenderCspmAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderCspmAwsOfferingVmScanners vmScanners, DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery, DefenderCspmAwsOfferingDatabasesDspm databasesDspm, DefenderCspmAwsOfferingCiem ciem, DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description, serializedAdditionalRawData)
         {
             VmScanners = vmScanners;
@@ -67,35 +40,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OfferingType = offeringType;
         }
 
-        /// <summary>
-        /// The Microsoft Defender for Server VM scanning configuration
-        /// Serialized Name: DefenderCspmAwsOffering.vmScanners
-        /// </summary>
+        /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
         public DefenderCspmAwsOfferingVmScanners VmScanners { get; set; }
-        /// <summary>
-        /// The Microsoft Defender Data Sensitivity discovery configuration
-        /// Serialized Name: DefenderCspmAwsOffering.dataSensitivityDiscovery
-        /// </summary>
+        /// <summary> The Microsoft Defender Data Sensitivity discovery configuration. </summary>
         public DefenderCspmAwsOfferingDataSensitivityDiscovery DataSensitivityDiscovery { get; set; }
-        /// <summary>
-        /// The databases DSPM configuration
-        /// Serialized Name: DefenderCspmAwsOffering.databasesDspm
-        /// </summary>
+        /// <summary> The databases DSPM configuration. </summary>
         public DefenderCspmAwsOfferingDatabasesDspm DatabasesDspm { get; set; }
-        /// <summary>
-        /// Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations
-        /// Serialized Name: DefenderCspmAwsOffering.ciem
-        /// </summary>
+        /// <summary> Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations. </summary>
         public DefenderCspmAwsOfferingCiem Ciem { get; set; }
-        /// <summary>
-        /// The Microsoft Defender container image assessment configuration
-        /// Serialized Name: DefenderCspmAwsOffering.mdcContainersImageAssessment
-        /// </summary>
+        /// <summary> The Microsoft Defender container image assessment configuration. </summary>
         public DefenderCspmAwsOfferingMdcContainersImageAssessment MdcContainersImageAssessment { get; set; }
-        /// <summary>
-        /// The Microsoft Defender container agentless discovery K8s configuration
-        /// Serialized Name: DefenderCspmAwsOffering.mdcContainersAgentlessDiscoveryK8s
-        /// </summary>
+        /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
         public DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S { get; set; }
     }
 }

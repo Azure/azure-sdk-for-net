@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set will be evaluated as 'true', will the event trigger the defined actions.
-    /// Serialized Name: AutomationRuleSet
-    /// </summary>
+    /// <summary> A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set will be evaluated as 'true', will the event trigger the defined actions. </summary>
     public partial class SecurityAutomationRuleSet
     {
         /// <summary>
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationRuleSet"/>. </summary>
-        /// <param name="rules"> Serialized Name: AutomationRuleSet.rules. </param>
+        /// <param name="rules"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAutomationRuleSet(IList<SecurityAutomationTriggeringRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: AutomationRuleSet.rules. </summary>
+        /// <summary> Gets the rules. </summary>
         public IList<SecurityAutomationTriggeringRule> Rules { get; }
     }
 }

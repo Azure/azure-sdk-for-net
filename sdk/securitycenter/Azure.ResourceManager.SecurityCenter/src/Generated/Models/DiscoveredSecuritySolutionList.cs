@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The DiscoveredSecuritySolutionList.
-    /// Serialized Name: DiscoveredSecuritySolutionList
-    /// </summary>
+    /// <summary> The DiscoveredSecuritySolutionList. </summary>
     internal partial class DiscoveredSecuritySolutionList
     {
         /// <summary>
@@ -56,11 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionList"/>. </summary>
-        /// <param name="value"> Serialized Name: DiscoveredSecuritySolutionList.value. </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: DiscoveredSecuritySolutionList.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiscoveredSecuritySolutionList(IReadOnlyList<DiscoveredSecuritySolution> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,12 +63,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: DiscoveredSecuritySolutionList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<DiscoveredSecuritySolution> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: DiscoveredSecuritySolutionList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

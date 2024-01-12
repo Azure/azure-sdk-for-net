@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The type of the environment data.
-    /// Serialized Name: EnvironmentType
-    /// </summary>
+    /// <summary> The type of the environment data. </summary>
     internal readonly partial struct EnvironmentType : IEquatable<EnvironmentType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AzureDevOpsScopeValue = "AzureDevOpsScope";
         private const string GitlabScopeValue = "GitlabScope";
 
-        /// <summary>
-        /// AwsAccount
-        /// Serialized Name: EnvironmentType.AwsAccount
-        /// </summary>
+        /// <summary> AwsAccount. </summary>
         public static EnvironmentType AwsAccount { get; } = new EnvironmentType(AwsAccountValue);
-        /// <summary>
-        /// GcpProject
-        /// Serialized Name: EnvironmentType.GcpProject
-        /// </summary>
+        /// <summary> GcpProject. </summary>
         public static EnvironmentType GcpProject { get; } = new EnvironmentType(GcpProjectValue);
-        /// <summary>
-        /// GithubScope
-        /// Serialized Name: EnvironmentType.GithubScope
-        /// </summary>
+        /// <summary> GithubScope. </summary>
         public static EnvironmentType GithubScope { get; } = new EnvironmentType(GithubScopeValue);
-        /// <summary>
-        /// AzureDevOpsScope
-        /// Serialized Name: EnvironmentType.AzureDevOpsScope
-        /// </summary>
+        /// <summary> AzureDevOpsScope. </summary>
         public static EnvironmentType AzureDevOpsScope { get; } = new EnvironmentType(AzureDevOpsScopeValue);
-        /// <summary>
-        /// GitlabScope
-        /// Serialized Name: EnvironmentType.GitlabScope
-        /// </summary>
+        /// <summary> GitlabScope. </summary>
         public static EnvironmentType GitlabScope { get; } = new EnvironmentType(GitlabScopeValue);
         /// <summary> Determines if two <see cref="EnvironmentType"/> values are the same. </summary>
         public static bool operator ==(EnvironmentType left, EnvironmentType right) => left.Equals(right);

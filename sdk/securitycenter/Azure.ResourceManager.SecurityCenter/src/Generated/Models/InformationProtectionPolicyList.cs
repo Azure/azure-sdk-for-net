@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Information protection policies response.
-    /// Serialized Name: InformationProtectionPolicyList
-    /// </summary>
+    /// <summary> Information protection policies response. </summary>
     internal partial class InformationProtectionPolicyList
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyList"/>. </summary>
-        /// <param name="value">
-        /// List of information protection policies.
-        /// Serialized Name: InformationProtectionPolicyList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: InformationProtectionPolicyList.nextLink
-        /// </param>
+        /// <param name="value"> List of information protection policies. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InformationProtectionPolicyList(IReadOnlyList<InformationProtectionPolicy> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of information protection policies.
-        /// Serialized Name: InformationProtectionPolicyList.value
-        /// </summary>
+        /// <summary> List of information protection policies. </summary>
         public IReadOnlyList<InformationProtectionPolicy> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: InformationProtectionPolicyList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// PendingDeletion - Deletion pending.
     /// DeletionSuccess - Deletion successful.
     /// DeletionFailure - Deletion failure.
-    /// Serialized Name: DevOpsProvisioningState
     /// </summary>
     public readonly partial struct DevOpsProvisioningState : IEquatable<DevOpsProvisioningState>
     {
@@ -41,40 +40,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DeletionSuccessValue = "DeletionSuccess";
         private const string DeletionFailureValue = "DeletionFailure";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: DevOpsProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static DevOpsProvisioningState Succeeded { get; } = new DevOpsProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: DevOpsProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static DevOpsProvisioningState Failed { get; } = new DevOpsProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: DevOpsProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static DevOpsProvisioningState Canceled { get; } = new DevOpsProvisioningState(CanceledValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: DevOpsProvisioningState.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static DevOpsProvisioningState Pending { get; } = new DevOpsProvisioningState(PendingValue);
-        /// <summary>
-        /// PendingDeletion
-        /// Serialized Name: DevOpsProvisioningState.PendingDeletion
-        /// </summary>
+        /// <summary> PendingDeletion. </summary>
         public static DevOpsProvisioningState PendingDeletion { get; } = new DevOpsProvisioningState(PendingDeletionValue);
-        /// <summary>
-        /// DeletionSuccess
-        /// Serialized Name: DevOpsProvisioningState.DeletionSuccess
-        /// </summary>
+        /// <summary> DeletionSuccess. </summary>
         public static DevOpsProvisioningState DeletionSuccess { get; } = new DevOpsProvisioningState(DeletionSuccessValue);
-        /// <summary>
-        /// DeletionFailure
-        /// Serialized Name: DevOpsProvisioningState.DeletionFailure
-        /// </summary>
+        /// <summary> DeletionFailure. </summary>
         public static DevOpsProvisioningState DeletionFailure { get; } = new DevOpsProvisioningState(DeletionFailureValue);
         /// <summary> Determines if two <see cref="DevOpsProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DevOpsProvisioningState left, DevOpsProvisioningState right) => left.Equals(right);

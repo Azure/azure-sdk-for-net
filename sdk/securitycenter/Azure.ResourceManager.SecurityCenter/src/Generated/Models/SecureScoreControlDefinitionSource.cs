@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The type of the security control (For example, BuiltIn)
-    /// Serialized Name: SecureScoreControlDefinitionSource
-    /// </summary>
+    /// <summary> The type of the security control (For example, BuiltIn). </summary>
     internal partial class SecureScoreControlDefinitionSource
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionSource"/>. </summary>
-        /// <param name="sourceType">
-        /// The type of security control (for example, BuiltIn)
-        /// Serialized Name: SecureScoreControlDefinitionSource.sourceType
-        /// </param>
+        /// <param name="sourceType"> The type of security control (for example, BuiltIn). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecureScoreControlDefinitionSource(SecurityControlType? sourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of security control (for example, BuiltIn)
-        /// Serialized Name: SecureScoreControlDefinitionSource.sourceType
-        /// </summary>
+        /// <summary> The type of security control (for example, BuiltIn). </summary>
         public SecurityControlType? SourceType { get; }
     }
 }

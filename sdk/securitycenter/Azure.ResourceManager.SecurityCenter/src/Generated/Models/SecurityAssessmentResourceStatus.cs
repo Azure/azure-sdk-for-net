@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The status of the resource regarding a single assessment
-    /// Serialized Name: ResourceStatus
-    /// </summary>
+    /// <summary> The status of the resource regarding a single assessment. </summary>
     public readonly partial struct SecurityAssessmentResourceStatus : IEquatable<SecurityAssessmentResourceStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string OffByPolicyValue = "OffByPolicy";
         private const string NotHealthyValue = "NotHealthy";
 
-        /// <summary>
-        /// This assessment on the resource is healthy
-        /// Serialized Name: ResourceStatus.Healthy
-        /// </summary>
+        /// <summary> This assessment on the resource is healthy. </summary>
         public static SecurityAssessmentResourceStatus Healthy { get; } = new SecurityAssessmentResourceStatus(HealthyValue);
-        /// <summary>
-        /// This assessment is not applicable to this resource
-        /// Serialized Name: ResourceStatus.NotApplicable
-        /// </summary>
+        /// <summary> This assessment is not applicable to this resource. </summary>
         public static SecurityAssessmentResourceStatus NotApplicable { get; } = new SecurityAssessmentResourceStatus(NotApplicableValue);
-        /// <summary>
-        /// This assessment is turned off by policy on this subscription
-        /// Serialized Name: ResourceStatus.OffByPolicy
-        /// </summary>
+        /// <summary> This assessment is turned off by policy on this subscription. </summary>
         public static SecurityAssessmentResourceStatus OffByPolicy { get; } = new SecurityAssessmentResourceStatus(OffByPolicyValue);
-        /// <summary>
-        /// This assessment on the resource is not healthy
-        /// Serialized Name: ResourceStatus.NotHealthy
-        /// </summary>
+        /// <summary> This assessment on the resource is not healthy. </summary>
         public static SecurityAssessmentResourceStatus NotHealthy { get; } = new SecurityAssessmentResourceStatus(NotHealthyValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentResourceStatus left, SecurityAssessmentResourceStatus right) => left.Equals(right);

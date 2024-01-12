@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The AWS organization data
-    /// Serialized Name: AwsOrganizationalData
     /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
     /// </summary>
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalInfo"/>. </summary>
-        /// <param name="organizationMembershipType">
-        /// The multi cloud account's membership type in the organization
-        /// Serialized Name: AwsOrganizationalData.organizationMembershipType
-        /// </param>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AwsOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The multi cloud account's membership type in the organization
-        /// Serialized Name: AwsOrganizationalData.organizationMembershipType
-        /// </summary>
+        /// <summary> The multi cloud account's membership type in the organization. </summary>
         internal OrganizationMembershipType OrganizationMembershipType { get; set; }
     }
 }

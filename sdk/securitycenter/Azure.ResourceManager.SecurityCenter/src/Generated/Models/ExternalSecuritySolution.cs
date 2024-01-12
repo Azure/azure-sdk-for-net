@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Represents a security solution external to Microsoft Defender for Cloud which sends information to an OMS workspace and whose data is displayed by Microsoft Defender for Cloud.
-    /// Serialized Name: ExternalSecuritySolution
     /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
     /// </summary>
@@ -62,14 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the external solution
-        /// Serialized Name: ExternalSecuritySolution.kind
-        /// </param>
-        /// <param name="location">
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </param>
+        /// <param name="kind"> The kind of the external solution. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,10 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary>
-        /// Location where the resource is stored
-        /// Serialized Name: Location.location
-        /// </summary>
+        /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
     }
 }

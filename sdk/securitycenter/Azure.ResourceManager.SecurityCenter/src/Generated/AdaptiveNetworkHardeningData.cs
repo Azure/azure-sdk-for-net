@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the AdaptiveNetworkHardening data model.
     /// The resource whose properties describes the Adaptive Network Hardening settings for some Azure resource
-    /// Serialized Name: AdaptiveNetworkHardening
     /// </summary>
     public partial class AdaptiveNetworkHardeningData : ResourceData
     {
@@ -64,18 +63,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="rules">
-        /// The security rules which are recommended to be effective on the VM
-        /// Serialized Name: AdaptiveNetworkHardening.properties.rules
-        /// </param>
-        /// <param name="rulesCalculatedOn">
-        /// The UTC time on which the rules were calculated
-        /// Serialized Name: AdaptiveNetworkHardening.properties.rulesCalculationTime
-        /// </param>
-        /// <param name="effectiveNetworkSecurityGroups">
-        /// The Network Security Groups effective on the network interfaces of the protected resource
-        /// Serialized Name: AdaptiveNetworkHardening.properties.effectiveNetworkSecurityGroups
-        /// </param>
+        /// <param name="rules"> The security rules which are recommended to be effective on the VM. </param>
+        /// <param name="rulesCalculatedOn"> The UTC time on which the rules were calculated. </param>
+        /// <param name="effectiveNetworkSecurityGroups"> The Network Security Groups effective on the network interfaces of the protected resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdaptiveNetworkHardeningData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<RecommendedSecurityRule> rules, DateTimeOffset? rulesCalculatedOn, IList<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -85,20 +75,11 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The security rules which are recommended to be effective on the VM
-        /// Serialized Name: AdaptiveNetworkHardening.properties.rules
-        /// </summary>
+        /// <summary> The security rules which are recommended to be effective on the VM. </summary>
         public IList<RecommendedSecurityRule> Rules { get; }
-        /// <summary>
-        /// The UTC time on which the rules were calculated
-        /// Serialized Name: AdaptiveNetworkHardening.properties.rulesCalculationTime
-        /// </summary>
+        /// <summary> The UTC time on which the rules were calculated. </summary>
         public DateTimeOffset? RulesCalculatedOn { get; set; }
-        /// <summary>
-        /// The Network Security Groups effective on the network interfaces of the protected resource
-        /// Serialized Name: AdaptiveNetworkHardening.properties.effectiveNetworkSecurityGroups
-        /// </summary>
+        /// <summary> The Network Security Groups effective on the network interfaces of the protected resource. </summary>
         public IList<EffectiveNetworkSecurityGroups> EffectiveNetworkSecurityGroups { get; }
     }
 }

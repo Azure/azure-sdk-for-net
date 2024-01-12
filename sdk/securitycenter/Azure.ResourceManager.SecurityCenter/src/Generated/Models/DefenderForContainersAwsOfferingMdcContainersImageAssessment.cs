@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender container image assessment configuration
-    /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersImageAssessment
-    /// </summary>
+    /// <summary> The Microsoft Defender container image assessment configuration. </summary>
     public partial class DefenderForContainersAwsOfferingMdcContainersImageAssessment
     {
         /// <summary>
@@ -54,31 +51,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingMdcContainersImageAssessment"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender container image assessment enabled
-        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersImageAssessment.enabled
-        /// </param>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersImageAssessment.cloudRoleArn
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender container image assessment enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForContainersAwsOfferingMdcContainersImageAssessment(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderForContainersAwsOfferingMdcContainersImageAssessment(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender container image assessment enabled
-        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersImageAssessment.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersImageAssessment.cloudRoleArn
-        /// </summary>
+        /// <summary> Is Microsoft Defender container image assessment enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

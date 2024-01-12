@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityApplication data model.
     /// Security Application over a given scope
-    /// Serialized Name: Application
     /// </summary>
     public partial class SecurityApplicationData : ResourceData
     {
@@ -63,22 +62,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// display name of the application
-        /// Serialized Name: Application.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// description of the application
-        /// Serialized Name: Application.properties.description
-        /// </param>
-        /// <param name="sourceResourceType">
-        /// The application source, what it affects, e.g. Assessments
-        /// Serialized Name: Application.properties.sourceResourceType
-        /// </param>
-        /// <param name="conditionSets">
-        /// The application conditionSets - see examples
-        /// Serialized Name: Application.properties.conditionSets
-        /// </param>
+        /// <param name="displayName"> display name of the application. </param>
+        /// <param name="description"> description of the application. </param>
+        /// <param name="sourceResourceType"> The application source, what it affects, e.g. Assessments. </param>
+        /// <param name="conditionSets"> The application conditionSets - see examples. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, ApplicationSourceResourceType? sourceResourceType, IList<BinaryData> conditionSets, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -89,24 +76,14 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// display name of the application
-        /// Serialized Name: Application.properties.displayName
-        /// </summary>
+        /// <summary> display name of the application. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// description of the application
-        /// Serialized Name: Application.properties.description
-        /// </summary>
+        /// <summary> description of the application. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The application source, what it affects, e.g. Assessments
-        /// Serialized Name: Application.properties.sourceResourceType
-        /// </summary>
+        /// <summary> The application source, what it affects, e.g. Assessments. </summary>
         public ApplicationSourceResourceType? SourceResourceType { get; set; }
         /// <summary>
         /// The application conditionSets - see examples
-        /// Serialized Name: Application.properties.conditionSets
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

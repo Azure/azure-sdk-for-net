@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A more specific scope used to identify the alerts to suppress.
-    /// Serialized Name: ScopeElement
-    /// </summary>
+    /// <summary> A more specific scope used to identify the alerts to suppress. </summary>
     public partial class SuppressionAlertsScopeElement
     {
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScopeElement"/>. </summary>
@@ -24,10 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScopeElement"/>. </summary>
-        /// <param name="field">
-        /// The alert entity type to suppress by.
-        /// Serialized Name: ScopeElement.field
-        /// </param>
+        /// <param name="field"> The alert entity type to suppress by. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SuppressionAlertsScopeElement(string field, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -35,10 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The alert entity type to suppress by.
-        /// Serialized Name: ScopeElement.field
-        /// </summary>
+        /// <summary> The alert entity type to suppress by. </summary>
         public string Field { get; set; }
         /// <summary>
         /// Additional Properties

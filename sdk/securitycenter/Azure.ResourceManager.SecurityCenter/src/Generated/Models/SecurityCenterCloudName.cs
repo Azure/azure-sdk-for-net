@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The multi cloud resource's cloud name.
-    /// Serialized Name: CloudName
-    /// </summary>
+    /// <summary> The multi cloud resource's cloud name. </summary>
     public readonly partial struct SecurityCenterCloudName : IEquatable<SecurityCenterCloudName>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AzureDevOpsValue = "AzureDevOps";
         private const string GitLabValue = "GitLab";
 
-        /// <summary>
-        /// Azure
-        /// Serialized Name: CloudName.Azure
-        /// </summary>
+        /// <summary> Azure. </summary>
         public static SecurityCenterCloudName Azure { get; } = new SecurityCenterCloudName(AzureValue);
-        /// <summary>
-        /// AWS
-        /// Serialized Name: CloudName.AWS
-        /// </summary>
+        /// <summary> AWS. </summary>
         public static SecurityCenterCloudName Aws { get; } = new SecurityCenterCloudName(AwsValue);
-        /// <summary>
-        /// GCP
-        /// Serialized Name: CloudName.GCP
-        /// </summary>
+        /// <summary> GCP. </summary>
         public static SecurityCenterCloudName Gcp { get; } = new SecurityCenterCloudName(GcpValue);
-        /// <summary>
-        /// Github
-        /// Serialized Name: CloudName.Github
-        /// </summary>
+        /// <summary> Github. </summary>
         public static SecurityCenterCloudName Github { get; } = new SecurityCenterCloudName(GithubValue);
-        /// <summary>
-        /// AzureDevOps
-        /// Serialized Name: CloudName.AzureDevOps
-        /// </summary>
+        /// <summary> AzureDevOps. </summary>
         public static SecurityCenterCloudName AzureDevOps { get; } = new SecurityCenterCloudName(AzureDevOpsValue);
-        /// <summary>
-        /// GitLab
-        /// Serialized Name: CloudName.GitLab
-        /// </summary>
+        /// <summary> GitLab. </summary>
         public static SecurityCenterCloudName GitLab { get; } = new SecurityCenterCloudName(GitLabValue);
         /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterCloudName left, SecurityCenterCloudName right) => left.Equals(right);

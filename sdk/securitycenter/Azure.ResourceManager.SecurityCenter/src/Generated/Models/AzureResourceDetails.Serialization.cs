@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<string> id = default;
-            Source source = default;
+            HealthReportSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = new Source(property.Value.GetString());
+                    source = new HealthReportSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The rule result adjusted with baseline.
-    /// Serialized Name: BaselineAdjustedResult
-    /// </summary>
+    /// <summary> The rule result adjusted with baseline. </summary>
     public partial class BaselineAdjustedResult
     {
         /// <summary>
@@ -57,22 +54,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
-        /// <param name="baseline">
-        /// Baseline details.
-        /// Serialized Name: BaselineAdjustedResult.baseline
-        /// </param>
-        /// <param name="status">
-        /// The rule result status.
-        /// Serialized Name: BaselineAdjustedResult.status
-        /// </param>
-        /// <param name="resultsNotInBaseline">
-        /// Results the are not in baseline.
-        /// Serialized Name: BaselineAdjustedResult.resultsNotInBaseline
-        /// </param>
-        /// <param name="resultsOnlyInBaseline">
-        /// Results the are in baseline.
-        /// Serialized Name: BaselineAdjustedResult.resultsOnlyInBaseline
-        /// </param>
+        /// <param name="baseline"> Baseline details. </param>
+        /// <param name="status"> The rule result status. </param>
+        /// <param name="resultsNotInBaseline"> Results the are not in baseline. </param>
+        /// <param name="resultsOnlyInBaseline"> Results the are in baseline. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BaselineAdjustedResult(SqlVulnerabilityAssessmentBaseline baseline, SqlVulnerabilityAssessmentScanResultRuleStatus? status, IList<IList<string>> resultsNotInBaseline, IList<IList<string>> resultsOnlyInBaseline, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,25 +68,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Baseline details.
-        /// Serialized Name: BaselineAdjustedResult.baseline
-        /// </summary>
+        /// <summary> Baseline details. </summary>
         public SqlVulnerabilityAssessmentBaseline Baseline { get; set; }
-        /// <summary>
-        /// The rule result status.
-        /// Serialized Name: BaselineAdjustedResult.status
-        /// </summary>
+        /// <summary> The rule result status. </summary>
         public SqlVulnerabilityAssessmentScanResultRuleStatus? Status { get; set; }
-        /// <summary>
-        /// Results the are not in baseline.
-        /// Serialized Name: BaselineAdjustedResult.resultsNotInBaseline
-        /// </summary>
+        /// <summary> Results the are not in baseline. </summary>
         public IList<IList<string>> ResultsNotInBaseline { get; }
-        /// <summary>
-        /// Results the are in baseline.
-        /// Serialized Name: BaselineAdjustedResult.resultsOnlyInBaseline
-        /// </summary>
+        /// <summary> Results the are in baseline. </summary>
         public IList<IList<string>> ResultsOnlyInBaseline { get; }
     }
 }

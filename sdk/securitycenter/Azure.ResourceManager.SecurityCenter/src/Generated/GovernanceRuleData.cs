@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the GovernanceRule data model.
     /// Governance rule over a given scope
-    /// Serialized Name: GovernanceRule
     /// </summary>
     public partial class GovernanceRuleData : ResourceData
     {
@@ -64,66 +63,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId">
-        /// The tenantId (GUID)
-        /// Serialized Name: GovernanceRule.properties.tenantId
-        /// </param>
-        /// <param name="displayName">
-        /// Display name of the governance rule
-        /// Serialized Name: GovernanceRule.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Description of the governance rule
-        /// Serialized Name: GovernanceRule.properties.description
-        /// </param>
-        /// <param name="remediationTimeframe">
-        /// Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days
-        /// Serialized Name: GovernanceRule.properties.remediationTimeframe
-        /// </param>
-        /// <param name="isGracePeriod">
-        /// Defines whether there is a grace period on the governance rule
-        /// Serialized Name: GovernanceRule.properties.isGracePeriod
-        /// </param>
-        /// <param name="rulePriority">
-        /// The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed
-        /// Serialized Name: GovernanceRule.properties.rulePriority
-        /// </param>
-        /// <param name="isDisabled">
-        /// Defines whether the rule is active/inactive
-        /// Serialized Name: GovernanceRule.properties.isDisabled
-        /// </param>
-        /// <param name="ruleType">
-        /// The rule type of the governance rule, defines the source of the rule e.g. Integrated
-        /// Serialized Name: GovernanceRule.properties.ruleType
-        /// </param>
-        /// <param name="sourceResourceType">
-        /// The governance rule source, what the rule affects, e.g. Assessments
-        /// Serialized Name: GovernanceRule.properties.sourceResourceType
-        /// </param>
-        /// <param name="excludedScopes">
-        /// Excluded scopes, filter out the descendants of the scope (on management scopes)
-        /// Serialized Name: GovernanceRule.properties.excludedScopes
-        /// </param>
-        /// <param name="conditionSets">
-        /// The governance rule conditionSets - see examples
-        /// Serialized Name: GovernanceRule.properties.conditionSets
-        /// </param>
-        /// <param name="includeMemberScopes">
-        /// Defines whether the rule is management scope rule (master connector as a single scope or management scope)
-        /// Serialized Name: GovernanceRule.properties.includeMemberScopes
-        /// </param>
-        /// <param name="ownerSource">
-        /// The owner source for the governance rule - e.g. Manually by user@contoso.com - see example
-        /// Serialized Name: GovernanceRule.properties.ownerSource
-        /// </param>
-        /// <param name="governanceEmailNotification">
-        /// The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners
-        /// Serialized Name: GovernanceRule.properties.governanceEmailNotification
-        /// </param>
-        /// <param name="metadata">
-        /// The governance rule metadata
-        /// Serialized Name: GovernanceRule.properties.metadata
-        /// </param>
+        /// <param name="tenantId"> The tenantId (GUID). </param>
+        /// <param name="displayName"> Display name of the governance rule. </param>
+        /// <param name="description"> Description of the governance rule. </param>
+        /// <param name="remediationTimeframe"> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </param>
+        /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance rule. </param>
+        /// <param name="rulePriority"> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </param>
+        /// <param name="isDisabled"> Defines whether the rule is active/inactive. </param>
+        /// <param name="ruleType"> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </param>
+        /// <param name="sourceResourceType"> The governance rule source, what the rule affects, e.g. Assessments. </param>
+        /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
+        /// <param name="conditionSets"> The governance rule conditionSets - see examples. </param>
+        /// <param name="includeMemberScopes"> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </param>
+        /// <param name="ownerSource"> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
+        /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
+        /// <param name="metadata"> The governance rule metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GovernanceRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int? rulePriority, bool? isDisabled, GovernanceRuleType? ruleType, GovernanceRuleSourceResourceType? sourceResourceType, IList<string> excludedScopes, IList<BinaryData> conditionSets, bool? includeMemberScopes, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification, GovernanceRuleMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -145,59 +99,28 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The tenantId (GUID)
-        /// Serialized Name: GovernanceRule.properties.tenantId
-        /// </summary>
+        /// <summary> The tenantId (GUID). </summary>
         public Guid? TenantId { get; }
-        /// <summary>
-        /// Display name of the governance rule
-        /// Serialized Name: GovernanceRule.properties.displayName
-        /// </summary>
+        /// <summary> Display name of the governance rule. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Description of the governance rule
-        /// Serialized Name: GovernanceRule.properties.description
-        /// </summary>
+        /// <summary> Description of the governance rule. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days
-        /// Serialized Name: GovernanceRule.properties.remediationTimeframe
-        /// </summary>
+        /// <summary> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </summary>
         public string RemediationTimeframe { get; set; }
-        /// <summary>
-        /// Defines whether there is a grace period on the governance rule
-        /// Serialized Name: GovernanceRule.properties.isGracePeriod
-        /// </summary>
+        /// <summary> Defines whether there is a grace period on the governance rule. </summary>
         public bool? IsGracePeriod { get; set; }
-        /// <summary>
-        /// The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed
-        /// Serialized Name: GovernanceRule.properties.rulePriority
-        /// </summary>
+        /// <summary> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </summary>
         public int? RulePriority { get; set; }
-        /// <summary>
-        /// Defines whether the rule is active/inactive
-        /// Serialized Name: GovernanceRule.properties.isDisabled
-        /// </summary>
+        /// <summary> Defines whether the rule is active/inactive. </summary>
         public bool? IsDisabled { get; set; }
-        /// <summary>
-        /// The rule type of the governance rule, defines the source of the rule e.g. Integrated
-        /// Serialized Name: GovernanceRule.properties.ruleType
-        /// </summary>
+        /// <summary> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </summary>
         public GovernanceRuleType? RuleType { get; set; }
-        /// <summary>
-        /// The governance rule source, what the rule affects, e.g. Assessments
-        /// Serialized Name: GovernanceRule.properties.sourceResourceType
-        /// </summary>
+        /// <summary> The governance rule source, what the rule affects, e.g. Assessments. </summary>
         public GovernanceRuleSourceResourceType? SourceResourceType { get; set; }
-        /// <summary>
-        /// Excluded scopes, filter out the descendants of the scope (on management scopes)
-        /// Serialized Name: GovernanceRule.properties.excludedScopes
-        /// </summary>
+        /// <summary> Excluded scopes, filter out the descendants of the scope (on management scopes). </summary>
         public IList<string> ExcludedScopes { get; }
         /// <summary>
         /// The governance rule conditionSets - see examples
-        /// Serialized Name: GovernanceRule.properties.conditionSets
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -227,25 +150,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </para>
         /// </summary>
         public IList<BinaryData> ConditionSets { get; }
-        /// <summary>
-        /// Defines whether the rule is management scope rule (master connector as a single scope or management scope)
-        /// Serialized Name: GovernanceRule.properties.includeMemberScopes
-        /// </summary>
+        /// <summary> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </summary>
         public bool? IncludeMemberScopes { get; set; }
-        /// <summary>
-        /// The owner source for the governance rule - e.g. Manually by user@contoso.com - see example
-        /// Serialized Name: GovernanceRule.properties.ownerSource
-        /// </summary>
+        /// <summary> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </summary>
         public GovernanceRuleOwnerSource OwnerSource { get; set; }
-        /// <summary>
-        /// The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners
-        /// Serialized Name: GovernanceRule.properties.governanceEmailNotification
-        /// </summary>
+        /// <summary> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </summary>
         public GovernanceRuleEmailNotification GovernanceEmailNotification { get; set; }
-        /// <summary>
-        /// The governance rule metadata
-        /// Serialized Name: GovernanceRule.properties.metadata
-        /// </summary>
+        /// <summary> The governance rule metadata. </summary>
         public GovernanceRuleMetadata Metadata { get; set; }
     }
 }

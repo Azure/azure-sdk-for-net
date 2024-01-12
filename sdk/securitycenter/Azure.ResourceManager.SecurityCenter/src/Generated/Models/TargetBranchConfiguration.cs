@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Repository branch configuration for PR Annotations.
-    /// Serialized Name: TargetBranchConfiguration
-    /// </summary>
+    /// <summary> Repository branch configuration for PR Annotations. </summary>
     public partial class TargetBranchConfiguration
     {
         /// <summary>
@@ -56,16 +53,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetBranchConfiguration"/>. </summary>
-        /// <param name="branchNames">
-        /// Gets or sets branches that should have annotations.
-        /// Serialized Name: TargetBranchConfiguration.branchNames
-        /// </param>
+        /// <param name="branchNames"> Gets or sets branches that should have annotations. </param>
         /// <param name="annotateDefaultBranch">
         /// Configuration of PR Annotations on default branch.
         ///
         /// Enabled - PR Annotations are enabled on the resource's default branch.
         /// Disabled - PR Annotations are disabled on the resource's default branch.
-        /// Serialized Name: TargetBranchConfiguration.annotateDefaultBranch
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TargetBranchConfiguration(IList<string> branchNames, AnnotateDefaultBranchState? annotateDefaultBranch, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -75,17 +68,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets branches that should have annotations.
-        /// Serialized Name: TargetBranchConfiguration.branchNames
-        /// </summary>
+        /// <summary> Gets or sets branches that should have annotations. </summary>
         public IList<string> BranchNames { get; }
         /// <summary>
         /// Configuration of PR Annotations on default branch.
         ///
         /// Enabled - PR Annotations are enabled on the resource's default branch.
         /// Disabled - PR Annotations are disabled on the resource's default branch.
-        /// Serialized Name: TargetBranchConfiguration.annotateDefaultBranch
         /// </summary>
         public AnnotateDefaultBranchState? AnnotateDefaultBranch { get; set; }
     }

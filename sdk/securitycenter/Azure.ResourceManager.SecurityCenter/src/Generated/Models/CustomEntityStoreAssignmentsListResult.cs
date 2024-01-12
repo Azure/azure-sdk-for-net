@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A list of custom entity store assignments
-    /// Serialized Name: CustomEntityStoreAssignmentsListResult
-    /// </summary>
+    /// <summary> A list of custom entity store assignments. </summary>
     internal partial class CustomEntityStoreAssignmentsListResult
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityStoreAssignmentsListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of custom entity store assignments
-        /// Serialized Name: CustomEntityStoreAssignmentsListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link used to get the next page of operations.
-        /// Serialized Name: CustomEntityStoreAssignmentsListResult.nextLink
-        /// </param>
+        /// <param name="value"> Collection of custom entity store assignments. </param>
+        /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomEntityStoreAssignmentsListResult(IReadOnlyList<CustomEntityStoreAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Collection of custom entity store assignments
-        /// Serialized Name: CustomEntityStoreAssignmentsListResult.value
-        /// </summary>
+        /// <summary> Collection of custom entity store assignments. </summary>
         public IReadOnlyList<CustomEntityStoreAssignmentData> Value { get; }
-        /// <summary>
-        /// The link used to get the next page of operations.
-        /// Serialized Name: CustomEntityStoreAssignmentsListResult.nextLink
-        /// </summary>
+        /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }
 }

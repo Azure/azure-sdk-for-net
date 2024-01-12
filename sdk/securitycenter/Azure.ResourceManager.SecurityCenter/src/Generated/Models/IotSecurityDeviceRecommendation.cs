@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Statistical information about the number of recommendations per device, per recommendation type.
-    /// Serialized Name: IoTSecurityDeviceRecommendation
-    /// </summary>
+    /// <summary> Statistical information about the number of recommendations per device, per recommendation type. </summary>
     public partial class IotSecurityDeviceRecommendation
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceRecommendation"/>. </summary>
-        /// <param name="recommendationDisplayName">
-        /// Display name of the recommendation.
-        /// Serialized Name: IoTSecurityDeviceRecommendation.recommendationDisplayName
-        /// </param>
-        /// <param name="reportedSeverity">
-        /// Assessed recommendation severity.
-        /// Serialized Name: IoTSecurityDeviceRecommendation.reportedSeverity
-        /// </param>
-        /// <param name="devicesCount">
-        /// Number of devices with this recommendation.
-        /// Serialized Name: IoTSecurityDeviceRecommendation.devicesCount
-        /// </param>
+        /// <param name="recommendationDisplayName"> Display name of the recommendation. </param>
+        /// <param name="reportedSeverity"> Assessed recommendation severity. </param>
+        /// <param name="devicesCount"> Number of devices with this recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecurityDeviceRecommendation(string recommendationDisplayName, ReportedSeverity? reportedSeverity, long? devicesCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Display name of the recommendation.
-        /// Serialized Name: IoTSecurityDeviceRecommendation.recommendationDisplayName
-        /// </summary>
+        /// <summary> Display name of the recommendation. </summary>
         public string RecommendationDisplayName { get; }
-        /// <summary>
-        /// Assessed recommendation severity.
-        /// Serialized Name: IoTSecurityDeviceRecommendation.reportedSeverity
-        /// </summary>
+        /// <summary> Assessed recommendation severity. </summary>
         public ReportedSeverity? ReportedSeverity { get; }
-        /// <summary>
-        /// Number of devices with this recommendation.
-        /// Serialized Name: IoTSecurityDeviceRecommendation.devicesCount
-        /// </summary>
+        /// <summary> Number of devices with this recommendation. </summary>
         public long? DevicesCount { get; }
     }
 }

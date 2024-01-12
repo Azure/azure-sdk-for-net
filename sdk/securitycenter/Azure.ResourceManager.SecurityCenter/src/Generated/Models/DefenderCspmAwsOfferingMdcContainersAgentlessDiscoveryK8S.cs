@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender container agentless discovery K8s configuration
-    /// Serialized Name: DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S
-    /// </summary>
+    /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
     public partial class DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S
     {
         /// <summary>
@@ -54,31 +51,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S"/>. </summary>
-        /// <param name="enabled">
-        /// Is Microsoft Defender container agentless discovery K8s enabled
-        /// Serialized Name: DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled
-        /// </param>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.cloudRoleArn
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender container agentless discovery K8s enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender container agentless discovery K8s enabled
-        /// Serialized Name: DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.cloudRoleArn
-        /// </summary>
+        /// <summary> Is Microsoft Defender container agentless discovery K8s enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

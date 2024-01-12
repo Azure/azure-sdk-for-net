@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The details about the project represented by the security connector
-    /// Serialized Name: GcpProjectDetails
-    /// </summary>
+    /// <summary> The details about the project represented by the security connector. </summary>
     public partial class GcpProjectDetails
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpProjectDetails"/>. </summary>
-        /// <param name="projectNumber">
-        /// The unique GCP Project number
-        /// Serialized Name: GcpProjectDetails.projectNumber
-        /// </param>
-        /// <param name="projectId">
-        /// The GCP Project id
-        /// Serialized Name: GcpProjectDetails.projectId
-        /// </param>
-        /// <param name="workloadIdentityPoolId">
-        /// The GCP workload identity federation pool id
-        /// Serialized Name: GcpProjectDetails.workloadIdentityPoolId
-        /// </param>
-        /// <param name="projectName">
-        /// GCP project name
-        /// Serialized Name: GcpProjectDetails.projectName
-        /// </param>
+        /// <param name="projectNumber"> The unique GCP Project number. </param>
+        /// <param name="projectId"> The GCP Project id. </param>
+        /// <param name="workloadIdentityPoolId"> The GCP workload identity federation pool id. </param>
+        /// <param name="projectName"> GCP project name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GcpProjectDetails(string projectNumber, string projectId, string workloadIdentityPoolId, string projectName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The unique GCP Project number
-        /// Serialized Name: GcpProjectDetails.projectNumber
-        /// </summary>
+        /// <summary> The unique GCP Project number. </summary>
         public string ProjectNumber { get; set; }
-        /// <summary>
-        /// The GCP Project id
-        /// Serialized Name: GcpProjectDetails.projectId
-        /// </summary>
+        /// <summary> The GCP Project id. </summary>
         public string ProjectId { get; set; }
-        /// <summary>
-        /// The GCP workload identity federation pool id
-        /// Serialized Name: GcpProjectDetails.workloadIdentityPoolId
-        /// </summary>
+        /// <summary> The GCP workload identity federation pool id. </summary>
         public string WorkloadIdentityPoolId { get; }
-        /// <summary>
-        /// GCP project name
-        /// Serialized Name: GcpProjectDetails.projectName
-        /// </summary>
+        /// <summary> GCP project name. </summary>
         public string ProjectName { get; }
     }
 }

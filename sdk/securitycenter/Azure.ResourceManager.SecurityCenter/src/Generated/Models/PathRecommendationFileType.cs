@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The type of the file (for Linux files - Executable is used)
-    /// Serialized Name: FileType
-    /// </summary>
+    /// <summary> The type of the file (for Linux files - Executable is used). </summary>
     public readonly partial struct PathRecommendationFileType : IEquatable<PathRecommendationFileType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ExecutableValue = "Executable";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Exe
-        /// Serialized Name: FileType.Exe
-        /// </summary>
+        /// <summary> Exe. </summary>
         public static PathRecommendationFileType Exe { get; } = new PathRecommendationFileType(ExeValue);
-        /// <summary>
-        /// Dll
-        /// Serialized Name: FileType.Dll
-        /// </summary>
+        /// <summary> Dll. </summary>
         public static PathRecommendationFileType Dll { get; } = new PathRecommendationFileType(DllValue);
-        /// <summary>
-        /// Msi
-        /// Serialized Name: FileType.Msi
-        /// </summary>
+        /// <summary> Msi. </summary>
         public static PathRecommendationFileType Msi { get; } = new PathRecommendationFileType(MsiValue);
-        /// <summary>
-        /// Script
-        /// Serialized Name: FileType.Script
-        /// </summary>
+        /// <summary> Script. </summary>
         public static PathRecommendationFileType Script { get; } = new PathRecommendationFileType(ScriptValue);
-        /// <summary>
-        /// Executable
-        /// Serialized Name: FileType.Executable
-        /// </summary>
+        /// <summary> Executable. </summary>
         public static PathRecommendationFileType Executable { get; } = new PathRecommendationFileType(ExecutableValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: FileType.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static PathRecommendationFileType Unknown { get; } = new PathRecommendationFileType(UnknownValue);
         /// <summary> Determines if two <see cref="PathRecommendationFileType"/> values are the same. </summary>
         public static bool operator ==(PathRecommendationFileType left, PathRecommendationFileType right) => left.Equals(right);

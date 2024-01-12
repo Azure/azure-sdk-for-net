@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Defines if email notifications will be sent about new security alerts
-    /// Serialized Name: SecurityAlertNotificationState
-    /// </summary>
+    /// <summary> Defines if email notifications will be sent about new security alerts. </summary>
     public readonly partial struct SecurityAlertNotificationState : IEquatable<SecurityAlertNotificationState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string OnValue = "On";
         private const string OffValue = "Off";
 
-        /// <summary>
-        /// Get notifications on new alerts
-        /// Serialized Name: SecurityAlertNotificationState.On
-        /// </summary>
+        /// <summary> Get notifications on new alerts. </summary>
         public static SecurityAlertNotificationState On { get; } = new SecurityAlertNotificationState(OnValue);
-        /// <summary>
-        /// Don't get notifications on new alerts
-        /// Serialized Name: SecurityAlertNotificationState.Off
-        /// </summary>
+        /// <summary> Don't get notifications on new alerts. </summary>
         public static SecurityAlertNotificationState Off { get; } = new SecurityAlertNotificationState(OffValue);
         /// <summary> Determines if two <see cref="SecurityAlertNotificationState"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertNotificationState left, SecurityAlertNotificationState right) => left.Equals(right);

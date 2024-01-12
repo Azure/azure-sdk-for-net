@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Links relevant to the assessment
-    /// Serialized Name: AssessmentLinks
-    /// </summary>
+    /// <summary> Links relevant to the assessment. </summary>
     internal partial class AssessmentLinks
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AssessmentLinks"/>. </summary>
-        /// <param name="azurePortalUri">
-        /// Link to assessment in Azure Portal
-        /// Serialized Name: AssessmentLinks.azurePortalUri
-        /// </param>
+        /// <param name="azurePortalUri"> Link to assessment in Azure Portal. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AssessmentLinks(Uri azurePortalUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Link to assessment in Azure Portal
-        /// Serialized Name: AssessmentLinks.azurePortalUri
-        /// </summary>
+        /// <summary> Link to assessment in Azure Portal. </summary>
         public Uri AzurePortalUri { get; }
     }
 }

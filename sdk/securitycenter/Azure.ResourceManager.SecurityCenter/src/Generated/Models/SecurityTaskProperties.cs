@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Changing set of properties, depending on the task type that is derived from the name field
-    /// Serialized Name: SecurityTaskParameters
-    /// </summary>
+    /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
     public partial class SecurityTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
@@ -24,10 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
-        /// <param name="name">
-        /// Name of the task type
-        /// Serialized Name: SecurityTaskParameters.name
-        /// </param>
+        /// <param name="name"> Name of the task type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityTaskProperties(string name, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -35,10 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Name of the task type
-        /// Serialized Name: SecurityTaskParameters.name
-        /// </summary>
+        /// <summary> Name of the task type. </summary>
         public string Name { get; }
         /// <summary>
         /// Additional Properties

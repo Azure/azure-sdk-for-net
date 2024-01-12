@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A list of vulnerability assessment scan records.
-    /// Serialized Name: Scans
-    /// </summary>
+    /// <summary> A list of vulnerability assessment scan records. </summary>
     internal partial class Scans
     {
         /// <summary>
@@ -57,10 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Scans"/>. </summary>
-        /// <param name="value">
-        /// List of vulnerability assessment scan records.
-        /// Serialized Name: Scans.value
-        /// </param>
+        /// <param name="value"> List of vulnerability assessment scan records. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Scans(IReadOnlyList<SqlVulnerabilityAssessmentScanData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of vulnerability assessment scan records.
-        /// Serialized Name: Scans.value
-        /// </summary>
+        /// <summary> List of vulnerability assessment scan records. </summary>
         public IReadOnlyList<SqlVulnerabilityAssessmentScanData> Value { get; }
     }
 }

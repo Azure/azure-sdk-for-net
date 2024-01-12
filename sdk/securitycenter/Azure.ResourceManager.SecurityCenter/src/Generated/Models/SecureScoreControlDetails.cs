@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Details of the security control, its score, and the health status of the relevant resources.
-    /// Serialized Name: SecureScoreControlDetails
-    /// </summary>
+    /// <summary> Details of the security control, its score, and the health status of the relevant resources. </summary>
     public partial class SecureScoreControlDetails : ResourceData
     {
         /// <summary>
@@ -60,42 +57,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// User friendly display name of the control
-        /// Serialized Name: SecureScoreControlDetails.properties.displayName
-        /// </param>
-        /// <param name="healthyResourceCount">
-        /// Number of healthy resources in the control
-        /// Serialized Name: SecureScoreControlDetails.properties.healthyResourceCount
-        /// </param>
-        /// <param name="unhealthyResourceCount">
-        /// Number of unhealthy resources in the control
-        /// Serialized Name: SecureScoreControlDetails.properties.unhealthyResourceCount
-        /// </param>
-        /// <param name="notApplicableResourceCount">
-        /// Number of not applicable resources in the control
-        /// Serialized Name: SecureScoreControlDetails.properties.notApplicableResourceCount
-        /// </param>
-        /// <param name="weight">
-        /// The relative weight for this specific control in each of your subscriptions. Used when calculating an aggregated score for this control across all of your subscriptions.
-        /// Serialized Name: SecureScoreControlDetails.properties.weight
-        /// </param>
-        /// <param name="definition">
-        /// Information about the security control.
-        /// Serialized Name: SecureScoreControlDetails.properties.definition
-        /// </param>
-        /// <param name="max">
-        /// Maximum score available
-        /// Serialized Name: SecureScoreControlDetails.properties.score.max
-        /// </param>
-        /// <param name="current">
-        /// Current score
-        /// Serialized Name: SecureScoreControlDetails.properties.score.current
-        /// </param>
-        /// <param name="percentage">
-        /// Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point
-        /// Serialized Name: SecureScoreControlDetails.properties.score.percentage
-        /// </param>
+        /// <param name="displayName"> User friendly display name of the control. </param>
+        /// <param name="healthyResourceCount"> Number of healthy resources in the control. </param>
+        /// <param name="unhealthyResourceCount"> Number of unhealthy resources in the control. </param>
+        /// <param name="notApplicableResourceCount"> Number of not applicable resources in the control. </param>
+        /// <param name="weight"> The relative weight for this specific control in each of your subscriptions. Used when calculating an aggregated score for this control across all of your subscriptions. </param>
+        /// <param name="definition"> Information about the security control. </param>
+        /// <param name="max"> Maximum score available. </param>
+        /// <param name="current"> Current score. </param>
+        /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecureScoreControlDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, int? healthyResourceCount, int? unhealthyResourceCount, int? notApplicableResourceCount, long? weight, SecureScoreControlDefinitionItem definition, int? max, double? current, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -111,50 +81,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User friendly display name of the control
-        /// Serialized Name: SecureScoreControlDetails.properties.displayName
-        /// </summary>
+        /// <summary> User friendly display name of the control. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Number of healthy resources in the control
-        /// Serialized Name: SecureScoreControlDetails.properties.healthyResourceCount
-        /// </summary>
+        /// <summary> Number of healthy resources in the control. </summary>
         public int? HealthyResourceCount { get; }
-        /// <summary>
-        /// Number of unhealthy resources in the control
-        /// Serialized Name: SecureScoreControlDetails.properties.unhealthyResourceCount
-        /// </summary>
+        /// <summary> Number of unhealthy resources in the control. </summary>
         public int? UnhealthyResourceCount { get; }
-        /// <summary>
-        /// Number of not applicable resources in the control
-        /// Serialized Name: SecureScoreControlDetails.properties.notApplicableResourceCount
-        /// </summary>
+        /// <summary> Number of not applicable resources in the control. </summary>
         public int? NotApplicableResourceCount { get; }
-        /// <summary>
-        /// The relative weight for this specific control in each of your subscriptions. Used when calculating an aggregated score for this control across all of your subscriptions.
-        /// Serialized Name: SecureScoreControlDetails.properties.weight
-        /// </summary>
+        /// <summary> The relative weight for this specific control in each of your subscriptions. Used when calculating an aggregated score for this control across all of your subscriptions. </summary>
         public long? Weight { get; }
-        /// <summary>
-        /// Information about the security control.
-        /// Serialized Name: SecureScoreControlDetails.properties.definition
-        /// </summary>
+        /// <summary> Information about the security control. </summary>
         public SecureScoreControlDefinitionItem Definition { get; set; }
-        /// <summary>
-        /// Maximum score available
-        /// Serialized Name: SecureScoreControlDetails.properties.score.max
-        /// </summary>
+        /// <summary> Maximum score available. </summary>
         public int? Max { get; }
-        /// <summary>
-        /// Current score
-        /// Serialized Name: SecureScoreControlDetails.properties.score.current
-        /// </summary>
+        /// <summary> Current score. </summary>
         public double? Current { get; }
-        /// <summary>
-        /// Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point
-        /// Serialized Name: SecureScoreControlDetails.properties.score.percentage
-        /// </summary>
+        /// <summary> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </summary>
         public double? Percentage { get; }
     }
 }

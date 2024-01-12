@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The IotSecuritySolutionAnalyticsModelDevicesMetrics.
-    /// Serialized Name: IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
-    /// </summary>
+    /// <summary> The IotSecuritySolutionAnalyticsModelDevicesMetrics. </summary>
     public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelDevicesMetrics"/>. </summary>
-        /// <param name="date">
-        /// Aggregation of IoT Security solution device alert metrics by date.
-        /// Serialized Name: IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem.date
-        /// </param>
-        /// <param name="devicesMetrics">
-        /// Device alert count by severity.
-        /// Serialized Name: IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem.devicesMetrics
-        /// </param>
+        /// <param name="date"> Aggregation of IoT Security solution device alert metrics by date. </param>
+        /// <param name="devicesMetrics"> Device alert count by severity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset? date, IotSeverityMetrics devicesMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,10 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             DevicesMetrics = devicesMetrics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary>
-        /// Device alert count by severity.
-        /// Serialized Name: IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem.devicesMetrics
-        /// </summary>
+        /// <summary> Device alert count by severity. </summary>
         public IotSeverityMetrics DevicesMetrics { get; }
     }
 }

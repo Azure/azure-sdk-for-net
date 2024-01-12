@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The source event types which evaluate the security automation set of rules. For example - security alerts and security assessments. To learn more about the supported security events data models schemas - please visit https://aka.ms/ASCAutomationSchemas.
-    /// Serialized Name: AutomationSource
-    /// </summary>
+    /// <summary> The source event types which evaluate the security automation set of rules. For example - security alerts and security assessments. To learn more about the supported security events data models schemas - please visit https://aka.ms/ASCAutomationSchemas. </summary>
     public partial class SecurityAutomationSource
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationSource"/>. </summary>
-        /// <param name="eventSource">
-        /// A valid event source type.
-        /// Serialized Name: AutomationSource.eventSource
-        /// </param>
-        /// <param name="ruleSets">
-        /// A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or').
-        /// Serialized Name: AutomationSource.ruleSets
-        /// </param>
+        /// <param name="eventSource"> A valid event source type. </param>
+        /// <param name="ruleSets"> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or'). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAutomationSource(SecurityEventSource? eventSource, IList<SecurityAutomationRuleSet> ruleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A valid event source type.
-        /// Serialized Name: AutomationSource.eventSource
-        /// </summary>
+        /// <summary> A valid event source type. </summary>
         public SecurityEventSource? EventSource { get; set; }
-        /// <summary>
-        /// A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or').
-        /// Serialized Name: AutomationSource.ruleSets
-        /// </summary>
+        /// <summary> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or'). </summary>
         public IList<SecurityAutomationRuleSet> RuleSets { get; }
     }
 }

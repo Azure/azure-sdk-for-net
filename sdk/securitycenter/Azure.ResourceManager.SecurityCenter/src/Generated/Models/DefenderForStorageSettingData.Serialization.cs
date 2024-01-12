@@ -50,27 +50,27 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabledPropertiesIsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
-                writer.WriteBooleanValue(IsEnabledPropertiesIsEnabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(OverrideSubscriptionLevelSettings))
+            if (Optional.IsDefined(IsOverrideSubscriptionLevelSettingsEnabled))
             {
                 writer.WritePropertyName("overrideSubscriptionLevelSettings"u8);
-                writer.WriteBooleanValue(OverrideSubscriptionLevelSettings.Value);
+                writer.WriteBooleanValue(IsOverrideSubscriptionLevelSettingsEnabled.Value);
             }
             writer.WritePropertyName("sensitiveDataDiscovery"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabledPropertiesSensitiveDataDiscoveryIsEnabled))
+            if (Optional.IsDefined(IsSensitiveDataDiscoveryEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
-                writer.WriteBooleanValue(IsEnabledPropertiesSensitiveDataDiscoveryIsEnabled.Value);
+                writer.WriteBooleanValue(IsSensitiveDataDiscoveryEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationStatusPropertiesSensitiveDataDiscoveryOperationStatus))
+            if (options.Format != "W" && Optional.IsDefined(SensitiveDataDiscoveryOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(OperationStatusPropertiesSensitiveDataDiscoveryOperationStatus);
+                writer.WriteObjectValue(SensitiveDataDiscoveryOperationStatus);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("malwareScanning"u8);
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("scanResultsEventGridTopicResourceId"u8);
                 writer.WriteStringValue(ScanResultsEventGridTopicResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationStatusPropertiesMalwareScanningOperationStatus))
+            if (options.Format != "W" && Optional.IsDefined(MalwareScanningOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(OperationStatusPropertiesMalwareScanningOperationStatus);
+                writer.WriteObjectValue(MalwareScanningOperationStatus);
             }
             writer.WritePropertyName("onUpload"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabledPropertiesMalwareScanningOnUploadIsEnabled))
+            if (Optional.IsDefined(IsMalwareScanningOnUploadEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
-                writer.WriteBooleanValue(IsEnabledPropertiesMalwareScanningOnUploadIsEnabled.Value);
+                writer.WriteBooleanValue(IsMalwareScanningOnUploadEnabled.Value);
             }
             if (Optional.IsDefined(CapGBPerMonth))
             {

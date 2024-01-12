@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SecurityScoreODataExpand.
-    /// Serialized Name: ExpandControlsEnum
-    /// </summary>
+    /// <summary> The SecurityScoreODataExpand. </summary>
     public readonly partial struct SecurityScoreODataExpand : IEquatable<SecurityScoreODataExpand>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string DefinitionValue = "definition";
 
-        /// <summary>
-        /// Add definition object for each control
-        /// Serialized Name: ExpandControlsEnum.definition
-        /// </summary>
+        /// <summary> Add definition object for each control. </summary>
         public static SecurityScoreODataExpand Definition { get; } = new SecurityScoreODataExpand(DefinitionValue);
         /// <summary> Determines if two <see cref="SecurityScoreODataExpand"/> values are the same. </summary>
         public static bool operator ==(SecurityScoreODataExpand left, SecurityScoreODataExpand right) => left.Equals(right);

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private TopologyRestOperations _topologyRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private AlertsRestOperations _alertsRestClient;
-        private ClientDiagnostics _apiCollectionAPICollectionsClientDiagnostics;
-        private APICollectionsRestOperations _apiCollectionAPICollectionsRestClient;
+        private ClientDiagnostics _securityCenterApiCollectionAPICollectionsClientDiagnostics;
+        private APICollectionsRestOperations _securityCenterApiCollectionAPICollectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableSecurityCenterSubscriptionResource"/> class for mocking. </summary>
         protected MockableSecurityCenterSubscriptionResource()
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private TopologyRestOperations TopologyRestClient => _topologyRestClient ??= new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AlertsRestOperations AlertsRestClient => _alertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ApiCollectionAPICollectionsClientDiagnostics => _apiCollectionAPICollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ApiCollectionResource.ResourceType.Namespace, Diagnostics);
-        private APICollectionsRestOperations ApiCollectionAPICollectionsRestClient => _apiCollectionAPICollectionsRestClient ??= new APICollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiCollectionResource.ResourceType));
+        private ClientDiagnostics SecurityCenterApiCollectionAPICollectionsClientDiagnostics => _securityCenterApiCollectionAPICollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterApiCollectionResource.ResourceType.Namespace, Diagnostics);
+        private APICollectionsRestOperations SecurityCenterApiCollectionAPICollectionsRestClient => _securityCenterApiCollectionAPICollectionsRestClient ??= new APICollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityCenterApiCollectionResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -2147,17 +2147,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCollectionResource"/></description>
+        /// <description><see cref="SecurityCenterApiCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiCollectionResource> GetApiCollectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityCenterApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterApiCollectionResource> GetSecurityCenterApiCollectionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCollectionAPICollectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCollectionAPICollectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCollectionResource(Client, ApiCollectionData.DeserializeApiCollectionData(e)), ApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetApiCollections", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterApiCollectionResource(Client, SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(e)), SecurityCenterApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterApiCollections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2177,17 +2177,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCollectionResource"/></description>
+        /// <description><see cref="SecurityCenterApiCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiCollectionResource> GetApiCollections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterApiCollectionResource> GetSecurityCenterApiCollections(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCollectionAPICollectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCollectionAPICollectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCollectionResource(Client, ApiCollectionData.DeserializeApiCollectionData(e)), ApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetApiCollections", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterApiCollectionResource(Client, SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(e)), SecurityCenterApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterApiCollections", "value", "nextLink", cancellationToken);
         }
     }
 }

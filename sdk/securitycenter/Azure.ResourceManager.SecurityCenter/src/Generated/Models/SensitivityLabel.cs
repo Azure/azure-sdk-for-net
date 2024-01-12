@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The sensitivity label.
-    /// Serialized Name: SensitivityLabel
-    /// </summary>
+    /// <summary> The sensitivity label. </summary>
     public partial class SensitivityLabel
     {
         /// <summary>
@@ -54,61 +51,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SensitivityLabel"/>. </summary>
-        /// <param name="displayName">
-        /// The name of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.displayName
-        /// </param>
-        /// <param name="description">
-        /// The description of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.description
-        /// </param>
-        /// <param name="rank">
-        /// The rank of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.rank
-        /// </param>
-        /// <param name="order">
-        /// The order of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.order
-        /// </param>
-        /// <param name="enabled">
-        /// Indicates whether the label is enabled or not.
-        /// Serialized Name: SensitivityLabel.enabled
-        /// </param>
+        /// <param name="displayName"> The name of the sensitivity label. </param>
+        /// <param name="description"> The description of the sensitivity label. </param>
+        /// <param name="rank"> The rank of the sensitivity label. </param>
+        /// <param name="order"> The order of the sensitivity label. </param>
+        /// <param name="isEnabled"> Indicates whether the label is enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivityLabel(string displayName, string description, SensitivityLabelRank? rank, int? order, bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SensitivityLabel(string displayName, string description, SensitivityLabelRank? rank, int? order, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
             Rank = rank;
             Order = order;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.displayName
-        /// </summary>
+        /// <summary> The name of the sensitivity label. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The description of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.description
-        /// </summary>
+        /// <summary> The description of the sensitivity label. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The rank of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.rank
-        /// </summary>
+        /// <summary> The rank of the sensitivity label. </summary>
         public SensitivityLabelRank? Rank { get; set; }
-        /// <summary>
-        /// The order of the sensitivity label.
-        /// Serialized Name: SensitivityLabel.order
-        /// </summary>
+        /// <summary> The order of the sensitivity label. </summary>
         public int? Order { get; set; }
-        /// <summary>
-        /// Indicates whether the label is enabled or not.
-        /// Serialized Name: SensitivityLabel.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
+        /// <summary> Indicates whether the label is enabled or not. </summary>
+        public bool? IsEnabled { get; set; }
     }
 }

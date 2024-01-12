@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Represents a user that is recommended to be allowed for a certain rule
-    /// Serialized Name: UserRecommendation
-    /// </summary>
+    /// <summary> Represents a user that is recommended to be allowed for a certain rule. </summary>
     public partial class UserRecommendation
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserRecommendation"/>. </summary>
-        /// <param name="username">
-        /// Represents a user that is recommended to be allowed for a certain rule
-        /// Serialized Name: UserRecommendation.username
-        /// </param>
-        /// <param name="recommendationAction">
-        /// The recommendation action of the machine or rule
-        /// Serialized Name: UserRecommendation.recommendationAction
-        /// </param>
+        /// <param name="username"> Represents a user that is recommended to be allowed for a certain rule. </param>
+        /// <param name="recommendationAction"> The recommendation action of the machine or rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserRecommendation(string username, RecommendationAction? recommendationAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Represents a user that is recommended to be allowed for a certain rule
-        /// Serialized Name: UserRecommendation.username
-        /// </summary>
+        /// <summary> Represents a user that is recommended to be allowed for a certain rule. </summary>
         public string Username { get; set; }
-        /// <summary>
-        /// The recommendation action of the machine or rule
-        /// Serialized Name: UserRecommendation.recommendationAction
-        /// </summary>
+        /// <summary> The recommendation action of the machine or rule. </summary>
         public RecommendationAction? RecommendationAction { get; set; }
     }
 }

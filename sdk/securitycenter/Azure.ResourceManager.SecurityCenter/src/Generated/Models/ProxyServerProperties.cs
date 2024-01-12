@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use.
-    /// Serialized Name: ProxyServerProperties
-    /// </summary>
+    /// <summary> For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use. </summary>
     public partial class ProxyServerProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProxyServerProperties"/>. </summary>
-        /// <param name="ip">
-        /// Proxy server IP
-        /// Serialized Name: ProxyServerProperties.ip
-        /// </param>
-        /// <param name="port">
-        /// Proxy server port
-        /// Serialized Name: ProxyServerProperties.port
-        /// </param>
+        /// <param name="ip"> Proxy server IP. </param>
+        /// <param name="port"> Proxy server port. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProxyServerProperties(string ip, string port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Proxy server IP
-        /// Serialized Name: ProxyServerProperties.ip
-        /// </summary>
+        /// <summary> Proxy server IP. </summary>
         public string IP { get; set; }
-        /// <summary>
-        /// Proxy server port
-        /// Serialized Name: ProxyServerProperties.port
-        /// </summary>
+        /// <summary> Proxy server port. </summary>
         public string Port { get; set; }
     }
 }

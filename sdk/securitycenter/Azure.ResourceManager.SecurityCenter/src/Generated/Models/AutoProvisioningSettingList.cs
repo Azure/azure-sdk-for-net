@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of all the auto provisioning settings response
-    /// Serialized Name: AutoProvisioningSettingList
-    /// </summary>
+    /// <summary> List of all the auto provisioning settings response. </summary>
     internal partial class AutoProvisioningSettingList
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoProvisioningSettingList"/>. </summary>
-        /// <param name="value">
-        /// List of all the auto provisioning settings
-        /// Serialized Name: AutoProvisioningSettingList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: AutoProvisioningSettingList.nextLink
-        /// </param>
+        /// <param name="value"> List of all the auto provisioning settings. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutoProvisioningSettingList(IReadOnlyList<AutoProvisioningSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of all the auto provisioning settings
-        /// Serialized Name: AutoProvisioningSettingList.value
-        /// </summary>
+        /// <summary> List of all the auto provisioning settings. </summary>
         public IReadOnlyList<AutoProvisioningSettingData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: AutoProvisioningSettingList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

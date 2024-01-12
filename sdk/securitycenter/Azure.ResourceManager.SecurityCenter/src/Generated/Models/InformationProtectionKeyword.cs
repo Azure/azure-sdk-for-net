@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The information type keyword.
-    /// Serialized Name: InformationProtectionKeyword
-    /// </summary>
+    /// <summary> The information type keyword. </summary>
     public partial class InformationProtectionKeyword
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InformationProtectionKeyword"/>. </summary>
-        /// <param name="pattern">
-        /// The keyword pattern.
-        /// Serialized Name: InformationProtectionKeyword.pattern
-        /// </param>
-        /// <param name="custom">
-        /// Indicates whether the keyword is custom or not.
-        /// Serialized Name: InformationProtectionKeyword.custom
-        /// </param>
-        /// <param name="canBeNumeric">
-        /// Indicates whether the keyword can be applied on numeric types or not.
-        /// Serialized Name: InformationProtectionKeyword.canBeNumeric
-        /// </param>
-        /// <param name="excluded">
-        /// Indicates whether the keyword is excluded or not.
-        /// Serialized Name: InformationProtectionKeyword.excluded
-        /// </param>
+        /// <param name="pattern"> The keyword pattern. </param>
+        /// <param name="custom"> Indicates whether the keyword is custom or not. </param>
+        /// <param name="canBeNumeric"> Indicates whether the keyword can be applied on numeric types or not. </param>
+        /// <param name="excluded"> Indicates whether the keyword is excluded or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InformationProtectionKeyword(string pattern, bool? custom, bool? canBeNumeric, bool? excluded, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The keyword pattern.
-        /// Serialized Name: InformationProtectionKeyword.pattern
-        /// </summary>
+        /// <summary> The keyword pattern. </summary>
         public string Pattern { get; set; }
-        /// <summary>
-        /// Indicates whether the keyword is custom or not.
-        /// Serialized Name: InformationProtectionKeyword.custom
-        /// </summary>
+        /// <summary> Indicates whether the keyword is custom or not. </summary>
         public bool? Custom { get; set; }
-        /// <summary>
-        /// Indicates whether the keyword can be applied on numeric types or not.
-        /// Serialized Name: InformationProtectionKeyword.canBeNumeric
-        /// </summary>
+        /// <summary> Indicates whether the keyword can be applied on numeric types or not. </summary>
         public bool? CanBeNumeric { get; set; }
-        /// <summary>
-        /// Indicates whether the keyword is excluded or not.
-        /// Serialized Name: InformationProtectionKeyword.excluded
-        /// </summary>
+        /// <summary> Indicates whether the keyword is excluded or not. </summary>
         public bool? Excluded { get; set; }
     }
 }

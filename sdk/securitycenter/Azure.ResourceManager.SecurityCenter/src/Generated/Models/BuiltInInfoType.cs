@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Pre-configured sensitive information type
-    /// Serialized Name: BuiltInInfoType
-    /// </summary>
+    /// <summary> Pre-configured sensitive information type. </summary>
     public partial class BuiltInInfoType
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BuiltInInfoType"/>. </summary>
-        /// <param name="name">
-        /// Display name of the info type
-        /// Serialized Name: BuiltInInfoType.name
-        /// </param>
-        /// <param name="id">
-        /// Id of the info type
-        /// Serialized Name: BuiltInInfoType.id
-        /// </param>
-        /// <param name="builtInInfoTypeValue">
-        /// Category of the built-in info type
-        /// Serialized Name: BuiltInInfoType.type
-        /// </param>
+        /// <param name="name"> Display name of the info type. </param>
+        /// <param name="id"> Id of the info type. </param>
+        /// <param name="builtInInfoTypeValue"> Category of the built-in info type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BuiltInInfoType(string name, Guid? id, string builtInInfoTypeValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Display name of the info type
-        /// Serialized Name: BuiltInInfoType.name
-        /// </summary>
+        /// <summary> Display name of the info type. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Id of the info type
-        /// Serialized Name: BuiltInInfoType.id
-        /// </summary>
+        /// <summary> Id of the info type. </summary>
         public Guid? Id { get; }
-        /// <summary>
-        /// Category of the built-in info type
-        /// Serialized Name: BuiltInInfoType.type
-        /// </summary>
+        /// <summary> Category of the built-in info type. </summary>
         public string BuiltInInfoTypeValue { get; }
     }
 }

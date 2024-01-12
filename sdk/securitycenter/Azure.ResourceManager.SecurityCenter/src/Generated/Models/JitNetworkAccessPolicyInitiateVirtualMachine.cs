@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The JitNetworkAccessPolicyInitiateVirtualMachine.
-    /// Serialized Name: JitNetworkAccessPolicyInitiateVirtualMachine
-    /// </summary>
+    /// <summary> The JitNetworkAccessPolicyInitiateVirtualMachine. </summary>
     public partial class JitNetworkAccessPolicyInitiateVirtualMachine
     {
         /// <summary>
@@ -51,14 +48,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateVirtualMachine"/>. </summary>
-        /// <param name="id">
-        /// Resource ID of the virtual machine that is linked to this policy
-        /// Serialized Name: JitNetworkAccessPolicyInitiateVirtualMachine.id
-        /// </param>
-        /// <param name="ports">
-        /// The ports to open for the resource with the `id`
-        /// Serialized Name: JitNetworkAccessPolicyInitiateVirtualMachine.ports
-        /// </param>
+        /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
+        /// <param name="ports"> The ports to open for the resource with the `id`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
         public JitNetworkAccessPolicyInitiateVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessPolicyInitiatePort> ports)
         {
@@ -70,14 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateVirtualMachine"/>. </summary>
-        /// <param name="id">
-        /// Resource ID of the virtual machine that is linked to this policy
-        /// Serialized Name: JitNetworkAccessPolicyInitiateVirtualMachine.id
-        /// </param>
-        /// <param name="ports">
-        /// The ports to open for the resource with the `id`
-        /// Serialized Name: JitNetworkAccessPolicyInitiateVirtualMachine.ports
-        /// </param>
+        /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
+        /// <param name="ports"> The ports to open for the resource with the `id`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal JitNetworkAccessPolicyInitiateVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessPolicyInitiatePort> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,15 +76,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// Resource ID of the virtual machine that is linked to this policy
-        /// Serialized Name: JitNetworkAccessPolicyInitiateVirtualMachine.id
-        /// </summary>
+        /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// The ports to open for the resource with the `id`
-        /// Serialized Name: JitNetworkAccessPolicyInitiateVirtualMachine.ports
-        /// </summary>
+        /// <summary> The ports to open for the resource with the `id`. </summary>
         public IList<JitNetworkAccessPolicyInitiatePort> Ports { get; }
     }
 }

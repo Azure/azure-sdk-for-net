@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Details of the resource that was assessed
-    /// Serialized Name: ResourceDetails
     /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
     /// </summary>
@@ -56,21 +55,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
-        /// <param name="source">
-        /// The platform where the assessed resource resides
-        /// Serialized Name: ResourceDetails.source
-        /// </param>
+        /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterResourceDetails(Source source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityCenterResourceDetails(HealthReportSource source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The platform where the assessed resource resides
-        /// Serialized Name: ResourceDetails.source
-        /// </summary>
-        internal Source Source { get; set; }
+        /// <summary> The platform where the assessed resource resides. </summary>
+        internal HealthReportSource Source { get; set; }
     }
 }

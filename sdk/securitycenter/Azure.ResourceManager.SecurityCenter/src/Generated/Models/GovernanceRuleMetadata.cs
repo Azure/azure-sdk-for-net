@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The governance rule metadata
-    /// Serialized Name: GovernanceRuleMetadata
-    /// </summary>
+    /// <summary> The governance rule metadata. </summary>
     public partial class GovernanceRuleMetadata
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleMetadata"/>. </summary>
-        /// <param name="createdBy">
-        /// Governance rule Created by object id (GUID)
-        /// Serialized Name: GovernanceRuleMetadata.createdBy
-        /// </param>
-        /// <param name="createdOn">
-        /// Governance rule creation date
-        /// Serialized Name: GovernanceRuleMetadata.createdOn
-        /// </param>
-        /// <param name="updatedBy">
-        /// Governance rule last updated by object id (GUID)
-        /// Serialized Name: GovernanceRuleMetadata.updatedBy
-        /// </param>
-        /// <param name="updatedOn">
-        /// Governance rule last update date
-        /// Serialized Name: GovernanceRuleMetadata.updatedOn
-        /// </param>
+        /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
+        /// <param name="createdOn"> Governance rule creation date. </param>
+        /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
+        /// <param name="updatedOn"> Governance rule last update date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GovernanceRuleMetadata(string createdBy, DateTimeOffset? createdOn, string updatedBy, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Governance rule Created by object id (GUID)
-        /// Serialized Name: GovernanceRuleMetadata.createdBy
-        /// </summary>
+        /// <summary> Governance rule Created by object id (GUID). </summary>
         public string CreatedBy { get; }
-        /// <summary>
-        /// Governance rule creation date
-        /// Serialized Name: GovernanceRuleMetadata.createdOn
-        /// </summary>
+        /// <summary> Governance rule creation date. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Governance rule last updated by object id (GUID)
-        /// Serialized Name: GovernanceRuleMetadata.updatedBy
-        /// </summary>
+        /// <summary> Governance rule last updated by object id (GUID). </summary>
         public string UpdatedBy { get; }
-        /// <summary>
-        /// Governance rule last update date
-        /// Serialized Name: GovernanceRuleMetadata.updatedOn
-        /// </summary>
+        /// <summary> Governance rule last update date. </summary>
         public DateTimeOffset? UpdatedOn { get; }
     }
 }

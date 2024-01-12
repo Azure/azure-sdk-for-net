@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender for Server VM scanning configuration
-    /// Serialized Name: DefenderForServersAwsOfferingVmScanners
-    /// </summary>
+    /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
     public partial class DefenderForServersAwsOfferingVmScanners
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingVmScanners"/>. </summary>
-        /// <param name="isEnabled">
-        /// Is Microsoft Defender for Server VM scanning enabled
-        /// Serialized Name: DefenderForServersAwsOfferingVmScanners.enabled
-        /// </param>
-        /// <param name="configuration">
-        /// configuration for Microsoft Defender for Server VM scanning
-        /// Serialized Name: DefenderForServersAwsOfferingVmScanners.configuration
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender for Server VM scanning enabled. </param>
+        /// <param name="configuration"> configuration for Microsoft Defender for Server VM scanning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForServersAwsOfferingVmScanners(bool? isEnabled, DefenderForServersAwsOfferingVmScannersConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender for Server VM scanning enabled
-        /// Serialized Name: DefenderForServersAwsOfferingVmScanners.enabled
-        /// </summary>
+        /// <summary> Is Microsoft Defender for Server VM scanning enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// configuration for Microsoft Defender for Server VM scanning
-        /// Serialized Name: DefenderForServersAwsOfferingVmScanners.configuration
-        /// </summary>
+        /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
         public DefenderForServersAwsOfferingVmScannersConfiguration Configuration { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// None - the setting was never set.
     /// Enabled - ActionableRemediation is enabled.
     /// Disabled - ActionableRemediation is disabled.
-    /// Serialized Name: ActionableRemediationState
     /// </summary>
     public readonly partial struct ActionableRemediationState : IEquatable<ActionableRemediationState>
     {
@@ -32,20 +31,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: ActionableRemediationState.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static ActionableRemediationState None { get; } = new ActionableRemediationState(NoneValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ActionableRemediationState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static ActionableRemediationState Disabled { get; } = new ActionableRemediationState(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ActionableRemediationState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static ActionableRemediationState Enabled { get; } = new ActionableRemediationState(EnabledValue);
         /// <summary> Determines if two <see cref="ActionableRemediationState"/> values are the same. </summary>
         public static bool operator ==(ActionableRemediationState left, ActionableRemediationState right) => left.Equals(right);

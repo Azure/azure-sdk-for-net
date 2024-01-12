@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// CVSS details
-    /// Serialized Name: Cvss
-    /// </summary>
+    /// <summary> CVSS details. </summary>
     public partial class SecurityCvss
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCvss"/>. </summary>
-        /// <param name="base">
-        /// CVSS base
-        /// Serialized Name: Cvss.base
-        /// </param>
+        /// <param name="base"> CVSS base. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCvss(float? @base, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// CVSS base
-        /// Serialized Name: Cvss.base
-        /// </summary>
+        /// <summary> CVSS base. </summary>
         public float? Base { get; }
     }
 }

@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The gcpOrganization data
-    /// Serialized Name: GcpOrganizationalData
     /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
     /// </summary>
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpOrganizationalInfo"/>. </summary>
-        /// <param name="organizationMembershipType">
-        /// The multi cloud account's membership type in the organization
-        /// Serialized Name: GcpOrganizationalData.organizationMembershipType
-        /// </param>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GcpOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The multi cloud account's membership type in the organization
-        /// Serialized Name: GcpOrganizationalData.organizationMembershipType
-        /// </summary>
+        /// <summary> The multi cloud account's membership type in the organization. </summary>
         internal OrganizationMembershipType OrganizationMembershipType { get; set; }
     }
 }

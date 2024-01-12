@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the RegulatoryComplianceControl data model.
     /// Regulatory compliance control details and state
-    /// Serialized Name: RegulatoryComplianceControl
     /// </summary>
     public partial class RegulatoryComplianceControlData : ResourceData
     {
@@ -62,26 +61,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// The description of the regulatory compliance control
-        /// Serialized Name: RegulatoryComplianceControl.properties.description
-        /// </param>
-        /// <param name="state">
-        /// Aggregative state based on the control's supported assessments states
-        /// Serialized Name: RegulatoryComplianceControl.properties.state
-        /// </param>
-        /// <param name="passedAssessments">
-        /// The number of supported regulatory compliance assessments of the given control with a passed state
-        /// Serialized Name: RegulatoryComplianceControl.properties.passedAssessments
-        /// </param>
-        /// <param name="failedAssessments">
-        /// The number of supported regulatory compliance assessments of the given control with a failed state
-        /// Serialized Name: RegulatoryComplianceControl.properties.failedAssessments
-        /// </param>
-        /// <param name="skippedAssessments">
-        /// The number of supported regulatory compliance assessments of the given control with a skipped state
-        /// Serialized Name: RegulatoryComplianceControl.properties.skippedAssessments
-        /// </param>
+        /// <param name="description"> The description of the regulatory compliance control. </param>
+        /// <param name="state"> Aggregative state based on the control's supported assessments states. </param>
+        /// <param name="passedAssessments"> The number of supported regulatory compliance assessments of the given control with a passed state. </param>
+        /// <param name="failedAssessments"> The number of supported regulatory compliance assessments of the given control with a failed state. </param>
+        /// <param name="skippedAssessments"> The number of supported regulatory compliance assessments of the given control with a skipped state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegulatoryComplianceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, RegulatoryComplianceState? state, int? passedAssessments, int? failedAssessments, int? skippedAssessments, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -93,30 +77,15 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The description of the regulatory compliance control
-        /// Serialized Name: RegulatoryComplianceControl.properties.description
-        /// </summary>
+        /// <summary> The description of the regulatory compliance control. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Aggregative state based on the control's supported assessments states
-        /// Serialized Name: RegulatoryComplianceControl.properties.state
-        /// </summary>
+        /// <summary> Aggregative state based on the control's supported assessments states. </summary>
         public RegulatoryComplianceState? State { get; set; }
-        /// <summary>
-        /// The number of supported regulatory compliance assessments of the given control with a passed state
-        /// Serialized Name: RegulatoryComplianceControl.properties.passedAssessments
-        /// </summary>
+        /// <summary> The number of supported regulatory compliance assessments of the given control with a passed state. </summary>
         public int? PassedAssessments { get; }
-        /// <summary>
-        /// The number of supported regulatory compliance assessments of the given control with a failed state
-        /// Serialized Name: RegulatoryComplianceControl.properties.failedAssessments
-        /// </summary>
+        /// <summary> The number of supported regulatory compliance assessments of the given control with a failed state. </summary>
         public int? FailedAssessments { get; }
-        /// <summary>
-        /// The number of supported regulatory compliance assessments of the given control with a skipped state
-        /// Serialized Name: RegulatoryComplianceControl.properties.skippedAssessments
-        /// </summary>
+        /// <summary> The number of supported regulatory compliance assessments of the given control with a skipped state. </summary>
         public int? SkippedAssessments { get; }
     }
 }

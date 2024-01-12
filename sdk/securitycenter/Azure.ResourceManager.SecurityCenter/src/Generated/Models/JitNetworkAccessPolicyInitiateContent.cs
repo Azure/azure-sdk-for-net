@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The JitNetworkAccessPolicyInitiateRequest.
-    /// Serialized Name: JitNetworkAccessPolicyInitiateRequest
-    /// </summary>
+    /// <summary> The JitNetworkAccessPolicyInitiateContent. </summary>
     public partial class JitNetworkAccessPolicyInitiateContent
     {
         /// <summary>
@@ -51,10 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateContent"/>. </summary>
-        /// <param name="virtualMachines">
-        /// A list of virtual machines &amp; ports to open access for
-        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.virtualMachines
-        /// </param>
+        /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyInitiateContent(IEnumerable<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines)
         {
@@ -64,14 +58,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateContent"/>. </summary>
-        /// <param name="virtualMachines">
-        /// A list of virtual machines &amp; ports to open access for
-        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.virtualMachines
-        /// </param>
-        /// <param name="justification">
-        /// The justification for making the initiate request
-        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.justification
-        /// </param>
+        /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
+        /// <param name="justification"> The justification for making the initiate request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal JitNetworkAccessPolicyInitiateContent(IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,15 +73,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// A list of virtual machines &amp; ports to open access for
-        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.virtualMachines
-        /// </summary>
+        /// <summary> A list of virtual machines &amp; ports to open access for. </summary>
         public IList<JitNetworkAccessPolicyInitiateVirtualMachine> VirtualMachines { get; }
-        /// <summary>
-        /// The justification for making the initiate request
-        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.justification
-        /// </summary>
+        /// <summary> The justification for making the initiate request. </summary>
         public string Justification { get; set; }
     }
 }

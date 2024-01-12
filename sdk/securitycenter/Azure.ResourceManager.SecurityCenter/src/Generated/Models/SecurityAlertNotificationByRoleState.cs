@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription.
-    /// Serialized Name: SecurityAlertNotificationByRoleState
-    /// </summary>
+    /// <summary> Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
     public readonly partial struct SecurityAlertNotificationByRoleState : IEquatable<SecurityAlertNotificationByRoleState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string OnValue = "On";
         private const string OffValue = "Off";
 
-        /// <summary>
-        /// Send notification on new alerts to the subscription's admins
-        /// Serialized Name: SecurityAlertNotificationByRoleState.On
-        /// </summary>
+        /// <summary> Send notification on new alerts to the subscription's admins. </summary>
         public static SecurityAlertNotificationByRoleState On { get; } = new SecurityAlertNotificationByRoleState(OnValue);
-        /// <summary>
-        /// Don't send notification on new alerts to the subscription's admins
-        /// Serialized Name: SecurityAlertNotificationByRoleState.Off
-        /// </summary>
+        /// <summary> Don't send notification on new alerts to the subscription's admins. </summary>
         public static SecurityAlertNotificationByRoleState Off { get; } = new SecurityAlertNotificationByRoleState(OffValue);
         /// <summary> Determines if two <see cref="SecurityAlertNotificationByRoleState"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertNotificationByRoleState left, SecurityAlertNotificationByRoleState right) => left.Equals(right);

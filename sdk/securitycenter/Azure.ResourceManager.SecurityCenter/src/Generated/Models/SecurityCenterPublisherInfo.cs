@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Represents the publisher information of a process/rule
-    /// Serialized Name: PublisherInfo
-    /// </summary>
+    /// <summary> Represents the publisher information of a process/rule. </summary>
     public partial class SecurityCenterPublisherInfo
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterPublisherInfo"/>. </summary>
-        /// <param name="publisherName">
-        /// The Subject field of the x.509 certificate used to sign the code, using the following fields -  O = Organization, L = Locality, S = State or Province, and C = Country
-        /// Serialized Name: PublisherInfo.publisherName
-        /// </param>
-        /// <param name="productName">
-        /// The product name taken from the file's version resource
-        /// Serialized Name: PublisherInfo.productName
-        /// </param>
-        /// <param name="binaryName">
-        /// The "OriginalName" field taken from the file's version resource
-        /// Serialized Name: PublisherInfo.binaryName
-        /// </param>
-        /// <param name="version">
-        /// The binary file version taken from the file's version resource
-        /// Serialized Name: PublisherInfo.version
-        /// </param>
+        /// <param name="publisherName"> The Subject field of the x.509 certificate used to sign the code, using the following fields -  O = Organization, L = Locality, S = State or Province, and C = Country. </param>
+        /// <param name="productName"> The product name taken from the file's version resource. </param>
+        /// <param name="binaryName"> The "OriginalName" field taken from the file's version resource. </param>
+        /// <param name="version"> The binary file version taken from the file's version resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCenterPublisherInfo(string publisherName, string productName, string binaryName, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Subject field of the x.509 certificate used to sign the code, using the following fields -  O = Organization, L = Locality, S = State or Province, and C = Country
-        /// Serialized Name: PublisherInfo.publisherName
-        /// </summary>
+        /// <summary> The Subject field of the x.509 certificate used to sign the code, using the following fields -  O = Organization, L = Locality, S = State or Province, and C = Country. </summary>
         public string PublisherName { get; set; }
-        /// <summary>
-        /// The product name taken from the file's version resource
-        /// Serialized Name: PublisherInfo.productName
-        /// </summary>
+        /// <summary> The product name taken from the file's version resource. </summary>
         public string ProductName { get; set; }
-        /// <summary>
-        /// The "OriginalName" field taken from the file's version resource
-        /// Serialized Name: PublisherInfo.binaryName
-        /// </summary>
+        /// <summary> The "OriginalName" field taken from the file's version resource. </summary>
         public string BinaryName { get; set; }
-        /// <summary>
-        /// The binary file version taken from the file's version resource
-        /// Serialized Name: PublisherInfo.version
-        /// </summary>
+        /// <summary> The binary file version taken from the file's version resource. </summary>
         public string Version { get; set; }
     }
 }

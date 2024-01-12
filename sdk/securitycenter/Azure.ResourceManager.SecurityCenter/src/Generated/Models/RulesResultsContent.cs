@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Rules results input.
-    /// Serialized Name: RulesResultsInput
-    /// </summary>
+    /// <summary> Rules results input. </summary>
     public partial class RulesResultsContent
     {
         /// <summary>
@@ -56,14 +53,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RulesResultsContent"/>. </summary>
-        /// <param name="latestScan">
-        /// Take results from latest scan.
-        /// Serialized Name: RulesResultsInput.latestScan
-        /// </param>
+        /// <param name="latestScan"> Take results from latest scan. </param>
         /// <param name="results">
         /// Expected results to be inserted into the baseline.
         /// Leave this field empty it LatestScan == true.
-        /// Serialized Name: RulesResultsInput.results
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RulesResultsContent(bool? latestScan, IDictionary<string, IList<IList<string>>> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -73,15 +66,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Take results from latest scan.
-        /// Serialized Name: RulesResultsInput.latestScan
-        /// </summary>
+        /// <summary> Take results from latest scan. </summary>
         public bool? LatestScan { get; set; }
         /// <summary>
         /// Expected results to be inserted into the baseline.
         /// Leave this field empty it LatestScan == true.
-        /// Serialized Name: RulesResultsInput.results
         /// </summary>
         public IDictionary<string, IList<IList<string>>> Results { get; }
     }

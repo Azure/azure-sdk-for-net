@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Microsoft information protection built-in and custom information types, labels, and integration status.
-    /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation
-    /// </summary>
+    /// <summary> Microsoft information protection built-in and custom information types, labels, and integration status. </summary>
     public partial class GetSensitivitySettingsResponsePropertiesMipInformation
     {
         /// <summary>
@@ -52,30 +49,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponsePropertiesMipInformation"/>. </summary>
         internal GetSensitivitySettingsResponsePropertiesMipInformation()
         {
-            Labels = new ChangeTrackingList<Label>();
+            Labels = new ChangeTrackingList<MipSensitivityLabel>();
             CustomInfoTypes = new ChangeTrackingList<InfoType>();
             BuiltInInfoTypes = new ChangeTrackingList<BuiltInInfoType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponsePropertiesMipInformation"/>. </summary>
-        /// <param name="mipIntegrationStatus">
-        /// Microsoft information protection integration status
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.mipIntegrationStatus
-        /// </param>
-        /// <param name="labels">
-        /// List of Microsoft information protection sensitivity labels
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.labels
-        /// </param>
-        /// <param name="customInfoTypes">
-        /// List of custom user-defined information types
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.customInfoTypes
-        /// </param>
-        /// <param name="builtInInfoTypes">
-        /// List of pre-configured sensitive information types
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.builtInInfoTypes
-        /// </param>
+        /// <param name="mipIntegrationStatus"> Microsoft information protection integration status. </param>
+        /// <param name="labels"> List of Microsoft information protection sensitivity labels. </param>
+        /// <param name="customInfoTypes"> List of custom user-defined information types. </param>
+        /// <param name="builtInInfoTypes"> List of pre-configured sensitive information types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus, IReadOnlyList<Label> labels, IReadOnlyList<InfoType> customInfoTypes, IReadOnlyList<BuiltInInfoType> builtInInfoTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus, IReadOnlyList<MipSensitivityLabel> labels, IReadOnlyList<InfoType> customInfoTypes, IReadOnlyList<BuiltInInfoType> builtInInfoTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MipIntegrationStatus = mipIntegrationStatus;
             Labels = labels;
@@ -84,25 +69,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Microsoft information protection integration status
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.mipIntegrationStatus
-        /// </summary>
+        /// <summary> Microsoft information protection integration status. </summary>
         public MipIntegrationStatus? MipIntegrationStatus { get; }
-        /// <summary>
-        /// List of Microsoft information protection sensitivity labels
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.labels
-        /// </summary>
-        public IReadOnlyList<Label> Labels { get; }
-        /// <summary>
-        /// List of custom user-defined information types
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.customInfoTypes
-        /// </summary>
+        /// <summary> List of Microsoft information protection sensitivity labels. </summary>
+        public IReadOnlyList<MipSensitivityLabel> Labels { get; }
+        /// <summary> List of custom user-defined information types. </summary>
         public IReadOnlyList<InfoType> CustomInfoTypes { get; }
-        /// <summary>
-        /// List of pre-configured sensitive information types
-        /// Serialized Name: GetSensitivitySettingsResponsePropertiesMipInformation.builtInInfoTypes
-        /// </summary>
+        /// <summary> List of pre-configured sensitive information types. </summary>
         public IReadOnlyList<BuiltInInfoType> BuiltInInfoTypes { get; }
     }
 }

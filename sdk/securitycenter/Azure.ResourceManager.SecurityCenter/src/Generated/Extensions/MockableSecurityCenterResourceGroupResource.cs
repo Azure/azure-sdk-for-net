@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private TopologyRestOperations _topologyRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private AlertsRestOperations _alertsRestClient;
-        private ClientDiagnostics _apiCollectionAPICollectionsClientDiagnostics;
-        private APICollectionsRestOperations _apiCollectionAPICollectionsRestClient;
+        private ClientDiagnostics _securityCenterApiCollectionAPICollectionsClientDiagnostics;
+        private APICollectionsRestOperations _securityCenterApiCollectionAPICollectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableSecurityCenterResourceGroupResource"/> class for mocking. </summary>
         protected MockableSecurityCenterResourceGroupResource()
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private TopologyRestOperations TopologyRestClient => _topologyRestClient ??= new TopologyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AlertsRestOperations AlertsRestClient => _alertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ApiCollectionAPICollectionsClientDiagnostics => _apiCollectionAPICollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ApiCollectionResource.ResourceType.Namespace, Diagnostics);
-        private APICollectionsRestOperations ApiCollectionAPICollectionsRestClient => _apiCollectionAPICollectionsRestClient ??= new APICollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiCollectionResource.ResourceType));
+        private ClientDiagnostics SecurityCenterApiCollectionAPICollectionsClientDiagnostics => _securityCenterApiCollectionAPICollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterApiCollectionResource.ResourceType.Namespace, Diagnostics);
+        private APICollectionsRestOperations SecurityCenterApiCollectionAPICollectionsRestClient => _securityCenterApiCollectionAPICollectionsRestClient ??= new APICollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityCenterApiCollectionResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -872,14 +872,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return GetResourceGroupSecurityAlerts(ascLocation).Get(alertName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiCollectionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SecurityCenterApiCollectionResources in the ResourceGroupResource. </summary>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ApiCollectionResources and their operations over a ApiCollectionResource. </returns>
-        public virtual ApiCollectionCollection GetApiCollections(string serviceName)
+        /// <returns> An object representing collection of SecurityCenterApiCollectionResources and their operations over a SecurityCenterApiCollectionResource. </returns>
+        public virtual SecurityCenterApiCollectionCollection GetSecurityCenterApiCollections(string serviceName)
         {
-            return new ApiCollectionCollection(Client, Id, serviceName);
+            return new SecurityCenterApiCollectionCollection(Client, Id, serviceName);
         }
 
         /// <summary>
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCollectionResource"/></description>
+        /// <description><see cref="SecurityCenterApiCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -909,9 +909,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiCollectionResource>> GetApiCollectionAsync(string serviceName, string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterApiCollectionResource>> GetSecurityCenterApiCollectionAsync(string serviceName, string apiId, CancellationToken cancellationToken = default)
         {
-            return await GetApiCollections(serviceName).GetAsync(apiId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterApiCollections(serviceName).GetAsync(apiId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCollectionResource"/></description>
+        /// <description><see cref="SecurityCenterApiCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -941,9 +941,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiCollectionResource> GetApiCollection(string serviceName, string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterApiCollectionResource> GetSecurityCenterApiCollection(string serviceName, string apiId, CancellationToken cancellationToken = default)
         {
-            return GetApiCollections(serviceName).Get(apiId, cancellationToken);
+            return GetSecurityCenterApiCollections(serviceName).Get(apiId, cancellationToken);
         }
 
         /// <summary>
@@ -1467,17 +1467,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCollectionResource"/></description>
+        /// <description><see cref="SecurityCenterApiCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiCollectionResource> GetApiCollectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityCenterApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterApiCollectionResource> GetSecurityCenterApiCollectionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCollectionAPICollectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCollectionAPICollectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCollectionResource(Client, ApiCollectionData.DeserializeApiCollectionData(e)), ApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetApiCollections", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterApiCollectionResource(Client, SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(e)), SecurityCenterApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetSecurityCenterApiCollections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1497,17 +1497,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCollectionResource"/></description>
+        /// <description><see cref="SecurityCenterApiCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiCollectionResource> GetApiCollections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterApiCollectionResource> GetSecurityCenterApiCollections(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCollectionAPICollectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCollectionAPICollectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCollectionResource(Client, ApiCollectionData.DeserializeApiCollectionData(e)), ApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetApiCollections", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityCenterApiCollectionAPICollectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterApiCollectionResource(Client, SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(e)), SecurityCenterApiCollectionAPICollectionsClientDiagnostics, Pipeline, "MockableSecurityCenterResourceGroupResource.GetSecurityCenterApiCollections", "value", "nextLink", cancellationToken);
         }
     }
 }

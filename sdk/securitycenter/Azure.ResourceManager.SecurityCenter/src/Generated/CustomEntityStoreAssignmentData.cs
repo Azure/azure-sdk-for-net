@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the CustomEntityStoreAssignment data model.
     /// Custom entity store assignment
-    /// Serialized Name: CustomEntityStoreAssignment
     /// </summary>
     public partial class CustomEntityStoreAssignmentData : ResourceData
     {
@@ -61,14 +60,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="principal">
-        /// The principal assigned with entity store. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]
-        /// Serialized Name: CustomEntityStoreAssignment.properties.principal
-        /// </param>
-        /// <param name="entityStoreDatabaseLink">
-        /// The link to entity store database.
-        /// Serialized Name: CustomEntityStoreAssignment.properties.entityStoreDatabaseLink
-        /// </param>
+        /// <param name="principal"> The principal assigned with entity store. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]. </param>
+        /// <param name="entityStoreDatabaseLink"> The link to entity store database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomEntityStoreAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string principal, string entityStoreDatabaseLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,15 +70,9 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The principal assigned with entity store. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]
-        /// Serialized Name: CustomEntityStoreAssignment.properties.principal
-        /// </summary>
+        /// <summary> The principal assigned with entity store. Format of principal is: [AAD type]=[PrincipalObjectId];[TenantId]. </summary>
         public string Principal { get; set; }
-        /// <summary>
-        /// The link to entity store database.
-        /// Serialized Name: CustomEntityStoreAssignment.properties.entityStoreDatabaseLink
-        /// </summary>
+        /// <summary> The link to entity store database. </summary>
         public string EntityStoreDatabaseLink { get; set; }
     }
 }

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<DefenderCspmGcpOfferingVmScanners> vmScanners = default;
             Optional<DefenderCspmGcpOfferingDataSensitivityDiscovery> dataSensitivityDiscovery = default;
             Optional<DefenderCspmGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8s = default;
+            Optional<DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8s = DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmGcpOffering(offeringType, description.Value, serializedAdditionalRawData, ciemDiscovery.Value, vmScanners.Value, dataSensitivityDiscovery.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8s.Value);
+            return new DefenderCspmGcpOffering(offeringType, description.Value, serializedAdditionalRawData, ciemDiscovery.Value, vmScanners.Value, dataSensitivityDiscovery.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
         BinaryData IPersistableModel<DefenderCspmGcpOffering>.Write(ModelReaderWriterOptions options)

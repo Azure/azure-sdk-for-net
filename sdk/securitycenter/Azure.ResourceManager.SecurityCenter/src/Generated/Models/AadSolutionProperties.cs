@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The external security solution properties for AAD solutions
-    /// Serialized Name: AadSolutionProperties
-    /// </summary>
+    /// <summary> The external security solution properties for AAD solutions. </summary>
     public partial class AadSolutionProperties : ExternalSecuritySolutionProperties
     {
         /// <summary> Initializes a new instance of <see cref="AadSolutionProperties"/>. </summary>
@@ -23,26 +20,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AadSolutionProperties"/>. </summary>
-        /// <param name="deviceVendor"> Serialized Name: ExternalSecuritySolutionProperties.deviceVendor. </param>
-        /// <param name="deviceType"> Serialized Name: ExternalSecuritySolutionProperties.deviceType. </param>
-        /// <param name="workspace">
-        /// Represents an OMS workspace to which the solution is connected
-        /// Serialized Name: ExternalSecuritySolutionProperties.workspace
-        /// </param>
+        /// <param name="deviceVendor"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectivityState">
-        /// The connectivity state of the external AAD solution
-        /// Serialized Name: AadConnectivityState.connectivityState
-        /// </param>
+        /// <param name="connectivityState"> The connectivity state of the external AAD solution. </param>
         internal AadSolutionProperties(string deviceVendor, string deviceType, WritableSubResource workspace, IDictionary<string, BinaryData> additionalProperties, AadConnectivityStateType? connectivityState) : base(deviceVendor, deviceType, workspace, additionalProperties)
         {
             ConnectivityState = connectivityState;
         }
 
-        /// <summary>
-        /// The connectivity state of the external AAD solution
-        /// Serialized Name: AadConnectivityState.connectivityState
-        /// </summary>
+        /// <summary> The connectivity state of the external AAD solution. </summary>
         public AadConnectivityStateType? ConnectivityState { get; set; }
     }
 }

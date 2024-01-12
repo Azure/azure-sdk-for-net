@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations
-    /// Serialized Name: DefenderCspmAwsOfferingCiem
-    /// </summary>
+    /// <summary> Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations. </summary>
     public partial class DefenderCspmAwsOfferingCiem
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingCiem"/>. </summary>
-        /// <param name="ciemDiscovery">
-        /// Defender CSPM CIEM discovery configuration
-        /// Serialized Name: DefenderCspmAwsOfferingCiem.ciemDiscovery
-        /// </param>
-        /// <param name="ciemOidc">
-        /// Defender CSPM CIEM AWS OIDC (open id connect) configuration
-        /// Serialized Name: DefenderCspmAwsOfferingCiem.ciemOidc
-        /// </param>
+        /// <param name="ciemDiscovery"> Defender CSPM CIEM discovery configuration. </param>
+        /// <param name="ciemOidc"> Defender CSPM CIEM AWS OIDC (open id connect) configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderCspmAwsOfferingCiem(DefenderCspmAwsOfferingCiemDiscovery ciemDiscovery, DefenderCspmAwsOfferingCiemOidc ciemOidc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Defender CSPM CIEM discovery configuration
-        /// Serialized Name: DefenderCspmAwsOfferingCiem.ciemDiscovery
-        /// </summary>
+        /// <summary> Defender CSPM CIEM discovery configuration. </summary>
         internal DefenderCspmAwsOfferingCiemDiscovery CiemDiscovery { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for CIEM discovery
-        /// Serialized Name: DefenderCspmAwsOfferingCiemDiscovery.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for CIEM discovery. </summary>
         public string CiemDiscoveryCloudRoleArn
         {
             get => CiemDiscovery is null ? default : CiemDiscovery.CloudRoleArn;
@@ -90,10 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary>
-        /// Defender CSPM CIEM AWS OIDC (open id connect) configuration
-        /// Serialized Name: DefenderCspmAwsOfferingCiem.ciemOidc
-        /// </summary>
+        /// <summary> Defender CSPM CIEM AWS OIDC (open id connect) configuration. </summary>
         public DefenderCspmAwsOfferingCiemOidc CiemOidc { get; set; }
     }
 }

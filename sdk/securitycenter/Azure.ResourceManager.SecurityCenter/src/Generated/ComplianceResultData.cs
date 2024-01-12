@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the ComplianceResult data model.
     /// a compliance result
-    /// Serialized Name: ComplianceResult
     /// </summary>
     public partial class ComplianceResultData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceStatus">
-        /// The status of the resource regarding a single assessment
-        /// Serialized Name: ComplianceResult.properties.resourceStatus
-        /// </param>
+        /// <param name="resourceStatus"> The status of the resource regarding a single assessment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAssessmentResourceStatus? resourceStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The status of the resource regarding a single assessment
-        /// Serialized Name: ComplianceResult.properties.resourceStatus
-        /// </summary>
+        /// <summary> The status of the resource regarding a single assessment. </summary>
         public SecurityAssessmentResourceStatus? ResourceStatus { get; }
     }
 }

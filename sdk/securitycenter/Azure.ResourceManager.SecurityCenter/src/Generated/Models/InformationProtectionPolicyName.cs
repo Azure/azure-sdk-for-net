@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The InformationProtectionPolicyName.
-    /// Serialized Name: InformationProtectionPolicyName
-    /// </summary>
+    /// <summary> The InformationProtectionPolicyName. </summary>
     public readonly partial struct InformationProtectionPolicyName : IEquatable<InformationProtectionPolicyName>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string EffectiveValue = "effective";
         private const string CustomValue = "custom";
 
-        /// <summary>
-        /// effective
-        /// Serialized Name: InformationProtectionPolicyName.effective
-        /// </summary>
+        /// <summary> effective. </summary>
         public static InformationProtectionPolicyName Effective { get; } = new InformationProtectionPolicyName(EffectiveValue);
-        /// <summary>
-        /// custom
-        /// Serialized Name: InformationProtectionPolicyName.custom
-        /// </summary>
+        /// <summary> custom. </summary>
         public static InformationProtectionPolicyName Custom { get; } = new InformationProtectionPolicyName(CustomValue);
         /// <summary> Determines if two <see cref="InformationProtectionPolicyName"/> values are the same. </summary>
         public static bool operator ==(InformationProtectionPolicyName left, InformationProtectionPolicyName right) => left.Equals(right);

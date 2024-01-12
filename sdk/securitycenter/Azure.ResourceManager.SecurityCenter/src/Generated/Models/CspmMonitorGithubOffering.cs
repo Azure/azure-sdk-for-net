@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The CSPM monitoring for github offering
-    /// Serialized Name: CspmMonitorGithubOffering
-    /// </summary>
+    /// <summary> The CSPM monitoring for github offering. </summary>
     public partial class CspmMonitorGithubOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGithubOffering"/>. </summary>
@@ -23,14 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGithubOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CspmMonitorGithubOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(offeringType, description, serializedAdditionalRawData)
         {

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecuritySubAssessment data model.
     /// Security sub-assessment on a resource
-    /// Serialized Name: SecuritySubAssessment
     /// </summary>
     public partial class SecuritySubAssessmentData : ResourceData
     {
@@ -62,47 +61,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="vulnerabilityId">
-        /// Vulnerability ID
-        /// Serialized Name: SecuritySubAssessment.properties.id
-        /// </param>
-        /// <param name="displayName">
-        /// User friendly display name of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.displayName
-        /// </param>
-        /// <param name="status">
-        /// Status of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.status
-        /// </param>
-        /// <param name="remediation">
-        /// Information on how to remediate this sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.remediation
-        /// </param>
-        /// <param name="impact">
-        /// Description of the impact of this sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.impact
-        /// </param>
-        /// <param name="category">
-        /// Category of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.category
-        /// </param>
-        /// <param name="description">
-        /// Human readable description of the assessment status
-        /// Serialized Name: SecuritySubAssessment.properties.description
-        /// </param>
-        /// <param name="generatedOn">
-        /// The date and time the sub-assessment was generated
-        /// Serialized Name: SecuritySubAssessment.properties.timeGenerated
-        /// </param>
+        /// <param name="vulnerabilityId"> Vulnerability ID. </param>
+        /// <param name="displayName"> User friendly display name of the sub-assessment. </param>
+        /// <param name="status"> Status of the sub-assessment. </param>
+        /// <param name="remediation"> Information on how to remediate this sub-assessment. </param>
+        /// <param name="impact"> Description of the impact of this sub-assessment. </param>
+        /// <param name="category"> Category of the sub-assessment. </param>
+        /// <param name="description"> Human readable description of the assessment status. </param>
+        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
-        /// Serialized Name: SecuritySubAssessment.properties.resourceDetails
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="additionalData">
         /// Details of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.additionalData
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
         /// </param>
@@ -122,56 +95,30 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Vulnerability ID
-        /// Serialized Name: SecuritySubAssessment.properties.id
-        /// </summary>
+        /// <summary> Vulnerability ID. </summary>
         public string VulnerabilityId { get; }
-        /// <summary>
-        /// User friendly display name of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.displayName
-        /// </summary>
+        /// <summary> User friendly display name of the sub-assessment. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Status of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.status
-        /// </summary>
+        /// <summary> Status of the sub-assessment. </summary>
         public SubAssessmentStatus Status { get; set; }
-        /// <summary>
-        /// Information on how to remediate this sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.remediation
-        /// </summary>
+        /// <summary> Information on how to remediate this sub-assessment. </summary>
         public string Remediation { get; }
-        /// <summary>
-        /// Description of the impact of this sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.impact
-        /// </summary>
+        /// <summary> Description of the impact of this sub-assessment. </summary>
         public string Impact { get; }
-        /// <summary>
-        /// Category of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.category
-        /// </summary>
+        /// <summary> Category of the sub-assessment. </summary>
         public string Category { get; }
-        /// <summary>
-        /// Human readable description of the assessment status
-        /// Serialized Name: SecuritySubAssessment.properties.description
-        /// </summary>
+        /// <summary> Human readable description of the assessment status. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The date and time the sub-assessment was generated
-        /// Serialized Name: SecuritySubAssessment.properties.timeGenerated
-        /// </summary>
+        /// <summary> The date and time the sub-assessment was generated. </summary>
         public DateTimeOffset? GeneratedOn { get; }
         /// <summary>
         /// Details of the resource that was assessed
-        /// Serialized Name: SecuritySubAssessment.properties.resourceDetails
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </summary>
         public SecurityCenterResourceDetails ResourceDetails { get; set; }
         /// <summary>
         /// Details of the sub-assessment
-        /// Serialized Name: SecuritySubAssessment.properties.additionalData
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
         /// </summary>

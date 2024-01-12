@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<MipIntegrationStatus> mipIntegrationStatus = default;
-            Optional<IReadOnlyList<Label>> labels = default;
+            Optional<IReadOnlyList<MipSensitivityLabel>> labels = default;
             Optional<IReadOnlyList<InfoType>> customInfoTypes = default;
             Optional<IReadOnlyList<BuiltInInfoType>> builtInInfoTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<Label> array = new List<Label>();
+                    List<MipSensitivityLabel> array = new List<MipSensitivityLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Label.DeserializeLabel(item));
+                        array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item));
                     }
                     labels = array;
                     continue;

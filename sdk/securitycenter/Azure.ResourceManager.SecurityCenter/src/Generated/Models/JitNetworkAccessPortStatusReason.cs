@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A description of why the `status` has its value
-    /// Serialized Name: StatusReason
-    /// </summary>
+    /// <summary> A description of why the `status` has its value. </summary>
     public readonly partial struct JitNetworkAccessPortStatusReason : IEquatable<JitNetworkAccessPortStatusReason>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string UserRequestedValue = "UserRequested";
         private const string NewerRequestInitiatedValue = "NewerRequestInitiated";
 
-        /// <summary>
-        /// Expired
-        /// Serialized Name: StatusReason.Expired
-        /// </summary>
+        /// <summary> Expired. </summary>
         public static JitNetworkAccessPortStatusReason Expired { get; } = new JitNetworkAccessPortStatusReason(ExpiredValue);
-        /// <summary>
-        /// UserRequested
-        /// Serialized Name: StatusReason.UserRequested
-        /// </summary>
+        /// <summary> UserRequested. </summary>
         public static JitNetworkAccessPortStatusReason UserRequested { get; } = new JitNetworkAccessPortStatusReason(UserRequestedValue);
-        /// <summary>
-        /// NewerRequestInitiated
-        /// Serialized Name: StatusReason.NewerRequestInitiated
-        /// </summary>
+        /// <summary> NewerRequestInitiated. </summary>
         public static JitNetworkAccessPortStatusReason NewerRequestInitiated { get; } = new JitNetworkAccessPortStatusReason(NewerRequestInitiatedValue);
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatusReason"/> values are the same. </summary>
         public static bool operator ==(JitNetworkAccessPortStatusReason left, JitNetworkAccessPortStatusReason right) => left.Equals(right);

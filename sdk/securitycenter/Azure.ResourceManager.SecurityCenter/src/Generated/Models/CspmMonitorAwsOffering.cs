@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The CSPM monitoring for AWS offering
-    /// Serialized Name: CspmMonitorAwsOffering
-    /// </summary>
+    /// <summary> The CSPM monitoring for AWS offering. </summary>
     public partial class CspmMonitorAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOffering"/>. </summary>
@@ -23,34 +20,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="nativeCloudConnection">
-        /// The native cloud connection configuration
-        /// Serialized Name: CspmMonitorAwsOffering.nativeCloudConnection
-        /// </param>
+        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
         internal CspmMonitorAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, CspmMonitorAwsOfferingNativeCloudConnection nativeCloudConnection) : base(offeringType, description, serializedAdditionalRawData)
         {
             NativeCloudConnection = nativeCloudConnection;
             OfferingType = offeringType;
         }
 
-        /// <summary>
-        /// The native cloud connection configuration
-        /// Serialized Name: CspmMonitorAwsOffering.nativeCloudConnection
-        /// </summary>
+        /// <summary> The native cloud connection configuration. </summary>
         internal CspmMonitorAwsOfferingNativeCloudConnection NativeCloudConnection { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: CspmMonitorAwsOfferingNativeCloudConnection.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn
         {
             get => NativeCloudConnection is null ? default : NativeCloudConnection.CloudRoleArn;

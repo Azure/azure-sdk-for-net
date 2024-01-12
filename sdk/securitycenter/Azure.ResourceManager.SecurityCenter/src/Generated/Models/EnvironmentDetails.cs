@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The environment details of the resource
-    /// Serialized Name: EnvironmentDetails
-    /// </summary>
+    /// <summary> The environment details of the resource. </summary>
     public partial class EnvironmentDetails
     {
         /// <summary>
@@ -55,26 +52,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDetails"/>. </summary>
-        /// <param name="nativeResourceId">
-        /// The native resource id of the resource (in case of Azure - the resource Id, in case of MC - the native resource id)
-        /// Serialized Name: EnvironmentDetails.nativeResourceId
-        /// </param>
-        /// <param name="environmentHierarchyId">
-        /// The hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the hierarchyId id)
-        /// Serialized Name: EnvironmentDetails.environmentHierarchyId
-        /// </param>
-        /// <param name="organizationalHierarchyId">
-        /// The organizational hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the organizational hierarchyId id)
-        /// Serialized Name: EnvironmentDetails.organizationalHierarchyId
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription Id
-        /// Serialized Name: EnvironmentDetails.subscriptionId
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant Id
-        /// Serialized Name: EnvironmentDetails.tenantId
-        /// </param>
+        /// <param name="nativeResourceId"> The native resource id of the resource (in case of Azure - the resource Id, in case of MC - the native resource id). </param>
+        /// <param name="environmentHierarchyId"> The hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the hierarchyId id). </param>
+        /// <param name="organizationalHierarchyId"> The organizational hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the organizational hierarchyId id). </param>
+        /// <param name="subscriptionId"> The subscription Id. </param>
+        /// <param name="tenantId"> The tenant Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnvironmentDetails(ResourceIdentifier nativeResourceId, string environmentHierarchyId, string organizationalHierarchyId, string subscriptionId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,30 +68,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The native resource id of the resource (in case of Azure - the resource Id, in case of MC - the native resource id)
-        /// Serialized Name: EnvironmentDetails.nativeResourceId
-        /// </summary>
+        /// <summary> The native resource id of the resource (in case of Azure - the resource Id, in case of MC - the native resource id). </summary>
         public ResourceIdentifier NativeResourceId { get; set; }
-        /// <summary>
-        /// The hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the hierarchyId id)
-        /// Serialized Name: EnvironmentDetails.environmentHierarchyId
-        /// </summary>
+        /// <summary> The hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the hierarchyId id). </summary>
         public string EnvironmentHierarchyId { get; set; }
-        /// <summary>
-        /// The organizational hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the organizational hierarchyId id)
-        /// Serialized Name: EnvironmentDetails.organizationalHierarchyId
-        /// </summary>
+        /// <summary> The organizational hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the organizational hierarchyId id). </summary>
         public string OrganizationalHierarchyId { get; set; }
-        /// <summary>
-        /// The subscription Id
-        /// Serialized Name: EnvironmentDetails.subscriptionId
-        /// </summary>
+        /// <summary> The subscription Id. </summary>
         public string SubscriptionId { get; set; }
-        /// <summary>
-        /// The tenant Id
-        /// Serialized Name: EnvironmentDetails.tenantId
-        /// </summary>
+        /// <summary> The tenant Id. </summary>
         public Guid? TenantId { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describes the Network Security Groups effective on a network interface
-    /// Serialized Name: EffectiveNetworkSecurityGroups
-    /// </summary>
+    /// <summary> Describes the Network Security Groups effective on a network interface. </summary>
     public partial class EffectiveNetworkSecurityGroups
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroups"/>. </summary>
-        /// <param name="networkInterface">
-        /// The Azure resource ID of the network interface
-        /// Serialized Name: EffectiveNetworkSecurityGroups.networkInterface
-        /// </param>
-        /// <param name="networkSecurityGroups">
-        /// The Network Security Groups effective on the network interface
-        /// Serialized Name: EffectiveNetworkSecurityGroups.networkSecurityGroups
-        /// </param>
+        /// <param name="networkInterface"> The Azure resource ID of the network interface. </param>
+        /// <param name="networkSecurityGroups"> The Network Security Groups effective on the network interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EffectiveNetworkSecurityGroups(string networkInterface, IList<string> networkSecurityGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Azure resource ID of the network interface
-        /// Serialized Name: EffectiveNetworkSecurityGroups.networkInterface
-        /// </summary>
+        /// <summary> The Azure resource ID of the network interface. </summary>
         public string NetworkInterface { get; set; }
-        /// <summary>
-        /// The Network Security Groups effective on the network interface
-        /// Serialized Name: EffectiveNetworkSecurityGroups.networkSecurityGroups
-        /// </summary>
+        /// <summary> The Network Security Groups effective on the network interface. </summary>
         public IList<string> NetworkSecurityGroups { get; }
     }
 }

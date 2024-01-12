@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The UnknownCloudOffering.
-    /// Serialized Name: UnknownCloudOffering
-    /// </summary>
+    /// <summary> The UnknownCloudOffering. </summary>
     internal partial class UnknownCloudOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCloudOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownCloudOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(offeringType, description, serializedAdditionalRawData)
         {

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Defender for Databases GCP offering configurations
-    /// Serialized Name: DefenderForDatabasesGcpOffering
-    /// </summary>
+    /// <summary> The Defender for Databases GCP offering configurations. </summary>
     public partial class DefenderForDatabasesGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesGcpOffering"/>. </summary>
@@ -23,23 +20,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesGcpOffering"/>. </summary>
-        /// <param name="offeringType">
-        /// The type of the security offering.
-        /// Serialized Name: CloudOffering.offeringType
-        /// </param>
-        /// <param name="description">
-        /// The offering description.
-        /// Serialized Name: CloudOffering.description
-        /// </param>
+        /// <param name="offeringType"> The type of the security offering. </param>
+        /// <param name="description"> The offering description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="arcAutoProvisioning">
-        /// The ARC autoprovisioning configuration
-        /// Serialized Name: DefenderForDatabasesGcpOffering.arcAutoProvisioning
-        /// </param>
-        /// <param name="defenderForDatabasesArcAutoProvisioning">
-        /// The native cloud connection configuration
-        /// Serialized Name: DefenderForDatabasesGcpOffering.defenderForDatabasesArcAutoProvisioning
-        /// </param>
+        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
+        /// <param name="defenderForDatabasesArcAutoProvisioning"> The native cloud connection configuration. </param>
         internal DefenderForDatabasesGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning) : base(offeringType, description, serializedAdditionalRawData)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
@@ -47,15 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OfferingType = offeringType;
         }
 
-        /// <summary>
-        /// The ARC autoprovisioning configuration
-        /// Serialized Name: DefenderForDatabasesGcpOffering.arcAutoProvisioning
-        /// </summary>
+        /// <summary> The ARC autoprovisioning configuration. </summary>
         public DefenderForDatabasesGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
-        /// <summary>
-        /// The native cloud connection configuration
-        /// Serialized Name: DefenderForDatabasesGcpOffering.defenderForDatabasesArcAutoProvisioning
-        /// </summary>
+        /// <summary> The native cloud connection configuration. </summary>
         public GcpDefenderForDatabasesArcAutoProvisioning DefenderForDatabasesArcAutoProvisioning { get; set; }
     }
 }

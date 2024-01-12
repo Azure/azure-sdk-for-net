@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The ETA (estimated time of arrival) for remediation
-    /// Serialized Name: RemediationEta
-    /// </summary>
+    /// <summary> The ETA (estimated time of arrival) for remediation. </summary>
     public partial class RemediationEta
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RemediationEta"/>. </summary>
-        /// <param name="eta">
-        /// ETA for remediation.
-        /// Serialized Name: RemediationEta.eta
-        /// </param>
-        /// <param name="justification">
-        /// Justification for change of Eta.
-        /// Serialized Name: RemediationEta.justification
-        /// </param>
+        /// <param name="eta"> ETA for remediation. </param>
+        /// <param name="justification"> Justification for change of Eta. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="justification"/> is null. </exception>
         public RemediationEta(DateTimeOffset eta, string justification)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemediationEta"/>. </summary>
-        /// <param name="eta">
-        /// ETA for remediation.
-        /// Serialized Name: RemediationEta.eta
-        /// </param>
-        /// <param name="justification">
-        /// Justification for change of Eta.
-        /// Serialized Name: RemediationEta.justification
-        /// </param>
+        /// <param name="eta"> ETA for remediation. </param>
+        /// <param name="justification"> Justification for change of Eta. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RemediationEta(DateTimeOffset eta, string justification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,15 +74,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// ETA for remediation.
-        /// Serialized Name: RemediationEta.eta
-        /// </summary>
+        /// <summary> ETA for remediation. </summary>
         public DateTimeOffset Eta { get; set; }
-        /// <summary>
-        /// Justification for change of Eta.
-        /// Serialized Name: RemediationEta.justification
-        /// </summary>
+        /// <summary> Justification for change of Eta. </summary>
         public string Justification { get; set; }
     }
 }

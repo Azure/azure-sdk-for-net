@@ -13,10 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of pricing configurations response.
-    /// Serialized Name: PricingList
-    /// </summary>
+    /// <summary> List of pricing configurations response. </summary>
     internal partial class PricingList
     {
         /// <summary>
@@ -52,10 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PricingList"/>. </summary>
-        /// <param name="value">
-        /// List of pricing configurations
-        /// Serialized Name: PricingList.value
-        /// </param>
+        /// <param name="value"> List of pricing configurations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PricingList(IEnumerable<SecurityCenterPricingData> value)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PricingList"/>. </summary>
-        /// <param name="value">
-        /// List of pricing configurations
-        /// Serialized Name: PricingList.value
-        /// </param>
+        /// <param name="value"> List of pricing configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PricingList(IReadOnlyList<SecurityCenterPricingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,10 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// List of pricing configurations
-        /// Serialized Name: PricingList.value
-        /// </summary>
+        /// <summary> List of pricing configurations. </summary>
         public IReadOnlyList<SecurityCenterPricingData> Value { get; }
     }
 }

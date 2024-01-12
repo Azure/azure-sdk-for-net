@@ -13,10 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of security automations response.
-    /// Serialized Name: AutomationList
-    /// </summary>
+    /// <summary> List of security automations response. </summary>
     internal partial class AutomationList
     {
         /// <summary>
@@ -52,10 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationList"/>. </summary>
-        /// <param name="value">
-        /// The list of security automations under the given scope.
-        /// Serialized Name: AutomationList.value
-        /// </param>
+        /// <param name="value"> The list of security automations under the given scope. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AutomationList(IEnumerable<SecurityAutomationData> value)
         {
@@ -65,14 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationList"/>. </summary>
-        /// <param name="value">
-        /// The list of security automations under the given scope.
-        /// Serialized Name: AutomationList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: AutomationList.nextLink
-        /// </param>
+        /// <param name="value"> The list of security automations under the given scope. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutomationList(IReadOnlyList<SecurityAutomationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,15 +74,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The list of security automations under the given scope.
-        /// Serialized Name: AutomationList.value
-        /// </summary>
+        /// <summary> The list of security automations under the given scope. </summary>
         public IReadOnlyList<SecurityAutomationData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: AutomationList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

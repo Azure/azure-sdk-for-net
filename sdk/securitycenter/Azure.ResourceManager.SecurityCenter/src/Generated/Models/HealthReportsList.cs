@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Page of health reports list
-    /// Serialized Name: HealthReportsList
-    /// </summary>
+    /// <summary> Page of health reports list. </summary>
     internal partial class HealthReportsList
     {
         /// <summary>
@@ -53,35 +50,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="HealthReportsList"/>. </summary>
         internal HealthReportsList()
         {
-            Value = new ChangeTrackingList<HealthReportData>();
+            Value = new ChangeTrackingList<SecurityHealthReportData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthReportsList"/>. </summary>
-        /// <param name="value">
-        /// Collection of health reports in this page
-        /// Serialized Name: HealthReportsList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page
-        /// Serialized Name: HealthReportsList.nextLink
-        /// </param>
+        /// <param name="value"> Collection of health reports in this page. </param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportsList(IReadOnlyList<HealthReportData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HealthReportsList(IReadOnlyList<SecurityHealthReportData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Collection of health reports in this page
-        /// Serialized Name: HealthReportsList.value
-        /// </summary>
-        public IReadOnlyList<HealthReportData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page
-        /// Serialized Name: HealthReportsList.nextLink
-        /// </summary>
+        /// <summary> Collection of health reports in this page. </summary>
+        public IReadOnlyList<SecurityHealthReportData> Value { get; }
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

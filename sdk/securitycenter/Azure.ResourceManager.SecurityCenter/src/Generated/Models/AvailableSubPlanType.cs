@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The available sub plans
-    /// Serialized Name: AvailableSubPlanType
-    /// </summary>
+    /// <summary> The available sub plans. </summary>
     public readonly partial struct AvailableSubPlanType : IEquatable<AvailableSubPlanType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string P1Value = "P1";
         private const string P2Value = "P2";
 
-        /// <summary>
-        /// P1
-        /// Serialized Name: AvailableSubPlanType.P1
-        /// </summary>
+        /// <summary> P1. </summary>
         public static AvailableSubPlanType P1 { get; } = new AvailableSubPlanType(P1Value);
-        /// <summary>
-        /// P2
-        /// Serialized Name: AvailableSubPlanType.P2
-        /// </summary>
+        /// <summary> P2. </summary>
         public static AvailableSubPlanType P2 { get; } = new AvailableSubPlanType(P2Value);
         /// <summary> Determines if two <see cref="AvailableSubPlanType"/> values are the same. </summary>
         public static bool operator ==(AvailableSubPlanType left, AvailableSubPlanType right) => left.Equals(right);

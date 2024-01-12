@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The IotSecurityAggregatedAlertTopDevice.
-    /// Serialized Name: IoTSecurityAggregatedAlertPropertiesTopDevicesListItem
-    /// </summary>
+    /// <summary> The IotSecurityAggregatedAlertTopDevice. </summary>
     public partial class IotSecurityAggregatedAlertTopDevice
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertTopDevice"/>. </summary>
-        /// <param name="deviceId">
-        /// Name of the device.
-        /// Serialized Name: IoTSecurityAggregatedAlertPropertiesTopDevicesListItem.deviceId
-        /// </param>
-        /// <param name="alertsCount">
-        /// Number of alerts raised for this device.
-        /// Serialized Name: IoTSecurityAggregatedAlertPropertiesTopDevicesListItem.alertsCount
-        /// </param>
-        /// <param name="lastOccurrence">
-        /// Most recent time this alert was raised for this device, on this day.
-        /// Serialized Name: IoTSecurityAggregatedAlertPropertiesTopDevicesListItem.lastOccurrence
-        /// </param>
+        /// <param name="deviceId"> Name of the device. </param>
+        /// <param name="alertsCount"> Number of alerts raised for this device. </param>
+        /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotSecurityAggregatedAlertTopDevice(string deviceId, long? alertsCount, string lastOccurrence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the device.
-        /// Serialized Name: IoTSecurityAggregatedAlertPropertiesTopDevicesListItem.deviceId
-        /// </summary>
+        /// <summary> Name of the device. </summary>
         public string DeviceId { get; }
-        /// <summary>
-        /// Number of alerts raised for this device.
-        /// Serialized Name: IoTSecurityAggregatedAlertPropertiesTopDevicesListItem.alertsCount
-        /// </summary>
+        /// <summary> Number of alerts raised for this device. </summary>
         public long? AlertsCount { get; }
-        /// <summary>
-        /// Most recent time this alert was raised for this device, on this day.
-        /// Serialized Name: IoTSecurityAggregatedAlertPropertiesTopDevicesListItem.lastOccurrence
-        /// </summary>
+        /// <summary> Most recent time this alert was raised for this device, on this day. </summary>
         public string LastOccurrence { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The status of the health report
-    /// Serialized Name: HealthReportStatus
-    /// </summary>
+    /// <summary> The status of the health report. </summary>
     public partial class HealthReportStatus
     {
         /// <summary>
@@ -54,28 +51,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthReportStatus"/>. </summary>
-        /// <param name="code">
-        /// The status of the health report
-        /// Serialized Name: HealthReportStatus.code
-        /// </param>
-        /// <param name="reason">
-        /// The reason of the given status
-        /// Serialized Name: HealthReportStatus.reason
-        /// </param>
-        /// <param name="lastScannedOn">
-        /// The date of when the resource was scanned in the last time
-        /// Serialized Name: HealthReportStatus.lastScannedDate
-        /// </param>
-        /// <param name="statusChangeOn">
-        /// The date of when the status of the health report was changed in the last time
-        /// Serialized Name: HealthReportStatus.statusChangeDate
-        /// </param>
-        /// <param name="firstEvaluationOn">
-        /// The date of when the resource of the health report was scanned in the first time
-        /// Serialized Name: HealthReportStatus.firstEvaluationDate
-        /// </param>
+        /// <param name="code"> The status of the health report. </param>
+        /// <param name="reason"> The reason of the given status. </param>
+        /// <param name="lastScannedOn"> The date of when the resource was scanned in the last time. </param>
+        /// <param name="statusChangeOn"> The date of when the status of the health report was changed in the last time. </param>
+        /// <param name="firstEvaluationOn"> The date of when the resource of the health report was scanned in the first time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportStatus(StatusName? code, string reason, DateTimeOffset? lastScannedOn, DateTimeOffset? statusChangeOn, DateTimeOffset? firstEvaluationOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HealthReportStatus(HealthReportStatusName? code, string reason, DateTimeOffset? lastScannedOn, DateTimeOffset? statusChangeOn, DateTimeOffset? firstEvaluationOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Reason = reason;
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The status of the health report
-        /// Serialized Name: HealthReportStatus.code
-        /// </summary>
-        public StatusName? Code { get; set; }
-        /// <summary>
-        /// The reason of the given status
-        /// Serialized Name: HealthReportStatus.reason
-        /// </summary>
+        /// <summary> The status of the health report. </summary>
+        public HealthReportStatusName? Code { get; set; }
+        /// <summary> The reason of the given status. </summary>
         public string Reason { get; }
-        /// <summary>
-        /// The date of when the resource was scanned in the last time
-        /// Serialized Name: HealthReportStatus.lastScannedDate
-        /// </summary>
+        /// <summary> The date of when the resource was scanned in the last time. </summary>
         public DateTimeOffset? LastScannedOn { get; }
-        /// <summary>
-        /// The date of when the status of the health report was changed in the last time
-        /// Serialized Name: HealthReportStatus.statusChangeDate
-        /// </summary>
+        /// <summary> The date of when the status of the health report was changed in the last time. </summary>
         public DateTimeOffset? StatusChangeOn { get; }
-        /// <summary>
-        /// The date of when the resource of the health report was scanned in the first time
-        /// Serialized Name: HealthReportStatus.firstEvaluationDate
-        /// </summary>
+        /// <summary> The date of when the resource of the health report was scanned in the first time. </summary>
         public DateTimeOffset? FirstEvaluationOn { get; }
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     ///
     /// Enabled - Resource should inherit configurations from parent.
     /// Disabled - Resource should not inherit configurations from parent.
-    /// Serialized Name: InheritFromParentState
     /// </summary>
     public readonly partial struct InheritFromParentState : IEquatable<InheritFromParentState>
     {
@@ -31,15 +30,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: InheritFromParentState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static InheritFromParentState Disabled { get; } = new InheritFromParentState(DisabledValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: InheritFromParentState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static InheritFromParentState Enabled { get; } = new InheritFromParentState(EnabledValue);
         /// <summary> Determines if two <see cref="InheritFromParentState"/> values are the same. </summary>
         public static bool operator ==(InheritFromParentState left, InheritFromParentState right) => left.Equals(right);

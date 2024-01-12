@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Defender CSPM CIEM discovery configuration
-    /// Serialized Name: DefenderCspmAwsOfferingCiemDiscovery
-    /// </summary>
+    /// <summary> Defender CSPM CIEM discovery configuration. </summary>
     internal partial class DefenderCspmAwsOfferingCiemDiscovery
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingCiemDiscovery"/>. </summary>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for CIEM discovery
-        /// Serialized Name: DefenderCspmAwsOfferingCiemDiscovery.cloudRoleArn
-        /// </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for CIEM discovery. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderCspmAwsOfferingCiemDiscovery(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The cloud role ARN in AWS for CIEM discovery
-        /// Serialized Name: DefenderCspmAwsOfferingCiemDiscovery.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for CIEM discovery. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

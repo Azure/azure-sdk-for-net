@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
         // ListAvailable_AzureDevOpsOrgs
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAvailableAzureDevOpsOrgs_ListAvailableAzureDevOpsOrgs()
+        public async Task GetAvailableDevOpsOrgs_ListAvailableAzureDevOpsOrgs()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2023-09-01-preview/examples/SecurityConnectorsDevOps/ListAvailableAzureDevOpsOrgs_example.json
             // this example is just showing the usage of "AzureDevOpsOrgs_ListAvailable" operation, for the dependent resources, they will have to be created separately.
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DevOpsConfigurationResource devOpsConfiguration = client.GetDevOpsConfigurationResource(devOpsConfigurationResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AzureDevOpsOrgResource item in devOpsConfiguration.GetAvailableAzureDevOpsOrgsAsync())
+            await foreach (DevOpsOrgResource item in devOpsConfiguration.GetAvailableDevOpsOrgsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AzureDevOpsOrgData resourceData = item.Data;
+                DevOpsOrgData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 Properties = new DevOpsConfigurationProperties()
                 {
                     AuthorizationCode = "00000000000000000000",
-                    AutoDiscovery = AutoDiscovery.Enabled,
+                    AutoDiscovery = DevOpsAutoDiscovery.Enabled,
                 },
             };
             ArmOperation<DevOpsConfigurationResource> lro = await devOpsConfiguration.CreateOrUpdateAsync(WaitUntil.Completed, data);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 Properties = new DevOpsConfigurationProperties()
                 {
                     AuthorizationCode = "00000000000000000000",
-                    AutoDiscovery = AutoDiscovery.Disabled,
+                    AutoDiscovery = DevOpsAutoDiscovery.Disabled,
                 },
             };
             ArmOperation<DevOpsConfigurationResource> lro = await devOpsConfiguration.CreateOrUpdateAsync(WaitUntil.Completed, data);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 Properties = new DevOpsConfigurationProperties()
                 {
                     AuthorizationCode = "00000000000000000000",
-                    AutoDiscovery = AutoDiscovery.Disabled,
+                    AutoDiscovery = DevOpsAutoDiscovery.Disabled,
                     TopLevelInventoryList =
 {
 "org1","org2"
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             {
                 Properties = new DevOpsConfigurationProperties()
                 {
-                    AutoDiscovery = AutoDiscovery.Enabled,
+                    AutoDiscovery = DevOpsAutoDiscovery.Enabled,
                 },
             };
             ArmOperation<DevOpsConfigurationResource> lro = await devOpsConfiguration.UpdateAsync(WaitUntil.Completed, data);
@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DevOpsConfigurationResource devOpsConfiguration = client.GetDevOpsConfigurationResource(devOpsConfigurationResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GitHubOwnerResource item in devOpsConfiguration.GetAvailableGitHubOwnersAsync())
+            await foreach (SecurityConnectorGitHubOwnerResource item in devOpsConfiguration.GetAvailableGitHubOwnersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GitHubOwnerData resourceData = item.Data;
+                SecurityConnectorGitHubOwnerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DevOpsConfigurationResource devOpsConfiguration = client.GetDevOpsConfigurationResource(devOpsConfigurationResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GitLabGroupResource item in devOpsConfiguration.GetAvailableGitLabGroupsAsync())
+            await foreach (SecurityConnectorGitLabGroupResource item in devOpsConfiguration.GetAvailableGitLabGroupsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GitLabGroupData resourceData = item.Data;
+                SecurityConnectorGitLabGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

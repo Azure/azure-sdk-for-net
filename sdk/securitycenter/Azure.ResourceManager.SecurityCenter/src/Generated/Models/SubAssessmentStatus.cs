@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Status of the sub-assessment
-    /// Serialized Name: SubAssessmentStatus
-    /// </summary>
+    /// <summary> Status of the sub-assessment. </summary>
     public partial class SubAssessmentStatus
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubAssessmentStatus"/>. </summary>
-        /// <param name="code">
-        /// Programmatic code for the status of the assessment
-        /// Serialized Name: SubAssessmentStatus.code
-        /// </param>
-        /// <param name="cause">
-        /// Programmatic code for the cause of the assessment status
-        /// Serialized Name: SubAssessmentStatus.cause
-        /// </param>
-        /// <param name="description">
-        /// Human readable description of the assessment status
-        /// Serialized Name: SubAssessmentStatus.description
-        /// </param>
-        /// <param name="severity">
-        /// The sub-assessment severity level
-        /// Serialized Name: SubAssessmentStatus.severity
-        /// </param>
+        /// <param name="code"> Programmatic code for the status of the assessment. </param>
+        /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
+        /// <param name="description"> Human readable description of the assessment status. </param>
+        /// <param name="severity"> The sub-assessment severity level. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubAssessmentStatus(SubAssessmentStatusCode? code, string cause, string description, SecurityAssessmentSeverity? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Programmatic code for the status of the assessment
-        /// Serialized Name: SubAssessmentStatus.code
-        /// </summary>
+        /// <summary> Programmatic code for the status of the assessment. </summary>
         public SubAssessmentStatusCode? Code { get; }
-        /// <summary>
-        /// Programmatic code for the cause of the assessment status
-        /// Serialized Name: SubAssessmentStatus.cause
-        /// </summary>
+        /// <summary> Programmatic code for the cause of the assessment status. </summary>
         public string Cause { get; }
-        /// <summary>
-        /// Human readable description of the assessment status
-        /// Serialized Name: SubAssessmentStatus.description
-        /// </summary>
+        /// <summary> Human readable description of the assessment status. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The sub-assessment severity level
-        /// Serialized Name: SubAssessmentStatus.severity
-        /// </summary>
+        /// <summary> The sub-assessment severity level. </summary>
         public SecurityAssessmentSeverity? Severity { get; }
     }
 }

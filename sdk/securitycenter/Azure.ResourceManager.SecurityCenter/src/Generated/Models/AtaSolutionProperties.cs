@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The external security solution properties for ATA solutions
-    /// Serialized Name: AtaSolutionProperties
-    /// </summary>
+    /// <summary> The external security solution properties for ATA solutions. </summary>
     public partial class AtaSolutionProperties : ExternalSecuritySolutionProperties
     {
         /// <summary> Initializes a new instance of <see cref="AtaSolutionProperties"/>. </summary>
@@ -23,20 +20,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AtaSolutionProperties"/>. </summary>
-        /// <param name="deviceVendor"> Serialized Name: ExternalSecuritySolutionProperties.deviceVendor. </param>
-        /// <param name="deviceType"> Serialized Name: ExternalSecuritySolutionProperties.deviceType. </param>
-        /// <param name="workspace">
-        /// Represents an OMS workspace to which the solution is connected
-        /// Serialized Name: ExternalSecuritySolutionProperties.workspace
-        /// </param>
+        /// <param name="deviceVendor"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="lastEventReceived"> Serialized Name: AtaSolutionProperties.lastEventReceived. </param>
+        /// <param name="lastEventReceived"></param>
         internal AtaSolutionProperties(string deviceVendor, string deviceType, WritableSubResource workspace, IDictionary<string, BinaryData> additionalProperties, string lastEventReceived) : base(deviceVendor, deviceType, workspace, additionalProperties)
         {
             LastEventReceived = lastEventReceived;
         }
 
-        /// <summary> Serialized Name: AtaSolutionProperties.lastEventReceived. </summary>
+        /// <summary> Gets or sets the last event received. </summary>
         public string LastEventReceived { get; set; }
     }
 }

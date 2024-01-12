@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The AWS organization data for the master account
-    /// Serialized Name: AwsOrganizationalDataMaster
-    /// </summary>
+    /// <summary> The AWS organization data for the master account. </summary>
     public partial class AwsOrganizationalDataMaster : AwsOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalDataMaster"/>. </summary>
@@ -25,19 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalDataMaster"/>. </summary>
-        /// <param name="organizationMembershipType">
-        /// The multi cloud account's membership type in the organization
-        /// Serialized Name: AwsOrganizationalData.organizationMembershipType
-        /// </param>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="stacksetName">
-        /// If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset
-        /// Serialized Name: AwsOrganizationalDataMaster.stacksetName
-        /// </param>
-        /// <param name="excludedAccountIds">
-        /// If the multi cloud account is of membership type organization, list of accounts excluded from offering
-        /// Serialized Name: AwsOrganizationalDataMaster.excludedAccountIds
-        /// </param>
+        /// <param name="stacksetName"> If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset. </param>
+        /// <param name="excludedAccountIds"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
         internal AwsOrganizationalDataMaster(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData, string stacksetName, IList<string> excludedAccountIds) : base(organizationMembershipType, serializedAdditionalRawData)
         {
             StacksetName = stacksetName;
@@ -45,15 +33,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OrganizationMembershipType = organizationMembershipType;
         }
 
-        /// <summary>
-        /// If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset
-        /// Serialized Name: AwsOrganizationalDataMaster.stacksetName
-        /// </summary>
+        /// <summary> If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset. </summary>
         public string StacksetName { get; set; }
-        /// <summary>
-        /// If the multi cloud account is of membership type organization, list of accounts excluded from offering
-        /// Serialized Name: AwsOrganizationalDataMaster.excludedAccountIds
-        /// </summary>
+        /// <summary> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </summary>
         public IList<string> ExcludedAccountIds { get; }
     }
 }

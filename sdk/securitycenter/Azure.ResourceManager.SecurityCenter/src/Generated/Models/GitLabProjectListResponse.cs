@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of RP resources which supports pagination.
-    /// Serialized Name: GitLabProjectListResponse
-    /// </summary>
+    /// <summary> List of RP resources which supports pagination. </summary>
     internal partial class GitLabProjectListResponse
     {
         /// <summary>
@@ -53,35 +50,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="GitLabProjectListResponse"/>. </summary>
         internal GitLabProjectListResponse()
         {
-            Value = new ChangeTrackingList<GitLabProjectData>();
+            Value = new ChangeTrackingList<SecurityConnectorGitLabProjectData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GitLabProjectListResponse"/>. </summary>
-        /// <param name="value">
-        /// Gets or sets list of resources.
-        /// Serialized Name: GitLabProjectListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: GitLabProjectListResponse.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets list of resources. </param>
+        /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GitLabProjectListResponse(IReadOnlyList<GitLabProjectData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GitLabProjectListResponse(IReadOnlyList<SecurityConnectorGitLabProjectData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets list of resources.
-        /// Serialized Name: GitLabProjectListResponse.value
-        /// </summary>
-        public IReadOnlyList<GitLabProjectData> Value { get; }
-        /// <summary>
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: GitLabProjectListResponse.nextLink
-        /// </summary>
+        /// <summary> Gets or sets list of resources. </summary>
+        public IReadOnlyList<SecurityConnectorGitLabProjectData> Value { get; }
+        /// <summary> Gets or sets next link to scroll over the results. </summary>
         public string NextLink { get; }
     }
 }

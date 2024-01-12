@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The databases DSPM configuration
-    /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm
-    /// </summary>
+    /// <summary> The databases DSPM configuration. </summary>
     public partial class DefenderCspmAwsOfferingDatabasesDspm
     {
         /// <summary>
@@ -54,31 +51,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingDatabasesDspm"/>. </summary>
-        /// <param name="enabled">
-        /// Is databases DSPM protection enabled
-        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.enabled
-        /// </param>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.cloudRoleArn
-        /// </param>
+        /// <param name="isEnabled"> Is databases DSPM protection enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmAwsOfferingDatabasesDspm(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DefenderCspmAwsOfferingDatabasesDspm(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is databases DSPM protection enabled
-        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.cloudRoleArn
-        /// </summary>
+        /// <summary> Is databases DSPM protection enabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

@@ -11,37 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Details of the On Premise Sql resource that was assessed
-    /// Serialized Name: OnPremiseSqlResourceDetails
-    /// </summary>
+    /// <summary> Details of the On Premise Sql resource that was assessed. </summary>
     public partial class OnPremiseSqlResourceDetails : OnPremiseResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="OnPremiseSqlResourceDetails"/>. </summary>
-        /// <param name="workspaceId">
-        /// Azure resource Id of the workspace the machine is attached to
-        /// Serialized Name: OnPremiseResourceDetails.workspaceId
-        /// </param>
-        /// <param name="vmUuid">
-        /// The unique Id of the machine
-        /// Serialized Name: OnPremiseResourceDetails.vmuuid
-        /// </param>
-        /// <param name="sourceComputerId">
-        /// The oms agent Id installed on the machine
-        /// Serialized Name: OnPremiseResourceDetails.sourceComputerId
-        /// </param>
-        /// <param name="machineName">
-        /// The name of the machine
-        /// Serialized Name: OnPremiseResourceDetails.machineName
-        /// </param>
-        /// <param name="serverName">
-        /// The Sql server name installed on the machine
-        /// Serialized Name: OnPremiseSqlResourceDetails.serverName
-        /// </param>
-        /// <param name="databaseName">
-        /// The Sql database name installed on the machine
-        /// Serialized Name: OnPremiseSqlResourceDetails.databaseName
-        /// </param>
+        /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
+        /// <param name="vmUuid"> The unique Id of the machine. </param>
+        /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
+        /// <param name="machineName"> The name of the machine. </param>
+        /// <param name="serverName"> The Sql server name installed on the machine. </param>
+        /// <param name="databaseName"> The Sql database name installed on the machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/>, <paramref name="machineName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         public OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(workspaceId, vmUuid, sourceComputerId, machineName)
         {
@@ -53,40 +32,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
             ServerName = serverName;
             DatabaseName = databaseName;
-            Source = Source.OnPremiseSql;
+            Source = HealthReportSource.OnPremiseSql;
         }
 
         /// <summary> Initializes a new instance of <see cref="OnPremiseSqlResourceDetails"/>. </summary>
-        /// <param name="source">
-        /// The platform where the assessed resource resides
-        /// Serialized Name: ResourceDetails.source
-        /// </param>
+        /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="workspaceId">
-        /// Azure resource Id of the workspace the machine is attached to
-        /// Serialized Name: OnPremiseResourceDetails.workspaceId
-        /// </param>
-        /// <param name="vmUuid">
-        /// The unique Id of the machine
-        /// Serialized Name: OnPremiseResourceDetails.vmuuid
-        /// </param>
-        /// <param name="sourceComputerId">
-        /// The oms agent Id installed on the machine
-        /// Serialized Name: OnPremiseResourceDetails.sourceComputerId
-        /// </param>
-        /// <param name="machineName">
-        /// The name of the machine
-        /// Serialized Name: OnPremiseResourceDetails.machineName
-        /// </param>
-        /// <param name="serverName">
-        /// The Sql server name installed on the machine
-        /// Serialized Name: OnPremiseSqlResourceDetails.serverName
-        /// </param>
-        /// <param name="databaseName">
-        /// The Sql database name installed on the machine
-        /// Serialized Name: OnPremiseSqlResourceDetails.databaseName
-        /// </param>
-        internal OnPremiseSqlResourceDetails(Source source, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, serializedAdditionalRawData, workspaceId, vmUuid, sourceComputerId, machineName)
+        /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
+        /// <param name="vmUuid"> The unique Id of the machine. </param>
+        /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
+        /// <param name="machineName"> The name of the machine. </param>
+        /// <param name="serverName"> The Sql server name installed on the machine. </param>
+        /// <param name="databaseName"> The Sql database name installed on the machine. </param>
+        internal OnPremiseSqlResourceDetails(HealthReportSource source, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, serializedAdditionalRawData, workspaceId, vmUuid, sourceComputerId, machineName)
         {
             ServerName = serverName;
             DatabaseName = databaseName;
@@ -98,15 +56,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The Sql server name installed on the machine
-        /// Serialized Name: OnPremiseSqlResourceDetails.serverName
-        /// </summary>
+        /// <summary> The Sql server name installed on the machine. </summary>
         public string ServerName { get; set; }
-        /// <summary>
-        /// The Sql database name installed on the machine
-        /// Serialized Name: OnPremiseSqlResourceDetails.databaseName
-        /// </summary>
+        /// <summary> The Sql database name installed on the machine. </summary>
         public string DatabaseName { get; set; }
     }
 }

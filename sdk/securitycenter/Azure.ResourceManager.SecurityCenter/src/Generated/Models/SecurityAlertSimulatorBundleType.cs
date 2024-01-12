@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Alert Simulator supported bundles.
-    /// Serialized Name: BundleType
-    /// </summary>
+    /// <summary> Alert Simulator supported bundles. </summary>
     public readonly partial struct SecurityAlertSimulatorBundleType : IEquatable<SecurityAlertSimulatorBundleType>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string VirtualMachinesValue = "VirtualMachines";
         private const string CosmosDbsValue = "CosmosDbs";
 
-        /// <summary>
-        /// AppServices
-        /// Serialized Name: BundleType.AppServices
-        /// </summary>
+        /// <summary> AppServices. </summary>
         public static SecurityAlertSimulatorBundleType AppServices { get; } = new SecurityAlertSimulatorBundleType(AppServicesValue);
-        /// <summary>
-        /// DNS
-        /// Serialized Name: BundleType.DNS
-        /// </summary>
+        /// <summary> DNS. </summary>
         public static SecurityAlertSimulatorBundleType Dns { get; } = new SecurityAlertSimulatorBundleType(DnsValue);
-        /// <summary>
-        /// KeyVaults
-        /// Serialized Name: BundleType.KeyVaults
-        /// </summary>
+        /// <summary> KeyVaults. </summary>
         public static SecurityAlertSimulatorBundleType KeyVaults { get; } = new SecurityAlertSimulatorBundleType(KeyVaultsValue);
-        /// <summary>
-        /// KubernetesService
-        /// Serialized Name: BundleType.KubernetesService
-        /// </summary>
+        /// <summary> KubernetesService. </summary>
         public static SecurityAlertSimulatorBundleType KubernetesService { get; } = new SecurityAlertSimulatorBundleType(KubernetesServiceValue);
-        /// <summary>
-        /// ResourceManager
-        /// Serialized Name: BundleType.ResourceManager
-        /// </summary>
+        /// <summary> ResourceManager. </summary>
         public static SecurityAlertSimulatorBundleType ResourceManager { get; } = new SecurityAlertSimulatorBundleType(ResourceManagerValue);
-        /// <summary>
-        /// SqlServers
-        /// Serialized Name: BundleType.SqlServers
-        /// </summary>
+        /// <summary> SqlServers. </summary>
         public static SecurityAlertSimulatorBundleType SqlServers { get; } = new SecurityAlertSimulatorBundleType(SqlServersValue);
-        /// <summary>
-        /// StorageAccounts
-        /// Serialized Name: BundleType.StorageAccounts
-        /// </summary>
+        /// <summary> StorageAccounts. </summary>
         public static SecurityAlertSimulatorBundleType StorageAccounts { get; } = new SecurityAlertSimulatorBundleType(StorageAccountsValue);
-        /// <summary>
-        /// VirtualMachines
-        /// Serialized Name: BundleType.VirtualMachines
-        /// </summary>
+        /// <summary> VirtualMachines. </summary>
         public static SecurityAlertSimulatorBundleType VirtualMachines { get; } = new SecurityAlertSimulatorBundleType(VirtualMachinesValue);
-        /// <summary>
-        /// CosmosDbs
-        /// Serialized Name: BundleType.CosmosDbs
-        /// </summary>
+        /// <summary> CosmosDbs. </summary>
         public static SecurityAlertSimulatorBundleType CosmosDbs { get; } = new SecurityAlertSimulatorBundleType(CosmosDbsValue);
         /// <summary> Determines if two <see cref="SecurityAlertSimulatorBundleType"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertSimulatorBundleType left, SecurityAlertSimulatorBundleType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A segment of a compliance assessment.
-    /// Serialized Name: ComplianceSegment
-    /// </summary>
+    /// <summary> A segment of a compliance assessment. </summary>
     public partial class ComplianceSegment
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComplianceSegment"/>. </summary>
-        /// <param name="segmentType">
-        /// The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc.
-        /// Serialized Name: ComplianceSegment.segmentType
-        /// </param>
-        /// <param name="percentage">
-        /// The size (%) of the segment.
-        /// Serialized Name: ComplianceSegment.percentage
-        /// </param>
+        /// <param name="segmentType"> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </param>
+        /// <param name="percentage"> The size (%) of the segment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ComplianceSegment(string segmentType, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc.
-        /// Serialized Name: ComplianceSegment.segmentType
-        /// </summary>
+        /// <summary> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </summary>
         public string SegmentType { get; }
-        /// <summary>
-        /// The size (%) of the segment.
-        /// Serialized Name: ComplianceSegment.percentage
-        /// </summary>
+        /// <summary> The size (%) of the segment. </summary>
         public double? Percentage { get; }
     }
 }

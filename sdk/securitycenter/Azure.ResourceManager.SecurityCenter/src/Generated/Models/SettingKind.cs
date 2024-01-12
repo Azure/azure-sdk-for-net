@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// the kind of the settings string
-    /// Serialized Name: SettingKind
-    /// </summary>
+    /// <summary> the kind of the settings string. </summary>
     internal readonly partial struct SettingKind : IEquatable<SettingKind>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AlertSuppressionSettingValue = "AlertSuppressionSetting";
         private const string AlertSyncSettingsValue = "AlertSyncSettings";
 
-        /// <summary>
-        /// DataExportSettings
-        /// Serialized Name: SettingKind.DataExportSettings
-        /// </summary>
+        /// <summary> DataExportSettings. </summary>
         public static SettingKind DataExportSettings { get; } = new SettingKind(DataExportSettingsValue);
-        /// <summary>
-        /// AlertSuppressionSetting
-        /// Serialized Name: SettingKind.AlertSuppressionSetting
-        /// </summary>
+        /// <summary> AlertSuppressionSetting. </summary>
         public static SettingKind AlertSuppressionSetting { get; } = new SettingKind(AlertSuppressionSettingValue);
-        /// <summary>
-        /// AlertSyncSettings
-        /// Serialized Name: SettingKind.AlertSyncSettings
-        /// </summary>
+        /// <summary> AlertSyncSettings. </summary>
         public static SettingKind AlertSyncSettings { get; } = new SettingKind(AlertSyncSettingsValue);
         /// <summary> Determines if two <see cref="SettingKind"/> values are the same. </summary>
         public static bool operator ==(SettingKind left, SettingKind right) => left.Equals(right);

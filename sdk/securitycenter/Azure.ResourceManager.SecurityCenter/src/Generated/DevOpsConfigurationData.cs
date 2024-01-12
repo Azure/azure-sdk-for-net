@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the DevOpsConfiguration data model.
     /// DevOps Configuration resource.
-    /// Serialized Name: DevOpsConfiguration
     /// </summary>
     public partial class DevOpsConfigurationData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// DevOps Configuration properties.
-        /// Serialized Name: DevOpsConfiguration.properties
-        /// </param>
+        /// <param name="properties"> DevOps Configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DevOpsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevOpsConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// DevOps Configuration properties.
-        /// Serialized Name: DevOpsConfiguration.properties
-        /// </summary>
+        /// <summary> DevOps Configuration properties. </summary>
         public DevOpsConfigurationProperties Properties { get; set; }
     }
 }

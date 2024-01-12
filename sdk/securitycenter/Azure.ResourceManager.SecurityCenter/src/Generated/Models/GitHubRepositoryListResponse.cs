@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of RP resources which supports pagination.
-    /// Serialized Name: GitHubRepositoryListResponse
-    /// </summary>
+    /// <summary> List of RP resources which supports pagination. </summary>
     internal partial class GitHubRepositoryListResponse
     {
         /// <summary>
@@ -53,35 +50,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="GitHubRepositoryListResponse"/>. </summary>
         internal GitHubRepositoryListResponse()
         {
-            Value = new ChangeTrackingList<GitHubRepositoryData>();
+            Value = new ChangeTrackingList<SecurityConnectorGitHubRepositoryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubRepositoryListResponse"/>. </summary>
-        /// <param name="value">
-        /// Gets or sets list of resources.
-        /// Serialized Name: GitHubRepositoryListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: GitHubRepositoryListResponse.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets list of resources. </param>
+        /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubRepositoryListResponse(IReadOnlyList<GitHubRepositoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GitHubRepositoryListResponse(IReadOnlyList<SecurityConnectorGitHubRepositoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets list of resources.
-        /// Serialized Name: GitHubRepositoryListResponse.value
-        /// </summary>
-        public IReadOnlyList<GitHubRepositoryData> Value { get; }
-        /// <summary>
-        /// Gets or sets next link to scroll over the results.
-        /// Serialized Name: GitHubRepositoryListResponse.nextLink
-        /// </summary>
+        /// <summary> Gets or sets list of resources. </summary>
+        public IReadOnlyList<SecurityConnectorGitHubRepositoryData> Value { get; }
+        /// <summary> Gets or sets next link to scroll over the results. </summary>
         public string NextLink { get; }
     }
 }

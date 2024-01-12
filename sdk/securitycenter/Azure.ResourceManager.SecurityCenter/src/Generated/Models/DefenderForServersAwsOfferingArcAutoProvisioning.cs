@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The ARC autoprovisioning configuration
-    /// Serialized Name: DefenderForServersAwsOfferingArcAutoProvisioning
-    /// </summary>
+    /// <summary> The ARC autoprovisioning configuration. </summary>
     public partial class DefenderForServersAwsOfferingArcAutoProvisioning
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingArcAutoProvisioning"/>. </summary>
-        /// <param name="isEnabled">
-        /// Is arc auto provisioning enabled
-        /// Serialized Name: DefenderForServersAwsOfferingArcAutoProvisioning.enabled
-        /// </param>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderForServersAwsOfferingArcAutoProvisioning.cloudRoleArn
-        /// </param>
-        /// <param name="configuration">
-        /// Configuration for servers Arc auto provisioning
-        /// Serialized Name: DefenderForServersAwsOfferingArcAutoProvisioning.configuration
-        /// </param>
+        /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
+        /// <param name="configuration"> Configuration for servers Arc auto provisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForServersAwsOfferingArcAutoProvisioning(bool? isEnabled, string cloudRoleArn, DefenderForServersAwsOfferingArcAutoProvisioningConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is arc auto provisioning enabled
-        /// Serialized Name: DefenderForServersAwsOfferingArcAutoProvisioning.enabled
-        /// </summary>
+        /// <summary> Is arc auto provisioning enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: DefenderForServersAwsOfferingArcAutoProvisioning.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
-        /// <summary>
-        /// Configuration for servers Arc auto provisioning
-        /// Serialized Name: DefenderForServersAwsOfferingArcAutoProvisioning.configuration
-        /// </summary>
+        /// <summary> Configuration for servers Arc auto provisioning. </summary>
         public DefenderForServersAwsOfferingArcAutoProvisioningConfiguration Configuration { get; set; }
     }
 }

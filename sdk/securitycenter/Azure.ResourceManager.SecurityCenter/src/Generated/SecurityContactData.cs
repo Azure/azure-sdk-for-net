@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityContact data model.
     /// Contact details and configurations for notifications coming from Microsoft Defender for Cloud.
-    /// Serialized Name: SecurityContact
     /// </summary>
     public partial class SecurityContactData : ResourceData
     {
@@ -62,22 +61,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="emails">
-        /// List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact.
-        /// Serialized Name: SecurityContact.properties.emails
-        /// </param>
-        /// <param name="phone">
-        /// The security contact's phone number
-        /// Serialized Name: SecurityContact.properties.phone
-        /// </param>
-        /// <param name="alertNotifications">
-        /// Defines whether to send email notifications about new security alerts
-        /// Serialized Name: SecurityContact.properties.alertNotifications
-        /// </param>
-        /// <param name="notificationsByRole">
-        /// Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription.
-        /// Serialized Name: SecurityContact.properties.notificationsByRole
-        /// </param>
+        /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
+        /// <param name="phone"> The security contact's phone number. </param>
+        /// <param name="alertNotifications"> Defines whether to send email notifications about new security alerts. </param>
+        /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emails, string phone, SecurityContactPropertiesAlertNotifications alertNotifications, SecurityContactPropertiesNotificationsByRole notificationsByRole, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,25 +75,13 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact.
-        /// Serialized Name: SecurityContact.properties.emails
-        /// </summary>
+        /// <summary> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </summary>
         public string Emails { get; set; }
-        /// <summary>
-        /// The security contact's phone number
-        /// Serialized Name: SecurityContact.properties.phone
-        /// </summary>
+        /// <summary> The security contact's phone number. </summary>
         public string Phone { get; set; }
-        /// <summary>
-        /// Defines whether to send email notifications about new security alerts
-        /// Serialized Name: SecurityContact.properties.alertNotifications
-        /// </summary>
+        /// <summary> Defines whether to send email notifications about new security alerts. </summary>
         public SecurityContactPropertiesAlertNotifications AlertNotifications { get; set; }
-        /// <summary>
-        /// Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription.
-        /// Serialized Name: SecurityContact.properties.notificationsByRole
-        /// </summary>
+        /// <summary> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
         public SecurityContactPropertiesNotificationsByRole NotificationsByRole { get; set; }
     }
 }

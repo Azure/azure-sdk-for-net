@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The gcpOrganization data for the parent account
-    /// Serialized Name: GcpOrganizationalDataOrganization
-    /// </summary>
+    /// <summary> The gcpOrganization data for the parent account. </summary>
     public partial class GcpParentOrganizationalInfo : GcpOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="GcpParentOrganizationalInfo"/>. </summary>
@@ -25,27 +22,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpParentOrganizationalInfo"/>. </summary>
-        /// <param name="organizationMembershipType">
-        /// The multi cloud account's membership type in the organization
-        /// Serialized Name: GcpOrganizationalData.organizationMembershipType
-        /// </param>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="excludedProjectNumbers">
-        /// If the multi cloud account is of membership type organization, list of accounts excluded from offering
-        /// Serialized Name: GcpOrganizationalDataOrganization.excludedProjectNumbers
-        /// </param>
-        /// <param name="serviceAccountEmailAddress">
-        /// The service account email address which represents the organization level permissions container.
-        /// Serialized Name: GcpOrganizationalDataOrganization.serviceAccountEmailAddress
-        /// </param>
-        /// <param name="workloadIdentityProviderId">
-        /// The GCP workload identity provider id which represents the permissions required to auto provision security connectors
-        /// Serialized Name: GcpOrganizationalDataOrganization.workloadIdentityProviderId
-        /// </param>
-        /// <param name="organizationName">
-        /// GCP organization name
-        /// Serialized Name: GcpOrganizationalDataOrganization.organizationName
-        /// </param>
+        /// <param name="excludedProjectNumbers"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address which represents the organization level permissions container. </param>
+        /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </param>
+        /// <param name="organizationName"> GCP organization name. </param>
         internal GcpParentOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> excludedProjectNumbers, string serviceAccountEmailAddress, string workloadIdentityProviderId, string organizationName) : base(organizationMembershipType, serializedAdditionalRawData)
         {
             ExcludedProjectNumbers = excludedProjectNumbers;
@@ -55,25 +37,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OrganizationMembershipType = organizationMembershipType;
         }
 
-        /// <summary>
-        /// If the multi cloud account is of membership type organization, list of accounts excluded from offering
-        /// Serialized Name: GcpOrganizationalDataOrganization.excludedProjectNumbers
-        /// </summary>
+        /// <summary> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </summary>
         public IList<string> ExcludedProjectNumbers { get; }
-        /// <summary>
-        /// The service account email address which represents the organization level permissions container.
-        /// Serialized Name: GcpOrganizationalDataOrganization.serviceAccountEmailAddress
-        /// </summary>
+        /// <summary> The service account email address which represents the organization level permissions container. </summary>
         public string ServiceAccountEmailAddress { get; set; }
-        /// <summary>
-        /// The GCP workload identity provider id which represents the permissions required to auto provision security connectors
-        /// Serialized Name: GcpOrganizationalDataOrganization.workloadIdentityProviderId
-        /// </summary>
+        /// <summary> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </summary>
         public string WorkloadIdentityProviderId { get; set; }
-        /// <summary>
-        /// GCP organization name
-        /// Serialized Name: GcpOrganizationalDataOrganization.organizationName
-        /// </summary>
+        /// <summary> GCP organization name. </summary>
         public string OrganizationName { get; }
     }
 }

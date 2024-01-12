@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The JitNetworkAccessPolicyInitiatePort.
-    /// Serialized Name: JitNetworkAccessPolicyInitiatePort
-    /// </summary>
+    /// <summary> The JitNetworkAccessPolicyInitiatePort. </summary>
     public partial class JitNetworkAccessPolicyInitiatePort
     {
         /// <summary>
@@ -49,11 +46,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
-        /// <param name="number"> Serialized Name: JitNetworkAccessPolicyInitiatePort.number. </param>
-        /// <param name="endOn">
-        /// The time to close the request in UTC
-        /// Serialized Name: JitNetworkAccessPolicyInitiatePort.endTimeUtc
-        /// </param>
+        /// <param name="number"></param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
         public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endOn)
         {
             Number = number;
@@ -61,15 +55,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
-        /// <param name="number"> Serialized Name: JitNetworkAccessPolicyInitiatePort.number. </param>
-        /// <param name="allowedSourceAddressPrefix">
-        /// Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request.
-        /// Serialized Name: JitNetworkAccessPolicyInitiatePort.allowedSourceAddressPrefix
-        /// </param>
-        /// <param name="endOn">
-        /// The time to close the request in UTC
-        /// Serialized Name: JitNetworkAccessPolicyInitiatePort.endTimeUtc
-        /// </param>
+        /// <param name="number"></param>
+        /// <param name="allowedSourceAddressPrefix"> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal JitNetworkAccessPolicyInitiatePort(int number, string allowedSourceAddressPrefix, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,17 +72,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary> Serialized Name: JitNetworkAccessPolicyInitiatePort.number. </summary>
+        /// <summary> Gets the number. </summary>
         public int Number { get; }
-        /// <summary>
-        /// Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request.
-        /// Serialized Name: JitNetworkAccessPolicyInitiatePort.allowedSourceAddressPrefix
-        /// </summary>
+        /// <summary> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </summary>
         public string AllowedSourceAddressPrefix { get; set; }
-        /// <summary>
-        /// The time to close the request in UTC
-        /// Serialized Name: JitNetworkAccessPolicyInitiatePort.endTimeUtc
-        /// </summary>
+        /// <summary> The time to close the request in UTC. </summary>
         public DateTimeOffset EndOn { get; }
     }
 }

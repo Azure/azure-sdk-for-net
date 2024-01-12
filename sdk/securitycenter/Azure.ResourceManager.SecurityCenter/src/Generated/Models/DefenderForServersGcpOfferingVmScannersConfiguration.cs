@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// configuration for Microsoft Defender for Server VM scanning
-    /// Serialized Name: DefenderForServersGcpOfferingVmScannersConfiguration
-    /// </summary>
+    /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
     public partial class DefenderForServersGcpOfferingVmScannersConfiguration
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingVmScannersConfiguration"/>. </summary>
-        /// <param name="scanningMode">
-        /// The scanning mode for the VM scan.
-        /// Serialized Name: DefenderForServersGcpOfferingVmScannersConfiguration.scanningMode
-        /// </param>
-        /// <param name="exclusionTags">
-        /// VM tags that indicate that VM should not be scanned
-        /// Serialized Name: DefenderForServersGcpOfferingVmScannersConfiguration.exclusionTags
-        /// </param>
+        /// <param name="scanningMode"> The scanning mode for the VM scan. </param>
+        /// <param name="exclusionTags"> VM tags that indicate that VM should not be scanned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForServersGcpOfferingVmScannersConfiguration(DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The scanning mode for the VM scan.
-        /// Serialized Name: DefenderForServersGcpOfferingVmScannersConfiguration.scanningMode
-        /// </summary>
+        /// <summary> The scanning mode for the VM scan. </summary>
         public DefenderForServersScanningMode? ScanningMode { get; set; }
-        /// <summary>
-        /// VM tags that indicate that VM should not be scanned
-        /// Serialized Name: DefenderForServersGcpOfferingVmScannersConfiguration.exclusionTags
-        /// </summary>
+        /// <summary> VM tags that indicate that VM should not be scanned. </summary>
         public IDictionary<string, string> ExclusionTags { get; }
     }
 }

@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> provisioningStatusMessage = default;
             Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
             Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<Authorization> authorization = default;
-            Optional<AutoDiscovery> autoDiscovery = default;
+            Optional<DevOpsAuthorization> authorization = default;
+            Optional<DevOpsAutoDiscovery> autoDiscovery = default;
             Optional<IList<string>> topLevelInventoryList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    authorization = Authorization.DeserializeAuthorization(property.Value);
+                    authorization = DevOpsAuthorization.DeserializeDevOpsAuthorization(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoDiscovery"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    autoDiscovery = new AutoDiscovery(property.Value.GetString());
+                    autoDiscovery = new DevOpsAutoDiscovery(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topLevelInventoryList"u8))

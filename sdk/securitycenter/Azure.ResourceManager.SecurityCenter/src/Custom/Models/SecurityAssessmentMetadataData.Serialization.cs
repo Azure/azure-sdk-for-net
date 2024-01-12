@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityAssessmentMetadataData : IUtf8JsonSerializable
+    public partial class SecurityAssessmentMetadataData
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void DeserializePolicyDefinitionId(JsonProperty property, ref Optional<ResourceIdentifier> policyDefinitionId)

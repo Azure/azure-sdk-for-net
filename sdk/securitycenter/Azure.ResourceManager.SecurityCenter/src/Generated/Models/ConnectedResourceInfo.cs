@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describes properties of a connected resource
-    /// Serialized Name: ConnectedResource
-    /// </summary>
+    /// <summary> Describes properties of a connected resource. </summary>
     public partial class ConnectedResourceInfo
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
-        /// <param name="connectedResourceId">
-        /// The Azure resource id of the connected resource
-        /// Serialized Name: ConnectedResource.connectedResourceId
-        /// </param>
-        /// <param name="tcpPorts">
-        /// The allowed tcp ports
-        /// Serialized Name: ConnectedResource.tcpPorts
-        /// </param>
-        /// <param name="udpPorts">
-        /// The allowed udp ports
-        /// Serialized Name: ConnectedResource.udpPorts
-        /// </param>
+        /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
+        /// <param name="tcpPorts"> The allowed tcp ports. </param>
+        /// <param name="udpPorts"> The allowed udp ports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectedResourceInfo(ResourceIdentifier connectedResourceId, string tcpPorts, string udpPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Azure resource id of the connected resource
-        /// Serialized Name: ConnectedResource.connectedResourceId
-        /// </summary>
+        /// <summary> The Azure resource id of the connected resource. </summary>
         public ResourceIdentifier ConnectedResourceId { get; }
-        /// <summary>
-        /// The allowed tcp ports
-        /// Serialized Name: ConnectedResource.tcpPorts
-        /// </summary>
+        /// <summary> The allowed tcp ports. </summary>
         public string TcpPorts { get; }
-        /// <summary>
-        /// The allowed udp ports
-        /// Serialized Name: ConnectedResource.udpPorts
-        /// </summary>
+        /// <summary> The allowed udp ports. </summary>
         public string UdpPorts { get; }
     }
 }

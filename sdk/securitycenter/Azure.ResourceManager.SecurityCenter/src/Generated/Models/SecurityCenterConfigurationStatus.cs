@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The configuration status of the machines group or machine or rule
-    /// Serialized Name: ConfigurationStatus
-    /// </summary>
+    /// <summary> The configuration status of the machines group or machine or rule. </summary>
     public readonly partial struct SecurityCenterConfigurationStatus : IEquatable<SecurityCenterConfigurationStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string FailedValue = "Failed";
         private const string NoStatusValue = "NoStatus";
 
-        /// <summary>
-        /// Configured
-        /// Serialized Name: ConfigurationStatus.Configured
-        /// </summary>
+        /// <summary> Configured. </summary>
         public static SecurityCenterConfigurationStatus Configured { get; } = new SecurityCenterConfigurationStatus(ConfiguredValue);
-        /// <summary>
-        /// NotConfigured
-        /// Serialized Name: ConfigurationStatus.NotConfigured
-        /// </summary>
+        /// <summary> NotConfigured. </summary>
         public static SecurityCenterConfigurationStatus NotConfigured { get; } = new SecurityCenterConfigurationStatus(NotConfiguredValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: ConfigurationStatus.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static SecurityCenterConfigurationStatus InProgress { get; } = new SecurityCenterConfigurationStatus(InProgressValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ConfigurationStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static SecurityCenterConfigurationStatus Failed { get; } = new SecurityCenterConfigurationStatus(FailedValue);
-        /// <summary>
-        /// NoStatus
-        /// Serialized Name: ConfigurationStatus.NoStatus
-        /// </summary>
+        /// <summary> NoStatus. </summary>
         public static SecurityCenterConfigurationStatus NoStatus { get; } = new SecurityCenterConfigurationStatus(NoStatusValue);
         /// <summary> Determines if two <see cref="SecurityCenterConfigurationStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterConfigurationStatus left, SecurityCenterConfigurationStatus right) => left.Equals(right);

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describes properties of an assessment metadata.
-    /// Serialized Name: SecurityAssessmentMetadataProperties
-    /// </summary>
+    /// <summary> Describes properties of an assessment metadata. </summary>
     public partial class SecurityAssessmentMetadataProperties
     {
         /// <summary>
@@ -50,18 +47,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataProperties"/>. </summary>
-        /// <param name="displayName">
-        /// User friendly display name of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.displayName
-        /// </param>
-        /// <param name="severity">
-        /// The severity level of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.severity
-        /// </param>
-        /// <param name="assessmentType">
-        /// BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition
-        /// Serialized Name: SecurityAssessmentMetadataProperties.assessmentType
-        /// </param>
+        /// <param name="displayName"> User friendly display name of the assessment. </param>
+        /// <param name="severity"> The severity level of the assessment. </param>
+        /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public SecurityAssessmentMetadataProperties(string displayName, SecurityAssessmentSeverity severity, SecurityAssessmentType assessmentType)
         {
@@ -75,48 +63,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataProperties"/>. </summary>
-        /// <param name="displayName">
-        /// User friendly display name of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.displayName
-        /// </param>
-        /// <param name="policyDefinitionId">
-        /// Azure resource ID of the policy definition that turns this assessment calculation on
-        /// Serialized Name: SecurityAssessmentMetadataProperties.policyDefinitionId
-        /// </param>
-        /// <param name="description">
-        /// Human readable description of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.description
-        /// </param>
-        /// <param name="remediationDescription">
-        /// Human readable description of what you should do to mitigate this security issue
-        /// Serialized Name: SecurityAssessmentMetadataProperties.remediationDescription
-        /// </param>
-        /// <param name="categories"> Serialized Name: SecurityAssessmentMetadataProperties.categories. </param>
-        /// <param name="severity">
-        /// The severity level of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.severity
-        /// </param>
-        /// <param name="userImpact">
-        /// The user impact of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.userImpact
-        /// </param>
-        /// <param name="implementationEffort">
-        /// The implementation effort required to remediate this assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.implementationEffort
-        /// </param>
-        /// <param name="threats"> Serialized Name: SecurityAssessmentMetadataProperties.threats. </param>
-        /// <param name="isPreview">
-        /// True if this assessment is in preview release status
-        /// Serialized Name: SecurityAssessmentMetadataProperties.preview
-        /// </param>
-        /// <param name="assessmentType">
-        /// BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition
-        /// Serialized Name: SecurityAssessmentMetadataProperties.assessmentType
-        /// </param>
-        /// <param name="partnerData">
-        /// Describes the partner that created the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.partnerData
-        /// </param>
+        /// <param name="displayName"> User friendly display name of the assessment. </param>
+        /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
+        /// <param name="description"> Human readable description of the assessment. </param>
+        /// <param name="remediationDescription"> Human readable description of what you should do to mitigate this security issue. </param>
+        /// <param name="categories"></param>
+        /// <param name="severity"> The severity level of the assessment. </param>
+        /// <param name="userImpact"> The user impact of the assessment. </param>
+        /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
+        /// <param name="threats"></param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
+        /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
+        /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -140,59 +98,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// User friendly display name of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.displayName
-        /// </summary>
+        /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Azure resource ID of the policy definition that turns this assessment calculation on
-        /// Serialized Name: SecurityAssessmentMetadataProperties.policyDefinitionId
-        /// </summary>
+        /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
         public ResourceIdentifier PolicyDefinitionId { get; }
-        /// <summary>
-        /// Human readable description of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.description
-        /// </summary>
+        /// <summary> Human readable description of the assessment. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Human readable description of what you should do to mitigate this security issue
-        /// Serialized Name: SecurityAssessmentMetadataProperties.remediationDescription
-        /// </summary>
+        /// <summary> Human readable description of what you should do to mitigate this security issue. </summary>
         public string RemediationDescription { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataProperties.categories. </summary>
+        /// <summary> Gets the categories. </summary>
         public IList<SecurityAssessmentResourceCategory> Categories { get; }
-        /// <summary>
-        /// The severity level of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.severity
-        /// </summary>
+        /// <summary> The severity level of the assessment. </summary>
         public SecurityAssessmentSeverity Severity { get; set; }
-        /// <summary>
-        /// The user impact of the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.userImpact
-        /// </summary>
+        /// <summary> The user impact of the assessment. </summary>
         public SecurityAssessmentUserImpact? UserImpact { get; set; }
-        /// <summary>
-        /// The implementation effort required to remediate this assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.implementationEffort
-        /// </summary>
+        /// <summary> The implementation effort required to remediate this assessment. </summary>
         public ImplementationEffort? ImplementationEffort { get; set; }
-        /// <summary> Serialized Name: SecurityAssessmentMetadataProperties.threats. </summary>
+        /// <summary> Gets the threats. </summary>
         public IList<SecurityThreat> Threats { get; }
-        /// <summary>
-        /// True if this assessment is in preview release status
-        /// Serialized Name: SecurityAssessmentMetadataProperties.preview
-        /// </summary>
+        /// <summary> True if this assessment is in preview release status. </summary>
         public bool? IsPreview { get; set; }
-        /// <summary>
-        /// BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition
-        /// Serialized Name: SecurityAssessmentMetadataProperties.assessmentType
-        /// </summary>
+        /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
         public SecurityAssessmentType AssessmentType { get; set; }
-        /// <summary>
-        /// Describes the partner that created the assessment
-        /// Serialized Name: SecurityAssessmentMetadataProperties.partnerData
-        /// </summary>
+        /// <summary> Describes the partner that created the assessment. </summary>
         public SecurityAssessmentMetadataPartner PartnerData { get; set; }
     }
 }

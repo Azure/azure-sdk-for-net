@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// CVE details
-    /// Serialized Name: CVE
-    /// </summary>
+    /// <summary> CVE details. </summary>
     public partial class SecurityCve
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCve"/>. </summary>
-        /// <param name="title">
-        /// CVE title
-        /// Serialized Name: CVE.title
-        /// </param>
-        /// <param name="link">
-        /// Link url
-        /// Serialized Name: CVE.link
-        /// </param>
+        /// <param name="title"> CVE title. </param>
+        /// <param name="link"> Link url. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCve(string title, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// CVE title
-        /// Serialized Name: CVE.title
-        /// </summary>
+        /// <summary> CVE title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// Link url
-        /// Serialized Name: CVE.link
-        /// </summary>
+        /// <summary> Link url. </summary>
         public string Link { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Rule results properties.
-    /// Serialized Name: RuleResultsProperties
-    /// </summary>
+    /// <summary> Rule results properties. </summary>
     internal partial class RuleResultsProperties
     {
         /// <summary>
@@ -56,10 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RuleResultsProperties"/>. </summary>
-        /// <param name="results">
-        /// Expected results in the baseline.
-        /// Serialized Name: RuleResultsProperties.results
-        /// </param>
+        /// <param name="results"> Expected results in the baseline. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RuleResultsProperties(IList<IList<string>> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Expected results in the baseline.
-        /// Serialized Name: RuleResultsProperties.results
-        /// </summary>
+        /// <summary> Expected results in the baseline. </summary>
         public IList<IList<string>> Results { get; }
     }
 }

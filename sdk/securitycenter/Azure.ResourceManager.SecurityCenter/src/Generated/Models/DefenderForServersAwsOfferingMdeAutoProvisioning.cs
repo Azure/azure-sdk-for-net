@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The Microsoft Defender for Endpoint autoprovisioning configuration
-    /// Serialized Name: DefenderForServersAwsOfferingMdeAutoProvisioning
-    /// </summary>
+    /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
     public partial class DefenderForServersAwsOfferingMdeAutoProvisioning
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingMdeAutoProvisioning"/>. </summary>
-        /// <param name="isEnabled">
-        /// Is Microsoft Defender for Endpoint auto provisioning enabled
-        /// Serialized Name: DefenderForServersAwsOfferingMdeAutoProvisioning.enabled
-        /// </param>
-        /// <param name="configuration">
-        /// configuration for Microsoft Defender for Endpoint autoprovisioning
-        /// Serialized Name: DefenderForServersAwsOfferingMdeAutoProvisioning.configuration
-        /// </param>
+        /// <param name="isEnabled"> Is Microsoft Defender for Endpoint auto provisioning enabled. </param>
+        /// <param name="configuration"> configuration for Microsoft Defender for Endpoint autoprovisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForServersAwsOfferingMdeAutoProvisioning(bool? isEnabled, BinaryData configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,14 +61,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Is Microsoft Defender for Endpoint auto provisioning enabled
-        /// Serialized Name: DefenderForServersAwsOfferingMdeAutoProvisioning.enabled
-        /// </summary>
+        /// <summary> Is Microsoft Defender for Endpoint auto provisioning enabled. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// configuration for Microsoft Defender for Endpoint autoprovisioning
-        /// Serialized Name: DefenderForServersAwsOfferingMdeAutoProvisioning.configuration
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

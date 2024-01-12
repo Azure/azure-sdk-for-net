@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The DefenderForStorageSettingName.
-    /// Serialized Name: DefenderForStorageSettingName
-    /// </summary>
+    /// <summary> The DefenderForStorageSettingName. </summary>
     public readonly partial struct DefenderForStorageSettingName : IEquatable<DefenderForStorageSettingName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string CurrentValue = "current";
 
-        /// <summary>
-        /// Name of the Defender for Storage Settings name.
-        /// Serialized Name: DefenderForStorageSettingName.current
-        /// </summary>
+        /// <summary> Name of the Defender for Storage Settings name. </summary>
         public static DefenderForStorageSettingName Current { get; } = new DefenderForStorageSettingName(CurrentValue);
         /// <summary> Determines if two <see cref="DefenderForStorageSettingName"/> values are the same. </summary>
         public static bool operator ==(DefenderForStorageSettingName left, DefenderForStorageSettingName right) => left.Equals(right);

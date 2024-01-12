@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The native cloud connection configuration
-    /// Serialized Name: CspmMonitorAwsOfferingNativeCloudConnection
-    /// </summary>
+    /// <summary> The native cloud connection configuration. </summary>
     internal partial class CspmMonitorAwsOfferingNativeCloudConnection
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOfferingNativeCloudConnection"/>. </summary>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: CspmMonitorAwsOfferingNativeCloudConnection.cloudRoleArn
-        /// </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CspmMonitorAwsOfferingNativeCloudConnection(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature
-        /// Serialized Name: CspmMonitorAwsOfferingNativeCloudConnection.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

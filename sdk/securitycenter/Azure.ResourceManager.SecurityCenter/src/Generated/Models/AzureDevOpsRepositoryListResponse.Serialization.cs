@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureDevOpsRepositoryData>> value = default;
+            Optional<IReadOnlyList<DevOpsRepositoryData>> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AzureDevOpsRepositoryData> array = new List<AzureDevOpsRepositoryData>();
+                    List<DevOpsRepositoryData> array = new List<DevOpsRepositoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsRepositoryData.DeserializeAzureDevOpsRepositoryData(item));
+                        array.Add(DevOpsRepositoryData.DeserializeDevOpsRepositoryData(item));
                     }
                     value = array;
                     continue;

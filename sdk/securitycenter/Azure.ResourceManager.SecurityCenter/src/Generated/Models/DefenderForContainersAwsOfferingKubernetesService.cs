@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The kubernetes service connection configuration
-    /// Serialized Name: DefenderForContainersAwsOfferingKubernetesService
-    /// </summary>
+    /// <summary> The kubernetes service connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingKubernetesService
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKubernetesService"/>. </summary>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS for this feature used for provisioning resources
-        /// Serialized Name: DefenderForContainersAwsOfferingKubernetesService.cloudRoleArn
-        /// </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature used for provisioning resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForContainersAwsOfferingKubernetesService(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The cloud role ARN in AWS for this feature used for provisioning resources
-        /// Serialized Name: DefenderForContainersAwsOfferingKubernetesService.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS for this feature used for provisioning resources. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

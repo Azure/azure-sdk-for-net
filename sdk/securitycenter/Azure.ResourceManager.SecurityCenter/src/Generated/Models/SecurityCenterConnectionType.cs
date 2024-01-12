@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The SecurityCenterConnectionType.
-    /// Serialized Name: ConnectionType
-    /// </summary>
+    /// <summary> The SecurityCenterConnectionType. </summary>
     public readonly partial struct SecurityCenterConnectionType : IEquatable<SecurityCenterConnectionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string InternalValue = "Internal";
         private const string ExternalValue = "External";
 
-        /// <summary>
-        /// Internal
-        /// Serialized Name: ConnectionType.Internal
-        /// </summary>
+        /// <summary> Internal. </summary>
         public static SecurityCenterConnectionType Internal { get; } = new SecurityCenterConnectionType(InternalValue);
-        /// <summary>
-        /// External
-        /// Serialized Name: ConnectionType.External
-        /// </summary>
+        /// <summary> External. </summary>
         public static SecurityCenterConnectionType External { get; } = new SecurityCenterConnectionType(ExternalValue);
         /// <summary> Determines if two <see cref="SecurityCenterConnectionType"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterConnectionType left, SecurityCenterConnectionType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Represents a summary of the alerts of the machine group
-    /// Serialized Name: AdaptiveApplicationControlIssueSummary
-    /// </summary>
+    /// <summary> Represents a summary of the alerts of the machine group. </summary>
     public partial class AdaptiveApplicationControlIssueSummary
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlIssueSummary"/>. </summary>
-        /// <param name="issue">
-        /// An alert that machines within a group can have
-        /// Serialized Name: AdaptiveApplicationControlIssueSummary.issue
-        /// </param>
-        /// <param name="numberOfVms">
-        /// The number of machines in the group that have this alert
-        /// Serialized Name: AdaptiveApplicationControlIssueSummary.numberOfVms
-        /// </param>
+        /// <param name="issue"> An alert that machines within a group can have. </param>
+        /// <param name="numberOfVms"> The number of machines in the group that have this alert. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdaptiveApplicationControlIssueSummary(AdaptiveApplicationControlIssue? issue, float? numberOfVms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// An alert that machines within a group can have
-        /// Serialized Name: AdaptiveApplicationControlIssueSummary.issue
-        /// </summary>
+        /// <summary> An alert that machines within a group can have. </summary>
         public AdaptiveApplicationControlIssue? Issue { get; }
-        /// <summary>
-        /// The number of machines in the group that have this alert
-        /// Serialized Name: AdaptiveApplicationControlIssueSummary.numberOfVms
-        /// </summary>
+        /// <summary> The number of machines in the group that have this alert. </summary>
         public float? NumberOfVms { get; }
     }
 }

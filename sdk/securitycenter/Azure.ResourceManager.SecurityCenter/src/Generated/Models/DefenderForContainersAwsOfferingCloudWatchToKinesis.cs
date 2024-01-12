@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// The cloudwatch to kinesis connection configuration
-    /// Serialized Name: DefenderForContainersAwsOfferingCloudWatchToKinesis
-    /// </summary>
+    /// <summary> The cloudwatch to kinesis connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingCloudWatchToKinesis
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingCloudWatchToKinesis"/>. </summary>
-        /// <param name="cloudRoleArn">
-        /// The cloud role ARN in AWS used by CloudWatch to transfer data into Kinesis
-        /// Serialized Name: DefenderForContainersAwsOfferingCloudWatchToKinesis.cloudRoleArn
-        /// </param>
+        /// <param name="cloudRoleArn"> The cloud role ARN in AWS used by CloudWatch to transfer data into Kinesis. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefenderForContainersAwsOfferingCloudWatchToKinesis(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The cloud role ARN in AWS used by CloudWatch to transfer data into Kinesis
-        /// Serialized Name: DefenderForContainersAwsOfferingCloudWatchToKinesis.cloudRoleArn
-        /// </summary>
+        /// <summary> The cloud role ARN in AWS used by CloudWatch to transfer data into Kinesis. </summary>
         public string CloudRoleArn { get; set; }
     }
 }

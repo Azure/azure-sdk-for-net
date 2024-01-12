@@ -12,10 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// List of locations where ASC saves your data
-    /// Serialized Name: AscLocationList
-    /// </summary>
+    /// <summary> List of locations where ASC saves your data. </summary>
     internal partial class AscLocationList
     {
         /// <summary>
@@ -57,11 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AscLocationList"/>. </summary>
-        /// <param name="value"> Serialized Name: AscLocationList.value. </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page.
-        /// Serialized Name: AscLocationList.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AscLocationList(IReadOnlyList<SecurityCenterLocationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,12 +64,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: AscLocationList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<SecurityCenterLocationData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page.
-        /// Serialized Name: AscLocationList.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }
 }

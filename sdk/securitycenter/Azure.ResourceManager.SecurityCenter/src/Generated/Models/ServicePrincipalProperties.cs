@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Details of the service principal.
-    /// Serialized Name: ServicePrincipalProperties
-    /// </summary>
+    /// <summary> Details of the service principal. </summary>
     public partial class ServicePrincipalProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
-        /// <param name="applicationId">
-        /// Application ID of service principal.
-        /// Serialized Name: ServicePrincipalProperties.applicationId
-        /// </param>
-        /// <param name="secret">
-        /// A secret string that the application uses to prove its identity, also can be referred to as application password (write only).
-        /// Serialized Name: ServicePrincipalProperties.secret
-        /// </param>
+        /// <param name="applicationId"> Application ID of service principal. </param>
+        /// <param name="secret"> A secret string that the application uses to prove its identity, also can be referred to as application password (write only). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServicePrincipalProperties(Guid? applicationId, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Application ID of service principal.
-        /// Serialized Name: ServicePrincipalProperties.applicationId
-        /// </summary>
+        /// <summary> Application ID of service principal. </summary>
         public Guid? ApplicationId { get; set; }
-        /// <summary>
-        /// A secret string that the application uses to prove its identity, also can be referred to as application password (write only).
-        /// Serialized Name: ServicePrincipalProperties.secret
-        /// </summary>
+        /// <summary> A secret string that the application uses to prove its identity, also can be referred to as application password (write only). </summary>
         public string Secret { get; set; }
     }
 }

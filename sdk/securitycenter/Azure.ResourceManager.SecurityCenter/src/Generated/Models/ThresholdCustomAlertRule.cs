@@ -12,25 +12,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// A custom alert rule that checks if a value (depends on the custom alert type) is within the given range.
-    /// Serialized Name: ThresholdCustomAlertRule
     /// Please note <see cref="ThresholdCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TimeWindowCustomAlertRule"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
     /// </summary>
     public partial class ThresholdCustomAlertRule : CustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/>. </summary>
-        /// <param name="isEnabled">
-        /// Status of the custom alert.
-        /// Serialized Name: CustomAlertRule.isEnabled
-        /// </param>
-        /// <param name="minThreshold">
-        /// The minimum threshold.
-        /// Serialized Name: ThresholdCustomAlertRule.minThreshold
-        /// </param>
-        /// <param name="maxThreshold">
-        /// The maximum threshold.
-        /// Serialized Name: ThresholdCustomAlertRule.maxThreshold
-        /// </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
         public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold) : base(isEnabled)
         {
             MinThreshold = minThreshold;
@@ -39,31 +29,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/>. </summary>
-        /// <param name="displayName">
-        /// The display name of the custom alert.
-        /// Serialized Name: CustomAlertRule.displayName
-        /// </param>
-        /// <param name="description">
-        /// The description of the custom alert.
-        /// Serialized Name: CustomAlertRule.description
-        /// </param>
-        /// <param name="isEnabled">
-        /// Status of the custom alert.
-        /// Serialized Name: CustomAlertRule.isEnabled
-        /// </param>
-        /// <param name="ruleType">
-        /// The type of the custom alert rule.
-        /// Serialized Name: CustomAlertRule.ruleType
-        /// </param>
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="minThreshold">
-        /// The minimum threshold.
-        /// Serialized Name: ThresholdCustomAlertRule.minThreshold
-        /// </param>
-        /// <param name="maxThreshold">
-        /// The maximum threshold.
-        /// Serialized Name: ThresholdCustomAlertRule.maxThreshold
-        /// </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
         internal ThresholdCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, int minThreshold, int maxThreshold) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData)
         {
             MinThreshold = minThreshold;
@@ -76,15 +48,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
-        /// <summary>
-        /// The minimum threshold.
-        /// Serialized Name: ThresholdCustomAlertRule.minThreshold
-        /// </summary>
+        /// <summary> The minimum threshold. </summary>
         public int MinThreshold { get; set; }
-        /// <summary>
-        /// The maximum threshold.
-        /// Serialized Name: ThresholdCustomAlertRule.maxThreshold
-        /// </summary>
+        /// <summary> The maximum threshold. </summary>
         public int MaxThreshold { get; set; }
     }
 }
