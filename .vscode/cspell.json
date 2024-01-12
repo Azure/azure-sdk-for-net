@@ -108,6 +108,7 @@
     "skus",
     "southcentralus",
     "structs",
+    "Uefi",
     "uints",
     "unbilled",
     "unencrypted",
@@ -545,6 +546,12 @@
       "words": [
         "Vmip",
         "Kubevirt"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridcompute/**/*.cs",
+      "words": [
+        "Scvmm"
       ]
     },
     {

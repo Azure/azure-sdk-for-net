@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,6 +88,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +118,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,6 +147,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,6 +175,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,6 +219,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
@@ -214,6 +262,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,6 +290,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

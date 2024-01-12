@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
