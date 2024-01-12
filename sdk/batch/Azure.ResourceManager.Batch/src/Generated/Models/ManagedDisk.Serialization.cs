@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class OSDisk : IUtf8JsonSerializable
+    internal partial class ManagedDisk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EphemeralOSDiskSettings))
+            if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("ephemeralOSDiskSettings"u8);
-                writer.WriteObjectValue(EphemeralOSDiskSettings);
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }
 
-        internal static OSDisk DeserializeOSDisk(JsonElement element)
+        internal static ManagedDisk DeserializeManagedDisk(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DiffDiskSettings> ephemeralOSDiskSettings = default;
+            Optional<BatchStorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ephemeralOSDiskSettings"u8))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ephemeralOSDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value);
+                    storageAccountType = property.Value.GetString().ToBatchStorageAccountType();
                     continue;
                 }
             }
-            return new OSDisk(ephemeralOSDiskSettings.Value);
+            return new ManagedDisk(Optional.ToNullable(storageAccountType));
         }
     }
 }
