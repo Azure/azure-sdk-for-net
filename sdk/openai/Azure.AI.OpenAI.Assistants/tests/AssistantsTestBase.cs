@@ -20,6 +20,13 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         => Recording?.Mode == RecordedTestMode.Playback ? "RecordedMetadataValue" : s_testMetadataValue;
     protected KeyValuePair<string, string> TestMetadataPair => new(s_testMetadataKey, TestMetadataValue);
 
+    private static readonly string s_placeholderAzureResourceUrl = "https://my-resource.openai.azure.com";
+    protected readonly string _azureResourceUrl;
+
+    private static readonly string s_placeholderApiKey = "placeholder";
+    protected readonly string _nonAzureApiKey;
+    protected readonly AzureKeyCredential _azureApiKeyCredential;
+
     public List<(AssistantsClient, string)> EnsuredFileDeletions = new();
     public List<(AssistantsClient, string)> EnsuredThreadDeletions = new();
 
@@ -31,6 +38,20 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
         UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
         SanitizedQueryParameters.Add("sig");
+
+        if (mode == RecordedTestMode.Playback)
+        {
+            _nonAzureApiKey = s_placeholderApiKey;
+            _azureResourceUrl = s_placeholderAzureResourceUrl;
+            _azureApiKeyCredential = new(s_placeholderApiKey);
+        }
+        else
+        {
+            _nonAzureApiKey = TestEnvironment.NonAzureOpenAIApiKey;
+            _azureResourceUrl = TestEnvironment.AzureOpenAIResourceUri;
+            _azureApiKeyCredential = new(TestEnvironment.AzureOpenAIApiKey);
+            UriRegexSanitizers.Add(new(_azureResourceUrl, s_placeholderAzureResourceUrl));
+        }
     }
 
     [OneTimeTearDown]

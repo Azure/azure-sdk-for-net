@@ -38,16 +38,10 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         => GetTestClient(target, OpenAIClientAuthenticationType.ApiKey);
 
     protected AssistantsClient GetNonAzureClientWithKey() => InstrumentClient(
-        new AssistantsClient(GetNonAzureApiKey(), GetInstrumentedClientOptions()));
+        new AssistantsClient(_nonAzureApiKey, GetInstrumentedClientOptions()));
 
     protected AssistantsClient GetAzureClientWithKey() => InstrumentClient(
-        new AssistantsClient(GetAzureResourceUri(), new AzureKeyCredential(GetAzureApiKey()), GetInstrumentedClientOptions()));
-
-    protected string GetNonAzureApiKey() => TestEnvironment.NonAzureOpenAIApiKey;
-
-    protected Uri GetAzureResourceUri() => new(TestEnvironment.AzureOpenAIResourceUri);
-
-    protected string GetAzureApiKey() => TestEnvironment.AzureOpenAIApiKey;
+        new AssistantsClient(new(_azureResourceUrl), _azureApiKeyCredential, GetInstrumentedClientOptions()));
 
     private AssistantsClientOptions GetInstrumentedClientOptions(
         AssistantsClientOptions.ServiceVersion? azureServiceVersionOverride = null)
