@@ -298,6 +298,7 @@ rename-mapping:
   HealthReportResourceDetails.id: -|arm-id
   StatusName: HealthReportStatusName
   Authorization: DevOpsAuthorization
+  InfoType: UserDefinedInformationType
 
 prepend-rp-prefix:
   - CloudName

@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSetting"/> for deserialization. </summary>
+        internal UnknownSetting()
+        {
+        }
     }
 }

@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             EnvironmentType = environmentType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownEnvironmentData"/> for deserialization. </summary>
+        internal UnknownEnvironmentData()
+        {
+        }
     }
 }

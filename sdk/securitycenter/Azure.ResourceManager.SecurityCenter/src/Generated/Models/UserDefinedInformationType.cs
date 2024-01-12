@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Custom user-defined information type. </summary>
-    public partial class InfoType
+    public partial class UserDefinedInformationType
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InfoType"/>. </summary>
-        internal InfoType()
+        /// <summary> Initializes a new instance of <see cref="UserDefinedInformationType"/>. </summary>
+        internal UserDefinedInformationType()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InfoType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserDefinedInformationType"/>. </summary>
         /// <param name="name"> Display name of the info type. </param>
         /// <param name="id"> Id of the info type. </param>
         /// <param name="description"> Description of the info type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InfoType(string name, Guid? id, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserDefinedInformationType(string name, Guid? id, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;

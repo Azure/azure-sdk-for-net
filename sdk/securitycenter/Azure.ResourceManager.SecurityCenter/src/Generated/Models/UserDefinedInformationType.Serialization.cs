@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InfoType : IUtf8JsonSerializable, IJsonModel<InfoType>
+    public partial class UserDefinedInformationType : IUtf8JsonSerializable, IJsonModel<UserDefinedInformationType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InfoType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserDefinedInformationType>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<InfoType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserDefinedInformationType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InfoType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedInformationType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InfoType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserDefinedInformationType)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        InfoType IJsonModel<InfoType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserDefinedInformationType IJsonModel<UserDefinedInformationType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InfoType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedInformationType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InfoType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserDefinedInformationType)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInfoType(document.RootElement, options);
+            return DeserializeUserDefinedInformationType(document.RootElement, options);
         }
 
-        internal static InfoType DeserializeInfoType(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UserDefinedInformationType DeserializeUserDefinedInformationType(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InfoType(name.Value, Optional.ToNullable(id), description.Value, serializedAdditionalRawData);
+            return new UserDefinedInformationType(name.Value, Optional.ToNullable(id), description.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InfoType>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UserDefinedInformationType>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InfoType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedInformationType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InfoType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserDefinedInformationType)} does not support '{options.Format}' format.");
             }
         }
 
-        InfoType IPersistableModel<InfoType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UserDefinedInformationType IPersistableModel<UserDefinedInformationType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InfoType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedInformationType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInfoType(document.RootElement, options);
+                        return DeserializeUserDefinedInformationType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InfoType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserDefinedInformationType)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InfoType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserDefinedInformationType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

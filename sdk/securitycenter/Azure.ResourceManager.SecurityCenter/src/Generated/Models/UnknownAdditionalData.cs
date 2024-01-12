@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             AssessedResourceType = assessedResourceType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAdditionalData"/> for deserialization. </summary>
+        internal UnknownAdditionalData()
+        {
+        }
     }
 }

@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Source = source;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownResourceDetails"/> for deserialization. </summary>
+        internal UnknownResourceDetails()
+        {
+        }
     }
 }

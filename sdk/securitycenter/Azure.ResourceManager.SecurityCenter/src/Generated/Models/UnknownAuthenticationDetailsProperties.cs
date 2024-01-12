@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             AuthenticationType = authenticationType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthenticationDetailsProperties"/> for deserialization. </summary>
+        internal UnknownAuthenticationDetailsProperties()
+        {
+        }
     }
 }

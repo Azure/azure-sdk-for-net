@@ -596,10 +596,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="customInfoTypes"> List of custom user-defined information types. </param>
         /// <param name="builtInInfoTypes"> List of pre-configured sensitive information types. </param>
         /// <returns> A new <see cref="Models.GetSensitivitySettingsResponsePropertiesMipInformation"/> instance for mocking. </returns>
-        public static GetSensitivitySettingsResponsePropertiesMipInformation GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus = null, IEnumerable<MipSensitivityLabel> labels = null, IEnumerable<InfoType> customInfoTypes = null, IEnumerable<BuiltInInfoType> builtInInfoTypes = null)
+        public static GetSensitivitySettingsResponsePropertiesMipInformation GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus = null, IEnumerable<MipSensitivityLabel> labels = null, IEnumerable<UserDefinedInformationType> customInfoTypes = null, IEnumerable<BuiltInInfoType> builtInInfoTypes = null)
         {
             labels ??= new List<MipSensitivityLabel>();
-            customInfoTypes ??= new List<InfoType>();
+            customInfoTypes ??= new List<UserDefinedInformationType>();
             builtInInfoTypes ??= new List<BuiltInInfoType>();
 
             return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels?.ToList(), customInfoTypes?.ToList(), builtInInfoTypes?.ToList(), serializedAdditionalRawData: null);
@@ -615,14 +615,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new MipSensitivityLabel(name, id, order, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InfoType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UserDefinedInformationType"/>. </summary>
         /// <param name="name"> Display name of the info type. </param>
         /// <param name="id"> Id of the info type. </param>
         /// <param name="description"> Description of the info type. </param>
-        /// <returns> A new <see cref="Models.InfoType"/> instance for mocking. </returns>
-        public static InfoType InfoType(string name = null, Guid? id = null, string description = null)
+        /// <returns> A new <see cref="Models.UserDefinedInformationType"/> instance for mocking. </returns>
+        public static UserDefinedInformationType UserDefinedInformationType(string name = null, Guid? id = null, string description = null)
         {
-            return new InfoType(name, id, description, serializedAdditionalRawData: null);
+            return new UserDefinedInformationType(name, id, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BuiltInInfoType"/>. </summary>

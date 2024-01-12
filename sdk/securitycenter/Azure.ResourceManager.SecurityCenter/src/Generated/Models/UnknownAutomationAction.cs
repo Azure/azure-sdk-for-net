@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             ActionType = actionType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAutomationAction"/> for deserialization. </summary>
+        internal UnknownAutomationAction()
+        {
+        }
     }
 }

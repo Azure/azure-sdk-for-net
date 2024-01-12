@@ -21,5 +21,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             OfferingType = offeringType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCloudOffering"/> for deserialization. </summary>
+        internal UnknownCloudOffering()
+        {
+        }
     }
 }

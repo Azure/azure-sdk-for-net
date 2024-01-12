@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             OrganizationMembershipType = organizationMembershipType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownGcpOrganizationalData"/> for deserialization. </summary>
+        internal UnknownGcpOrganizationalData()
+        {
+        }
     }
 }

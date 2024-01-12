@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             ResourceIdentifierType = resourceIdentifierType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertResourceIdentifier"/> for deserialization. </summary>
+        internal UnknownAlertResourceIdentifier()
+        {
+        }
     }
 }
