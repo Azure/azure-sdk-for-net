@@ -21,12 +21,15 @@ internal class PipelineResponseHeaders : PipelineMessageHeaders
     }
 
     public override void Add(string name, string value)
+        // Response headers are read-only.
         => throw new NotSupportedException();
 
     public override bool Remove(string name)
+        // Response headers are read-only.
         => throw new NotSupportedException();
 
     public override void Set(string name, string value)
+        // Response headers are read-only.
         => throw new NotSupportedException();
 
     public override bool TryGetValue(string name, out string? value)

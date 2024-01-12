@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-public class RetriableTransport : PipelineTransport
+public class MockPipelineTransport : PipelineTransport
 {
     private readonly Func<int, int> _responseFactory;
     private int _retryCount;
@@ -20,12 +20,12 @@ public class RetriableTransport : PipelineTransport
     public Action<int>? OnSendingRequest { get; set; }
     public Action<int>? OnReceivedResponse { get; set; }
 
-    public RetriableTransport(string id, params int[] codes)
+    public MockPipelineTransport(string id, params int[] codes)
         : this(id, i => codes[i])
     {
     }
 
-    public RetriableTransport(string id, Func<int, int> responseFactory)
+    public MockPipelineTransport(string id, Func<int, int> responseFactory)
     {
         Id = id;
         _responseFactory = responseFactory;
