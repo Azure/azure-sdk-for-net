@@ -21,8 +21,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="additionalProperties"> Additional properties to be provided by a child type of DocumentIngress. </param>
         /// <param name="name"> Event name. </param>
-        internal EventDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name) : base(documentType, documentStreamIds, properties)
+        internal EventDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string additionalProperties, string name) : base(documentType, documentStreamIds, properties, additionalProperties)
         {
             Name = name;
         }
