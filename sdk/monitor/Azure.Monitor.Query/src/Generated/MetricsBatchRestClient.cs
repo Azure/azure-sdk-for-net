@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
-        internal HttpMessage CreateBatchRequest(Guid subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime, string endtime, TimeSpan? interval, string aggregation, int? top, string orderby, string filter, string rollupby)
+        internal HttpMessage CreateBatchRequest(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime, string endtime, TimeSpan? interval, string aggregation, int? top, string orderby, string filter, string rollupby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,9 +126,13 @@ namespace Azure.Monitor.Query
         /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<MetricsBatchResult>> BatchAsync(Guid subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
+        public async Task<Response<MetricsBatchResult>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (metricnamespace == null)
             {
                 throw new ArgumentNullException(nameof(metricnamespace));
@@ -190,9 +194,13 @@ namespace Azure.Monitor.Query
         /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
-        public Response<MetricsBatchResult> Batch(Guid subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
+        public Response<MetricsBatchResult> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (metricnamespace == null)
             {
                 throw new ArgumentNullException(nameof(metricnamespace));

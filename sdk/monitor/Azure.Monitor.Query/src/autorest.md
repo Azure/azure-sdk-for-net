@@ -129,3 +129,13 @@ directive:
   - remove-operation: Metrics_ListAtSubscriptionScope
   - remove-operation: Metrics_ListAtSubscriptionScopePost
 ```
+
+### Convert guid/uuid format of subscriptionId to string
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.SubscriptionIdParameter
+  transform: >
+    $["format"] = "string";
+```
