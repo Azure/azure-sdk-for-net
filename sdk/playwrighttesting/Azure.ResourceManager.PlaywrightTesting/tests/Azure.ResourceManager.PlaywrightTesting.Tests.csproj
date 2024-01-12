@@ -2,4 +2,5 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.PlaywrightTesting.csproj" />
   </ItemGroup>
+
 </Project>
