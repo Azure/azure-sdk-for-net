@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
 {
     public class PlaywrightTestingAccountOperations : PlaywrightTestingManagementTestBase
     {
-        private AccountCollection _accountCollection { get; set; }
-        private AccountResource _accountResource { get; set; }
-        private AccountData _accountData { get; set; }
+        private PlaywrightTestingAccountCollection _accountCollection { get; set; }
+        private PlaywrightTestingAccountResource _accountResource { get; set; }
+        private PlaywrightTestingAccountData _accountData { get; set; }
 
         public PlaywrightTestingAccountOperations(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             }
 
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            _accountCollection = (await CreateResourceGroup(subscription, ResourceHelper.RESOURCE_GROUP_NAME, ResourceHelper.RESOURCE_LOCATION)).GetAccounts();
+            _accountCollection = (await CreateResourceGroup(subscription, ResourceHelper.RESOURCE_GROUP_NAME, ResourceHelper.RESOURCE_LOCATION)).GetPlaywrightTestingAccounts();
 
-            _accountData = new AccountData(ResourceHelper.RESOURCE_LOCATION);
+            _accountData = new PlaywrightTestingAccountData(ResourceHelper.RESOURCE_LOCATION);
         }
 
         [OneTimeTearDown]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
         public async Task AccountOperationTests()
         {
             //Create API
-            ArmOperation<AccountResource> createResponse = await _accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, ResourceHelper.WORKSPACE_NAME, _accountData);
+            ArmOperation<PlaywrightTestingAccountResource> createResponse = await _accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, ResourceHelper.WORKSPACE_NAME, _accountData);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -54,54 +54,54 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             Assert.IsTrue(createResponse.Value.HasData);
             Assert.AreEqual(ResourceHelper.WORKSPACE_NAME, createResponse.Value.Data.Name);
             Assert.AreEqual(ResourceHelper.RESOURCE_LOCATION, createResponse.Value.Data.Location.Name);
-            Assert.AreEqual(ProvisioningState.Succeeded, createResponse.Value.Data.ProvisioningState);
+            Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, createResponse.Value.Data.ProvisioningState);
 
             //GET API
-            Response<AccountResource> getResponse = await _accountCollection.GetAsync(ResourceHelper.WORKSPACE_NAME);
-            AccountResource accountResource = getResponse.Value;
+            Response<PlaywrightTestingAccountResource> getResponse = await _accountCollection.GetAsync(ResourceHelper.WORKSPACE_NAME);
+            PlaywrightTestingAccountResource accountResource = getResponse.Value;
 
             Assert.IsNotNull(accountResource);
             Assert.IsTrue(accountResource.HasData);
             Assert.AreEqual(ResourceHelper.WORKSPACE_NAME, accountResource.Data.Name);
             Assert.AreEqual(ResourceHelper.RESOURCE_LOCATION, accountResource.Data.Location.Name);
-            Assert.AreEqual(ProvisioningState.Succeeded, accountResource.Data.ProvisioningState);
+            Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, accountResource.Data.ProvisioningState);
 
             //GETALL API
-            List<AccountResource> getAllResponse = await _accountCollection.GetAllAsync().ToEnumerableAsync();
+            List<PlaywrightTestingAccountResource> getAllResponse = await _accountCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(getAllResponse);
             Assert.IsNotNull(getAllResponse);
-            foreach (AccountResource resource in getAllResponse)
+            foreach (PlaywrightTestingAccountResource resource in getAllResponse)
             {
                 Assert.IsNotNull(resource);
                 Assert.IsTrue(resource.HasData);
                 Assert.IsNotNull(resource.Data.Id);
                 Assert.IsNotNull(resource.Data.Name);
-                Assert.AreEqual(ProvisioningState.Succeeded, resource.Data.ProvisioningState);
+                Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, resource.Data.ProvisioningState);
             }
 
             //GET RESOURCE GROUP API
-            Response<AccountResource> getRGResponse = await createResponse.Value.GetAsync();
+            Response<PlaywrightTestingAccountResource> getRGResponse = await createResponse.Value.GetAsync();
             accountResource = getRGResponse.Value;
 
             Assert.IsNotNull(accountResource);
             Assert.IsTrue(accountResource.HasData);
             Assert.AreEqual(ResourceHelper.WORKSPACE_NAME, accountResource.Data.Name);
             Assert.AreEqual(ResourceHelper.RESOURCE_LOCATION, accountResource.Data.Location.Name);
-            Assert.AreEqual(ProvisioningState.Succeeded, accountResource.Data.ProvisioningState);
+            Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, accountResource.Data.ProvisioningState);
 
             //UPDATE API
-            AccountPatch resourcePatchPayload = new AccountPatch
+            PlaywrightTestingAccountPatch resourcePatchPayload = new PlaywrightTestingAccountPatch
             {
                 RegionalAffinity= EnablementStatus.Enabled,
             };
 
-            Response<AccountResource> updateResponse = await accountResource.UpdateAsync(resourcePatchPayload);
-            AccountResource updateResponseValue = updateResponse.Value;
+            Response<PlaywrightTestingAccountResource> updateResponse = await accountResource.UpdateAsync(resourcePatchPayload);
+            PlaywrightTestingAccountResource updateResponseValue = updateResponse.Value;
             Assert.IsNotNull(updateResponseValue);
             Assert.IsTrue(updateResponseValue.HasData);
             Assert.AreEqual(ResourceHelper.WORKSPACE_NAME, updateResponseValue.Data.Name);
             Assert.AreEqual(ResourceHelper.RESOURCE_LOCATION, updateResponseValue.Data.Location.Name);
-            Assert.AreEqual(ProvisioningState.Succeeded, updateResponseValue.Data.ProvisioningState);
+            Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, updateResponseValue.Data.ProvisioningState);
             Assert.IsTrue(updateResponseValue.Data.RegionalAffinity == EnablementStatus.Enabled);
 
             //DELETE API

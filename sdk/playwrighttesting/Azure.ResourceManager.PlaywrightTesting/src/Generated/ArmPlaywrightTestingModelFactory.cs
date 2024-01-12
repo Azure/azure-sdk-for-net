@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPlaywrightTestingModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.AccountData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <param name="scalableExecution"> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </param>
         /// <param name="reporting"> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="PlaywrightTesting.AccountData"/> instance for mocking. </returns>
-        public static AccountData AccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Uri dashboardUri = null, EnablementStatus? regionalAffinity = null, EnablementStatus? scalableExecution = null, EnablementStatus? reporting = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="PlaywrightTesting.PlaywrightTestingAccountData"/> instance for mocking. </returns>
+        public static PlaywrightTestingAccountData PlaywrightTestingAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Uri dashboardUri = null, EnablementStatus? regionalAffinity = null, EnablementStatus? scalableExecution = null, EnablementStatus? reporting = null, PlaywrightTestingProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AccountData(id, name, resourceType, systemData, tags, location, dashboardUri, regionalAffinity, scalableExecution, reporting, provisioningState, serializedAdditionalRawData: null);
+            return new PlaywrightTestingAccountData(id, name, resourceType, systemData, tags, location, dashboardUri, regionalAffinity, scalableExecution, reporting, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.QuotumData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="freeTrial"> The free-trial quota. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="PlaywrightTesting.QuotumData"/> instance for mocking. </returns>
-        public static QuotumData QuotumData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FreeTrialProperties freeTrial = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightTestingQuotaData PlaywrightTestingQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FreeTrialProperties freeTrial = null, PlaywrightTestingProvisioningState? provisioningState = null)
         {
-            return new QuotumData(id, name, resourceType, systemData, freeTrial, provisioningState, serializedAdditionalRawData: null);
+            return new PlaywrightTestingQuotaData(id, name, resourceType, systemData, freeTrial, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

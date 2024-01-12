@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: PlaywrightTesting
 namespace: Azure.ResourceManager.PlaywrightTesting
-require: https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/playwrighttesting/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1285ef63d84c4bf3dfe42b514451822e1dd6e8fc/specification/playwrighttesting/resource-manager/readme.md
+#tag: package-2023-10-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +21,14 @@ use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
+
+rename-mapping:
+  Quota: PlaywrightTestingQuotas
+
+prepend-rp-prefix:
+  - QuotaNames
+  - Account
+  - ProvisioningState
 
 format-by-name-rules:
   'tenantId': 'uuid'

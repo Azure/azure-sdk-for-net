@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
 {
     public class PlaywrightTestingQuotaOperations : PlaywrightTestingManagementTestBase
     {
-        private QuotumCollection _quotaCollection { get; set; }
-        private QuotumResource _quotaResource { get; set; }
-        private QuotumData _quotaData { get; set; }
+        private PlaywrightTestingQuotaCollection _quotaCollection { get; set; }
+        private PlaywrightTestingQuotaResource _quotaResource { get; set; }
+        private PlaywrightTestingQuotaData _quotaData { get; set; }
 
         public PlaywrightTestingQuotaOperations(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             }
 
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            _quotaCollection = subscription.GetQuota(ResourceHelper.RESOURCE_LOCATION);
+            _quotaCollection = subscription.GetAllPlaywrightTestingQuota(ResourceHelper.RESOURCE_LOCATION);
         }
 
         [OneTimeTearDown]
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
         public async Task QuotaOperationTests()
         {
             //GET API
-            Response<QuotumResource> getResponse = await _quotaCollection.GetAsync(QuotaName.ScalableExecution);
+            Response<PlaywrightTestingQuotaResource> getResponse = await _quotaCollection.GetAsync(PlaywrightTestingQuotaName.ScalableExecution);
             Assert.NotNull(getResponse);
             Assert.IsNotNull(getResponse.Value);
             Assert.IsNotNull(getResponse.Value.Data);
             Assert.IsNotNull(getResponse.Value.Data.Name);
-            Assert.AreEqual(QuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
+            Assert.AreEqual(PlaywrightTestingQuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
             Assert.IsNotNull(getResponse.Value.Data.FreeTrial);
             Assert.IsNotNull(getResponse.Value.Data.FreeTrial.AccountId);
 
             //List API
-            List<QuotumResource> listResponse = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
+            List<PlaywrightTestingQuotaResource> listResponse = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(listResponse);
-            foreach (QuotumResource resource in listResponse)
+            foreach (PlaywrightTestingQuotaResource resource in listResponse)
             {
                 Assert.IsTrue(resource.HasData);
                 Assert.IsNotNull(resource.Data);

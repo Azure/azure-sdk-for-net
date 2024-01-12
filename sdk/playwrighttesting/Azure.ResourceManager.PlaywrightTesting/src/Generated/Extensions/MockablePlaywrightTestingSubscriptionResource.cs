@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockablePlaywrightTestingSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _accountClientDiagnostics;
-        private AccountsRestOperations _accountRestClient;
+        private ClientDiagnostics _playwrightTestingAccountAccountsClientDiagnostics;
+        private AccountsRestOperations _playwrightTestingAccountAccountsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePlaywrightTestingSubscriptionResource"/> class for mocking. </summary>
         protected MockablePlaywrightTestingSubscriptionResource()
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         {
         }
 
-        private ClientDiagnostics AccountClientDiagnostics => _accountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", AccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations AccountRestClient => _accountRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccountResource.ResourceType));
+        private ClientDiagnostics PlaywrightTestingAccountAccountsClientDiagnostics => _playwrightTestingAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", PlaywrightTestingAccountResource.ResourceType.Namespace, Diagnostics);
+        private AccountsRestOperations PlaywrightTestingAccountAccountsRestClient => _playwrightTestingAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PlaywrightTestingAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of QuotumResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of PlaywrightTestingQuotaResources in the SubscriptionResource. </summary>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
-        /// <returns> An object representing collection of QuotumResources and their operations over a QuotumResource. </returns>
-        public virtual QuotumCollection GetQuota(AzureLocation location)
+        /// <returns> An object representing collection of PlaywrightTestingQuotaResources and their operations over a PlaywrightTestingQuotaResource. </returns>
+        public virtual PlaywrightTestingQuotaCollection GetAllPlaywrightTestingQuota(AzureLocation location)
         {
-            return new QuotumCollection(Client, Id, location);
+            return new PlaywrightTestingQuotaCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotumResource>> GetQuotumAsync(AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
         {
-            return await GetQuota(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAllPlaywrightTestingQuota(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="name"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<QuotumResource> GetQuotum(AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
         {
-            return GetQuota(location).Get(name, cancellationToken);
+            return GetAllPlaywrightTestingQuota(location).Get(name, cancellationToken);
         }
 
         /// <summary>
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PlaywrightTestingAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PlaywrightTestingAccountResource> GetPlaywrightTestingAccountsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AccountResource(Client, AccountData.DeserializeAccountData(e)), AccountClientDiagnostics, Pipeline, "MockablePlaywrightTestingSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PlaywrightTestingAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlaywrightTestingAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingAccountResource(Client, PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(e)), PlaywrightTestingAccountAccountsClientDiagnostics, Pipeline, "MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PlaywrightTestingAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PlaywrightTestingAccountResource> GetPlaywrightTestingAccounts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AccountResource(Client, AccountData.DeserializeAccountData(e)), AccountClientDiagnostics, Pipeline, "MockablePlaywrightTestingSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PlaywrightTestingAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlaywrightTestingAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingAccountResource(Client, PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(e)), PlaywrightTestingAccountAccountsClientDiagnostics, Pipeline, "MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

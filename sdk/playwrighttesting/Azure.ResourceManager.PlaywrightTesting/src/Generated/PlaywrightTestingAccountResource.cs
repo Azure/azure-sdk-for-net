@@ -20,14 +20,14 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PlaywrightTesting
 {
     /// <summary>
-    /// A Class representing an Account along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AccountResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAccount method.
+    /// A Class representing a PlaywrightTestingAccount along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlaywrightTestingAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPlaywrightTestingAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPlaywrightTestingAccount method.
     /// </summary>
-    public partial class AccountResource : ArmResource
+    public partial class PlaywrightTestingAccountResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AccountResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PlaywrightTestingAccountResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="name"> The name. </param>
@@ -37,35 +37,35 @@ namespace Azure.ResourceManager.PlaywrightTesting
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _accountClientDiagnostics;
-        private readonly AccountsRestOperations _accountRestClient;
-        private readonly AccountData _data;
+        private readonly ClientDiagnostics _playwrightTestingAccountAccountsClientDiagnostics;
+        private readonly AccountsRestOperations _playwrightTestingAccountAccountsRestClient;
+        private readonly PlaywrightTestingAccountData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzurePlaywrightService/accounts";
 
-        /// <summary> Initializes a new instance of the <see cref="AccountResource"/> class for mocking. </summary>
-        protected AccountResource()
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountResource"/> class for mocking. </summary>
+        protected PlaywrightTestingAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AccountResource(ArmClient client, AccountData data) : this(client, data.Id)
+        internal PlaywrightTestingAccountResource(ArmClient client, PlaywrightTestingAccountData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PlaywrightTestingAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _accountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string accountApiVersion);
-            _accountRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, accountApiVersion);
+            _playwrightTestingAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string playwrightTestingAccountAccountsApiVersion);
+            _playwrightTestingAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightTestingAccountAccountsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AccountData Data
+        public virtual PlaywrightTestingAccountData Data
         {
             get
             {
@@ -109,21 +109,21 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.Get");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.Get");
             scope.Start();
             try
             {
-                var response = await _accountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,21 +149,21 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccountResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.Get");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.Get");
             scope.Start();
             try
             {
-                var response = _accountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _playwrightTestingAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.Delete");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = await _accountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PlaywrightTestingArmOperation(_accountClientDiagnostics, Pipeline, _accountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _playwrightTestingAccountAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new PlaywrightTestingArmOperation(_playwrightTestingAccountAccountsClientDiagnostics, Pipeline, _playwrightTestingAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.Delete");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = _accountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PlaywrightTestingArmOperation(_accountClientDiagnostics, Pipeline, _accountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _playwrightTestingAccountAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new PlaywrightTestingArmOperation(_playwrightTestingAccountAccountsClientDiagnostics, Pipeline, _playwrightTestingAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -273,23 +273,23 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AccountResource>> UpdateAsync(AccountPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> UpdateAsync(PlaywrightTestingAccountPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.Update");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.Update");
             scope.Start();
             try
             {
-                var response = await _accountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                var response = await _playwrightTestingAccountAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -315,23 +315,23 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AccountResource> Update(AccountPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> Update(PlaywrightTestingAccountPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.Update");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.Update");
             scope.Start();
             try
             {
-                var response = _accountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                var response = _playwrightTestingAccountAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,12 +365,12 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.AddTag");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.AddTag");
             scope.Start();
             try
             {
@@ -379,13 +379,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _accountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _playwrightTestingAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new PlaywrightTestingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AccountPatch();
+                    var patch = new PlaywrightTestingAccountPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -427,12 +427,12 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.AddTag");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.AddTag");
             scope.Start();
             try
             {
@@ -441,13 +441,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _accountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _playwrightTestingAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new PlaywrightTestingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AccountPatch();
+                    var patch = new PlaywrightTestingAccountPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -481,18 +481,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.SetTags");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.SetTags");
             scope.Start();
             try
             {
@@ -502,13 +502,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _accountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _playwrightTestingAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new PlaywrightTestingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AccountPatch();
+                    var patch = new PlaywrightTestingAccountPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -538,18 +538,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.SetTags");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.SetTags");
             scope.Start();
             try
             {
@@ -559,13 +559,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _accountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _playwrightTestingAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new PlaywrightTestingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AccountPatch();
+                    var patch = new PlaywrightTestingAccountPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -595,18 +595,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.RemoveTag");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.RemoveTag");
             scope.Start();
             try
             {
@@ -615,13 +615,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _accountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _playwrightTestingAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new PlaywrightTestingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AccountPatch();
+                    var patch = new PlaywrightTestingAccountPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -655,18 +655,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountResource.RemoveTag");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountResource.RemoveTag");
             scope.Start();
             try
             {
@@ -675,13 +675,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _accountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _playwrightTestingAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new PlaywrightTestingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AccountPatch();
+                    var patch = new PlaywrightTestingAccountPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

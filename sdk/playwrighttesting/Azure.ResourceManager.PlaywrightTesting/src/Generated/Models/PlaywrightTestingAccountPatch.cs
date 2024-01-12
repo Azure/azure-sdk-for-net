@@ -8,16 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PlaywrightTesting.Models;
 
-namespace Azure.ResourceManager.PlaywrightTesting
+namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary>
-    /// A class representing the Account data model.
-    /// An account resource
-    /// </summary>
-    public partial class AccountData : TrackedResourceData
+    /// <summary> The type used for update operations of the Account. </summary>
+    public partial class PlaywrightTestingAccountPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,49 +46,34 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public AccountData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
+        public PlaywrightTestingAccountPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="dashboardUri"> The Playwright testing dashboard URI for the account resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="regionalAffinity"> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
         /// <param name="scalableExecution"> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </param>
         /// <param name="reporting"> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri dashboardUri, EnablementStatus? regionalAffinity, EnablementStatus? scalableExecution, EnablementStatus? reporting, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, EnablementStatus? regionalAffinity, EnablementStatus? scalableExecution, EnablementStatus? reporting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DashboardUri = dashboardUri;
+            Tags = tags;
             RegionalAffinity = regionalAffinity;
             ScalableExecution = scalableExecution;
             Reporting = reporting;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountData"/> for deserialization. </summary>
-        internal AccountData()
-        {
-        }
-
-        /// <summary> The Playwright testing dashboard URI for the account resource. </summary>
-        public Uri DashboardUri { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </summary>
         public EnablementStatus? RegionalAffinity { get; set; }
         /// <summary> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </summary>
         public EnablementStatus? ScalableExecution { get; set; }
         /// <summary> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </summary>
         public EnablementStatus? Reporting { get; set; }
-        /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
     }
 }

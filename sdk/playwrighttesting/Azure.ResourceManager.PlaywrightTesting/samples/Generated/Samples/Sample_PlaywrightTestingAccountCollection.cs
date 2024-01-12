@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
-    public partial class Sample_AccountCollection
+    public partial class Sample_PlaywrightTestingAccountCollection
     {
         // Accounts_ListByResourceGroup
         [NUnit.Framework.Test]
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PlaywrightTestingAccountResource
+            PlaywrightTestingAccountCollection collection = resourceGroupResource.GetPlaywrightTestingAccounts();
 
             // invoke the operation and iterate over the result
-            await foreach (AccountResource item in collection.GetAllAsync())
+            await foreach (PlaywrightTestingAccountResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountData resourceData = item.Data;
+                PlaywrightTestingAccountData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PlaywrightTestingAccountResource
+            PlaywrightTestingAccountCollection collection = resourceGroupResource.GetPlaywrightTestingAccounts();
 
             // invoke the operation
             string name = "myPlaywrightAccount";
-            AccountResource result = await collection.GetAsync(name);
+            PlaywrightTestingAccountResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PlaywrightTestingAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PlaywrightTestingAccountResource
+            PlaywrightTestingAccountCollection collection = resourceGroupResource.GetPlaywrightTestingAccounts();
 
             // invoke the operation
             string name = "myPlaywrightAccount";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PlaywrightTestingAccountResource
+            PlaywrightTestingAccountCollection collection = resourceGroupResource.GetPlaywrightTestingAccounts();
 
             // invoke the operation
             string name = "myPlaywrightAccount";
-            NullableResponse<AccountResource> response = await collection.GetIfExistsAsync(name);
-            AccountResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PlaywrightTestingAccountResource> response = await collection.GetIfExistsAsync(name);
+            PlaywrightTestingAccountResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountData resourceData = result.Data;
+                PlaywrightTestingAccountData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PlaywrightTestingAccountResource
+            PlaywrightTestingAccountCollection collection = resourceGroupResource.GetPlaywrightTestingAccounts();
 
             // invoke the operation
             string name = "myPlaywrightAccount";
-            AccountData data = new AccountData(new AzureLocation("westus"))
+            PlaywrightTestingAccountData data = new PlaywrightTestingAccountData(new AzureLocation("westus"))
             {
                 RegionalAffinity = EnablementStatus.Enabled,
                 Tags =
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
 ["Team"] = "Dev Exp",
 },
             };
-            ArmOperation<AccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            AccountResource result = lro.Value;
+            ArmOperation<PlaywrightTestingAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            PlaywrightTestingAccountResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PlaywrightTestingAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

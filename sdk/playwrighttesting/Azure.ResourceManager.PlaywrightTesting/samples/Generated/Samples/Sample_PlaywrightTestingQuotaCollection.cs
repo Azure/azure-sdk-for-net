@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
-    public partial class Sample_QuotumCollection
+    public partial class Sample_PlaywrightTestingQuotaCollection
     {
         // Quotas_ListBySubscription
         [NUnit.Framework.Test]
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this QuotumResource
+            // get the collection of this PlaywrightTestingQuotaResource
             AzureLocation location = new AzureLocation("eastus");
-            QuotumCollection collection = subscriptionResource.GetQuota(location);
+            PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation and iterate over the result
-            await foreach (QuotumResource item in collection.GetAllAsync())
+            await foreach (PlaywrightTestingQuotaResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                QuotumData resourceData = item.Data;
+                PlaywrightTestingQuotaData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this QuotumResource
+            // get the collection of this PlaywrightTestingQuotaResource
             AzureLocation location = new AzureLocation("eastus");
-            QuotumCollection collection = subscriptionResource.GetQuota(location);
+            PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            QuotaName name = QuotaName.ScalableExecution;
-            QuotumResource result = await collection.GetAsync(name);
+            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
+            PlaywrightTestingQuotaResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            QuotumData resourceData = result.Data;
+            PlaywrightTestingQuotaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this QuotumResource
+            // get the collection of this PlaywrightTestingQuotaResource
             AzureLocation location = new AzureLocation("eastus");
-            QuotumCollection collection = subscriptionResource.GetQuota(location);
+            PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            QuotaName name = QuotaName.ScalableExecution;
+            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
             bool result = await collection.ExistsAsync(name);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this QuotumResource
+            // get the collection of this PlaywrightTestingQuotaResource
             AzureLocation location = new AzureLocation("eastus");
-            QuotumCollection collection = subscriptionResource.GetQuota(location);
+            PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            QuotaName name = QuotaName.ScalableExecution;
-            NullableResponse<QuotumResource> response = await collection.GetIfExistsAsync(name);
-            QuotumResource result = response.HasValue ? response.Value : null;
+            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
+            NullableResponse<PlaywrightTestingQuotaResource> response = await collection.GetIfExistsAsync(name);
+            PlaywrightTestingQuotaResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                QuotumData resourceData = result.Data;
+                PlaywrightTestingQuotaData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

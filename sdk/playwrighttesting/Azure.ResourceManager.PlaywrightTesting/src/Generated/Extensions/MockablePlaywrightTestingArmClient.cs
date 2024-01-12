@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountResource.CreateResourceIdentifier" /> to create an <see cref="AccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PlaywrightTestingAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlaywrightTestingAccountResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightTestingAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountResource"/> object. </returns>
-        public virtual AccountResource GetAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlaywrightTestingAccountResource"/> object. </returns>
+        public virtual PlaywrightTestingAccountResource GetPlaywrightTestingAccountResource(ResourceIdentifier id)
         {
-            AccountResource.ValidateResourceId(id);
-            return new AccountResource(Client, id);
+            PlaywrightTestingAccountResource.ValidateResourceId(id);
+            return new PlaywrightTestingAccountResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="QuotumResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotumResource.CreateResourceIdentifier" /> to create a <see cref="QuotumResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PlaywrightTestingQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlaywrightTestingQuotaResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightTestingQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotumResource"/> object. </returns>
-        public virtual QuotumResource GetQuotumResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlaywrightTestingQuotaResource"/> object. </returns>
+        public virtual PlaywrightTestingQuotaResource GetPlaywrightTestingQuotaResource(ResourceIdentifier id)
         {
-            QuotumResource.ValidateResourceId(id);
-            return new QuotumResource(Client, id);
+            PlaywrightTestingQuotaResource.ValidateResourceId(id);
+            return new PlaywrightTestingQuotaResource(Client, id);
         }
     }
 }

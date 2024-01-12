@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, QuotaName name)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QuotumData>> GetAsync(string subscriptionId, AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
+        public async Task<Response<PlaywrightTestingQuotaData>> GetAsync(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -145,13 +145,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 case 200:
                     {
-                        QuotumData value = default;
+                        PlaywrightTestingQuotaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QuotumData.DeserializeQuotumData(document.RootElement);
+                        value = PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((QuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightTestingQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QuotumData> Get(string subscriptionId, AzureLocation location, QuotaName name, CancellationToken cancellationToken = default)
+        public Response<PlaywrightTestingQuotaData> Get(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 case 200:
                     {
-                        QuotumData value = default;
+                        PlaywrightTestingQuotaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QuotumData.DeserializeQuotumData(document.RootElement);
+                        value = PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((QuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightTestingQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.PlaywrightTesting.Models;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
-    public partial class Sample_QuotumResource
+    public partial class Sample_PlaywrightTestingQuotaResource
     {
         // Quotas_Get
         [NUnit.Framework.Test]
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this QuotumResource created on azure
-            // for more information of creating QuotumResource, please refer to the document of QuotumResource
+            // this example assumes you already have this PlaywrightTestingQuotaResource created on azure
+            // for more information of creating PlaywrightTestingQuotaResource, please refer to the document of PlaywrightTestingQuotaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
-            QuotaName name = QuotaName.ScalableExecution;
-            ResourceIdentifier quotumResourceId = QuotumResource.CreateResourceIdentifier(subscriptionId, location, name);
-            QuotumResource quotum = client.GetQuotumResource(quotumResourceId);
+            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
+            ResourceIdentifier playwrightTestingQuotaResourceId = PlaywrightTestingQuotaResource.CreateResourceIdentifier(subscriptionId, location, name);
+            PlaywrightTestingQuotaResource playwrightTestingQuota = client.GetPlaywrightTestingQuotaResource(playwrightTestingQuotaResourceId);
 
             // invoke the operation
-            QuotumResource result = await quotum.GetAsync();
+            PlaywrightTestingQuotaResource result = await playwrightTestingQuota.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            QuotumData resourceData = result.Data;
+            PlaywrightTestingQuotaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

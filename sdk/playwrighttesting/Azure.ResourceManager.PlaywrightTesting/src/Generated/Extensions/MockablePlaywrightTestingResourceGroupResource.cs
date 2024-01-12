@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public virtual AccountCollection GetAccounts()
+        /// <summary> Gets a collection of PlaywrightTestingAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PlaywrightTestingAccountResources and their operations over a PlaywrightTestingAccountResource. </returns>
+        public virtual PlaywrightTestingAccountCollection GetPlaywrightTestingAccounts()
         {
-            return GetCachedClient(client => new AccountCollection(client, Id));
+            return GetCachedClient(client => new PlaywrightTestingAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountResource>> GetAccountAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> GetPlaywrightTestingAccountAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetAccounts().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetPlaywrightTestingAccounts().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccountResource> GetAccount(string name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> GetPlaywrightTestingAccount(string name, CancellationToken cancellationToken = default)
         {
-            return GetAccounts().Get(name, cancellationToken);
+            return GetPlaywrightTestingAccounts().Get(name, cancellationToken);
         }
     }
 }

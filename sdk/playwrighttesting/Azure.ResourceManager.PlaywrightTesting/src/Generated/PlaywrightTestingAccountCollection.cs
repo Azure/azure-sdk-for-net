@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PlaywrightTesting
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AccountResource"/> and their operations.
-    /// Each <see cref="AccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="AccountCollection"/> instance call the GetAccounts method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="PlaywrightTestingAccountResource"/> and their operations.
+    /// Each <see cref="PlaywrightTestingAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PlaywrightTestingAccountCollection"/> instance call the GetPlaywrightTestingAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AccountCollection : ArmCollection, IEnumerable<AccountResource>, IAsyncEnumerable<AccountResource>
+    public partial class PlaywrightTestingAccountCollection : ArmCollection, IEnumerable<PlaywrightTestingAccountResource>, IAsyncEnumerable<PlaywrightTestingAccountResource>
     {
-        private readonly ClientDiagnostics _accountClientDiagnostics;
-        private readonly AccountsRestOperations _accountRestClient;
+        private readonly ClientDiagnostics _playwrightTestingAccountAccountsClientDiagnostics;
+        private readonly AccountsRestOperations _playwrightTestingAccountAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AccountCollection"/> class for mocking. </summary>
-        protected AccountCollection()
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountCollection"/> class for mocking. </summary>
+        protected PlaywrightTestingAccountCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PlaywrightTestingAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _accountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", AccountResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AccountResource.ResourceType, out string accountApiVersion);
-            _accountRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, accountApiVersion);
+            _playwrightTestingAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", PlaywrightTestingAccountResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PlaywrightTestingAccountResource.ResourceType, out string playwrightTestingAccountAccountsApiVersion);
+            _playwrightTestingAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightTestingAccountAccountsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AccountData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PlaywrightTestingAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, PlaywrightTestingAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.CreateOrUpdate");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _accountRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PlaywrightTestingArmOperation<AccountResource>(new AccountOperationSource(Client), _accountClientDiagnostics, Pipeline, _accountRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _playwrightTestingAccountAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new PlaywrightTestingArmOperation<PlaywrightTestingAccountResource>(new PlaywrightTestingAccountOperationSource(Client), _playwrightTestingAccountAccountsClientDiagnostics, Pipeline, _playwrightTestingAccountAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AccountResource> CreateOrUpdate(WaitUntil waitUntil, string name, AccountData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PlaywrightTestingAccountResource> CreateOrUpdate(WaitUntil waitUntil, string name, PlaywrightTestingAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.CreateOrUpdate");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _accountRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new PlaywrightTestingArmOperation<AccountResource>(new AccountOperationSource(Client), _accountClientDiagnostics, Pipeline, _accountRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _playwrightTestingAccountAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
+                var operation = new PlaywrightTestingArmOperation<PlaywrightTestingAccountResource>(new PlaywrightTestingAccountOperationSource(Client), _playwrightTestingAccountAccountsClientDiagnostics, Pipeline, _playwrightTestingAccountAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,18 +177,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<AccountResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.Get");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = await _accountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,18 +222,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AccountResource> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.Get");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = _accountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _playwrightTestingAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -259,17 +259,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PlaywrightTestingAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PlaywrightTestingAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _accountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _accountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AccountResource(Client, AccountData.DeserializeAccountData(e)), _accountClientDiagnostics, Pipeline, "AccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingAccountResource(Client, PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(e)), _playwrightTestingAccountAccountsClientDiagnostics, Pipeline, "PlaywrightTestingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,17 +289,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PlaywrightTestingAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PlaywrightTestingAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _accountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _accountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AccountResource(Client, AccountData.DeserializeAccountData(e)), _accountClientDiagnostics, Pipeline, "AccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingAccountResource(Client, PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(e)), _playwrightTestingAccountAccountsClientDiagnostics, Pipeline, "PlaywrightTestingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.Exists");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _accountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,11 +374,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.Exists");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = _accountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _playwrightTestingAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,18 +413,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<AccountResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PlaywrightTestingAccountResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.GetIfExists");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _accountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<AccountResource>(response.GetRawResponse());
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PlaywrightTestingAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,18 +458,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<AccountResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PlaywrightTestingAccountResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _accountClientDiagnostics.CreateScope("AccountCollection.GetIfExists");
+            using var scope = _playwrightTestingAccountAccountsClientDiagnostics.CreateScope("PlaywrightTestingAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _accountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _playwrightTestingAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<AccountResource>(response.GetRawResponse());
-                return Response.FromValue(new AccountResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PlaywrightTestingAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
         }
 
-        IEnumerator<AccountResource> IEnumerable<AccountResource>.GetEnumerator()
+        IEnumerator<PlaywrightTestingAccountResource> IEnumerable<PlaywrightTestingAccountResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AccountResource> IAsyncEnumerable<AccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PlaywrightTestingAccountResource> IAsyncEnumerable<PlaywrightTestingAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
-    public partial class Sample_AccountResource
+    public partial class Sample_PlaywrightTestingAccountResource
     {
         // Accounts_ListBySubscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAccounts_AccountsListBySubscription()
+        public async Task GetPlaywrightTestingAccounts_AccountsListBySubscription()
         {
             // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_ListBySubscription.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AccountResource item in subscriptionResource.GetAccountsAsync())
+            await foreach (PlaywrightTestingAccountResource item in subscriptionResource.GetPlaywrightTestingAccountsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountData resourceData = item.Data;
+                PlaywrightTestingAccountData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PlaywrightTestingAccountResource created on azure
+            // for more information of creating PlaywrightTestingAccountResource, please refer to the document of PlaywrightTestingAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string name = "myPlaywrightAccount";
-            ResourceIdentifier accountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            AccountResource account = client.GetAccountResource(accountResourceId);
+            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
             // invoke the operation
-            AccountResource result = await account.GetAsync();
+            PlaywrightTestingAccountResource result = await playwrightTestingAccount.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PlaywrightTestingAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PlaywrightTestingAccountResource created on azure
+            // for more information of creating PlaywrightTestingAccountResource, please refer to the document of PlaywrightTestingAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string name = "myPlaywrightAccount";
-            ResourceIdentifier accountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            AccountResource account = client.GetAccountResource(accountResourceId);
+            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
             // invoke the operation
-            AccountPatch patch = new AccountPatch()
+            PlaywrightTestingAccountPatch patch = new PlaywrightTestingAccountPatch()
             {
                 Tags =
 {
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
 },
                 RegionalAffinity = EnablementStatus.Enabled,
             };
-            AccountResource result = await account.UpdateAsync(patch);
+            PlaywrightTestingAccountResource result = await playwrightTestingAccount.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PlaywrightTestingAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PlaywrightTestingAccountResource created on azure
+            // for more information of creating PlaywrightTestingAccountResource, please refer to the document of PlaywrightTestingAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string name = "myPlaywrightAccount";
-            ResourceIdentifier accountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            AccountResource account = client.GetAccountResource(accountResourceId);
+            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
             // invoke the operation
-            await account.DeleteAsync(WaitUntil.Completed);
+            await playwrightTestingAccount.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

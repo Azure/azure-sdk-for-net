@@ -14,10 +14,10 @@ using Azure.ResourceManager.PlaywrightTesting.Models;
 namespace Azure.ResourceManager.PlaywrightTesting
 {
     /// <summary>
-    /// A class representing the Quotum data model.
+    /// A class representing the PlaywrightTestingQuota data model.
     /// A quota resource
     /// </summary>
-    public partial class QuotumData : ResourceData
+    public partial class PlaywrightTestingQuotaData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QuotumData"/>. </summary>
-        public QuotumData()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
+        public PlaywrightTestingQuotaData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotumData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="freeTrial"> The free-trial quota. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotumData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FreeTrialProperties freeTrial, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlaywrightTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FreeTrialProperties freeTrial, PlaywrightTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             FreeTrial = freeTrial;
             ProvisioningState = provisioningState;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <summary> The free-trial quota. </summary>
         public FreeTrialProperties FreeTrial { get; set; }
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PlaywrightTestingProvisioningState? ProvisioningState { get; }
     }
 }
