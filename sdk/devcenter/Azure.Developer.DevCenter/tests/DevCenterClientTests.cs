@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    //[PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
+    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class DevCenterClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private DevCenterClient _devCenterClient;

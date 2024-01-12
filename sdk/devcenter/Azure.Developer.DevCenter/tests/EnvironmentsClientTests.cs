@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    //[PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
+    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class EnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private const string EnvName = "DevTestEnv";
@@ -146,7 +147,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             DevCenterEnvironment environment = await GetEnvironmentAsync();
 
-            if (environment == null)
+            if (environment == default)
             {
                 await SetUpEnvironmentAsync();
                 environment = await GetEnvironmentAsync();
@@ -207,10 +208,18 @@ namespace Azure.Developer.DevCenter.Tests
 
         private async Task<DevCenterEnvironment> GetEnvironmentAsync()
         {
-            return (await _environmentsClient.GetEnvironmentAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                EnvName))?.Value;
+            try
+            {
+                return (await _environmentsClient.GetEnvironmentAsync(
+                    TestEnvironment.ProjectName,
+                    TestEnvironment.MeUserId,
+                    EnvName)).Value;
+            }
+            // if environment doesn't exist Get Environment will throw an error
+            catch
+            {
+                return default;
+            }
         }
 
         private async Task<List<DevCenterEnvironment>> GetEnvironmentsAsync()
@@ -242,9 +251,7 @@ namespace Azure.Developer.DevCenter.Tests
                 EnvName,
                 environment);
 
-            environment = await environmentCreateOperation.WaitForCompletionAsync();
-
-            EnvironmentProvisioningState? provisioningState = environment.ProvisioningState;
+            EnvironmentProvisioningState? provisioningState = environmentCreateOperation.Value.ProvisioningState;
             Assert.IsTrue(provisioningState.Equals(EnvironmentProvisioningState.Succeeded));
         }
 
@@ -256,9 +263,21 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.MeUserId,
                 EnvName);
 
-            Response response = await environmentDeleteOperation.WaitForCompletionResponseAsync();
-            var status = response.Status;
-            TestContext.WriteLine($"Completed environment deletion with status {status}");
+            CheckLROSucceeded(environmentDeleteOperation);
+        }
+
+        private void CheckLROSucceeded(Operation finalOperationResponse)
+        {
+            var responseData = finalOperationResponse.GetRawResponse().Content;
+            var response = JsonDocument.Parse(responseData).RootElement;
+
+            if (!response.TryGetProperty("status", out var responseStatusJson))
+            {
+                FailDueToMissingProperty("status");
+            }
+
+            var status = responseStatusJson.ToString();
+            Assert.True(status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
         }
 
         private void FailDueToMissingProperty(string propertyName)
