@@ -8,9 +8,6 @@ parameters:
 - name: ArtifactLocation
   type: string
   default: ''
-- name: GitHubSpecRepoPat
-  type: string
-  default: ''
 
 steps:
   - task: Powershell@2
@@ -24,3 +21,5 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify REST API spec location for "${{ parameters.PackageName }}"
+    env:
+      GH_TOKEN: $(azuresdk-github-pat)

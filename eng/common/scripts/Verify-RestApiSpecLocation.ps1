@@ -15,7 +15,7 @@
   The location of the generated artifact for the package.
 
 .PARAMETER GitHubPat
-  The GitHub personal access token used for authentication.
+  The GitHub personal access token used for authentication. By default, it will use the environment variable GH_TOKEN.
 
 .PARAMETER PackageInfoDirectory
   The directory path where the package information is stored.
@@ -35,13 +35,19 @@ param (
   [ValidateNotNullOrEmpty()]
   [string] $ArtifactLocation,
   [Parameter(Position = 2)]
-  [ValidateNotNullOrEmpty()]
-  [string]$GitHubPat,
+  [string]$GitHubPat = $($env:GH_TOKEN),
   [string]$PackageInfoDirectory
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers/PSModule-Helpers.ps1)
+
+# Check if github token is set
+if(-not $GitHubPat) {
+  LogError "GitHubPat is not set. Please set the environment variable GH_TOKEN or pass the GitHubPat parameter."
+  exit 1
+}
+
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 # This function is used to verify the 'require' and 'input-file' settings in autorest.md point to the main branch of Azure/azure-rest-api-specs repository
@@ -119,11 +125,11 @@ function Verify-YamlContent([string]$markdownContent) {
           $requireValue = $yamlobj["require"]
           $inputFileValue = $yamlobj["input-file"]
           if ($requireValue) {
-            LogDebug "require is set as:$requireValue"
+            LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'require' is set as:$requireValue"
             Verify-Url $requireValue
           }
           elseif ($inputFileValue) {
-            LogDebug "input-file is set as:$inputFileValue"
+            LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'input-file' is set as:$inputFileValue"
             foreach($inputFile in $inputFileValue) {
               Verify-Url $inputFile
             }
@@ -134,11 +140,11 @@ function Verify-YamlContent([string]$markdownContent) {
               $requireValue = $batch["require"]
               $inputFileValue = $batch["input-file"]
               if ($requireValue) {
-                LogDebug "require is set as:$requireValue"
+                LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'require' is set as:$requireValue"
                 Verify-Url $requireValue
               }
               elseif ($inputFileValue) {
-                LogDebug "input-file is set as:$inputFileValue"
+                LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'input-file' is set as:$inputFileValue"
                 foreach($inputFile in $inputFileValue) {
                   Verify-Url $inputFile
                 }
@@ -166,7 +172,7 @@ function Verify-PackageVersion() {
       LogError "The function for 'FindArtifactForApiReviewFn' was not found.`
       Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
       See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
-      exit(1)
+      exit 1
     }
     if (-not $PackageInfoDirectory)
     {
@@ -205,19 +211,19 @@ function Verify-PackageVersion() {
         # Ignore the validation if the package is not GA version
         if ($version.IsPrerelease) {
           Write-Host "ServiceDir:$ServiceDirectory, Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version is a prerelease version and the validation of spec location is ignored."
-          exit(0)
+          exit 0
         }
         $continueValidation = $true
       }
     }
     if($continueValidation -eq $false) {
       Write-Host "ServiceDir:$ServiceDirectory, no package info is found for package $PackageName, the validation of spec location is ignored."
-      exit(0)
+      exit 0
     }
   }
   catch {
     LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to retrieve package and validate package version with exception:`n$_ "
-    exit(1)
+    exit 1
   }
 }
 
