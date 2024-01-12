@@ -244,7 +244,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
+        public ResponseBufferingPolicy() { }
         public static bool GetBufferingEnabled(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public static System.TimeSpan? GetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }

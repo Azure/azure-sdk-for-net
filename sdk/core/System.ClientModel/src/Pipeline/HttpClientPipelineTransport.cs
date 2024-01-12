@@ -39,11 +39,14 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     private static HttpClient CreateDefaultClient()
     {
-        // TODO:
-        //   - SSL settings?
-        //   - Proxy settings?
-        //   - Cookies?
-        //   - MaxConnectionsPerServer?  PooledConnectionLifetime?
+        // The following settings are added in Azure.Core and are not included
+        // in System.ClientModel.  If needed, we will migrate them to ClientModel
+        // over time.
+        //   - SSL settings
+        //   - Proxy settings
+        //   - Cookies
+        //   - MaxConnectionsPerServer
+        //   - PooledConnectionLifetime
 
         HttpClientHandler handler = new HttpClientHandler()
         {
@@ -163,10 +166,6 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         // We set derived values on the MessageResponse here, including Content and IsError
         // to ensure these things happen in the transport.  If derived implementations need
         // to override these default transport values, they can do so in pipeline policies.
-
-        // TODO: a possible alternative is to make instantiating the Response a specific
-        // extensibilty point and let OnReceivedResponse enable transport-specific logic.
-        // Consider which is preferred as part of holistic extensibility-point review.
         if (contentStream is not null)
         {
             message.Response.ContentStream = contentStream;

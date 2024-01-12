@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
 
         public ResponseBodyPolicy(TimeSpan networkTimeout)
         {
-            _policy = new ResponseBufferingPolicy(networkTimeout);
+            _policy = new ResponseBufferingPolicy();
             _networkTimeout = networkTimeout;
         }
 
@@ -37,7 +37,8 @@ namespace Azure.Core.Pipeline
             // We either use the default that the policy was constructed with at
             // pipeline-creation time, or we get an override value from the message that
             // we use for the duration of this invocation only.
-            TimeSpan invocationNetworkTimeout = message.NetworkTimeout ?? _networkTimeout;
+            message.NetworkTimeout ??= _networkTimeout;
+            TimeSpan invocationNetworkTimeout = (TimeSpan)message.NetworkTimeout!;
 
             try
             {
