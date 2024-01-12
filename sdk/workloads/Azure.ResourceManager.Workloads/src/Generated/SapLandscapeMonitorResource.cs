@@ -199,7 +199,9 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapLandscapeMonitorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation(response);
+                var uri = _sapLandscapeMonitorRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new WorkloadsArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,7 +243,9 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapLandscapeMonitorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new WorkloadsArmOperation(response);
+                var uri = _sapLandscapeMonitorRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new WorkloadsArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -371,7 +375,9 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapLandscapeMonitorRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapLandscapeMonitorResource>(Response.FromValue(new SapLandscapeMonitorResource(Client, response), response.GetRawResponse()));
+                var uri = _sapLandscapeMonitorRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new WorkloadsArmOperation<SapLandscapeMonitorResource>(Response.FromValue(new SapLandscapeMonitorResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -417,7 +423,9 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapLandscapeMonitorRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapLandscapeMonitorResource>(Response.FromValue(new SapLandscapeMonitorResource(Client, response), response.GetRawResponse()));
+                var uri = _sapLandscapeMonitorRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new WorkloadsArmOperation<SapLandscapeMonitorResource>(Response.FromValue(new SapLandscapeMonitorResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
