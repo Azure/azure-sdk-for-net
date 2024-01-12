@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace System.ClientModel.Primitives;
 
-public abstract class MessageHeaders : IEnumerable<KeyValuePair<string, string>>
+public abstract class PipelineMessageHeaders : IEnumerable<KeyValuePair<string, string>>
 {
     public abstract void Add(string name, string value);
 
