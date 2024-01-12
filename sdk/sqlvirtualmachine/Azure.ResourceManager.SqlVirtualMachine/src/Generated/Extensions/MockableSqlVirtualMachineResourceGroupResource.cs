@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
@@ -130,6 +154,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetByManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -112,6 +112,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
@@ -157,6 +173,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,6 +215,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -224,6 +256,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_Unregister</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,6 +293,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_Unregister</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +332,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_ProviderPermissions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,7 +347,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<ProviderPermission> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ProviderPermission.DeserializeProviderPermission(e), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_ProviderPermissions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -312,7 +376,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<ProviderPermission> ProviderPermissions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ProviderPermission.DeserializeProviderPermission(e), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -325,6 +389,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_Register</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +429,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_Register</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The third party consent for S2S. </param>
@@ -388,6 +468,10 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ProviderResourceTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -396,7 +480,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<ProviderResourceType> GetProviderResourceTypesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ProviderResourceType.DeserializeProviderResourceType(e), _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -410,6 +494,10 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ProviderResourceTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -418,7 +506,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<ProviderResourceType> GetProviderResourceTypes(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ProviderResourceType.DeserializeProviderResourceType(e), _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
     }
 }

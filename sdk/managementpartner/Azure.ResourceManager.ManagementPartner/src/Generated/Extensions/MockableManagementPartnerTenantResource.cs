@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -85,6 +93,14 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +125,10 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +150,10 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
