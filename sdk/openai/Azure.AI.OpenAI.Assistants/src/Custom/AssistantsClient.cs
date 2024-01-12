@@ -757,7 +757,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateInternalListFilesRequest(string purpose, RequestContext context)
         => CreateRequestMessage("/files", content: null, context, RequestMethod.Get, ("purpose", purpose));
 
-    internal HttpMessage CreateCreateFileRequest(RequestContent content, RequestContext context)
+    internal HttpMessage CreateUploadFileRequest(RequestContent content, RequestContext context)
     {
         HttpMessage message = CreateRequestMessage("/files", content, context, RequestMethod.Post);
         (content as Azure.Core.MultipartFormDataContent).ApplyToRequest(message.Request);

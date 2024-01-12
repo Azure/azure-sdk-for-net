@@ -61,7 +61,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     protected string GetDeploymentOrModelName(OpenAIClientServiceTarget target)
         => target switch
         {
-            OpenAIClientServiceTarget.Azure => "gpt-4-1106",
+            OpenAIClientServiceTarget.Azure => "gpt-4-1106-preview",
             OpenAIClientServiceTarget.NonAzure => "gpt-4-1106-preview",
             _ => throw new NotImplementedException(),
         };
