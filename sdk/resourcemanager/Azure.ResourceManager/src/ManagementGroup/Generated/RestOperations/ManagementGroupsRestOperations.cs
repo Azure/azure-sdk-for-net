@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagementGroups
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string cacheControl, string skiptoken)
+        internal RequestUriBuilder CreateListRequestUri(string cacheControl, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             request.Uri = uri;
             if (cacheControl != null)
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.ManagementGroups
         ///
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ManagementGroupListResult>> ListAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupListResult>> ListAsync(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(cacheControl, skiptoken);
+            using var message = CreateListRequest(cacheControl, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.ManagementGroups
         ///
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ManagementGroupListResult> List(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupListResult> List(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(cacheControl, skiptoken);
+            using var message = CreateListRequest(cacheControl, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return uri;
         }
 
-        internal HttpMessage CreateGetDescendantsRequest(string groupId, string skiptoken, int? top)
+        internal HttpMessage CreateGetDescendantsRequest(string groupId, string skipToken, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -551,9 +551,9 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.AppendPath(groupId, true);
             uri.AppendPath("/descendants", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             if (top != null)
             {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.ManagementGroups
         ///
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
@@ -579,11 +579,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DescendantListResult>> GetDescendantsAsync(string groupId, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DescendantListResult>> GetDescendantsAsync(string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetDescendantsRequest(groupId, skiptoken, top);
+            using var message = CreateGetDescendantsRequest(groupId, skipToken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.ManagementGroups
         ///
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
@@ -613,11 +613,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DescendantListResult> GetDescendants(string groupId, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DescendantListResult> GetDescendants(string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetDescendantsRequest(groupId, skiptoken, top);
+            using var message = CreateGetDescendantsRequest(groupId, skipToken, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string cacheControl, string skiptoken)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string cacheControl, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string cacheControl, string skiptoken)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string cacheControl, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -741,18 +741,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ManagementGroupListResult>> ListNextPageAsync(string nextLink, string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupListResult>> ListNextPageAsync(string nextLink, string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
+            using var message = CreateListNextPageRequest(nextLink, cacheControl, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -774,18 +774,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ManagementGroupListResult> ListNextPage(string nextLink, string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupListResult> ListNextPage(string nextLink, string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
+            using var message = CreateListNextPageRequest(nextLink, cacheControl, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal RequestUriBuilder CreateGetDescendantsNextPageRequestUri(string nextLink, string groupId, string skiptoken, int? top)
+        internal RequestUriBuilder CreateGetDescendantsNextPageRequestUri(string nextLink, string groupId, string skipToken, int? top)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return uri;
         }
 
-        internal HttpMessage CreateGetDescendantsNextPageRequest(string nextLink, string groupId, string skiptoken, int? top)
+        internal HttpMessage CreateGetDescendantsNextPageRequest(string nextLink, string groupId, string skipToken, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
@@ -838,12 +838,12 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DescendantListResult>> GetDescendantsNextPageAsync(string nextLink, string groupId, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DescendantListResult>> GetDescendantsNextPageAsync(string nextLink, string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetDescendantsNextPageRequest(nextLink, groupId, skiptoken, top);
+            using var message = CreateGetDescendantsNextPageRequest(nextLink, groupId, skipToken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
@@ -874,12 +874,12 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DescendantListResult> GetDescendantsNextPage(string nextLink, string groupId, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DescendantListResult> GetDescendantsNextPage(string nextLink, string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetDescendantsNextPageRequest(nextLink, groupId, skiptoken, top);
+            using var message = CreateGetDescendantsNextPageRequest(nextLink, groupId, skipToken, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

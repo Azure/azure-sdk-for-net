@@ -107,7 +107,7 @@
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
-    <PackageReference Update="Azure.Core" Version="1.36.0" />
+    <PackageReference Update="Azure.Core" Version="1.37.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.31" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0-beta.4" />
@@ -127,7 +127,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.9.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.10.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.4" />
