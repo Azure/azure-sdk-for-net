@@ -27,7 +27,7 @@ function Get-ChangedServices {
         [string[]] $ChangedFiles
     )
     
-    $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([a-zA-Z\-]+)") { $matches[1] } } | Sort-Object -Unique
+    $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
 
     return $changedServices
 }
