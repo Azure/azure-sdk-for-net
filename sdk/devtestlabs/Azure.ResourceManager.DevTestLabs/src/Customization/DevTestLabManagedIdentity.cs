@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,12 +16,43 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// </summary>
     public partial class DevTestLabManagedIdentity
     {
-        /// <summary> Initializes a new instance of DevTestLabManagedIdentity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabManagedIdentity"/>. </summary>
         public DevTestLabManagedIdentity()
         {
         }
-
-        /// <summary> Initializes a new instance of DevTestLabManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabManagedIdentity"/>. </summary>
         /// <param name="managedIdentityType">
         /// Managed identity.
         /// Serialized Name: IdentityProperties.type
@@ -37,12 +69,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// The client secret URL of the identity.
         /// Serialized Name: IdentityProperties.clientSecretUrl
         /// </param>
-        internal DevTestLabManagedIdentity(ManagedServiceIdentityType managedIdentityType, Guid? principalId, Guid? tenantId, Uri clientSecretUri)
+        /// /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabManagedIdentity(ManagedServiceIdentityType managedIdentityType, Guid? principalId, Guid? tenantId, Uri clientSecretUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagedIdentityType = managedIdentityType;
             PrincipalId = principalId;
             TenantId = tenantId;
             ClientSecretUri = clientSecretUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
