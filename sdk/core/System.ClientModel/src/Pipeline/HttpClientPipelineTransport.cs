@@ -70,11 +70,9 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     protected sealed override void ProcessCore(PipelineMessage message)
     {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-
 #if NET6_0_OR_GREATER
 
-        ProcessSyncOrAsync(message, async: false).GetAwaiter().GetResult();
+        ProcessSyncOrAsync(message, async: false).EnsureCompleted();
 
 #else
 
@@ -82,12 +80,11 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         // This can cause deadlocks in applications when the threadpool gets saturated.
         // The resolution is for a customer to upgrade to a net6.0+ target,
         // where we are able to provide a code path that calls HttpClient native sync APIs.
+        // As such, the following call is intentionally blocking.
 
         ProcessSyncOrAsync(message, async: true).AsTask().GetAwaiter().GetResult();
 
 #endif
-
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
     protected sealed override async ValueTask ProcessCoreAsync(PipelineMessage message)
