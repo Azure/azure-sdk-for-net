@@ -130,6 +130,17 @@ public partial class OpenAIClient
         _isConfiguredForAzureOpenAI = false;
     }
 
+    /// <summary>
+    /// Sets the value of the private field _isConfiguredForAzureOpenAI.
+    /// This method provides a way to modify the private field from outside of the class.
+    /// </summary>
+    /// <param name="value">The new value to set. If true, the client will be configured for Azure OpenAI. 
+    /// If false, the client will be configured for the non-Azure OpenAI endpoint.</param>
+    public void SetIsConfiguredForAzureOpenAI(bool value)
+    {
+        _isConfiguredForAzureOpenAI = value;
+    }
+
     /// <summary> Return textual completions as configured for a given prompt. </summary>
     /// <param name="completionsOptions">
     ///     The options for this completions request.
