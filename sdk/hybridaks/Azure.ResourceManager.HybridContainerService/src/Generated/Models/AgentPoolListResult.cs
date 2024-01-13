@@ -11,7 +11,7 @@ using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The AgentPoolListResult. </summary>
+    /// <summary> A list of agent pool resources. </summary>
     internal partial class AgentPoolListResult
     {
         /// <summary> Initializes a new instance of <see cref="AgentPoolListResult"/>. </summary>

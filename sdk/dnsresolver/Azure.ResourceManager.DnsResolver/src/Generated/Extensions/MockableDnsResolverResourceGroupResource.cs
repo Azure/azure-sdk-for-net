@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

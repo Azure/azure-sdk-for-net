@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Indexes;
-using System.Threading.Tasks;
 #pragma warning disable SA1402 // File may only contain a single type
 
-namespace Azure.Search.Documents.Tests.samples.VectorSearch
+namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
     public static partial class VectorSearchCommons
     {
@@ -81,9 +78,9 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         public string HotelId { get; set; }
         public string HotelName { get; set; }
         public string Description { get; set; }
-        public IReadOnlyList<float> DescriptionVector { get; set; }
+        public ReadOnlyMemory<float> DescriptionVector { get; set; }
         public string Category { get; set; }
-        public IReadOnlyList<float> CategoryVector { get; set; }
+        public ReadOnlyMemory<float> CategoryVector { get; set; }
     }
     #endregion
 }

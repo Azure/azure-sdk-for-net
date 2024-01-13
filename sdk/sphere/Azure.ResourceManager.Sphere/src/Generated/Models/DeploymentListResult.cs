@@ -13,17 +13,11 @@ using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The response of a Deployment list operation.
-    /// Serialized Name: DeploymentListResult
-    /// </summary>
+    /// <summary> The response of a Deployment list operation. </summary>
     internal partial class DeploymentListResult
     {
         /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/>. </summary>
-        /// <param name="value">
-        /// The Deployment items on this page
-        /// Serialized Name: DeploymentListResult.value
-        /// </param>
+        /// <param name="value"> The Deployment items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DeploymentListResult(IEnumerable<SphereDeploymentData> value)
         {
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/>. </summary>
-        /// <param name="value">
-        /// The Deployment items on this page
-        /// Serialized Name: DeploymentListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: DeploymentListResult.nextLink
-        /// </param>
+        /// <param name="value"> The Deployment items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal DeploymentListResult(IReadOnlyList<SphereDeploymentData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The Deployment items on this page
-        /// Serialized Name: DeploymentListResult.value
-        /// </summary>
+        /// <summary> The Deployment items on this page. </summary>
         public IReadOnlyList<SphereDeploymentData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: DeploymentListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }
