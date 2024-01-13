@@ -81,7 +81,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
             using (PipelineMessage message = pipeline.CreateMessage())
             {
                 message.Request.Uri = testServer.Address;
-                ResponseBufferingPolicy.SetBufferingEnabled(message, true);
+                message.BufferResponse = true;
 
                 await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -120,7 +120,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
             using (PipelineMessage message = pipeline.CreateMessage())
             {
                 message.Request.Uri = testServer.Address;
-                ResponseBufferingPolicy.SetBufferingEnabled(message, false);
+                message.BufferResponse = false;
 
                 await pipeline.SendSyncOrAsync(message, IsAsync);
 

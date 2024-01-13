@@ -125,24 +125,4 @@ public class ResponseBufferingPolicy : PipelinePolicy
                 $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");
         }
     }
-
-    #region Buffer Response Override
-
-    public static void SetBufferingEnabled(PipelineMessage message, bool bufferingEnabled)
-        => message.BufferResponse = bufferingEnabled;
-
-    public static bool GetBufferingEnabled(PipelineMessage message)
-        => message.BufferResponse;
-
-    #endregion
-
-    #region Network Timeout Override
-
-    public static void SetNetworkTimeout(PipelineMessage message, TimeSpan? networkTimeout)
-        => message.NetworkTimeout = networkTimeout;
-
-    public static TimeSpan? GetNetworkTimeout(PipelineMessage message)
-        => message.NetworkTimeout;
-
-    #endregion
 }

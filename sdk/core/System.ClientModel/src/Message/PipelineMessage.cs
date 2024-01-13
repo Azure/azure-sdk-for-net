@@ -49,9 +49,18 @@ public class PipelineMessage : IDisposable
 
     internal int RetryCount { get; set; }
 
-    internal bool BufferResponse { get; set; }
+    /// <summary>
+    /// Gets or sets the value indicating whether the response should be buffered
+    /// in-memory by the pipeline. Defaults to true.
+    /// </summary>
+    public bool BufferResponse { get; set; }
 
-    internal TimeSpan? NetworkTimeout { get; set; }
+    /// <summary>
+    /// Gets or sets the network timeout value for this message.
+    /// If <c>null</c>, the value set on the client's options will be used.
+    /// Defaults to <c>null</c>.
+    /// </summary>
+    public TimeSpan? NetworkTimeout { get; set; }
 
     #endregion
 
