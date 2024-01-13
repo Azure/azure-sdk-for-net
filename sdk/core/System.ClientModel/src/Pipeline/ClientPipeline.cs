@@ -112,7 +112,7 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        policies[index++] = new ResponseBufferingPolicy.Shared;
+        policies[index++] = ResponseBufferingPolicy.Shared;
 
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
