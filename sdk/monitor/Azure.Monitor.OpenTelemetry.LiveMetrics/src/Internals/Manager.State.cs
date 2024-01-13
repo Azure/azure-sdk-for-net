@@ -42,8 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         private void InitializeState()
         {
             SetPingState();
-            Task.Run(() => Run(CancellationToken.None)); // TODO: USE AN ACTUAL CANCELLATION TOKEN
-            // TODO: Investigate use of a dedicated thread here.
+            _thread.Start();
         }
 
         private void SetPingState()
@@ -94,10 +93,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// This State Machine uses delegates for the callback action and the backoff evaluation.
         /// These delegates are updated whenever a state is changed.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        private void Run(CancellationToken cancellationToken)
+        private void Run()
         {
-            while (!cancellationToken.IsCancellationRequested)
+            while (!_cancellationToken.IsCancellationRequested)
             {
                 var callbackStarted = DateTimeOffset.UtcNow;
 
@@ -121,7 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
                 }
 
-                Task.Delay(nextTick, cancellationToken).Wait();
+                _thread?.Join(nextTick);
             }
         }
     }

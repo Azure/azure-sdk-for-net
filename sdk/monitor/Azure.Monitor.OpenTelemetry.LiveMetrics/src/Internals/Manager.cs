@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -16,12 +17,24 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         private readonly bool _isAadEnabled;
         private readonly string _streamId = Guid.NewGuid().ToString();
 
+        private readonly Thread _thread;
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
+        private readonly CancellationToken _cancellationToken;
+
         public Manager(LiveMetricsExporterOptions options, IPlatform platform)
         {
             options.Retry.MaxRetries = 0; // prevent Azure.Core from automatically retrying.
 
             _connectionVars = InitializeConnectionVars(options, platform);
             _quickPulseSDKClientAPIsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
+
+            _cancellationToken = _cancellationTokenSource.Token;
+
+            _thread = new Thread(() => Run())
+            {
+                Name = "LiveMetrics State Machine",
+                IsBackground = true,
+            };
 
             if (options.EnableLiveMetrics)
             {

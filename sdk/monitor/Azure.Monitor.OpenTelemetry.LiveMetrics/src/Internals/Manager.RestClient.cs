@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     xMsQpsInvariantVersion: "5",
                     xMsQpsConfigurationEtag: _etag,
                     monitoringDataPoint: null,
-                    cancellationToken: default);
+                    cancellationToken: _cancellationToken);
 
                 if (IsResponseSuccess(response))
                 {
@@ -97,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     xMsQpsConfigurationEtag: _etag,
                     xMsQpsTransmissionTime: null,
                     monitoringDataPoints: new MonitoringDataPoint[] { dataPoint }, // TODO: CHECK WITH SERVICE TEAM. WHY DOES THIS NEED TO BE A COLLECITON?
-                    cancellationToken: default);
+                    cancellationToken: _cancellationToken);
 
                 if (IsResponseSuccess(response))
                 {
