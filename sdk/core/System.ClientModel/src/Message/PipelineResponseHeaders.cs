@@ -9,12 +9,12 @@ using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
 
-internal class PipelineResponseHeaders : PipelineMessageHeaders
+internal class HttpClientPipelineResponseHeaders : PipelineMessageHeaders
 {
     private readonly HttpResponseMessage _httpResponse;
     private readonly HttpContent _httpResponseContent;
 
-    public PipelineResponseHeaders(HttpResponseMessage response, HttpContent responseContent)
+    public HttpClientPipelineResponseHeaders(HttpResponseMessage response, HttpContent responseContent)
     {
         _httpResponse = response;
         _httpResponseContent = responseContent;

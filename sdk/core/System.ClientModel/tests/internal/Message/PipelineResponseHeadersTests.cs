@@ -17,7 +17,7 @@ public class PipelineResponseHeadersTests
         HttpResponseMessage httpResponse = new HttpResponseMessage();
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
 
         Assert.Throws<NotSupportedException>(() => headers.Add("Mock-Header", "Mock value"));
     }
@@ -28,7 +28,7 @@ public class PipelineResponseHeadersTests
         HttpResponseMessage httpResponse = new HttpResponseMessage();
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
 
         Assert.Throws<NotSupportedException>(() => headers.Set("Mock-Header", "Mock value"));
     }
@@ -38,7 +38,7 @@ public class PipelineResponseHeadersTests
     {
         HttpResponseMessage httpResponse = new HttpResponseMessage();
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
 
         Assert.Throws<NotSupportedException>(() => headers.Remove("Mock-Header"));
     }
@@ -50,7 +50,7 @@ public class PipelineResponseHeadersTests
         httpResponse.Headers.Add("Mock-Header", "Mock value");
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
 
         Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
         Assert.AreEqual("Mock value", value);
@@ -64,7 +64,7 @@ public class PipelineResponseHeadersTests
         httpResponse.Headers.Add("Mock-Header", "Value 2");
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
 
         Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
         Assert.AreEqual("Value 1,Value 2", value);
@@ -77,7 +77,7 @@ public class PipelineResponseHeadersTests
         httpResponse.Headers.Add("Mock-Header", "Mock value");
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
 
         Assert.IsTrue(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values));
         Assert.AreEqual(1, values!.Count());
@@ -92,7 +92,7 @@ public class PipelineResponseHeadersTests
         httpResponse.Headers.Add("Mock-Header", "Value 2");
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
         Assert.IsTrue(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values));
         Assert.AreEqual(2, values!.Count());
         Assert.AreEqual("Value 1", values!.ElementAt(0));
@@ -106,7 +106,7 @@ public class PipelineResponseHeadersTests
         httpResponse.Headers.Add("Mock-Header", "Mock value");
         HttpContent content = new ByteArrayContent(BinaryData.FromString("Content").ToArray());
 
-        PipelineResponseHeaders headers = new(httpResponse, content);
+        HttpClientPipelineResponseHeaders headers = new(httpResponse, content);
 
         Assert.IsTrue(headers.TryGetValues("MOCK-HEADER", out IEnumerable<string>? values));
         Assert.AreEqual(1, values!.Count());
