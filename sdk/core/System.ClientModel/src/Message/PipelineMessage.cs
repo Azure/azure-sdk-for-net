@@ -6,8 +6,6 @@ using System.Threading;
 
 namespace System.ClientModel.Primitives;
 
-// TODO: MessageClassifier and RequestOptions will come in a later PR.
-
 public class PipelineMessage : IDisposable
 {
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
@@ -36,6 +34,15 @@ public class PipelineMessage : IDisposable
     #region Pipeline invocation options
 
     public CancellationToken CancellationToken { get; set; }
+
+    public PipelineMessageClassifier? MessageClassifier { get; protected internal set; }
+
+    public void Apply(RequestOptions options, PipelineMessageClassifier? messageClassifier = default)
+    {
+        // This design moves the client-author API (options.Apply) off the
+        // client-user type RequestOptions.
+        options.Apply(this, messageClassifier);
+    }
 
     public bool TryGetProperty(Type type, out object? value) =>
         _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
