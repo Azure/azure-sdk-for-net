@@ -4,7 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- azure-ai-vision-imageanalysis
+- azure-computer-vision
 name: Azure.AI.Vision.ImageAnalysis samples for .NET
 description: Samples for the Azure.AI.Vision.ImageAnalysis client library.
 ---

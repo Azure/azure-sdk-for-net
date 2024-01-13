@@ -7,7 +7,7 @@ This sample demonstrates how to get a Tags for an image. To get started you'll n
 
 ## Examples
 
-The following sections provide code snippets covering using ImageAnalysis to extract tags from an image:
+The following sections provide code snippets using ImageAnalysis to extract tags from an image:
 
 ### Authenticate the client
 
@@ -23,7 +23,7 @@ string key = Environment.GetEnvironmentVariable("VISION_KEY");
 ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 ```
 
-Here we are using enviornment variables to hold the endpoint and key for the Computer Vision Resource.
+Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
 
 ### Extract tags from an image file
 
@@ -65,4 +65,4 @@ foreach (DetectedTag tag in result.Tags.Values)
     Console.WriteLine($"   '{tag.Name}', Confidence {tag.Confidence:F4}");
 }
 ```
-[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Custom/ImageAnalysisClient.cs

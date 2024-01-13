@@ -6,7 +6,7 @@ This sample demonstrates how to get Dense Captions for an image. To get started 
 
 ## Examples
 
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to generate dense captions for an image:
+The following sections provide code snippets using the `client` created above, using ImageAnalysis to generate dense captions for an image:
 
 ### Authenticate the client
 
@@ -22,7 +22,7 @@ string key = Environment.GetEnvironmentVariable("VISION_KEY");
 ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 ```
 
-Here we are using enviornment variables to hold the endpoint and key for the Computer Vision Resource.
+Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
 
 ### Generate dense captions for an image file
 
@@ -71,4 +71,4 @@ foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
     Console.WriteLine($"   Region: '{denseCaption.Text}', Confidence {denseCaption.Confidence:F4}, Bounding box {denseCaption.BoundingBox}");
 }
 ```
-[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Custom/ImageAnalysisClient.cs

@@ -4,7 +4,7 @@ This sample demonstrates how to read text from an image. To get started you'll n
 
 ## Examples
 
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to read text from an image:
+The following sections provide code snippets using ImageAnalysis to read text from an image:
 
 ### Authenticate the client
 
@@ -20,11 +20,11 @@ string key = Environment.GetEnvironmentVariable("VISION_KEY");
 ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 ```
 
-Here we are using enviornment variables to hold the endpoint and key for the Computer Vision Resource.
+Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
 
 ### Read text from an image file
 
-This example demonstrates how to read text from the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Read` method call returns an `ReadResult` object, which contains the read text.
+This example demonstrates how to read text from the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ReadResult` object, which contains the read text.
 
 ```C# Snippet:ImageAnalysisReadFromFile
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
@@ -47,7 +47,7 @@ foreach (var line in result.Value.Read.Blocks.SelectMany(block => block.Lines))
 
 ### Read text from an image URL
 
-This example is similar to the above, except it calls the `Read` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisReadFromUrl
 var result = client.Analyze(
@@ -65,4 +65,4 @@ foreach (var line in result.Value.Read.Blocks.SelectMany(block => block.Lines))
     }
 }
 ```
-[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Custom/ImageAnalysisClient.cs
