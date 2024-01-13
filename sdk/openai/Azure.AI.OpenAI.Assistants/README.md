@@ -1,4 +1,4 @@
-#  OpenAI Assistants: Azure's client library for .NET
+# Azure OpenAI: OpenAI Assistants client library for .NET
 
 > **NOTE**: This is a preview version of the Azure SDK library for OpenAI Assistants. The Azure OpenAI service does not yet include Assistants features and this project is thus currently for sole use with OpenAI's `api.openai.com` endpoints. [OpenAI's Assistants API](https://platform.openai.com/docs/api-reference/assistants) is tagged as beta and both the API surface as well as this library's representation are subject to change.
 
@@ -29,9 +29,7 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 dotnet add package Azure.AI.OpenAI.Assistants --prerelease
 ```
 
-## Usage
-
-### Overview
+### Authenticate the client
 
 See [OpenAI's "how assistants work"](https://platform.openai.com/docs/assistants/how-it-works) documentation for an
 overview of the concepts and relationships used with assistants. This overview closely follows
@@ -45,7 +43,18 @@ AssistantsClient client = isAzureOpenAI
     : new AssistantsClient(nonAzureApiKey);
 ```
 
-With a client, an assistant can then be created:
+## Key concepts
+
+### Overview
+
+For an overview of Assistants and the pertinent key concepts like Threads, Messages, Runs, and Tools, please see
+[OpenAI's Assistants API overview](https://platform.openai.com/docs/assistants/overview).
+
+## Usage
+
+### Examples
+
+With an authenticated client, an assistant can be created:
 ```C# Snippet:OverviewCreateAssistant
 Response<Assistant> assistantResponse = await client.CreateAssistantAsync(
     new AssistantCreationOptions("gpt-4-1106-preview")
