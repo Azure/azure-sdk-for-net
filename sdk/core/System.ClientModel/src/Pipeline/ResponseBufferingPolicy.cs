@@ -15,15 +15,14 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ResponseBufferingPolicy : PipelinePolicy
 {
+    internal static readonly ResponseBufferingPolicy Shared = new();
+
     public ResponseBufferingPolicy()
     {
     }
 
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).AsTask().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+        => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
 
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
@@ -126,24 +125,4 @@ public class ResponseBufferingPolicy : PipelinePolicy
                 $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");
         }
     }
-
-    #region Buffer Response Override
-
-    public static void SetBufferingEnabled(PipelineMessage message, bool bufferingEnabled)
-        => message.BufferResponse = bufferingEnabled;
-
-    public static bool GetBufferingEnabled(PipelineMessage message)
-        => message.BufferResponse;
-
-    #endregion
-
-    #region Network Timeout Override
-
-    public static void SetNetworkTimeout(PipelineMessage message, TimeSpan? networkTimeout)
-        => message.NetworkTimeout = networkTimeout;
-
-    public static TimeSpan? GetNetworkTimeout(PipelineMessage message)
-        => message.NetworkTimeout;
-
-    #endregion
 }

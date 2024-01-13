@@ -482,9 +482,7 @@ namespace Azure.Core
     public sealed partial class HttpMessage : System.ClientModel.Primitives.PipelineMessage
     {
         public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ClientModel.Primitives.PipelineRequest)) { }
-        public bool BufferResponse { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
-        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }

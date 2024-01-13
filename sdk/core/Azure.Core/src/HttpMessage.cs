@@ -77,25 +77,6 @@ namespace Azure.Core
             set => MessageClassifier = value;
         }
 
-        /// <summary>
-        /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
-        /// </summary>
-        public bool BufferResponse
-        {
-            get => ResponseBufferingPolicy.GetBufferingEnabled(this);
-            set => ResponseBufferingPolicy.SetBufferingEnabled(this, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> will be used instead.
-        /// Defaults to <c>null</c>.
-        /// </summary>
-        public TimeSpan? NetworkTimeout
-        {
-            get => ResponseBufferingPolicy.GetNetworkTimeout(this);
-            set => ResponseBufferingPolicy.SetNetworkTimeout(this, value);
-        }
-
         internal int RetryNumber { get; set; }
 
         internal DateTimeOffset ProcessingStartTime { get; set; }

@@ -35,7 +35,7 @@ public partial class HttpClientPipelineTransport
             => _httpResponse.ReasonPhrase ?? string.Empty;
 
         protected override PipelineMessageHeaders GetHeadersCore()
-            => new PipelineResponseHeaders(_httpResponse, _httpResponseContent);
+            => new HttpClientPipelineResponseHeaders(_httpResponse, _httpResponseContent);
 
         public override Stream? ContentStream
         {

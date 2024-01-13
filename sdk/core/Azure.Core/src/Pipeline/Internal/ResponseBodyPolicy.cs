@@ -51,7 +51,7 @@ namespace Azure.Core.Pipeline
                     _policy.Process(message, processor, -1);
                 }
 
-                if (!ResponseBufferingPolicy.GetBufferingEnabled(message) &&
+                if (!message.BufferResponse &&
                     invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
                 {
                     Stream? responseContentStream = message.Response.ContentStream;

@@ -144,8 +144,10 @@ namespace System.ClientModel.Primitives
     public partial class PipelineMessage : System.IDisposable
     {
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
+        public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineMessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
         public void Apply(System.ClientModel.Primitives.RequestOptions options, System.ClientModel.Primitives.PipelineMessageClassifier? messageClassifier = null) { }
@@ -246,12 +248,8 @@ namespace System.ClientModel.Primitives
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public ResponseBufferingPolicy() { }
-        public static bool GetBufferingEnabled(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-        public static System.TimeSpan? GetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-        public static void SetBufferingEnabled(System.ClientModel.Primitives.PipelineMessage message, bool bufferingEnabled) { }
-        public static void SetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, System.TimeSpan? networkTimeout) { }
     }
     public partial class ResponseStatusClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {

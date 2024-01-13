@@ -46,7 +46,7 @@ public partial class HttpClientPipelineTransport
         {
             if (_uri is null)
             {
-                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
+                throw new InvalidOperationException("Uri has not been set on this instance.");
             }
 
             return _uri;
