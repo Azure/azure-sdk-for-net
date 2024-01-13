@@ -6,7 +6,7 @@ This sample demonstrates how to get a detect people in an image. To get started 
 
 ## Examples
 
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to detect people in an image:
+The following sections provide code snippets overing using ImageAnalysis to detect people in an image:
 
 ### Authenticate the client
 

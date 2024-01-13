@@ -6,7 +6,7 @@ This sample demonstrates how to get Objects in an image. To get started you'll n
 
 ## Examples
 
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to detect objects in an image:
+The following sections provide code snippets covering using ImageAnalysis to detect objects in an image:
 
 ### Authenticate the client
 

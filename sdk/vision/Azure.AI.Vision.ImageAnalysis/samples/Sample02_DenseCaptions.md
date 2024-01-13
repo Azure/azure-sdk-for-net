@@ -37,11 +37,11 @@ Notes:
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get dense captions for the image. 
+// Get dense captions for the image.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.DenseCaptions,
-    new ImageAnalysisOptions { GenderNeutralCaption = true }); 
+    new ImageAnalysisOptions { GenderNeutralCaption = true });
 
 // Print dense caption results to the console
 Console.WriteLine($"Image analysis results:");
@@ -57,11 +57,11 @@ foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
 This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisDenseCaptionFromUrl
-// Get dense captions for the image. 
+// Get dense captions for the image.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.DenseCaptions,
-    new ImageAnalysisOptions { GenderNeutralCaption = true }); 
+    new ImageAnalysisOptions { GenderNeutralCaption = true });
 
 // Print dense caption results to the console
 Console.WriteLine($"Image analysis results:");

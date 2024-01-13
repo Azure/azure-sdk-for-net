@@ -6,7 +6,7 @@ This sample demonstrates how to get a SmartCrops for an image. To get started yo
 
 ## Examples
 
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to generate smart-cropped thumbnails from an image:
+The following sections provide code snippets covering using ImageAnalysis to generate smart-cropped thumbnails from an image:
 
 ### Authenticate the client
 

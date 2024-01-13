@@ -4,7 +4,7 @@ This sample demonstrates how to get a caption for an image. To get started you'l
 
 ## Examples
 
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to caption an image:
+The following sections provide code snippets covering using ImageAnalysis to caption an image:
 
 ### Authenticate the client
 
