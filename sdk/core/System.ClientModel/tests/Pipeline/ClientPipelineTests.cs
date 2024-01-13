@@ -282,7 +282,6 @@ public class ClientPipelineTests : SyncAsyncTestBase
     public async Task RequestOptionsCanCustomizePipeline()
     {
         ClientPipelineOptions pipelineOptions = new ClientPipelineOptions();
-        pipelineOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
         pipelineOptions.Transport = new ObservableTransport("Transport");
 
         ClientPipeline pipeline = ClientPipeline.Create(pipelineOptions);
@@ -298,13 +297,11 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(7, observations.Count);
+        Assert.AreEqual(5, observations.Count);
         Assert.AreEqual("Request:A", observations[index++]);
-        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:B", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Response:B", observations[index++]);
-        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);
     }
 }
