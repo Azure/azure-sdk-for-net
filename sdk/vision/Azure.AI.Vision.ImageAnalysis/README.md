@@ -101,11 +101,11 @@ Notes:
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get a caption for the image. 
+// Get a caption for the image.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { GenderNeutralCaption = true }); 
+    new ImageAnalysisOptions { GenderNeutralCaption = true });
 
 // Print caption results to the console
 Console.WriteLine($"Image analysis results:");
@@ -118,11 +118,11 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisGenerateCaptionFromUrl
-// Get a caption for the image. 
+// Get a caption for the image.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { GenderNeutralCaption = true }); 
+    new ImageAnalysisOptions { GenderNeutralCaption = true });
 
 // Print caption results to the console
 Console.WriteLine($"Image analysis results:");
@@ -138,7 +138,7 @@ This example demonstrates how to extract printed or hand-written text for the im
 // Load image to analyze into a stream
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Extract text (OCR) from an image stream. 
+// Extract text (OCR) from an image stream.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Read);
@@ -163,7 +163,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
 This example demonstrates how to extract printed or hand-written text for a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg).
 
 ```C# Snippet:ImageAnalysisExtractTextFromUrl
-// Extract text (OCR) from an image stream. 
+// Extract text (OCR) from an image stream.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Read);
