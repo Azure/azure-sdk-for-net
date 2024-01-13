@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -17,16 +19,58 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            ErrorInfo error = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ErrorResponse>> details = default;
+            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"u8))
+                if (property.NameEquals("code"u8))
                 {
-                    error = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    code = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("details"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeErrorResponse(item));
+                    }
+                    details = array;
+                    continue;
+                }
+                if (property.NameEquals("additionalInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                    }
+                    additionalInfo = array;
                     continue;
                 }
             }
-            return new ErrorResponse(error);
+            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

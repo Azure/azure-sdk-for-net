@@ -63,7 +63,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual Response<MetricsBatchResult> QueryBatch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsBatchResult> QueryBatch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryClientOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count == 0 || metricNames.Count == 0)
             {
@@ -88,71 +88,6 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private string GetSubscriptionId(string resourceId)
-        {
-            int startIndex = resourceId.IndexOf("subscriptions/") + 14;
-            return resourceId.Substring(startIndex, resourceId.IndexOf("/", startIndex) - startIndex);
-        }
-
-        private async Task<Response<MetricsBatchResult>> ExecuteBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
-        {
-            var subscriptionId = GetSubscriptionId(resourceIds[0]);
-
-            string filter = null;
-            TimeSpan? granularity = null;
-            string aggregations = null;
-            string startTime = null;
-            int? top = null;
-            string orderBy = null;
-            string endTime = null;
-            ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
-
-            if (options != null)
-            {
-                startTime = options.TimeRange.Value.Start.ToString();
-                endTime = options.TimeRange.Value.End.ToString();
-
-                top = options.Size;
-                orderBy = options.OrderBy;
-                filter = options.Filter;
-                granularity = options.Granularity;
-            }
-
-            if (!isAsync)
-            {
-                return _metricBatchClient.Batch(
-                    subscriptionId,
-                    metricNamespace,
-                    metricNames,
-                    resourceIdList,
-                    startTime,
-                    endTime,
-                    granularity,
-                    aggregations,
-                    top,
-                    orderBy,
-                    filter,
-                    cancellationToken);
-            }
-
-            else
-            {
-                return await _metricBatchClient.BatchAsync(
-                    subscriptionId,
-                    metricNamespace,
-                    metricNames,
-                    resourceIdList,
-                    startTime,
-                    endTime,
-                    granularity,
-                    aggregations,
-                    top,
-                    orderBy,
-                    filter,
-                    cancellationToken).ConfigureAwait(false);
-            }
-        }
-
         /// <summary>
         /// Returns all the Azure Monitor metrics requested for the batch of resources.
         /// </summary>
@@ -162,7 +97,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual async Task<Response<MetricsBatchResult>> QueryBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsBatchResult>> QueryBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryClientOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count == 0 || metricNames.Count == 0)
             {
@@ -185,6 +120,76 @@ namespace Azure.Monitor.Query
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private async Task<Response<MetricsBatchResult>> ExecuteBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryClientOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
+        {
+            var subscriptionId = GetSubscriptionId(resourceIds[0]);
+
+            string filter = null;
+            TimeSpan? granularity = null;
+            string aggregations = null;
+            string startTime = null;
+            int? top = null;
+            string orderBy = null;
+            string endTime = null;
+            string rollUpBy = null;
+
+            ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
+
+            if (options != null)
+            {
+                startTime = options.TimeRange.Value.Start.ToString();
+                endTime = options.TimeRange.Value.End.ToString();
+                aggregations = options.Aggregations.ToString();
+                top = options.Size;
+                orderBy = options.OrderBy;
+                filter = options.Filter;
+                granularity = options.Granularity;
+                rollUpBy = options.RollUpBy;
+            }
+
+            if (!isAsync)
+            {
+                return _metricBatchClient.Batch(
+                    subscriptionId,
+                    metricNamespace,
+                    metricNames,
+                    resourceIdList,
+                    startTime,
+                    endTime,
+                    granularity,
+                    aggregations,
+                    top,
+                    orderBy,
+                    filter,
+                    rollUpBy,
+                    cancellationToken);
+            }
+
+            else
+            {
+                return await _metricBatchClient.BatchAsync(
+                    subscriptionId,
+                    metricNamespace,
+                    metricNames,
+                    resourceIdList,
+                    startTime,
+                    endTime,
+                    granularity,
+                    aggregations,
+                    top,
+                    orderBy,
+                    filter,
+                    rollUpBy,
+                    cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        private string GetSubscriptionId(string resourceId)
+        {
+            int startIndex = resourceId.IndexOf("subscriptions/") + 14;
+            return resourceId.Substring(startIndex, resourceId.IndexOf("/", startIndex) - startIndex);
         }
     }
 }
