@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
-        /// <param name="connectionString"> The connection string for the datasource. Set to '&lt;unchanged&gt;' if you do not want the connection string updated. </param>
+        /// <param name="connectionString"> The connection string for the datasource. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </param>
         internal DataSourceCredentials(string connectionString)
         {
             ConnectionString = connectionString;
         }
 
-        /// <summary> The connection string for the datasource. Set to '&lt;unchanged&gt;' if you do not want the connection string updated. </summary>
+        /// <summary> The connection string for the datasource. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </summary>
         public string ConnectionString { get; set; }
     }
 }

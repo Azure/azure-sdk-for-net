@@ -1,3 +1,6 @@
+#Requires -Version 6.0
+#Requires -PSEdition Core
+
 <#
 .SYNOPSIS
 Merge multiple asset tagss worth of content into a single asset tag.
@@ -66,9 +69,6 @@ function Git-Command($CommandString, $WorkingDirectory, $HardExit=$true) {
 }
 
 function Resolve-Proxy {
-    # this script requires the presence of git
-    Test-Exe-In-Path -ExeToLookFor "git" | Out-Null
-
     $testProxyExe = "test-proxy"
     # this script requires the presence of the test-proxy on the PATH
     $proxyToolPresent = Test-Exe-In-Path -ExeToLookFor "test-proxy" -ExitOnError $false
@@ -184,7 +184,13 @@ function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDire
 function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $len = $TargetTags.Length
 
-    Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -NoNewLine
+    if ($TargetTags.GetType().Name -eq "String") {
+        $len = 1
+    }
+
+    $suffix = if ($len -gt 1) { "s" } else { "" }
+
+    Write-Host "`nSuccessfully combined $len tag$suffix. Invoke `"test-proxy push " -NoNewLine
     Write-Host $AssetsJson -ForegroundColor Green -NoNewLine
     Write-Host "`" to push the results as a new tag."
 }
@@ -270,12 +276,22 @@ function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
     # if we have successfully gotten to the end without any non-zero exit codes...delete the mergeprogress file, we're g2g
     Cleanup-Incomplete-Progress $MountDirectory
 
-    return $pushedTags
+    return @($pushedTags)
 }
 
 $ErrorActionPreference = "Stop"
 
-# resolve the proxy location so that we can invoke it easily
+# this script requires the presence of git
+Test-Exe-In-Path -ExeToLookFor "git" | Out-Null
+
+# this script expects at least powershell 6 (core)
+
+if ($PSVersionTable["PSVersion"].Major -lt 6) {
+    Write-Error "This script requires a version of powershell newer than 6. See http://aka.ms/powershell for resolution."
+    exit 1
+}
+
+# resolve the proxy location so that we can invoke it easily, if not present we exit here.
 $proxyExe = Resolve-Proxy
 
 $AssetsJson = Resolve-Path $AssetsJson

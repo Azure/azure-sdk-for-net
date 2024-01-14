@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

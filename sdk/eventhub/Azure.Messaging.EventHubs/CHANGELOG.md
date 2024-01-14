@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.  
+
+  This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString()`.   The affected system properties are:
+  - MessageId
+  - CorelationId
+  - To
+  - ReplyTo
+
 ### Bugs Fixed
 
 - Load balancing is no longer blocked when event processing for a lost partition does not honor the cancellation token.  Previously, long-running processing could cause delays in load balancing that resulted in ownership not being renewed for all partitions.
@@ -16,6 +24,8 @@
 
 - Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
 
+- Reduced the timeout for transient service failures when starting the buffered producer. This fixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
+
 ### Other Changes
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
@@ -23,6 +33,10 @@
 - Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
 
 - Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
+
+- The "Event Receive Completed" log now includes the maximum batch size and wait time that were used for the operation.
+
+- A new log has been added to capture the end-to-end performance of the cycle to read and process events for a partition owned by an event processor type.  This is emitted as a verbose ETW event with the Id 129 and is highly recommended to capture when troubleshooting processor scenarios.
 
 ## 5.10.0 (2023-11-07)
 
