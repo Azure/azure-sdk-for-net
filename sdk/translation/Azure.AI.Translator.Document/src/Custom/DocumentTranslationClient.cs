@@ -33,7 +33,7 @@ namespace Azure.AI.Translator.Document
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="multipartRequestContent"/> is null. </exception>
-        public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, MultipartRequestContent multipartRequestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, DocumentContent multipartRequestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(multipartRequestContent, nameof(multipartRequestContent));
@@ -67,7 +67,7 @@ namespace Azure.AI.Translator.Document
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="multipartRequestContent"/> is null. </exception>
-        public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, MultipartRequestContent multipartRequestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, DocumentContent multipartRequestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(multipartRequestContent, nameof(multipartRequestContent));
@@ -88,7 +88,7 @@ namespace Azure.AI.Translator.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DocumentTranslateAsync(string,MultipartRequestContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DocumentTranslateAsync(string,DocumentContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -117,7 +117,7 @@ namespace Azure.AI.Translator.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        internal virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
@@ -146,7 +146,7 @@ namespace Azure.AI.Translator.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DocumentTranslate(string,MultipartRequestContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DocumentTranslate(string,DocumentContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -175,7 +175,7 @@ namespace Azure.AI.Translator.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DocumentTranslate(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        internal virtual Response DocumentTranslate(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));

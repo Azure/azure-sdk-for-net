@@ -20,12 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
     <Folder Include="TestData\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\TestInput.txt">
+    <None Update="TestData\test-glossary.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\test-input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

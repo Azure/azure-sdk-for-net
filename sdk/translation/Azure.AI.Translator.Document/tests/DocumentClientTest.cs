@@ -17,16 +17,30 @@ namespace Azure.AI.Translator.Document.Tests
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
         [RecordedTest]
-        public async Task TestOperation()
+        public void TranslateTextDocument()
         {
             var client = new DocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
-            string testInputFileName = "TestInput.txt";
-            string testOutputFileName = "TestOutput.txt";
-            string filePath = Path.Combine("TestData", testInputFileName);
+            string testOutputFileName = "test-output.txt";
+            string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
-            var translateContent = new MultipartRequestContent(BinaryData.FromStream(fileStream));
-            translateContent.FileName = testInputFileName;
+            var translateContent = new DocumentContent(BinaryData.FromStream(fileStream), Path.GetFileName(filePath), "text/html");
+            var response = client.DocumentTranslate("hi", translateContent);
+            File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task TranslateTextDocumentWithCsvGlossary()
+        {
+            var client = new DocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            string testOutputFileName = "test-glossay-output.txt";
+            string filePath = Path.Combine("TestData", "test-input.txt");
+            using Stream fileStream = File.OpenRead(filePath);
+
+            var translateContent = new DocumentContent(BinaryData.FromStream(fileStream), Path.GetFileName(filePath), "text/html");
+            filePath = Path.Combine("TestData", "test-glossary.csv");
+            using Stream glossaryStream = File.OpenRead(filePath);
+            translateContent.AddGlossary(BinaryData.FromStream(glossaryStream), Path.GetFileName(filePath), "text/csv");
             var response = await client.DocumentTranslateAsync("hi", translateContent).ConfigureAwait(false);
             File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
         }

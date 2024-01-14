@@ -3,14 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.AI.Translator.Document
 {
     [CodeGenModel("DocumentTranslateContent")]
+    [CodeGenSuppress("MultipartRequestContent", typeof(BinaryData))]
+    [CodeGenSuppress("MultipartRequestContent", typeof(BinaryData), typeof(IList<BinaryData>))]
     [CodeGenSuppress("ToRequestContent")]
-    public partial class MultipartRequestContent
+    public partial class DocumentContent
     {
     }
 }

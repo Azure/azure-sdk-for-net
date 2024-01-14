@@ -6,23 +6,11 @@ using Azure.Core;
 
 namespace Azure.AI.Translator.Document
 {
-    public partial class MultipartRequestContent
+    public partial class DocumentContent
     {
         internal virtual RequestContent ToRequestContent()
         {
-            MultipartFormDataContent content = new MultipartFormDataContent();
-            string filename = Optional.IsDefined(FileName) ? FileName : "file.txt";
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Content-Type", "text/plain");
-            // headers.Add("Content-Disposition", $"form-data; name=document; filename={filename}");
-            content.Add(RequestContent.Create(Document), "document", "file.txt", headers);
-
-            foreach (var glossaary in Glossary)
-            {
-                content.Add(RequestContent.Create(glossaary), "document", "file.txt", headers);
-            }
-
-            return content;
+            return this.MultipartFormDataContent;
         }
     }
 }
