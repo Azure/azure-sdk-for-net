@@ -8,11 +8,7 @@ namespace Azure.AI.Translator.Document
 {
     public partial class DocumentTranslateContent
     {
-        // CUSTOM CODE NOTE:
-        // Implement custom serialization code to compose a request with Content-Type:
-        // multipart/form-data, which currently cannot be auto-generated.
-
-        internal virtual RequestContent ToRequestMultipartFormDataContent()
+        internal virtual RequestContent ToRequestContent()
         {
             MultipartFormDataContent content = new MultipartFormDataContent();
             string filename = Optional.IsDefined(FileName) ? FileName : "file.txt";

@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translator.Document
 {
-    [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateDocumentTranslateRequest", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     public partial class DocumentTranslationClient
     {
     }
