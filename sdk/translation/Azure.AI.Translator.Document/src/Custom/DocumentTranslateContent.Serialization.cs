@@ -8,22 +8,23 @@ namespace Azure.AI.Translator.Document
 {
     public partial class DocumentTranslateContent
     {
-        /// <summary> The optional filename or descriptive identifier to associate with with the audio data. </summary>
-        public string Filename { get; set; }
-
         // CUSTOM CODE NOTE:
         // Implement custom serialization code to compose a request with Content-Type:
         // multipart/form-data, which currently cannot be auto-generated.
 
-        internal virtual RequestContent ToRequestContent()
+        internal virtual RequestContent ToRequestMultipartFormDataContent()
         {
-            MultipartFormDataContent content = new();
-
-            string filename = Optional.IsDefined(Filename) ? Filename : "file.txt";
+            MultipartFormDataContent content = new MultipartFormDataContent();
+            string filename = Optional.IsDefined(FileName) ? FileName : "file.txt";
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Content-Type", "text/plain");
-            headers.Add("Content-Disposition", $"form-data; name=document; filename={filename}");
-            content.Add(MultipartContent.Create(Document), headers);
+            // headers.Add("Content-Disposition", $"form-data; name=document; filename={filename}");
+            content.Add(RequestContent.Create(Document), "document", "file.txt", headers);
+
+            foreach (var glossaary in Glossary)
+            {
+                content.Add(RequestContent.Create(glossaary), "document", "file.txt", headers);
+            }
 
             return content;
         }

@@ -26,9 +26,9 @@ namespace Azure.AI.Translator.Document.Tests
             using Stream fileStream = File.OpenRead(filePath);
 
             var translateContent = new DocumentTranslateContent(BinaryData.FromStream(fileStream));
-            translateContent.Filename = testInputFileName;
+            translateContent.FileName = testInputFileName;
             var response = await client.DocumentTranslateAsync("hi", translateContent).ConfigureAwait(false);
-            File.WriteAllBytes(Path.Combine("TestData", testOutputFileName), response.Value.ToArray());
+            File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
         }
 
         #region Helpers
