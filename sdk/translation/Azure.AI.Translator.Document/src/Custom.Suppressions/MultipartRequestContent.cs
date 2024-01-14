@@ -8,9 +8,8 @@ using Azure.Core;
 
 namespace Azure.AI.Translator.Document
 {
-    // CUSTOM CODE NOTE:
-    [CodeGenSuppress("ToRequestContent")]
     [CodeGenModel("DocumentTranslateContent")]
+    [CodeGenSuppress("ToRequestContent")]
     public partial class MultipartRequestContent
     {
     }

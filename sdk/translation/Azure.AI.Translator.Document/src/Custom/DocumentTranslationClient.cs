@@ -33,14 +33,14 @@ namespace Azure.AI.Translator.Document
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="multipartRequestContent"/> is null. </exception>
-        public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, MultipartRequestContent multipartRequestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, MultipartRequestContent multipartRequestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(multipartRequestContent, nameof(multipartRequestContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = multipartRequestContent.ToRequestContent();
-            Response response = DocumentTranslate(targetLanguage, content, sourceLanguage, category, allowFallback, context);
+            Response response = await DocumentTranslateAsync(targetLanguage, content, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.AI.Translator.Document
         /// The target language must be one of the supported languages included in the translation scope.
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request / Content. </param>
+        /// <param name="multipartRequestContent"> Document Translate Request / Content. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -66,16 +66,132 @@ namespace Azure.AI.Translator.Document
         ///     Possible values are: true (default) or false.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, MultipartRequestContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="multipartRequestContent"/> is null. </exception>
+        public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, MultipartRequestContent multipartRequestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
+            Argument.AssertNotNull(multipartRequestContent, nameof(multipartRequestContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = documentTranslateContent.ToRequestContent();
-            Response response = await DocumentTranslateAsync(targetLanguage, content, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
+            using RequestContent content = multipartRequestContent.ToRequestContent();
+            Response response = DocumentTranslate(targetLanguage, content, sourceLanguage, category, allowFallback, context);
             return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] API to translate a document.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DocumentTranslateAsync(string,MultipartRequestContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetLanguage">
+        /// Specifies the language of the output document.
+        /// The target language must be one of the supported languages included in the translation scope.
+        /// For example if you want to translate the document in German language, then use targetLanguage=de
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="sourceLanguage">
+        /// Specifies source language of the input document.
+        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
+        /// For example if the source document is written in English, then use sourceLanguage=en
+        /// </param>
+        /// <param name="category">
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
+        ///     from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
+        ///     project details to this parameter to use your deployed customized system. Default value is: general.
+        /// </param>
+        /// <param name="allowFallback">
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        ///     Possible values are: true (default) or false.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.DocumentTranslate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, content, sourceLanguage, category, allowFallback, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] API to translate a document.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DocumentTranslate(string,MultipartRequestContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetLanguage">
+        /// Specifies the language of the output document.
+        /// The target language must be one of the supported languages included in the translation scope.
+        /// For example if you want to translate the document in German language, then use targetLanguage=de
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="sourceLanguage">
+        /// Specifies source language of the input document.
+        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
+        /// For example if the source document is written in English, then use sourceLanguage=en
+        /// </param>
+        /// <param name="category">
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
+        ///     from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
+        ///     project details to this parameter to use your deployed customized system. Default value is: general.
+        /// </param>
+        /// <param name="allowFallback">
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        ///     Possible values are: true (default) or false.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DocumentTranslate(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.DocumentTranslate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, content, sourceLanguage, category, allowFallback, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal HttpMessage CreateDocumentTranslateRequest(string targetLanguage, RequestContent content, string sourceLanguage, string category, bool? allowFallback, RequestContext context)
