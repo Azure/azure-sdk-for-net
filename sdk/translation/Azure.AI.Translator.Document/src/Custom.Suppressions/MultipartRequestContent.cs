@@ -8,9 +8,10 @@ using Azure.Core;
 
 namespace Azure.AI.Translator.Document
 {
-    public partial class DocumentTranslateContent
+    // CUSTOM CODE NOTE:
+    [CodeGenSuppress("ToRequestContent")]
+    [CodeGenModel("DocumentTranslateContent")]
+    public partial class MultipartRequestContent
     {
-        /// <summary> The optional filename or descriptive identifier to associate with with the audio data. </summary>
-        public string FileName { get; set; }
     }
 }

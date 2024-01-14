@@ -61,76 +61,6 @@ namespace Azure.AI.Translator.Document
             _apiVersion = options.Version;
         }
 
-        /// <summary> API to translate a document. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output document.
-        /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de
-        /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request / Content. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies source language of the input document.
-        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
-        /// For example if the source document is written in English, then use sourceLanguage=en
-        /// </param>
-        /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
-        ///     from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
-        ///     project details to this parameter to use your deployed customized system. Default value is: general.
-        /// </param>
-        /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
-        ///     Possible values are: true (default) or false.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslateAsync(string,DocumentTranslateContent,string,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = documentTranslateContent.ToRequestContent();
-            Response response = await DocumentTranslateAsync(targetLanguage, content, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> API to translate a document. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output document.
-        /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de
-        /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request / Content. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies source language of the input document.
-        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
-        /// For example if the source document is written in English, then use sourceLanguage=en
-        /// </param>
-        /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
-        ///     from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
-        ///     project details to this parameter to use your deployed customized system. Default value is: general.
-        /// </param>
-        /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
-        ///     Possible values are: true (default) or false.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslate(string,DocumentTranslateContent,string,string,bool?,CancellationToken)']/*" />
-        public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = documentTranslateContent.ToRequestContent();
-            Response response = DocumentTranslate(targetLanguage, content, sourceLanguage, category, allowFallback, context);
-            return Response.FromValue(response.Content, response);
-        }
-
         /// <summary>
         /// [Protocol Method] API to translate a document.
         /// <list type="bullet">
@@ -141,7 +71,7 @@ namespace Azure.AI.Translator.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DocumentTranslateAsync(string,DocumentTranslateContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DocumentTranslateAsync(string,MultipartRequestContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -200,7 +130,7 @@ namespace Azure.AI.Translator.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DocumentTranslate(string,DocumentTranslateContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DocumentTranslate(string,MultipartRequestContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

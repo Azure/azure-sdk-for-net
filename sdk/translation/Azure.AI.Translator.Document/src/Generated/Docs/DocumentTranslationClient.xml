@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="DocumentTranslateAsync(string,DocumentTranslateContent,string,string,bool?,CancellationToken)">
+    <member name="DocumentTranslateAsync(string,MultipartRequestContent,string,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call DocumentTranslateAsync.
 <code><![CDATA[
@@ -9,8 +9,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()));
-Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", documentTranslateContent);
+MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()));
+Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", multipartRequestContent);
 ]]></code>
 This sample shows how to call DocumentTranslateAsync with all parameters.
 <code><![CDATA[
@@ -18,14 +18,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()))
+MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()))
 {
     Glossary = { BinaryData.FromObjectAsJson(new object()) },
 };
-Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", documentTranslateContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
+Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", multipartRequestContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
 ]]></code></example>
     </member>
-    <member name="DocumentTranslate(string,DocumentTranslateContent,string,string,bool?,CancellationToken)">
+    <member name="DocumentTranslate(string,MultipartRequestContent,string,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call DocumentTranslate.
 <code><![CDATA[
@@ -33,8 +33,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()));
-Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", documentTranslateContent);
+MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()));
+Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", multipartRequestContent);
 ]]></code>
 This sample shows how to call DocumentTranslate with all parameters.
 <code><![CDATA[
@@ -42,11 +42,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()))
+MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()))
 {
     Glossary = { BinaryData.FromObjectAsJson(new object()) },
 };
-Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", documentTranslateContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
+Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", multipartRequestContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
 ]]></code></example>
     </member>
     <member name="DocumentTranslateAsync(string,RequestContent,string,string,bool?,RequestContext)">

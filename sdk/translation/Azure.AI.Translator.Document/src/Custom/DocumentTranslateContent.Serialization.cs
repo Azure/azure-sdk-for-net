@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translator.Document
 {
-    public partial class DocumentTranslateContent
+    public partial class MultipartRequestContent
     {
         internal virtual RequestContent ToRequestContent()
         {

@@ -62,8 +62,8 @@ namespace Azure.AI.Translator.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()));
-            Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", documentTranslateContent);
+            MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()));
+            Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", multipartRequestContent);
         }
 
         [Test]
@@ -74,8 +74,8 @@ namespace Azure.AI.Translator.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()));
-            Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", documentTranslateContent);
+            MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()));
+            Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", multipartRequestContent);
         }
 
         [Test]
@@ -130,11 +130,11 @@ new object()
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()))
+            MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()))
             {
                 Glossary = { BinaryData.FromObjectAsJson(new object()) },
             };
-            Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", documentTranslateContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
+            Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", multipartRequestContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
         }
 
         [Test]
@@ -145,11 +145,11 @@ new object()
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()))
+            MultipartRequestContent multipartRequestContent = new MultipartRequestContent(BinaryData.FromObjectAsJson(new object()))
             {
                 Glossary = { BinaryData.FromObjectAsJson(new object()) },
             };
-            Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", documentTranslateContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
+            Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", multipartRequestContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
         }
     }
 }

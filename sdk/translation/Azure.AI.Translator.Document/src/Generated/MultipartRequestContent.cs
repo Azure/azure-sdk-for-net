@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.AI.Translator.Document
 {
     /// <summary> Document Translate Request / Content. </summary>
-    public partial class DocumentTranslateContent
+    public partial class MultipartRequestContent
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultipartRequestContent"/>. </summary>
         /// <param name="document"> Document to be translated in the form. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="document"/> is null. </exception>
-        public DocumentTranslateContent(BinaryData document)
+        public MultipartRequestContent(BinaryData document)
         {
             Argument.AssertNotNull(document, nameof(document));
 
@@ -25,10 +25,10 @@ namespace Azure.AI.Translator.Document
             Glossary = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultipartRequestContent"/>. </summary>
         /// <param name="document"> Document to be translated in the form. </param>
         /// <param name="glossary"> Glossary / translation memory will be used during translation in the form. </param>
-        internal DocumentTranslateContent(BinaryData document, IList<BinaryData> glossary)
+        internal MultipartRequestContent(BinaryData document, IList<BinaryData> glossary)
         {
             Document = document;
             Glossary = glossary;
