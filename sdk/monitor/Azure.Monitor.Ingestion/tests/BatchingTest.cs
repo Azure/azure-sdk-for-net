@@ -114,7 +114,7 @@ namespace Azure.Monitor.Ingestion.Tests
             {
                 CollectionAssert.AreEqual(
                     expectedBatch,
-                    batch.Logs.Cast<Dictionary<char, string>>().Select(x => x.Single().Key));
+                    batch.Logs.Cast<Dictionary<string, string>>().Select(x => x.Single().Key));
             }
 
             Assert.AreEqual(testCase.ExpectedMaxSerializedItemSize, x.Max(b => b.LogsData.ToMemory().Length));
@@ -161,9 +161,9 @@ namespace Azure.Monitor.Ingestion.Tests
             //write a string that reflects the builder parameters for easier debugging
             private string _testCaseStringRepresentation;
 
-            public Dictionary<char, string>[] ItemsToExport { get; private set; }
+            public Dictionary<string, string>[] ItemsToExport { get; private set; }
 
-            public List<char>[] ExpectedBatchIds { get; private set; }
+            public List<string>[] ExpectedBatchIds { get; private set; }
 
             public int ExpectedMaxSerializedItemSize { get; private set; }
 
@@ -176,13 +176,16 @@ namespace Azure.Monitor.Ingestion.Tests
                 int middleItemSize = LogsIngestionClient.SingleUploadThreshold + middleItemSizeOffset;
                 var itemsToExport = new[]
                 {
-                    new Dictionary<char, string>{ { 'A', new string('a', ItemASize - 8)} },
-                    new Dictionary<char, string>{ { 'B', new string('b', middleItemSize - 8)} },
-                    new Dictionary<char, string>{ { 'C', new string('c', ItemCSize - 8)} },
+                    new Dictionary<string, string>{ { "A", new string('a', ItemASize - 8)} },
+                    new Dictionary<string, string>{ { "B", new string('b', middleItemSize - 8)} },
+                    new Dictionary<string, string>{ { "C", new string('c', ItemCSize - 8)} },
                 };
 
                 // break apart the shorthand batch definitions into the dictionary keys expected in each batch
-                var expectedBatchIds = expectedBatchDefinitions.Split('|').Select(batchDefinition => batchDefinition.ToList()).ToArray();
+                var expectedBatchIds = expectedBatchDefinitions
+                    .Split('|')
+                    .Select(batchDefinition => batchDefinition.Select(c => c.ToString()).ToList())
+                    .ToArray();
 
                 var maxSerializedItemSize = LogsIngestionClient.SingleUploadThreshold + maxSerializedItemSizeOffset;
 
