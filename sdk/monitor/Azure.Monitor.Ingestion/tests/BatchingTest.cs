@@ -106,81 +106,94 @@ namespace Azure.Monitor.Ingestion.Tests
         }
 
         [TestCaseSource(nameof(GetValidateBatchThresholdCases))]
-        public void ValidateBatchThresholds((int MiddleItemSize, string[] BatchDefinitions, int MaxSerializedItem) testCase)
+        public void ValidateBatchThreshold(ValidateBatchThresholdCase testCase)
         {
-            var (middleItemSize, expectedBatchIds, maxSerializedItem) = testCase;
-
-            middleItemSize += LogsIngestionClient.SingleUploadThreshold;
-            maxSerializedItem += LogsIngestionClient.SingleUploadThreshold;
-
-            // when calculating length of serialized object, we subtract "{\"X\":""\}".Length = 8 from the intended item size
-            var entries = new[]
-            {
-                new Dictionary<char, string>{ { 'A', new string('a', 20 - 8)} },
-                new Dictionary<char, string>{ { 'B', new string('b', middleItemSize - 8)} },
-                new Dictionary<char, string>{ { 'C', new string('c', 10 - 8)} },
-            };
-
-            LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
-            Assert.AreEqual(expectedBatchIds.Length, x.Length);
-            foreach (var (expectedBatch, batch) in expectedBatchIds.Zip(x, ValueTuple.Create))
+            LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(testCase.ItemsToExport).ToArray();
+            Assert.AreEqual(testCase.ExpectedBatchIds.Length, x.Length);
+            foreach (var (expectedBatch, batch) in testCase.ExpectedBatchIds.Zip(x, ValueTuple.Create))
             {
                 CollectionAssert.AreEqual(
-                    expectedBatch.AsEnumerable(),
+                    expectedBatch,
                     batch.Logs.Cast<Dictionary<char, string>>().Select(x => x.Single().Key));
             }
 
-            Assert.AreEqual(maxSerializedItem, x.Max(b => b.LogsData.ToMemory().Length));
+            Assert.AreEqual(testCase.ExpectedMaxSerializedItemSize, x.Max(b => b.LogsData.ToMemory().Length));
         }
 
-        public static IEnumerable<(int MiddleItemSizeOffset, string[] BatchDefinitions, int MaxSerializedItemOffset)> GetValidateBatchThresholdCases()
+        public static IEnumerable<ValidateBatchThresholdCase> GetValidateBatchThresholdCases()
         {
-            const int ItemASize = 20;
-            const int ItemBSize = 10;
-
             // An array of items to serialize has the cumulative size of the sum of each item's serialized size plus:
             // - two chars for brackets
             // - one char for each element but the first, for the comma
 
             // the size of A+B is three less than the max, so serialized as an array it meets the exact upper bound
-            yield return (-(ItemASize + 3), new[] { "AB", "C" }, 0); // Items 1+2, 3
+            yield return ValidateBatchThresholdCase.Generate(
+                middleItemSizeOffset: -(ValidateBatchThresholdCase.ItemASize + 3),
+                expectedBatchDefinitions: "AB|C",
+                maxSerializedItemSizeOffset: 0);
 
             // even one more character in them forces A to be yielded before B is added, so B and C are together
-            yield return (-(ItemASize + 2), new[] { "A", "BC" }, -ItemASize + ItemBSize + 1);
+            yield return ValidateBatchThresholdCase.Generate(
+                middleItemSizeOffset: -(ValidateBatchThresholdCase.ItemASize + 2),
+                expectedBatchDefinitions: "A|BC",
+                maxSerializedItemSizeOffset: -ValidateBatchThresholdCase.ItemASize + ValidateBatchThresholdCase.ItemCSize + 1);
 
             // This tests the special case where a single item, serialized as an array, reaches the max size.
             // It is then yielded immediately by itself, without also yielding the previous items.
-            yield return (-2, new[] { "B", "AC" }, 0); // Items 2, 1+3
+            yield return ValidateBatchThresholdCase.Generate(
+                middleItemSizeOffset: -2,
+                expectedBatchDefinitions: "B|AC",
+                maxSerializedItemSizeOffset: 0); // Items 2, 1+3
 
             // This serves as a control on the previous case, that only when the item reaches the max size is it yielded
             // "Out of turn"
-            yield return (-3, new[] { "A", "B", "C" }, -1); // Items 1, 2, 3
+            yield return ValidateBatchThresholdCase.Generate(
+                middleItemSizeOffset: -3,
+                expectedBatchDefinitions: "A|B|C",
+                maxSerializedItemSizeOffset: -1); // Items 1, 2, 3
         }
 
         public class ValidateBatchThresholdCase
         {
-            public Dictionary<char, string>[] ItemsToSerialize { get; }
+            public const int ItemASize = 20;
+            public const int ItemCSize = 12;
 
-            public List<string>[] ExpectedBatchIds { get; }
+            //write a string that reflects the builder parameters for easier debugging
+            private string _testCaseStringRepresentation;
 
-            public int ExpectedMaxSerializedItemSize { get; }
+            public Dictionary<char, string>[] ItemsToExport { get; private set; }
 
+            public List<char>[] ExpectedBatchIds { get; private set; }
 
-            public ValidateBatchThresholdCase(Dictionary<char, string>[] itemsToSerialize, List<string>[] expectedBatchIds, int expectedMaxSerializedItemSize)
+            public int ExpectedMaxSerializedItemSize { get; private set; }
+
+            public override string ToString() => _testCaseStringRepresentation ?? base.ToString();
+
+            public static ValidateBatchThresholdCase Generate(int middleItemSizeOffset, string expectedBatchDefinitions, int maxSerializedItemSizeOffset)
             {
-                ItemsToSerialize = itemsToSerialize;
-                ExpectedBatchIds = expectedBatchIds;
-                ExpectedMaxSerializedItemSize = expectedMaxSerializedItemSize;
+                // when calculating length of serialized object, we subtract "{\"X\":""\}".Length = 8 from the intended item size
+                // to determine the length of the string to generate
+                int middleItemSize = LogsIngestionClient.SingleUploadThreshold + middleItemSizeOffset;
+                var itemsToExport = new[]
+                {
+                    new Dictionary<char, string>{ { 'A', new string('a', ItemASize - 8)} },
+                    new Dictionary<char, string>{ { 'B', new string('b', middleItemSize - 8)} },
+                    new Dictionary<char, string>{ { 'C', new string('c', ItemCSize - 8)} },
+                };
+
+                // break apart the shorthand batch definitions into the dictionary keys expected in each batch
+                var expectedBatchIds = expectedBatchDefinitions.Split('|').Select(batchDefinition => batchDefinition.ToList()).ToArray();
+
+                var maxSerializedItemSize = LogsIngestionClient.SingleUploadThreshold + maxSerializedItemSizeOffset;
+
+                return new ValidateBatchThresholdCase()
+                {
+                    ItemsToExport = itemsToExport,
+                    ExpectedBatchIds = expectedBatchIds,
+                    ExpectedMaxSerializedItemSize = maxSerializedItemSize,
+                    _testCaseStringRepresentation = $"{nameof(ValidateBatchThresholdCase)}.{nameof(Generate)}({middleItemSizeOffset}, {expectedBatchDefinitions}, {maxSerializedItemSizeOffset})"
+                };
             }
-
         }
-
-        /*
-         Size tests:
-          21, 1000, 12 -> 1024, 14
-          21, 1001, 12 -> 23, 1016
-          21, 1021, 12 -> 23, 1023, 14
-          21, 1022, 12 -> 1024, 36
-         */
     }
 }
