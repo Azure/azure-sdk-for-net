@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+-Add `200` to the response code of the `SyncFunctionTriggers`
+
 ### Other Changes
 
 ## 1.1.0-beta.4 (2023-11-30)
@@ -59,7 +61,7 @@
   `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
 - Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `PublicCertificateData.Thumbprint` has been hidden but is still available.
-  
+
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.32.0.
