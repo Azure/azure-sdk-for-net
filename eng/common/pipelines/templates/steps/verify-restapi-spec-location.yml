@@ -17,7 +17,6 @@ steps:
         -ServiceDirectory "${{ parameters.ServiceDirectory }}"
         -PackageName "${{ parameters.PackageName }}"
         -ArtifactLocation: "${{ parameters.ArtifactLocation }}"
-        -GitHubPat "${{  parameters.GitHubSpecRepoPat }}"
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify REST API spec location for "${{ parameters.PackageName }}"
