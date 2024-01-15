@@ -17,9 +17,10 @@ namespace Azure.ResourceManager.Nginx
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Nginx.NginxCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.NginxCertificateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NginxCertificateData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NginxCertificateData : Azure.ResourceManager.Models.ResourceData
     {
-        public NginxCertificateData(Azure.Core.AzureLocation location) { }
+        public NginxCertificateData() { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxCertificateProperties Properties { get { throw null; } set { } }
     }
     public partial class NginxCertificateResource : Azure.ResourceManager.ArmResource
@@ -28,17 +29,11 @@ namespace Azure.ResourceManager.Nginx
         protected NginxCertificateResource() { }
         public virtual Azure.ResourceManager.Nginx.NginxCertificateData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string certificateName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxCertificateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.NginxCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxCertificateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.NginxCertificateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -59,9 +54,10 @@ namespace Azure.ResourceManager.Nginx
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Nginx.NginxConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.NginxConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NginxConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NginxConfigurationData : Azure.ResourceManager.Models.ResourceData
     {
-        public NginxConfigurationData(Azure.Core.AzureLocation location) { }
+        public NginxConfigurationData() { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties Properties { get { throw null; } set { } }
     }
     public partial class NginxConfigurationResource : Azure.ResourceManager.ArmResource
@@ -70,17 +66,11 @@ namespace Azure.ResourceManager.Nginx
         protected NginxConfigurationResource() { }
         public virtual Azure.ResourceManager.Nginx.NginxConfigurationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string configurationName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxConfigurationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.NginxConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.NginxConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -173,12 +163,12 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     public static partial class ArmNginxModelFactory
     {
-        public static Azure.ResourceManager.Nginx.NginxCertificateData NginxCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Nginx.Models.NginxCertificateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxCertificateProperties NginxCertificateProperties(Azure.ResourceManager.Nginx.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.ProvisioningState?), string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.NginxConfigurationData NginxConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties NginxConfigurationProperties(Azure.ResourceManager.Nginx.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> files = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> protectedFiles = null, string packageData = null, string rootFile = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxCertificateData NginxCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxCertificateProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxCertificateProperties NginxCertificateProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxConfigurationData NginxConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties NginxConfigurationProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> files = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> protectedFiles = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage package = null, string rootFile = null) { throw null; }
         public static Azure.ResourceManager.Nginx.NginxDeploymentData NginxDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties properties = null, string skuName = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties NginxDeploymentProperties(Azure.ResourceManager.Nginx.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.ProvisioningState?), string nginxVersion = null, string managedResourceGroup = null, Azure.ResourceManager.Nginx.Models.NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = default(bool?), Azure.ResourceManager.Nginx.Models.NginxStorageAccount loggingStorageAccount = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties NginxDeploymentProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), string nginxVersion = null, string managedResourceGroup = null, Azure.ResourceManager.Nginx.Models.NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = default(bool?), Azure.ResourceManager.Nginx.Models.NginxStorageAccount loggingStorageAccount = null, int? scalingCapacity = default(int?), string userPreferredEmail = null) { throw null; }
     }
     public partial class NginxCertificateProperties
     {
@@ -186,7 +176,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public string CertificateVirtualPath { get { throw null; } set { } }
         public string KeyVaultSecretId { get { throw null; } set { } }
         public string KeyVirtualPath { get { throw null; } set { } }
-        public Azure.ResourceManager.Nginx.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class NginxConfigurationFile
     {
@@ -194,13 +184,19 @@ namespace Azure.ResourceManager.Nginx.Models
         public string Content { get { throw null; } set { } }
         public string VirtualPath { get { throw null; } set { } }
     }
+    public partial class NginxConfigurationPackage
+    {
+        public NginxConfigurationPackage() { }
+        public string Data { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ProtectedFiles { get { throw null; } }
+    }
     public partial class NginxConfigurationProperties
     {
         public NginxConfigurationProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> Files { get { throw null; } }
-        public string PackageData { get { throw null; } set { } }
+        public Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage Package { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> ProtectedFiles { get { throw null; } }
-        public Azure.ResourceManager.Nginx.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
         public string RootFile { get { throw null; } set { } }
     }
     public partial class NginxDeploymentPatch
@@ -221,13 +217,17 @@ namespace Azure.ResourceManager.Nginx.Models
         public string ManagedResourceGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxNetworkProfile NetworkProfile { get { throw null; } set { } }
         public string NginxVersion { get { throw null; } }
-        public Azure.ResourceManager.Nginx.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
+        public int? ScalingCapacity { get { throw null; } set { } }
+        public string UserPreferredEmail { get { throw null; } set { } }
     }
     public partial class NginxDeploymentUpdateProperties
     {
         public NginxDeploymentUpdateProperties() { }
         public bool? EnableDiagnosticsSupport { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxStorageAccount LoggingStorageAccount { get { throw null; } set { } }
+        public int? ScalingCapacity { get { throw null; } set { } }
+        public string UserPreferredEmail { get { throw null; } set { } }
     }
     public partial class NginxFrontendIPConfiguration
     {
@@ -239,14 +239,14 @@ namespace Azure.ResourceManager.Nginx.Models
     {
         public NginxNetworkProfile() { }
         public Azure.ResourceManager.Nginx.Models.NginxFrontendIPConfiguration FrontEndIPConfiguration { get { throw null; } set { } }
-        public string NetworkInterfaceSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkInterfaceSubnetId { get { throw null; } set { } }
     }
     public partial class NginxPrivateIPAddress
     {
         public NginxPrivateIPAddress() { }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NginxPrivateIPAllocationMethod : System.IEquatable<Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod>
@@ -266,35 +266,35 @@ namespace Azure.ResourceManager.Nginx.Models
         public static bool operator !=(Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod left, Azure.ResourceManager.Nginx.Models.NginxPrivateIPAllocationMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NginxProvisioningState : System.IEquatable<Azure.ResourceManager.Nginx.Models.NginxProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NginxProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Nginx.Models.NginxProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxProvisioningState left, Azure.ResourceManager.Nginx.Models.NginxProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Nginx.Models.NginxProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Nginx.Models.NginxProvisioningState left, Azure.ResourceManager.Nginx.Models.NginxProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NginxStorageAccount
     {
         public NginxStorageAccount() { }
         public string AccountName { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Nginx.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Nginx.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Nginx.Models.ProvisioningState left, Azure.ResourceManager.Nginx.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Nginx.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Nginx.Models.ProvisioningState left, Azure.ResourceManager.Nginx.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

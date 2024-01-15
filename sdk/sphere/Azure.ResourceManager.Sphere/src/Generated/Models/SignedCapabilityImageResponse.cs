@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Signed device capability image response
-    /// Serialized Name: SignedCapabilityImageResponse
-    /// </summary>
+    /// <summary> Signed device capability image response. </summary>
     public partial class SignedCapabilityImageResponse
     {
         /// <summary> Initializes a new instance of <see cref="SignedCapabilityImageResponse"/>. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SignedCapabilityImageResponse"/>. </summary>
-        /// <param name="image">
-        /// The signed device capability image as a UTF-8 encoded base 64 string.
-        /// Serialized Name: SignedCapabilityImageResponse.image
-        /// </param>
+        /// <param name="image"> The signed device capability image as a UTF-8 encoded base 64 string. </param>
         internal SignedCapabilityImageResponse(string image)
         {
             Image = image;
         }
 
-        /// <summary>
-        /// The signed device capability image as a UTF-8 encoded base 64 string.
-        /// Serialized Name: SignedCapabilityImageResponse.image
-        /// </summary>
+        /// <summary> The signed device capability image as a UTF-8 encoded base 64 string. </summary>
         public string Image { get; }
     }
 }

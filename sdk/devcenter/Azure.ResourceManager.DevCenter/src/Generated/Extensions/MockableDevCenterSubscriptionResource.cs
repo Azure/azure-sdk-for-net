@@ -80,6 +80,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,6 +142,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -149,6 +173,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -171,6 +203,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +244,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationStatuses_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
@@ -244,6 +284,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
@@ -267,6 +311,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
@@ -289,6 +337,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,6 +376,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
@@ -358,6 +414,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -380,6 +440,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,6 +468,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -426,6 +498,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

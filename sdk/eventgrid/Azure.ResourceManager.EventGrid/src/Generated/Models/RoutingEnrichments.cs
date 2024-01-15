@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingEnrichments"/>. </summary>
-        /// <param name="static"></param>
+        /// <param name="static">
+        /// Please note <see cref="StaticRoutingEnrichment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StaticStringRoutingEnrichment"/>.
+        /// </param>
         /// <param name="dynamic"></param>
         internal RoutingEnrichments(IList<StaticRoutingEnrichment> @static, IList<DynamicRoutingEnrichment> @dynamic)
         {
@@ -29,7 +32,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             Dynamic = @dynamic;
         }
 
-        /// <summary> Gets the static. </summary>
+        /// <summary>
+        /// Gets the static
+        /// Please note <see cref="StaticRoutingEnrichment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StaticStringRoutingEnrichment"/>.
+        /// </summary>
         public IList<StaticRoutingEnrichment> Static { get; }
         /// <summary> Gets the dynamic. </summary>
         public IList<DynamicRoutingEnrichment> Dynamic { get; }

@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Description for the Client resource. </param>
         /// <param name="authenticationName"> The name presented by the client for authentication. The default value is the name of the resource. </param>
-        /// <param name="authentication"> Authentication information for the client. </param>
         /// <param name="clientCertificateAuthentication"> The client certificate authentication information. </param>
         /// <param name="state"> Indicates if the client is enabled or not. Default value is Enabled. </param>
         /// <param name="attributes">
@@ -101,11 +100,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the Client resource. </param>
         /// <returns> A new <see cref="EventGrid.EventGridNamespaceClientData"/> instance for mocking. </returns>
-        public static EventGridNamespaceClientData EventGridNamespaceClientData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string authenticationName = null, EventGridNamespaceClientAuthentication authentication = null, ClientCertificateAuthentication clientCertificateAuthentication = null, EventGridNamespaceClientState? state = null, IDictionary<string, BinaryData> attributes = null, EventGridNamespaceClientProvisioningState? provisioningState = null)
+        public static EventGridNamespaceClientData EventGridNamespaceClientData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string authenticationName = null, ClientCertificateAuthentication clientCertificateAuthentication = null, EventGridNamespaceClientState? state = null, IDictionary<string, BinaryData> attributes = null, EventGridNamespaceClientProvisioningState? provisioningState = null)
         {
             attributes ??= new Dictionary<string, BinaryData>();
 
-            return new EventGridNamespaceClientData(id, name, resourceType, systemData, description, authenticationName, authentication, clientCertificateAuthentication, state, attributes, provisioningState);
+            return new EventGridNamespaceClientData(id, name, resourceType, systemData, description, authenticationName, clientCertificateAuthentication, state, attributes, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGrid.EventGridDomainData"/>. </summary>
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery / dead-lettering.
         /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="Models.WebHookEventSubscriptionDestination"/>.
+        /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="Models.WebHookEventSubscriptionDestination"/>.
         /// </param>
         /// <param name="deliveryWithResourceIdentity">
         /// Information about the destination where events have to be delivered for the event subscription.
@@ -274,7 +273,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="topicsHostname"> Topics configuration information for the namespace resource. </param>
         /// <param name="topicSpacesConfiguration"> Topic spaces configuration information for the namespace resource. </param>
         /// <param name="isZoneRedundant">
-        /// Allows the user to specify if the service is zone-redundant. This is a required property and user needs to specify this value explicitly.
+        /// This is an optional property and it allows the user to specify if the namespace resource supports zone-redundancy capability or not. If this
+        /// property is not specified explicitly by the user, its default value depends on the following conditions:
+        ///     a. For Availability Zones enabled regions - The default property value would be true.
+        ///     b. For non-Availability Zones enabled regions - The default property value would be false.
         /// Once specified, this property cannot be updated.
         /// </param>
         /// <param name="publicNetworkAccess">
@@ -492,6 +494,24 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new PartnerTopicData(id, name, resourceType, systemData, tags, location, identity, partnerRegistrationImmutableId, source, eventTypeInfo, expireOnIfNotActivated, provisioningState, activationState, partnerTopicFriendlyDescription, messageForActivation);
         }
 
+        /// <summary> Initializes a new instance of <see cref="EventGrid.NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state to reflect configuration state and indicate status of nsp profile configuration retrieval. </param>
+        /// <param name="provisioningIssues"> Provisioning issues to reflect status when attempting to retrieve nsp profile configuration. </param>
+        /// <param name="networkSecurityPerimeter"> Perimeter info for nsp association. </param>
+        /// <param name="resourceAssociation"> Nsp association name and access mode of association. </param>
+        /// <param name="profile"> Nsp profile configuration, access rules and diagnostic settings. </param>
+        /// <returns> A new <see cref="EventGrid.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterConfigProvisioningState? provisioningState = null, IEnumerable<NetworkSecurityPerimeterConfigurationIssues> provisioningIssues = null, NetworkSecurityPerimeterInfo networkSecurityPerimeter = null, ResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterConfigurationProfile profile = null)
+        {
+            provisioningIssues ??= new List<NetworkSecurityPerimeterConfigurationIssues>();
+
+            return new NetworkSecurityPerimeterConfigurationData(id, name, resourceType, systemData, provisioningState, provisioningIssues?.ToList(), networkSecurityPerimeter, resourceAssociation, profile);
+        }
+
         /// <summary> Initializes a new instance of <see cref="EventGrid.EventGridNamespacePermissionBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -659,13 +679,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="sourceResourceFormat"> Source resource format. </param>
         /// <param name="supportedScopesForSource"> Supported source scopes. </param>
         /// <param name="areRegionalAndGlobalSourcesSupported"> Flag to indicate that a topic type can support both regional or global system topics. </param>
+        /// <param name="additionalEnforcedPermissions"> Permissions which are enforced for creating and updating system topics of this this topic type. </param>
         /// <returns> A new <see cref="EventGrid.TopicTypeData"/> instance for mocking. </returns>
-        public static TopicTypeData TopicTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provider = null, string displayName = null, string description = null, EventGridResourceRegionType? resourceRegionType = null, TopicTypeProvisioningState? provisioningState = null, IEnumerable<string> supportedLocations = null, string sourceResourceFormat = null, IEnumerable<TopicTypeSourceScope> supportedScopesForSource = null, bool? areRegionalAndGlobalSourcesSupported = null)
+        public static TopicTypeData TopicTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provider = null, string displayName = null, string description = null, EventGridResourceRegionType? resourceRegionType = null, TopicTypeProvisioningState? provisioningState = null, IEnumerable<string> supportedLocations = null, string sourceResourceFormat = null, IEnumerable<TopicTypeSourceScope> supportedScopesForSource = null, bool? areRegionalAndGlobalSourcesSupported = null, IEnumerable<TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions = null)
         {
             supportedLocations ??= new List<string>();
             supportedScopesForSource ??= new List<TopicTypeSourceScope>();
+            additionalEnforcedPermissions ??= new List<TopicTypeAdditionalEnforcedPermission>();
 
-            return new TopicTypeData(id, name, resourceType, systemData, provider, displayName, description, resourceRegionType, provisioningState, supportedLocations?.ToList(), sourceResourceFormat, supportedScopesForSource?.ToList(), areRegionalAndGlobalSourcesSupported);
+            return new TopicTypeData(id, name, resourceType, systemData, provider, displayName, description, resourceRegionType, provisioningState, supportedLocations?.ToList(), sourceResourceFormat, supportedScopesForSource?.ToList(), areRegionalAndGlobalSourcesSupported, additionalEnforcedPermissions?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGrid.VerifiedPartnerData"/>. </summary>

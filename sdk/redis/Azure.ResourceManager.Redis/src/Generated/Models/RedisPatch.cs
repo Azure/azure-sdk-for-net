@@ -33,8 +33,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="shardCount"> The number of shards to be created on a Premium Cluster Cache. </param>
         /// <param name="minimumTlsVersion"> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
+        /// <param name="updateChannel"> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
-        internal RedisPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, RedisSku sku)
+        internal RedisPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, RedisSku sku)
         {
             Tags = tags;
             Identity = identity;
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.Redis.Models
             ShardCount = shardCount;
             MinimumTlsVersion = minimumTlsVersion;
             PublicNetworkAccess = publicNetworkAccess;
+            UpdateChannel = updateChannel;
             Sku = sku;
         }
 
@@ -72,6 +74,8 @@ namespace Azure.ResourceManager.Redis.Models
         public RedisTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
         public RedisPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </summary>
+        public UpdateChannel? UpdateChannel { get; set; }
         /// <summary> The SKU of the Redis cache to deploy. </summary>
         public RedisSku Sku { get; set; }
     }

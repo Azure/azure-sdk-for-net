@@ -27,8 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         public override void OnEnd(Activity activity)
         {
-            // Validate if live metrics is enabled.
-            if (!_manager._state.IsEnabled())
+            // Check if live metrics is enabled.
+            if (!_manager.ShouldCollect())
             {
                 return;
             }

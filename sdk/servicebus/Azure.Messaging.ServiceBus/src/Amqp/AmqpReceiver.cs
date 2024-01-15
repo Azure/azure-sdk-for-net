@@ -130,17 +130,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
 
-        private static IReadOnlyList<ServiceBusReceivedMessage> s_backingEmptyList;
         private readonly bool _isProcessor;
 
-        private static IReadOnlyList<ServiceBusReceivedMessage> EmptyList
-        {
-            get
-            {
-                s_backingEmptyList ??= new ReadOnlyCollection<ServiceBusReceivedMessage>(new List<ServiceBusReceivedMessage>(0));
-                return s_backingEmptyList;
-            }
-        }
+        private static readonly IReadOnlyList<ServiceBusReceivedMessage> s_emptyReceivedMessageList = Array.Empty<ServiceBusReceivedMessage>();
+
+        private static readonly IReadOnlyList<AmqpMessage> s_emptyAmqpMessageList = Array.Empty<AmqpMessage>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
@@ -372,7 +366,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     cancellationToken).ConfigureAwait(false);
 
                 IReadOnlyCollection<AmqpMessage> messageList =
-                    messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived.ToList();
+                    messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived?.ToList() ?? s_emptyAmqpMessageList;
 
                 // If this is a session receiver and we didn't receive all requested messages, we need to drain the credits
                 // to ensure FIFO ordering within each session.
@@ -398,7 +392,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     message.Dispose();
                 }
 
-                return receivedMessages ?? EmptyList;
+                return receivedMessages ?? s_emptyReceivedMessageList;
             }
             catch (OperationCanceledException)
             {
@@ -1050,13 +1044,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages ?? EmptyList;
+                return messages ?? s_emptyReceivedMessageList;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return EmptyList;
+                return s_emptyReceivedMessageList;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -1375,7 +1369,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages ?? EmptyList;
+            return messages ?? s_emptyReceivedMessageList;
         }
 
         /// <summary>

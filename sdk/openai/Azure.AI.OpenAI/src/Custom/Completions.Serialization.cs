@@ -70,12 +70,4 @@ public partial class Completions
         }
         return new Completions(id, created, Optional.ToList(promptAnnotations), choices, usage);
     }
-
-    /// <summary> Deserializes the model from a raw response. </summary>
-    /// <param name="response"> The response to deserialize the model from. </param>
-    internal static Completions FromResponse(Response response)
-    {
-        using var document = JsonDocument.Parse(response.Content);
-        return DeserializeCompletions(document.RootElement);
-    }
 }
