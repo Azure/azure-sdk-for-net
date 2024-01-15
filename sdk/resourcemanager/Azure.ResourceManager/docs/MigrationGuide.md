@@ -650,7 +650,7 @@ var virtualMachineDataToModify = new VirtualMachineData(AzureLocation.EastUS)
 VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
 var virtualMachineModify = (await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachine.Data.Name, virtualMachineDataToModify)).Value;
 ```
-**The UpdateAsync method**
+**Update a few properties using `UpdateAsync` method**
 ```C# Snippet:UpdateByUpdateAsync_Fluent_VirtualMachine
 var patch = new VirtualMachinePatch()
 {
