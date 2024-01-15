@@ -8,6 +8,7 @@
  "Enums": [
   {
    "$id": "2",
+   "Kind": "Enum",
    "Name": "DistributionModeKind",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -38,6 +39,7 @@
   },
   {
    "$id": "6",
+   "Kind": "Enum",
    "Name": "QueueSelectorAttachmentKind",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -80,6 +82,7 @@
   },
   {
    "$id": "12",
+   "Kind": "Enum",
    "Name": "RouterRuleKind",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -122,6 +125,7 @@
   },
   {
    "$id": "18",
+   "Kind": "Enum",
    "Name": "WorkerSelectorAttachmentKind",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -164,6 +168,7 @@
   },
   {
    "$id": "24",
+   "Kind": "Enum",
    "Name": "ExceptionTriggerKind",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -188,6 +193,7 @@
   },
   {
    "$id": "27",
+   "Kind": "Enum",
    "Name": "ExceptionActionKind",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -218,6 +224,7 @@
   },
   {
    "$id": "31",
+   "Kind": "Enum",
    "Name": "RouterJobStatus",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -302,6 +309,7 @@
   },
   {
    "$id": "44",
+   "Kind": "Enum",
    "Name": "LabelOperator",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -350,6 +358,7 @@
   },
   {
    "$id": "51",
+   "Kind": "Enum",
    "Name": "RouterWorkerSelectorStatus",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -374,6 +383,7 @@
   },
   {
    "$id": "54",
+   "Kind": "Enum",
    "Name": "JobMatchingModeKind",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -404,6 +414,7 @@
   },
   {
    "$id": "58",
+   "Kind": "Enum",
    "Name": "RouterJobStatusSelector",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -501,6 +512,7 @@
   },
   {
    "$id": "73",
+   "Kind": "Enum",
    "Name": "RouterWorkerState",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -531,6 +543,7 @@
   },
   {
    "$id": "77",
+   "Kind": "Enum",
    "Name": "RouterWorkerStateSelector",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -568,6 +581,7 @@
   },
   {
    "$id": "82",
+   "Kind": "Enum",
    "Name": "ScoringRuleParameterSelector",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -592,6 +606,7 @@
   },
   {
    "$id": "85",
+   "Kind": "Enum",
    "Name": "ExpressionRouterRuleLanguage",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -610,6 +625,7 @@
   },
   {
    "$id": "87",
+   "Kind": "Enum",
    "Name": "Versions",
    "EnumValueType": "String",
    "AllowedValues": [
@@ -630,6 +646,7 @@
  "Models": [
   {
    "$id": "89",
+   "Kind": "Model",
    "Name": "DistributionPolicy",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Policy governing how jobs are distributed to workers",
@@ -643,8 +660,8 @@
      "Description": "The entity tag for this resource.",
      "Type": {
       "$id": "91",
-      "Name": "eTag",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -657,8 +674,8 @@
      "Description": "Id of a distribution policy.",
      "Type": {
       "$id": "93",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -671,8 +688,8 @@
      "Description": "Friendly name of this policy.",
      "Type": {
       "$id": "95",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -685,8 +702,8 @@
      "Description": "Number of seconds after which any offers created under this policy will be expired.",
      "Type": {
       "$id": "97",
-      "Name": "float64",
-      "Kind": "Float64",
+      "Kind": "Primitive",
+      "Name": "Float64",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -699,6 +716,7 @@
      "Description": "Mode governing the specific distribution method.",
      "Type": {
       "$id": "99",
+      "Kind": "Model",
       "Name": "DistributionMode",
       "Namespace": "AzureCommunicationRoutingService",
       "Description": "Abstract base class for defining a distribution mode.",
@@ -713,8 +731,8 @@
         "Description": "Governs the minimum desired number of active concurrent offers a job can have.",
         "Type": {
          "$id": "101",
-         "Name": "int32",
-         "Kind": "Int32",
+         "Kind": "Primitive",
+         "Name": "Int32",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -727,8 +745,8 @@
         "Description": "Governs the maximum number of active concurrent offers a job can have.",
         "Type": {
          "$id": "103",
-         "Name": "int32",
-         "Kind": "Int32",
+         "Kind": "Primitive",
+         "Name": "Int32",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -741,8 +759,8 @@
         "Description": "If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for a job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false.",
         "Type": {
          "$id": "105",
-         "Name": "boolean",
-         "Kind": "Boolean",
+         "Kind": "Primitive",
+         "Name": "Boolean",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -772,6 +790,7 @@
   },
   {
    "$id": "107",
+   "Kind": "Model",
    "Name": "PagedDistributionPolicy",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of DistributionPolicy items",
@@ -785,6 +804,7 @@
      "Description": "The DistributionPolicy items on this page",
      "Type": {
       "$id": "109",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "89"
@@ -801,8 +821,8 @@
      "Description": "The link to the next page of items",
      "Type": {
       "$id": "111",
-      "Name": "ResourceLocation",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -812,6 +832,7 @@
   },
   {
    "$id": "112",
+   "Kind": "Model",
    "Name": "ClassificationPolicy",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A container for the rules that govern how jobs are classified.",
@@ -825,8 +846,8 @@
      "Description": "The entity tag for this resource.",
      "Type": {
       "$id": "114",
-      "Name": "eTag",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -839,8 +860,8 @@
      "Description": "Id of a classification policy.",
      "Type": {
       "$id": "116",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -853,8 +874,8 @@
      "Description": "Friendly name of this policy.",
      "Type": {
       "$id": "118",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -867,8 +888,8 @@
      "Description": "Id of a fallback queue to select if queue selector attachments doesn't find a match.",
      "Type": {
       "$id": "120",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -881,9 +902,11 @@
      "Description": "Queue selector attachments used to resolve a queue for a job.",
      "Type": {
       "$id": "122",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "123",
+       "Kind": "Model",
        "Name": "QueueSelectorAttachment",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "An attachment of queue selectors to resolve a queue to a job from a classification policy.",
@@ -917,6 +940,7 @@
      "Description": "A rule to determine a priority score for a job.",
      "Type": {
       "$id": "126",
+      "Kind": "Model",
       "Name": "RouterRule",
       "Namespace": "AzureCommunicationRoutingService",
       "Description": "A rule of one of the following types:\nStaticRule:  A rule providing static rules that always return the same result, regardless of input.\nDirectMapRule:  A rule that return the same labels as the input labels.\nExpressionRule: A rule providing inline expression rules.\nFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.\nWebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.",
@@ -948,9 +972,11 @@
      "Description": "Worker selector attachments used to attach worker selectors to a job.",
      "Type": {
       "$id": "129",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "130",
+       "Kind": "Model",
        "Name": "WorkerSelectorAttachment",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "An attachment which attaches worker selectors to a job.",
@@ -990,6 +1016,7 @@
   },
   {
    "$id": "132",
+   "Kind": "Model",
    "Name": "PagedClassificationPolicy",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of ClassificationPolicy items",
@@ -1003,6 +1030,7 @@
      "Description": "The ClassificationPolicy items on this page",
      "Type": {
       "$id": "134",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "112"
@@ -1019,8 +1047,8 @@
      "Description": "The link to the next page of items",
      "Type": {
       "$id": "136",
-      "Name": "ResourceLocation",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1030,6 +1058,7 @@
   },
   {
    "$id": "137",
+   "Kind": "Model",
    "Name": "ExceptionPolicy",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A policy that defines actions to execute when exception are triggered.",
@@ -1043,8 +1072,8 @@
      "Description": "The entity tag for this resource.",
      "Type": {
       "$id": "139",
-      "Name": "eTag",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -1057,8 +1086,8 @@
      "Description": "Id of an exception policy.",
      "Type": {
       "$id": "141",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -1071,8 +1100,8 @@
      "Description": "Friendly name of this policy.",
      "Type": {
       "$id": "143",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1085,9 +1114,11 @@
      "Description": "A collection of exception rules on the exception policy.",
      "Type": {
       "$id": "145",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "146",
+       "Kind": "Model",
        "Name": "ExceptionRule",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "A rule that defines actions to execute upon a specific trigger.",
@@ -1101,8 +1132,8 @@
          "Description": "Id of an exception rule.",
          "Type": {
           "$id": "148",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -1115,6 +1146,7 @@
          "Description": "The trigger for this exception rule.",
          "Type": {
           "$id": "150",
+          "Kind": "Model",
           "Name": "ExceptionTrigger",
           "Namespace": "AzureCommunicationRoutingService",
           "Description": "Abstract base class for defining a trigger for exception rules.",
@@ -1146,9 +1178,11 @@
          "Description": "A collection of actions to perform once the exception is triggered.",
          "Type": {
           "$id": "153",
+          "Kind": "Array",
           "Name": "Array",
           "ElementType": {
            "$id": "154",
+           "Kind": "Model",
            "Name": "ExceptionAction",
            "Namespace": "AzureCommunicationRoutingService",
            "Description": "The action to take when the exception is triggered.",
@@ -1163,8 +1197,8 @@
              "Description": "Unique Id of the exception action.",
              "Type": {
               "$id": "156",
-              "Name": "string",
-              "Kind": "String",
+              "Kind": "Primitive",
+              "Name": "String",
               "IsNullable": false
              },
              "IsRequired": false,
@@ -1209,6 +1243,7 @@
   },
   {
    "$id": "158",
+   "Kind": "Model",
    "Name": "PagedExceptionPolicy",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of ExceptionPolicy items",
@@ -1222,6 +1257,7 @@
      "Description": "The ExceptionPolicy items on this page",
      "Type": {
       "$id": "160",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "137"
@@ -1238,8 +1274,8 @@
      "Description": "The link to the next page of items",
      "Type": {
       "$id": "162",
-      "Name": "ResourceLocation",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1249,6 +1285,7 @@
   },
   {
    "$id": "163",
+   "Kind": "Model",
    "Name": "RouterQueue",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A queue that can contain jobs to be routed.",
@@ -1262,8 +1299,8 @@
      "Description": "The entity tag for this resource.",
      "Type": {
       "$id": "165",
-      "Name": "eTag",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -1276,8 +1313,8 @@
      "Description": "Id of a queue.",
      "Type": {
       "$id": "167",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -1290,8 +1327,8 @@
      "Description": "Friendly name of this queue.",
      "Type": {
       "$id": "169",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1304,8 +1341,8 @@
      "Description": "Id of a distribution policy that will determine how a job is distributed to workers.",
      "Type": {
       "$id": "171",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1318,17 +1355,18 @@
      "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "173",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "174",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "175",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
+       "Kind": "Intrinsic",
+       "Name": "unknown",
        "IsNullable": false
       },
       "IsNullable": false
@@ -1343,8 +1381,8 @@
      "Description": "Id of an exception policy that determines various job escalation rules.",
      "Type": {
       "$id": "177",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1354,6 +1392,7 @@
   },
   {
    "$id": "178",
+   "Kind": "Model",
    "Name": "PagedRouterQueue",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of RouterQueue items",
@@ -1367,6 +1406,7 @@
      "Description": "The RouterQueue items on this page",
      "Type": {
       "$id": "180",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "163"
@@ -1383,8 +1423,8 @@
      "Description": "The link to the next page of items",
      "Type": {
       "$id": "182",
-      "Name": "ResourceLocation",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1394,6 +1434,7 @@
   },
   {
    "$id": "183",
+   "Kind": "Model",
    "Name": "RouterJob",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A unit of work to be routed",
@@ -1407,8 +1448,8 @@
      "Description": "The entity tag for this resource.",
      "Type": {
       "$id": "185",
-      "Name": "eTag",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -1421,8 +1462,8 @@
      "Description": "Id of a job.",
      "Type": {
       "$id": "187",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -1435,8 +1476,8 @@
      "Description": "Reference to an external parent context, eg. call ID.",
      "Type": {
       "$id": "189",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1460,8 +1501,8 @@
      "Description": "Timestamp a job was queued in UTC.",
      "Type": {
       "$id": "192",
-      "Name": "utcDateTime",
-      "Kind": "DateTime",
+      "Kind": "Primitive",
+      "Name": "DateTime",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1474,8 +1515,8 @@
      "Description": "The channel identifier. eg. voice, chat, etc.",
      "Type": {
       "$id": "194",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1488,8 +1529,8 @@
      "Description": "Id of a classification policy used for classifying this job.",
      "Type": {
       "$id": "196",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1502,8 +1543,8 @@
      "Description": "Id of a queue that this job is queued to.",
      "Type": {
       "$id": "198",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1516,8 +1557,8 @@
      "Description": "Priority of this job.",
      "Type": {
       "$id": "200",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1530,8 +1571,8 @@
      "Description": "Reason code for cancelled or closed jobs.",
      "Type": {
       "$id": "202",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1544,9 +1585,11 @@
      "Description": "A collection of manually specified worker selectors, which a worker must satisfy in order to process this job.",
      "Type": {
       "$id": "204",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "205",
+       "Kind": "Model",
        "Name": "RouterWorkerSelector",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "Describes a condition that must be met against a set of labels for worker selection.",
@@ -1560,8 +1603,8 @@
          "Description": "The label key to query against.",
          "Type": {
           "$id": "207",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -1585,8 +1628,8 @@
          "Description": "The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean.",
          "Type": {
           "$id": "210",
-          "Name": "Intrinsic",
-          "Kind": "unknown",
+          "Kind": "Intrinsic",
+          "Name": "unknown",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1599,8 +1642,8 @@
          "Description": "Describes how long this label selector is valid in seconds.",
          "Type": {
           "$id": "212",
-          "Name": "float64",
-          "Kind": "Float64",
+          "Kind": "Primitive",
+          "Name": "Float64",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1613,8 +1656,8 @@
          "Description": "Pushes a job to the front of the queue as long as this selector is active.",
          "Type": {
           "$id": "214",
-          "Name": "boolean",
-          "Kind": "Boolean",
+          "Kind": "Primitive",
+          "Name": "Boolean",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1638,8 +1681,8 @@
          "Description": "The time at which this worker selector expires in UTC.",
          "Type": {
           "$id": "217",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1659,6 +1702,7 @@
      "Description": "A collection of worker selectors attached by a classification policy, which a worker must satisfy in order to process this job.",
      "Type": {
       "$id": "219",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "205"
@@ -1675,17 +1719,18 @@
      "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "221",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "222",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "223",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
+       "Kind": "Intrinsic",
+       "Name": "unknown",
        "IsNullable": false
       },
       "IsNullable": false
@@ -1700,15 +1745,17 @@
      "Description": "A collection of the assignments of the job. Key is AssignmentId.",
      "Type": {
       "$id": "225",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "226",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "227",
+       "Kind": "Model",
        "Name": "RouterJobAssignment",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "Assignment details of a job to a worker.",
@@ -1722,8 +1769,8 @@
          "Description": "Id of a job assignment.",
          "Type": {
           "$id": "229",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -1736,8 +1783,8 @@
          "Description": "Id of the Worker assigned to the job.",
          "Type": {
           "$id": "231",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1750,8 +1797,8 @@
          "Description": "Timestamp when the job was assigned to a worker in UTC.",
          "Type": {
           "$id": "233",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -1764,8 +1811,8 @@
          "Description": "Timestamp when the job was marked as completed after being assigned in UTC.",
          "Type": {
           "$id": "235",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1778,8 +1825,8 @@
          "Description": "Timestamp when the job was marked as closed after being completed in UTC.",
          "Type": {
           "$id": "237",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1799,17 +1846,18 @@
      "Description": "A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "239",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "240",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "241",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
+       "Kind": "Intrinsic",
+       "Name": "unknown",
        "IsNullable": false
       },
       "IsNullable": false
@@ -1824,9 +1872,11 @@
      "Description": "Notes attached to a job, sorted by timestamp.",
      "Type": {
       "$id": "243",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "244",
+       "Kind": "Model",
        "Name": "RouterJobNote",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "A note attached to a job.",
@@ -1840,8 +1890,8 @@
          "Description": "The message contained in the note.",
          "Type": {
           "$id": "246",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -1854,8 +1904,8 @@
          "Description": "The time at which the note was added in UTC. If not provided, will default to the current time.",
          "Type": {
           "$id": "248",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -1875,8 +1925,8 @@
      "Description": "If set, job will be scheduled to be enqueued at a given time.",
      "Type": {
       "$id": "250",
-      "Name": "utcDateTime",
-      "Kind": "DateTime",
+      "Kind": "Primitive",
+      "Name": "DateTime",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1889,6 +1939,7 @@
      "Description": "If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode.",
      "Type": {
       "$id": "252",
+      "Kind": "Model",
       "Name": "JobMatchingMode",
       "Namespace": "AzureCommunicationRoutingService",
       "Description": "A matching mode of one of the following types:\nQueueAndMatchMode: Used when matching worker to a job is required to be done right after job is queued.\nScheduleAndSuspendMode: Used for scheduling jobs to be queued at a future time. At specified time, matching of a worker to the job will not start automatically.\nSuspendMode: Used when matching workers to a job needs to be suspended.",
@@ -1929,6 +1980,7 @@
   },
   {
    "$id": "254",
+   "Kind": "Model",
    "Name": "ReclassifyJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -1939,6 +1991,7 @@
   },
   {
    "$id": "255",
+   "Kind": "Model",
    "Name": "ReclassifyJobResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -1949,6 +2002,7 @@
   },
   {
    "$id": "256",
+   "Kind": "Model",
    "Name": "CancelJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -1963,8 +2017,8 @@
      "Description": "A note that will be appended to a job's Notes collection with the current timestamp.",
      "Type": {
       "$id": "258",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1977,8 +2031,8 @@
      "Description": "Indicates the outcome of a job, populate this field with your own custom values. If not provided, default value of \"Cancelled\" is set.",
      "Type": {
       "$id": "260",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -1988,6 +2042,7 @@
   },
   {
    "$id": "261",
+   "Kind": "Model",
    "Name": "CancelJobResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -1998,6 +2053,7 @@
   },
   {
    "$id": "262",
+   "Kind": "Model",
    "Name": "CompleteJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2012,8 +2068,8 @@
      "Description": "A note that will be appended to a job's Notes collection with the current timestamp.",
      "Type": {
       "$id": "264",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2023,6 +2079,7 @@
   },
   {
    "$id": "265",
+   "Kind": "Model",
    "Name": "CompleteJobResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2033,6 +2090,7 @@
   },
   {
    "$id": "266",
+   "Kind": "Model",
    "Name": "CloseJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2047,8 +2105,8 @@
      "Description": "Indicates the outcome of a job, populate this field with your own custom values.",
      "Type": {
       "$id": "268",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2061,8 +2119,8 @@
      "Description": "If not provided, worker capacity is released immediately along with a JobClosedEvent notification. If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC.",
      "Type": {
       "$id": "270",
-      "Name": "utcDateTime",
-      "Kind": "DateTime",
+      "Kind": "Primitive",
+      "Name": "DateTime",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2075,8 +2133,8 @@
      "Description": "A note that will be appended to a job's Notes collection with the current timestamp.",
      "Type": {
       "$id": "272",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2086,6 +2144,7 @@
   },
   {
    "$id": "273",
+   "Kind": "Model",
    "Name": "CloseJobResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2096,6 +2155,7 @@
   },
   {
    "$id": "274",
+   "Kind": "Model",
    "Name": "PagedRouterJob",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of RouterJob items",
@@ -2109,6 +2169,7 @@
      "Description": "The RouterJob items on this page",
      "Type": {
       "$id": "276",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "183"
@@ -2125,8 +2186,8 @@
      "Description": "The link to the next page of items",
      "Type": {
       "$id": "278",
-      "Name": "ResourceLocation",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2136,6 +2197,7 @@
   },
   {
    "$id": "279",
+   "Kind": "Model",
    "Name": "RouterJobPositionDetails",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Position and estimated wait time for a job.",
@@ -2149,8 +2211,8 @@
      "Description": "Id of the job these details are about.",
      "Type": {
       "$id": "281",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2163,8 +2225,8 @@
      "Description": "Position of the job in question within that queue.",
      "Type": {
       "$id": "283",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2177,8 +2239,8 @@
      "Description": "Id of the queue this job is enqueued in.",
      "Type": {
       "$id": "285",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2191,8 +2253,8 @@
      "Description": "Length of the queue: total number of enqueued jobs.",
      "Type": {
       "$id": "287",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2205,8 +2267,8 @@
      "Description": "Estimated wait time of the job rounded up to the nearest minute.",
      "Type": {
       "$id": "289",
-      "Name": "float64",
-      "Kind": "Float64",
+      "Kind": "Primitive",
+      "Name": "Float64",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2216,6 +2278,7 @@
   },
   {
    "$id": "290",
+   "Kind": "Model",
    "Name": "UnassignJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2230,8 +2293,8 @@
      "Description": "If SuspendMatching is true, then a job is not queued for re-matching with a worker.",
      "Type": {
       "$id": "292",
-      "Name": "boolean",
-      "Kind": "Boolean",
+      "Kind": "Primitive",
+      "Name": "Boolean",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2241,6 +2304,7 @@
   },
   {
    "$id": "293",
+   "Kind": "Model",
    "Name": "UnassignJobResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2255,8 +2319,8 @@
      "Description": "Id of an unassigned job.",
      "Type": {
       "$id": "295",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2269,8 +2333,8 @@
      "Description": "The number of times a job is unassigned. At a maximum 3.",
      "Type": {
       "$id": "297",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2280,6 +2344,7 @@
   },
   {
    "$id": "298",
+   "Kind": "Model",
    "Name": "AcceptJobOfferResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Response containing ids for the worker, job, and assignment from an accepted offer.",
@@ -2293,8 +2358,8 @@
      "Description": "Id of job assignment that assigns a worker that has accepted an offer to a job.",
      "Type": {
       "$id": "300",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2307,8 +2372,8 @@
      "Description": "Id of the job assigned.",
      "Type": {
       "$id": "302",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2321,8 +2386,8 @@
      "Description": "Id of the worker that has been assigned this job.",
      "Type": {
       "$id": "304",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2332,6 +2397,7 @@
   },
   {
    "$id": "305",
+   "Kind": "Model",
    "Name": "DeclineJobOfferOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2346,8 +2412,8 @@
      "Description": "If the RetryOfferAt is not provided, then this job will not be offered again to the worker who declined this job unless the worker is de-registered and re-registered.  If a RetryOfferAt time is provided, then the job will be re-matched to eligible workers at the retry time in UTC.  The worker that declined the job will also be eligible for the job at that time.",
      "Type": {
       "$id": "307",
-      "Name": "utcDateTime",
-      "Kind": "DateTime",
+      "Kind": "Primitive",
+      "Name": "DateTime",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2357,6 +2423,7 @@
   },
   {
    "$id": "308",
+   "Kind": "Model",
    "Name": "DeclineJobOfferResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2367,6 +2434,7 @@
   },
   {
    "$id": "309",
+   "Kind": "Model",
    "Name": "RouterQueueStatistics",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Statistics for the queue.",
@@ -2380,8 +2448,8 @@
      "Description": "Id of the queue these details are about.",
      "Type": {
       "$id": "311",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2394,8 +2462,8 @@
      "Description": "Length of the queue: total number of enqueued jobs.",
      "Type": {
       "$id": "313",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2408,17 +2476,18 @@
      "Description": "The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority.",
      "Type": {
       "$id": "315",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "316",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "317",
-       "Name": "float64",
-       "Kind": "Float64",
+       "Kind": "Primitive",
+       "Name": "Float64",
        "IsNullable": false
       },
       "IsNullable": false
@@ -2433,8 +2502,8 @@
      "Description": "The wait time of the job that has been enqueued in this queue for the longest.",
      "Type": {
       "$id": "319",
-      "Name": "float64",
-      "Kind": "Float64",
+      "Kind": "Primitive",
+      "Name": "Float64",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2444,6 +2513,7 @@
   },
   {
    "$id": "320",
+   "Kind": "Model",
    "Name": "RouterWorker",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "An entity for jobs to be routed to.",
@@ -2457,8 +2527,8 @@
      "Description": "The entity tag for this resource.",
      "Type": {
       "$id": "322",
-      "Name": "eTag",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2471,8 +2541,8 @@
      "Description": "Id of a worker.",
      "Type": {
       "$id": "324",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -2496,11 +2566,12 @@
      "Description": "Collection of queue(s) that this worker can receive work from.",
      "Type": {
       "$id": "327",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "328",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "IsNullable": false
@@ -2515,8 +2586,8 @@
      "Description": "The total capacity score this worker has to manage multiple concurrent jobs.",
      "Type": {
       "$id": "330",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2529,17 +2600,18 @@
      "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "332",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "333",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "334",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
+       "Kind": "Intrinsic",
+       "Name": "unknown",
        "IsNullable": false
       },
       "IsNullable": false
@@ -2554,17 +2626,18 @@
      "Description": "A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "336",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "337",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "338",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
+       "Kind": "Intrinsic",
+       "Name": "unknown",
        "IsNullable": false
       },
       "IsNullable": false
@@ -2579,9 +2652,11 @@
      "Description": "Collection of channel(s) this worker can handle and their impact on the workers capacity.",
      "Type": {
       "$id": "340",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "341",
+       "Kind": "Model",
        "Name": "RouterChannel",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "Represents the capacity a job in this channel will consume from a worker.",
@@ -2595,8 +2670,8 @@
          "Description": "Id of a channel.",
          "Type": {
           "$id": "343",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2609,8 +2684,8 @@
          "Description": "The amount of capacity that an instance of a job of this channel will consume of the total worker capacity.",
          "Type": {
           "$id": "345",
-          "Name": "int32",
-          "Kind": "Int32",
+          "Kind": "Primitive",
+          "Name": "Int32",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2623,8 +2698,8 @@
          "Description": "The maximum number of jobs that can be supported concurrently for this channel.",
          "Type": {
           "$id": "347",
-          "Name": "int32",
-          "Kind": "Int32",
+          "Kind": "Primitive",
+          "Name": "Int32",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -2644,9 +2719,11 @@
      "Description": "A list of active offers issued to this worker.",
      "Type": {
       "$id": "349",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "350",
+       "Kind": "Model",
        "Name": "RouterJobOffer",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "An offer of a job to a worker.",
@@ -2660,8 +2737,8 @@
          "Description": "Id of an offer.",
          "Type": {
           "$id": "352",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2674,8 +2751,8 @@
          "Description": "Id of the job.",
          "Type": {
           "$id": "354",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2688,8 +2765,8 @@
          "Description": "The capacity cost consumed by the job offer.",
          "Type": {
           "$id": "356",
-          "Name": "int32",
-          "Kind": "Int32",
+          "Kind": "Primitive",
+          "Name": "Int32",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2702,8 +2779,8 @@
          "Description": "Timestamp when the offer was created in UTC.",
          "Type": {
           "$id": "358",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -2716,8 +2793,8 @@
          "Description": "Timestamp when the offer will expire in UTC.",
          "Type": {
           "$id": "360",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -2737,9 +2814,11 @@
      "Description": "A list of assigned jobs attached to this worker.",
      "Type": {
       "$id": "362",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "363",
+       "Kind": "Model",
        "Name": "RouterWorkerAssignment",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "The assignment for a worker to a job.",
@@ -2753,8 +2832,8 @@
          "Description": "Id of the assignment.",
          "Type": {
           "$id": "365",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2767,8 +2846,8 @@
          "Description": "Id of the job assigned.",
          "Type": {
           "$id": "367",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2781,8 +2860,8 @@
          "Description": "The amount of capacity this assignment has consumed on the worker.",
          "Type": {
           "$id": "369",
-          "Name": "int32",
-          "Kind": "Int32",
+          "Kind": "Primitive",
+          "Name": "Int32",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2795,8 +2874,8 @@
          "Description": "The assignment time of the job in UTC.",
          "Type": {
           "$id": "371",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -2816,8 +2895,8 @@
      "Description": "A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed.",
      "Type": {
       "$id": "373",
-      "Name": "float64",
-      "Kind": "Float64",
+      "Kind": "Primitive",
+      "Name": "Float64",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2830,8 +2909,8 @@
      "Description": "A flag indicating this worker is open to receive offers or not.",
      "Type": {
       "$id": "375",
-      "Name": "boolean",
-      "Kind": "Boolean",
+      "Kind": "Primitive",
+      "Name": "Boolean",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2850,6 +2929,7 @@
   },
   {
    "$id": "376",
+   "Kind": "Model",
    "Name": "PagedRouterWorker",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of RouterWorker items",
@@ -2863,6 +2943,7 @@
      "Description": "The RouterWorker items on this page",
      "Type": {
       "$id": "378",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "320"
@@ -2879,8 +2960,8 @@
      "Description": "The link to the next page of items",
      "Type": {
       "$id": "380",
-      "Name": "ResourceLocation",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -2890,6 +2971,7 @@
   },
   {
    "$id": "381",
+   "Kind": "Model",
    "Name": "RouterConditionalRequestHeaders",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Provides the 'If-*' headers to enable conditional (cached) responses for JobRouter.",
@@ -2899,6 +2981,7 @@
   },
   {
    "$id": "382",
+   "Kind": "Model",
    "Name": "LastModifiedResponseEnvelope",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Provides the 'Last-Modified' header to enable conditional (cached) requests",
@@ -2908,6 +2991,7 @@
   },
   {
    "$id": "383",
+   "Kind": "Model",
    "Name": "ReclassifyJobResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "OK Response payload from reclassifying a job.",
@@ -2929,6 +3013,7 @@
   },
   {
    "$id": "385",
+   "Kind": "Model",
    "Name": "CancelJobResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "OK Response payload from cancelling a job.",
@@ -2950,6 +3035,7 @@
   },
   {
    "$id": "387",
+   "Kind": "Model",
    "Name": "CompleteJobResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "OK Response payload from completing a job.",
@@ -2971,6 +3057,7 @@
   },
   {
    "$id": "389",
+   "Kind": "Model",
    "Name": "CloseJobResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Response payload from closing a job synchronously.",
@@ -2992,6 +3079,7 @@
   },
   {
    "$id": "391",
+   "Kind": "Model",
    "Name": "DeclineJobOfferResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "OK Response payload from declining a job.",
@@ -3013,6 +3101,7 @@
   },
   {
    "$id": "393",
+   "Kind": "Model",
    "Name": "ScheduleAndSuspendMode",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes a matching mode used for scheduling jobs to be queued at a future time. At the specified time, matching worker to a job will not start automatically.",
@@ -3030,8 +3119,8 @@
      "Description": "Requested schedule time.",
      "Type": {
       "$id": "395",
-      "Name": "utcDateTime",
-      "Kind": "DateTime",
+      "Kind": "Primitive",
+      "Name": "DateTime",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3041,6 +3130,7 @@
   },
   {
    "$id": "396",
+   "Kind": "Model",
    "Name": "QueueAndMatchMode",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes a matching mode where matching worker to a job is automatically started after job is queued successfully.",
@@ -3054,6 +3144,7 @@
   },
   {
    "$id": "397",
+   "Kind": "Model",
    "Name": "SuspendMode",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes a matching mode where matching worker to a job is suspended.",
@@ -3067,6 +3158,7 @@
   },
   {
    "$id": "398",
+   "Kind": "Model",
    "Name": "BestWorkerMode",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Jobs are distributed to the worker with the strongest abilities available.",
@@ -3095,6 +3187,7 @@
      "Description": "Options to configure 'scoringRule'. If not set, default values are used.",
      "Type": {
       "$id": "401",
+      "Kind": "Model",
       "Name": "ScoringRuleOptions",
       "Namespace": "AzureCommunicationRoutingService",
       "Description": "Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode.",
@@ -3108,8 +3201,8 @@
         "Description": "Set batch size when 'isBatchScoringEnabled' is set to true. Defaults to 20 if not configured.",
         "Type": {
          "$id": "403",
-         "Name": "int32",
-         "Kind": "Int32",
+         "Kind": "Primitive",
+         "Name": "Int32",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -3122,6 +3215,7 @@
         "Description": "List of extra parameters from a job that will be sent as part of the payload to scoring rule. If not set, a job's labels (sent in the payload as `job`) and a job's worker selectors (sent in the payload as `selectors`) are added to the payload of the scoring rule by default. Note: Worker labels are always sent with scoring payload.",
         "Type": {
          "$id": "405",
+         "Kind": "Array",
          "Name": "Array",
          "ElementType": {
           "$ref": "82"
@@ -3138,8 +3232,8 @@
         "Description": "If set to true, will score workers in batches, and the parameter name of the worker labels will be sent as `workers`. By default, set to false and the parameter name for the worker labels will be sent as `worker`. Note: If enabled, use 'batchSize' to set batch size.",
         "Type": {
          "$id": "407",
-         "Name": "boolean",
-         "Kind": "Boolean",
+         "Kind": "Primitive",
+         "Name": "Boolean",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -3152,8 +3246,8 @@
         "Description": "If false, will sort scores by ascending order. By default, set to true.",
         "Type": {
          "$id": "409",
-         "Name": "boolean",
-         "Kind": "Boolean",
+         "Kind": "Primitive",
+         "Name": "Boolean",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -3171,6 +3265,7 @@
   },
   {
    "$id": "410",
+   "Kind": "Model",
    "Name": "CancelExceptionAction",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "An action that marks a job as cancelled.",
@@ -3188,8 +3283,8 @@
      "Description": "A note that will be appended to a job's notes collection with the current timestamp.",
      "Type": {
       "$id": "412",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3202,8 +3297,8 @@
      "Description": "Indicates the outcome of a job, populate this field with your own custom values.",
      "Type": {
       "$id": "414",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3213,6 +3308,7 @@
   },
   {
    "$id": "415",
+   "Kind": "Model",
    "Name": "ConditionalQueueSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes a set of queue selectors that will be attached if the given condition resolves to true.",
@@ -3241,9 +3337,11 @@
      "Description": "The queue selectors to attach.",
      "Type": {
       "$id": "418",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "419",
+       "Kind": "Model",
        "Name": "RouterQueueSelector",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "Describes a condition that must be met against a set of labels for queue selection.",
@@ -3257,8 +3355,8 @@
          "Description": "The label key to query against.",
          "Type": {
           "$id": "421",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -3282,8 +3380,8 @@
          "Description": "The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean.",
          "Type": {
           "$id": "424",
-          "Name": "Intrinsic",
-          "Kind": "unknown",
+          "Kind": "Intrinsic",
+          "Name": "unknown",
           "IsNullable": false
          },
          "IsRequired": false,
@@ -3303,6 +3401,7 @@
   },
   {
    "$id": "425",
+   "Kind": "Model",
    "Name": "ConditionalWorkerSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes a set of worker selectors that will be attached if the given condition resolves to true.",
@@ -3331,6 +3430,7 @@
      "Description": "The worker selectors to attach.",
      "Type": {
       "$id": "428",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "205"
@@ -3344,6 +3444,7 @@
   },
   {
    "$id": "429",
+   "Kind": "Model",
    "Name": "DirectMapRouterRule",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A rule that return the same labels as the input labels.",
@@ -3357,6 +3458,7 @@
   },
   {
    "$id": "430",
+   "Kind": "Model",
    "Name": "ExpressionRouterRule",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A rule providing inline expression rules.",
@@ -3385,8 +3487,8 @@
      "Description": "An expression to evaluate. Should contain return statement with calculated values.",
      "Type": {
       "$id": "433",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3396,6 +3498,7 @@
   },
   {
    "$id": "434",
+   "Kind": "Model",
    "Name": "FunctionRouterRule",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A rule providing a binding to an HTTP Triggered Azure Function.",
@@ -3413,8 +3516,8 @@
      "Description": "URL for Azure Function.",
      "Type": {
       "$id": "436",
-      "Name": "url",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3427,6 +3530,7 @@
      "Description": "Credentials used to access Azure function rule.",
      "Type": {
       "$id": "438",
+      "Kind": "Model",
       "Name": "FunctionRouterRuleCredential",
       "Namespace": "AzureCommunicationRoutingService",
       "Description": "Credentials used to access Azure function rule.",
@@ -3440,8 +3544,8 @@
         "Description": "Access key scoped to a particular function.",
         "Type": {
          "$id": "440",
-         "Name": "string",
-         "Kind": "String",
+         "Kind": "Primitive",
+         "Name": "String",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -3454,8 +3558,8 @@
         "Description": "Access key scoped to a Azure Function app. This key grants access to all functions under the app.",
         "Type": {
          "$id": "442",
-         "Name": "string",
-         "Kind": "String",
+         "Kind": "Primitive",
+         "Name": "String",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -3468,8 +3572,8 @@
         "Description": "Client id, when AppKey is provided In context of Azure function, this is usually the name of the key.",
         "Type": {
          "$id": "444",
-         "Name": "string",
-         "Kind": "String",
+         "Kind": "Primitive",
+         "Name": "String",
          "IsNullable": false
         },
         "IsRequired": false,
@@ -3487,6 +3591,7 @@
   },
   {
    "$id": "445",
+   "Kind": "Model",
    "Name": "LongestIdleMode",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Jobs are directed to the worker who has been idle longest.",
@@ -3500,6 +3605,7 @@
   },
   {
    "$id": "446",
+   "Kind": "Model",
    "Name": "ManualReclassifyExceptionAction",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "An action that manually reclassifies a job by providing the queue, priority and worker selectors.",
@@ -3517,8 +3623,8 @@
      "Description": "Updated QueueId.",
      "Type": {
       "$id": "448",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3531,8 +3637,8 @@
      "Description": "Updated Priority.",
      "Type": {
       "$id": "450",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3545,6 +3651,7 @@
      "Description": "Updated WorkerSelectors.",
      "Type": {
       "$id": "452",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "205"
@@ -3558,6 +3665,7 @@
   },
   {
    "$id": "453",
+   "Kind": "Model",
    "Name": "OAuth2WebhookClientCredential",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/",
@@ -3571,8 +3679,8 @@
      "Description": "ClientId for Contoso Authorization server.",
      "Type": {
       "$id": "455",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3585,8 +3693,8 @@
      "Description": "Client secret for Contoso Authorization server.",
      "Type": {
       "$id": "457",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3596,6 +3704,7 @@
   },
   {
    "$id": "458",
+   "Kind": "Model",
    "Name": "PassThroughQueueSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Attaches a queue selector where the value is passed through from a job's label with the same key.",
@@ -3613,8 +3722,8 @@
      "Description": "The label key to query against.",
      "Type": {
       "$id": "460",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3635,6 +3744,7 @@
   },
   {
    "$id": "462",
+   "Kind": "Model",
    "Name": "PassThroughWorkerSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Attaches a worker selector where the value is passed through from a job's label with the same key.",
@@ -3652,8 +3762,8 @@
      "Description": "The label key to query against.",
      "Type": {
       "$id": "464",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3677,8 +3787,8 @@
      "Description": "Describes how long the attached label selector is valid in seconds.",
      "Type": {
       "$id": "467",
-      "Name": "float64",
-      "Kind": "Float64",
+      "Kind": "Primitive",
+      "Name": "Float64",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3688,6 +3798,7 @@
   },
   {
    "$id": "468",
+   "Kind": "Model",
    "Name": "QueueLengthExceptionTrigger",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Trigger for an exception action on exceeding queue length.",
@@ -3705,8 +3816,8 @@
      "Description": "Threshold of number of jobs ahead in the queue to for this trigger to fire.",
      "Type": {
       "$id": "470",
-      "Name": "int32",
-      "Kind": "Int32",
+      "Kind": "Primitive",
+      "Name": "Int32",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3716,6 +3827,7 @@
   },
   {
    "$id": "471",
+   "Kind": "Model",
    "Name": "QueueWeightedAllocation",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Contains the weight percentage and queue selectors to be applied if selected for weighted distributions.",
@@ -3729,8 +3841,8 @@
      "Description": "The percentage of this weight, expressed as a fraction of 1.",
      "Type": {
       "$id": "473",
-      "Name": "float64",
-      "Kind": "Float64",
+      "Kind": "Primitive",
+      "Name": "Float64",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3743,6 +3855,7 @@
      "Description": "A collection of queue selectors that will be applied if this allocation is selected.",
      "Type": {
       "$id": "475",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "419"
@@ -3756,6 +3869,7 @@
   },
   {
    "$id": "476",
+   "Kind": "Model",
    "Name": "ReclassifyExceptionAction",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "An action that modifies labels on a job and then reclassifies it.",
@@ -3773,8 +3887,8 @@
      "Description": "The new classification policy that will determine queue, priority and worker selectors.",
      "Type": {
       "$id": "478",
-      "Name": "string",
-      "Kind": "String",
+      "Kind": "Primitive",
+      "Name": "String",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3787,17 +3901,18 @@
      "Description": "Dictionary containing the labels to update (or add if not existing) in key-value pairs.  Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "480",
+      "Kind": "Dictionary",
       "Name": "Dictionary",
       "KeyType": {
        "$id": "481",
-       "Name": "string",
-       "Kind": "String",
+       "Kind": "Primitive",
+       "Name": "String",
        "IsNullable": false
       },
       "ValueType": {
        "$id": "482",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
+       "Kind": "Intrinsic",
+       "Name": "unknown",
        "IsNullable": false
       },
       "IsNullable": false
@@ -3809,6 +3924,7 @@
   },
   {
    "$id": "483",
+   "Kind": "Model",
    "Name": "RoundRobinMode",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Jobs are distributed in order to workers, starting with the worker that is after the last worker to receive a job.",
@@ -3822,6 +3938,7 @@
   },
   {
    "$id": "484",
+   "Kind": "Model",
    "Name": "RuleEngineQueueSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Attaches queue selectors to a job when the RouterRule is resolved.",
@@ -3847,6 +3964,7 @@
   },
   {
    "$id": "486",
+   "Kind": "Model",
    "Name": "RuleEngineWorkerSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Attaches worker selectors to a job when a RouterRule is resolved.",
@@ -3872,6 +3990,7 @@
   },
   {
    "$id": "488",
+   "Kind": "Model",
    "Name": "StaticQueueSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes a queue selector that will be attached to a job.",
@@ -3897,6 +4016,7 @@
   },
   {
    "$id": "490",
+   "Kind": "Model",
    "Name": "StaticRouterRule",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A rule providing static rules that always return the same result, regardless of input.",
@@ -3914,8 +4034,8 @@
      "Description": "The static value this rule always returns. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "492",
-      "Name": "Intrinsic",
-      "Kind": "unknown",
+      "Kind": "Intrinsic",
+      "Name": "unknown",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -3925,6 +4045,7 @@
   },
   {
    "$id": "493",
+   "Kind": "Model",
    "Name": "StaticWorkerSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes a worker selector that will be attached to a job.",
@@ -3950,6 +4071,7 @@
   },
   {
    "$id": "495",
+   "Kind": "Model",
    "Name": "WaitTimeExceptionTrigger",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Trigger for an exception action on exceeding wait time.",
@@ -3967,8 +4089,8 @@
      "Description": "Threshold for wait time for this trigger.",
      "Type": {
       "$id": "497",
-      "Name": "float64",
-      "Kind": "Float64",
+      "Kind": "Primitive",
+      "Name": "Float64",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -3978,6 +4100,7 @@
   },
   {
    "$id": "498",
+   "Kind": "Model",
    "Name": "WebhookRouterRule",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "A rule providing a binding to an external web server.",
@@ -3995,8 +4118,8 @@
      "Description": "Uri for Authorization Server.",
      "Type": {
       "$id": "500",
-      "Name": "url",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -4020,8 +4143,8 @@
      "Description": "Uri for Contoso's Web Server.",
      "Type": {
       "$id": "503",
-      "Name": "url",
-      "Kind": "Uri",
+      "Kind": "Primitive",
+      "Name": "Uri",
       "IsNullable": false
      },
      "IsRequired": false,
@@ -4031,6 +4154,7 @@
   },
   {
    "$id": "504",
+   "Kind": "Model",
    "Name": "WeightedAllocationQueueSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes multiple sets of queue selectors, of which one will be selected and attached according to a weighting.",
@@ -4048,6 +4172,7 @@
      "Description": "A collection of percentage based weighted allocations.",
      "Type": {
       "$id": "506",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$ref": "471"
@@ -4061,6 +4186,7 @@
   },
   {
    "$id": "507",
+   "Kind": "Model",
    "Name": "WeightedAllocationWorkerSelectorAttachment",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Describes multiple sets of worker selectors, of which one will be selected and attached according to a weighting.",
@@ -4078,9 +4204,11 @@
      "Description": "A collection of percentage based weighted allocations.",
      "Type": {
       "$id": "509",
+      "Kind": "Array",
       "Name": "Array",
       "ElementType": {
        "$id": "510",
+       "Kind": "Model",
        "Name": "WorkerWeightedAllocation",
        "Namespace": "AzureCommunicationRoutingService",
        "Description": "Contains the weight percentage and worker selectors to be applied if selected for weighted distributions.",
@@ -4094,8 +4222,8 @@
          "Description": "The percentage of this weight, expressed as a fraction of 1.",
          "Type": {
           "$id": "512",
-          "Name": "float64",
-          "Kind": "Float64",
+          "Kind": "Primitive",
+          "Name": "Float64",
           "IsNullable": false
          },
          "IsRequired": true,
@@ -4108,6 +4236,7 @@
          "Description": "A collection of worker selectors that will be applied if this allocation is selected.",
          "Type": {
           "$id": "514",
+          "Kind": "Array",
           "Name": "Array",
           "ElementType": {
            "$ref": "205"
@@ -4151,8 +4280,8 @@
        "Description": "Uri of your Communication resource",
        "Type": {
         "$id": "518",
+        "Kind": "Primitive",
         "Name": "Uri",
-        "Kind": "Uri",
         "IsNullable": false
        },
        "Location": "Uri",
@@ -4172,8 +4301,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "520",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -4181,8 +4310,8 @@
         "$id": "521",
         "Type": {
          "$id": "522",
+         "Kind": "Primitive",
          "Name": "String",
-         "Kind": "String",
          "IsNullable": false
         },
         "Value": "2023-11-01"
@@ -4203,8 +4332,8 @@
        "Description": "Id of a distribution policy.",
        "Type": {
         "$id": "524",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -4224,11 +4353,12 @@
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
         "$id": "526",
+        "Kind": "Literal",
         "Name": "Literal",
         "LiteralValueType": {
          "$id": "527",
+         "Kind": "Primitive",
          "Name": "String",
-         "Kind": "String",
          "IsNullable": false
         },
         "Value": "application/merge-patch+json",
@@ -4258,8 +4388,8 @@
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
         "$id": "530",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4279,8 +4409,8 @@
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
         "$id": "532",
-        "Name": "utcDateTime",
-        "Kind": "DateTimeRFC7231",
+        "Kind": "Primitive",
+        "Name": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4317,8 +4447,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "535",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4357,8 +4487,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "539",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -4369,8 +4499,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "541",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -4397,8 +4527,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "544",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -4409,8 +4539,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "546",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -4449,8 +4579,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "549",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -4473,8 +4603,8 @@
        "Description": "Id of a distribution policy.",
        "Type": {
         "$id": "551",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -4493,8 +4623,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "553",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4533,8 +4663,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "557",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -4545,8 +4675,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "559",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -4583,8 +4713,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "562",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -4607,8 +4737,8 @@
        "Description": "Number of objects to return per page.",
        "Type": {
         "$id": "564",
-        "Name": "int32",
-        "Kind": "Int32",
+        "Kind": "Primitive",
+        "Name": "Int32",
         "IsNullable": false
        },
        "Location": "Query",
@@ -4627,8 +4757,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "566",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4696,8 +4826,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "572",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -4720,8 +4850,8 @@
        "Description": "Id of a distribution policy.",
        "Type": {
         "$id": "574",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -4740,8 +4870,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "576",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4799,8 +4929,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "581",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -4823,8 +4953,8 @@
        "Description": "Id of a classification policy.",
        "Type": {
         "$id": "583",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -4844,11 +4974,12 @@
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
         "$id": "585",
+        "Kind": "Literal",
         "Name": "Literal",
         "LiteralValueType": {
          "$id": "586",
+         "Kind": "Primitive",
          "Name": "String",
-         "Kind": "String",
          "IsNullable": false
         },
         "Value": "application/merge-patch+json",
@@ -4878,8 +5009,8 @@
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
         "$id": "589",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4899,8 +5030,8 @@
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
         "$id": "591",
-        "Name": "utcDateTime",
-        "Kind": "DateTimeRFC7231",
+        "Kind": "Primitive",
+        "Name": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4937,8 +5068,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "594",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4977,8 +5108,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "598",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -4989,8 +5120,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "600",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -5017,8 +5148,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "603",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -5029,8 +5160,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "605",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -5069,8 +5200,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "608",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5093,8 +5224,8 @@
        "Description": "Id of a classification policy.",
        "Type": {
         "$id": "610",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -5113,8 +5244,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "612",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5153,8 +5284,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "616",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -5165,8 +5296,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "618",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -5203,8 +5334,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "621",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5227,8 +5358,8 @@
        "Description": "Number of objects to return per page.",
        "Type": {
         "$id": "623",
-        "Name": "int32",
-        "Kind": "Int32",
+        "Kind": "Primitive",
+        "Name": "Int32",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5247,8 +5378,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "625",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5316,8 +5447,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "631",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5340,8 +5471,8 @@
        "Description": "Id of a classification policy.",
        "Type": {
         "$id": "633",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -5360,8 +5491,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "635",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5419,8 +5550,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "640",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5443,8 +5574,8 @@
        "Description": "Id of an exception policy.",
        "Type": {
         "$id": "642",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -5464,11 +5595,12 @@
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
         "$id": "644",
+        "Kind": "Literal",
         "Name": "Literal",
         "LiteralValueType": {
          "$id": "645",
+         "Kind": "Primitive",
          "Name": "String",
-         "Kind": "String",
          "IsNullable": false
         },
         "Value": "application/merge-patch+json",
@@ -5498,8 +5630,8 @@
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
         "$id": "648",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5519,8 +5651,8 @@
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
         "$id": "650",
-        "Name": "utcDateTime",
-        "Kind": "DateTimeRFC7231",
+        "Kind": "Primitive",
+        "Name": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5557,8 +5689,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "653",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5597,8 +5729,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "657",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -5609,8 +5741,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "659",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -5637,8 +5769,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "662",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -5649,8 +5781,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "664",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -5689,8 +5821,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "667",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5713,8 +5845,8 @@
        "Description": "Id of an exception policy.",
        "Type": {
         "$id": "669",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -5733,8 +5865,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "671",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5773,8 +5905,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "675",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -5785,8 +5917,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "677",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -5823,8 +5955,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "680",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5847,8 +5979,8 @@
        "Description": "Number of objects to return per page.",
        "Type": {
         "$id": "682",
-        "Name": "int32",
-        "Kind": "Int32",
+        "Kind": "Primitive",
+        "Name": "Int32",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5867,8 +5999,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "684",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5936,8 +6068,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "690",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -5960,8 +6092,8 @@
        "Description": "Id of an exception policy.",
        "Type": {
         "$id": "692",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -5980,8 +6112,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "694",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6039,8 +6171,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "699",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -6063,8 +6195,8 @@
        "Description": "Id of a queue.",
        "Type": {
         "$id": "701",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -6084,11 +6216,12 @@
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
         "$id": "703",
+        "Kind": "Literal",
         "Name": "Literal",
         "LiteralValueType": {
          "$id": "704",
+         "Kind": "Primitive",
          "Name": "String",
-         "Kind": "String",
          "IsNullable": false
         },
         "Value": "application/merge-patch+json",
@@ -6118,8 +6251,8 @@
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
         "$id": "707",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6139,8 +6272,8 @@
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
         "$id": "709",
-        "Name": "utcDateTime",
-        "Kind": "DateTimeRFC7231",
+        "Kind": "Primitive",
+        "Name": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6177,8 +6310,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "712",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6217,8 +6350,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "716",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -6229,8 +6362,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "718",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -6257,8 +6390,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "721",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -6269,8 +6402,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "723",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -6309,8 +6442,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "726",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -6333,8 +6466,8 @@
        "Description": "Id of a queue.",
        "Type": {
         "$id": "728",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -6353,8 +6486,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "730",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6393,8 +6526,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "734",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -6405,8 +6538,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "736",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -6443,8 +6576,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "739",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -6467,8 +6600,8 @@
        "Description": "Number of objects to return per page.",
        "Type": {
         "$id": "741",
-        "Name": "int32",
-        "Kind": "Int32",
+        "Kind": "Primitive",
+        "Name": "Int32",
         "IsNullable": false
        },
        "Location": "Query",
@@ -6487,8 +6620,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "743",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6556,8 +6689,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "749",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -6580,8 +6713,8 @@
        "Description": "Id of a queue.",
        "Type": {
         "$id": "751",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -6600,8 +6733,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "753",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6670,8 +6803,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "760",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -6694,8 +6827,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "762",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -6715,11 +6848,12 @@
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
         "$id": "764",
+        "Kind": "Literal",
         "Name": "Literal",
         "LiteralValueType": {
          "$id": "765",
+         "Kind": "Primitive",
          "Name": "String",
-         "Kind": "String",
          "IsNullable": false
         },
         "Value": "application/merge-patch+json",
@@ -6749,8 +6883,8 @@
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
         "$id": "768",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6770,8 +6904,8 @@
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
         "$id": "770",
-        "Name": "utcDateTime",
-        "Kind": "DateTimeRFC7231",
+        "Kind": "Primitive",
+        "Name": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6808,8 +6942,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "773",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6848,8 +6982,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "777",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -6860,8 +6994,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "779",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -6888,8 +7022,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "782",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -6900,8 +7034,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "784",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -6940,8 +7074,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "787",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -6964,8 +7098,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "789",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -6984,8 +7118,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "791",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7024,8 +7158,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "795",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -7036,8 +7170,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "797",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -7073,8 +7207,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "800",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7097,8 +7231,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "802",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -7117,8 +7251,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "804",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7176,8 +7310,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "809",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7200,8 +7334,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "811",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -7238,8 +7372,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "814",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7265,8 +7399,8 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "817",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7333,8 +7467,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "822",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7357,8 +7491,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "824",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -7395,8 +7529,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "827",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7422,8 +7556,8 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "830",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7490,8 +7624,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "835",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7514,8 +7648,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "837",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -7535,8 +7669,8 @@
        "Description": "Id of a job assignment.",
        "Type": {
         "$id": "839",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -7573,8 +7707,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "842",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7600,8 +7734,8 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "845",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7668,8 +7802,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "850",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7692,8 +7826,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "852",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -7713,8 +7847,8 @@
        "Description": "Id of a job assignment.",
        "Type": {
         "$id": "854",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -7751,8 +7885,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "857",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7778,8 +7912,8 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "860",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -7846,8 +7980,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "865",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7870,8 +8004,8 @@
        "Description": "Number of objects to return per page.",
        "Type": {
         "$id": "867",
-        "Name": "int32",
-        "Kind": "Int32",
+        "Kind": "Primitive",
+        "Name": "Int32",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7909,8 +8043,8 @@
        "Description": "If specified, filter jobs by queue.",
        "Type": {
         "$id": "870",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7930,8 +8064,8 @@
        "Description": "If specified, filter jobs by channel.",
        "Type": {
         "$id": "872",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7951,8 +8085,8 @@
        "Description": "If specified, filter jobs by classificationPolicy.",
        "Type": {
         "$id": "874",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7972,8 +8106,8 @@
        "Description": "If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore].",
        "Type": {
         "$id": "876",
-        "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "Primitive",
+        "Name": "DateTime",
         "IsNullable": false
        },
        "Location": "Query",
@@ -7993,8 +8127,8 @@
        "Description": "If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf).",
        "Type": {
         "$id": "878",
-        "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "Primitive",
+        "Name": "DateTime",
         "IsNullable": false
        },
        "Location": "Query",
@@ -8013,8 +8147,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "880",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8082,8 +8216,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "886",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -8106,8 +8240,8 @@
        "Description": "Id of the job.",
        "Type": {
         "$id": "888",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8126,8 +8260,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "890",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8191,8 +8325,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "895",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -8215,8 +8349,8 @@
        "Description": "Id of a job.",
        "Type": {
         "$id": "897",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8236,8 +8370,8 @@
        "Description": "Id of a job assignment.",
        "Type": {
         "$id": "899",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8274,8 +8408,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "902",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8301,8 +8435,8 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "905",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8368,8 +8502,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "910",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -8392,8 +8526,8 @@
        "Description": "Id of a worker.",
        "Type": {
         "$id": "912",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8413,8 +8547,8 @@
        "Description": "Id of an offer.",
        "Type": {
         "$id": "914",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8433,8 +8567,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "916",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8498,8 +8632,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "921",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -8522,8 +8656,8 @@
        "Description": "Id of a worker.",
        "Type": {
         "$id": "923",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8543,8 +8677,8 @@
        "Description": "Id of an offer.",
        "Type": {
         "$id": "925",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8581,8 +8715,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "928",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8608,8 +8742,8 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "931",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8675,8 +8809,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "936",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -8699,8 +8833,8 @@
        "Description": "Id of the queue to retrieve statistics.",
        "Type": {
         "$id": "938",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8719,8 +8853,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "940",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8784,8 +8918,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "945",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -8808,8 +8942,8 @@
        "Description": "Id of a worker.",
        "Type": {
         "$id": "947",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -8829,11 +8963,12 @@
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
         "$id": "949",
+        "Kind": "Literal",
         "Name": "Literal",
         "LiteralValueType": {
          "$id": "950",
+         "Kind": "Primitive",
          "Name": "String",
-         "Kind": "String",
          "IsNullable": false
         },
         "Value": "application/merge-patch+json",
@@ -8863,8 +8998,8 @@
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
         "$id": "953",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8884,8 +9019,8 @@
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
         "$id": "955",
-        "Name": "utcDateTime",
-        "Kind": "DateTimeRFC7231",
+        "Kind": "Primitive",
+        "Name": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8922,8 +9057,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "958",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8962,8 +9097,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "962",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -8974,8 +9109,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "964",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -9002,8 +9137,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "967",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -9014,8 +9149,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "969",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -9054,8 +9189,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "972",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -9078,8 +9213,8 @@
        "Description": "Id of a worker.",
        "Type": {
         "$id": "974",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -9098,8 +9233,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "976",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -9138,8 +9273,8 @@
          "Description": "The entity tag for the response.",
          "Type": {
           "$id": "980",
-          "Name": "string",
-          "Kind": "String",
+          "Kind": "Primitive",
+          "Name": "String",
           "IsNullable": false
          }
         },
@@ -9150,8 +9285,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "982",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
+          "Kind": "Primitive",
+          "Name": "DateTime",
           "IsNullable": false
          }
         }
@@ -9187,8 +9322,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "985",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -9211,8 +9346,8 @@
        "Description": "Id of a worker.",
        "Type": {
         "$id": "987",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Path",
@@ -9231,8 +9366,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "989",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
@@ -9290,8 +9425,8 @@
        "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "994",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -9314,8 +9449,8 @@
        "Description": "Number of objects to return per page.",
        "Type": {
         "$id": "996",
-        "Name": "int32",
-        "Kind": "Int32",
+        "Kind": "Primitive",
+        "Name": "Int32",
         "IsNullable": false
        },
        "Location": "Query",
@@ -9353,8 +9488,8 @@
        "Description": "If specified, select workers who have a channel configuration with this channel.",
        "Type": {
         "$id": "999",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -9374,8 +9509,8 @@
        "Description": "If specified, select workers who are assigned to this queue.",
        "Type": {
         "$id": "1001",
-        "Name": "string",
-        "Kind": "String",
+        "Kind": "Primitive",
+        "Name": "String",
         "IsNullable": false
        },
        "Location": "Query",
@@ -9395,8 +9530,8 @@
        "Description": "If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.",
        "Type": {
         "$id": "1003",
-        "Name": "boolean",
-        "Kind": "Boolean",
+        "Kind": "Primitive",
+        "Name": "Boolean",
         "IsNullable": false
        },
        "Location": "Query",
@@ -9415,8 +9550,8 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "1005",
+        "Kind": "Primitive",
         "Name": "String",
-        "Kind": "String",
         "IsNullable": false
        },
        "Location": "Header",
