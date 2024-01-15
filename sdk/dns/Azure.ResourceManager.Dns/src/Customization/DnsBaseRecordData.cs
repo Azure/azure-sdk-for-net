@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Dns
         /// </para>
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-        /// <summary> Initializes a new instance of <see cref="DnsARecordData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsBaseRecordData"/>. </summary>
         public DnsBaseRecordData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsARecordData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsBaseRecordData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

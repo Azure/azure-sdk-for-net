@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         void IJsonModel<DnsAaaaRecordListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DnsAaaaRecordListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsAaaaRecordListResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Dns.Models
         }
         DnsAaaaRecordListResult IJsonModel<DnsAaaaRecordListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DnsAaaaRecordListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsAaaaRecordListResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Dns.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Dns.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
