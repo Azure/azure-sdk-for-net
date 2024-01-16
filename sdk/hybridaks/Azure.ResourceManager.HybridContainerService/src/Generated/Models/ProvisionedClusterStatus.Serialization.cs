@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<IReadOnlyList<ProvisionedClusterAddonStatusProfile>> controlPlaneStatus = default;
+            Optional<HybridContainerServiceResourceProvisioningState> currentState = default;
             Optional<string> errorMessage = default;
-            Optional<ProvisionedClusterOperationStatus> operationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("controlPlaneStatus"u8))
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     controlPlaneStatus = array;
                     continue;
                 }
-                if (property.NameEquals("errorMessage"u8))
-                {
-                    errorMessage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("operationStatus"u8))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationStatus = ProvisionedClusterOperationStatus.DeserializeProvisionedClusterOperationStatus(property.Value);
+                    currentState = new HybridContainerServiceResourceProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("errorMessage"u8))
+                {
+                    errorMessage = property.Value.GetString();
                     continue;
                 }
             }
-            return new ProvisionedClusterStatus(Optional.ToList(controlPlaneStatus), errorMessage.Value, operationStatus.Value);
+            return new ProvisionedClusterStatus(Optional.ToList(controlPlaneStatus), Optional.ToNullable(currentState), errorMessage.Value);
         }
     }
 }

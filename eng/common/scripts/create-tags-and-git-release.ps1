@@ -7,6 +7,7 @@ param (
   $artifactLocation, # the root of the artifact folder. DevOps $(System.ArtifactsDirectory)
   $workingDirectory, # directory that package artifacts will be extracted into for examination (if necessary)
   $packageRepository, # used to indicate destination against which we will check the existing version.
+  $packageFilter,
   # valid options: PyPI, Nuget, NPM, Maven, C, CPP
   # used by CreateTags
   $releaseSha, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
@@ -25,6 +26,11 @@ Write-Host "Using API URL $apiUrl"
 
 # VERIFY PACKAGES
 $pkgList = VerifyPackages -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
+
+if ($packageFilter) {
+    Write-Host "Filtering discovered packages to '$packageFilter'"
+    [array]$pkgList = $pkgList | Where-Object { $_.PackageId -like $packageFilter }
+}
 
 if ($pkgList) {
   Write-Host "Given the visible artifacts, github releases will be created for the following:"

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockMessageHeaders : MessageHeaders
+public class MockMessageHeaders : PipelineMessageHeaders
 {
     public override void Add(string name, string value)
     {
