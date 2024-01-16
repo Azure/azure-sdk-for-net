@@ -455,7 +455,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && long.TryParse(offsetStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offsetResult))
             {
                 offset = offsetResult;
-                if (offset != long.MinValue) // If no offset was provided then it would have a value of long.MinValue
+                if (offset != long.MinValue) // The default offset value when one is not provided is long.MinValue
                 {
                     startingPosition ??= EventPosition.FromOffset(offsetResult, false);
                 }
