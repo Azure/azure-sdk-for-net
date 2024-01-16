@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> CloudProviderProfile - The underlying cloud infra provider properties. </summary>
+    /// <summary> The profile for the underlying cloud infrastructure provider for the provisioned cluster. </summary>
     internal partial class ProvisionedClusterCloudProviderProfile
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterCloudProviderProfile"/>. </summary>
@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterCloudProviderProfile"/>. </summary>
-        /// <param name="infraNetworkProfile"> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </param>
+        /// <param name="infraNetworkProfile"> The profile for the infrastructure networks used by the provisioned cluster. </param>
         internal ProvisionedClusterCloudProviderProfile(ProvisionedClusterInfraNetworkProfile infraNetworkProfile)
         {
             InfraNetworkProfile = infraNetworkProfile;
         }
 
-        /// <summary> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </summary>
+        /// <summary> The profile for the infrastructure networks used by the provisioned cluster. </summary>
         internal ProvisionedClusterInfraNetworkProfile InfraNetworkProfile { get; set; }
-        /// <summary> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
+        /// <summary> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
         public IList<ResourceIdentifier> InfraNetworkVnetSubnetIds
         {
             get
