@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
-
-#nullable enable
+using System.ClientModel.Internal;
 
 namespace Azure.Core
 {
@@ -14,9 +12,7 @@ namespace Azure.Core
     /// </summary>
     public class StatusCodeClassifier : ResponseClassifier
     {
-        // We need 10 ulongs to represent status codes 100 - 599.
-        private const int Length = 10;
-        private ulong[] _successCodes;
+        private BitVector640 _successCodes;
 
         internal ResponseClassificationHandler[]? Handlers { get; set; }
 
@@ -27,7 +23,7 @@ namespace Azure.Core
         /// not to be errors.</param>
         public StatusCodeClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
-            _successCodes = new ulong[Length];
+            _successCodes = new();
 
             foreach (int statusCode in successStatusCodes)
             {
@@ -35,70 +31,37 @@ namespace Azure.Core
             }
         }
 
-        private StatusCodeClassifier(ulong[] successCodes, ResponseClassificationHandler[]? handlers)
+        private StatusCodeClassifier(BitVector640 successCodes, ResponseClassificationHandler[]? handlers)
         {
-            Debug.Assert(successCodes?.Length == Length);
-
-            _successCodes = successCodes!;
+            _successCodes = successCodes;
             Handlers = handlers;
         }
 
         /// <inheritdoc/>
         public override bool IsErrorResponse(HttpMessage message)
         {
-            bool isError;
-
             if (Handlers != null)
             {
-                foreach (var handler in Handlers)
+                foreach (ResponseClassificationHandler handler in Handlers)
                 {
-                    if (handler.TryClassify(message, out isError))
+                    if (handler.TryClassify(message, out bool isError))
                     {
                         return isError;
                     }
                 }
             }
 
-            return !IsSuccessCode(message.Response.Status);
+            return !_successCodes[message.Response.Status];
         }
 
         internal virtual StatusCodeClassifier Clone()
-        {
-            ulong[] successCodes = new ulong[Length];
-            Array.Copy(_successCodes, successCodes, Length);
-
-            return new StatusCodeClassifier(successCodes, Handlers);
-        }
+            => new(_successCodes, Handlers);
 
         internal void AddClassifier(int statusCode, bool isError)
         {
             Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
 
-            var index = statusCode >> 6;        // divides by 64
-            int bit = statusCode & 0b111111;    // keeps the bits up to 63
-            ulong mask = 1ul << bit;      // shifts a 1 to the position of code
-
-            ulong value = _successCodes[index];
-            if (!isError)
-            {
-                value |= mask;
-            }
-            else
-            {
-                value &= ~mask;
-            }
-
-            _successCodes[index] = value;
-        }
-
-        private bool IsSuccessCode(int statusCode)
-        {
-            var index = statusCode >> 6;      // divides by 64
-            int bit = statusCode & 0b111111;  // keeps the bits up to 63
-            ulong mask = 1ul << bit;    // shifts a 1 to the position of code
-
-            ulong value = _successCodes[index];
-            return (value & mask) != 0;
+            _successCodes[statusCode] = isError;
         }
     }
 }

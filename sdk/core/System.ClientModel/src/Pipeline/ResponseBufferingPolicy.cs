@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +30,8 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
+        Debug.Assert(message.NetworkTimeout is not null);
+
         TimeSpan invocationNetworkTimeout = (TimeSpan)message.NetworkTimeout!;
 
         CancellationToken oldToken = message.CancellationToken;

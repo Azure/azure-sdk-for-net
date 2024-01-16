@@ -5,20 +5,19 @@ using System.ClientModel.Internal;
 
 namespace System.ClientModel.Primitives
 {
-    public class ResponseStatusClassifier : PipelineMessageClassifier
+    internal class ResponseStatusClassifier : PipelineMessageClassifier
     {
-        // We need 10 ulongs to represent status codes 100 - 599.
-        private const int Length = 10;
-        private readonly ulong[] _successCodes;
+        // Until we have C# 12...
+        private BitVector640 _successCodes;
 
         /// <summary>
-        /// Creates a new instance of <see cref="ResponseStatusClassifier"/>
+        /// Creates a new instance of <see cref="ResponseStatusClassifier"/>.
         /// </summary>
         /// <param name="successStatusCodes">The status codes that this classifier will consider
         /// not to be errors.</param>
         public ResponseStatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
-            _successCodes = new ulong[Length];
+            _successCodes = new();
 
             foreach (int statusCode in successStatusCodes)
             {
@@ -27,37 +26,20 @@ namespace System.ClientModel.Primitives
         }
 
         public sealed override bool IsErrorResponse(PipelineMessage message)
-            => base.IsErrorResponse(message);
+        {
+            if (message.Response is null)
+            {
+                throw new InvalidOperationException("Response is not set on message.");
+            }
+
+            return !_successCodes[message.Response.Status];
+        }
 
         private void AddClassifier(int statusCode, bool isError)
         {
             Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
 
-            var index = statusCode >> 6;        // divides by 64
-            int bit = statusCode & 0b111111;    // keeps the bits up to 63
-            ulong mask = 1ul << bit;      // shifts a 1 to the position of code
-
-            ulong value = _successCodes[index];
-            if (!isError)
-            {
-                value |= mask;
-            }
-            else
-            {
-                value &= ~mask;
-            }
-
-            _successCodes[index] = value;
-        }
-
-        private bool IsSuccessCode(int statusCode)
-        {
-            var index = statusCode >> 6;      // divides by 64
-            int bit = statusCode & 0b111111;  // keeps the bits up to 63
-            ulong mask = 1ul << bit;    // shifts a 1 to the position of code
-
-            ulong value = _successCodes[index];
-            return (value & mask) != 0;
+            _successCodes[statusCode] = isError;
         }
     }
 }

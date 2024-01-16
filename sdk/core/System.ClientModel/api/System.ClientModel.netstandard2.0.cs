@@ -158,6 +158,7 @@ namespace System.ClientModel.Primitives
     public partial class PipelineMessageClassifier
     {
         protected internal PipelineMessageClassifier() { }
+        public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
         public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     public partial class PipelineMessageDelay
@@ -249,10 +250,5 @@ namespace System.ClientModel.Primitives
         public ResponseBufferingPolicy() { }
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-    }
-    public partial class ResponseStatusClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
-    {
-        public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
-        public sealed override bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
 }
