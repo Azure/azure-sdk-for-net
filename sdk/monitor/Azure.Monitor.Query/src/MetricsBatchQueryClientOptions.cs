@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.Monitor.Query.Models;
 
@@ -92,7 +93,17 @@ namespace Azure.Monitor.Query
         /// Only one order can be specified.
         /// Examples: sum asc.
         /// </summary>
-        public string OrderBy { get; set; }
+        public IList<string> OrderBy { get; internal set; } = new List<string>();
+
+        /// <summary>
+        /// Join OrderBy so it can be sent as a comma separated string.
+        /// </summary>
+        [CodeGenMember("OrderBy")]
+        internal string OrderByRaw
+        {
+            get => MetricsBatchExtensions.CommaJoin(OrderBy);
+            set => OrderBy = MetricsBatchExtensions.CommaSplit(value);
+        }
 
         /// <summary>
         /// Dimension name(s) to rollup results by.
