@@ -8,8 +8,8 @@ using Azure.Core;
 namespace Azure.AI.Translator.Document
 {
     [CodeGenModel("DocumentTranslateContent")]
-    [CodeGenSuppress("MultipartRequestContent", typeof(BinaryData))]
-    [CodeGenSuppress("MultipartRequestContent", typeof(BinaryData), typeof(IList<BinaryData>))]
+    [CodeGenSuppress("DocumentContent", typeof(BinaryData))]
+    [CodeGenSuppress("DocumentContent", typeof(BinaryData), typeof(IList<BinaryData>))]
     [CodeGenSuppress("ToRequestContent")]
     public partial class DocumentContent
     {

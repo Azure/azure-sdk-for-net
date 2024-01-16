@@ -14,24 +14,5 @@ namespace Azure.AI.Translator.Document
     /// <summary> Document Translate Request / Content. </summary>
     public partial class DocumentContent
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
-        /// <param name="document"> Document to be translated in the form. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="document"/> is null. </exception>
-        public DocumentContent(BinaryData document)
-        {
-            Argument.AssertNotNull(document, nameof(document));
-
-            Document = document;
-            Glossary = new ChangeTrackingList<BinaryData>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
-        /// <param name="document"> Document to be translated in the form. </param>
-        /// <param name="glossary"> Glossary / translation memory will be used during translation in the form. </param>
-        internal DocumentContent(BinaryData document, IList<BinaryData> glossary)
-        {
-            Document = document;
-            Glossary = glossary;
-        }
     }
 }
