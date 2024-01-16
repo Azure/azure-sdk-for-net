@@ -10,35 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> AgentPool configuration. </summary>
+    /// <summary> Profile for agent pool properties specified during creation. </summary>
     public partial class HybridContainerServiceAgentPoolProfile
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolProfile"/>. </summary>
         public HybridContainerServiceAgentPoolProfile()
         {
-            AvailabilityZones = new ChangeTrackingList<string>();
+            NodeLabels = new ChangeTrackingDictionary<string, string>();
+            NodeTaints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolProfile"/>. </summary>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        internal HybridContainerServiceAgentPoolProfile(IList<string> availabilityZones, HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, string nodeImageVersion)
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        internal HybridContainerServiceAgentPoolProfile(HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods)
         {
-            AvailabilityZones = availabilityZones;
             OSType = osType;
             OSSku = osSku;
-            NodeImageVersion = nodeImageVersion;
+            NodeLabels = nodeLabels;
+            NodeTaints = nodeTaints;
+            MaxCount = maxCount;
+            MinCount = minCount;
+            EnableAutoScaling = enableAutoScaling;
+            MaxPods = maxPods;
         }
 
-        /// <summary> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </summary>
-        public IList<string> AvailabilityZones { get; }
-        /// <summary> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </summary>
+        /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
         public HybridContainerServiceOSType? OSType { get; set; }
         /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
         public HybridContainerServiceOSSku? OSSku { get; set; }
-        /// <summary> The version of node image. </summary>
-        public string NodeImageVersion { get; set; }
+        /// <summary> The node labels to be persisted across all nodes in agent pool. </summary>
+        public IDictionary<string, string> NodeLabels { get; }
+        /// <summary> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
+        public IList<string> NodeTaints { get; }
+        /// <summary> The maximum number of nodes for auto-scaling. </summary>
+        public int? MaxCount { get; set; }
+        /// <summary> The minimum number of nodes for auto-scaling. </summary>
+        public int? MinCount { get; set; }
+        /// <summary> Whether to enable auto-scaler. Default value is false. </summary>
+        public bool? EnableAutoScaling { get; set; }
+        /// <summary> The maximum number of pods that can run on a node. </summary>
+        public int? MaxPods { get; set; }
     }
 }

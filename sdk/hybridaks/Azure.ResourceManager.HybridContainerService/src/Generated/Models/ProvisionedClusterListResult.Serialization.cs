@@ -12,9 +12,9 @@ using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class ProvisionedClustersListResult
+    internal partial class ProvisionedClusterListResult
     {
-        internal static ProvisionedClustersListResult DeserializeProvisionedClustersListResult(JsonElement element)
+        internal static ProvisionedClusterListResult DeserializeProvisionedClusterListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClustersListResult(Optional.ToList(value), nextLink.Value);
+            return new ProvisionedClusterListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClusterControlPlaneEndpoint : IUtf8JsonSerializable
+    internal partial class ControlPlaneProfileControlPlaneEndpoint : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,22 +20,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("hostIP"u8);
                 writer.WriteStringValue(HostIP);
             }
-            if (Optional.IsDefined(Port))
-            {
-                writer.WritePropertyName("port"u8);
-                writer.WriteNumberValue(Port.Value);
-            }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClusterControlPlaneEndpoint DeserializeProvisionedClusterControlPlaneEndpoint(JsonElement element)
+        internal static ControlPlaneProfileControlPlaneEndpoint DeserializeControlPlaneProfileControlPlaneEndpoint(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> hostIP = default;
-            Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostIP"u8))
@@ -43,17 +37,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     hostIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    port = property.Value.GetInt32();
-                    continue;
-                }
             }
-            return new ProvisionedClusterControlPlaneEndpoint(hostIP.Value, Optional.ToNullable(port));
+            return new ControlPlaneProfileControlPlaneEndpoint(hostIP.Value);
         }
     }
 }
