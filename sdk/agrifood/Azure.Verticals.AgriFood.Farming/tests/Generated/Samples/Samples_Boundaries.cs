@@ -25,7 +25,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -41,7 +41,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -57,7 +57,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -82,7 +82,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -107,7 +107,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", content);
@@ -122,7 +122,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", content);
@@ -137,7 +137,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -207,7 +207,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -277,7 +277,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.GetBoundary("<partyId>", "<boundaryId>", null);
 
@@ -291,7 +291,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.GetBoundaryAsync("<partyId>", "<boundaryId>", null);
 
@@ -305,7 +305,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.GetBoundary("<partyId>", "<boundaryId>", null);
 
@@ -339,7 +339,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.GetBoundaryAsync("<partyId>", "<boundaryId>", null);
 
@@ -373,7 +373,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.Delete("<partyId>", "<boundaryId>");
 
@@ -386,7 +386,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
 
@@ -399,7 +399,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.Delete("<partyId>", "<boundaryId>");
 
@@ -412,7 +412,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
 
@@ -425,7 +425,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.GetOverlap("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -439,7 +439,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.GetOverlapAsync("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -453,7 +453,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = client.GetOverlap("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -469,7 +469,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Response response = await client.GetOverlapAsync("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -485,7 +485,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             foreach (BinaryData item in client.GetBoundaries(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -500,7 +500,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             await foreach (BinaryData item in client.GetBoundariesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -515,7 +515,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             foreach (BinaryData item in client.GetBoundaries("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -546,7 +546,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             await foreach (BinaryData item in client.GetBoundariesAsync("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -577,7 +577,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             foreach (BinaryData item in client.Search(content))
@@ -593,7 +593,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             await foreach (BinaryData item in client.SearchAsync(content))
@@ -609,7 +609,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -690,7 +690,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -771,7 +771,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -786,7 +786,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -801,7 +801,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -832,7 +832,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -863,7 +863,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             foreach (BinaryData item in client.SearchByPartyId("<partyId>", content))
@@ -879,7 +879,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             await foreach (BinaryData item in client.SearchByPartyIdAsync("<partyId>", content))
@@ -895,7 +895,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -976,7 +976,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1057,7 +1057,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
             BinaryData responseData = operation.Value;
@@ -1074,7 +1074,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
             BinaryData responseData = operation.Value;
@@ -1091,7 +1091,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
             BinaryData responseData = operation.Value;
@@ -1117,7 +1117,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+            Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
             BinaryData responseData = operation.Value;
