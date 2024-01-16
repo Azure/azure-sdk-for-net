@@ -115,10 +115,6 @@ jobs:
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with dev version
 
-      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
-        parameters:
-          Artifacts: ${{parameters.Artifacts}}
-
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
