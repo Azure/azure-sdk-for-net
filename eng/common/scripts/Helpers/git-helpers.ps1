@@ -49,16 +49,18 @@ class ConflictedFile {
       throw "File $File does not exist, pass a valid file path to the constructor."
     }
 
-    $this.Path = Resolve-Path $File
+    # Normally we would use Resolve-Path $file, but git only can handle relative paths using git show <commitsh>:<path>
+    # Therefore, just maintain whatever the path is here.
+    $this.Path = $File
     $this.Content = Get-Content -Raw $File
 
-    Write-Host $this.Content
     $this.ParseContent($this.Content)
   }
 
   [string] Left(){
     if ($this.IsConflicted) {
-      $tempContent = git show $this.LeftSource:$this.Path
+      Write-Host "& git show --textconv $($this.LeftSource):$($this.Path)"
+      $tempContent = & git show --textconv "$($this.LeftSource):$($this.Path)"
       return $tempContent
     }
     else {
@@ -68,7 +70,8 @@ class ConflictedFile {
 
   [string] Right(){
     if ($this.IsConflicted) {
-      $tempContent = git show $this.RightSource:$this.Path
+      Write-Host "& git show --textconv $($this.RightSource):$($this.Path)"
+      $tempContent = & git show --textconv "$($this.RightSource):$($this.Path)"
       return $tempContent
     }
     else {
@@ -83,25 +86,14 @@ class ConflictedFile {
     $direction = "both"
     
     foreach($line in $lines) {
-      Write-Host $line
-
-      $leftMatch = $line -match "^<<<<<<<\s*(.+)"
-      $rightMatch = $line -match "^>>>>>>>\s*(.+)"
-      # state machine for choosing what we're looking at
-      if ($leftMatch) {
+      if ($line -match "^<<<<<<<\s*(.+)") {
         $this.IsConflicted = $true
-
-        Write-Host $leftMatch
-
-        $this.LeftSource = $leftMatch[1]
+        $this.LeftSource = $matches[1]
         continue
       }
-      elseif ($rightMatch) {
+      elseif ($line -match "^>>>>>>>\s*(.+)") {
         $this.IsConflicted = $true
-
-        Write-Host $rightMatch
-
-        $this.RightSource = $rightMatch[1]
+        $this.RightSource = $matches[1]
         continue
       }
     }
