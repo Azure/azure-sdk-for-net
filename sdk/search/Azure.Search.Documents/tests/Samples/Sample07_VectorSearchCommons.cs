@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 // Add more hotel documents here...
             };
         }
-#endregion
+        #endregion
     }
 
     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Model

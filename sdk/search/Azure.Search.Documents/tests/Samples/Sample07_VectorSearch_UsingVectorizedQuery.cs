@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
                 }
                 Console.WriteLine($"Total number of search results:{count}");
-#endregion
+                #endregion
                 Assert.GreaterOrEqual(count, 1);
             }
             finally
