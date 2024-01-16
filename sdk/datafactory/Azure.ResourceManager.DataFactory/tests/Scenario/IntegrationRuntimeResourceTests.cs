@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Ignore this until https://github.com/Azure/azure-sdk-for-net/issues/40940 is fixed")]
         public async Task IntegraionRuntime_Create_Exists_Get_List_Delete()
         {
             // Get the resource group

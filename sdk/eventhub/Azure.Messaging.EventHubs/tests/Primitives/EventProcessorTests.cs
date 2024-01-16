@@ -149,13 +149,13 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns><c>true</c> if the <paramref name="partitionId"/> was owned and was being processed; otherwise, <c>false</c>.</returns>
         ///
-        private static Task<bool> InvokeTryStopProcessingPartitionAsync<T>(EventProcessor<T> processor,
-                                                                           string partitionId,
-                                                                           ProcessingStoppedReason reason,
-                                                                           CancellationToken cancellationToken) where T : EventProcessorPartition, new() =>
-            (Task<bool>)
+        private static Task InvokeStopProcessingPartitionAsync<T>(EventProcessor<T> processor,
+                                                                  string partitionId,
+                                                                  ProcessingStoppedReason reason,
+                                                                  CancellationToken cancellationToken) where T : EventProcessorPartition, new() =>
+            (Task)
                 typeof(EventProcessor<T>)
-                    .GetMethod("TryStopProcessingPartitionAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetMethod("StopProcessingPartitionAsync", BindingFlags.Instance | BindingFlags.NonPublic)
                     .Invoke(processor, new object[] { partitionId, reason, cancellationToken });
 
         /// <summary>

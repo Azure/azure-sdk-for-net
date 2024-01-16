@@ -45,6 +45,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AdditionalProperties))
+            {
+                writer.WritePropertyName("additionalProperties"u8);
+                writer.WriteStringValue(AdditionalProperties);
+            }
             writer.WriteEndObject();
         }
     }
