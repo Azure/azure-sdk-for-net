@@ -12,7 +12,7 @@ namespace Azure.Monitor.Query
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Monitor Metrics service.
     /// </summary>
-    public class MetricsBatchQueryClientOptions: ClientOptions
+    public class MetricsBatchQueryOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
 
@@ -22,13 +22,13 @@ namespace Azure.Monitor.Query
         internal const ServiceVersion LatestVersion = ServiceVersion.V2023_05_01_PREVIEW;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsBatchQueryClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="MetricsBatchQueryOptions"/> class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public MetricsBatchQueryClientOptions(ServiceVersion version = LatestVersion)
+        public MetricsBatchQueryOptions(ServiceVersion version = LatestVersion)
         {
             _version = version;
         }
@@ -109,7 +109,17 @@ namespace Azure.Monitor.Query
         /// Dimension name(s) to rollup results by.
         /// Examples: If you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries.
         /// </summary>
-        public string RollUpBy { get; set; }
+        public IList<string> RollUpBy { get; internal set; } = new List<string>();
+
+        /// <summary>
+        /// Join OrderBy so it can be sent as a comma separated string.
+        /// </summary>
+        [CodeGenMember("RollUpBy")]
+        internal string RollUpByRaw
+        {
+            get => MetricsBatchExtensions.CommaJoin(RollUpBy);
+            set => RollUpBy = MetricsBatchExtensions.CommaSplit(value);
+        }
 
         /// <summary>
         /// Gets or sets the interval at which to sample metrics.

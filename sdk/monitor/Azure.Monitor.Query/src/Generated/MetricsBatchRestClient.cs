@@ -127,7 +127,7 @@ namespace Azure.Monitor.Query
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<MetricsBatchResult>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricsBatchResult>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, IList<string> orderby = null, string filter = null, IList<string> rollupby = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -146,7 +146,7 @@ namespace Azure.Monitor.Query
                 throw new ArgumentNullException(nameof(batchRequest));
             }
 
-            using var message = CreateBatchRequest(subscriptionId, metricnamespace, metricnames, batchRequest, starttime, endtime, interval, aggregation, top, orderby, filter, rollupby);
+            using var message = CreateBatchRequest(subscriptionId, metricnamespace, metricnames, batchRequest, starttime, endtime, interval, aggregation, top, MetricsBatchExtensions.CommaJoin(orderby), filter, MetricsBatchExtensions.CommaJoin(rollupby));
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -195,7 +195,7 @@ namespace Azure.Monitor.Query
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
-        public Response<MetricsBatchResult> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
+        public Response<MetricsBatchResult> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, IList<string> orderby = null, string filter = null, IList<string> rollupby = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -214,7 +214,7 @@ namespace Azure.Monitor.Query
                 throw new ArgumentNullException(nameof(batchRequest));
             }
 
-            using var message = CreateBatchRequest(subscriptionId, metricnamespace, metricnames, batchRequest, starttime, endtime, interval, aggregation, top, orderby, filter, rollupby);
+            using var message = CreateBatchRequest(subscriptionId, metricnamespace, metricnames, batchRequest, starttime, endtime, interval, aggregation, top, MetricsBatchExtensions.CommaJoin(orderby), filter, MetricsBatchExtensions.CommaJoin(rollupby));
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
