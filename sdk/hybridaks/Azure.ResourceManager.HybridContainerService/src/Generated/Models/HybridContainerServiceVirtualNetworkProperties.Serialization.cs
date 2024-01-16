@@ -41,16 +41,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DhcpServers))
-            {
-                writer.WritePropertyName("dhcpServers"u8);
-                writer.WriteStartArray();
-                foreach (var item in DhcpServers)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
@@ -88,7 +78,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<InfraVnetProfile> infraVnetProfile = default;
             Optional<IList<KubernetesVirtualIPItem>> vipPool = default;
             Optional<IList<VirtualMachineIPItem>> vmipPool = default;
-            Optional<IList<string>> dhcpServers = default;
             Optional<IList<string>> dnsServers = default;
             Optional<string> gateway = default;
             Optional<string> ipAddressPrefix = default;
@@ -132,20 +121,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item));
                     }
                     vmipPool = array;
-                    continue;
-                }
-                if (property.NameEquals("dhcpServers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    dhcpServers = array;
                     continue;
                 }
                 if (property.NameEquals("dnsServers"u8))
@@ -200,7 +175,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new HybridContainerServiceVirtualNetworkProperties(infraVnetProfile.Value, Optional.ToList(vipPool), Optional.ToList(vmipPool), Optional.ToList(dhcpServers), Optional.ToList(dnsServers), gateway.Value, ipAddressPrefix.Value, Optional.ToNullable(vlanId), Optional.ToNullable(provisioningState), status.Value);
+            return new HybridContainerServiceVirtualNetworkProperties(infraVnetProfile.Value, Optional.ToList(vipPool), Optional.ToList(vmipPool), Optional.ToList(dnsServers), gateway.Value, ipAddressPrefix.Value, Optional.ToNullable(vlanId), Optional.ToNullable(provisioningState), status.Value);
         }
     }
 }

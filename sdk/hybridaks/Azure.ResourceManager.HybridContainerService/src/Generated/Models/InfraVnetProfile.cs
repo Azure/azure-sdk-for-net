@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The InfraVnetProfile. </summary>
-    public partial class InfraVnetProfile
+    internal partial class InfraVnetProfile
     {
         /// <summary> Initializes a new instance of <see cref="InfraVnetProfile"/>. </summary>
         public InfraVnetProfile()
@@ -16,28 +16,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InfraVnetProfile"/>. </summary>
-        /// <param name="hci"> Infra network profile for HCI platform. </param>
-        /// <param name="vmware"> Infra network profile for VMware platform. </param>
-        internal InfraVnetProfile(HciInfraVnetProfile hci, VMwareInfraVnetProfile vmware)
+        /// <param name="hci"> Infrastructure network profile for HCI platform. </param>
+        internal InfraVnetProfile(HciInfraVnetProfile hci)
         {
             Hci = hci;
-            Vmware = vmware;
         }
 
-        /// <summary> Infra network profile for HCI platform. </summary>
+        /// <summary> Infrastructure network profile for HCI platform. </summary>
         public HciInfraVnetProfile Hci { get; set; }
-        /// <summary> Infra network profile for VMware platform. </summary>
-        internal VMwareInfraVnetProfile Vmware { get; set; }
-        /// <summary> Name of the network segment in VSphere. </summary>
-        public string VmwareSegmentName
-        {
-            get => Vmware is null ? default : Vmware.SegmentName;
-            set
-            {
-                if (Vmware is null)
-                    Vmware = new VMwareInfraVnetProfile();
-                Vmware.SegmentName = value;
-            }
-        }
     }
 }
