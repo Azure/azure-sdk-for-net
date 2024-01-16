@@ -201,7 +201,7 @@ public partial class ClientPipeline
                            _customPerTryPolicies.Length +
                            _customBeforeTransportPolicies.Length)
             {
-                policy = _customPerTryPolicies.Span[index - (_beforeTransportIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)];
+                policy = _customBeforeTransportPolicies.Span[index - (_beforeTransportIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)];
                 return true;
             }
 
