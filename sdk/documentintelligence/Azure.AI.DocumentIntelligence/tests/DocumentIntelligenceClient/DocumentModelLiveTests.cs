@@ -35,6 +35,24 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
+        public async Task AnalyzeDocumentWithBase64Source()
+        {
+            var client = CreateDocumentIntelligenceClient();
+
+            var content = new AnalyzeDocumentContent()
+            {
+                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.ContosoReceipt)
+            };
+
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
+
+            Assert.That(operation.HasCompleted);
+            Assert.That(operation.HasValue);
+
+            ValidateContosoReceiptAnalyzeResult(operation.Value);
+        }
+
+        [RecordedTest]
         public async Task AnalyzeDocumentCanParseBlankPage()
         {
             var client = CreateDocumentIntelligenceClient();

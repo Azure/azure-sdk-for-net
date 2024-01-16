@@ -10,7 +10,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
     public class DocumentIntelligenceClientLiveTests : DocumentIntelligenceLiveTestBase
     {
         public DocumentIntelligenceClientLiveTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Live)
+            : base(isAsync)
         {
         }
 
