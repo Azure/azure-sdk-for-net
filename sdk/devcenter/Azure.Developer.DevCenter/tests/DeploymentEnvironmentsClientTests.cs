@@ -16,7 +16,7 @@ using NUnit.Framework;
 namespace Azure.Developer.DevCenter.Tests
 {
     [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
-    public class EnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
+    public class DeploymentEnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private const string EnvName = "DevTestEnv";
         private const string EnvDefinitionName = "Sandbox";
@@ -28,7 +28,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new DevCenterClientOptions())));
 
-        public EnvironmentsClientTests(bool isAsync) : base(isAsync)
+        public DeploymentEnvironmentsClientTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -89,6 +89,23 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
+        public async Task GetEnvironmentDefinitionSucceeds()
+        {
+            EnvironmentDefinition envDefinition = await _environmentsClient.GetEnvironmentDefinitionAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.CatalogName,
+                EnvDefinitionName);
+
+            string envDefinitionName = envDefinition.Name;
+            if (string.IsNullOrWhiteSpace(envDefinitionName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.AreEqual(EnvDefinitionName, envDefinitionName);
+        }
+
+        [RecordedTest]
         public async Task GetEnvironmentDefinitionsSucceeds()
         {
             List<EnvironmentDefinition> envDefinitions = await _environmentsClient.GetEnvironmentDefinitionsAsync(
@@ -98,13 +115,13 @@ namespace Azure.Developer.DevCenter.Tests
 
             foreach (var envDefinition in envDefinitions)
             {
-                string envDefinitionsName = envDefinition.Name;
-                if (string.IsNullOrWhiteSpace(envDefinitionsName))
+                string envDefinitionName = envDefinition.Name;
+                if (string.IsNullOrWhiteSpace(envDefinitionName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                TestContext.WriteLine(envDefinitionsName);
+                TestContext.WriteLine(envDefinitionName);
             }
         }
 
@@ -130,7 +147,7 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
-        public async Task EnvironmentCreateAndDeleteSucceeds()
+        public async Task CreateAndDeleteEnvironmentSucceeds()
         {
             await SetUpEnvironmentAsync();
             await DeleteEnvironmentAsync();

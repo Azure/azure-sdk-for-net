@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.Developer.DevCenter.Tests
 {
     [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
-    public class DevBoxClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
+    public class DevBoxesClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         public const string DevBoxName = "MyDevBox";
 
@@ -27,7 +27,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new DevCenterClientOptions())));
 
-        public DevBoxClientTests(bool isAsync) : base(isAsync)
+        public DevBoxesClientTests(bool isAsync) : base(isAsync)
         {
         }
 
