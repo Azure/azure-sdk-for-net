@@ -42,7 +42,7 @@ directive:
     $["x-ms-enum"].name = "ErrorMessage";
 ```
 
-### Change naming of Error to ErrorMessage
+### Remove from Generated Models
 ``` yaml
 directive:
   - remove-operation-match: /.*Reservation.*/i
