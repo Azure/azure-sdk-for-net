@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<string> version = default;
-            Optional<KubernetesVersionCapabilities> capabilities = default;
             Optional<bool> isPreview = default;
             Optional<IReadOnlyDictionary<string, KubernetesPatchVersions>> patchVersions = default;
             foreach (var property in element.EnumerateObject())
@@ -28,15 +27,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("capabilities"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))
@@ -63,7 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new KubernetesVersionProperties(version.Value, capabilities.Value, Optional.ToNullable(isPreview), Optional.ToDictionary(patchVersions));
+            return new KubernetesVersionProperties(version.Value, Optional.ToNullable(isPreview), Optional.ToDictionary(patchVersions));
         }
     }
 }
