@@ -36,3 +36,74 @@ function Get-ChangedFiles {
   }
   return $changedFiles
 }
+
+class ConflictedFile {
+  [string]$LeftSource = ""
+  [string]$RightSource = ""
+  [string]$Content = ""
+  [string]$Path = ""
+  [boolean]$IsConflicted = $false
+
+  ConflictedFile([string]$File = "") {
+    if (!(Test-Path $File)) {
+      throw "File $File does not exist, pass a valid file path to the constructor."
+    }
+
+    $this.Path = Resolve-Path $File
+    $this.Content = Get-Content -Raw $File
+
+    Write-Host $this.Content
+    $this.ParseContent($this.Content)
+  }
+
+  [string] Left(){
+    if ($this.IsConflicted) {
+      $tempContent = git show $this.LeftSource:$this.Path
+      return $tempContent
+    }
+    else {
+      return $this.Content
+    }
+  }
+
+  [string] Right(){
+    if ($this.IsConflicted) {
+      $tempContent = git show $this.RightSource:$this.Path
+      return $tempContent
+    }
+    else {
+      return $this.Content
+    }
+  }
+
+  [void] ParseContent([string]$IncomingContent) {
+    $lines = $IncomingContent -split "`r?`n"
+    $l = @()
+    $r = @()
+    $direction = "both"
+    
+    foreach($line in $lines) {
+      Write-Host $line
+
+      $leftMatch = $line -match "^<<<<<<<\s*(.+)"
+      $rightMatch = $line -match "^>>>>>>>\s*(.+)"
+      # state machine for choosing what we're looking at
+      if ($leftMatch) {
+        $this.IsConflicted = $true
+
+        Write-Host $leftMatch
+
+        $this.LeftSource = $leftMatch[1]
+        continue
+      }
+      elseif ($rightMatch) {
+        $this.IsConflicted = $true
+
+        Write-Host $rightMatch
+
+        $this.RightSource = $rightMatch[1]
+        continue
+      }
+    }
+  }
+}
