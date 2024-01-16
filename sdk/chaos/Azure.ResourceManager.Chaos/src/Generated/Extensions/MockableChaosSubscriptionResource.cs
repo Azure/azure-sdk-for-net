@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> String that represents a Location resource name. </param>
@@ -88,6 +96,14 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,6 +129,14 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
@@ -136,6 +160,14 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

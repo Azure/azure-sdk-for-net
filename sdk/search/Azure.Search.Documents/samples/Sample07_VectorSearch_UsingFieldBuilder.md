@@ -4,7 +4,7 @@ The `FieldBuilder` class allows you to define a Search index from a model type. 
 
 ## Model Creation
 
-Consider the following model, which includes a property named `DescriptionVector` that represents a vector field. To configure a vector field, you must provide the model dimensions, indicating the size of the embeddings generated for this field, as well as the name of the vector search profile that specifies the algorithm configuration and any optional parameters for searching the vector field.
+Consider the following model, which includes a property named `DescriptionVector` that represents a vector field. To configure a vector field, you must provide the model dimensions, indicating the size of the embeddings generated for this field, as well as the name of the vector search profile that specifies the algorithm configuration in the `VectorSearchField` attribute.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_FieldBuilder_Model
 public class MyDocument
@@ -18,7 +18,7 @@ public class MyDocument
     [SearchableField(AnalyzerName = "en.microsoft")]
     public string Description { get; set; }
 
-    [SearchableField(VectorSearchDimensions = "1536", VectorSearchProfile = "my-vector-profile")]
+    [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "my-vector-profile")]
     public IReadOnlyList<float> DescriptionVector { get; set; }
 }
 ```
@@ -28,7 +28,7 @@ public class MyDocument
 We will create an instace of `SearchIndex` and use `FieldBuilder` to define fields based on the `MyDocument` model class.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingFieldBuilder
-string vectorSearchProfile = "my-vector-profile";
+string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
 string indexName = "my-document";
@@ -40,11 +40,11 @@ SearchIndex searchIndex = new SearchIndex(indexName)
     {
         Profiles =
     {
-        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+        new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
     },
         Algorithms =
     {
-        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+        new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
     }
     },
 };
@@ -61,4 +61,4 @@ SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);
 ```
 
-To perform vector search please refer to the [Vector Search Using RAW Vector Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md) or [Vector Search Using Vectorizable Text Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md) samples.
+To perform vector search please refer to the [Vector Search Using Vectorized Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizedQuery.md) sample or [Vector Search Using Vectorizable Text Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md) samples.

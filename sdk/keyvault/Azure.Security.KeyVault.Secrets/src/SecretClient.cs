@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing <see cref="KeyVaultSecret"/>.
     /// The client also supports listing <see cref="DeletedSecret"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
-    [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
+    [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
     public class SecretClient
     {
         internal const string SecretsPath = "/secrets/";

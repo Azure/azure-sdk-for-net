@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Defines the names of all text normalizers supported by Azure Cognitive Search. </summary>
+    /// <summary> Defines the names of all text normalizers supported by the search engine. </summary>
     public readonly partial struct LexicalNormalizerName : IEquatable<LexicalNormalizerName>
     {
         private readonly string _value;

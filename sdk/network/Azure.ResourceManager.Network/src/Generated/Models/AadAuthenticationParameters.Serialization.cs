@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AadAuthenticationParameters : IUtf8JsonSerializable
+    public partial class AadAuthenticationParameters : IUtf8JsonSerializable, IJsonModel<AadAuthenticationParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadAuthenticationParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AadAuthenticationParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AadAuthenticationParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AadTenant))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AadAuthenticationParameters DeserializeAadAuthenticationParameters(JsonElement element)
+        AadAuthenticationParameters IJsonModel<AadAuthenticationParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AadAuthenticationParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAadAuthenticationParameters(document.RootElement, options);
+        }
+
+        internal static AadAuthenticationParameters DeserializeAadAuthenticationParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> aadTenant = default;
             Optional<string> aadAudience = default;
             Optional<string> aadIssuer = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadTenant"u8))
@@ -59,8 +101,44 @@ namespace Azure.ResourceManager.Network.Models
                     aadIssuer = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AadAuthenticationParameters(aadTenant.Value, aadAudience.Value, aadIssuer.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AadAuthenticationParameters(aadTenant.Value, aadAudience.Value, aadIssuer.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AadAuthenticationParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AadAuthenticationParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AadAuthenticationParameters IPersistableModel<AadAuthenticationParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AadAuthenticationParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAadAuthenticationParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AadAuthenticationParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

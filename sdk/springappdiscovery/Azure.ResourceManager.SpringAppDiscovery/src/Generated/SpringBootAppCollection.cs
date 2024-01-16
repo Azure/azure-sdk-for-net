@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="springbootappsName"> The springbootapps name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +184,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="springbootappsName"> The springbootapps name. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
