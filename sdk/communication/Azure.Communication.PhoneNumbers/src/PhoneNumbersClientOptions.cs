@@ -12,7 +12,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Client options for PhoneNumbersClient. </summary>
     public class PhoneNumbersClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
