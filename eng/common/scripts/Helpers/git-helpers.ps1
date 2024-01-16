@@ -50,7 +50,8 @@ class ConflictedFile {
     }
 
     # Normally we would use Resolve-Path $file, but git only can handle relative paths using git show <commitsh>:<path>
-    # Therefore, just maintain whatever the path is here.
+    # Therefore, just maintain whatever the path is given to us. Left() and Right() should therefore be called from the same
+    # directory as where we defined the relative path to the target file.
     $this.Path = $File
     $this.Content = Get-Content -Raw $File
 
@@ -59,9 +60,14 @@ class ConflictedFile {
 
   [string] Left(){
     if ($this.IsConflicted) {
-      Write-Host "& git show --textconv $($this.LeftSource):$($this.Path)"
-      $tempContent = & git show --textconv "$($this.LeftSource):$($this.Path)"
-      return $tempContent
+      # we are forced to get this line by line and reassemble via join because of how powershell is interacting with
+      # git show --textconv commitsh:path
+      # powershell ignores the newlines with and without --textconv, which results in a json file without original spacing.
+      # by forcefully reading into the array line by line, the whitespace is preserved. we're relying on gits autoconverstion of clrf to lf
+      # to ensure that the line endings are consistent.
+      Write-Host "& git show $($this.LeftSource):$($this.Path)"
+      [array]$tempContent = & git show "$($this.LeftSource):$($this.Path)"
+      return $tempContent -join "`n"
     }
     else {
       return $this.Content
@@ -70,9 +76,9 @@ class ConflictedFile {
 
   [string] Right(){
     if ($this.IsConflicted) {
-      Write-Host "& git show --textconv $($this.RightSource):$($this.Path)"
-      $tempContent = & git show --textconv "$($this.RightSource):$($this.Path)"
-      return $tempContent
+      Write-Host "& git show $($this.RightSource):$($this.Path)"
+      [array]$tempContent = & git show "$($this.RightSource):$($this.Path)"
+      return $tempContent -join `n
     }
     else {
       return $this.Content
@@ -83,7 +89,6 @@ class ConflictedFile {
     $lines = $IncomingContent -split "`r?`n"
     $l = @()
     $r = @()
-    $direction = "both"
     
     foreach($line in $lines) {
       if ($line -match "^<<<<<<<\s*(.+)") {
@@ -95,6 +100,10 @@ class ConflictedFile {
         $this.IsConflicted = $true
         $this.RightSource = $matches[1]
         continue
+      }
+
+      if ($this.LeftSource -and $this.RightSource) {
+        break
       }
     }
   }
