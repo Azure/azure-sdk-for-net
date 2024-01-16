@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.3 (2024-01-16)
+- Test GA library release
+
 ## 1.0.3-beta.20 (2022-04-26)
 
 ### Other Changes
