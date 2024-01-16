@@ -8,27 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalMessageTextDetails : IUtf8JsonSerializable
+    internal partial class InternalMessageTextDetails
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("value"u8);
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("annotations"u8);
-            writer.WriteStartArray();
-            foreach (var item in Annotations)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static InternalMessageTextDetails DeserializeInternalMessageTextDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -36,7 +20,7 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string value = default;
-            IList<MessageTextAnnotation> annotations = default;
+            IReadOnlyList<MessageTextAnnotation> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,14 +48,6 @@ namespace Azure.AI.OpenAI.Assistants
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeInternalMessageTextDetails(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

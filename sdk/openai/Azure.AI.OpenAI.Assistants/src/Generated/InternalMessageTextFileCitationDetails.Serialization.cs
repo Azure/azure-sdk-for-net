@@ -7,22 +7,11 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalMessageTextFileCitationDetails : IUtf8JsonSerializable
+    internal partial class InternalMessageTextFileCitationDetails
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("file_id"u8);
-            writer.WriteStringValue(FileId);
-            writer.WritePropertyName("quote"u8);
-            writer.WriteStringValue(Quote);
-            writer.WriteEndObject();
-        }
-
         internal static InternalMessageTextFileCitationDetails DeserializeInternalMessageTextFileCitationDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -53,14 +42,6 @@ namespace Azure.AI.OpenAI.Assistants
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeInternalMessageTextFileCitationDetails(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

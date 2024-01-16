@@ -46,7 +46,7 @@ public class AssistantsTests : AssistantsTestBase
             {
                 Name = "AOAI SDK Test Assistant - Delete Me",
                 Description = "Created by automated tests to exercise the API; should not be used",
-                Tools = { new CodeInterpreterToolDefinition() },
+                Tools = { new RetrievalToolDefinition() },
                 Instructions = "You are a very generic assistant.",
                 Metadata = { TestMetadataPair },
             });

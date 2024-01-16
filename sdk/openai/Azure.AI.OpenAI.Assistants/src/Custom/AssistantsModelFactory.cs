@@ -149,7 +149,7 @@ public static partial class AssistantsModelFactory
     /// </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <returns> A new <see cref="Assistants.ThreadMessage"/> instance for mocking. </returns>
-    public static ThreadMessage ThreadMessage(string id = null, DateTimeOffset createdAt = default, string threadId = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string assistantId = null, string runId = null, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null)
+    public static ThreadMessage ThreadMessage(string id = null, DateTimeOffset createdAt = default, string threadId = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string assistantId = null, string runId = null, IEnumerable<string> fileIds = null, IReadOnlyDictionary<string, string> metadata = null)
     {
         contentItems ??= new List<MessageContent>();
         fileIds ??= new List<string>();

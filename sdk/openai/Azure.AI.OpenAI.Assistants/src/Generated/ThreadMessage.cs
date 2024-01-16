@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> A single message within an assistant thread. </summary>
+    /// <summary> A single, existing message within an assistant thread. </summary>
     public partial class ThreadMessage
     {
         /// <summary> Initializes a new instance of <see cref="ThreadMessage"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="contentItems"/> or <paramref name="fileIds"/> is null. </exception>
-        public ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageRole role, IEnumerable<MessageContent> contentItems, IEnumerable<string> fileIds, IDictionary<string, string> metadata)
+        internal ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageRole role, IEnumerable<MessageContent> contentItems, IEnumerable<string> fileIds, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(threadId, nameof(threadId));
@@ -57,7 +57,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// access files.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal ThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageRole role, IList<MessageContent> contentItems, string assistantId, string runId, IList<string> fileIds, IDictionary<string, string> metadata)
+        internal ThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageRole role, IReadOnlyList<MessageContent> contentItems, string assistantId, string runId, IReadOnlyList<string> fileIds, IReadOnlyDictionary<string, string> metadata)
         {
             Id = id;
             Object = @object;
@@ -72,30 +72,30 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; }
         /// <summary> The ID of the thread that this message belongs to. </summary>
-        public string ThreadId { get; set; }
+        public string ThreadId { get; }
         /// <summary> The role associated with the assistant thread message. </summary>
-        public MessageRole Role { get; set; }
+        public MessageRole Role { get; }
         /// <summary>
         /// The list of content items associated with the assistant thread message.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
         /// </summary>
-        public IList<MessageContent> ContentItems { get; }
+        public IReadOnlyList<MessageContent> ContentItems { get; }
         /// <summary> If applicable, the ID of the assistant that authored this message. </summary>
-        public string AssistantId { get; set; }
+        public string AssistantId { get; }
         /// <summary> If applicable, the ID of the run associated with the authoring of this message. </summary>
-        public string RunId { get; set; }
+        public string RunId { get; }
         /// <summary>
         /// A list of file IDs that the assistant should use. Useful for tools like retrieval and code_interpreter that can
         /// access files.
         /// </summary>
-        public IList<string> FileIds { get; }
+        public IReadOnlyList<string> FileIds { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

@@ -147,6 +147,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.MessageFileCitationTextAnnotation MessageFileCitationTextAnnotation(string text, int startIndex, int endIndex, string fileId, string quote) { throw null; }
         public static Azure.AI.OpenAI.Assistants.MessageFilePathTextAnnotation MessageFilePathTextAnnotation(string text, int startIndex, int endIndex, string fileId) { throw null; }
         public static Azure.AI.OpenAI.Assistants.MessageImageFileContent MessageImageFileContent(string fileId) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null, int startIndex = 0, int endIndex = 0) { throw null; }
         public static Azure.AI.OpenAI.Assistants.MessageTextContent MessageTextContent(string text, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.MessageTextAnnotation> annotations) { throw null; }
         public static Azure.AI.OpenAI.Assistants.OpenAIFile OpenAIFile(string id = null, int size = 0, string filename = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose = default(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose)) { throw null; }
         public static Azure.AI.OpenAI.Assistants.PageableList<T> PageableList<T>(System.Collections.Generic.IReadOnlyList<T> data, string firstId, string lastId, bool hasMore) { throw null; }
@@ -158,7 +159,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.RunStepMessageCreationReference RunStepMessageCreationReference(string messageId = null) { throw null; }
         public static Azure.AI.OpenAI.Assistants.RunStepToolCallDetails RunStepToolCallDetails(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolCall> toolCalls = null) { throw null; }
         public static Azure.AI.OpenAI.Assistants.SubmitToolOutputsAction SubmitToolOutputsAction(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolCall> toolCalls) { throw null; }
-        public static Azure.AI.OpenAI.Assistants.ThreadMessage ThreadMessage(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string threadId = null, Azure.AI.OpenAI.Assistants.MessageRole role = default(Azure.AI.OpenAI.Assistants.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.MessageContent> contentItems = null, string assistantId = null, string runId = null, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.ThreadMessage ThreadMessage(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string threadId = null, Azure.AI.OpenAI.Assistants.MessageRole role = default(Azure.AI.OpenAI.Assistants.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.MessageContent> contentItems = null, string assistantId = null, string runId = null, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.OpenAI.Assistants.ThreadRun ThreadRun(string id = null, string threadId = null, string assistantId = null, Azure.AI.OpenAI.Assistants.RunStatus status = default(Azure.AI.OpenAI.Assistants.RunStatus), Azure.AI.OpenAI.Assistants.RequiredAction requiredAction = null, Azure.AI.OpenAI.Assistants.RunError lastError = null, string model = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolDefinition> tools = null, System.Collections.Generic.IEnumerable<string> fileIds = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancelledAt = default(System.DateTimeOffset?), System.DateTimeOffset? failedAt = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.OpenAI.Assistants.ToolCall ToolCall(string type = null, string id = null) { throw null; }
     }
@@ -172,7 +173,7 @@ namespace Azure.AI.OpenAI.Assistants
     public partial class AssistantThreadCreationOptions
     {
         public AssistantThreadCreationOptions() { }
-        public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ThreadMessage> Messages { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ThreadInitializationMessage> Messages { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
     }
     public partial class CodeInterpreterImageOutput : Azure.AI.OpenAI.Assistants.CodeInterpreterToolCallOutput
@@ -301,9 +302,9 @@ namespace Azure.AI.OpenAI.Assistants
     public abstract partial class MessageTextAnnotation
     {
         protected MessageTextAnnotation(string text, int startIndex, int endIndex) { }
-        public int EndIndex { get { throw null; } set { } }
-        public int StartIndex { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
+        public int EndIndex { get { throw null; } }
+        public int StartIndex { get { throw null; } }
+        public string Text { get { throw null; } }
     }
     public partial class MessageTextContent : Azure.AI.OpenAI.Assistants.MessageContent
     {
@@ -499,18 +500,26 @@ namespace Azure.AI.OpenAI.Assistants
         internal SubmitToolOutputsAction() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.ToolCall> ToolCalls { get { throw null; } }
     }
+    public partial class ThreadInitializationMessage
+    {
+        public ThreadInitializationMessage(Azure.AI.OpenAI.Assistants.MessageRole role, string content) { }
+        public string Content { get { throw null; } }
+        public System.Collections.Generic.IList<string> FileIds { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.AI.OpenAI.Assistants.MessageRole Role { get { throw null; } }
+    }
     public partial class ThreadMessage
     {
-        public ThreadMessage(string id, System.DateTimeOffset createdAt, string threadId, Azure.AI.OpenAI.Assistants.MessageRole role, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.MessageContent> contentItems, System.Collections.Generic.IEnumerable<string> fileIds, System.Collections.Generic.IDictionary<string, string> metadata) { }
-        public string AssistantId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.MessageContent> ContentItems { get { throw null; } }
-        public System.DateTimeOffset CreatedAt { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> FileIds { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public Azure.AI.OpenAI.Assistants.MessageRole Role { get { throw null; } set { } }
-        public string RunId { get { throw null; } set { } }
-        public string ThreadId { get { throw null; } set { } }
+        internal ThreadMessage() { }
+        public string AssistantId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.MessageContent> ContentItems { get { throw null; } }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> FileIds { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
+        public Azure.AI.OpenAI.Assistants.MessageRole Role { get { throw null; } }
+        public string RunId { get { throw null; } }
+        public string ThreadId { get { throw null; } }
     }
     public partial class ThreadRun
     {

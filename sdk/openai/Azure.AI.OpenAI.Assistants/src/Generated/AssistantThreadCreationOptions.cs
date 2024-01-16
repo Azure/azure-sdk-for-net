@@ -16,21 +16,21 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="AssistantThreadCreationOptions"/>. </summary>
         public AssistantThreadCreationOptions()
         {
-            Messages = new ChangeTrackingList<ThreadMessage>();
+            Messages = new ChangeTrackingList<ThreadInitializationMessage>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssistantThreadCreationOptions"/>. </summary>
-        /// <param name="messages"> The messages to associate with the new thread. </param>
+        /// <param name="messages"> The initial messages to associate with the new thread. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal AssistantThreadCreationOptions(IList<ThreadMessage> messages, IDictionary<string, string> metadata)
+        internal AssistantThreadCreationOptions(IList<ThreadInitializationMessage> messages, IDictionary<string, string> metadata)
         {
             Messages = messages;
             Metadata = metadata;
         }
 
-        /// <summary> The messages to associate with the new thread. </summary>
-        public IList<ThreadMessage> Messages { get; }
+        /// <summary> The initial messages to associate with the new thread. </summary>
+        public IList<ThreadInitializationMessage> Messages { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IDictionary<string, string> Metadata { get; set; }
     }

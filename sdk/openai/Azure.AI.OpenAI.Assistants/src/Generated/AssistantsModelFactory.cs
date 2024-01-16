@@ -98,6 +98,17 @@ namespace Azure.AI.OpenAI.Assistants
             return new CodeInterpreterImageReference(fileId);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.MessageTextAnnotation"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Assistants.MessageTextAnnotation"/> instance for mocking. </returns>
+        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null, int startIndex = default, int endIndex = default)
+        {
+            return new UnknownMessageTextAnnotation(type, text, startIndex, endIndex);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationDetails"/>. </summary>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
         /// <returns> A new <see cref="Assistants.RunStepMessageCreationDetails"/> instance for mocking. </returns>

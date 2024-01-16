@@ -13,63 +13,8 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class ThreadMessage : IUtf8JsonSerializable
+    public partial class ThreadMessage
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
-            writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedAt, "U");
-            writer.WritePropertyName("thread_id"u8);
-            writer.WriteStringValue(ThreadId);
-            writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role.ToString());
-            writer.WritePropertyName("content"u8);
-            writer.WriteStartArray();
-            foreach (var item in ContentItems)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(AssistantId))
-            {
-                writer.WritePropertyName("assistant_id"u8);
-                writer.WriteStringValue(AssistantId);
-            }
-            if (Optional.IsDefined(RunId))
-            {
-                writer.WritePropertyName("run_id"u8);
-                writer.WriteStringValue(RunId);
-            }
-            writer.WritePropertyName("file_ids"u8);
-            writer.WriteStartArray();
-            foreach (var item in FileIds)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            else
-            {
-                writer.WriteNull("metadata");
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ThreadMessage DeserializeThreadMessage(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -81,11 +26,11 @@ namespace Azure.AI.OpenAI.Assistants
             DateTimeOffset createdAt = default;
             string threadId = default;
             MessageRole role = default;
-            IList<MessageContent> content = default;
+            IReadOnlyList<MessageContent> content = default;
             Optional<string> assistantId = default;
             Optional<string> runId = default;
-            IList<string> fileIds = default;
-            IDictionary<string, string> metadata = default;
+            IReadOnlyList<string> fileIds = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -168,14 +113,6 @@ namespace Azure.AI.OpenAI.Assistants
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeThreadMessage(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

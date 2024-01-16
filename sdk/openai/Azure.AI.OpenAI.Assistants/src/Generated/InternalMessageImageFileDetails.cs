@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="InternalMessageImageFileDetails"/>. </summary>
         /// <param name="internalDetails"> The ID for the file associated with this image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
-        public InternalMessageImageFileDetails(InternalMessageImageFileIdDetails internalDetails)
+        internal InternalMessageImageFileDetails(InternalMessageImageFileIdDetails internalDetails)
         {
             Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
@@ -24,6 +24,6 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The ID for the file associated with this image. </summary>
-        public InternalMessageImageFileIdDetails InternalDetails { get; set; }
+        public InternalMessageImageFileIdDetails InternalDetails { get; }
     }
 }

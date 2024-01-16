@@ -47,10 +47,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> The object type. </summary>
         internal string Type { get; set; }
         /// <summary> The textual content associated with this text annotation item. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
         /// <summary> The first text index associated with this text annotation. </summary>
-        public int StartIndex { get; set; }
+        public int StartIndex { get; }
         /// <summary> The last text index associated with this text annotation. </summary>
-        public int EndIndex { get; set; }
+        public int EndIndex { get; }
     }
 }

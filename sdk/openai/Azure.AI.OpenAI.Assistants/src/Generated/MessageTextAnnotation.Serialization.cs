@@ -7,26 +7,11 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class MessageTextAnnotation : IUtf8JsonSerializable
+    public partial class MessageTextAnnotation
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("text"u8);
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("start_index"u8);
-            writer.WriteNumberValue(StartIndex);
-            writer.WritePropertyName("end_index"u8);
-            writer.WriteNumberValue(EndIndex);
-            writer.WriteEndObject();
-        }
-
         internal static MessageTextAnnotation DeserializeMessageTextAnnotation(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -50,14 +35,6 @@ namespace Azure.AI.OpenAI.Assistants
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeMessageTextAnnotation(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

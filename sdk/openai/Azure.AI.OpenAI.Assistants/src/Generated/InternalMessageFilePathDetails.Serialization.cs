@@ -7,20 +7,11 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalMessageFilePathDetails : IUtf8JsonSerializable
+    internal partial class InternalMessageFilePathDetails
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("file_id"u8);
-            writer.WriteStringValue(FileId);
-            writer.WriteEndObject();
-        }
-
         internal static InternalMessageFilePathDetails DeserializeInternalMessageFilePathDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -45,14 +36,6 @@ namespace Azure.AI.OpenAI.Assistants
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeInternalMessageFilePathDetails(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

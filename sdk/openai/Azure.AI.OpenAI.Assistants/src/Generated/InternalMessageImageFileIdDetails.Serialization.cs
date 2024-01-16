@@ -7,20 +7,11 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalMessageImageFileIdDetails : IUtf8JsonSerializable
+    internal partial class InternalMessageImageFileIdDetails
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("file_id"u8);
-            writer.WriteStringValue(FileId);
-            writer.WriteEndObject();
-        }
-
         internal static InternalMessageImageFileIdDetails DeserializeInternalMessageImageFileIdDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -45,14 +36,6 @@ namespace Azure.AI.OpenAI.Assistants
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeInternalMessageImageFileIdDetails(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }
