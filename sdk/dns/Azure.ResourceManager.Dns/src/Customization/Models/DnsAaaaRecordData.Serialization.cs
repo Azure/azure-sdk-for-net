@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Dns
 
         void IJsonModel<DnsAaaaRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DnsAaaaRecordData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsAaaaRecordData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
