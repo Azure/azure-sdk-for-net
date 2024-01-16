@@ -157,7 +157,7 @@ public partial class HttpClientPipelineTransport
             protected override bool TryComputeLength(out long length)
                 => _content.TryComputeLength(out length);
 
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
             protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
