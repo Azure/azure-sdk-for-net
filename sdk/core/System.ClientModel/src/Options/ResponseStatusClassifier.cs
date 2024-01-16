@@ -7,14 +7,13 @@ namespace System.ClientModel.Primitives
 {
     internal class ResponseStatusClassifier : PipelineMessageClassifier
     {
-        // Until we have C# 12...
         private BitVector640 _successCodes;
 
         /// <summary>
         /// Creates a new instance of <see cref="ResponseStatusClassifier"/>.
         /// </summary>
-        /// <param name="successStatusCodes">The status codes that this classifier will consider
-        /// not to be errors.</param>
+        /// <param name="successStatusCodes">The status codes that this classifier
+        /// will consider not to be errors.</param>
         public ResponseStatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
             _successCodes = new();

@@ -17,10 +17,10 @@ namespace Azure.Core
         internal ResponseClassificationHandler[]? Handlers { get; set; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="StatusCodeClassifier"/>
+        /// Creates a new instance of <see cref="StatusCodeClassifier"/>.
         /// </summary>
-        /// <param name="successStatusCodes">The status codes that this classifier will consider
-        /// not to be errors.</param>
+        /// <param name="successStatusCodes">The status codes that this classifier
+        /// will consider not to be errors.</param>
         public StatusCodeClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
             _successCodes = new();
@@ -61,7 +61,7 @@ namespace Azure.Core
         {
             Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
 
-            _successCodes[statusCode] = isError;
+            _successCodes[statusCode] = !isError;
         }
     }
 }
