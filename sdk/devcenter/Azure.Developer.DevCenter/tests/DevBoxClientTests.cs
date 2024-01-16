@@ -48,9 +48,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.MeUserId,
                 DevBoxName);
 
-            Response devBoxStopResponse = devBoxStopOperation.WaitForCompletionResponse();
-
-            Assert.AreEqual((int)HttpStatusCode.OK, devBoxStopResponse.Status);
+            CheckLROSucceeded(devBoxStopOperation);
 
             // Start the dev box
             Operation devBoxStartOperation = await _devBoxesClient.StartDevBoxAsync(
@@ -59,9 +57,19 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.MeUserId,
                 DevBoxName);
 
-            Response devBoxStartResponse = devBoxStartOperation.WaitForCompletionResponse();
+            CheckLROSucceeded(devBoxStartOperation);
+        }
 
-            Assert.AreEqual((int)HttpStatusCode.OK, devBoxStartResponse.Status);
+        [RecordedTest]
+        public async Task RestartDevBoxSucceeds()
+        {
+            Operation devBoxRestartOperation = await _devBoxesClient.RestartDevBoxAsync(
+                WaitUntil.Completed,
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName);
+
+            CheckLROSucceeded(devBoxRestartOperation);
         }
 
         [RecordedTest]
@@ -89,6 +97,23 @@ namespace Azure.Developer.DevCenter.Tests
             }
 
             Assert.AreEqual(remoteConnectionUrl.Scheme, "ms-avd");
+        }
+
+        [RecordedTest]
+        public async Task GetDevBoxSucceeds()
+        {
+            DevBox devBox = await _devBoxesClient.GetDevBoxAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName);
+
+            string devBoxName = devBox.Name;
+            if (string.IsNullOrWhiteSpace(devBoxName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.AreEqual(devBoxName, DevBoxName);
         }
 
         [RecordedTest]
@@ -187,6 +212,7 @@ namespace Azure.Developer.DevCenter.Tests
             {
                 FailDueToMissingProperty("name");
             }
+
             Assert.AreEqual("default", scheduleName);
         }
 
@@ -283,7 +309,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task SkipActionAndDeleteDevBoxSucceeds()
         {
             //This test will run for each target framework. Since Skip Action can run only once - if you skip action in a machine that
-            //already has the scheduled shutdown skipped it will fail. So we need no delete the machine, and SetUp will create a new one
+            //already has the scheduled shutdown skipped it will fail. So we need no delete the machine, and SetUp will create a new one for each test
 
             Response skipActionResponse = await _devBoxesClient.SkipActionAsync(
                 TestEnvironment.ProjectName,

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -35,21 +36,17 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetProjectsSucceeds()
         {
-            var numberOfReturnedProjects = 0;
+            List<DevCenterProject> projects = await _devCenterClient.GetProjectsAsync().ToEnumerableAsync();
 
-            await foreach (DevCenterProject item in _devCenterClient.GetProjectsAsync())
+            Assert.AreEqual(1, projects.Count);
+
+            string projectName = projects[0].Name;
+            if (string.IsNullOrWhiteSpace(projectName))
             {
-                numberOfReturnedProjects++;
-                string projectName = item?.Name;
-                if (string.IsNullOrWhiteSpace(projectName))
-                {
-                    Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
-                }
-
-                Assert.AreEqual(TestEnvironment.ProjectName, projectName);
+                Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
             }
 
-            Assert.AreEqual(1, numberOfReturnedProjects);
+            Assert.AreEqual(TestEnvironment.ProjectName, projectName);
         }
 
         [Test]
@@ -57,7 +54,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             Response<DevCenterProject> getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
 
-            string projectName = getProjectResponse?.Value?.Name;
+            string projectName = getProjectResponse.Value.Name;
             if (string.IsNullOrWhiteSpace(projectName))
             {
                 Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
