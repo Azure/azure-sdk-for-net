@@ -59,4 +59,16 @@ public static class MockSyncAsyncExtensions
             policy.ProcessNext(message, pipeline, currentIndex, isAsync);
         }
     }
+
+    public static async Task ProcessSyncOrAsync(this HttpClientPipelineTransport transport, PipelineMessage message, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await transport.ProcessAsync(message).ConfigureAwait(false);
+        }
+        else
+        {
+            transport.Process(message);
+        }
+    }
 }

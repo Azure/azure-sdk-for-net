@@ -11,9 +11,6 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelineResponse : IDisposable
 {
-    // TODO: We can move this onto ClientPipeline once we move that type into main.
-    internal static TimeSpan DefaultNetworkTimeout { get; } = TimeSpan.FromSeconds(100);
-
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
@@ -76,7 +73,7 @@ public abstract class PipelineResponse : IDisposable
 
     protected virtual void SetIsErrorCore(bool isError) => _isError = isError;
 
-    internal TimeSpan NetworkTimeout { get; set; } = DefaultNetworkTimeout;
+    internal TimeSpan NetworkTimeout { get; set; } = ClientPipeline.DefaultNetworkTimeout;
 
     public abstract void Dispose();
 
