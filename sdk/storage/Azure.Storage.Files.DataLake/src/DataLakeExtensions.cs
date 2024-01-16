@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.DataLake
         internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadInfo> blobDownloadInfoResponse)
         {
             blobDownloadInfoResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
-            blobDownloadInfoResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.ACLHeaderName, out string accessControlList);
+            blobDownloadInfoResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.AclHeaderName, out string accessControlList);
             FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
                 ContentLength = blobDownloadInfoResponse.Value.ContentLength,
@@ -89,7 +89,7 @@ namespace Azure.Storage.Files.DataLake
         internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadStreamingResult> blobDownloadStreamingResultResponse)
         {
             blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
-            blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.ACLHeaderName, out string accessControlList);
+            blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.AclHeaderName, out string accessControlList);
             FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
                 ContentLength = blobDownloadStreamingResultResponse.Value.Details.ContentLength,
@@ -158,7 +158,7 @@ namespace Azure.Storage.Files.DataLake
                 pathProperties.Permissions = permissions;
             }
             if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
-                Constants.DataLake.ACLHeaderName,
+                Constants.DataLake.AclHeaderName,
                 out string accessControlList))
             {
                 pathProperties.AccessControlList = PathAccessControlExtensions.ParseAccessControlList(accessControlList);
