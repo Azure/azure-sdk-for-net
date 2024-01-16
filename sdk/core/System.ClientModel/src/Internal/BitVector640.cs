@@ -5,6 +5,7 @@ namespace System.ClientModel.Internal;
 
 internal struct BitVector640
 {
+    // Keeping ulongs as fields puts them on the stack.
     private ulong _bits0;
     private ulong _bits1;
     private ulong _bits2;
@@ -20,32 +21,36 @@ internal struct BitVector640
     {
         readonly get
         {
+            // "Index" of the ulong the bit is stored in.
             int index = i >> 6;
+
+            // i % 6, i.e. the offset of the bit in the ulong.
             int mod = i & 0b111111;
+
+            // A mask that lets us access the single bit
             ulong mask = 1ul << mod;
+
+            // The storage ulong and the mask
             ulong bit = Get(index) & mask;
+
+            // If the bit equals the mask, the bit was set to true.
             return bit == mask;
         }
         set
         {
+            // "Index" of the ulong the bit is stored in.
             int index = i >> 6;
+
+            // i % 6, i.e. the offset of the bit in the ulong.
             int mod = i & 0b111111;
+
+            // A mask that lets us access the single bit
             ulong mask = 1ul << mod;
-            Set(index, mask);
+
+            // Set the bit in question to the passed-in value
+            Set(index, mask, value);
         }
     }
-
-    public readonly bool IsNonzero() =>
-        _bits0 > 0 ||
-        _bits1 > 0 ||
-        _bits2 > 0 ||
-        _bits3 > 0 ||
-        _bits4 > 0 ||
-        _bits5 > 0 ||
-        _bits6 > 0 ||
-        _bits7 > 0 ||
-        _bits8 > 0 ||
-        _bits9 > 0;
 
     private readonly ulong Get(int index)
     {
@@ -65,42 +70,83 @@ internal struct BitVector640
         };
     }
 
-    private void Set(int index, ulong mask)
+    private void Set(int index, ulong mask, bool value)
     {
-        switch (index)
+        if (value)
         {
-            case 0:
-                _bits0 |= mask;
-                break;
-            case 1:
-                _bits1 |= mask;
-                break;
-            case 2:
-                _bits2 |= mask;
-                break;
-            case 3:
-                _bits3 |= mask;
-                break;
-            case 4:
-                _bits4 |= mask;
-                break;
-            case 5:
-                _bits5 |= mask;
-                break;
-            case 6:
-                _bits6 |= mask;
-                break;
-            case 7:
-                _bits7 |= mask;
-                break;
-            case 8:
-                _bits8 |= mask;
-                break;
-            case 9:
-                _bits9 |= mask;
-                break;
-            default:
-                throw new InvalidOperationException();
+            switch (index)
+            {
+                case 0:
+                    _bits0 |= mask;
+                    break;
+                case 1:
+                    _bits1 |= mask;
+                    break;
+                case 2:
+                    _bits2 |= mask;
+                    break;
+                case 3:
+                    _bits3 |= mask;
+                    break;
+                case 4:
+                    _bits4 |= mask;
+                    break;
+                case 5:
+                    _bits5 |= mask;
+                    break;
+                case 6:
+                    _bits6 |= mask;
+                    break;
+                case 7:
+                    _bits7 |= mask;
+                    break;
+                case 8:
+                    _bits8 |= mask;
+                    break;
+                case 9:
+                    _bits9 |= mask;
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+        else
+        {
+            switch (index)
+            {
+                case 0:
+                    _bits0 &= ~mask;
+                    break;
+                case 1:
+                    _bits1 &= ~mask;
+                    break;
+                case 2:
+                    _bits2 &= ~mask;
+                    break;
+                case 3:
+                    _bits3 &= ~mask;
+                    break;
+                case 4:
+                    _bits4 &= ~mask;
+                    break;
+                case 5:
+                    _bits5 &= ~mask;
+                    break;
+                case 6:
+                    _bits6 &= ~mask;
+                    break;
+                case 7:
+                    _bits7 &= ~mask;
+                    break;
+                case 8:
+                    _bits8 &= ~mask;
+                    break;
+                case 9:
+                    _bits9 &= ~mask;
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
         }
     }
 }
