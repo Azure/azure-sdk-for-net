@@ -39,7 +39,7 @@ namespace System.ClientModel.Primitives
         {
             Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
 
-            _successCodes[statusCode] = isError;
+            _successCodes[statusCode] = !isError;
         }
     }
 }
