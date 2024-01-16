@@ -684,7 +684,7 @@
 /sdk/quantum/Azure.Quantum.Jobs/                                   @xfield
 
 # ServiceLabel: %Recovery Services Backup %Service Attention
-/sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/ @Daya-Patil
+/sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup/ @Daya-Patil
 
 # ServiceLabel: %Recovery Services Site-Recovery %Service Attention
 /sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery/ @Sharmistha-Rai
