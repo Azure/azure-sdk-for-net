@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 {
@@ -107,5 +108,68 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(7, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
         public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(7, credentialTypeName, scope);
+
+        [NonEvent]
+        public void PingFailed(Response response)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceFailed(name: "Ping", response.Status, response.ReasonPhrase);
+            }
+        }
+
+        [NonEvent]
+        public void PostFailed(Response response)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceFailed(name: "Post", response.Status, response.ReasonPhrase);
+            }
+        }
+
+        [NonEvent]
+        public void PingFailedWithUnknownException(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceFailedWithUnknownException(name: "Ping", ex.ToInvariantString());
+            }
+        }
+
+        [NonEvent]
+        public void PostFailedWithUnknownException(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceFailedWithUnknownException(name: "Post", ex.ToInvariantString());
+            }
+        }
+
+        [NonEvent]
+        public void PingFailedWithServiceError(int statusCode, ServiceError serviceError)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceFailedWithServiceError(name: "Ping", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+            }
+        }
+
+        [NonEvent]
+        public void PostFailedWithServiceError(int statusCode, ServiceError serviceError)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceFailedWithServiceError(name: "Post", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+            }
+        }
+
+        [Event(8, Message = "Service failed. Name: {0}. Status Code: {1} Reason: {2}.", Level = EventLevel.Error)]
+        public void ServiceFailed(string name, int statusCode, string reasonPhrase) => WriteEvent(8, name, statusCode, reasonPhrase);
+
+        [Event(9, Message = "Service failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
+        public void ServiceFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(9, name, exceptionMessage);
+
+        [Event(10, Message = "Service failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
+        public void ServiceFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(10, name, statusCode, code, message, exception);
     }
 }
