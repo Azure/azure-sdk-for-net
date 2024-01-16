@@ -197,13 +197,13 @@
 /sdk/anomalydetector/Azure.AI.AnomalyDetector/                     @conhua @mengaims @juaduan @moreOver0
 
 # PRLabel: %Cognitive - Health Insights
-/sdk/healthinsights/                                              @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/                                              @asaflevi-ms
 
 # ServiceLabel: %Cognitive - Health Insights Cancer Profiling %Service Attention
-/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms
 
 # ServiceLabel: %Cognitive - Health Insights Clinical Matching %Service Attention
-/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms
 
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
@@ -845,7 +845,7 @@
 /sdk/servicebus/tests.data.yml                                     @shankarsama @DorothySun216
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978 
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978
 
 # ######## DPG ########
 
