@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-preview-2023-11' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/05c4049bc22f0ec65acc18f9835132397049cb9e/specification/hybridaks/resource-manager/readme.md.
+- Upgraded api-version tag from 'package-preview-2023-11' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6fa7593a0ba4371e45991/specification/hybridaks/resource-manager/readme.md.
 
 ## 1.0.0-beta.4 (2024-01-03)
 
