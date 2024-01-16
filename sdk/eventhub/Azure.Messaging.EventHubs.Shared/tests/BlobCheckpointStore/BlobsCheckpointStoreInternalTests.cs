@@ -1313,7 +1313,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960182, false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
