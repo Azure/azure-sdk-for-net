@@ -87,7 +87,7 @@ namespace Azure.Communication.PhoneNumbers
         { }
 
         private PhoneNumbersClient(string endpoint, HttpPipeline httpPipeline, PhoneNumbersClientOptions options)
-            : this(new ClientDiagnostics(options, suppressNestedClientActivities: false), httpPipeline, endpoint, options.AcceptedLanguage, options.Version)
+            : this(new ClientDiagnostics(options, suppressNestedClientActivities: false), httpPipeline, new Uri(endpoint), options.AcceptedLanguage, options.Version)
         { }
 
         /// <summary> Initializes a new instance of PhoneNumbersClient. </summary>
@@ -96,7 +96,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="acceptedLanguage"> The accepted language to be used for response localization. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
+        private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
             InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
@@ -168,7 +168,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
+                return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
+                return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -243,7 +243,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, null, cancellationToken).ConfigureAwait(false);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
@@ -262,7 +262,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, cancellationToken);
+                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, null, cancellationToken);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
