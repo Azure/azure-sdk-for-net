@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -22,13 +21,6 @@ namespace Azure.ResourceManager.HybridContainerService
             writer.WriteStartObject();
             writer.WritePropertyName("controlPlaneProfile"u8);
             writer.WriteObjectValue(ControlPlaneProfile);
-            writer.WritePropertyName("agentPoolProfiles"u8);
-            writer.WriteStartArray();
-            foreach (var item in AgentPoolProfiles)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -45,7 +37,6 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<SystemData> systemData = default;
             Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
             ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default;
-            IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -95,21 +86,11 @@ namespace Azure.ResourceManager.HybridContainerService
                             controlPlaneProfile = ProvisionedClusterPoolUpgradeProfile.DeserializeProvisionedClusterPoolUpgradeProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("agentPoolProfiles"u8))
-                        {
-                            List<ProvisionedClusterPoolUpgradeProfile> array = new List<ProvisionedClusterPoolUpgradeProfile>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ProvisionedClusterPoolUpgradeProfile.DeserializeProvisionedClusterPoolUpgradeProfile(item));
-                            }
-                            agentPoolProfiles = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), controlPlaneProfile, agentPoolProfiles);
+            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), controlPlaneProfile);
         }
     }
 }

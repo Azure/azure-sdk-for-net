@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesPatchVersions"/>. </summary>
-        /// <param name="readiness"> Whether the kubernetes version variant (Linux, Windows, Windows2022) is ready or not. </param>
-        /// <param name="upgrades"> Possible upgrade path for given patch version. </param>
+        /// <param name="readiness"> Indicates whether the kubernetes version image is ready or not. </param>
+        /// <param name="upgrades"> Possible upgrade paths for given patch version. </param>
         internal KubernetesPatchVersions(IReadOnlyList<KubernetesVersionReadiness> readiness, IReadOnlyList<string> upgrades)
         {
             Readiness = readiness;
             Upgrades = upgrades;
         }
 
-        /// <summary> Whether the kubernetes version variant (Linux, Windows, Windows2022) is ready or not. </summary>
+        /// <summary> Indicates whether the kubernetes version image is ready or not. </summary>
         public IReadOnlyList<KubernetesVersionReadiness> Readiness { get; }
-        /// <summary> Possible upgrade path for given patch version. </summary>
+        /// <summary> Possible upgrade paths for given patch version. </summary>
         public IReadOnlyList<string> Upgrades { get; }
     }
 }

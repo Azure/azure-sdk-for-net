@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The virtualNetworks resource patch definition. </summary>
+    /// <summary> The Virtual Network resource patch definition. </summary>
     public partial class HybridContainerServiceVirtualNetworkPatch
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkPatch"/>. </summary>
