@@ -18,15 +18,19 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilitiesRequest"/>. </summary>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
-        internal PhoneNumberCapabilitiesRequest(PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
+        internal PhoneNumberCapabilitiesRequest(PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms, string tenDLCCampaignBriefId)
         {
             Calling = calling;
             Sms = sms;
+            TenDLCCampaignBriefId = tenDLCCampaignBriefId;
         }
 
         /// <summary> Capability value for calling. </summary>
         public PhoneNumberCapabilityType? Calling { get; set; }
         /// <summary> Capability value for SMS. </summary>
         public PhoneNumberCapabilityType? Sms { get; set; }
+        /// <summary> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </summary>
+        public string TenDLCCampaignBriefId { get; set; }
     }
 }

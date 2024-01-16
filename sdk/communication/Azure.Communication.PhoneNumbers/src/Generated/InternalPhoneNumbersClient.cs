@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -33,7 +34,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-12-01")
+        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-31-preview")
         {
             RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -104,6 +105,42 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 return RestClient.GetByNumber(phoneNumber, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Searches for operator information for a given list of phone numbers. </summary>
+        /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.OperatorInformationSearch");
+            scope.Start();
+            try
+            {
+                return await RestClient.OperatorInformationSearchAsync(phoneNumbers, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Searches for operator information for a given list of phone numbers. </summary>
+        /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.OperatorInformationSearch");
+            scope.Start();
+            try
+            {
+                return RestClient.OperatorInformationSearch(phoneNumbers, cancellationToken);
             }
             catch (Exception e)
             {
@@ -330,15 +367,16 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<InternalPurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<InternalPurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, consentToNotResellNumbers, cancellationToken).ConfigureAwait(false);
+                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId, consentToNotResellNumbers).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -349,15 +387,16 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual InternalPurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual InternalPurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
-                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                var originalResponse = RestClient.PurchasePhoneNumbers(searchId, consentToNotResellNumbers, cancellationToken);
+                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId, consentToNotResellNumbers).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -370,9 +409,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -383,8 +423,8 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.UpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
-                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
+                var originalResponse = await RestClient.UpdateCapabilitiesAsync(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken).ConfigureAwait(false);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -397,9 +437,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -410,8 +451,8 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = RestClient.UpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
-                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
+                var originalResponse = RestClient.UpdateCapabilities(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId).Request, originalResponse);
             }
             catch (Exception e)
             {
