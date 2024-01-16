@@ -107,7 +107,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
         try
         {
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
             if (!async)
             {
                 // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
@@ -127,7 +127,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
             if (responseMessage.Content != null)
             {
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
                 if (async)
                 {
                     contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);

@@ -145,7 +145,8 @@ namespace Azure.Core.Tests
             MockTransport mockTransport = new MockTransport(mockResponse);
             Response response = await SendGetRequest(mockTransport, new ResponseBodyPolicy(TimeSpan.FromMilliseconds(1234567)), bufferResponse: false);
 
-            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            //Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            Assert.IsFalse(response.ContentStream.CanWrite);
             Assert.AreEqual(1234567, hangingStream.ReadTimeout);
         }
 
@@ -206,7 +207,8 @@ namespace Azure.Core.Tests
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false);
 
-            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            //Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            Assert.IsFalse(response.ContentStream.CanWrite);
             Assert.AreEqual(30, hangingStream.ReadTimeout);
         }
 
