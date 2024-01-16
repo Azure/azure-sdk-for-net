@@ -65,9 +65,8 @@ class ConflictedFile {
       # powershell ignores the newlines with and without --textconv, which results in a json file without original spacing.
       # by forcefully reading into the array line by line, the whitespace is preserved. we're relying on gits autoconverstion of clrf to lf
       # to ensure that the line endings are consistent.
-      Write-Host "& git show $($this.LeftSource):$($this.Path)"
-      [array]$tempContent = & git show "$($this.LeftSource):$($this.Path)"
-      return $tempContent -join "`n"
+      Write-Host "git show $($this.LeftSource):$($this.Path)"
+      return git show ("$($this.LeftSource):$($this.Path)")
     }
     else {
       return $this.Content
@@ -76,9 +75,8 @@ class ConflictedFile {
 
   [string] Right(){
     if ($this.IsConflicted) {
-      Write-Host "& git show $($this.RightSource):$($this.Path)"
-      [array]$tempContent = & git show "$($this.RightSource):$($this.Path)"
-      return $tempContent -join `n
+      Write-Host "git show $($this.RightSource):$($this.Path)"
+      return git show ("$($this.RightSource):$($this.Path)")
     }
     else {
       return $this.Content

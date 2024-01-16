@@ -25,48 +25,8 @@ param(
   [string] $AssetsJson
 )
 
-
 . (Join-Path $PSScriptRoot ".." ".." "onboarding" "common-asset-functions.ps1")
-
-function Get-AssetsBase {
-    param(
-        [Parameter(Position=0)]
-        [string] $AssetsJson
-    )
-    
-    $AssetsContent = Get-Content -Raw $AssetsJson
-    
-
-    # $Assets = ConvertFrom-Json $AssetsContent
-    
-    # $AssetsVersions = @{}
-    
-    # foreach ($Asset in $Assets) {
-    #     $AssetsVersions[$Asset.name] = $Asset.version
-    # }
-    
-    return $AssetsVersions
-}
-
-function Get-AssetsTarget {
-    param(
-        [Parameter(Position=0)]
-        [string] $AssetsJson
-    )
-    
-    $AssetsContent = Get-Content -Raw $AssetsJson
-    
-
-    # $Assets = ConvertFrom-Json $AssetsContent
-    
-    # $AssetsVersions = @{}
-    
-    # foreach ($Asset in $Assets) {
-    #     $AssetsVersions[$Asset.name] = $Asset.version
-    # }
-    
-    return $AssetsVersions
-}
+. (Join-Path $PSScriptRoot ".." ".." ".." "scripts" "Helpers" "git-helpers.ps1")
 
 $TestProxy = Resolve-Proxy
 
@@ -75,18 +35,44 @@ if (!(Test-Path $AssetsJson)) {
   exit 1
 }
 
-$AssetsJson = Resolve-Path $AssetsJson
+# normally we we would Resolve-Path the $AssetsJson, but the git show command only works with relative paths, so we'll just keep that here.
 
-if ($AssetsJson.Name -ne "assets.json") {
+if (-not $AssetsJson.EndsWith("assets.json")) {
   Write-Error "This script can only resolve conflicts within an assets.json. The file provided is not an assets.json: $AssetsJson"
   exit 1
 }
 
+$conflictingAssets = [ConflictedFile]::new($AssetsJson)
 
+if (-not $conflictingAssets.IsConflicted) {
+  Write-Host "No conflicts found in $AssetsJson, nothing to resolve, so there is no second tag to merge. Exiting"
+  exit 0
+}
 
-$BaseAssets = Get-AssetsBase $AssetsJson
-$TargetAssets = Get-AssetsTarget $AssetsJson
+# this is very dumb, but will properly work!
+try {
+  $BaseAssets = $conflictingAssets.Left() | ConvertFrom-Json
+}
+catch {
+  Write-Error "Failed to convert previous version to valid JSON format."
+  exit 1
+}
 
-$TargetAssets | ConvertTo-Json -Depth 100 | Out-File $AssetsJson
+try {
+  $TargetAssets = $conflictingAssets.Right() | ConvertFrom-Json
+}
+catch {
+  Write-Error "Failed to convert target assets.json version to valid JSON format."
+  exit 1
+}
 
-$PSScriptRoot/../tag-merge/merge-proxy-tags.ps1 $AssetsJson $BaseAssets.Tag $TargetAssets.Tag
+Write-Host "Replacing conflicted assets.json with base branch version." -ForegroundColor Green
+Set-Content -Path $AssetsJson -Value $conflictingAssets.Left()
+
+# $PSScriptRoot/../tag-merge/merge-proxy-tags.ps1 $AssetsJson $BaseAssets.Tag $TargetAssets.Tag
+
+# Write-Host $lastexitcode
+
+# if ($lastexitcode -eq 0) {
+#   Write-Host "Successfully merged '$($TargetASsets.Tag)' into '$($BaseAssets.Tag)'. Invoke 'test-proxy push $AssetsJson' and commit the result before continuing the merge!" -ForegroundColor Green
+# }
