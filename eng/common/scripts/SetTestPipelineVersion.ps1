@@ -48,6 +48,10 @@ foreach ($packageName in $packageNamesArray) {
   $newVersion.PrereleaseNumber = $BuildID
   $newVersion.IsPrerelease = $True
 
+  # for testing purpose of GA library
+  $newVersion = [AzureEngSemanticVersion]::new("1.0.2")
+  Write-Host "newVersion.isprelease: $newVersion.IsPrerelease"
+
   Write-Host "Version to publish [ $($newVersion.ToString()) ]"
 
   SetPackageVersion -PackageName $packageName `
