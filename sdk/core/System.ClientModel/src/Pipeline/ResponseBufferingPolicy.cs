@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,11 +30,14 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        CancellationToken oldToken = message.CancellationToken;
-        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
+        Debug.Assert(message.NetworkTimeout is not null);
 
         TimeSpan invocationNetworkTimeout = (TimeSpan)message.NetworkTimeout!;
+
+        CancellationToken oldToken = message.CancellationToken;
+        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
         cts.CancelAfter(invocationNetworkTimeout);
+
         try
         {
             message.CancellationToken = cts.Token;
@@ -57,14 +61,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
             cts.CancelAfter(Timeout.Infinite);
         }
 
-        if (!message.BufferResponse)
-        {
-            return;
-        }
-
         message.AssertResponse();
-
-        // Set the network timeout on the response.
         message.Response!.NetworkTimeout = invocationNetworkTimeout;
 
         Stream? responseContentStream = message.Response!.ContentStream;
@@ -75,6 +72,20 @@ public class ResponseBufferingPolicy : PipelinePolicy
             // been buffered.
             return;
         }
+
+        if (!message.BufferResponse)
+        {
+            // Client has requested not to buffer the message response content.
+            // If applicable, wrap it in a read-timeout stream.
+            if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
+            {
+                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
+            }
+
+            return;
+        }
+
+        // If we got this far, buffer the response.
 
         // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
         // register callback to dispose the stream on cancellation.
