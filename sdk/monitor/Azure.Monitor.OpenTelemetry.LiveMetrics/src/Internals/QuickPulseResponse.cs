@@ -29,5 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         public bool Success { get; }
         public string? ConfigurationEtag { get; }
         public bool Subscribed { get; }
+
+        // TODO: Filtering parameters can be added here.
     }
 }
