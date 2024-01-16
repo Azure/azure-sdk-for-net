@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Mapping Error Messages to Codes. </summary>
-    public readonly partial struct Error : IEquatable<Error>
+    public readonly partial struct ErrorMessage : IEquatable<ErrorMessage>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorMessage"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Error(string value)
+        public ErrorMessage(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -41,51 +41,51 @@ namespace Azure.Communication.PhoneNumbers
         private const string UnknownSearchErrorValue = "UnknownSearchError";
 
         /// <summary> NoError. </summary>
-        public static Error NoError { get; } = new Error(NoErrorValue);
+        public static ErrorMessage NoError { get; } = new ErrorMessage(NoErrorValue);
         /// <summary> UnknownErrorCode. </summary>
-        public static Error UnknownErrorCode { get; } = new Error(UnknownErrorCodeValue);
+        public static ErrorMessage UnknownErrorCode { get; } = new ErrorMessage(UnknownErrorCodeValue);
         /// <summary> OutOfStock. </summary>
-        public static Error OutOfStock { get; } = new Error(OutOfStockValue);
+        public static ErrorMessage OutOfStock { get; } = new ErrorMessage(OutOfStockValue);
         /// <summary> AuthorizationDenied. </summary>
-        public static Error AuthorizationDenied { get; } = new Error(AuthorizationDeniedValue);
+        public static ErrorMessage AuthorizationDenied { get; } = new ErrorMessage(AuthorizationDeniedValue);
         /// <summary> MissingAddress. </summary>
-        public static Error MissingAddress { get; } = new Error(MissingAddressValue);
+        public static ErrorMessage MissingAddress { get; } = new ErrorMessage(MissingAddressValue);
         /// <summary> InvalidAddress. </summary>
-        public static Error InvalidAddress { get; } = new Error(InvalidAddressValue);
+        public static ErrorMessage InvalidAddress { get; } = new ErrorMessage(InvalidAddressValue);
         /// <summary> InvalidOfferModel. </summary>
-        public static Error InvalidOfferModel { get; } = new Error(InvalidOfferModelValue);
+        public static ErrorMessage InvalidOfferModel { get; } = new ErrorMessage(InvalidOfferModelValue);
         /// <summary> NotEnoughLicenses. </summary>
-        public static Error NotEnoughLicenses { get; } = new Error(NotEnoughLicensesValue);
+        public static ErrorMessage NotEnoughLicenses { get; } = new ErrorMessage(NotEnoughLicensesValue);
         /// <summary> NoWallet. </summary>
-        public static Error NoWallet { get; } = new Error(NoWalletValue);
+        public static ErrorMessage NoWallet { get; } = new ErrorMessage(NoWalletValue);
         /// <summary> NotEnoughCredit. </summary>
-        public static Error NotEnoughCredit { get; } = new Error(NotEnoughCreditValue);
+        public static ErrorMessage NotEnoughCredit { get; } = new ErrorMessage(NotEnoughCreditValue);
         /// <summary> NumbersPartiallyAcquired. </summary>
-        public static Error NumbersPartiallyAcquired { get; } = new Error(NumbersPartiallyAcquiredValue);
+        public static ErrorMessage NumbersPartiallyAcquired { get; } = new ErrorMessage(NumbersPartiallyAcquiredValue);
         /// <summary> AllNumbersNotAcquired. </summary>
-        public static Error AllNumbersNotAcquired { get; } = new Error(AllNumbersNotAcquiredValue);
+        public static ErrorMessage AllNumbersNotAcquired { get; } = new ErrorMessage(AllNumbersNotAcquiredValue);
         /// <summary> ReservationExpired. </summary>
-        public static Error ReservationExpired { get; } = new Error(ReservationExpiredValue);
+        public static ErrorMessage ReservationExpired { get; } = new ErrorMessage(ReservationExpiredValue);
         /// <summary> PurchaseFailed. </summary>
-        public static Error PurchaseFailed { get; } = new Error(PurchaseFailedValue);
+        public static ErrorMessage PurchaseFailed { get; } = new ErrorMessage(PurchaseFailedValue);
         /// <summary> BillingUnavailable. </summary>
-        public static Error BillingUnavailable { get; } = new Error(BillingUnavailableValue);
+        public static ErrorMessage BillingUnavailable { get; } = new ErrorMessage(BillingUnavailableValue);
         /// <summary> ProvisioningFailed. </summary>
-        public static Error ProvisioningFailed { get; } = new Error(ProvisioningFailedValue);
+        public static ErrorMessage ProvisioningFailed { get; } = new ErrorMessage(ProvisioningFailedValue);
         /// <summary> UnknownSearchError. </summary>
-        public static Error UnknownSearchError { get; } = new Error(UnknownSearchErrorValue);
-        /// <summary> Determines if two <see cref="Error"/> values are the same. </summary>
-        public static bool operator ==(Error left, Error right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Error"/> values are not the same. </summary>
-        public static bool operator !=(Error left, Error right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Error"/>. </summary>
-        public static implicit operator Error(string value) => new Error(value);
+        public static ErrorMessage UnknownSearchError { get; } = new ErrorMessage(UnknownSearchErrorValue);
+        /// <summary> Determines if two <see cref="ErrorMessage"/> values are the same. </summary>
+        public static bool operator ==(ErrorMessage left, ErrorMessage right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ErrorMessage"/> values are not the same. </summary>
+        public static bool operator !=(ErrorMessage left, ErrorMessage right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ErrorMessage"/>. </summary>
+        public static implicit operator ErrorMessage(string value) => new ErrorMessage(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Error other && Equals(other);
+        public override bool Equals(object obj) => obj is ErrorMessage other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Error other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ErrorMessage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

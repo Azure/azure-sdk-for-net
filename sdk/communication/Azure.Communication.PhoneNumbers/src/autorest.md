@@ -32,3 +32,12 @@ directive:
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
 ```
+
+### Change naming of Error to ErrorMessage
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.PhoneNumberSearchResult.properties.error"
+  transform: >
+    $["x-ms-enum"].name = "ErrorMessage";
+```

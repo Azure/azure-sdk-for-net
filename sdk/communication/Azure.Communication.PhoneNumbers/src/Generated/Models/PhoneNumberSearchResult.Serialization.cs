@@ -28,7 +28,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCost cost = default;
             DateTimeOffset searchExpiresBy = default;
             Optional<int> errorCode = default;
-            Optional<Error> error = default;
+            Optional<ErrorMessage> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchId"u8))
@@ -86,7 +86,7 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         continue;
                     }
-                    error = new Error(property.Value.GetString());
+                    error = new ErrorMessage(property.Value.GetString());
                     continue;
                 }
             }
