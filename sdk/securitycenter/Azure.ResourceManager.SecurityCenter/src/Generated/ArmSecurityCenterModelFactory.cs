@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -2703,6 +2704,80 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AzureResourceDetails AzureResourceDetails(string id = null)
         {
             return new AzureResourceDetails(HealthReportSource.Azure, serializedAdditionalRawData: null, id);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityCenter.Models.GcpProjectDetails" />. </summary>
+        /// <param name="projectNumber"> The unique GCP Project number. </param>
+        /// <param name="projectId"> The GCP Project id. </param>
+        /// <param name="workloadIdentityPoolId"> The GCP workload identity federation pool id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityCenter.Models.GcpProjectDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GcpProjectDetails GcpProjectDetails(string projectNumber, string projectId, string workloadIdentityPoolId)
+        {
+            return GcpProjectDetails(projectNumber: projectNumber, projectId: projectId, workloadIdentityPoolId: workloadIdentityPoolId, projectName: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderForContainersAwsOffering" />. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="kubernetesServiceCloudRoleArn"> The kubernetes service connection configuration. </param>
+        /// <param name="kubernetesScubaReaderCloudRoleArn"> The kubernetes to scuba connection configuration. </param>
+        /// <param name="cloudRoleArn"> The cloudwatch to kinesis connection configuration. </param>
+        /// <param name="kinesisToS3CloudRoleArn"> The kinesis to s3 connection configuration. </param>
+        /// <param name="containerVulnerabilityAssessmentCloudRoleArn"> The container vulnerability assessment configuration. </param>
+        /// <param name="containerVulnerabilityAssessmentTaskCloudRoleArn"> The container vulnerability assessment task configuration. </param>
+        /// <param name="isContainerVulnerabilityAssessmentEnabled"> Enable container vulnerability assessment feature. </param>
+        /// <param name="isAutoProvisioningEnabled"> Is audit logs pipeline auto provisioning enabled. </param>
+        /// <param name="kubeAuditRetentionTime"> The retention time in days of kube audit logs set on the CloudWatch log group. </param>
+        /// <param name="scubaExternalId"> The externalId used by the data reader to prevent the confused deputy attack. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderForContainersAwsOffering" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description, string kubernetesServiceCloudRoleArn, string kubernetesScubaReaderCloudRoleArn, string cloudRoleArn, string kinesisToS3CloudRoleArn, string containerVulnerabilityAssessmentCloudRoleArn, string containerVulnerabilityAssessmentTaskCloudRoleArn, bool? isContainerVulnerabilityAssessmentEnabled, bool? isAutoProvisioningEnabled, long? kubeAuditRetentionTime, string scubaExternalId)
+        {
+            return DefenderForContainersAwsOffering(description: description, kubernetesServiceCloudRoleArn: kubernetesServiceCloudRoleArn, kubernetesScubaReaderCloudRoleArn: kubernetesScubaReaderCloudRoleArn, cloudRoleArn: cloudRoleArn, kinesisToS3CloudRoleArn: kinesisToS3CloudRoleArn, containerVulnerabilityAssessmentCloudRoleArn: containerVulnerabilityAssessmentCloudRoleArn, containerVulnerabilityAssessmentTaskCloudRoleArn: containerVulnerabilityAssessmentTaskCloudRoleArn, isContainerVulnerabilityAssessmentEnabled: isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled: isAutoProvisioningEnabled, kubeAuditRetentionTime: kubeAuditRetentionTime, scubaExternalId: scubaExternalId, mdcContainersImageAssessment: default, mdcContainersAgentlessDiscoveryK8S: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderForDatabasesAwsOffering" />. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
+        /// <param name="rds"> The RDS configuration. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderForDatabasesAwsOffering" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DefenderForDatabasesAwsOffering DefenderForDatabasesAwsOffering(string description, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds)
+        {
+            return DefenderForDatabasesAwsOffering(description: description, arcAutoProvisioning: arcAutoProvisioning, rds: rds, databasesDspm: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderForContainersGcpOffering" />. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
+        /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
+        /// <param name="isAuditLogsAutoProvisioningEnabled"> Is audit logs data collection enabled. </param>
+        /// <param name="isDefenderAgentAutoProvisioningEnabled"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
+        /// <param name="isPolicyAgentAutoProvisioningEnabled"> Is Policy Kubernetes agent auto provisioning enabled. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderForContainersGcpOffering" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? isAuditLogsAutoProvisioningEnabled, bool? isDefenderAgentAutoProvisioningEnabled, bool? isPolicyAgentAutoProvisioningEnabled)
+        {
+            return DefenderForContainersGcpOffering(description: description, nativeCloudConnection: nativeCloudConnection, dataPipelineNativeCloudConnection: dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled: isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled: isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled: isPolicyAgentAutoProvisioningEnabled, mdcContainersImageAssessment: default, mdcContainersAgentlessDiscoveryK8S: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderCspmAwsOffering" />. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderCspmAwsOffering" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description, DefenderCspmAwsOfferingVmScanners vmScanners)
+        {
+            return DefenderCspmAwsOffering(description: description, vmScanners: vmScanners, dataSensitivityDiscovery: default, databasesDspm: default, ciem: default, mdcContainersImageAssessment: default, mdcContainersAgentlessDiscoveryK8S: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderCspmGcpOffering" />. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.SecurityCenter.Models.DefenderCspmGcpOffering" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description)
+        {
+            return DefenderCspmGcpOffering(description: description, ciemDiscovery: default, vmScanners: default, dataSensitivityDiscovery: default, mdcContainersImageAssessment: default, mdcContainersAgentlessDiscoveryK8S: default);
         }
     }
 }
