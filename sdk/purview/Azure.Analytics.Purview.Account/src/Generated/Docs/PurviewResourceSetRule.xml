@@ -7,7 +7,7 @@ This sample shows how to call GetResourceSetRuleAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = await client.GetResourceSetRuleAsync(null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetResourceSetRuleAsync with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = await client.GetResourceSetRuleAsync(null);
 
@@ -116,7 +116,7 @@ This sample shows how to call GetResourceSetRule and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = client.GetResourceSetRule(null);
 
@@ -127,7 +127,7 @@ This sample shows how to call GetResourceSetRule with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = client.GetResourceSetRule(null);
 
@@ -225,7 +225,7 @@ This sample shows how to call CreateOrUpdateResourceSetRuleAsync and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateResourceSetRuleAsync(content);
@@ -237,7 +237,7 @@ This sample shows how to call CreateOrUpdateResourceSetRuleAsync with all reques
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -446,7 +446,7 @@ This sample shows how to call CreateOrUpdateResourceSetRule and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateResourceSetRule(content);
@@ -458,7 +458,7 @@ This sample shows how to call CreateOrUpdateResourceSetRule with all request con
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -667,7 +667,7 @@ This sample shows how to call DeleteResourceSetRuleAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = await client.DeleteResourceSetRuleAsync();
 
@@ -677,7 +677,7 @@ This sample shows how to call DeleteResourceSetRuleAsync with all request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = await client.DeleteResourceSetRuleAsync();
 
@@ -690,7 +690,7 @@ This sample shows how to call DeleteResourceSetRule.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = client.DeleteResourceSetRule();
 
@@ -700,7 +700,7 @@ This sample shows how to call DeleteResourceSetRule with all request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewResourceSetRule client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+PurviewResourceSetRule client = new PurviewAccountClient(endpoint, null, credential).GetPurviewResourceSetRuleClient();
 
 Response response = client.DeleteResourceSetRule();
 
