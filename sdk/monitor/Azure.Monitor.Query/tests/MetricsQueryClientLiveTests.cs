@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query.Tests
             return InstrumentClient(new MetricsBatchQueryClient(
                 new Uri(TestEnvironment.DataplaneEndpoint),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsBatchQueryOptions())
+                InstrumentClientOptions(new MetricsBatchQueryClientOptions())
             ));
         }
 

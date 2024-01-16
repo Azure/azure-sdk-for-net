@@ -12,23 +12,23 @@ namespace Azure.Monitor.Query
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Monitor Metrics service.
     /// </summary>
-    public class MetricsBatchQueryOptions: ClientOptions
+    public class MetricsBatchQueryClientOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
 
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_05_01_PREVIEW;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsBatchQueryOptions"/> class.
+        /// Initializes a new instance of the <see cref="MetricsBatchQueryClientOptions"/> class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public MetricsBatchQueryOptions(ServiceVersion version = LatestVersion)
+        public MetricsBatchQueryClientOptions(ServiceVersion version = LatestVersion)
         {
             _version = version;
         }
@@ -41,9 +41,9 @@ namespace Azure.Monitor.Query
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Version 2023-05-01-preview of the service.
+            /// Version  V2023_10_01 of the service.
             /// </summary>
-            V2023_05_01_PREVIEW = 1,
+            V2023_10_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
