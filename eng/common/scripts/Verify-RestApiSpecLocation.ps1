@@ -155,7 +155,6 @@ function Verify-YamlContent([string]$markdownContent) {
       }
       catch {
         Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse yaml section $yamlSection with exception:`n$_ "
-        Verify-Url "https://github.com/Azure/azure-rest-api-specs/blob/05c4049bc22f0ec65acc18f9835132397049cb9e/specification/cdn/resource-manager/Microsoft.Cdn/stable/2023-05-01/cdn.json"
       }
     }
   }
