@@ -16,7 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="TestData\AvailabilitySetData\AvailabilitySetData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

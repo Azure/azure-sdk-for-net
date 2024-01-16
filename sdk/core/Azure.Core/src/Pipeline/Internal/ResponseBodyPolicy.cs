@@ -50,18 +50,6 @@ namespace Azure.Core.Pipeline
                 {
                     _policy.Process(message, processor, -1);
                 }
-
-                if (!message.BufferResponse &&
-                    invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
-                {
-                    Stream? responseContentStream = message.Response.ContentStream;
-                    if (responseContentStream == null || responseContentStream.CanSeek)
-                    {
-                        return;
-                    }
-
-                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
-                }
             }
             catch (TaskCanceledException e)
             {
