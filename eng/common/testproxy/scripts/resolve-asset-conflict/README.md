@@ -53,4 +53,10 @@ test-proxy push -a sdk/storage/azure-storage-blob/assets.json
 
 ### Resolving conflicts
 
-<TODO> implement this and see what falls out.
+When an assets.json merge has conflicts on the **test recordings** side, the `merge-proxy-tags` script will exit with an error describing how to re-invoke the `merge-proxy-tags` script AFTER you resolve the conflicts.
+
+- `cd` into the assets location output by the script
+- resolve the conflict or conflicts
+- add the resolution, and invoke `git cherry-pick --continue`
+
+Afterwards, re-invoke the `merge-proxy-tags` script with arguments given to you in original error. This will leave the assets in a `touched` state that can be `test-proxy push`-ed.
