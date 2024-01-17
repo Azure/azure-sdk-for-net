@@ -447,7 +447,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out var sequenceStr) && long.TryParse(sequenceStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var sequenceResult))
             {
                 sequenceNumber = sequenceResult;
-                if (sequenceNumber != long.MinValue) // This means no value was passed.
+                if (sequenceNumber != long.MinValue) // If the sequence number is not equal to the default (long.MinValue), then a value was passed in.
                 {
                     startingPosition = EventPosition.FromSequenceNumber(sequenceResult, false);
                 }
@@ -455,7 +455,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && long.TryParse(offsetStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offsetResult))
             {
                 offset = offsetResult;
-                if (offset != long.MinValue) // The default offset value when one is not provided is long.MinValue
+                if (offset != long.MinValue) // If the offset is not equal to the default (long.MinValue), then a value was passed in.
                 {
                     startingPosition ??= EventPosition.FromOffset(offsetResult, false);
                 }
