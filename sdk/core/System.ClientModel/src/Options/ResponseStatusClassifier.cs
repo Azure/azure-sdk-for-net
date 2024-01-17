@@ -26,12 +26,9 @@ namespace System.ClientModel.Primitives
 
         public sealed override bool IsErrorResponse(PipelineMessage message)
         {
-            if (message.Response is null)
-            {
-                throw new InvalidOperationException("Response is not set on message.");
-            }
+            message.AssertResponse();
 
-            return !_successCodes[message.Response.Status];
+            return !_successCodes[message.Response!.Status];
         }
 
         private void AddClassifier(int statusCode, bool isError)
