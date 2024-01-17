@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details. </summary>
         internal ManagedClusterSecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
         /// <summary> Whether to enable workload identity. </summary>
-        public bool? WorkloadIdentityEnabled
+        public bool? IsWorkloadIdentityEnabled
         {
-            get => WorkloadIdentity is null ? default : WorkloadIdentity.Enabled;
+            get => WorkloadIdentity is null ? default : WorkloadIdentity.IsWorkloadIdentityEnabled;
             set
             {
                 if (WorkloadIdentity is null)
                     WorkloadIdentity = new ManagedClusterSecurityProfileWorkloadIdentity();
-                WorkloadIdentity.Enabled = value;
+                WorkloadIdentity.IsWorkloadIdentityEnabled = value;
             }
         }
 

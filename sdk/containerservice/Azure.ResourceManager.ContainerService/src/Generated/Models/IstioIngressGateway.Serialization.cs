@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

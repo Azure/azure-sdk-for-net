@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ManagedClusterWorkloadAutoScalerProfile> workloadAutoScalerProfile = default;
             Optional<ManagedClusterAzureMonitorProfile> azureMonitorProfile = default;
             Optional<ServiceMeshProfile> serviceMeshProfile = default;
-            Optional<string> resourceUID = default;
+            Optional<ResourceIdentifier> resourceUID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -794,7 +794,11 @@ namespace Azure.ResourceManager.ContainerService
                         }
                         if (property0.NameEquals("resourceUID"u8))
                         {
-                            resourceUID = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceUID = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -47,20 +47,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IstioEgressGateway"/>. </summary>
-        /// <param name="enabled"> Whether to enable the egress gateway. </param>
-        public IstioEgressGateway(bool enabled)
+        /// <param name="isEnabled"> Whether to enable the egress gateway. </param>
+        public IstioEgressGateway(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             NodeSelector = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IstioEgressGateway"/>. </summary>
-        /// <param name="enabled"> Whether to enable the egress gateway. </param>
+        /// <param name="isEnabled"> Whether to enable the egress gateway. </param>
         /// <param name="nodeSelector"> NodeSelector for scheduling the egress gateway. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IstioEgressGateway(bool enabled, IDictionary<string, string> nodeSelector, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IstioEgressGateway(bool isEnabled, IDictionary<string, string> nodeSelector, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             NodeSelector = nodeSelector;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable the egress gateway. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> NodeSelector for scheduling the egress gateway. </summary>
         public IDictionary<string, string> NodeSelector { get; }
     }

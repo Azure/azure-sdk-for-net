@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/>. </summary>
-        /// <param name="isEnabled"> Whether to enable VPA. Default value is false. </param>
-        public ManagedClusterVerticalPodAutoscaler(bool isEnabled)
+        /// <param name="isVpaEnabled"> Whether to enable VPA. Default value is false. </param>
+        public ManagedClusterVerticalPodAutoscaler(bool isVpaEnabled)
         {
-            IsEnabled = isEnabled;
+            IsVpaEnabled = isVpaEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/>. </summary>
-        /// <param name="isEnabled"> Whether to enable VPA. Default value is false. </param>
+        /// <param name="isVpaEnabled"> Whether to enable VPA. Default value is false. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterVerticalPodAutoscaler(bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterVerticalPodAutoscaler(bool isVpaEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IsEnabled = isEnabled;
+            IsVpaEnabled = isVpaEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable VPA. Default value is false. </summary>
-        public bool IsEnabled { get; set; }
+        public bool IsVpaEnabled { get; set; }
     }
 }

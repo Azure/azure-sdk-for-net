@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
-        /// <param name="enabled"> Whether to enable workload identity. </param>
+        /// <param name="isWorkloadIdentityEnabled"> Whether to enable workload identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfileWorkloadIdentity(bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterSecurityProfileWorkloadIdentity(bool? isWorkloadIdentityEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsWorkloadIdentityEnabled = isWorkloadIdentityEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable workload identity. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsWorkloadIdentityEnabled { get; set; }
     }
 }

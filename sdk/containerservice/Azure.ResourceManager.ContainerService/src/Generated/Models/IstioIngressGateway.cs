@@ -47,21 +47,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="IstioIngressGateway"/>. </summary>
         /// <param name="mode"> Mode of an ingress gateway. </param>
-        /// <param name="enabled"> Whether to enable the ingress gateway. </param>
-        public IstioIngressGateway(IstioIngressGatewayMode mode, bool enabled)
+        /// <param name="isEnabled"> Whether to enable the ingress gateway. </param>
+        public IstioIngressGateway(IstioIngressGatewayMode mode, bool isEnabled)
         {
             Mode = mode;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="IstioIngressGateway"/>. </summary>
         /// <param name="mode"> Mode of an ingress gateway. </param>
-        /// <param name="enabled"> Whether to enable the ingress gateway. </param>
+        /// <param name="isEnabled"> Whether to enable the ingress gateway. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IstioIngressGateway(IstioIngressGatewayMode mode, bool enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IstioIngressGateway(IstioIngressGatewayMode mode, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Mode of an ingress gateway. </summary>
         public IstioIngressGatewayMode Mode { get; set; }
         /// <summary> Whether to enable the ingress gateway. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
     }
 }

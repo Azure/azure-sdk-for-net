@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
+            writer.WriteBooleanValue(IsVpaEnabled);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

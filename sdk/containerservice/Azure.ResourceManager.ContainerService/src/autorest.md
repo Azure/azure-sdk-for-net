@@ -75,7 +75,7 @@ rename-mapping:
   ManagedClusterAzureMonitorProfileMetrics.enabled: IsEnabled
   ManagedClusterSecurityProfileImageCleaner.enabled: IsEnabled
   ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler: ManagedClusterVerticalPodAutoscaler
-  ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled: IsEnabled
+  ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled: IsVpaEnabled
   NodeOSUpgradeChannel: ManagedClusterNodeOSUpgradeChannel
   PortRange: AgentPoolNetworkPortRange
   Protocol: AgentPoolNetworkPortProtocol
@@ -85,6 +85,11 @@ rename-mapping:
   # Change from ManagedServiceIdentity to ManagedClusterIdentity
   ManagedCluster.identity: ClusterIdentity
   DelegatedResource: ManagedClusterDelegatedIdentity
+  ManagedCluster.properties.resourceUID: -|arm-id
+  IstioEgressGateway.enabled: IsEnabled
+  IstioIngressGateway.enabled: IsEnabled
+  ManagedClusterWorkloadAutoScalerProfileKeda.enabled: IsKedaEnabled
+  ManagedClusterSecurityProfileWorkloadIdentity.enabled: IsWorkloadIdentityEnabled
 
 format-by-name-rules:
   'tenantId': 'uuid'
