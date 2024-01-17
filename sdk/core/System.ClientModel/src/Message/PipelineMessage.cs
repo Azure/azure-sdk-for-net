@@ -41,6 +41,29 @@ public class PipelineMessage : IDisposable
         protected internal set;
     }
 
+    /// <summary>
+    /// Gets or sets the message classifier used by the client pipeline to
+    /// determine whether the service responded with an error response, and
+    /// populate the PipelineMessage.Response.IsError property.
+    ///
+    /// It is expected that this property will be set once in the client's
+    /// service method with a classifier created from the service API's
+    /// published success codes. Setting this value outside the service method
+    /// will override the client-specified classifier and should be done at the
+    /// caller's risk.
+    /// </summary>
+    //
+    // In addition to the above comment visible to client-authors and end-users,
+    // ClientModel maintainers should be aware that since MessageClassifiers
+    // are not composable, we must not add another way to set a
+    // MessageClassifier on the client, i.e. a public MessageClasifier property
+    // on PipelineOptions or RequestOptions.  If we did, we would have to use
+    // one or the other and it would not be transparent to the end-user which
+    // one was in effect. Instead, we can add AddClassifier APIs like the ones
+    // on Azure.Core's RequestContext that either add success/error codes to
+    // the client-provided classifier or compose a chain of classification
+    // handlers that preserve the functionality of the client-provided classifier
+    // at the end of the chain.
     public PipelineMessageClassifier? MessageClassifier { get; set; }
 
     public void Apply(RequestOptions options)
