@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class RadiologyInsightsClientTests
+    internal class RadiologyInsightsClientSample
     {
         [Test]
         public void RadiologyInsightsHeroScenario()
@@ -17,7 +17,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            PatientRecord patientRecord = RadiologyInsightsClientTests.CreatePatientRecord();
+            PatientRecord patientRecord = RadiologyInsightsClientSample.CreatePatientRecord();
             patientRecord.PatientDocuments[0].AdministrativeMetadata = CreateDocumentAdministrativeMetadata();
             var radiologyInsightsModelConfiguration = CreateConfiguration();
             List<PatientRecord> patientRecords = new List<PatientRecord> { patientRecord };
