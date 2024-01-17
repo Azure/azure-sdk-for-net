@@ -239,45 +239,44 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         testDoneTcs.Cancel();
     }
 
-    // TODO: Hangs.  Fix?
-    //[Test]
-    //public async Task TimesOutNonBufferedBodyReads()
-    //{
-    //    var testDoneTcs = new CancellationTokenSource();
+    [Test]
+    public async Task TimesOutNonBufferedBodyReads()
+    {
+        var testDoneTcs = new CancellationTokenSource();
 
-    //    ClientPipelineOptions options = new()
-    //    {
-    //        NetworkTimeout = TimeSpan.FromMilliseconds(500),
-    //    };
-    //    ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipelineOptions options = new()
+        {
+            NetworkTimeout = TimeSpan.FromMilliseconds(500),
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
 
-    //    using TestServer testServer = new TestServer(
-    //        async context =>
-    //        {
-    //            context.Response.StatusCode = 200;
-    //            context.Response.Headers.Add("Connection", "close");
-    //            await context.Response.WriteAsync("1");
-    //            await context.Response.Body.FlushAsync();
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.StatusCode = 200;
+                context.Response.Headers.Add("Connection", "close");
+                await context.Response.WriteAsync("1");
+                await context.Response.Body.FlushAsync();
 
-    //            await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
-    //        });
+                await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+            });
 
-    //    using PipelineMessage message = pipeline.CreateMessage();
-    //    message.Request.Uri = testServer.Address;
-    //    ResponseBufferingPolicy.SetBufferResponse(message, false);
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = false;
 
-    //    await pipeline.SendSyncOrAsync(message, IsAsync);
+        await pipeline.SendSyncOrAsync(message, IsAsync);
 
-    //    Assert.AreEqual(message.Response!.Status, 200);
-    //    var responseContentStream = message.Response.ContentStream;
-    //    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
-    //    var buffer = new byte[10];
-    //    Assert.AreEqual(1, await responseContentStream!.ReadAsync(buffer, 0, 1));
-    //    var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
-    //    Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
+        Assert.AreEqual(message.Response!.Status, 200);
+        var responseContentStream = message.Response.ContentStream;
+        Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
+        var buffer = new byte[10];
+        Assert.AreEqual(1, await responseContentStream!.ReadAsync(buffer, 0, 1));
+        var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
 
-    //    testDoneTcs.Cancel();
-    //}
+        testDoneTcs.Cancel();
+    }
 
     #endregion
 
@@ -348,42 +347,46 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         testDoneTcs.Cancel();
     }
 
-    // TODO: Hangs. Resolve?
-    //[Test]
-    //public async Task DoesntRetryClientCancellation()
-    //{
-    //    var testDoneTcs = new CancellationTokenSource();
-    //    int i = 0;
+    [Test]
+    public async Task DoesntRetryClientCancellation()
+    {
+        var testDoneTcs = new CancellationTokenSource();
+        int i = 0;
 
-    //    ClientPipeline pipeline = ClientPipeline.Create();
-    //    TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+        ClientPipeline pipeline = ClientPipeline.Create();
+        TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-    //    using TestServer testServer = new TestServer(
-    //        async context =>
-    //        {
-    //            Interlocked.Increment(ref i);
-    //            tcs.SetResult(null!);
-    //            await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
-    //        });
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                Interlocked.Increment(ref i);
+                tcs.SetResult(null!);
+                await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+            });
 
-    //    var cts = new CancellationTokenSource();
-    //    using PipelineMessage message = pipeline.CreateMessage();
-    //    message.Request.Uri = testServer.Address;
-    //    ResponseBufferingPolicy.SetBufferResponse(message, false);
+        var cts = new CancellationTokenSource();
 
-    //    var task = Task.Run(() => pipeline.SendSyncOrAsync(message, IsAsync));
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = false;
 
-    //    // Wait for server to receive a request
-    //    await tcs.Task;
+        // Set CancellationToken on the message.
+        RequestOptions options = new() { CancellationToken = cts.Token };
+        message.Apply(options);
 
-    //    cts.Cancel();
+        var task = Task.Run(() => pipeline.SendSyncOrAsync(message, IsAsync));
 
-    //    TaskCanceledException? exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await task);
-    //    Assert.AreEqual("The operation was canceled.", exception!.Message);
-    //    Assert.AreEqual(1, i);
+        // Wait for server to receive a request
+        await tcs.Task;
 
-    //    testDoneTcs.Cancel();
-    //}
+        cts.Cancel();
+
+        TaskCanceledException? exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await task);
+        Assert.AreEqual("The operation was canceled.", exception!.Message);
+        Assert.AreEqual(1, i);
+
+        testDoneTcs.Cancel();
+    }
 
     [Test]
     public async Task RetriesBufferedBodyTimeout()
@@ -430,42 +433,41 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
     #region Test parallel connections
 
-    // TODO: This one hangs on net462.  Why?
-    //[Test]
-    //public async Task Opens50ParallelConnections()
-    //{
-    //    // Running 50 sync requests on the threadpool would cause starvation
-    //    // and the test would take 20 sec to finish otherwise
-    //    ThreadPool.SetMinThreads(100, 100);
+    [Test]
+    public async Task Opens50ParallelConnections()
+    {
+        // Running 50 sync requests on the threadpool would cause starvation
+        // and the test would take 20 sec to finish otherwise
+        ThreadPool.SetMinThreads(100, 100);
 
-    //    ClientPipeline pipeline = ClientPipeline.Create();
-    //    int reqNum = 0;
+        ClientPipeline pipeline = ClientPipeline.Create();
+        int reqNum = 0;
 
-    //    TaskCompletionSource<object> requestsTcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource<object> requestsTcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-    //    using TestServer testServer = new TestServer(
-    //        async context =>
-    //        {
-    //            if (Interlocked.Increment(ref reqNum) == 50)
-    //            {
-    //                requestsTcs.SetResult(true);
-    //            }
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                if (Interlocked.Increment(ref reqNum) == 50)
+                {
+                    requestsTcs.SetResult(true);
+                }
 
-    //            await requestsTcs.Task;
-    //        });
+                await requestsTcs.Task;
+            });
 
-    //    var requestCount = 50;
-    //    List<Task> requests = new List<Task>();
-    //    for (int i = 0; i < requestCount; i++)
-    //    {
-    //        PipelineMessage message = pipeline.CreateMessage();
-    //        message.Request.Uri = testServer.Address;
+        var requestCount = 50;
+        List<Task> requests = new List<Task>();
+        for (int i = 0; i < requestCount; i++)
+        {
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Uri = testServer.Address;
 
-    //        requests.Add(Task.Run(() => pipeline.SendSyncOrAsync(message, IsAsync)));
-    //    }
+            requests.Add(Task.Run(() => pipeline.SendSyncOrAsync(message, IsAsync)));
+        }
 
-    //    await Task.WhenAll(requests);
-    //}
+        await Task.WhenAll(requests);
+    }
 
     #endregion
 }
