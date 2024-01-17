@@ -10,9 +10,12 @@
 
 ### Other Changes
 
-- Updated this package to include package references to the now stable versions of `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http`.
-  This removes the need for internal vendoring of these packages. 
+- Removed the code of internal vendored instrumentation libraries `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http`.
   ([#41370](https://github.com/Azure/azure-sdk-for-net/pull/41370))
+- Added OpenTelemetry dependencies
+  ([#41370](https://github.com/Azure/azure-sdk-for-net/pull/41370))
+  - OpenTelemetry.Instrumentation.AspNetCore 1.6.0
+  - OpenTelemetry.Instrumentation.Http 1.6.0
 
 ## 1.0.0 (2023-11-29)
 
