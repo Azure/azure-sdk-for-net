@@ -246,8 +246,9 @@ function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory, $Rel
         $cherryPickResult = Git-Command-With-Result "cherry-pick $tagSha" - $AssetsRepoLocation -HardExit $false
 
         if ($cherryPickResult.ExitCode -ne 0) {
-            Write-Host "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-invoke " +
-            "by `"./eng/common/testproxy/scripts/tag-merge/merge-proxy-tags.ps1 $RelativeAssetsJson $remainingTagString`"" -ForegroundColor Red
+            $error = "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-invoke " +
+            "by `"./eng/common/testproxy/scripts/tag-merge/merge-proxy-tags.ps1 $RelativeAssetsJson $remainingTagString`""
+            Write-Host $error -ForegroundColor Red
             exit 1
         }
     }

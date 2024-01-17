@@ -68,10 +68,11 @@ catch {
 Write-Host "Replacing conflicted assets.json with base branch version." -ForegroundColor Green
 Set-Content -Path $AssetsJson -Value $conflictingAssets.Left()
 
-$PSScriptRoot/../tag-merge/merge-proxy-tags.ps1 $AssetsJson $BaseAssets.Tag $TargetAssets.Tag
+$ScriptPath = Join-Path $PSScriptRoot ".." "tag-merge" "merge-proxy-tags.ps1"
+& $ScriptPath $AssetsJson $BaseAssets.Tag $TargetAssets.Tag
 
 if ($lastexitcode -eq 0) {
-   Write-Host "Successfully merged '$($TargetASsets.Tag)' into '$($BaseAssets.Tag)'. Invoke 'test-proxy push -a $AssetsJson' and commit the resulting assets.json!" -ForegroundColor Green
+   Write-Host "Successfully auto-merged assets tag '$($TargetASsets.Tag)' into tag '$($BaseAssets.Tag)'. Invoke 'test-proxy push -a $AssetsJson' and commit the resulting assets.json!" -ForegroundColor Green
 }
 else {
   Write-Host "Conflicts were discovered, resolve the conflicts and invoke the `"merge-proxy-tags.ps1`" as recommended in the line directly above."
