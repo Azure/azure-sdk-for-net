@@ -58,7 +58,7 @@ class ConflictedFile {
     $this.ParseContent($this.Content)
   }
 
-  [string] Left(){
+  [array] Left(){
     if ($this.IsConflicted) {
       # we are forced to get this line by line and reassemble via join because of how powershell is interacting with
       # git show --textconv commitsh:path
@@ -66,17 +66,19 @@ class ConflictedFile {
       # by forcefully reading into the array line by line, the whitespace is preserved. we're relying on gits autoconverstion of clrf to lf
       # to ensure that the line endings are consistent.
       Write-Host "git show $($this.LeftSource):$($this.Path)"
-      return git show ("$($this.LeftSource):$($this.Path)")
+      $tempContent = (git show ("$($this.LeftSource):$($this.Path)"))
+      return $tempContent -split "`r?`n"
     }
     else {
       return $this.Content
     }
   }
 
-  [string] Right(){
+  [array] Right(){
     if ($this.IsConflicted) {
       Write-Host "git show $($this.RightSource):$($this.Path)"
-      return git show ("$($this.RightSource):$($this.Path)")
+      $tempContent =  git show ("$($this.RightSource):$($this.Path)")
+      return $tempContent -split "`r?`n"
     }
     else {
       return $this.Content
