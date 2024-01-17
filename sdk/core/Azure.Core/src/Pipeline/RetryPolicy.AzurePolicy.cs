@@ -15,14 +15,16 @@ public partial class RetryPolicy
     internal class AzureCoreRetryPolicy : ClientRetryPolicy
     {
         private readonly RetryPolicy _pipelinePolicy;
+        private readonly DelayStrategy _delayStrategy;
 
         private long _beforeProcess;
         private long _afterProcess;
         private double _elapsedTime;
 
         public AzureCoreRetryPolicy(int maxRetries, DelayStrategy delay, RetryPolicy policy)
-            : base(maxRetries, CreateDelay(delay, policy))
+            : base(maxRetries)
         {
+            _delayStrategy = delay;
             _pipelinePolicy = policy;
         }
 
@@ -62,7 +64,7 @@ public partial class RetryPolicy
         protected override async ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
             => await _pipelinePolicy.ShouldRetryAsync(AssertHttpMessage(message), exception).ConfigureAwait(false);
 
-        public void OnDelayComplete(PipelineMessage message)
+        protected override void OnTryComplete(PipelineMessage message)
         {
             HttpMessage httpMessage = AssertHttpMessage(message);
             httpMessage.RetryNumber++;
@@ -75,7 +77,22 @@ public partial class RetryPolicy
             _elapsedTime = default;
         }
 
-        // TODO: I like this pattern.  Where else can I apply it?
+        protected override TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
+        {
+            HttpMessage httpMessage = AssertHttpMessage(message);
+
+            Debug.Assert(tryCount == httpMessage.RetryNumber);
+
+            Response? response = httpMessage.HasResponse ? httpMessage.Response : default;
+            return _delayStrategy.GetNextDelay(response, tryCount + 1);
+        }
+
+        protected override async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+            => await _pipelinePolicy.WaitAsync(time, cancellationToken).ConfigureAwait(false);
+
+        protected override void Wait(TimeSpan time, CancellationToken cancellationToken)
+            => _pipelinePolicy.Wait(time, cancellationToken);
+
         private static HttpMessage AssertHttpMessage(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
@@ -84,40 +101,6 @@ public partial class RetryPolicy
             }
 
             return httpMessage;
-        }
-
-        private static PipelineMessageDelay CreateDelay(DelayStrategy strategy, RetryPolicy policy)
-            => new AzureCoreRetryDelay(strategy, policy);
-
-        private class AzureCoreRetryDelay : PipelineMessageDelay
-        {
-            private readonly DelayStrategy _strategy;
-            private readonly RetryPolicy _retryPolicy;
-
-            public AzureCoreRetryDelay(DelayStrategy strategy, RetryPolicy policy)
-            {
-                _strategy = strategy;
-                _retryPolicy = policy;
-            }
-
-            protected override TimeSpan GetNextDelay(PipelineMessage message, int delayCount)
-            {
-                HttpMessage httpMessage = AssertHttpMessage(message);
-
-                Debug.Assert(delayCount == httpMessage.RetryNumber);
-
-                Response? response = httpMessage.HasResponse ? httpMessage.Response : default;
-                return _strategy.GetNextDelay(response, delayCount + 1);
-            }
-
-            protected override void OnWaitComplete(PipelineMessage message)
-                => _retryPolicy.OnDelayComplete(message);
-
-            protected override void WaitCore(TimeSpan duration, CancellationToken cancellationToken)
-                => _retryPolicy.Wait(duration, cancellationToken);
-
-            protected override async Task WaitCoreAsync(TimeSpan duration, CancellationToken cancellationToken)
-                => await _retryPolicy.WaitAsync(duration, cancellationToken).ConfigureAwait(false);
         }
     }
 }

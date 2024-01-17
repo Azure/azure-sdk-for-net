@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.ExceptionServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -11,18 +12,19 @@ namespace System.ClientModel.Primitives;
 public class ClientRetryPolicy : PipelinePolicy
 {
     private const int DefaultMaxRetries = 3;
+    private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
 
     private readonly int _maxRetries;
-    private readonly PipelineMessageDelay _delay;
+    private readonly TimeSpan _initialDelay;
 
-    public ClientRetryPolicy() : this(DefaultMaxRetries, PipelineMessageDelay.Default)
+    public ClientRetryPolicy() : this(DefaultMaxRetries)
     {
     }
 
-    public ClientRetryPolicy(int maxRetries, PipelineMessageDelay delay)
+    public ClientRetryPolicy(int maxRetries)
     {
         _maxRetries = maxRetries;
-        _delay = delay;
+        _initialDelay = DefaultInitialDelay;
     }
 
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -84,19 +86,24 @@ public class ClientRetryPolicy : PipelinePolicy
 
             if (shouldRetry)
             {
-                if (async)
+                TimeSpan delay = GetNextDelay(message, message.RetryCount);
+                if (delay > TimeSpan.Zero)
                 {
-                    await _delay.WaitAsync(message, message.CancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    _delay.Wait(message, message.CancellationToken);
+                    if (async)
+                    {
+                        await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Wait(delay, message.CancellationToken);
+                    }
                 }
 
                 // Dispose the content stream to free up a connection if the request has any
                 message.Response?.ContentStream?.Dispose();
 
                 message.RetryCount++;
+                OnTryComplete(message);
 
                 continue;
             }
@@ -126,6 +133,8 @@ public class ClientRetryPolicy : PipelinePolicy
     protected virtual void OnRequestSent(PipelineMessage message) { }
 
     protected virtual ValueTask OnRequestSentAsync(PipelineMessage message) => default;
+
+    protected virtual void OnTryComplete(PipelineMessage message) { }
 
     internal bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
@@ -165,37 +174,55 @@ public class ClientRetryPolicy : PipelinePolicy
     protected virtual ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
         => new(ShouldRetryCore(message, exception));
 
+    internal TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
+    => GetNextDelayCore(message, tryCount);
+
+    protected virtual TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
+    {
+        // Default implementation is exponential backoff
+        return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
+    }
+
+    protected virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+    {
+        await Task.Delay(time, cancellationToken).ConfigureAwait(false);
+    }
+
+    protected virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
+    {
+        cancellationToken.WaitHandle.WaitOne(time);
+    }
+
     #region Retry Classifier
 
-    // TODO: replace these with classifiers.  Keeping internal for the initial
-    // implementation.
+    // Overriding response-retriable classification will be added in a later ClientModel release.
     private static bool IsRetriable(PipelineMessage message)
     {
         message.AssertResponse();
 
         return message.Response!.Status switch
-           {
-               // Request Timeout
-               408 => true,
+        {
+            // Request Timeout
+            408 => true,
 
-               // Too Many Requests
-               429 => true,
+            // Too Many Requests
+            429 => true,
 
-               // Internal Server Error
-               500 => true,
+            // Internal Server Error
+            500 => true,
 
-               // Bad Gateway
-               502 => true,
+            // Bad Gateway
+            502 => true,
 
-               // Service Unavailable
-               503 => true,
+            // Service Unavailable
+            503 => true,
 
-               // Gateway Timeout
-               504 => true,
+            // Gateway Timeout
+            504 => true,
 
-               // Default case
-               _ => false
-           };
+            // Default case
+            _ => false
+        };
     }
 
     private static bool IsRetriable(PipelineMessage message, Exception exception)

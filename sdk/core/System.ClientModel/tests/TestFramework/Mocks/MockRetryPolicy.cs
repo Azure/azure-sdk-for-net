@@ -9,13 +9,19 @@ namespace ClientModel.Tests.Mocks;
 
 public class MockRetryPolicy : ClientRetryPolicy
 {
-    public MockRetryPolicy() : this(3, new MockMessageDelay())
+    private readonly Func<int, TimeSpan>? _delayFactory;
+
+    public MockRetryPolicy() : this(3)
     {
     }
 
-    public MockRetryPolicy(int maxRetries, PipelineMessageDelay delay)
-        : base(maxRetries, delay)
+    public MockRetryPolicy(int maxRetries) : this(maxRetries, default)
     {
+    }
+
+    public MockRetryPolicy(int maxRetries, Func<int, TimeSpan>? delayFactory) : base(maxRetries)
+    {
+        _delayFactory = delayFactory;
     }
 
     public Exception? LastException {  get; private set; }
@@ -77,5 +83,15 @@ public class MockRetryPolicy : ClientRetryPolicy
         OnSendingRequestCalled = true;
 
         return base.OnSendingRequestAsync(message);
+    }
+
+    protected override TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
+    {
+        if (_delayFactory is not null)
+        {
+            return _delayFactory(tryCount);
+        }
+
+        return base.GetNextDelayCore(message, tryCount);
     }
 }
