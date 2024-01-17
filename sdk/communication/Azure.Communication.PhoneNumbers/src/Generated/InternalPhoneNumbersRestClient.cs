@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
     internal partial class InternalPhoneNumbersRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -45,7 +45,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/areaCodes", false);
@@ -86,7 +86,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries", false);
             if (skip != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/localities", false);
@@ -144,7 +144,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/offerings", false);
@@ -180,7 +180,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
             uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/:search", false);
@@ -256,7 +256,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/searchResults/", false);
             uri.AppendPath(searchId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -319,13 +319,13 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreatePurchasePhoneNumbersRequest(string searchId)
+        internal HttpMessage CreatePurchasePhoneNumbersRequest(string searchId, bool? consentToNotResellNumbers)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/availablePhoneNumbers/:purchase", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -333,7 +333,8 @@ namespace Azure.Communication.PhoneNumbers
             request.Headers.Add("Content-Type", "application/json");
             var model = new PhoneNumberPurchaseRequest()
             {
-                SearchId = searchId
+                SearchId = searchId,
+                ConsentToNotResellNumbers = consentToNotResellNumbers
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue<PhoneNumberPurchaseRequest>(model);
@@ -343,10 +344,11 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePurchasePhoneNumbersRequest(searchId);
+            using var message = CreatePurchasePhoneNumbersRequest(searchId, consentToNotResellNumbers);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PhoneNumbersPurchasePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
@@ -360,10 +362,11 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePurchasePhoneNumbersRequest(searchId);
+            using var message = CreatePurchasePhoneNumbersRequest(searchId, consentToNotResellNumbers);
             _pipeline.Send(message, cancellationToken);
             var headers = new PhoneNumbersPurchasePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
@@ -381,7 +384,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/", false);
             uri.AppendPath(phoneNumber, true);
             uri.AppendPath("/capabilities", false);
@@ -456,7 +459,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/", false);
             uri.AppendPath(phoneNumber, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -525,7 +528,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers/", false);
             uri.AppendPath(phoneNumber, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -586,7 +589,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/phoneNumbers", false);
             if (skip != null)
             {
@@ -686,7 +689,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -703,7 +706,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -720,7 +723,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -737,7 +740,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (acceptLanguage != null)
@@ -754,7 +757,7 @@ namespace Azure.Communication.PhoneNumbers
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

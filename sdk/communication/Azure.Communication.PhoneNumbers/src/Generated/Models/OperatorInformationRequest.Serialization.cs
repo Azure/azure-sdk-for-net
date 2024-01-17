@@ -15,13 +15,15 @@ namespace Azure.Communication.PhoneNumbers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("phoneNumbers"u8);
-            writer.WriteStartArray();
-            foreach (var item in PhoneNumbers)
+            if (Optional.IsCollectionDefined(PhoneNumbers))
             {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
+                writer.WritePropertyName("phoneNumbers"u8);
+                writer.WriteStartArray();
+                foreach (var item in PhoneNumbers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);

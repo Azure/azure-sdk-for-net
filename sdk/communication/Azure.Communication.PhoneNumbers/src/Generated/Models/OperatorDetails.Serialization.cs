@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -39,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
                 }
             }
             return new OperatorDetails(name, mobileNetworkCode, mobileCountryCode);
-        }
+            }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

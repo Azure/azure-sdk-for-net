@@ -36,6 +36,7 @@ namespace Azure.Communication.PhoneNumbers
             InternationalFormat = internationalFormat;
             IsoCountryCode = isoCountryCode;
             NumberType = numberType;
+            IsoCountryCode = isoCountryCode;
             OperatorDetails = operatorDetails;
         }
 
@@ -49,6 +50,8 @@ namespace Azure.Communication.PhoneNumbers
         public string IsoCountryCode { get; }
         /// <summary> Type of service associated with the phone number. </summary>
         public OperatorNumberType? NumberType { get; }
+        /// <summary> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </summary>
+        public string IsoCountryCode { get; }
         /// <summary> Represents metadata describing the operator of a phone number. </summary>
         public OperatorDetails OperatorDetails { get; }
     }
