@@ -66,7 +66,7 @@ class ConflictedFile {
       # by forcefully reading into the array line by line, the whitespace is preserved. we're relying on gits autoconverstion of clrf to lf
       # to ensure that the line endings are consistent.
       Write-Host "git show $($this.LeftSource):$($this.Path)"
-      $tempContent = (git show ("$($this.LeftSource):$($this.Path)"))
+      $tempContent = git show ("$($this.LeftSource):$($this.Path)")
       return $tempContent -split "`r?`n"
     }
     else {
