@@ -99,7 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 if (response.Success)
                 {
-                    _lastSuccessfulPing = DateTimeOffset.UtcNow;
+                    _lastSuccessfulPost = DateTimeOffset.UtcNow;
 
                     if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
                     {
