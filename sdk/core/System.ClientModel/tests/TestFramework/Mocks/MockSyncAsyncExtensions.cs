@@ -71,16 +71,4 @@ public static class MockSyncAsyncExtensions
             transport.Process(message);
         }
     }
-
-    //public static async Task WaitSyncOrAsync(this PipelineMessageDelay delay, PipelineMessage message, bool isAsync)
-    //{
-    //    if (isAsync)
-    //    {
-    //        await delay.WaitAsync(message, default).ConfigureAwait(false);
-    //    }
-    //    else
-    //    {
-    //        delay.Wait(message, default);
-    //    }
-    //}
 }
