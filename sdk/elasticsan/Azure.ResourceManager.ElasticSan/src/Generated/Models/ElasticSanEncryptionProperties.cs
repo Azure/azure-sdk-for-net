@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Response for Volume request. </summary>
-    public partial class ElasticSanVolumePatch
+    /// <summary> The encryption settings on the volume group. </summary>
+    public partial class ElasticSanEncryptionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,35 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
-        public ElasticSanVolumePatch()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionProperties"/>. </summary>
+        public ElasticSanEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
-        /// <param name="sizeGiB"> Volume size. </param>
-        /// <param name="managedBy"> Parent resource information. </param>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionProperties"/>. </summary>
+        /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
+        /// <param name="encryptionIdentity"> The identity to be used with service-side encryption at rest. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumePatch(long? sizeGiB, ManagedByInfo managedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanEncryptionProperties(ElasticSanKeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SizeGiB = sizeGiB;
-            ManagedBy = managedBy;
+            KeyVaultProperties = keyVaultProperties;
+            EncryptionIdentity = encryptionIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Volume size. </summary>
-        public long? SizeGiB { get; set; }
-        /// <summary> Parent resource information. </summary>
-        internal ManagedByInfo ManagedBy { get; set; }
-        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public ResourceIdentifier ManagedByResourceId
+        /// <summary> Properties provided by key vault. </summary>
+        public ElasticSanKeyVaultProperties KeyVaultProperties { get; set; }
+        /// <summary> The identity to be used with service-side encryption at rest. </summary>
+        internal EncryptionIdentity EncryptionIdentity { get; set; }
+        /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>
+        public ResourceIdentifier EncryptionUserAssignedIdentity
         {
-            get => ManagedBy is null ? default : ManagedBy.ResourceId;
+            get => EncryptionIdentity is null ? default : EncryptionIdentity.EncryptionUserAssignedIdentity;
             set
             {
-                if (ManagedBy is null)
-                    ManagedBy = new ManagedByInfo();
-                ManagedBy.ResourceId = value;
+                if (EncryptionIdentity is null)
+                    EncryptionIdentity = new EncryptionIdentity();
+                EncryptionIdentity.EncryptionUserAssignedIdentity = value;
             }
         }
     }

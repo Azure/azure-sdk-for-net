@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Response for Volume request. </summary>
-    public partial class ElasticSanVolumePatch
+    /// <summary> Data used when creating a volume snapshot. </summary>
+    public partial class SnapshotCreationInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,36 +46,31 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
-        public ElasticSanVolumePatch()
+        /// <summary> Initializes a new instance of <see cref="SnapshotCreationInfo"/>. </summary>
+        /// <param name="sourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
+        public SnapshotCreationInfo(ResourceIdentifier sourceId)
         {
+            Argument.AssertNotNull(sourceId, nameof(sourceId));
+
+            SourceId = sourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
-        /// <param name="sizeGiB"> Volume size. </param>
-        /// <param name="managedBy"> Parent resource information. </param>
+        /// <summary> Initializes a new instance of <see cref="SnapshotCreationInfo"/>. </summary>
+        /// <param name="sourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumePatch(long? sizeGiB, ManagedByInfo managedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotCreationInfo(ResourceIdentifier sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SizeGiB = sizeGiB;
-            ManagedBy = managedBy;
+            SourceId = sourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Volume size. </summary>
-        public long? SizeGiB { get; set; }
-        /// <summary> Parent resource information. </summary>
-        internal ManagedByInfo ManagedBy { get; set; }
-        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public ResourceIdentifier ManagedByResourceId
+        /// <summary> Initializes a new instance of <see cref="SnapshotCreationInfo"/> for deserialization. </summary>
+        internal SnapshotCreationInfo()
         {
-            get => ManagedBy is null ? default : ManagedBy.ResourceId;
-            set
-            {
-                if (ManagedBy is null)
-                    ManagedBy = new ManagedByInfo();
-                ManagedBy.ResourceId = value;
-            }
         }
+
+        /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>
+        public ResourceIdentifier SourceId { get; set; }
     }
 }
