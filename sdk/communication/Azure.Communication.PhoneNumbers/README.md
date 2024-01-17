@@ -125,7 +125,7 @@ var client = new PhoneNumbersClient(connectionString);
 Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
 
 ```C# Snippet:SearchPhoneNumbersAsync
-var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
+var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.InboundOutbound, sms: PhoneNumberCapabilityType.None);
 
 var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
 await searchOperation.WaitForCompletionAsync();
@@ -136,7 +136,7 @@ await searchOperation.WaitForCompletionAsync();
 Phone numbers can be acquired through purchasing a search.
 
 ```C# Snippet:StartPurchaseSearchAsync
-var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
+var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId, true);
 await purchaseOperation.WaitForCompletionResponseAsync();
 ```
 
