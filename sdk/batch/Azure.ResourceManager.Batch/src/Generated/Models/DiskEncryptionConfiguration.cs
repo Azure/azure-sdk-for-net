@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Shared Image Gallery Image. </summary>
+    /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
     internal partial class DiskEncryptionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>

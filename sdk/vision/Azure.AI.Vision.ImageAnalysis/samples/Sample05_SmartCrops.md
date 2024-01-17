@@ -6,7 +6,7 @@ This sample demonstrates how to get a SmartCrops for an image. To get started yo
 
 ## Examples
 
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to generate smart-cropped thumbnails from an image:
+The following sections provide code snippets using ImageAnalysis to generate smart-cropped thumbnails from an image:
 
 ### Authenticate the client
 
@@ -22,7 +22,7 @@ string key = Environment.GetEnvironmentVariable("VISION_KEY");
 ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 ```
 
-Here we are using enviornment variables to hold the endpoint and key for the Computer Vision Resource.
+Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
 
 ### Generate smart-cropped thumbnails for an image file
 
@@ -65,4 +65,4 @@ foreach (CropRegion cropRegion in result.SmartCrops.Values)
 }
 ```
 
-[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Custom/ImageAnalysisClient.cs

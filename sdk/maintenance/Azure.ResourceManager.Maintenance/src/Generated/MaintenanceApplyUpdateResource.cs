@@ -105,6 +105,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,6 +145,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,6 +184,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateOrCancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +230,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateOrCancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

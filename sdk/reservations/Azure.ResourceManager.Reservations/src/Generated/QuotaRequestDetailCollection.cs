@@ -73,6 +73,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +155,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -168,6 +192,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -196,6 +228,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,6 +268,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
@@ -258,6 +306,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,6 +347,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

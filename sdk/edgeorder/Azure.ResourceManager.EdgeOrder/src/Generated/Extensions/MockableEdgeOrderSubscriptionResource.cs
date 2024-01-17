@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListAddressesAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
@@ -87,6 +95,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListAddressesAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
@@ -110,6 +126,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListProductFamilies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +159,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListProductFamilies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Filters for showing the product families. </param>
@@ -167,6 +191,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Filters for showing the configurations. </param>
@@ -193,6 +221,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +253,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListProductFamiliesMetadata</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
@@ -243,6 +279,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListProductFamiliesMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +307,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListOrderAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
@@ -290,6 +334,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListOrderAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
@@ -312,6 +360,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,6 +393,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

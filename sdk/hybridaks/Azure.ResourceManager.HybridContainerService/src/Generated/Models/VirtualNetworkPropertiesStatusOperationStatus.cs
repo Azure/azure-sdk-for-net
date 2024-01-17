@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Contains Provisioning errors. </summary>
+    /// <summary> The detailed status of the long running operation. </summary>
     public partial class VirtualNetworkPropertiesStatusOperationStatus
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
@@ -16,25 +16,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
-        /// <param name="error"></param>
-        /// <param name="operationId"></param>
-        /// <param name="phase"> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </param>
-        /// <param name="status"></param>
-        internal VirtualNetworkPropertiesStatusOperationStatus(HybridContainerServiceNetworkOperationError error, string operationId, string phase, string status)
+        /// <param name="error"> The error if any from the operation. </param>
+        /// <param name="operationId"> The identifier of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        internal VirtualNetworkPropertiesStatusOperationStatus(HybridContainerServiceNetworkOperationError error, string operationId, string status)
         {
             Error = error;
             OperationId = operationId;
-            Phase = phase;
             Status = status;
         }
 
-        /// <summary> Gets the error. </summary>
+        /// <summary> The error if any from the operation. </summary>
         public HybridContainerServiceNetworkOperationError Error { get; }
-        /// <summary> Gets the operation id. </summary>
+        /// <summary> The identifier of the operation. </summary>
         public string OperationId { get; }
-        /// <summary> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </summary>
-        public string Phase { get; }
-        /// <summary> Gets the status. </summary>
+        /// <summary> The status of the operation. </summary>
         public string Status { get; }
     }
 }

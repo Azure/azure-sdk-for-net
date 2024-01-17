@@ -352,6 +352,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -381,6 +389,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -429,6 +445,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCoreControlPlaneResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -458,6 +482,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCoreControlPlaneResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -506,6 +538,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -535,6 +575,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -583,6 +631,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -612,6 +668,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -643,6 +707,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -670,6 +742,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -699,6 +779,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCoreControlPlaneResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -726,6 +814,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCoreControlPlaneResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -755,6 +851,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -782,6 +886,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -828,6 +940,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -857,6 +977,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// <item>

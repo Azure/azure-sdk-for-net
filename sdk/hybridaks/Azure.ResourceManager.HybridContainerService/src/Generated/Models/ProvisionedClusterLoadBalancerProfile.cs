@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> LoadBalancerProfile - Profile of the cluster load balancer. </summary>
+    /// <summary> Profile of the HA Proxy load balancer. </summary>
     internal partial class ProvisionedClusterLoadBalancerProfile
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterLoadBalancerProfile"/>. </summary>
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterLoadBalancerProfile"/>. </summary>
-        /// <param name="count"> Count - Number of load balancer VMs. The default value is 0. </param>
+        /// <param name="count"> Number of HA Proxy load balancer VMs. The default value is 0. </param>
         internal ProvisionedClusterLoadBalancerProfile(int? count)
         {
             Count = count;
         }
 
-        /// <summary> Count - Number of load balancer VMs. The default value is 0. </summary>
+        /// <summary> Number of HA Proxy load balancer VMs. The default value is 0. </summary>
         public int? Count { get; set; }
     }
 }

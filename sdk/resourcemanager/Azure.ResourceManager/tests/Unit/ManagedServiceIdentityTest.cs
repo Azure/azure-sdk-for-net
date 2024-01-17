@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializerInvalidNullType()
         {
             var identityJsonProperty = DeserializerHelper("InvalidTypeIsNull.json");
-            Assert.Throws<ArgumentNullException>(delegate { ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value); });
+            Assert.AreEqual(default(ManagedServiceIdentityType), ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value).ManagedServiceIdentityType);
         }
 
         [TestCase]
@@ -52,12 +52,9 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializerNoneWithEmptyStringIds()
         {
             var identityJsonProperty = DeserializerHelper("NoneEmptyStringIds.json");
-#if DEBUG
-            Assert.Throws<JsonException>(delegate { ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value); });
-#else
-            ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value);
-            Assert.AreEqual(ManagedServiceIdentityType.None, back.ManagedServiceIdentityType);
-#endif
+            var msi = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value);
+            Assert.IsNull(msi.PrincipalId);
+            Assert.IsNull(msi.TenantId);
         }
 
         [TestCase]
