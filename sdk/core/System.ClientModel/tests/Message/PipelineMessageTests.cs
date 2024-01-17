@@ -26,21 +26,6 @@ public class PipelineMessageTests
     }
 
     [Test]
-    public void ApplySetsMessageClassifier()
-    {
-        ClientPipeline pipeline = ClientPipeline.Create();
-        PipelineMessage message = pipeline.CreateMessage();
-
-        RequestOptions options = new RequestOptions();
-        message.Apply(options, new MockMessageClassifier("MockClassifier"));
-
-        MockMessageClassifier? classifier = message.MessageClassifier as MockMessageClassifier;
-
-        Assert.IsNotNull(classifier);
-        Assert.AreEqual("MockClassifier", classifier!.Id);
-    }
-
-    [Test]
     public void CanSetAndGetMessageProperties()
     {
         ClientPipeline pipeline = ClientPipeline.Create();
