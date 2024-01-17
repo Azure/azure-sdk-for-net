@@ -41,6 +41,31 @@ namespace Azure.Communication.PhoneNumbers
             Cost = cost;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
+        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
+        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
+        /// <param name="countryCode"> The ISO 3166-2 code of the phone number's country, e.g. US. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
+        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <param name="operatorId"> Id of the operator that provided the number. </param>
+        /// <param name="operatorName"> Name of the operator that provided the number. </param>
+        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost, string operatorId, string operatorName)
+        {
+            Id = id;
+            PhoneNumber = phoneNumber;
+            CountryCode = countryCode;
+            PhoneNumberType = phoneNumberType;
+            Capabilities = capabilities;
+            AssignmentType = assignmentType;
+            PurchaseDate = purchaseDate;
+            Cost = cost;
+            OperatorId = operatorId;
+            OperatorName = operatorName;
+        }
+
         /// <summary> The id of the phone number, e.g. 11234567890. </summary>
         public string Id { get; }
         /// <summary> String of the E.164 format of the phone number, e.g. +11234567890. </summary>
@@ -57,5 +82,9 @@ namespace Azure.Communication.PhoneNumbers
         public DateTimeOffset PurchaseDate { get; }
         /// <summary> The incurred cost for a single phone number. </summary>
         public PhoneNumberCost Cost { get; }
+        /// <summary> Id of the operator that provided the number. </summary>
+        public string OperatorId { get; }
+        /// <summary> Name of the operator that provided the number. </summary>
+        public string OperatorName { get; }
     }
 }

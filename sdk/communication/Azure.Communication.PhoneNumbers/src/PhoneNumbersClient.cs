@@ -98,8 +98,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="apiVersion"> Api Version. </param>
         private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
-            InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, new System.Uri(endpoint), apiVersion);
+            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, new System.Uri(endpoint), apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _acceptedLanguage = acceptedLanguage;
@@ -236,14 +236,15 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
+        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, bool consentToNotResellNumbers, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
             scope.Start();
             try
             {
-                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, consentToNotResellNumbers, cancellationToken).ConfigureAwait(false);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
@@ -255,14 +256,15 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
+        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, bool consentToNotResellNumbers, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
             scope.Start();
             try
             {
-                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, cancellationToken);
+                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, consentToNotResellNumbers, cancellationToken);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
