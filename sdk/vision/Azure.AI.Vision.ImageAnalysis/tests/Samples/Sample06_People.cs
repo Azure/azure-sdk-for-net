@@ -27,6 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print people detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" People:");
             foreach (DetectedPerson person in result.People.Values)
             {
@@ -48,6 +49,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print people detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" People:");
             foreach (DetectedPerson person in result.People.Values)
             {

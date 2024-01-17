@@ -13,7 +13,7 @@ The following sections provide code snippets using ImageAnalysis to extract tags
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
 class. To configure a client for use with Azure Image Analysis, provide a valid endpoint URI to an Azure Computer Vision resource
-along with a corresponding key credential authorized to use the Azure Computer Vison resource.
+along with a corresponding key credential authorized to use the Azure Computer Vision resource.
 
 ```C# Snippet:ImageAnalysisAuth
 string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
@@ -40,6 +40,7 @@ ImageAnalysisResult result = client.Analyze(
 
 // Print tags results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" Tags:");
 foreach (DetectedTag tag in result.Tags.Values)
 {
@@ -59,6 +60,7 @@ ImageAnalysisResult result = client.Analyze(
 
 // Print tags results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" Tags:");
 foreach (DetectedTag tag in result.Tags.Values)
 {

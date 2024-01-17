@@ -18,13 +18,14 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisReadFromFile
             using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-            var result = client.Analyze(
+            ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.Read);
 
             Console.WriteLine($"Image read results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Text:");
-            foreach (var line in result.Value.Read.Blocks.SelectMany(block => block.Lines))
+            foreach (var line in result.Read.Blocks.SelectMany(block => block.Lines))
             {
                 Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
                 foreach (DetectedTextWord word in line.Words)
@@ -42,13 +43,14 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             var client = ImageAnalysisAuth();
 
             #region Snippet:ImageAnalysisReadFromUrl
-            var result = client.Analyze(
+            ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Read);
 
             Console.WriteLine($"Image read results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Text:");
-            foreach (var line in result.Value.Read.Blocks.SelectMany(block => block.Lines))
+            foreach (var line in result.Read.Blocks.SelectMany(block => block.Lines))
             {
                 Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
                 foreach (DetectedTextWord word in line.Words)

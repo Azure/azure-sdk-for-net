@@ -23,6 +23,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 new ImageAnalysisOptions { GenderNeutralCaption = true });
 
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Caption:");
             Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confidence:F4}");
             #endregion
@@ -40,6 +41,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 new ImageAnalysisOptions { GenderNeutralCaption = true });
 
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Caption:");
             Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confidence:F4}");
             #endregion

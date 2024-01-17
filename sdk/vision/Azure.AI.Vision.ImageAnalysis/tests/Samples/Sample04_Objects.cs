@@ -27,6 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print object detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Objects:");
             foreach (DetectedObject detectedObject in result.Objects.Values)
             {
@@ -48,6 +49,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print object detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Objects:");
             foreach (DetectedObject detectedObject in result.Objects.Values)
             {

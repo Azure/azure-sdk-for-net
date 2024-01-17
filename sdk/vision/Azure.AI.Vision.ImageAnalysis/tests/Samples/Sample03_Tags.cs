@@ -25,6 +25,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print tags results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Tags:");
             foreach (DetectedTag tag in result.Tags.Values)
             {
@@ -46,6 +47,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print tags results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Tags:");
             foreach (DetectedTag tag in result.Tags.Values)
             {
