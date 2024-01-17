@@ -114,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceFailed(name: "Ping", response.Status, response.ReasonPhrase);
+                ServiceCallFailed(name: "Ping", response.Status, response.ReasonPhrase);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceFailed(name: "Post", response.Status, response.ReasonPhrase);
+                ServiceCallFailed(name: "Post", response.Status, response.ReasonPhrase);
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceFailedWithUnknownException(name: "Ping", ex.ToInvariantString());
+                ServiceCallFailedWithUnknownException(name: "Ping", ex.ToInvariantString());
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceFailedWithUnknownException(name: "Post", ex.ToInvariantString());
+                ServiceCallFailedWithUnknownException(name: "Post", ex.ToInvariantString());
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceFailedWithServiceError(name: "Ping", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+                ServiceCallFailedWithServiceError(name: "Ping", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
             }
         }
 
@@ -159,17 +159,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ServiceFailedWithServiceError(name: "Post", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+                ServiceCallFailedWithServiceError(name: "Post", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
             }
         }
 
-        [Event(8, Message = "Service failed. Name: {0}. Status Code: {1} Reason: {2}.", Level = EventLevel.Error)]
-        public void ServiceFailed(string name, int statusCode, string reasonPhrase) => WriteEvent(8, name, statusCode, reasonPhrase);
+        [Event(8, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2}.", Level = EventLevel.Error)]
+        public void ServiceCallFailed(string name, int statusCode, string reasonPhrase) => WriteEvent(8, name, statusCode, reasonPhrase);
 
-        [Event(9, Message = "Service failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
-        public void ServiceFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(9, name, exceptionMessage);
+        [Event(9, Message = "Service call failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
+        public void ServiceCallFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(9, name, exceptionMessage);
 
-        [Event(10, Message = "Service failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
-        public void ServiceFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(10, name, statusCode, code, message, exception);
+        [Event(10, Message = "Service call failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
+        public void ServiceCallFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(10, name, statusCode, code, message, exception);
     }
 }
