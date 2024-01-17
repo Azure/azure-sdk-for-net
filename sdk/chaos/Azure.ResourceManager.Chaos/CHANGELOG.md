@@ -9,6 +9,10 @@ This is the first stable release of Chaos client library.
 - Update API version to 2023-11-01
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
+
 ## 1.0.0-beta.6 (2023-11-27)
 
 ### Features Added

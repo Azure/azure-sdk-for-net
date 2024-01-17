@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             Assert.AreEqual(200, deleteResponse.GetRawResponse().Status);
 
             await Delay(2000, 0);
+
             var existsResponse = await rg.GetChaosExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
             Assert.AreEqual(false, existsResponse.Value);
         }
