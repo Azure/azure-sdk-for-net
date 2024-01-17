@@ -57,6 +57,9 @@ namespace Azure.Core
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
-            => base.IsErrorResponse(message);
+        {
+            TryClassifyResponse(message, out bool isError);
+            return isError;
+        }
     }
 }

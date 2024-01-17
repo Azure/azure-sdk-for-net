@@ -13,16 +13,27 @@ public class PipelineMessageClassifier
     protected internal PipelineMessageClassifier() { }
 
     /// <summary>
-    /// Specifies if the response contained in the <paramref name="message"/> is not successful.
+    /// Determines whether the Response property of <paramref name="message"/>
+    /// is considered an error response by pipeline policies and the client.
     /// </summary>
-    public virtual bool IsErrorResponse(PipelineMessage message)
+    /// <param name="message">The message to classify.</param>
+    /// <param name="isError">True if the classifer considers the message's
+    /// response to be an error; false otherwise.</param>
+    /// <returns>True if the classifier provided a value for <paramref name="isError"/>,
+    /// false if it did not classify the message response. A classifier can return
+    /// false if it wants to be composable with other classifiers and pass the
+    /// decision on to another classifier instead of doing the classification
+    /// itself.</returns>
+    public virtual bool TryClassifyResponse(PipelineMessage message, out bool isError)
     {
-        if (message.Response is null)
-        {
-            throw new InvalidOperationException("IsError must be called on a message where the OutputMessage is populated.");
-        }
+        message.AssertResponse();
 
-        int statusKind = message.Response.Status / 100;
-        return statusKind == 4 || statusKind == 5;
+        int statusKind = message.Response!.Status / 100;
+        isError = statusKind == 4 || statusKind == 5;
+
+        // By returning true here, any type that derives from this type and
+        // does not provide an implementation for this method will always stop
+        // any composition of classifiers before passing control to the next one.
+        return true;
     }
 }
