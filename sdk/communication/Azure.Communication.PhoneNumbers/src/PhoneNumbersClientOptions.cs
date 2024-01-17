@@ -47,7 +47,7 @@ namespace Azure.Communication.PhoneNumbers
                 ServiceVersion.V2021_03_07 => "2021-03-07",
                 ServiceVersion.V2022_01_11_Preview_2 => "2022-01-11-preview2",
                 ServiceVersion.V2022_12_01 => "2022-12-01",
-                ServiceVersion.V2024_01_Preview => "package-preview-2024-01",
+                ServiceVersion.V2024_01_Preview => "2024-01-31-preview",
                 _ => throw new NotSupportedException()
             };
         }
