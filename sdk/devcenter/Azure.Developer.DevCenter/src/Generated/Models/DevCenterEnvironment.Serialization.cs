@@ -49,7 +49,7 @@ namespace Azure.Developer.DevCenter.Models
             string environmentType = default;
             Optional<Guid> user = default;
             Optional<EnvironmentProvisioningState> provisioningState = default;
-            Optional<string> resourceGroupId = default;
+            Optional<ResourceIdentifier> resourceGroupId = default;
             string catalogName = default;
             string environmentDefinitionName = default;
             Optional<ResponseError> error = default;
@@ -94,7 +94,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("resourceGroupId"u8))
                 {
-                    resourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("catalogName"u8))

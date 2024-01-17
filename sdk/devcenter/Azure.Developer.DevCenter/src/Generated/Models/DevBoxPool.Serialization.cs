@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string name = default;
-            string location = default;
+            AzureLocation location = default;
             Optional<DevBoxOSType> osType = default;
             Optional<DevBoxHardwareProfile> hardwareProfile = default;
             Optional<HibernateSupport> hibernateSupport = default;
@@ -38,7 +38,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osType"u8))

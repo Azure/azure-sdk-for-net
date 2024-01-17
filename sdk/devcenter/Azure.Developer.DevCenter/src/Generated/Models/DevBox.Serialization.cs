@@ -42,7 +42,7 @@ namespace Azure.Developer.DevCenter.Models
             PowerState powerState = default;
             Optional<Guid> uniqueId = default;
             Optional<ResponseError> error = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<DevBoxOSType> osType = default;
             Optional<Guid> user = default;
             Optional<DevBoxHardwareProfile> hardwareProfile = default;
@@ -115,7 +115,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -182,7 +186,7 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, powerState, Optional.ToNullable(uniqueId), error.Value, location.Value, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator));
+            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, powerState, Optional.ToNullable(uniqueId), error.Value, location, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

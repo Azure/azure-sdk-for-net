@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string name = default;
-            string deploymentTargetId = default;
+            ResourceIdentifier deploymentTargetId = default;
             EnvironmentTypeStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,16 +31,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("deploymentTargetId"u8))
                 {
-                    deploymentTargetId = property.Value.GetString();
+                    deploymentTargetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    //UPDATE SERIALIZATION, CUSTOMIZE BEFORE GEN
-                    if (property.Value.ValueKind == JsonValueKind.Object)
-                    {
-                        continue;
-                    }
                     status = new EnvironmentTypeStatus(property.Value.GetString());
                     continue;
                 }

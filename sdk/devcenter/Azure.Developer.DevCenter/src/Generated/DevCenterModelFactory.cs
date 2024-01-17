@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -46,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
         /// available to create Dev Boxes.
         /// </param>
         /// <returns> A new <see cref="Models.DevBoxPool"/> instance for mocking. </returns>
-        public static DevBoxPool DevBoxPool(string name = null, string location = null, DevBoxOSType? osType = null, DevBoxHardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, LocalAdministratorStatus? localAdministratorStatus = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
+        public static DevBoxPool DevBoxPool(string name = null, AzureLocation location = default, DevBoxOSType? osType = null, DevBoxHardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, LocalAdministratorStatus? localAdministratorStatus = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
         {
             return new DevBoxPool(name, location, osType, hardwareProfile, hibernateSupport, storageProfile, imageReference, localAdministratorStatus, stopOnDisconnect, healthStatus);
         }
@@ -136,7 +137,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
-        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState powerState = default, Guid? uniqueId = null, ResponseError error = null, string location = null, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
+        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState powerState = default, Guid? uniqueId = null, ResponseError error = null, AzureLocation location = default, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
         {
             return new DevBox(name, projectName, poolName, hibernateSupport, provisioningState, actionState, powerState, uniqueId, error, location, osType, userId, hardwareProfile, storageProfile, imageReference, createdTime, localAdministratorStatus);
         }
@@ -192,7 +193,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
         /// <returns> A new <see cref="Models.DevCenterEnvironment"/> instance for mocking. </returns>
-        public static DevCenterEnvironment DevCenterEnvironment(BinaryData parameters = null, string name = null, string environmentTypeName = null, Guid? userId = null, EnvironmentProvisioningState? provisioningState = null, string resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
+        public static DevCenterEnvironment DevCenterEnvironment(BinaryData parameters = null, string name = null, string environmentTypeName = null, Guid? userId = null, EnvironmentProvisioningState? provisioningState = null, ResourceIdentifier resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
         {
             return new DevCenterEnvironment(parameters, name, environmentTypeName, userId, provisioningState, resourceGroupId, catalogName, environmentDefinitionName, error);
         }
@@ -260,7 +261,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
         /// <returns> A new <see cref="Models.DevCenterEnvironmentType"/> instance for mocking. </returns>
-        public static DevCenterEnvironmentType DevCenterEnvironmentType(string name = null, string deploymentTargetId = null, EnvironmentTypeStatus status = default)
+        public static DevCenterEnvironmentType DevCenterEnvironmentType(string name = null, ResourceIdentifier deploymentTargetId = null, EnvironmentTypeStatus status = default)
         {
             if (name == null)
             {

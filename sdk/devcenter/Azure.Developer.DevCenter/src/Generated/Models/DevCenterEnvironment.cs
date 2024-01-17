@@ -40,7 +40,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
-        internal DevCenterEnvironment(BinaryData parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, string resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error)
+        internal DevCenterEnvironment(BinaryData parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error)
         {
             Parameters = parameters;
             Name = name;
@@ -92,8 +92,6 @@ namespace Azure.Developer.DevCenter.Models
         public Guid? UserId { get; }
         /// <summary> The provisioning state of the environment. </summary>
         public EnvironmentProvisioningState? ProvisioningState { get; }
-        /// <summary> The identifier of the resource group containing the environment's resources. </summary>
-        public string ResourceGroupId { get; }
         /// <summary> Name of the catalog. </summary>
         public string CatalogName { get; set; }
         /// <summary> Name of the environment definition. </summary>
