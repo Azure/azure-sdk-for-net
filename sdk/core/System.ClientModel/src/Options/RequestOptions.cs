@@ -98,7 +98,7 @@ public class RequestOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot make changes to RequestOptions after its first use.");
+            throw new InvalidOperationException("Cannot change a RequestOptions instance after it has been passed to a client method.");
         }
     }
 }
