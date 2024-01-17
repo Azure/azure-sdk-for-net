@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     _lastSuccessfulPing = DateTimeOffset.UtcNow;
 
-                    if (response.ConfigurationEtag!= null && response.ConfigurationEtag != _etag)
+                    if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
                     {
                         Debug.WriteLine($"OnPing: updated etag: {response.ConfigurationEtag}");
                         _etag = response.ConfigurationEtag;
