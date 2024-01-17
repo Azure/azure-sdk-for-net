@@ -323,7 +323,7 @@ namespace Azure.Monitor.Query.Models
     public partial class MetricsBatchResult
     {
         internal MetricsBatchResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricsBatchResultValues> Values { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricsQueryResult> Values { get { throw null; } }
     }
     public partial class MetricsBatchResultValues
     {
@@ -402,7 +402,7 @@ namespace Azure.Monitor.Query.Models
         public static Azure.Monitor.Query.Models.LogsTableRow LogsTableRow(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.LogsTableColumn> columns, System.Collections.Generic.IEnumerable<object> values) { throw null; }
         public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? granularity = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricResult MetricResult(string id, string resourceType, string name, Azure.Monitor.Query.Models.MetricUnit unit, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricTimeSeriesElement> timeSeries) { throw null; }
-        public static Azure.Monitor.Query.Models.MetricsBatchResult MetricsBatchResult(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricsBatchResultValues> values = null) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricsBatchResult MetricsBatchResult(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricsQueryResult> values = null) { throw null; }
         public static Azure.Monitor.Query.Models.MetricsBatchResultValues MetricsBatchResultValues(System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset), string interval = null, string @namespace = null, Azure.Core.AzureLocation resourceRegion = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricResult> metrics = null) { throw null; }
         public static Azure.Monitor.Query.Models.MetricsQueryResult MetricsQueryResult(int? cost, string timespan, System.TimeSpan? granularity, string @namespace, string resourceRegion, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricResult> metrics) { throw null; }
         public static Azure.Monitor.Query.Models.MetricTimeSeriesElement MetricTimeSeriesElement(System.Collections.Generic.IReadOnlyDictionary<string, string> metadataValues, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricValue> values) { throw null; }

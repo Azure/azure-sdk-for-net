@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.Monitor.Query.Models;
 
@@ -112,7 +111,7 @@ namespace Azure.Monitor.Query
         public IList<string> RollUpBy { get; internal set; } = new List<string>();
 
         /// <summary>
-        /// Join OrderBy so it can be sent as a comma separated string.
+        /// Join RollUpBy so it can be sent as a comma separated string.
         /// </summary>
         [CodeGenMember("RollUpBy")]
         internal string RollUpByRaw

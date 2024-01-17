@@ -27,9 +27,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of <see cref="Models.MetricsBatchResult"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
         /// <returns> A new <see cref="Models.MetricsBatchResult"/> instance for mocking. </returns>
-        public static MetricsBatchResult MetricsBatchResult(IEnumerable<MetricsBatchResultValues> values = null)
+        public static MetricsBatchResult MetricsBatchResult(IEnumerable<MetricsQueryResult> values = null)
         {
-            values ??= new List<MetricsBatchResultValues>();
+            values ??= new List<MetricsQueryResult>();
 
             return new MetricsBatchResult(values?.ToList());
         }

@@ -161,9 +161,9 @@ namespace Azure.Monitor.Query
                     granularity,
                     aggregations,
                     top,
-                    orderBy,
+                    MetricsBatchExtensions.CommaJoin(orderBy),
                     filter,
-                    rollUpBy,
+                    MetricsBatchExtensions.CommaJoin(rollUpBy),
                     cancellationToken);
             }
 
@@ -179,9 +179,9 @@ namespace Azure.Monitor.Query
                     granularity,
                     aggregations,
                     top,
-                    orderBy,
+                    MetricsBatchExtensions.CommaJoin(orderBy),
                     filter,
-                    rollUpBy,
+                    MetricsBatchExtensions.CommaJoin(rollUpBy),
                     cancellationToken).ConfigureAwait(false);
             }
         }

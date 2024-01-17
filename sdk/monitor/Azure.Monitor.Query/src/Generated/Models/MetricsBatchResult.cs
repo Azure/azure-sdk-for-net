@@ -16,17 +16,14 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of <see cref="MetricsBatchResult"/>. </summary>
         internal MetricsBatchResult()
         {
-            Values = new ChangeTrackingList<MetricsBatchResultValues>();
+            Values = new ChangeTrackingList<MetricsQueryResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsBatchResult"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
-        internal MetricsBatchResult(IReadOnlyList<MetricsBatchResultValues> values)
+        internal MetricsBatchResult(IReadOnlyList<MetricsQueryResult> values)
         {
             Values = values;
         }
-
-        /// <summary> The collection of metric data responses per resource, per metric. </summary>
-        public IReadOnlyList<MetricsBatchResultValues> Values { get; }
     }
 }
