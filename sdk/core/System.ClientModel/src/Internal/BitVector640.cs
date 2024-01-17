@@ -3,6 +3,17 @@
 
 namespace System.ClientModel.Internal;
 
+/// <summary>
+/// This type effectively stores 640 bool values, but compresses their storage
+/// into ten ulongs, where each bit of the ulong represents a single bool value.
+///
+/// It exposes a public indexer so that the bool values can be accessed as a
+/// standard .NET collection API.
+///
+/// It is used in System.ClientModel and Azure.Core to implement response
+/// classifiers, where each true bit represents a status code that the
+/// classifier considers a success code.
+/// </summary>
 internal struct BitVector640
 {
     // Keeping ulongs as fields puts them on the stack.
