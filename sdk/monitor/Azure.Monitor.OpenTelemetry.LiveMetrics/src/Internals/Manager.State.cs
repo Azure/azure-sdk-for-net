@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -22,18 +21,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// </remarks>
     internal partial class Manager
     {
-        private Action _callbackAction = () => { };
+        private Thread? _thread;
 
         private readonly State _state = new();
-
         private TimeSpan _period;
         private bool _shouldCollect = false;
+        private Action _callbackAction = () => { };
         private Func<bool> _evaluateBackoff = () => false;
 
         private readonly TimeSpan _pingPeriod = TimeSpan.FromSeconds(5);
         private readonly TimeSpan _postPeriod = TimeSpan.FromSeconds(1);
         private readonly TimeSpan _backoffPeriod = TimeSpan.FromMinutes(1);
-
         private readonly TimeSpan _maximumPingInterval = TimeSpan.FromSeconds(60);
         private readonly TimeSpan _maximumPostInterval = TimeSpan.FromSeconds(20);
 
@@ -41,6 +39,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         private void InitializeState()
         {
+            _thread = new Thread(() => Run())
+            {
+                Name = "LiveMetrics State Machine",
+                IsBackground = true,
+            };
+
             SetPingState();
             _thread.Start();
         }
@@ -77,12 +81,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _state.Update(LiveMetricsState.Backoff);
             _shouldCollect = false;
-            _callbackAction = BackoffConcluded;
+            _callbackAction = OnBackoffConcluded;
             _period = _backoffPeriod;
             _evaluateBackoff = () => false;
         }
 
-        private void BackoffConcluded()
+        private void OnBackoffConcluded()
         {
             // when the backoff period is concluded, we switch to Ping.
             SetPingState();
@@ -95,13 +99,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// </summary>
         private void Run()
         {
-            while (!_cancellationToken.IsCancellationRequested)
+            while (true)
             {
                 var callbackStarted = DateTimeOffset.UtcNow;
 
                 _callbackAction.Invoke();
 
-                var timeSpentInThisTick = DateTimeOffset.UtcNow - callbackStarted;
+                var timeSpentInThisCallback = DateTimeOffset.UtcNow - callbackStarted;
 
                 TimeSpan nextTick;
 
@@ -115,11 +119,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 else
                 {
                     // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
-                    nextTick = _period - timeSpentInThisTick;
+                    nextTick = _period - timeSpentInThisCallback;
                     nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
                 }
 
-                _thread?.Join(nextTick);
+                _thread!.Join(nextTick);
             }
         }
     }
