@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Net;
 using System.Threading;
 using Azure;
@@ -69,7 +70,8 @@ public class MapsClient
     private HttpMessage CreateGetLocationRequest(string ipAddress, RequestContext context)
     {
         HttpMessage message = _pipeline.CreateMessage();
-        message.Apply(context, new StatusCodeClassifier(stackalloc ushort[] { 200 }));
+        message.Apply(context);
+        message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         Request request = message.Request;
         request.Method = RequestMethod.Get;
