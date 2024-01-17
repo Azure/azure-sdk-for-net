@@ -35,7 +35,7 @@ public class PipelineMessage : IDisposable
 
     public CancellationToken CancellationToken { get; set; }
 
-    public PipelineMessageClassifier? MessageClassifier { get; protected internal set; }
+    public PipelineMessageClassifier? MessageClassifier { get; set; }
 
     public void Apply(RequestOptions options, PipelineMessageClassifier? messageClassifier = default)
     {
