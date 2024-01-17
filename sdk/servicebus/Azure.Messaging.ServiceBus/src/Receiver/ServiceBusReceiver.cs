@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -16,8 +15,6 @@ using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -37,6 +34,9 @@ namespace Azure.Messaging.ServiceBus
     ///</remarks>
     public class ServiceBusReceiver : IAsyncDisposable
     {
+        /// <summary>The maximum number of messages to delete in a single batch.  This cap is established and enforced by the service.</summary>
+        internal const int MaxDeleteMessageCount = 4000;
+
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -447,7 +447,9 @@ namespace Azure.Messaging.ServiceBus
             return null;
         }
 
+        /// <summary>
         /// Fetches a list of active messages without changing the state of the receiver or the message source.
+        /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages that will be fetched.</param>
         /// <param name="fromSequenceNumber">An optional sequence number from where to peek the
@@ -664,6 +666,133 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.AbandonMessageComplete(Identifier, lockToken);
+        }
+
+        /// <summary>
+        /// Deletes all messages from an entity.
+        /// </summary>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <remarks>
+        /// This method may invoke multiple service requests to delete all messages.  As a result, it may exceed the configured <see cref="ServiceBusRetryOptions.TryTimeout"/>.
+        /// If you need control over the amount of time the operation takes, it is recommended that you pass a <paramref name="cancellationToken"/> with the desired timeout set for cancellation.
+        ///
+        /// Because multiple service requests may be made, the possibility of partial success exists.  In this scenario, the method will stop attempting to delete additional messages
+        /// and throw the exception that was encountered.  It is recommended to evaluate this exception and determine which messages may not have been deleted.
+        /// </remarks>
+        /// <returns>The number of messages that were deleted.</returns>
+        public virtual async Task<int> DeleteMessagesAsync(CancellationToken cancellationToken = default)
+        {
+            var deleted = await DeleteMessagesAsync(MaxDeleteMessageCount, DateTimeOffset.UtcNow.AddDays(1), cancellationToken).ConfigureAwait(false);
+
+            if (deleted == MaxDeleteMessageCount)
+            {
+               var batchCount = MaxDeleteMessageCount;
+
+               while (batchCount == MaxDeleteMessageCount)
+               {
+                   batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, DateTimeOffset.UtcNow.AddDays(1), cancellationToken).ConfigureAwait(false);
+                   deleted += batchCount;
+               }
+            }
+
+            return deleted;
+        }
+
+        /// <summary>
+        /// Deletes all message which were enqueued prior to a given <paramref name="beforeEnqueueTimeUtc"/>.
+        /// </summary>
+        /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <remarks>
+        /// This method may invoke multiple service requests to delete all eligible messages.  As a result, it may exceed the configured <see cref="ServiceBusRetryOptions.TryTimeout"/>.
+        /// If you need control over the amount of time the operation takes, it is recommended that you pass a <paramref name="cancellationToken"/> with the desired timeout set for cancellation.
+        ///
+        /// Because multiple service requests may be made, the possibility of partial success exists.  In this scenario, the method will stop attempting to delete additional messages
+        /// and throw the exception that was encountered.  It is recommended to evaluate this exception and determine which messages may not have been deleted.
+        /// </remarks>
+        /// <returns>The number of messages that were deleted.</returns>
+        public virtual async Task<int> DeleteMessagesAsync(
+            DateTimeOffset beforeEnqueueTimeUtc,
+            CancellationToken cancellationToken = default)
+        {
+            var deleted = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTimeUtc, cancellationToken).ConfigureAwait(false);
+
+            if (deleted == MaxDeleteMessageCount)
+            {
+               var batchCount = MaxDeleteMessageCount;
+
+               while (batchCount == MaxDeleteMessageCount)
+               {
+                   batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTimeUtc, cancellationToken).ConfigureAwait(false);
+                   deleted += batchCount;
+               }
+            }
+
+            return deleted;
+        }
+
+        /// <summary>
+        /// Deletes up to <paramref name="messageCount"/> messages from an entity.  The actual number
+        /// of deleted messages may be less if there are fewer eligible messages in the entity.
+        /// </summary>
+        /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The number of messages that were deleted.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
+        /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
+        public virtual Task<int> DeleteMessagesAsync(
+            int messageCount,
+            CancellationToken cancellationToken = default) => DeleteMessagesAsync(messageCount, DateTimeOffset.UtcNow.AddDays(1), cancellationToken);
+
+        /// <summary>
+        /// Deletes up to <paramref name="messageCount"/> messages from the entity. Only messages that
+        /// were enqueued prior to <paramref name="beforeEnqueueTimeUtc"/> will be deleted. The actual number
+        /// of deleted messages may be less if there are fewer eligible messages in the entity.
+        /// </summary>
+        /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.</param>
+        /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The number of messages that were deleted.</returns>\
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
+        /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
+        public virtual async Task<int> DeleteMessagesAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertAtLeast(messageCount, 1, nameof(messageCount));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            Logger.DeleteMessagesStart(Identifier, messageCount, beforeEnqueueTimeUtc);
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
+                DiagnosticProperty.DeleteActivityName,
+                ActivityKind.Client,
+                MessagingDiagnosticOperation.Settle);
+
+            scope.Start();
+
+            int numMessagesDeleted;
+            try
+            {
+                numMessagesDeleted = await InnerReceiver.DeleteMessagesAsync(messageCount, beforeEnqueueTimeUtc, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                Logger.DeleteMessagesException(Identifier, exception.ToString());
+                scope.Failed(exception);
+                throw;
+            }
+
+            Logger.DeleteMessagesComplete(Identifier, numMessagesDeleted);
+            return numMessagesDeleted;
         }
 
         /// <summary>
