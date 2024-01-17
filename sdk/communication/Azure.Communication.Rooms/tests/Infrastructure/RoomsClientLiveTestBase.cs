@@ -116,7 +116,7 @@ namespace Azure.Communication.Rooms.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
         private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version)
         {

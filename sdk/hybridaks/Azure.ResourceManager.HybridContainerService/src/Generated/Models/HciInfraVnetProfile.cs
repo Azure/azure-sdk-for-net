@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Infra network profile for HCI platform. </summary>
+    /// <summary> Infrastructure network profile for HCI platform. </summary>
     public partial class HciInfraVnetProfile
     {
         /// <summary> Initializes a new instance of <see cref="HciInfraVnetProfile"/>. </summary>
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciInfraVnetProfile"/>. </summary>
-        /// <param name="mocGroup"> Resource group in MOC(Microsoft On-premises Cloud). </param>
+        /// <param name="mocGroup"> Group in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocVnetName"> Virtual Network name in MOC(Microsoft On-premises Cloud). </param>
         internal HciInfraVnetProfile(string mocGroup, string mocLocation, string mocVnetName)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             MocVnetName = mocVnetName;
         }
 
-        /// <summary> Resource group in MOC(Microsoft On-premises Cloud). </summary>
+        /// <summary> Group in MOC(Microsoft On-premises Cloud). </summary>
         public string MocGroup { get; set; }
         /// <summary> Location in MOC(Microsoft On-premises Cloud). </summary>
         public string MocLocation { get; set; }
