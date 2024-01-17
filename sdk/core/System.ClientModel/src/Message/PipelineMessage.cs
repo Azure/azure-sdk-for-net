@@ -43,8 +43,8 @@ public class PipelineMessage : IDisposable
 
     /// <summary>
     /// Gets or sets the message classifier used by the client pipeline to
-    /// determine whether the service responded with an error response, and
-    /// populate the PipelineMessage.Response.IsError property.
+    /// determine whether the response from the service should be considered
+    /// an error, and populate the PipelineMessage.Response.IsError property.
     ///
     /// It is expected that this property will be set once in the client's
     /// service method with a classifier created from the service API's
