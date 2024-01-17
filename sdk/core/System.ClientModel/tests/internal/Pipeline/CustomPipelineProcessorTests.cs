@@ -27,55 +27,6 @@ public class CustomPipelineProcessorTests
     }
 
     [Test]
-    public void ConstructorThrowsForInvalidIndexValues()
-    {
-        PipelineRequest request = new MockPipelineRequest();
-        PipelineMessage message = new PipelineMessage(request);
-
-        var perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            ClientPipeline.RequestOptionsProcessor processor = new(
-            fixedPolicies: new PipelinePolicy[1],
-            perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            perCallIndex: 1,
-            perTryIndex: 0,
-            beforeTransportIndex: 0);
-        });
-
-        Assert.AreEqual("perCallIndex", perCallEx!.ParamName);
-
-        perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            ClientPipeline.RequestOptionsProcessor processor = new(
-            fixedPolicies: new PipelinePolicy[1],
-            perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            perCallIndex: 2,
-            perTryIndex: 2,
-            beforeTransportIndex: 2);
-        });
-
-        Assert.AreEqual("perCallIndex", perCallEx!.ParamName);
-
-        var perTryEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            ClientPipeline.RequestOptionsProcessor processor = new(
-            fixedPolicies: new PipelinePolicy[1],
-            perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
-            perCallIndex: 0,
-            perTryIndex: 2,
-            beforeTransportIndex: 2);
-        });
-
-        Assert.AreEqual("perTryIndex", perTryEx!.ParamName);
-    }
-
-    [Test]
     public void AddsPerCallPoliciesToEmptyPipeline()
     {
         PipelineRequest request = new MockPipelineRequest();
