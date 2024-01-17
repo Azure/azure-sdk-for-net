@@ -26,7 +26,6 @@ namespace Azure.Communication.PhoneNumbers
         private const string ReleasePhoneNumberValue = "releasePhoneNumber";
         private const string SearchValue = "search";
         private const string UpdatePhoneNumberCapabilitiesValue = "updatePhoneNumberCapabilities";
-
         private const string ReservationPurchaseValue = "reservationPurchase";
 
         /// <summary> purchase. </summary>

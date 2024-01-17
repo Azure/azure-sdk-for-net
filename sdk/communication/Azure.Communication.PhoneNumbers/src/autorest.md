@@ -32,6 +32,14 @@ directive:
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
 ```
+### Change naming of Error to ErrorMessage
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.PhoneNumberSearchResult.properties.error"
+  transform: >
+    $["x-ms-enum"].name = "ErrorMessage";
+```
 
 ``` yaml
 directive:
@@ -43,35 +51,4 @@ directive:
   - remove-model: PhoneNumbersBrowseResult
   - remove-model: PhoneNumberBrowseCapabilitiesRequest
   - remove-model: PhoneNumbersReservationPurchaseRequest
-```
-
-<!-- ``` yaml
-directive:
-  # Rename model named MyModel to NewModel
-  - rename-model:
-      from: Error
-      to: PhoneNumberError
-``` -->
-
-
-### Removed Property error from PhoneNumberSearchResult
-``` yaml
-directive:
-  where-model: PhoneNumberSearchResult
-  remove-property: error
-```
-
-### Removed Property errorCode from PhoneNumberSearchResult
-``` yaml
-directive:
-  where-model: PhoneNumberSearchResult
-  remove-property: errorCode
-```
-
-
-### Removed Property phoneNumberSource from PurchasedPhoneNumber
-``` yaml
-directive:
-  where-model: PurchasedPhoneNumber
-  remove-property: phoneNumberSource
 ```

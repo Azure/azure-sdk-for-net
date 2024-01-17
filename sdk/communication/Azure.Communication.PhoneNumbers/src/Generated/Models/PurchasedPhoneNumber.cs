@@ -52,7 +52,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <param name="operatorId"> Id of the operator that provided the number. </param>
         /// <param name="operatorName"> Name of the operator that provided the number. </param>
-        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost, string operatorId, string operatorName)
+        /// <param name="phoneNumberSource"> Source of the number, e.g. Cloud or OperatorConnect. </param>
+        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost, string operatorId, string operatorName, PhoneNumberSource? phoneNumberSource)
         {
             Id = id;
             PhoneNumber = phoneNumber;
@@ -64,6 +65,7 @@ namespace Azure.Communication.PhoneNumbers
             Cost = cost;
             OperatorId = operatorId;
             OperatorName = operatorName;
+            PhoneNumberSource = phoneNumberSource;
         }
 
         /// <summary> The id of the phone number, e.g. 11234567890. </summary>
@@ -86,5 +88,7 @@ namespace Azure.Communication.PhoneNumbers
         public string OperatorId { get; }
         /// <summary> Name of the operator that provided the number. </summary>
         public string OperatorName { get; }
+        /// <summary> Source of the number, e.g. Cloud or OperatorConnect. </summary>
+        public PhoneNumberSource? PhoneNumberSource { get; }
     }
 }

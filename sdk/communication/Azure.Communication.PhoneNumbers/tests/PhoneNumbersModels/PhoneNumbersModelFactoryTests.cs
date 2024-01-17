@@ -74,8 +74,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var phoneNumbers = new List<string> { "+12065551234", "+12065551235" };
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityType.Inbound, PhoneNumberCapabilityType.Inbound);
             var cost = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
+            var error = ErrorMessage.NoError;
 
-            var result = PhoneNumbersModelFactory.PhoneNumberSearchResult("search1", phoneNumbers, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost, DateTimeOffset.Now);
+            var result = PhoneNumbersModelFactory.PhoneNumberSearchResult("search1", phoneNumbers, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost, DateTimeOffset.Now, 0, error);
             Assert.IsNotNull(result);
             Assert.AreEqual("search1", result.SearchId);
             Assert.AreEqual(phoneNumbers, result.PhoneNumbers);
@@ -83,6 +84,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(PhoneNumberAssignmentType.Application, result.AssignmentType);
             Assert.AreEqual(capabilities, result.Capabilities);
             Assert.AreEqual(cost, result.Cost);
+            Assert.AreEqual(0, result.ErrorCode);
+            Assert.AreEqual(error, result.Error);
         }
     }
 }

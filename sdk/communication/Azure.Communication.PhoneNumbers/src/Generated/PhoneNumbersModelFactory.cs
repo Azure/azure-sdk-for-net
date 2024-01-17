@@ -96,6 +96,24 @@ namespace Azure.Communication.PhoneNumbers
             return new PhoneNumberCost(amount, isoCurrencySymbol, billingFrequency);
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberSearchResult"/>. </summary>
+        /// <param name="searchId"> The search id. </param>
+        /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
+        /// <param name="assignmentType"> Phone number's assignment type. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
+        /// <param name="errorCode"> The error code of the search. </param>
+        /// <param name="error"> Mapping Error Messages to Codes. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberSearchResult"/> instance for mocking. </returns>
+        public static PhoneNumberSearchResult PhoneNumberSearchResult(string searchId = null, IEnumerable<string> phoneNumbers = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberCost cost = null, DateTimeOffset searchExpiresOn = default, int? errorCode = null, ErrorMessage? error = null)
+        {
+            phoneNumbers ??= new List<string>();
+
+            return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
+        }
+
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PurchasedPhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
@@ -107,10 +125,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <param name="operatorId"> Id of the operator that provided the number. </param>
         /// <param name="operatorName"> Name of the operator that provided the number. </param>
+        /// <param name="phoneNumberSource"> Source of the number, e.g. Cloud or OperatorConnect. </param>
         /// <returns> A new <see cref="PhoneNumbers.PurchasedPhoneNumber"/> instance for mocking. </returns>
-        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null, string operatorId = null, string operatorName = null)
+        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null, string operatorId = null, string operatorName = null, PhoneNumberSource? phoneNumberSource = null)
         {
-            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId, operatorName);
+            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId, operatorName, phoneNumberSource);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformationResult"/>. </summary>
