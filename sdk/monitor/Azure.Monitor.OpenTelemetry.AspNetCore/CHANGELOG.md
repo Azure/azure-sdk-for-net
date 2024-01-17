@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+- Updated this package to include package references to the now stable versions of `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http`.
+  This removes the need for internal vendoring of these packages. 
+  ([]())
+
 ## 1.0.0 (2023-11-29)
 
 ### Other Changes
