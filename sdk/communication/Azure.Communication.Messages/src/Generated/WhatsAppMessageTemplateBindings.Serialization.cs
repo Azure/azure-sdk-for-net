@@ -15,41 +15,41 @@ namespace Azure.Communication.Messages.Models.Channels
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(HeaderInternal))
+            if (Optional.IsCollectionDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStartArray();
-                foreach (var item in HeaderInternal)
+                foreach (var item in Header)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BodyInternal))
+            if (Optional.IsCollectionDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStartArray();
-                foreach (var item in BodyInternal)
+                foreach (var item in Body)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FooterInternal))
+            if (Optional.IsCollectionDefined(Footer))
             {
                 writer.WritePropertyName("footer"u8);
                 writer.WriteStartArray();
-                foreach (var item in FooterInternal)
+                foreach (var item in Footer)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ButtonsInternal))
+            if (Optional.IsCollectionDefined(Buttons))
             {
                 writer.WritePropertyName("buttons"u8);
                 writer.WriteStartArray();
-                foreach (var item in ButtonsInternal)
+                foreach (var item in Buttons)
                 {
                     writer.WriteObjectValue(item);
                 }

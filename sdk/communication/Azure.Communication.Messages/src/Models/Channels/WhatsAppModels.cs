@@ -9,6 +9,9 @@ namespace Azure.Communication.Messages.Models.Channels
     [CodeGenModel("WhatsAppMessageButtonSubType")]
     public partial struct WhatsAppMessageButtonSubType { }
 
+    [CodeGenModel("WhatsAppMessageTemplateBindings")]
+    public partial class WhatsAppMessageTemplateBindings { }
+
     [CodeGenModel("WhatsAppMessageTemplateBindingsButton")]
     public partial class WhatsAppMessageTemplateBindingsButton { }
 
