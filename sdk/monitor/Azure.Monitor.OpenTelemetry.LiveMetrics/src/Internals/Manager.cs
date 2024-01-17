@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
