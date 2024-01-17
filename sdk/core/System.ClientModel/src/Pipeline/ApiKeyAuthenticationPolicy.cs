@@ -102,6 +102,7 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
     private void SetHeader(PipelineMessage message)
     {
         _credential.Deconstruct(out string key);
+
         message.Request.Headers.Set(_name, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
     }
 
