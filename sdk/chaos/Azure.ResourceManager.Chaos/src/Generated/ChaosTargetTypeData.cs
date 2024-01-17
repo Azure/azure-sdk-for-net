@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing the ChaosTargetType data model.
     /// Model that represents a Target Type resource.
-    /// Serialized Name: TargetType
     /// </summary>
     public partial class ChaosTargetTypeData : ResourceData
     {
@@ -62,26 +61,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Location of the Target Type resource.
-        /// Serialized Name: TargetType.location
-        /// </param>
-        /// <param name="displayName">
-        /// Localized string of the display name.
-        /// Serialized Name: TargetType.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Localized string of the description.
-        /// Serialized Name: TargetType.properties.description
-        /// </param>
-        /// <param name="propertiesSchema">
-        /// URL to retrieve JSON schema of the Target Type properties.
-        /// Serialized Name: TargetType.properties.propertiesSchema
-        /// </param>
-        /// <param name="resourceTypes">
-        /// List of resource types this Target Type can extend.
-        /// Serialized Name: TargetType.properties.resourceTypes
-        /// </param>
+        /// <param name="location"> Location of the Target Type resource. </param>
+        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="propertiesSchema"> URL to retrieve JSON schema of the Target Type properties. </param>
+        /// <param name="resourceTypes"> List of resource types this Target Type can extend. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosTargetTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayName, string description, string propertiesSchema, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -93,30 +77,15 @@ namespace Azure.ResourceManager.Chaos
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Location of the Target Type resource.
-        /// Serialized Name: TargetType.location
-        /// </summary>
+        /// <summary> Location of the Target Type resource. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// Localized string of the display name.
-        /// Serialized Name: TargetType.properties.displayName
-        /// </summary>
+        /// <summary> Localized string of the display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Localized string of the description.
-        /// Serialized Name: TargetType.properties.description
-        /// </summary>
+        /// <summary> Localized string of the description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// URL to retrieve JSON schema of the Target Type properties.
-        /// Serialized Name: TargetType.properties.propertiesSchema
-        /// </summary>
+        /// <summary> URL to retrieve JSON schema of the Target Type properties. </summary>
         public string PropertiesSchema { get; }
-        /// <summary>
-        /// List of resource types this Target Type can extend.
-        /// Serialized Name: TargetType.properties.resourceTypes
-        /// </summary>
+        /// <summary> List of resource types this Target Type can extend. </summary>
         public IReadOnlyList<string> ResourceTypes { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Enum of the selector type.
-    /// Serialized Name: SelectorType
-    /// </summary>
+    /// <summary> Enum of the selector type. </summary>
     internal readonly partial struct SelectorType : IEquatable<SelectorType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string ListValue = "List";
         private const string QueryValue = "Query";
 
-        /// <summary>
-        /// List
-        /// Serialized Name: SelectorType.List
-        /// </summary>
+        /// <summary> List. </summary>
         public static SelectorType List { get; } = new SelectorType(ListValue);
-        /// <summary>
-        /// Query
-        /// Serialized Name: SelectorType.Query
-        /// </summary>
+        /// <summary> Query. </summary>
         public static SelectorType Query { get; } = new SelectorType(QueryValue);
         /// <summary> Determines if two <see cref="SelectorType"/> values are the same. </summary>
         public static bool operator ==(SelectorType left, SelectorType right) => left.Equals(right);

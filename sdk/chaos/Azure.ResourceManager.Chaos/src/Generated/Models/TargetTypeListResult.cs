@@ -12,10 +12,7 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents a list of Target Type resources and a link for pagination.
-    /// Serialized Name: TargetTypeListResult
-    /// </summary>
+    /// <summary> Model that represents a list of Target Type resources and a link for pagination. </summary>
     internal partial class TargetTypeListResult
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/>. </summary>
-        /// <param name="value">
-        /// List of Target Type resources.
-        /// Serialized Name: TargetTypeListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to retrieve the next page of Target Type resources.
-        /// Serialized Name: TargetTypeListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of Target Type resources. </param>
+        /// <param name="nextLink"> URL to retrieve the next page of Target Type resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TargetTypeListResult(IReadOnlyList<ChaosTargetTypeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Target Type resources.
-        /// Serialized Name: TargetTypeListResult.value
-        /// </summary>
+        /// <summary> List of Target Type resources. </summary>
         public IReadOnlyList<ChaosTargetTypeData> Value { get; }
-        /// <summary>
-        /// URL to retrieve the next page of Target Type resources.
-        /// Serialized Name: TargetTypeListResult.nextLink
-        /// </summary>
+        /// <summary> URL to retrieve the next page of Target Type resources. </summary>
         public string NextLink { get; }
     }
 }

@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing the ChaosExperiment data model.
     /// Model that represents a Experiment resource.
-    /// Serialized Name: Experiment
     /// </summary>
     public partial class ChaosExperimentData : TrackedResourceData
     {
@@ -55,13 +54,9 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="steps">
-        /// List of steps.
-        /// Serialized Name: Experiment.properties.steps
-        /// </param>
+        /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
         /// List of selectors.
-        /// Serialized Name: Experiment.properties.selectors
         /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </param>
@@ -82,21 +77,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity of the experiment resource.
-        /// Serialized Name: Experiment.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </param>
-        /// <param name="provisioningState">
-        /// Most recent provisioning state for the given experiment resource.
-        /// Serialized Name: Experiment.properties.provisioningState
-        /// </param>
-        /// <param name="steps">
-        /// List of steps.
-        /// Serialized Name: Experiment.properties.steps
-        /// </param>
+        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
+        /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
         /// List of selectors.
-        /// Serialized Name: Experiment.properties.selectors
         /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </param>
@@ -115,24 +100,14 @@ namespace Azure.ResourceManager.Chaos
         {
         }
 
-        /// <summary>
-        /// The identity of the experiment resource.
-        /// Serialized Name: Experiment.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </summary>
+        /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Most recent provisioning state for the given experiment resource.
-        /// Serialized Name: Experiment.properties.provisioningState
-        /// </summary>
+        /// <summary> Most recent provisioning state for the given experiment resource. </summary>
         public ChaosProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// List of steps.
-        /// Serialized Name: Experiment.properties.steps
-        /// </summary>
+        /// <summary> List of steps. </summary>
         public IList<ChaosExperimentStep> Steps { get; }
         /// <summary>
         /// List of selectors.
-        /// Serialized Name: Experiment.properties.selectors
         /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </summary>

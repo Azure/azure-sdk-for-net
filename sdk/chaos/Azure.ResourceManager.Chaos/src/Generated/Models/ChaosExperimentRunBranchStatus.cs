@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents the a list of actions and action statuses.
-    /// Serialized Name: BranchStatus
-    /// </summary>
+    /// <summary> Model that represents the a list of actions and action statuses. </summary>
     public partial class ChaosExperimentRunBranchStatus
     {
         /// <summary>
@@ -56,22 +53,10 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunBranchStatus"/>. </summary>
-        /// <param name="branchName">
-        /// The name of the branch status.
-        /// Serialized Name: BranchStatus.branchName
-        /// </param>
-        /// <param name="branchId">
-        /// The id of the branch status.
-        /// Serialized Name: BranchStatus.branchId
-        /// </param>
-        /// <param name="status">
-        /// The status of the branch.
-        /// Serialized Name: BranchStatus.status
-        /// </param>
-        /// <param name="actions">
-        /// The array of actions.
-        /// Serialized Name: BranchStatus.actions
-        /// </param>
+        /// <param name="branchName"> The name of the branch status. </param>
+        /// <param name="branchId"> The id of the branch status. </param>
+        /// <param name="status"> The status of the branch. </param>
+        /// <param name="actions"> The array of actions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentRunBranchStatus(string branchName, string branchId, string status, IReadOnlyList<ChaosExperimentRunActionStatus> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,25 +67,13 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the branch status.
-        /// Serialized Name: BranchStatus.branchName
-        /// </summary>
+        /// <summary> The name of the branch status. </summary>
         public string BranchName { get; }
-        /// <summary>
-        /// The id of the branch status.
-        /// Serialized Name: BranchStatus.branchId
-        /// </summary>
+        /// <summary> The id of the branch status. </summary>
         public string BranchId { get; }
-        /// <summary>
-        /// The status of the branch.
-        /// Serialized Name: BranchStatus.status
-        /// </summary>
+        /// <summary> The status of the branch. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The array of actions.
-        /// Serialized Name: BranchStatus.actions
-        /// </summary>
+        /// <summary> The array of actions. </summary>
         public IReadOnlyList<ChaosExperimentRunActionStatus> Actions { get; }
     }
 }

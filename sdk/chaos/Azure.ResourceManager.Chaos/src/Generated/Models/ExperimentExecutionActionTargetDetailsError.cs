@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents the Experiment action target details error model.
-    /// Serialized Name: ExperimentExecutionActionTargetDetailsError
-    /// </summary>
+    /// <summary> Model that represents the Experiment action target details error model. </summary>
     public partial class ExperimentExecutionActionTargetDetailsError
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsError"/>. </summary>
-        /// <param name="code">
-        /// The error code.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsError.code
-        /// </param>
-        /// <param name="message">
-        /// The error message
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsError.message
-        /// </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExperimentExecutionActionTargetDetailsError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The error code.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsError.code
-        /// </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; }
-        /// <summary>
-        /// The error message
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsError.message
-        /// </summary>
+        /// <summary> The error message. </summary>
         public string Message { get; }
     }
 }

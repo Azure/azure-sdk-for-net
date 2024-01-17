@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents a reference to a Target in the selector.
-    /// Serialized Name: TargetReference
-    /// </summary>
+    /// <summary> Model that represents a reference to a Target in the selector. </summary>
     public partial class ChaosTargetReference
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.Chaos.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetReference"/>. </summary>
-        /// <param name="referenceType">
-        /// Enum of the Target reference type.
-        /// Serialized Name: TargetReference.type
-        /// </param>
-        /// <param name="id">
-        /// String of the resource ID of a Target resource.
-        /// Serialized Name: TargetReference.id
-        /// </param>
+        /// <param name="referenceType"> Enum of the Target reference type. </param>
+        /// <param name="id"> String of the resource ID of a Target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ChaosTargetReference(ChaosTargetReferenceType referenceType, ResourceIdentifier id)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetReference"/>. </summary>
-        /// <param name="referenceType">
-        /// Enum of the Target reference type.
-        /// Serialized Name: TargetReference.type
-        /// </param>
-        /// <param name="id">
-        /// String of the resource ID of a Target resource.
-        /// Serialized Name: TargetReference.id
-        /// </param>
+        /// <param name="referenceType"> Enum of the Target reference type. </param>
+        /// <param name="id"> String of the resource ID of a Target resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosTargetReference(ChaosTargetReferenceType referenceType, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,15 +74,9 @@ namespace Azure.ResourceManager.Chaos.Models
         {
         }
 
-        /// <summary>
-        /// Enum of the Target reference type.
-        /// Serialized Name: TargetReference.type
-        /// </summary>
+        /// <summary> Enum of the Target reference type. </summary>
         public ChaosTargetReferenceType ReferenceType { get; set; }
-        /// <summary>
-        /// String of the resource ID of a Target resource.
-        /// Serialized Name: TargetReference.id
-        /// </summary>
+        /// <summary> String of the resource ID of a Target resource. </summary>
         public ResourceIdentifier Id { get; set; }
     }
 }

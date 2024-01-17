@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents a step in the Experiment resource.
-    /// Serialized Name: ChaosExperimentStep
-    /// </summary>
+    /// <summary> Model that represents a step in the Experiment resource. </summary>
     public partial class ChaosExperimentStep
     {
         /// <summary>
@@ -51,14 +48,8 @@ namespace Azure.ResourceManager.Chaos.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentStep"/>. </summary>
-        /// <param name="name">
-        /// String of the step name.
-        /// Serialized Name: ChaosExperimentStep.name
-        /// </param>
-        /// <param name="branches">
-        /// List of branches.
-        /// Serialized Name: ChaosExperimentStep.branches
-        /// </param>
+        /// <param name="name"> String of the step name. </param>
+        /// <param name="branches"> List of branches. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="branches"/> is null. </exception>
         public ChaosExperimentStep(string name, IEnumerable<ChaosExperimentBranch> branches)
         {
@@ -70,14 +61,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentStep"/>. </summary>
-        /// <param name="name">
-        /// String of the step name.
-        /// Serialized Name: ChaosExperimentStep.name
-        /// </param>
-        /// <param name="branches">
-        /// List of branches.
-        /// Serialized Name: ChaosExperimentStep.branches
-        /// </param>
+        /// <param name="name"> String of the step name. </param>
+        /// <param name="branches"> List of branches. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentStep(string name, IList<ChaosExperimentBranch> branches, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,15 +76,9 @@ namespace Azure.ResourceManager.Chaos.Models
         {
         }
 
-        /// <summary>
-        /// String of the step name.
-        /// Serialized Name: ChaosExperimentStep.name
-        /// </summary>
+        /// <summary> String of the step name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// List of branches.
-        /// Serialized Name: ChaosExperimentStep.branches
-        /// </summary>
+        /// <summary> List of branches. </summary>
         public IList<ChaosExperimentBranch> Branches { get; }
     }
 }

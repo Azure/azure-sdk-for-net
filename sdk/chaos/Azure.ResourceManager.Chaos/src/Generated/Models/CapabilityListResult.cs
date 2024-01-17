@@ -12,10 +12,7 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents a list of Capability resources and a link for pagination.
-    /// Serialized Name: CapabilityListResult
-    /// </summary>
+    /// <summary> Model that represents a list of Capability resources and a link for pagination. </summary>
     internal partial class CapabilityListResult
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilityListResult"/>. </summary>
-        /// <param name="value">
-        /// List of Capability resources.
-        /// Serialized Name: CapabilityListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to retrieve the next page of Capability resources.
-        /// Serialized Name: CapabilityListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of Capability resources. </param>
+        /// <param name="nextLink"> URL to retrieve the next page of Capability resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CapabilityListResult(IReadOnlyList<ChaosCapabilityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Capability resources.
-        /// Serialized Name: CapabilityListResult.value
-        /// </summary>
+        /// <summary> List of Capability resources. </summary>
         public IReadOnlyList<ChaosCapabilityData> Value { get; }
-        /// <summary>
-        /// URL to retrieve the next page of Capability resources.
-        /// Serialized Name: CapabilityListResult.nextLink
-        /// </summary>
+        /// <summary> URL to retrieve the next page of Capability resources. </summary>
         public string NextLink { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Runtime properties of this Capability Type.
-    /// Serialized Name: CapabilityTypePropertiesRuntimeProperties
-    /// </summary>
+    /// <summary> Runtime properties of this Capability Type. </summary>
     internal partial class ChaosCapabilityTypeRuntimeProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeRuntimeProperties"/>. </summary>
-        /// <param name="kind">
-        /// String of the kind of the resource's action type (continuous or discrete).
-        /// Serialized Name: CapabilityTypePropertiesRuntimeProperties.kind
-        /// </param>
+        /// <param name="kind"> String of the kind of the resource's action type (continuous or discrete). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosCapabilityTypeRuntimeProperties(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// String of the kind of the resource's action type (continuous or discrete).
-        /// Serialized Name: CapabilityTypePropertiesRuntimeProperties.kind
-        /// </summary>
+        /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string Kind { get; }
     }
 }

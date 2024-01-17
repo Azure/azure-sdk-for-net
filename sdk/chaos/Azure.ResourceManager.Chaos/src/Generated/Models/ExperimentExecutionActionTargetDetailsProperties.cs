@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents the Experiment action target details properties model.
-    /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties
-    /// </summary>
+    /// <summary> Model that represents the Experiment action target details properties model. </summary>
     public partial class ExperimentExecutionActionTargetDetailsProperties
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
-        /// <param name="status">
-        /// The status of the execution.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.status
-        /// </param>
-        /// <param name="target">
-        /// The target for the action.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.target
-        /// </param>
-        /// <param name="targetFailedOn">
-        /// String that represents the failed date time.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetFailedTime
-        /// </param>
-        /// <param name="targetCompletedOn">
-        /// String that represents the completed date time.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetCompletedTime
-        /// </param>
-        /// <param name="error">
-        /// The error of the action.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.error
-        /// </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="target"> The target for the action. </param>
+        /// <param name="targetFailedOn"> String that represents the failed date time. </param>
+        /// <param name="targetCompletedOn"> String that represents the completed date time. </param>
+        /// <param name="error"> The error of the action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExperimentExecutionActionTargetDetailsProperties(string status, string target, DateTimeOffset? targetFailedOn, DateTimeOffset? targetCompletedOn, ExperimentExecutionActionTargetDetailsError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The status of the execution.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.status
-        /// </summary>
+        /// <summary> The status of the execution. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The target for the action.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.target
-        /// </summary>
+        /// <summary> The target for the action. </summary>
         public string Target { get; }
-        /// <summary>
-        /// String that represents the failed date time.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetFailedTime
-        /// </summary>
+        /// <summary> String that represents the failed date time. </summary>
         public DateTimeOffset? TargetFailedOn { get; }
-        /// <summary>
-        /// String that represents the completed date time.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetCompletedTime
-        /// </summary>
+        /// <summary> String that represents the completed date time. </summary>
         public DateTimeOffset? TargetCompletedOn { get; }
-        /// <summary>
-        /// The error of the action.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.error
-        /// </summary>
+        /// <summary> The error of the action. </summary>
         public ExperimentExecutionActionTargetDetailsError Error { get; }
     }
 }

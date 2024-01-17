@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing the ChaosExperimentExecution data model.
     /// Model that represents the execution of a Experiment.
-    /// Serialized Name: ExperimentExecution
     /// </summary>
     public partial class ChaosExperimentExecutionData : ResourceData
     {
@@ -61,18 +60,9 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status">
-        /// The status of the execution.
-        /// Serialized Name: ExperimentExecution.properties.status
-        /// </param>
-        /// <param name="startedOn">
-        /// String that represents the start date time.
-        /// Serialized Name: ExperimentExecution.properties.startedAt
-        /// </param>
-        /// <param name="stoppedOn">
-        /// String that represents the stop date time.
-        /// Serialized Name: ExperimentExecution.properties.stoppedAt
-        /// </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -82,20 +72,11 @@ namespace Azure.ResourceManager.Chaos
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The status of the execution.
-        /// Serialized Name: ExperimentExecution.properties.status
-        /// </summary>
+        /// <summary> The status of the execution. </summary>
         public string Status { get; }
-        /// <summary>
-        /// String that represents the start date time.
-        /// Serialized Name: ExperimentExecution.properties.startedAt
-        /// </summary>
+        /// <summary> String that represents the start date time. </summary>
         public DateTimeOffset? StartedOn { get; }
-        /// <summary>
-        /// String that represents the stop date time.
-        /// Serialized Name: ExperimentExecution.properties.stoppedAt
-        /// </summary>
+        /// <summary> String that represents the stop date time. </summary>
         public DateTimeOffset? StoppedOn { get; }
     }
 }

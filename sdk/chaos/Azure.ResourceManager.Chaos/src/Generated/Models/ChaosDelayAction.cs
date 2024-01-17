@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents a delay action.
-    /// Serialized Name: DelayAction
-    /// </summary>
+    /// <summary> Model that represents a delay action. </summary>
     public partial class ChaosDelayAction : ChaosExperimentAction
     {
         /// <summary> Initializes a new instance of <see cref="ChaosDelayAction"/>. </summary>
-        /// <param name="name">
-        /// String that represents a Capability URN.
-        /// Serialized Name: ChaosExperimentAction.name
-        /// </param>
-        /// <param name="duration">
-        /// ISO8601 formatted string that represents a duration.
-        /// Serialized Name: DelayAction.duration
-        /// </param>
+        /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ChaosDelayAction(string name, TimeSpan duration) : base(name)
         {
@@ -36,19 +27,10 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosDelayAction"/>. </summary>
-        /// <param name="actionType">
-        /// Enum that discriminates between action models.
-        /// Serialized Name: ChaosExperimentAction.type
-        /// </param>
-        /// <param name="name">
-        /// String that represents a Capability URN.
-        /// Serialized Name: ChaosExperimentAction.name
-        /// </param>
+        /// <param name="actionType"> Enum that discriminates between action models. </param>
+        /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="duration">
-        /// ISO8601 formatted string that represents a duration.
-        /// Serialized Name: DelayAction.duration
-        /// </param>
+        /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         internal ChaosDelayAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration) : base(actionType, name, serializedAdditionalRawData)
         {
             Duration = duration;
@@ -60,10 +42,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
         }
 
-        /// <summary>
-        /// ISO8601 formatted string that represents a duration.
-        /// Serialized Name: DelayAction.duration
-        /// </summary>
+        /// <summary> ISO8601 formatted string that represents a duration. </summary>
         public TimeSpan Duration { get; set; }
     }
 }

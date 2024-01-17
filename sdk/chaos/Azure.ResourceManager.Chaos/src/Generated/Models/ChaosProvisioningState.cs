@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Current provisioning state for a given Azure Chaos resource.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Current provisioning state for a given Azure Chaos resource. </summary>
     public readonly partial struct ChaosProvisioningState : IEquatable<ChaosProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ChaosProvisioningState Succeeded { get; } = new ChaosProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ChaosProvisioningState Failed { get; } = new ChaosProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ChaosProvisioningState Canceled { get; } = new ChaosProvisioningState(CanceledValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static ChaosProvisioningState Creating { get; } = new ChaosProvisioningState(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static ChaosProvisioningState Updating { get; } = new ChaosProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static ChaosProvisioningState Deleting { get; } = new ChaosProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ChaosProvisioningState left, ChaosProvisioningState right) => left.Equals(right);

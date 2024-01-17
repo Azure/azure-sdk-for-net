@@ -10,24 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// The UnknownChaosTargetSelector.
-    /// Serialized Name: UnknownChaosTargetSelector
-    /// </summary>
+    /// <summary> The UnknownChaosTargetSelector. </summary>
     internal partial class UnknownChaosTargetSelector : ChaosTargetSelector
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetSelector"/>. </summary>
-        /// <param name="selectorType">
-        /// Enum of the selector type.
-        /// Serialized Name: ChaosTargetSelector.type
-        /// </param>
-        /// <param name="id">
-        /// String of the selector ID.
-        /// Serialized Name: ChaosTargetSelector.id
-        /// </param>
+        /// <param name="selectorType"> Enum of the selector type. </param>
+        /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter">
         /// Model that represents available filter types that can be applied to a targets list.
-        /// Serialized Name: ChaosTargetSelector.filter
         /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetSimpleFilter"/>.
         /// </param>

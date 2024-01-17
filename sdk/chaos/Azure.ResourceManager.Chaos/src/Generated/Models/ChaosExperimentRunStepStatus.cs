@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents the a list of branches and branch statuses.
-    /// Serialized Name: StepStatus
-    /// </summary>
+    /// <summary> Model that represents the a list of branches and branch statuses. </summary>
     public partial class ChaosExperimentRunStepStatus
     {
         /// <summary>
@@ -56,22 +53,10 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunStepStatus"/>. </summary>
-        /// <param name="stepName">
-        /// The name of the step.
-        /// Serialized Name: StepStatus.stepName
-        /// </param>
-        /// <param name="stepId">
-        /// The id of the step.
-        /// Serialized Name: StepStatus.stepId
-        /// </param>
-        /// <param name="status">
-        /// The value of the status of the step.
-        /// Serialized Name: StepStatus.status
-        /// </param>
-        /// <param name="branches">
-        /// The array of branches.
-        /// Serialized Name: StepStatus.branches
-        /// </param>
+        /// <param name="stepName"> The name of the step. </param>
+        /// <param name="stepId"> The id of the step. </param>
+        /// <param name="status"> The value of the status of the step. </param>
+        /// <param name="branches"> The array of branches. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentRunStepStatus(string stepName, string stepId, string status, IReadOnlyList<ChaosExperimentRunBranchStatus> branches, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,25 +67,13 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the step.
-        /// Serialized Name: StepStatus.stepName
-        /// </summary>
+        /// <summary> The name of the step. </summary>
         public string StepName { get; }
-        /// <summary>
-        /// The id of the step.
-        /// Serialized Name: StepStatus.stepId
-        /// </summary>
+        /// <summary> The id of the step. </summary>
         public string StepId { get; }
-        /// <summary>
-        /// The value of the status of the step.
-        /// Serialized Name: StepStatus.status
-        /// </summary>
+        /// <summary> The value of the status of the step. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The array of branches.
-        /// Serialized Name: StepStatus.branches
-        /// </summary>
+        /// <summary> The array of branches. </summary>
         public IReadOnlyList<ChaosExperimentRunBranchStatus> Branches { get; }
     }
 }

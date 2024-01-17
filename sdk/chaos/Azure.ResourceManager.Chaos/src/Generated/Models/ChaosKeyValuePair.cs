@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// A map to describe the settings of an action.
-    /// Serialized Name: KeyValuePair
-    /// </summary>
+    /// <summary> A map to describe the settings of an action. </summary>
     public partial class ChaosKeyValuePair
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.Chaos.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosKeyValuePair"/>. </summary>
-        /// <param name="key">
-        /// The name of the setting for the action.
-        /// Serialized Name: KeyValuePair.key
-        /// </param>
-        /// <param name="value">
-        /// The value of the setting for the action.
-        /// Serialized Name: KeyValuePair.value
-        /// </param>
+        /// <param name="key"> The name of the setting for the action. </param>
+        /// <param name="value"> The value of the setting for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public ChaosKeyValuePair(string key, string value)
         {
@@ -69,14 +60,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosKeyValuePair"/>. </summary>
-        /// <param name="key">
-        /// The name of the setting for the action.
-        /// Serialized Name: KeyValuePair.key
-        /// </param>
-        /// <param name="value">
-        /// The value of the setting for the action.
-        /// Serialized Name: KeyValuePair.value
-        /// </param>
+        /// <param name="key"> The name of the setting for the action. </param>
+        /// <param name="value"> The value of the setting for the action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosKeyValuePair(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,15 +75,9 @@ namespace Azure.ResourceManager.Chaos.Models
         {
         }
 
-        /// <summary>
-        /// The name of the setting for the action.
-        /// Serialized Name: KeyValuePair.key
-        /// </summary>
+        /// <summary> The name of the setting for the action. </summary>
         public string Key { get; set; }
-        /// <summary>
-        /// The value of the setting for the action.
-        /// Serialized Name: KeyValuePair.value
-        /// </summary>
+        /// <summary> The value of the setting for the action. </summary>
         public string Value { get; set; }
     }
 }

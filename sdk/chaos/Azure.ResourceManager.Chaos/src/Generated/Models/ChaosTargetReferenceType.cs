@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Enum of the Target reference type.
-    /// Serialized Name: TargetReferenceType
-    /// </summary>
+    /// <summary> Enum of the Target reference type. </summary>
     public readonly partial struct ChaosTargetReferenceType : IEquatable<ChaosTargetReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         private const string ChaosTargetValue = "ChaosTarget";
 
-        /// <summary>
-        /// ChaosTarget
-        /// Serialized Name: TargetReferenceType.ChaosTarget
-        /// </summary>
+        /// <summary> ChaosTarget. </summary>
         public static ChaosTargetReferenceType ChaosTarget { get; } = new ChaosTargetReferenceType(ChaosTargetValue);
         /// <summary> Determines if two <see cref="ChaosTargetReferenceType"/> values are the same. </summary>
         public static bool operator ==(ChaosTargetReferenceType left, ChaosTargetReferenceType right) => left.Equals(right);

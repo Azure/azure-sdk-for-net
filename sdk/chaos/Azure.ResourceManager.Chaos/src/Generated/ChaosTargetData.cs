@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing the ChaosTarget data model.
     /// Model that represents a Target resource.
-    /// Serialized Name: Target
     /// </summary>
     public partial class ChaosTargetData : ResourceData
     {
@@ -52,10 +51,7 @@ namespace Azure.ResourceManager.Chaos
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetData"/>. </summary>
-        /// <param name="properties">
-        /// The properties of the target resource.
-        /// Serialized Name: Target.properties
-        /// </param>
+        /// <param name="properties"> The properties of the target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ChaosTargetData(IDictionary<string, BinaryData> properties)
         {
@@ -69,14 +65,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Location of the target resource.
-        /// Serialized Name: Target.location
-        /// </param>
-        /// <param name="properties">
-        /// The properties of the target resource.
-        /// Serialized Name: Target.properties
-        /// </param>
+        /// <param name="location"> Location of the target resource. </param>
+        /// <param name="properties"> The properties of the target resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -90,14 +80,10 @@ namespace Azure.ResourceManager.Chaos
         {
         }
 
-        /// <summary>
-        /// Location of the target resource.
-        /// Serialized Name: Target.location
-        /// </summary>
+        /// <summary> Location of the target resource. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary>
         /// The properties of the target resource.
-        /// Serialized Name: Target.properties
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

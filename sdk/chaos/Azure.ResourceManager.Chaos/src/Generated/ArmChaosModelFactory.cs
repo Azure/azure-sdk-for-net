@@ -22,26 +22,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="publisher">
-        /// String of the Publisher that this Capability extends.
-        /// Serialized Name: Capability.properties.publisher
-        /// </param>
-        /// <param name="targetType">
-        /// String of the Target Type that this Capability extends.
-        /// Serialized Name: Capability.properties.targetType
-        /// </param>
-        /// <param name="description">
-        /// Localized string of the description.
-        /// Serialized Name: Capability.properties.description
-        /// </param>
-        /// <param name="parametersSchema">
-        /// URL to retrieve JSON schema of the Capability parameters.
-        /// Serialized Name: Capability.properties.parametersSchema
-        /// </param>
-        /// <param name="urn">
-        /// String of the URN for this Capability Type.
-        /// Serialized Name: Capability.properties.urn
-        /// </param>
+        /// <param name="publisher"> String of the Publisher that this Capability extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability extends. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
         /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
         public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null)
         {
@@ -53,50 +38,17 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Location of the Capability Type resource.
-        /// Serialized Name: CapabilityType.location
-        /// </param>
-        /// <param name="publisher">
-        /// String of the Publisher that this Capability Type extends.
-        /// Serialized Name: CapabilityType.properties.publisher
-        /// </param>
-        /// <param name="targetType">
-        /// String of the Target Type that this Capability Type extends.
-        /// Serialized Name: CapabilityType.properties.targetType
-        /// </param>
-        /// <param name="displayName">
-        /// Localized string of the display name.
-        /// Serialized Name: CapabilityType.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Localized string of the description.
-        /// Serialized Name: CapabilityType.properties.description
-        /// </param>
-        /// <param name="parametersSchema">
-        /// URL to retrieve JSON schema of the Capability Type parameters.
-        /// Serialized Name: CapabilityType.properties.parametersSchema
-        /// </param>
-        /// <param name="urn">
-        /// String of the URN for this Capability Type.
-        /// Serialized Name: CapabilityType.properties.urn
-        /// </param>
-        /// <param name="kind">
-        /// String of the kind of this Capability Type.
-        /// Serialized Name: CapabilityType.properties.kind
-        /// </param>
-        /// <param name="azureRbacActions">
-        /// Control plane actions necessary to execute capability type.
-        /// Serialized Name: CapabilityType.properties.azureRbacActions
-        /// </param>
-        /// <param name="azureRbacDataActions">
-        /// Data plane actions necessary to execute capability type.
-        /// Serialized Name: CapabilityType.properties.azureRbacDataActions
-        /// </param>
-        /// <param name="runtimeKind">
-        /// Runtime properties of this Capability Type.
-        /// Serialized Name: CapabilityType.properties.runtimeProperties
-        /// </param>
+        /// <param name="location"> Location of the Capability Type resource. </param>
+        /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
+        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <param name="kind"> String of the kind of this Capability Type. </param>
+        /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
+        /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
+        /// <param name="runtimeKind"> Runtime properties of this Capability Type. </param>
         /// <returns> A new <see cref="Chaos.ChaosCapabilityTypeData"/> instance for mocking. </returns>
         public static ChaosCapabilityTypeData ChaosCapabilityTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, IEnumerable<string> azureRbacActions = null, IEnumerable<string> azureRbacDataActions = null, string runtimeKind = null)
         {
@@ -113,21 +65,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity of the experiment resource.
-        /// Serialized Name: Experiment.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </param>
-        /// <param name="provisioningState">
-        /// Most recent provisioning state for the given experiment resource.
-        /// Serialized Name: Experiment.properties.provisioningState
-        /// </param>
-        /// <param name="steps">
-        /// List of steps.
-        /// Serialized Name: Experiment.properties.steps
-        /// </param>
+        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
+        /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
         /// List of selectors.
-        /// Serialized Name: Experiment.properties.selectors
         /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </param>
@@ -146,18 +88,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status">
-        /// The status of the execution.
-        /// Serialized Name: ExperimentExecution.properties.status
-        /// </param>
-        /// <param name="startedOn">
-        /// String that represents the start date time.
-        /// Serialized Name: ExperimentExecution.properties.startedAt
-        /// </param>
-        /// <param name="stoppedOn">
-        /// String that represents the stop date time.
-        /// Serialized Name: ExperimentExecution.properties.stoppedAt
-        /// </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
         public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null)
         {
@@ -169,30 +102,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status">
-        /// The status of the execution.
-        /// Serialized Name: ExperimentExecutionDetails.properties.status
-        /// </param>
-        /// <param name="startedOn">
-        /// String that represents the start date time.
-        /// Serialized Name: ExperimentExecutionDetails.properties.startedAt
-        /// </param>
-        /// <param name="stoppedOn">
-        /// String that represents the stop date time.
-        /// Serialized Name: ExperimentExecutionDetails.properties.stoppedAt
-        /// </param>
-        /// <param name="failureReason">
-        /// The reason why the execution failed.
-        /// Serialized Name: ExperimentExecutionDetails.properties.failureReason
-        /// </param>
-        /// <param name="lastActionOn">
-        /// String that represents the last action date time.
-        /// Serialized Name: ExperimentExecutionDetails.properties.lastActionAt
-        /// </param>
-        /// <param name="runInformationSteps">
-        /// The information of the experiment run.
-        /// Serialized Name: ExperimentExecutionDetails.properties.runInformation
-        /// </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="failureReason"> The reason why the execution failed. </param>
+        /// <param name="lastActionOn"> String that represents the last action date time. </param>
+        /// <param name="runInformationSteps"> The information of the experiment run. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
         public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, string failureReason = null, DateTimeOffset? lastActionOn = null, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = null)
         {
@@ -202,22 +117,10 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChaosExperimentRunStepStatus"/>. </summary>
-        /// <param name="stepName">
-        /// The name of the step.
-        /// Serialized Name: StepStatus.stepName
-        /// </param>
-        /// <param name="stepId">
-        /// The id of the step.
-        /// Serialized Name: StepStatus.stepId
-        /// </param>
-        /// <param name="status">
-        /// The value of the status of the step.
-        /// Serialized Name: StepStatus.status
-        /// </param>
-        /// <param name="branches">
-        /// The array of branches.
-        /// Serialized Name: StepStatus.branches
-        /// </param>
+        /// <param name="stepName"> The name of the step. </param>
+        /// <param name="stepId"> The id of the step. </param>
+        /// <param name="status"> The value of the status of the step. </param>
+        /// <param name="branches"> The array of branches. </param>
         /// <returns> A new <see cref="Models.ChaosExperimentRunStepStatus"/> instance for mocking. </returns>
         public static ChaosExperimentRunStepStatus ChaosExperimentRunStepStatus(string stepName = null, string stepId = null, string status = null, IEnumerable<ChaosExperimentRunBranchStatus> branches = null)
         {
@@ -227,22 +130,10 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChaosExperimentRunBranchStatus"/>. </summary>
-        /// <param name="branchName">
-        /// The name of the branch status.
-        /// Serialized Name: BranchStatus.branchName
-        /// </param>
-        /// <param name="branchId">
-        /// The id of the branch status.
-        /// Serialized Name: BranchStatus.branchId
-        /// </param>
-        /// <param name="status">
-        /// The status of the branch.
-        /// Serialized Name: BranchStatus.status
-        /// </param>
-        /// <param name="actions">
-        /// The array of actions.
-        /// Serialized Name: BranchStatus.actions
-        /// </param>
+        /// <param name="branchName"> The name of the branch status. </param>
+        /// <param name="branchId"> The id of the branch status. </param>
+        /// <param name="status"> The status of the branch. </param>
+        /// <param name="actions"> The array of actions. </param>
         /// <returns> A new <see cref="Models.ChaosExperimentRunBranchStatus"/> instance for mocking. </returns>
         public static ChaosExperimentRunBranchStatus ChaosExperimentRunBranchStatus(string branchName = null, string branchId = null, string status = null, IEnumerable<ChaosExperimentRunActionStatus> actions = null)
         {
@@ -252,30 +143,12 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChaosExperimentRunActionStatus"/>. </summary>
-        /// <param name="actionName">
-        /// The name of the action status.
-        /// Serialized Name: ActionStatus.actionName
-        /// </param>
-        /// <param name="actionId">
-        /// The id of the action status.
-        /// Serialized Name: ActionStatus.actionId
-        /// </param>
-        /// <param name="status">
-        /// The status of the action.
-        /// Serialized Name: ActionStatus.status
-        /// </param>
-        /// <param name="startOn">
-        /// String that represents the start time of the action.
-        /// Serialized Name: ActionStatus.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// String that represents the end time of the action.
-        /// Serialized Name: ActionStatus.endTime
-        /// </param>
-        /// <param name="targets">
-        /// The array of targets.
-        /// Serialized Name: ActionStatus.targets
-        /// </param>
+        /// <param name="actionName"> The name of the action status. </param>
+        /// <param name="actionId"> The id of the action status. </param>
+        /// <param name="status"> The status of the action. </param>
+        /// <param name="startOn"> String that represents the start time of the action. </param>
+        /// <param name="endOn"> String that represents the end time of the action. </param>
+        /// <param name="targets"> The array of targets. </param>
         /// <returns> A new <see cref="Models.ChaosExperimentRunActionStatus"/> instance for mocking. </returns>
         public static ChaosExperimentRunActionStatus ChaosExperimentRunActionStatus(string actionName = null, string actionId = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ExperimentExecutionActionTargetDetailsProperties> targets = null)
         {
@@ -285,26 +158,11 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
-        /// <param name="status">
-        /// The status of the execution.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.status
-        /// </param>
-        /// <param name="target">
-        /// The target for the action.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.target
-        /// </param>
-        /// <param name="targetFailedOn">
-        /// String that represents the failed date time.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetFailedTime
-        /// </param>
-        /// <param name="targetCompletedOn">
-        /// String that represents the completed date time.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetCompletedTime
-        /// </param>
-        /// <param name="error">
-        /// The error of the action.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.error
-        /// </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="target"> The target for the action. </param>
+        /// <param name="targetFailedOn"> String that represents the failed date time. </param>
+        /// <param name="targetCompletedOn"> String that represents the completed date time. </param>
+        /// <param name="error"> The error of the action. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionActionTargetDetailsProperties"/> instance for mocking. </returns>
         public static ExperimentExecutionActionTargetDetailsProperties ExperimentExecutionActionTargetDetailsProperties(string status = null, string target = null, DateTimeOffset? targetFailedOn = null, DateTimeOffset? targetCompletedOn = null, ExperimentExecutionActionTargetDetailsError error = null)
         {
@@ -312,14 +170,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsError"/>. </summary>
-        /// <param name="code">
-        /// The error code.
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsError.code
-        /// </param>
-        /// <param name="message">
-        /// The error message
-        /// Serialized Name: ExperimentExecutionActionTargetDetailsError.message
-        /// </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionActionTargetDetailsError"/> instance for mocking. </returns>
         public static ExperimentExecutionActionTargetDetailsError ExperimentExecutionActionTargetDetailsError(string code = null, string message = null)
         {
@@ -331,26 +183,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Location of the Target Type resource.
-        /// Serialized Name: TargetType.location
-        /// </param>
-        /// <param name="displayName">
-        /// Localized string of the display name.
-        /// Serialized Name: TargetType.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Localized string of the description.
-        /// Serialized Name: TargetType.properties.description
-        /// </param>
-        /// <param name="propertiesSchema">
-        /// URL to retrieve JSON schema of the Target Type properties.
-        /// Serialized Name: TargetType.properties.propertiesSchema
-        /// </param>
-        /// <param name="resourceTypes">
-        /// List of resource types this Target Type can extend.
-        /// Serialized Name: TargetType.properties.resourceTypes
-        /// </param>
+        /// <param name="location"> Location of the Target Type resource. </param>
+        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="propertiesSchema"> URL to retrieve JSON schema of the Target Type properties. </param>
+        /// <param name="resourceTypes"> List of resource types this Target Type can extend. </param>
         /// <returns> A new <see cref="Chaos.ChaosTargetTypeData"/> instance for mocking. </returns>
         public static ChaosTargetTypeData ChaosTargetTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string displayName = null, string description = null, string propertiesSchema = null, IEnumerable<string> resourceTypes = null)
         {
@@ -364,14 +201,8 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Location of the target resource.
-        /// Serialized Name: Target.location
-        /// </param>
-        /// <param name="properties">
-        /// The properties of the target resource.
-        /// Serialized Name: Target.properties
-        /// </param>
+        /// <param name="location"> Location of the target resource. </param>
+        /// <param name="properties"> The properties of the target resource. </param>
         /// <returns> A new <see cref="Chaos.ChaosTargetData"/> instance for mocking. </returns>
         public static ChaosTargetData ChaosTargetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, BinaryData> properties = null)
         {

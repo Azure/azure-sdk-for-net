@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Describes an experiment update.
-    /// Serialized Name: ExperimentUpdate
-    /// </summary>
+    /// <summary> Describes an experiment update. </summary>
     public partial class ChaosExperimentPatch
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentPatch"/>. </summary>
-        /// <param name="identity">
-        /// The identity of the experiment resource.
-        /// Serialized Name: ExperimentUpdate.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </param>
+        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentPatch(ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The identity of the experiment resource.
-        /// Serialized Name: ExperimentUpdate.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </summary>
+        /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

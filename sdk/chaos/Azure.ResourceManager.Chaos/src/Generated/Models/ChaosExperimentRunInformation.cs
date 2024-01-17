@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// The information of the experiment run.
-    /// Serialized Name: ExperimentExecutionDetailsPropertiesRunInformation
-    /// </summary>
+    /// <summary> The information of the experiment run. </summary>
     internal partial class ChaosExperimentRunInformation
     {
         /// <summary>
@@ -56,10 +53,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunInformation"/>. </summary>
-        /// <param name="steps">
-        /// The steps of the experiment run.
-        /// Serialized Name: ExperimentExecutionDetailsPropertiesRunInformation.steps
-        /// </param>
+        /// <param name="steps"> The steps of the experiment run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentRunInformation(IReadOnlyList<ChaosExperimentRunStepStatus> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +61,7 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The steps of the experiment run.
-        /// Serialized Name: ExperimentExecutionDetailsPropertiesRunInformation.steps
-        /// </summary>
+        /// <summary> The steps of the experiment run. </summary>
         public IReadOnlyList<ChaosExperimentRunStepStatus> Steps { get; }
     }
 }

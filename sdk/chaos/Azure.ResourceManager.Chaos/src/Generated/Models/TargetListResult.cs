@@ -12,10 +12,7 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents a list of Target resources and a link for pagination.
-    /// Serialized Name: TargetListResult
-    /// </summary>
+    /// <summary> Model that represents a list of Target resources and a link for pagination. </summary>
     internal partial class TargetListResult
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetListResult"/>. </summary>
-        /// <param name="value">
-        /// List of Target resources.
-        /// Serialized Name: TargetListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to retrieve the next page of Target resources.
-        /// Serialized Name: TargetListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of Target resources. </param>
+        /// <param name="nextLink"> URL to retrieve the next page of Target resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TargetListResult(IReadOnlyList<ChaosTargetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Target resources.
-        /// Serialized Name: TargetListResult.value
-        /// </summary>
+        /// <summary> List of Target resources. </summary>
         public IReadOnlyList<ChaosTargetData> Value { get; }
-        /// <summary>
-        /// URL to retrieve the next page of Target resources.
-        /// Serialized Name: TargetListResult.nextLink
-        /// </summary>
+        /// <summary> URL to retrieve the next page of Target resources. </summary>
         public string NextLink { get; }
     }
 }

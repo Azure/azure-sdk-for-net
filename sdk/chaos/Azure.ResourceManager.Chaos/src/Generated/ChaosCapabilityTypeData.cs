@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing the ChaosCapabilityType data model.
     /// Model that represents a Capability Type resource.
-    /// Serialized Name: CapabilityType
     /// </summary>
     public partial class ChaosCapabilityTypeData : ResourceData
     {
@@ -64,50 +63,17 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Location of the Capability Type resource.
-        /// Serialized Name: CapabilityType.location
-        /// </param>
-        /// <param name="publisher">
-        /// String of the Publisher that this Capability Type extends.
-        /// Serialized Name: CapabilityType.properties.publisher
-        /// </param>
-        /// <param name="targetType">
-        /// String of the Target Type that this Capability Type extends.
-        /// Serialized Name: CapabilityType.properties.targetType
-        /// </param>
-        /// <param name="displayName">
-        /// Localized string of the display name.
-        /// Serialized Name: CapabilityType.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Localized string of the description.
-        /// Serialized Name: CapabilityType.properties.description
-        /// </param>
-        /// <param name="parametersSchema">
-        /// URL to retrieve JSON schema of the Capability Type parameters.
-        /// Serialized Name: CapabilityType.properties.parametersSchema
-        /// </param>
-        /// <param name="urn">
-        /// String of the URN for this Capability Type.
-        /// Serialized Name: CapabilityType.properties.urn
-        /// </param>
-        /// <param name="kind">
-        /// String of the kind of this Capability Type.
-        /// Serialized Name: CapabilityType.properties.kind
-        /// </param>
-        /// <param name="azureRbacActions">
-        /// Control plane actions necessary to execute capability type.
-        /// Serialized Name: CapabilityType.properties.azureRbacActions
-        /// </param>
-        /// <param name="azureRbacDataActions">
-        /// Data plane actions necessary to execute capability type.
-        /// Serialized Name: CapabilityType.properties.azureRbacDataActions
-        /// </param>
-        /// <param name="runtimeProperties">
-        /// Runtime properties of this Capability Type.
-        /// Serialized Name: CapabilityType.properties.runtimeProperties
-        /// </param>
+        /// <param name="location"> Location of the Capability Type resource. </param>
+        /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
+        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <param name="kind"> String of the kind of this Capability Type. </param>
+        /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
+        /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
+        /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosCapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IList<string> azureRbacActions, IList<string> azureRbacDataActions, ChaosCapabilityTypeRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -125,65 +91,29 @@ namespace Azure.ResourceManager.Chaos
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Location of the Capability Type resource.
-        /// Serialized Name: CapabilityType.location
-        /// </summary>
+        /// <summary> Location of the Capability Type resource. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// String of the Publisher that this Capability Type extends.
-        /// Serialized Name: CapabilityType.properties.publisher
-        /// </summary>
+        /// <summary> String of the Publisher that this Capability Type extends. </summary>
         public string Publisher { get; }
-        /// <summary>
-        /// String of the Target Type that this Capability Type extends.
-        /// Serialized Name: CapabilityType.properties.targetType
-        /// </summary>
+        /// <summary> String of the Target Type that this Capability Type extends. </summary>
         public string TargetType { get; }
-        /// <summary>
-        /// Localized string of the display name.
-        /// Serialized Name: CapabilityType.properties.displayName
-        /// </summary>
+        /// <summary> Localized string of the display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Localized string of the description.
-        /// Serialized Name: CapabilityType.properties.description
-        /// </summary>
+        /// <summary> Localized string of the description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// URL to retrieve JSON schema of the Capability Type parameters.
-        /// Serialized Name: CapabilityType.properties.parametersSchema
-        /// </summary>
+        /// <summary> URL to retrieve JSON schema of the Capability Type parameters. </summary>
         public string ParametersSchema { get; }
-        /// <summary>
-        /// String of the URN for this Capability Type.
-        /// Serialized Name: CapabilityType.properties.urn
-        /// </summary>
+        /// <summary> String of the URN for this Capability Type. </summary>
         public string Urn { get; }
-        /// <summary>
-        /// String of the kind of this Capability Type.
-        /// Serialized Name: CapabilityType.properties.kind
-        /// </summary>
+        /// <summary> String of the kind of this Capability Type. </summary>
         public string Kind { get; }
-        /// <summary>
-        /// Control plane actions necessary to execute capability type.
-        /// Serialized Name: CapabilityType.properties.azureRbacActions
-        /// </summary>
+        /// <summary> Control plane actions necessary to execute capability type. </summary>
         public IList<string> AzureRbacActions { get; }
-        /// <summary>
-        /// Data plane actions necessary to execute capability type.
-        /// Serialized Name: CapabilityType.properties.azureRbacDataActions
-        /// </summary>
+        /// <summary> Data plane actions necessary to execute capability type. </summary>
         public IList<string> AzureRbacDataActions { get; }
-        /// <summary>
-        /// Runtime properties of this Capability Type.
-        /// Serialized Name: CapabilityType.properties.runtimeProperties
-        /// </summary>
+        /// <summary> Runtime properties of this Capability Type. </summary>
         internal ChaosCapabilityTypeRuntimeProperties RuntimeProperties { get; set; }
-        /// <summary>
-        /// String of the kind of the resource's action type (continuous or discrete).
-        /// Serialized Name: CapabilityTypePropertiesRuntimeProperties.kind
-        /// </summary>
+        /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string RuntimeKind
         {
             get => RuntimeProperties is null ? default : RuntimeProperties.Kind;

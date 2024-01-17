@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing the ChaosCapability data model.
     /// Model that represents a Capability resource.
-    /// Serialized Name: Capability
     /// </summary>
     public partial class ChaosCapabilityData : ResourceData
     {
@@ -61,26 +60,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="publisher">
-        /// String of the Publisher that this Capability extends.
-        /// Serialized Name: Capability.properties.publisher
-        /// </param>
-        /// <param name="targetType">
-        /// String of the Target Type that this Capability extends.
-        /// Serialized Name: Capability.properties.targetType
-        /// </param>
-        /// <param name="description">
-        /// Localized string of the description.
-        /// Serialized Name: Capability.properties.description
-        /// </param>
-        /// <param name="parametersSchema">
-        /// URL to retrieve JSON schema of the Capability parameters.
-        /// Serialized Name: Capability.properties.parametersSchema
-        /// </param>
-        /// <param name="urn">
-        /// String of the URN for this Capability Type.
-        /// Serialized Name: Capability.properties.urn
-        /// </param>
+        /// <param name="publisher"> String of the Publisher that this Capability extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability extends. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -92,30 +76,15 @@ namespace Azure.ResourceManager.Chaos
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// String of the Publisher that this Capability extends.
-        /// Serialized Name: Capability.properties.publisher
-        /// </summary>
+        /// <summary> String of the Publisher that this Capability extends. </summary>
         public string Publisher { get; }
-        /// <summary>
-        /// String of the Target Type that this Capability extends.
-        /// Serialized Name: Capability.properties.targetType
-        /// </summary>
+        /// <summary> String of the Target Type that this Capability extends. </summary>
         public string TargetType { get; }
-        /// <summary>
-        /// Localized string of the description.
-        /// Serialized Name: Capability.properties.description
-        /// </summary>
+        /// <summary> Localized string of the description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// URL to retrieve JSON schema of the Capability parameters.
-        /// Serialized Name: Capability.properties.parametersSchema
-        /// </summary>
+        /// <summary> URL to retrieve JSON schema of the Capability parameters. </summary>
         public string ParametersSchema { get; }
-        /// <summary>
-        /// String of the URN for this Capability Type.
-        /// Serialized Name: Capability.properties.urn
-        /// </summary>
+        /// <summary> String of the URN for this Capability Type. </summary>
         public string Urn { get; }
     }
 }

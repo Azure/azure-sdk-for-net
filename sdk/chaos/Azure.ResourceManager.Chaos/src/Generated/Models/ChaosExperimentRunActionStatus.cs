@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents the an action and its status.
-    /// Serialized Name: ActionStatus
-    /// </summary>
+    /// <summary> Model that represents the an action and its status. </summary>
     public partial class ChaosExperimentRunActionStatus
     {
         /// <summary>
@@ -56,30 +53,12 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunActionStatus"/>. </summary>
-        /// <param name="actionName">
-        /// The name of the action status.
-        /// Serialized Name: ActionStatus.actionName
-        /// </param>
-        /// <param name="actionId">
-        /// The id of the action status.
-        /// Serialized Name: ActionStatus.actionId
-        /// </param>
-        /// <param name="status">
-        /// The status of the action.
-        /// Serialized Name: ActionStatus.status
-        /// </param>
-        /// <param name="startOn">
-        /// String that represents the start time of the action.
-        /// Serialized Name: ActionStatus.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// String that represents the end time of the action.
-        /// Serialized Name: ActionStatus.endTime
-        /// </param>
-        /// <param name="targets">
-        /// The array of targets.
-        /// Serialized Name: ActionStatus.targets
-        /// </param>
+        /// <param name="actionName"> The name of the action status. </param>
+        /// <param name="actionId"> The id of the action status. </param>
+        /// <param name="status"> The status of the action. </param>
+        /// <param name="startOn"> String that represents the start time of the action. </param>
+        /// <param name="endOn"> String that represents the end time of the action. </param>
+        /// <param name="targets"> The array of targets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentRunActionStatus(string actionName, string actionId, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -92,35 +71,17 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the action status.
-        /// Serialized Name: ActionStatus.actionName
-        /// </summary>
+        /// <summary> The name of the action status. </summary>
         public string ActionName { get; }
-        /// <summary>
-        /// The id of the action status.
-        /// Serialized Name: ActionStatus.actionId
-        /// </summary>
+        /// <summary> The id of the action status. </summary>
         public string ActionId { get; }
-        /// <summary>
-        /// The status of the action.
-        /// Serialized Name: ActionStatus.status
-        /// </summary>
+        /// <summary> The status of the action. </summary>
         public string Status { get; }
-        /// <summary>
-        /// String that represents the start time of the action.
-        /// Serialized Name: ActionStatus.startTime
-        /// </summary>
+        /// <summary> String that represents the start time of the action. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// String that represents the end time of the action.
-        /// Serialized Name: ActionStatus.endTime
-        /// </summary>
+        /// <summary> String that represents the end time of the action. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// The array of targets.
-        /// Serialized Name: ActionStatus.targets
-        /// </summary>
+        /// <summary> The array of targets. </summary>
         public IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> Targets { get; }
     }
 }

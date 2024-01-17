@@ -12,10 +12,7 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary>
-    /// Model that represents a list of Experiment resources and a link for pagination.
-    /// Serialized Name: ExperimentListResult
-    /// </summary>
+    /// <summary> Model that represents a list of Experiment resources and a link for pagination. </summary>
     internal partial class ExperimentListResult
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/>. </summary>
-        /// <param name="value">
-        /// List of Experiment resources.
-        /// Serialized Name: ExperimentListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to retrieve the next page of Experiment resources.
-        /// Serialized Name: ExperimentListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of Experiment resources. </param>
+        /// <param name="nextLink"> URL to retrieve the next page of Experiment resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExperimentListResult(IReadOnlyList<ChaosExperimentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.Chaos.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Experiment resources.
-        /// Serialized Name: ExperimentListResult.value
-        /// </summary>
+        /// <summary> List of Experiment resources. </summary>
         public IReadOnlyList<ChaosExperimentData> Value { get; }
-        /// <summary>
-        /// URL to retrieve the next page of Experiment resources.
-        /// Serialized Name: ExperimentListResult.nextLink
-        /// </summary>
+        /// <summary> URL to retrieve the next page of Experiment resources. </summary>
         public string NextLink { get; }
     }
 }
