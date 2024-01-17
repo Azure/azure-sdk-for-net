@@ -278,6 +278,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
             }
+            if (Optional.IsDefined(EnableNodePublicIPv6))
+            {
+                writer.WritePropertyName("enableNodePublicIPv6"u8);
+                writer.WriteBooleanValue(EnableNodePublicIPv6.Value);
+            }
             if (Optional.IsDefined(VmSharedGalleryImageId))
             {
                 writer.WritePropertyName("vmSharedGalleryImageId"u8);
@@ -292,6 +297,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 writer.WritePropertyName("vmImagePlan"u8);
                 writer.WriteObjectValue(VmImagePlan);
+            }
+            if (Optional.IsDefined(ServiceArtifactReferenceId))
+            {
+                writer.WritePropertyName("serviceArtifactReferenceId"u8);
+                writer.WriteStringValue(ServiceArtifactReferenceId);
+            }
+            if (Optional.IsDefined(DscpConfigurationId))
+            {
+                writer.WritePropertyName("dscpConfigurationId"u8);
+                writer.WriteStringValue(DscpConfigurationId);
+            }
+            if (Optional.IsCollectionDefined(AdditionalNetworkInterfaceConfigurations))
+            {
+                writer.WritePropertyName("additionalNetworkInterfaceConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalNetworkInterfaceConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -349,9 +374,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<ServiceFabricManagedClusterSecurityType> securityType = default;
             Optional<bool> secureBootEnabled = default;
             Optional<bool> enableNodePublicIP = default;
+            Optional<bool> enableNodePublicIPv6 = default;
             Optional<ResourceIdentifier> vmSharedGalleryImageId = default;
             Optional<ResourceIdentifier> natGatewayId = default;
             Optional<VmImagePlan> vmImagePlan = default;
+            Optional<ResourceIdentifier> serviceArtifactReferenceId = default;
+            Optional<ResourceIdentifier> dscpConfigurationId = default;
+            Optional<IList<AdditionalNetworkInterfaceConfiguration>> additionalNetworkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -783,6 +812,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             enableNodePublicIP = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableNodePublicIPv6"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableNodePublicIPv6 = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("vmSharedGalleryImageId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
@@ -810,11 +848,43 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("serviceArtifactReferenceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            serviceArtifactReferenceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("dscpConfigurationId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            dscpConfigurationId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalNetworkInterfaceConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AdditionalNetworkInterfaceConfiguration> array = new List<AdditionalNetworkInterfaceConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item));
+                            }
+                            additionalNetworkInterfaceConfigurations = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags));
+            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), Optional.ToNullable(enableNodePublicIPv6), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, serviceArtifactReferenceId.Value, dscpConfigurationId.Value, Optional.ToList(additionalNetworkInterfaceConfigurations), Optional.ToDictionary(tags));
         }
     }
 }

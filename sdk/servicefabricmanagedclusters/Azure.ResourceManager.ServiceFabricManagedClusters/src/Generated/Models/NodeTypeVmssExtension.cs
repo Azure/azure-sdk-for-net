@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             VmssExtensionPropertiesType = vmssExtensionPropertiesType;
             TypeHandlerVersion = typeHandlerVersion;
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
+            SetupOrder = new ChangeTrackingList<VmssExtensionSetupOrder>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
@@ -46,7 +47,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled)
+        /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
+        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled, IList<VmssExtensionSetupOrder> setupOrder)
         {
             Name = name;
             Publisher = publisher;
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ProvisionAfterExtensions = provisionAfterExtensions;
             ProvisioningState = provisioningState;
             IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
+            SetupOrder = setupOrder;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -141,5 +144,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string ProvisioningState { get; }
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
         public bool? IsAutomaticUpgradeEnabled { get; set; }
+        /// <summary> Indicates the setup order for the extension. </summary>
+        public IList<VmssExtensionSetupOrder> SetupOrder { get; }
     }
 }

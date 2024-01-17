@@ -76,6 +76,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
+            if (Optional.IsCollectionDefined(SetupOrder))
+            {
+                writer.WritePropertyName("setupOrder"u8);
+                writer.WriteStartArray();
+                foreach (var item in SetupOrder)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -97,6 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<IList<string>> provisionAfterExtensions = default;
             Optional<string> provisioningState = default;
             Optional<bool> enableAutomaticUpgrade = default;
+            Optional<IList<VmssExtensionSetupOrder>> setupOrder = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -188,11 +199,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                             enableAutomaticUpgrade = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("setupOrder"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VmssExtensionSetupOrder> array = new List<VmssExtensionSetupOrder>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new VmssExtensionSetupOrder(item.GetString()));
+                            }
+                            setupOrder = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade));
+            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToList(setupOrder));
         }
     }
 }
