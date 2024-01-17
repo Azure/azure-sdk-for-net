@@ -132,7 +132,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
@@ -167,7 +167,7 @@ namespace Azure.Core.Pipeline
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 

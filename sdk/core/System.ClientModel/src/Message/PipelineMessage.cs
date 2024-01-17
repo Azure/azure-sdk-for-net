@@ -33,15 +33,22 @@ public class PipelineMessage : IDisposable
 
     #region Pipeline invocation options
 
-    public CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken
+    {
+        get;
+
+        // Set internally by RequestOptions.Apply
+        protected internal set;
+    }
 
     public PipelineMessageClassifier? MessageClassifier { get; set; }
 
-    public void Apply(RequestOptions options, PipelineMessageClassifier? messageClassifier = default)
+    public void Apply(RequestOptions options)
     {
         // This design moves the client-author API (options.Apply) off the
-        // client-user type RequestOptions.
-        options.Apply(this, messageClassifier);
+        // client-user type RequestOptions.  Its only purpose is to call through to
+        // the internal options.Apply method.
+        options.Apply(this);
     }
 
     public bool TryGetProperty(Type type, out object? value) =>
