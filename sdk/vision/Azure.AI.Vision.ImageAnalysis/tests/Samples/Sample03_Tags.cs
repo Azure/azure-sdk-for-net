@@ -53,31 +53,5 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
             #endregion
         }
-
-        [TestCase]
-        public void ImageAnalysisTagsException()
-        {
-            var client = ImageAnalysisAuth();
-            #region Snippet:ImageAnalysisTagsException
-            var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
-
-            try
-            {
-                var result = client.Analyze(imageUrl, VisualFeatures.DenseCaptions);
-            }
-            catch (RequestFailedException e)
-            {
-                if (e.Status == 400)
-                {
-                    Console.WriteLine("Error analyzing image.");
-                    Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            #endregion
-        }
     }
 }

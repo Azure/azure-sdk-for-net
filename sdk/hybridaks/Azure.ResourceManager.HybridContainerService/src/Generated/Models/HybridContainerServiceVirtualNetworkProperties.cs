@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </summary>
+    /// <summary> Properties of the virtual network resource. </summary>
     public partial class HybridContainerServiceVirtualNetworkProperties
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkProperties"/>. </summary>
@@ -18,27 +18,24 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             VipPool = new ChangeTrackingList<KubernetesVirtualIPItem>();
             VmipPool = new ChangeTrackingList<VirtualMachineIPItem>();
-            DhcpServers = new ChangeTrackingList<string>();
             DnsServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkProperties"/>. </summary>
         /// <param name="infraVnetProfile"></param>
-        /// <param name="vipPool"> Virtual IP Pool for Kubernetes. </param>
-        /// <param name="vmipPool"> IP Pool for Virtual Machines. </param>
-        /// <param name="dhcpServers"> Address of the DHCP servers associated with the network. </param>
-        /// <param name="dnsServers"> Address of the DNS servers associated with the network. </param>
-        /// <param name="gateway"> Address of the Gateway associated with the network. </param>
+        /// <param name="vipPool"> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </param>
+        /// <param name="vmipPool"> Range of IP Addresses for Kubernetes node VMs. </param>
+        /// <param name="dnsServers"> List of DNS server IP Addresses associated with the network. </param>
+        /// <param name="gateway"> IP Address of the Gateway associated with the network. </param>
         /// <param name="ipAddressPrefix"> IP Address Prefix of the network. </param>
         /// <param name="vlanId"> VLAN Id used by the network. </param>
         /// <param name="provisioningState"></param>
-        /// <param name="status"> HybridAKSNetworkStatus defines the observed state of HybridAKSNetwork. </param>
-        internal HybridContainerServiceVirtualNetworkProperties(InfraVnetProfile infraVnetProfile, IList<KubernetesVirtualIPItem> vipPool, IList<VirtualMachineIPItem> vmipPool, IList<string> dhcpServers, IList<string> dnsServers, string gateway, string ipAddressPrefix, int? vlanId, HybridContainerServiceProvisioningState? provisioningState, HybridContainerServiceNetworkStatus status)
+        /// <param name="status"> Status of the virtual network resource. </param>
+        internal HybridContainerServiceVirtualNetworkProperties(InfraVnetProfile infraVnetProfile, IList<KubernetesVirtualIPItem> vipPool, IList<VirtualMachineIPItem> vmipPool, IList<string> dnsServers, string gateway, string ipAddressPrefix, int? vlanId, HybridContainerServiceProvisioningState? provisioningState, HybridContainerServiceNetworkStatus status)
         {
             InfraVnetProfile = infraVnetProfile;
             VipPool = vipPool;
             VmipPool = vmipPool;
-            DhcpServers = dhcpServers;
             DnsServers = dnsServers;
             Gateway = gateway;
             IPAddressPrefix = ipAddressPrefix;
@@ -48,16 +45,26 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Gets or sets the infra vnet profile. </summary>
-        public InfraVnetProfile InfraVnetProfile { get; set; }
-        /// <summary> Virtual IP Pool for Kubernetes. </summary>
+        internal InfraVnetProfile InfraVnetProfile { get; set; }
+        /// <summary> Infrastructure network profile for HCI platform. </summary>
+        public HciInfraVnetProfile InfraVnetHci
+        {
+            get => InfraVnetProfile is null ? default : InfraVnetProfile.Hci;
+            set
+            {
+                if (InfraVnetProfile is null)
+                    InfraVnetProfile = new InfraVnetProfile();
+                InfraVnetProfile.Hci = value;
+            }
+        }
+
+        /// <summary> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </summary>
         public IList<KubernetesVirtualIPItem> VipPool { get; }
-        /// <summary> IP Pool for Virtual Machines. </summary>
+        /// <summary> Range of IP Addresses for Kubernetes node VMs. </summary>
         public IList<VirtualMachineIPItem> VmipPool { get; }
-        /// <summary> Address of the DHCP servers associated with the network. </summary>
-        public IList<string> DhcpServers { get; }
-        /// <summary> Address of the DNS servers associated with the network. </summary>
+        /// <summary> List of DNS server IP Addresses associated with the network. </summary>
         public IList<string> DnsServers { get; }
-        /// <summary> Address of the Gateway associated with the network. </summary>
+        /// <summary> IP Address of the Gateway associated with the network. </summary>
         public string Gateway { get; set; }
         /// <summary> IP Address Prefix of the network. </summary>
         public string IPAddressPrefix { get; set; }
@@ -65,9 +72,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public int? VlanId { get; set; }
         /// <summary> Gets the provisioning state. </summary>
         public HybridContainerServiceProvisioningState? ProvisioningState { get; }
-        /// <summary> HybridAKSNetworkStatus defines the observed state of HybridAKSNetwork. </summary>
+        /// <summary> Status of the virtual network resource. </summary>
         internal HybridContainerServiceNetworkStatus Status { get; }
-        /// <summary> Contains Provisioning errors. </summary>
+        /// <summary> The detailed status of the long running operation. </summary>
         public VirtualNetworkPropertiesStatusOperationStatus OperationStatus
         {
             get => Status?.OperationStatus;
