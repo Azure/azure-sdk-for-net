@@ -17,12 +17,9 @@ public class PipelineMessageClassifier
     /// </summary>
     public virtual bool IsErrorResponse(PipelineMessage message)
     {
-        if (message.Response is null)
-        {
-            throw new InvalidOperationException("IsError must be called on a message where the OutputMessage is populated.");
-        }
+        message.AssertResponse();
 
-        int statusKind = message.Response.Status / 100;
+        int statusKind = message.Response!.Status / 100;
         return statusKind == 4 || statusKind == 5;
     }
 }
