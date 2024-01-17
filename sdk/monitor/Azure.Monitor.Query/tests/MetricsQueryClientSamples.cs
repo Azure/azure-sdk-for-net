@@ -164,12 +164,12 @@ namespace Azure.Monitor.Query.Tests
             string resourceId = TestEnvironment.StorageAccountId;
 #endif
             MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-            Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
+            Response<MetricsBatchQueryResult> metricsResultsResponse = await client.QueryBatchAsync(
                 resourceIds: new List<string> { resourceId },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-            MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
+            MetricsBatchQueryResult metricsQueryResults = metricsResultsResponse.Value;
             foreach (var value in metricsQueryResults.Values)
             {
                 Console.WriteLine(value.Interval);

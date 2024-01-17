@@ -127,7 +127,7 @@ namespace Azure.Monitor.Query
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<MetricsBatchResult>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricsBatchQueryResult>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -152,9 +152,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        MetricsBatchResult value = default;
+                        MetricsBatchQueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricsBatchResult.DeserializeMetricsBatchResult(document.RootElement);
+                        value = MetricsBatchQueryResult.DeserializeMetricsBatchQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,7 +195,7 @@ namespace Azure.Monitor.Query
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="batchRequest"/> is null. </exception>
-        public Response<MetricsBatchResult> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
+        public Response<MetricsBatchQueryResult> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList batchRequest, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, string rollupby = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -220,9 +220,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        MetricsBatchResult value = default;
+                        MetricsBatchQueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricsBatchResult.DeserializeMetricsBatchResult(document.RootElement);
+                        value = MetricsBatchQueryResult.DeserializeMetricsBatchQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

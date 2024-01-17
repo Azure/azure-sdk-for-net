@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     [CodeGenModel("MetricResultsResponse")]
-    public partial class MetricsBatchResult
+    public partial class MetricsBatchQueryResult
     {
         /// <summary> The collection of metric data responses per resource, per metric. </summary>
         public IReadOnlyList<MetricsQueryResult> Values { get; }

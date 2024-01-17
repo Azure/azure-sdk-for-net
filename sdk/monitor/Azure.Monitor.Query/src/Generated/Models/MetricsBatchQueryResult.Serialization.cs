@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricsBatchResult
+    public partial class MetricsBatchQueryResult
     {
-        internal static MetricsBatchResult DeserializeMetricsBatchResult(JsonElement element)
+        internal static MetricsBatchQueryResult DeserializeMetricsBatchQueryResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricsBatchResult(Optional.ToList(values));
+            return new MetricsBatchQueryResult(Optional.ToList(values));
         }
     }
 }

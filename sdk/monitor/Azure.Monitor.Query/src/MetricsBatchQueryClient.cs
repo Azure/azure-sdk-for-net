@@ -63,7 +63,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual Response<MetricsBatchResult> QueryBatch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryClientOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsBatchQueryResult> QueryBatch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count == 0 || metricNames.Count == 0)
             {
@@ -97,7 +97,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual async Task<Response<MetricsBatchResult>> QueryBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryClientOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsBatchQueryResult>> QueryBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count == 0 || metricNames.Count == 0)
             {
@@ -122,7 +122,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private async Task<Response<MetricsBatchResult>> ExecuteBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryClientOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
+        private async Task<Response<MetricsBatchQueryResult>> ExecuteBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
         {
             var subscriptionId = GetSubscriptionId(resourceIds[0]);
 
