@@ -75,13 +75,13 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetRemoteConnectionSucceeds()
         {
-            Response<RemoteConnection> remoteConnectionResponse = await _devBoxesClient.GetRemoteConnectionAsync(
+            RemoteConnection remoteConnection = await _devBoxesClient.GetRemoteConnectionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName);
 
             // Check webUrl
-            Uri webUrl = remoteConnectionResponse?.Value?.WebUri;
+            Uri webUrl = remoteConnection.WebUri;
             if (webUrl == null)
             {
                 FailDueToMissingProperty("webUrl");
@@ -90,7 +90,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(webUrl.Scheme, Uri.UriSchemeHttps);
 
             // Check RDP connection
-            Uri remoteConnectionUrl = remoteConnectionResponse?.Value?.RdpConnectionUri;
+            Uri remoteConnectionUrl = remoteConnection.RdpConnectionUri;
             if (remoteConnectionUrl == null)
             {
                 FailDueToMissingProperty("rdpConnectionUrl");
@@ -169,11 +169,11 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetPoolSucceeds()
         {
-            Response<DevBoxPool> getPoolResponse = await _devBoxesClient.GetPoolAsync(
+            DevBoxPool pool = await _devBoxesClient.GetPoolAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.PoolName);
 
-            string poolName = getPoolResponse.Value.Name;
+            string poolName = pool.Name;
             if (string.IsNullOrWhiteSpace(poolName))
             {
                 FailDueToMissingProperty("name");
@@ -199,6 +199,23 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
+        public async Task GetScheduleSucceeds()
+        {
+            DevBoxSchedule schedule = await _devBoxesClient.GetScheduleAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.PoolName,
+                "default");
+
+            string scheduleName = schedule.Name;
+            if (string.IsNullOrWhiteSpace(scheduleName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.AreEqual("default", scheduleName);
+        }
+
+        [RecordedTest]
         public async Task GetSchedulesSucceeds()
         {
             List<DevBoxSchedule> schedules = await _devBoxesClient.GetSchedulesAsync(
@@ -217,33 +234,15 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
-        public async Task GetScheduleSucceeds()
-        {
-            Response<DevBoxSchedule> getScheduleResponse = await _devBoxesClient.GetScheduleAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.PoolName,
-                "default");
-
-            string scheduleName = getScheduleResponse?.Value?.Name;
-            if (string.IsNullOrWhiteSpace(scheduleName))
-            {
-                FailDueToMissingProperty("name");
-            }
-
-            Assert.AreEqual("default", scheduleName);
-        }
-
-        [RecordedTest]
         public async Task GetAndDelayActionSucceeds()
         {
-            Response<DevBoxAction> actionResponse = await _devBoxesClient.GetDevBoxActionAsync(
+            DevBoxAction action = await _devBoxesClient.GetDevBoxActionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
                 "schedule-default");
 
-            DevBoxAction action = actionResponse.Value;
-            if (action == default)
+            if (action == null)
             {
                 FailDueToMissingProperty("action");
             }
@@ -251,22 +250,28 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual("schedule-default", action.Name);
             Assert.AreEqual(DevBoxActionType.Stop, action.ActionType);
 
-            DateTimeOffset delayUntil = action.NextAction.ScheduledTime.AddMinutes(10);
+            DateTimeOffset currentScheduledTime = action.NextAction.ScheduledTime;
+            if (currentScheduledTime == default)
+            {
+                FailDueToMissingProperty("scheduledTime");
+            }
 
-            Response<DevBoxAction> delayActionResponse = await _devBoxesClient.DelayActionAsync(
+            DateTimeOffset delayUntil = currentScheduledTime.AddMinutes(10);
+
+            DevBoxAction delayedAction = await _devBoxesClient.DelayActionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
                 action.Name,
                 delayUntil);
 
-            DevBoxNextAction nextAction = delayActionResponse.Value.NextAction;
-            if (nextAction == null)
+            DateTimeOffset delayedTime = delayedAction.NextAction.ScheduledTime;
+            if (delayedTime == default)
             {
-                FailDueToMissingProperty("nextAction");
+                FailDueToMissingProperty("scheduledTime");
             }
 
-            Assert.AreEqual(delayUntil, nextAction.ScheduledTime);
+            Assert.AreEqual(delayUntil, delayedTime);
         }
 
         [RecordedTest]
@@ -370,7 +375,6 @@ namespace Azure.Developer.DevCenter.Tests
                  TestEnvironment.PoolName
             );
 
-            // Create dev box
             Operation<DevBox> devBoxCreateOperation = await _devBoxesClient.CreateDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,

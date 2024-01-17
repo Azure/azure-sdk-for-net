@@ -58,11 +58,11 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetCatalogSucceeds()
         {
-            Response<DevCenterCatalog> getCatalogResponse = await _environmentsClient.GetCatalogAsync(
+            DevCenterCatalog catalog = await _environmentsClient.GetCatalogAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.CatalogName);
 
-            string catalogName = getCatalogResponse.Value.Name;
+            string catalogName = catalog.Name;
             if (string.IsNullOrWhiteSpace(catalogName))
             {
                 FailDueToMissingProperty("name");
