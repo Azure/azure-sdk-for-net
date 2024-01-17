@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- `ServiceBusReceiver` now supports the ability to delete messages from an entity in batches using the `DeleteMessagesAsync` method.  The target messages can be constrained to a fixed count, limited to only those earlier than a given date, or unconstrained such that all messages are deleted.
+
 ### Breaking Changes
 
 ### Bugs Fixed

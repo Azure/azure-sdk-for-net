@@ -248,6 +248,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
                 await sender.SendMessagesAsync(batch);
                 AssertSendActivities(sender, messages, listener);
+
+                // delete messages
+                await receiver.DeleteMessagesAsync();
+                var deleteActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.DeleteActivityName);
+                AssertCommonTags(deleteActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace, default, 1);
             };
         }
 
