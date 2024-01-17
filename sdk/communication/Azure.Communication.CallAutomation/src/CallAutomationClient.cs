@@ -133,6 +133,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>Initializes a new instance of <see cref="CallAutomationClient"/> for mocking.</summary>
         protected CallAutomationClient()
         {
+            // testing pipeline
             _pipeline = null;
             _resourceEndpoint = null;
             _clientDiagnostics = null;
