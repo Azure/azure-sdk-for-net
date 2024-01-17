@@ -19,14 +19,14 @@ public class RequestOptions
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
 
-    private readonly PipelineMessageHeaders _requestHeaders;
+    private readonly PipelineMessageHeaders _addHeaders;
 
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
         ErrorOptions = ClientErrorBehaviors.Default;
 
-        _requestHeaders = new PipelineRequestHeaders();
+        _addHeaders = new PipelineRequestHeaders();
     }
 
     public CancellationToken CancellationToken { get; set; }
@@ -40,7 +40,7 @@ public class RequestOptions
 
         AssertNotFrozen();
 
-        _requestHeaders.Add(name, value);
+        _addHeaders.Add(name, value);
     }
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
@@ -66,32 +66,29 @@ public class RequestOptions
     }
 
     // Set options on the message before sending it through the pipeline.
-    internal void Apply(PipelineMessage message, PipelineMessageClassifier? messageClassifier = default)
+    internal void Apply(PipelineMessage message)
     {
         _frozen = true;
 
-        // Even though we're overriding the message.CancellationToken, this works
-        // with Azure.Core clients because message.CancellationToken is overridden
-        // in Azure.Core's HttpPipeline.Send, which will be the last update before
-        // the message flows though the pipeline.
+        // Set the cancellation token on the message so pipeline policies
+        // will have access to it as the message flows through the pipeline.
+        // This doesn't affect Azure.Core-based clients because the HttpMessage
+        // cancellation token will be set again in HttpPipeline.Send.
         message.CancellationToken = CancellationToken;
 
         // We don't overwrite the classifier on the message if it's already set.
-        // This is needed for Azure.Core so a ClientModel MessageClassifier
-        // doesn't overwrite an Azure.Core ResponseClassifier.  The classifier
-        // should never be pre-set on a ClientModel client.
-        message.MessageClassifier ??=
-            // The classifier passed by the client-author.
-            messageClassifier ??
-            // The internal global default classifier.
-            PipelineMessageClassifier.Default;
+        // This preserves any values set by the client author, and is also
+        // needed for Azure.Core-based clients so we don't overwrite a default
+        // Azure.Core ResponseClassifier.
+        message.MessageClassifier ??= PipelineMessageClassifier.Default;
 
-        // Copy custom pipeline policies.
+        // Copy custom pipeline policies to the message.
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
 
-        foreach (var header in _requestHeaders)
+        // Add the values of any headers set via AddHeader.
+        foreach (var header in _addHeaders)
         {
             message.Request.Headers.Add(header.Key, header.Value);
         }

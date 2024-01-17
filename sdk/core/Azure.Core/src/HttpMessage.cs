@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -80,6 +81,9 @@ namespace Azure.Core
         internal int RetryNumber { get; set; }
 
         internal DateTimeOffset ProcessingStartTime { get; set; }
+
+        internal void SetCancellationToken(CancellationToken cancellationToken)
+            => CancellationToken = cancellationToken;
 
         /// <summary>
         /// The processing context for the message.
