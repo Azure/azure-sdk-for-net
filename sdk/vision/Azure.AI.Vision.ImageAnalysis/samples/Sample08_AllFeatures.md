@@ -1,6 +1,6 @@
 # Analyze an Image with All Visual Features
 
-This sample demonstrates how to analyze an image using all visual features provided by Azure AI Vision ImageAnalysis. This includes features such as Caption, Dense Captions, Tags, Objects, SmartCrops, People, and Read. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
+This sample demonstrates how to analyze an image using all visual features provided by Azure AI Vision ImageAnalysis. This includes the features Caption, Dense Captions, Tags, Objects, SmartCrops, People, and Read. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
 ## Examples
 
@@ -87,7 +87,7 @@ This example demonstrates how to analyze an image URL using all visual features.
 ```C# Snippet:ImageAnalysisAllFromUrl
 // Analyze the image with all visual features.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.Caption |
     VisualFeatures.DenseCaptions |
     VisualFeatures.Tags |

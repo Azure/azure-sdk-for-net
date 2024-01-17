@@ -27,7 +27,7 @@ Here we are using environment variables to hold the endpoint and key for the Com
 
 ### Extract tags from an image file
 
-This example demonstrates how to extract tags for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains the extracted tags and their confidence scores in the range [0, 1].
+This example demonstrates how to extract tags for the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains the extracted tags and their confidence scores in the range [0, 1].
 
 ```C# Snippet:ImageAnalysisTagsFromFile
 // Use a file stream to pass the image data to the analyze call
@@ -50,12 +50,12 @@ foreach (DetectedTag tag in result.Tags.Values)
 
 ### Extract tags from an image URL
 
-This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisTagsFromUrl
 // Get the tags for the image.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.Tags);
 
 // Print tags results to the console

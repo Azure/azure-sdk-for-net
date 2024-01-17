@@ -26,7 +26,7 @@ Here we are using environment variables to hold the endpoint and key for the Com
 
 ### Detect people in an image file
 
-This example demonstrates how to detect people in the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains the detected people along with their bounding box coordinates and confidence scores.
+This example demonstrates how to detect people in the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains the detected people along with their bounding box coordinates and confidence scores.
 
 ```C# Snippet:ImageAnalysisPeopleFromFile
 // Use a file stream to pass the image data to the analyze call
@@ -49,12 +49,12 @@ foreach (DetectedPerson person in result.People.Values)
 
 ### Detect people in an image URL
 
-This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisPeopleFromUrl
 // Detect people in the image.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.People);
 
 // Print people detection results to the console

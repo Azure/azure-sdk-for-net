@@ -24,7 +24,7 @@ Here we are using environment variables to hold the endpoint and key for the Com
 
 ### Read text from an image file
 
-This example demonstrates how to read text from the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ReadResult` object, which contains the read text.
+This example demonstrates how to read text from the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ReadResult` object, which contains the read text.
 
 ```C# Snippet:ImageAnalysisReadFromFile
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
@@ -48,11 +48,11 @@ foreach (var line in result.Read.Blocks.SelectMany(block => block.Lines))
 
 ### Read text from an image URL
 
-This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisReadFromUrl
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.Read);
 
 Console.WriteLine($"Image read results:");

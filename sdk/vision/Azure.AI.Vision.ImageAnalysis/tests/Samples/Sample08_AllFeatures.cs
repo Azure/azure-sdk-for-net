@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Analyze the image with all visual features.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.Caption |
                 VisualFeatures.DenseCaptions |
                 VisualFeatures.Tags |

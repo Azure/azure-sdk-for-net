@@ -45,7 +45,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisDenseCaptionFromUrl
             // Get dense captions for the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.DenseCaptions,
                 new ImageAnalysisOptions { GenderNeutralCaption = true });
 

@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             #region Snippet:ImageAnalysisCaptionFromUrl
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.Caption,
                 new ImageAnalysisOptions { GenderNeutralCaption = true });
 
