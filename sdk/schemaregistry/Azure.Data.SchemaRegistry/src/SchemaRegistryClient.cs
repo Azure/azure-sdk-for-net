@@ -18,8 +18,6 @@ namespace Azure.Data.SchemaRegistry
     {
         private const string CredentialScope = "https://eventhubs.azure.net/.default";
 
-        private SchemaOps InternalClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClient"/>.
         /// </summary>
@@ -33,7 +31,6 @@ namespace Azure.Data.SchemaRegistry
         public SchemaRegistryClient(string fullyQualifiedNamespace, TokenCredential credential, SchemaRegistryClientOptions options) : this(new Uri($"https://{fullyQualifiedNamespace}"), credential, options)
         {
             FullyQualifiedNamespace = fullyQualifiedNamespace;
-            InternalClient = GetSchemaOpsClient();
         }
 
         /// <summary>
@@ -109,11 +106,11 @@ namespace Azure.Data.SchemaRegistry
                 Response response;
                 if (async)
                 {
-                    response = await InternalClient.RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
+                    response = await RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType().ToString(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = InternalClient.RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType().ToString(), cancellationToken);
+                    response = RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType().ToString(), cancellationToken);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -186,11 +183,11 @@ namespace Azure.Data.SchemaRegistry
                 Response response;
                 if (async)
                 {
-                    response = await InternalClient.GetSchemaIdByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaIdByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = InternalClient.GetSchemaIdByContent(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken);
+                    response = GetSchemaIdByContent(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -266,11 +263,11 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    response = await InternalClient.GetSchemaByVersionAsync(groupName, schemaName, version, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = InternalClient.GetSchemaByVersion(groupName, schemaName, version, cancellationToken);
+                    response = GetSchemaByVersion(groupName, schemaName, version, cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -300,11 +297,11 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    response = await InternalClient.GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = InternalClient.GetSchemaById(schemaId, cancellationToken);
+                    response = GetSchemaById(schemaId, cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;

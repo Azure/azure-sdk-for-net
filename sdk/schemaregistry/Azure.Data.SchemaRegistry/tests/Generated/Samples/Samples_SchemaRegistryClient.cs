@@ -16,15 +16,15 @@ using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Samples
 {
-    public partial class Samples_SchemaOps
+    public partial class Samples_SchemaRegistryClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SchemaOps_GetSchemaByVersion_ShortVersion()
+        public void Example_SchemaOperations_GetSchemaByVersion_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
 
@@ -34,11 +34,11 @@ namespace Azure.Data.SchemaRegistry.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SchemaOps_GetSchemaByVersion_ShortVersion_Async()
+        public async Task Example_SchemaOperations_GetSchemaByVersion_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
 
@@ -48,33 +48,33 @@ namespace Azure.Data.SchemaRegistry.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SchemaOps_GetSchemaByVersion_ShortVersion_Convenience()
+        public void Example_SchemaOperations_GetSchemaByVersion_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SchemaOps_GetSchemaByVersion_ShortVersion_Convenience_Async()
+        public async Task Example_SchemaOperations_GetSchemaByVersion_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SchemaOps_GetSchemaByVersion_AllParameters()
+        public void Example_SchemaOperations_GetSchemaByVersion_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
 
@@ -84,11 +84,11 @@ namespace Azure.Data.SchemaRegistry.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SchemaOps_GetSchemaByVersion_AllParameters_Async()
+        public async Task Example_SchemaOperations_GetSchemaByVersion_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
 
@@ -98,22 +98,22 @@ namespace Azure.Data.SchemaRegistry.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SchemaOps_GetSchemaByVersion_AllParameters_Convenience()
+        public void Example_SchemaOperations_GetSchemaByVersion_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SchemaOps_GetSchemaByVersion_AllParameters_Convenience_Async()
+        public async Task Example_SchemaOperations_GetSchemaByVersion_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaOps client = new SchemaRegistryClient(endpoint, credential).GetSchemaOpsClient(apiVersion: "2023-07-01");
+            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
 
             Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
         }
