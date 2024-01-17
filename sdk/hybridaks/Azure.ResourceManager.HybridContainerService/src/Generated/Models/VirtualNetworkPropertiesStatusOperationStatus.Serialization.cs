@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             Optional<HybridContainerServiceNetworkOperationError> error = default;
             Optional<string> operationId = default;
-            Optional<string> phase = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,18 +37,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phase"u8))
-                {
-                    phase = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkPropertiesStatusOperationStatus(error.Value, operationId.Value, phase.Value, status.Value);
+            return new VirtualNetworkPropertiesStatusOperationStatus(error.Value, operationId.Value, status.Value);
         }
     }
 }

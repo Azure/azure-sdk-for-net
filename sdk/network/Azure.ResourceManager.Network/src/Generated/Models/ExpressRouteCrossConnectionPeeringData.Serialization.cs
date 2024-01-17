@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -12,11 +15,24 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCrossConnectionPeeringData : IUtf8JsonSerializable
+    public partial class ExpressRouteCrossConnectionPeeringData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCrossConnectionPeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExpressRouteCrossConnectionPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -26,6 +42,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -38,6 +59,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AzureASN))
+            {
+                writer.WritePropertyName("azureASN"u8);
+                writer.WriteNumberValue(AzureASN.Value);
             }
             if (Optional.IsDefined(PeerASN))
             {
@@ -54,6 +80,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("secondaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(SecondaryPeerAddressPrefix);
             }
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAzurePort))
+            {
+                writer.WritePropertyName("primaryAzurePort"u8);
+                writer.WriteStringValue(PrimaryAzurePort);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecondaryAzurePort))
+            {
+                writer.WritePropertyName("secondaryAzurePort"u8);
+                writer.WriteStringValue(SecondaryAzurePort);
+            }
             if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
@@ -69,10 +105,20 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(GatewayManagerETag))
             {
                 writer.WritePropertyName("gatewayManagerEtag"u8);
                 writer.WriteStringValue(GatewayManagerETag);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            {
+                writer.WritePropertyName("lastModifiedBy"u8);
+                writer.WriteStringValue(LastModifiedBy);
             }
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
@@ -80,11 +126,40 @@ namespace Azure.ResourceManager.Network
                 writer.WriteObjectValue(IPv6PeeringConfig);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteCrossConnectionPeeringData DeserializeExpressRouteCrossConnectionPeeringData(JsonElement element)
+        ExpressRouteCrossConnectionPeeringData IJsonModel<ExpressRouteCrossConnectionPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement, options);
+        }
+
+        internal static ExpressRouteCrossConnectionPeeringData DeserializeExpressRouteCrossConnectionPeeringData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,6 +183,8 @@ namespace Azure.ResourceManager.Network
             Optional<string> gatewayManagerETag = default;
             Optional<string> lastModifiedBy = default;
             Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -261,8 +338,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExpressRouteCrossConnectionPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, ipv6PeeringConfig.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExpressRouteCrossConnectionPeeringData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, ipv6PeeringConfig.Value);
         }
+
+        BinaryData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExpressRouteCrossConnectionPeeringData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExpressRouteCrossConnectionPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
