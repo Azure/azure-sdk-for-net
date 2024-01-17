@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents a continuous action. </summary>
-    public partial class ContinuousAction : Action
+    public partial class ContinuousAction : ChaosExperimentAction
     {
         /// <summary> Initializes a new instance of <see cref="ContinuousAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
