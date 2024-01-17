@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace System.ClientModel.Internal;
 
@@ -19,7 +20,6 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     private (TKey Key, TValue Value) _second;
     private (TKey Key, TValue Value)[]? _rest;
     private int _count;
-    private readonly object _lock = new();
 #if DEBUG
     private bool _disposed;
 #endif
@@ -194,22 +194,41 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
 
                 return;
             default:
-                if (_rest == null)
+                // ArrayBackedPropertyBag is not thread safe.
+                // However, we need to be sure that _rest array never returned to the ArrayPool twice
+                var current = _rest;
+                var count = _count;
+                if (current == null)
                 {
-                    _rest = ArrayPool<(TKey Key, TValue Value)>.Shared.Rent(8);
-                    _rest[_count++ - 2] = (key, value);
-                    return;
+                    var rest = ArrayPool<(TKey, TValue)>.Shared.Rent(8);
+                    if (Interlocked.CompareExchange(ref _rest, rest, null) == null)
+                    {
+                        rest[count++ - 2] = (key, value);
+                    }
+                    else
+                    {
+                        ArrayPool<(TKey, TValue)>.Shared.Return(rest, true);
+                    }
                 }
-
-                if (_rest.Length <= _count)
+                else if (current.Length <= count)
                 {
-                    var larger = ArrayPool<(TKey Key, TValue Value)>.Shared.Rent(_rest.Length << 1);
-                    _rest.CopyTo(larger, 0);
-                    var old = _rest;
-                    _rest = larger;
-                    ArrayPool<(TKey Key, TValue Value)>.Shared.Return(old, true);
+                    var larger = ArrayPool<(TKey, TValue)>.Shared.Rent(current.Length << 1);
+                    if (Interlocked.CompareExchange(ref _rest, larger, current) == current)
+                    {
+                        current.CopyTo(larger, 0);
+                        larger[count++ - 2] = (key, value);
+                        ArrayPool<(TKey, TValue)>.Shared.Return(current, true);
+                    }
+                    else
+                    {
+                        ArrayPool<(TKey, TValue)>.Shared.Return(larger, true);
+                    }
                 }
-                _rest[_count++ - 2] = (key, value);
+                else
+                {
+                    current[count++ - 2] = (key, value);
+                }
+                _count = count;
                 return;
         }
     }
@@ -236,18 +255,19 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private int GetIndex(TKey key)
     {
-        if (_count == 0)
+        var count = _count;
+        if (count == 0)
             return -1;
-        if (_count > 0 && _first.Key.Equals(key))
+        if (count > 0 && _first.Key.Equals(key))
             return 0;
-        if (_count > 1 && _second.Key.Equals(key))
+        if (count > 1 && _second.Key.Equals(key))
             return 1;
 
-        if (_count <= 2)
+        if (count <= 2)
             return -1;
 
         (TKey Key, TValue Value)[] rest = GetRest();
-        int max = _count - 2;
+        int max = count - 2;
         for (var i = 0; i < max; i++)
         {
             if (rest[i].Key.Equals(key))
@@ -268,17 +288,10 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         _count = 0;
         _first = default;
         _second = default;
-
-        lock (_lock)
+        var rest = Interlocked.Exchange(ref _rest, default);
+        if (rest != default)
         {
-            if (_rest == default)
-            {
-                return;
-            }
-
-            var rest = _rest;
-            _rest = default;
-            ArrayPool<(TKey Key, TValue Value)>.Shared.Return(rest, true);
+            ArrayPool<(TKey, TValue)>.Shared.Return(rest, true);
         }
     }
 

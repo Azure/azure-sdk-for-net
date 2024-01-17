@@ -3,9 +3,13 @@
 
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
+using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace System.ClientModel.Tests.Internal;
 
@@ -207,6 +211,59 @@ public class ArrayBackedPropertyBagTests
         {
             Assert.IsTrue(second.TryGetValue(key, out var value));
             Assert.AreEqual(key, value);
+        }
+    }
+
+    [Test]
+    // This test validates that items can be added concurrently, and it doesn't lead to double return of array into array pool
+    public async Task AddItemsConcurrently()
+    {
+        // Warmup
+        var arrays = new List<(ulong, ulong)[]>();
+        for (int i = 8; i <= 0x1_000; i <<= 1)
+        {
+            arrays.Add(ArrayPool<(ulong, ulong)>.Shared.Rent(i));
+            arrays.Add(ArrayPool<(ulong, ulong)>.Shared.Rent(i));
+        }
+
+        foreach (var array in arrays)
+        {
+            ArrayPool<(ulong, ulong)>.Shared.Return(array, true);
+        }
+
+        arrays.Clear();
+
+        // Test
+        var target = new ArrayBackedPropertyBag<ulong, ulong>();
+        target.Set(0, 0);
+        target.Set(1, 1);
+        var signal = new SemaphoreSlim(0, 100);
+        var tasks = Enumerable.Range(0, 100).Select(_ => Task.Run(async () =>
+        {
+            await signal.WaitAsync();
+            for (ulong i = 2; i < 0x1_000; i++)
+            {
+                target.Set(i, i);
+            }
+        })).ToArray();
+
+        signal.Release(100);
+        await Task.WhenAll(tasks);
+        target.Dispose();
+
+        // Assert
+        for (int i = 0x1_000; i >= 8; i >>= 1)
+        {
+            arrays.Add(ArrayPool<(ulong, ulong)>.Shared.Rent(i));
+            arrays.Add(ArrayPool<(ulong, ulong)>.Shared.Rent(i));
+        }
+
+        for (int i = 0; i < arrays.Count - 1; i++)
+        {
+            for (int j = i + 1; j < arrays.Count; j++)
+            {
+                Assert.IsFalse(ReferenceEquals(arrays[i], arrays[j]));
+            }
         }
     }
 }
