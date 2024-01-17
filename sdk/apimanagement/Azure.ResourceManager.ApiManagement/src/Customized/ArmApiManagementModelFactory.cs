@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure;
@@ -36,6 +37,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="requestId"> Request Identifier. </param>
         /// <param name="requestSize"> The size of this request.. </param>
         /// <returns> A new <see cref="Models.RequestReportRecordContract"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("BackendResponseCode has been replaced by BackendResponseCodeInteger", false)]
         public static RequestReportRecordContract RequestReportRecordContract(string apiId = null, string operationId = null, string productId = null, string userId = null, RequestMethod? method = null, Uri uri = null, IPAddress ipAddress = null, string backendResponseCode = null, int? responseCode = null, int? responseSize = null, DateTimeOffset? timestamp = null, string cache = null, double? apiTime = null, double? serviceTime = null, string apiRegion = null, ResourceIdentifier subscriptionResourceId = null, string requestId = null, int? requestSize = null)
             => new RequestReportRecordContract(apiId, operationId, productId, userId, method, uri, ipAddress, int.Parse(backendResponseCode), responseCode, responseSize, timestamp, cache, apiTime, serviceTime, apiRegion, subscriptionResourceId, requestId, requestSize);
     }
