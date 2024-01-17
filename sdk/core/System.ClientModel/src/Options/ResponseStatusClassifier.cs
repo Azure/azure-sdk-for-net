@@ -24,14 +24,17 @@ namespace System.ClientModel.Primitives
             }
         }
 
-        public sealed override bool IsErrorResponse(PipelineMessage message)
+        public override bool TryClassifyResponse(PipelineMessage message, out bool isError)
         {
             if (message.Response is null)
             {
                 throw new InvalidOperationException("Response is not set on message.");
             }
 
-            return !_successCodes[message.Response.Status];
+            isError = !_successCodes[message.Response.Status];
+
+            // Always terminate any classifier-chain.
+            return true;
         }
 
         private void AddClassifier(int statusCode, bool isError)

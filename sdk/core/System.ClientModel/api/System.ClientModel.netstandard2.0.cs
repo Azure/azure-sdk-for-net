@@ -159,7 +159,7 @@ namespace System.ClientModel.Primitives
     {
         protected internal PipelineMessageClassifier() { }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
-        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public virtual bool TryClassifyResponse(System.ClientModel.Primitives.PipelineMessage message, out bool isError) { throw null; }
     }
     public partial class PipelineMessageDelay
     {

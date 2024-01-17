@@ -29,21 +29,21 @@ public class MockMessageClassifier : PipelineMessageClassifier
 
     public string Id { get; set; }
 
-    public override bool IsErrorResponse(PipelineMessage message)
+    public override bool TryClassifyResponse(PipelineMessage message, out bool isError)
     {
+        isError = false;
+
         if (_successCodes is not null)
         {
             foreach (var code in _successCodes)
             {
                 if (message.Response!.Status == code)
                 {
-                    return true;
+                    isError = true;
                 }
             }
-
-            return false;
         }
 
-        return base.IsErrorResponse(message);
+        return true;
     }
 }
