@@ -52,9 +52,9 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetProjectSucceeds()
         {
-            Response<DevCenterProject> getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
+            DevCenterProject project = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
 
-            string projectName = getProjectResponse.Value.Name;
+            string projectName = project.Name;
             if (string.IsNullOrWhiteSpace(projectName))
             {
                 Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
