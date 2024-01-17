@@ -148,6 +148,8 @@
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.6.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.6.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.6.0" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.6.0" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.6.0" />
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
