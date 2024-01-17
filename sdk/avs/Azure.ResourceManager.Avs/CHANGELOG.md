@@ -1,14 +1,12 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2024-01-22)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added ExtendedNetworkBlocks to AvsPrivateCloudData class
 
 ### Other Changes
+- Upgraded API version to 2023-03-01
 
 ## 1.2.0 (2023-11-27)
 
