@@ -238,14 +238,16 @@ function Prepare-Assets($ProxyExe, $MountDirectory, $AssetsJson) {
     }
 }
 
-function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
+function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory, $RelativeAssetsJson){
+    $remainingTagString = $RemainingTags -join " "
     foreach($Tag in $RemainingTags) {
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
         $existingTags = Save-Incomplete-Progress $Tag $MountDirectory
         $cherryPickResult = Git-Command-With-Result "cherry-pick $tagSha" - $AssetsRepoLocation -HardExit $false
 
         if ($cherryPickResult.ExitCode -ne 0) {
-            Write-Host "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-run this script with the same arguments as before." -ForegroundColor Red
+            Write-Host "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-invoke " +
+            "by `"./eng/common/testproxy/scripts/tag-merge/merge-proxy-tags.ps1 $RelativeAssetsJson $remainingTagString`"" -ForegroundColor Red
             exit 1
         }
     }
@@ -276,6 +278,7 @@ if ($PSVersionTable["PSVersion"].Major -lt 6) {
 # resolve the proxy location so that we can invoke it easily, if not present we exit here.
 $proxyExe = Resolve-Proxy
 
+$relativeAssetsJson = $AssetsJson
 $AssetsJson = Resolve-Path $AssetsJson
 
 # figure out where the root of the repo for the passed assets.json is. We need it to properly set the mounting
@@ -295,6 +298,6 @@ $tags = Resolve-Target-Tags $AssetsJson $TargetTags $mountDirectory
 
 Start-Message $AssetsJson $Tags $AssetsRepoLocation $mountDirectory
 
-$CombinedTags = Combine-Tags $Tags $AssetsRepoLocation $mountDirectory
+$CombinedTags = Combine-Tags $Tags $AssetsRepoLocation $mountDirectory $relativeAssetsJson
 
 Finish-Message $AssetsJson $CombinedTags $AssetsRepoLocation $mountDirectory

@@ -38,6 +38,8 @@ This script should _only_ be used on an already conflicted `assets.json` file. O
 
 ### Call the script
 
+For simplicity when resolving merge-conflicts, invoke the script from the root of the repo. The help instructions from `merge-asset-tags` use paths relative from repo root.
+
 ```powershell
 # including context to get into a merge conflict
 cd "path/to/language/repo/root"

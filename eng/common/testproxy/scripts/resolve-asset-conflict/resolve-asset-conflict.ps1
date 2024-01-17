@@ -36,7 +36,6 @@ if (!(Test-Path $AssetsJson)) {
 }
 
 # normally we we would Resolve-Path the $AssetsJson, but the git show command only works with relative paths, so we'll just keep that here.
-
 if (-not $AssetsJson.EndsWith("assets.json")) {
   Write-Error "This script can only resolve conflicts within an assets.json. The file provided is not an assets.json: $AssetsJson"
   exit 1
@@ -69,10 +68,11 @@ catch {
 Write-Host "Replacing conflicted assets.json with base branch version." -ForegroundColor Green
 Set-Content -Path $AssetsJson -Value $conflictingAssets.Left()
 
-# $PSScriptRoot/../tag-merge/merge-proxy-tags.ps1 $AssetsJson $BaseAssets.Tag $TargetAssets.Tag
+$PSScriptRoot/../tag-merge/merge-proxy-tags.ps1 $AssetsJson $BaseAssets.Tag $TargetAssets.Tag
 
-# Write-Host $lastexitcode
-
-# if ($lastexitcode -eq 0) {
-#   Write-Host "Successfully merged '$($TargetASsets.Tag)' into '$($BaseAssets.Tag)'. Invoke 'test-proxy push $AssetsJson' and commit the result before continuing the merge!" -ForegroundColor Green
-# }
+if ($lastexitcode -eq 0) {
+   Write-Host "Successfully merged '$($TargetASsets.Tag)' into '$($BaseAssets.Tag)'. Invoke 'test-proxy push -a $AssetsJson' and commit the resulting assets.json!" -ForegroundColor Green
+}
+else {
+  Write-Host "Conflicts were discovered, resolve the conflicts and invoke the `"merge-proxy-tags.ps1`" as recommended in the line directly above."
+}
