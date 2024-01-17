@@ -5,16 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PublicIPDdosProtectionStatusResult
+    public partial class PublicIPDdosProtectionStatusResult : IUtf8JsonSerializable, IJsonModel<PublicIPDdosProtectionStatusResult>
     {
-        internal static PublicIPDdosProtectionStatusResult DeserializePublicIPDdosProtectionStatusResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIPDdosProtectionStatusResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PublicIPDdosProtectionStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPDdosProtectionStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PublicIPAddressId))
+            {
+                writer.WritePropertyName("publicIpAddressId"u8);
+                writer.WriteStringValue(PublicIPAddressId);
+            }
+            if (Optional.IsDefined(PublicIPAddress))
+            {
+                writer.WritePropertyName("publicIpAddress"u8);
+                writer.WriteStringValue(PublicIPAddress.ToString());
+            }
+            if (Optional.IsDefined(IsWorkloadProtected))
+            {
+                writer.WritePropertyName("isWorkloadProtected"u8);
+                writer.WriteStringValue(IsWorkloadProtected.Value.ToString());
+            }
+            if (Optional.IsDefined(DdosProtectionPlanId))
+            {
+                writer.WritePropertyName("ddosProtectionPlanId"u8);
+                writer.WriteStringValue(DdosProtectionPlanId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PublicIPDdosProtectionStatusResult IJsonModel<PublicIPDdosProtectionStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPDdosProtectionStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePublicIPDdosProtectionStatusResult(document.RootElement, options);
+        }
+
+        internal static PublicIPDdosProtectionStatusResult DeserializePublicIPDdosProtectionStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +89,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IPAddress> publicIPAddress = default;
             Optional<WorkloadProtectedFlag> isWorkloadProtected = default;
             Optional<ResourceIdentifier> ddosProtectionPlanId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIpAddressId"u8))
@@ -61,8 +129,44 @@ namespace Azure.ResourceManager.Network.Models
                     ddosProtectionPlanId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PublicIPDdosProtectionStatusResult(publicIPAddressId.Value, publicIPAddress.Value, Optional.ToNullable(isWorkloadProtected), ddosProtectionPlanId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PublicIPDdosProtectionStatusResult(publicIPAddressId.Value, publicIPAddress.Value, Optional.ToNullable(isWorkloadProtected), ddosProtectionPlanId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PublicIPDdosProtectionStatusResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPDdosProtectionStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PublicIPDdosProtectionStatusResult IPersistableModel<PublicIPDdosProtectionStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPDdosProtectionStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePublicIPDdosProtectionStatusResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PublicIPDdosProtectionStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

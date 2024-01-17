@@ -12,12 +12,7 @@ public class PipelineMessageTests
     [Test]
     public void CanSetAndGetMessageProperties()
     {
-        ClientPipelineOptions options = new ClientPipelineOptions()
-        {
-            Transport = new ObservableTransport("MockTransport")
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
 
         message.SetProperty(GetType(), "MockProperty");
@@ -29,12 +24,7 @@ public class PipelineMessageTests
     [Test]
     public void TryGetPropertyReturnsFalseIfNotExist()
     {
-        ClientPipelineOptions options = new ClientPipelineOptions()
-        {
-            Transport = new ObservableTransport("MockTransport")
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
 
         Assert.False(message.TryGetProperty(GetType(), out _));
@@ -43,12 +33,7 @@ public class PipelineMessageTests
     [Test]
     public void TryGetPropertyReturnsValueIfSet()
     {
-        ClientPipelineOptions options = new ClientPipelineOptions()
-        {
-            Transport = new ObservableTransport("MockTransport")
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
 
         message.SetProperty(GetType(), "value");
@@ -60,12 +45,7 @@ public class PipelineMessageTests
     [Test]
     public void TryGetTypeKeyedPropertyReturnsCorrectValues()
     {
-        ClientPipelineOptions options = new ClientPipelineOptions()
-        {
-            Transport = new ObservableTransport("MockTransport")
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
 
         int readLoops = 10;
