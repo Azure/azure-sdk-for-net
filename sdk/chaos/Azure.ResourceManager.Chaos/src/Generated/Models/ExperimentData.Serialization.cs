@@ -52,18 +52,6 @@ namespace Azure.ResourceManager.Chaos
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StartOnCreation))
-            {
-                if (StartOnCreation != null)
-                {
-                    writer.WritePropertyName("startOnCreation"u8);
-                    writer.WriteBooleanValue(StartOnCreation.Value);
-                }
-                else
-                {
-                    writer.WriteNull("startOnCreation");
-                }
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -81,9 +69,9 @@ namespace Azure.ResourceManager.Chaos
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            IList<Step> steps = default;
-            IList<Selector> selectors = default;
-            Optional<bool?> startOnCreation = default;
+            Optional<ProvisioningState> provisioningState = default;
+            IList<ChaosExperimentStep> steps = default;
+            IList<ChaosTargetSelector> selectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -147,41 +135,40 @@ namespace Azure.ResourceManager.Chaos
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("steps"u8))
                         {
-                            List<Step> array = new List<Step>();
+                            List<ChaosExperimentStep> array = new List<ChaosExperimentStep>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Step.DeserializeStep(item));
+                                array.Add(ChaosExperimentStep.DeserializeChaosExperimentStep(item));
                             }
                             steps = array;
                             continue;
                         }
                         if (property0.NameEquals("selectors"u8))
                         {
-                            List<Selector> array = new List<Selector>();
+                            List<ChaosTargetSelector> array = new List<ChaosTargetSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Selector.DeserializeSelector(item));
+                                array.Add(ChaosTargetSelector.DeserializeChaosTargetSelector(item));
                             }
                             selectors = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("startOnCreation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                startOnCreation = null;
-                                continue;
-                            }
-                            startOnCreation = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, steps, selectors, Optional.ToNullable(startOnCreation));
+            return new ExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), steps, selectors);
         }
     }
 }

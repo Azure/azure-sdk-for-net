@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> All properties of the provisioned cluster. </summary>
+    /// <summary> Properties of the provisioned cluster. </summary>
     public partial class ProvisionedClusterProperties
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterProperties"/>. </summary>
@@ -20,31 +20,37 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterProperties"/>. </summary>
-        /// <param name="linuxProfile"> LinuxProfile - The profile for Linux VMs in the Provisioned Cluster. </param>
-        /// <param name="controlPlane"> ControlPlane - ControlPlane Configuration. </param>
-        /// <param name="kubernetesVersion"> KubernetesVersion - Version of Kubernetes specified when creating the managed cluster. </param>
-        /// <param name="networkProfile"> NetworkProfile - Profile of network configuration. </param>
-        /// <param name="agentPoolProfiles"> The agent pools of the cluster. </param>
-        /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="status"> HybridAKSClusterStatus defines the observed state of HybridAKSCluster. </param>
+        /// <param name="linuxProfile"> The profile for Linux VMs in the provisioned cluster. </param>
+        /// <param name="controlPlane"> The profile for control plane of the provisioned cluster. </param>
+        /// <param name="kubernetesVersion"> The version of Kubernetes in use by the provisioned cluster. </param>
+        /// <param name="networkProfile"> The network configuration profile for the provisioned cluster. </param>
+        /// <param name="storageProfile"> The storage configuration profile for the provisioned cluster. </param>
+        /// <param name="clusterVmAccessProfile"> The SSH restricted access profile for the VMs in the provisioned cluster. </param>
+        /// <param name="agentPoolProfiles"> The agent pool properties for the provisioned cluster. </param>
+        /// <param name="cloudProviderProfile"> The profile for the underlying cloud infrastructure provider for the provisioned cluster. </param>
+        /// <param name="provisioningState"> The status of the latest long running operation for the provisioned cluster. </param>
+        /// <param name="status"> The observed status of the provisioned cluster. </param>
         /// <param name="licenseProfile"> The license profile of the provisioned cluster. </param>
-        internal ProvisionedClusterProperties(LinuxProfileProperties linuxProfile, ProvisionedClusterControlPlaneProfile controlPlane, string kubernetesVersion, ProvisionedClusterNetworkProfile networkProfile, IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles, ProvisionedClusterCloudProviderProfile cloudProviderProfile, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterStatus status, ProvisionedClusterLicenseProfile licenseProfile)
+        /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when auto scaling is enabled for the provisioned cluster. </param>
+        internal ProvisionedClusterProperties(LinuxProfileProperties linuxProfile, ProvisionedClusterControlPlaneProfile controlPlane, string kubernetesVersion, ProvisionedClusterNetworkProfile networkProfile, StorageProfile storageProfile, ClusterVmAccessProfile clusterVmAccessProfile, IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles, ProvisionedClusterCloudProviderProfile cloudProviderProfile, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterStatus status, ProvisionedClusterLicenseProfile licenseProfile, ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile)
         {
             LinuxProfile = linuxProfile;
             ControlPlane = controlPlane;
             KubernetesVersion = kubernetesVersion;
             NetworkProfile = networkProfile;
+            StorageProfile = storageProfile;
+            ClusterVmAccessProfile = clusterVmAccessProfile;
             AgentPoolProfiles = agentPoolProfiles;
             CloudProviderProfile = cloudProviderProfile;
             ProvisioningState = provisioningState;
             Status = status;
             LicenseProfile = licenseProfile;
+            AutoScalerProfile = autoScalerProfile;
         }
 
-        /// <summary> LinuxProfile - The profile for Linux VMs in the Provisioned Cluster. </summary>
+        /// <summary> The profile for Linux VMs in the provisioned cluster. </summary>
         internal LinuxProfileProperties LinuxProfile { get; set; }
-        /// <summary> PublicKeys - The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified. </summary>
+        /// <summary> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </summary>
         public IList<LinuxSshPublicKey> SshPublicKeys
         {
             get
@@ -55,17 +61,33 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
         }
 
-        /// <summary> ControlPlane - ControlPlane Configuration. </summary>
+        /// <summary> The profile for control plane of the provisioned cluster. </summary>
         public ProvisionedClusterControlPlaneProfile ControlPlane { get; set; }
-        /// <summary> KubernetesVersion - Version of Kubernetes specified when creating the managed cluster. </summary>
+        /// <summary> The version of Kubernetes in use by the provisioned cluster. </summary>
         public string KubernetesVersion { get; set; }
-        /// <summary> NetworkProfile - Profile of network configuration. </summary>
+        /// <summary> The network configuration profile for the provisioned cluster. </summary>
         public ProvisionedClusterNetworkProfile NetworkProfile { get; set; }
-        /// <summary> The agent pools of the cluster. </summary>
+        /// <summary> The storage configuration profile for the provisioned cluster. </summary>
+        public StorageProfile StorageProfile { get; set; }
+        /// <summary> The SSH restricted access profile for the VMs in the provisioned cluster. </summary>
+        internal ClusterVmAccessProfile ClusterVmAccessProfile { get; set; }
+        /// <summary> IP Address or CIDR for SSH access to VMs in the provisioned cluster. </summary>
+        public string ClusterVmAccessAuthorizedIPRanges
+        {
+            get => ClusterVmAccessProfile is null ? default : ClusterVmAccessProfile.AuthorizedIPRanges;
+            set
+            {
+                if (ClusterVmAccessProfile is null)
+                    ClusterVmAccessProfile = new ClusterVmAccessProfile();
+                ClusterVmAccessProfile.AuthorizedIPRanges = value;
+            }
+        }
+
+        /// <summary> The agent pool properties for the provisioned cluster. </summary>
         public IList<HybridContainerServiceNamedAgentPoolProfile> AgentPoolProfiles { get; }
-        /// <summary> The underlying cloud infra provider properties. </summary>
+        /// <summary> The profile for the underlying cloud infrastructure provider for the provisioned cluster. </summary>
         internal ProvisionedClusterCloudProviderProfile CloudProviderProfile { get; set; }
-        /// <summary> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
+        /// <summary> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
         public IList<ResourceIdentifier> InfraNetworkVnetSubnetIds
         {
             get
@@ -76,13 +98,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
         }
 
-        /// <summary> Provisioning state of the resource. </summary>
+        /// <summary> The status of the latest long running operation for the provisioned cluster. </summary>
         public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> HybridAKSClusterStatus defines the observed state of HybridAKSCluster. </summary>
+        /// <summary> The observed status of the provisioned cluster. </summary>
         public ProvisionedClusterStatus Status { get; }
         /// <summary> The license profile of the provisioned cluster. </summary>
         internal ProvisionedClusterLicenseProfile LicenseProfile { get; set; }
-        /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
+        /// <summary> Indicates whether Azure Hybrid Benefit is opted in. Default value is false. </summary>
         public ProvisionedClusterAzureHybridBenefit? LicenseAzureHybridBenefit
         {
             get => LicenseProfile is null ? default : LicenseProfile.AzureHybridBenefit;
@@ -93,5 +115,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 LicenseProfile.AzureHybridBenefit = value;
             }
         }
+
+        /// <summary> Parameters to be applied to the cluster-autoscaler when auto scaling is enabled for the provisioned cluster. </summary>
+        public ProvisionedClusterPropertiesAutoScalerProfile AutoScalerProfile { get; set; }
     }
 }

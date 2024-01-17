@@ -19,6 +19,11 @@ namespace Azure.Identity.Broker
         public bool? IsLegacyMsaPassthroughEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets whether proof of possession is required.
+        /// </summary>
+        public bool IsProofOfPossessionRequired { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
         /// </summary>
         public SharedTokenCacheCredentialBrokerOptions()

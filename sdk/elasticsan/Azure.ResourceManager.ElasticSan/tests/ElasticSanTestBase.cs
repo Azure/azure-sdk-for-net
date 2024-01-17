@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests
         {
             string locationParameter = location ?? DefaultLocation;
             ElasticSanData parameters = new ElasticSanData(locationParameter,
-                new ElasticSanSku(ElasticSanSkuName.PremiumLrs, null),
+                new ElasticSanSku(ElasticSanSkuName.PremiumLrs, null, null),
                 baseSizeTib,
                 extendedCapacitySizeTib);
             return parameters;

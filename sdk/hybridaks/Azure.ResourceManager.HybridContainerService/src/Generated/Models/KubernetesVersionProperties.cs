@@ -21,27 +21,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionProperties"/>. </summary>
         /// <param name="version"> major.minor version of Kubernetes release. </param>
-        /// <param name="capabilities"> Capabilities on this kubernetes version. </param>
         /// <param name="isPreview"> Whether this version is in preview mode. </param>
         /// <param name="patchVersions"> Patch versions of a Kubernetes release. </param>
-        internal KubernetesVersionProperties(string version, KubernetesVersionCapabilities capabilities, bool? isPreview, IReadOnlyDictionary<string, KubernetesPatchVersions> patchVersions)
+        internal KubernetesVersionProperties(string version, bool? isPreview, IReadOnlyDictionary<string, KubernetesPatchVersions> patchVersions)
         {
             Version = version;
-            Capabilities = capabilities;
             IsPreview = isPreview;
             PatchVersions = patchVersions;
         }
 
         /// <summary> major.minor version of Kubernetes release. </summary>
         public string Version { get; }
-        /// <summary> Capabilities on this kubernetes version. </summary>
-        internal KubernetesVersionCapabilities Capabilities { get; }
-        /// <summary> Gets the capabilities support plan. </summary>
-        public IReadOnlyList<string> CapabilitiesSupportPlan
-        {
-            get => Capabilities?.SupportPlan;
-        }
-
         /// <summary> Whether this version is in preview mode. </summary>
         public bool? IsPreview { get; }
         /// <summary> Patch versions of a Kubernetes release. </summary>

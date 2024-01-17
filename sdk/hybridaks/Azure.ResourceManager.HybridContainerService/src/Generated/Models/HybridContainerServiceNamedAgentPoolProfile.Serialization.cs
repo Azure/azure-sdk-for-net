@@ -31,16 +31,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
-            {
-                writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteStartArray();
-                foreach (var item in AvailabilityZones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -51,10 +41,46 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (Optional.IsDefined(NodeImageVersion))
+            if (Optional.IsCollectionDefined(NodeLabels))
             {
-                writer.WritePropertyName("nodeImageVersion"u8);
-                writer.WriteStringValue(NodeImageVersion);
+                writer.WritePropertyName("nodeLabels"u8);
+                writer.WriteStartObject();
+                foreach (var item in NodeLabels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(NodeTaints))
+            {
+                writer.WritePropertyName("nodeTaints"u8);
+                writer.WriteStartArray();
+                foreach (var item in NodeTaints)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MaxCount))
+            {
+                writer.WritePropertyName("maxCount"u8);
+                writer.WriteNumberValue(MaxCount.Value);
+            }
+            if (Optional.IsDefined(MinCount))
+            {
+                writer.WritePropertyName("minCount"u8);
+                writer.WriteNumberValue(MinCount.Value);
+            }
+            if (Optional.IsDefined(EnableAutoScaling))
+            {
+                writer.WritePropertyName("enableAutoScaling"u8);
+                writer.WriteBooleanValue(EnableAutoScaling.Value);
+            }
+            if (Optional.IsDefined(MaxPods))
+            {
+                writer.WritePropertyName("maxPods"u8);
+                writer.WriteNumberValue(MaxPods.Value);
             }
             writer.WriteEndObject();
         }
@@ -67,11 +93,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             Optional<int> count = default;
             Optional<string> vmSize = default;
+            Optional<string> kubernetesVersion = default;
             Optional<string> name = default;
-            Optional<IList<string>> availabilityZones = default;
             Optional<HybridContainerServiceOSType> osType = default;
             Optional<HybridContainerServiceOSSku> ossku = default;
-            Optional<string> nodeImageVersion = default;
+            Optional<IDictionary<string, string>> nodeLabels = default;
+            Optional<IList<string>> nodeTaints = default;
+            Optional<int> maxCount = default;
+            Optional<int> minCount = default;
+            Optional<bool> enableAutoScaling = default;
+            Optional<int> maxPods = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -88,23 +119,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vmSize = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kubernetesVersion"u8))
+                {
+                    kubernetesVersion = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("availabilityZones"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    availabilityZones = array;
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -125,13 +147,72 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     ossku = new HybridContainerServiceOSSku(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nodeImageVersion"u8))
+                if (property.NameEquals("nodeLabels"u8))
                 {
-                    nodeImageVersion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    nodeLabels = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("nodeTaints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    nodeTaints = array;
+                    continue;
+                }
+                if (property.NameEquals("maxCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("minCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("enableAutoScaling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAutoScaling = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("maxPods"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxPods = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new HybridContainerServiceNamedAgentPoolProfile(Optional.ToList(availabilityZones), Optional.ToNullable(osType), Optional.ToNullable(ossku), nodeImageVersion.Value, Optional.ToNullable(count), vmSize.Value, name.Value);
+            return new HybridContainerServiceNamedAgentPoolProfile(Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, name.Value);
         }
     }
 }
