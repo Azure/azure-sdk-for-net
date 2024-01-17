@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Enum that discriminates between filter types. Currently only `Simple` type is supported. </summary>
+    /// <summary>
+    /// Enum that discriminates between filter types. Currently only `Simple` type is supported.
+    /// Serialized Name: FilterType
+    /// </summary>
     internal readonly partial struct FilterType : IEquatable<FilterType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         private const string SimpleValue = "Simple";
 
-        /// <summary> Simple. </summary>
+        /// <summary>
+        /// Simple
+        /// Serialized Name: FilterType.Simple
+        /// </summary>
         public static FilterType Simple { get; } = new FilterType(SimpleValue);
         /// <summary> Determines if two <see cref="FilterType"/> values are the same. </summary>
         public static bool operator ==(FilterType left, FilterType right) => left.Equals(right);

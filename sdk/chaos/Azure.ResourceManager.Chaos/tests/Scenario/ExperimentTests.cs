@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Chaos.Tests
             var deleteResponse = await experimentResourceResponse.Value.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
             Assert.AreEqual(200, deleteResponse.GetRawResponse().Status);
 
-            await Delay(2000);
-            var existsResponse = await rg.GetExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
+            await Delay(2000, 0);
+            var existsResponse = await rg.GetChaosExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
             Assert.AreEqual(false, existsResponse.Value);
         }
 
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Chaos.Tests
             var startResponse = await experimentResourceResponse.Value.StartAsync(WaitUntil.Started).ConfigureAwait(false);
             Assert.AreEqual(202, startResponse.GetRawResponse().Status);
 
-            var executionsList = await experimentResourceResponse.Value.GetExperimentExecutions().ToListAsync().ConfigureAwait(false);
+            var executionsList = await experimentResourceResponse.Value.GetChaosExperimentExecutions().ToListAsync().ConfigureAwait(false);
             Assert.True(executionsList.Any());
 
             var executionId = UrlUtility.GetExecutionsId(executionsList.FirstOrDefault().Id);
-            var executionResponse = await experimentResourceResponse.Value.GetExperimentExecutionAsync(executionId).ConfigureAwait(false);
+            var executionResponse = await experimentResourceResponse.Value.GetChaosExperimentExecutionAsync(executionId).ConfigureAwait(false);
             Assert.AreEqual(200, executionResponse.GetRawResponse().Status);
         }
 

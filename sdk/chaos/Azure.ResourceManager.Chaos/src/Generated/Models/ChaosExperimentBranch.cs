@@ -12,15 +12,54 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a branch in the step. 9 total per experiment. </summary>
+    /// <summary>
+    /// Model that represents a branch in the step. 9 total per experiment.
+    /// Serialized Name: ChaosExperimentBranch
+    /// </summary>
     public partial class ChaosExperimentBranch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentBranch"/>. </summary>
-        /// <param name="name"> String of the branch name. </param>
+        /// <param name="name">
+        /// String of the branch name.
+        /// Serialized Name: ChaosExperimentBranch.name
+        /// </param>
         /// <param name="actions">
         /// List of actions.
+        /// Serialized Name: ChaosExperimentBranch.actions
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
+        /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="actions"/> is null. </exception>
         public ChaosExperimentBranch(string name, IEnumerable<ChaosExperimentAction> actions)
@@ -33,24 +72,39 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentBranch"/>. </summary>
-        /// <param name="name"> String of the branch name. </param>
+        /// <param name="name">
+        /// String of the branch name.
+        /// Serialized Name: ChaosExperimentBranch.name
+        /// </param>
         /// <param name="actions">
         /// List of actions.
+        /// Serialized Name: ChaosExperimentBranch.actions
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
+        /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
         /// </param>
-        internal ChaosExperimentBranch(string name, IList<ChaosExperimentAction> actions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChaosExperimentBranch(string name, IList<ChaosExperimentAction> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> String of the branch name. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosExperimentBranch"/> for deserialization. </summary>
+        internal ChaosExperimentBranch()
+        {
+        }
+
+        /// <summary>
+        /// String of the branch name.
+        /// Serialized Name: ChaosExperimentBranch.name
+        /// </summary>
         public string Name { get; set; }
         /// <summary>
         /// List of actions.
+        /// Serialized Name: ChaosExperimentBranch.actions
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
+        /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
         /// </summary>
         public IList<ChaosExperimentAction> Actions { get; }
     }

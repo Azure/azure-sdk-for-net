@@ -13,13 +13,17 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary>
     /// Model that represents a selector in the Experiment resource.
+    /// Serialized Name: ChaosTargetSelector
     /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
     /// </summary>
     public abstract partial class ChaosTargetSelector
     {
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSelector"/>. </summary>
-        /// <param name="id"> String of the selector ID. </param>
+        /// <param name="id">
+        /// String of the selector ID.
+        /// Serialized Name: ChaosTargetSelector.id
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         protected ChaosTargetSelector(string id)
         {
@@ -30,10 +34,17 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSelector"/>. </summary>
-        /// <param name="selectorType"> Enum of the selector type. </param>
-        /// <param name="id"> String of the selector ID. </param>
+        /// <param name="selectorType">
+        /// Enum of the selector type.
+        /// Serialized Name: ChaosTargetSelector.type
+        /// </param>
+        /// <param name="id">
+        /// String of the selector ID.
+        /// Serialized Name: ChaosTargetSelector.id
+        /// </param>
         /// <param name="filter">
         /// Model that represents available filter types that can be applied to a targets list.
+        /// Serialized Name: ChaosTargetSelector.filter
         /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetSimpleFilter"/>.
         /// </param>
@@ -46,12 +57,24 @@ namespace Azure.ResourceManager.Chaos.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Enum of the selector type. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetSelector"/> for deserialization. </summary>
+        internal ChaosTargetSelector()
+        {
+        }
+
+        /// <summary>
+        /// Enum of the selector type.
+        /// Serialized Name: ChaosTargetSelector.type
+        /// </summary>
         internal SelectorType SelectorType { get; set; }
-        /// <summary> String of the selector ID. </summary>
+        /// <summary>
+        /// String of the selector ID.
+        /// Serialized Name: ChaosTargetSelector.id
+        /// </summary>
         public string Id { get; set; }
         /// <summary>
         /// Model that represents available filter types that can be applied to a targets list.
+        /// Serialized Name: ChaosTargetSelector.filter
         /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetSimpleFilter"/>.
         /// </summary>

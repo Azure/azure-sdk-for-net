@@ -1,8 +1,13 @@
 # Release History
 
-## 1.0.0-beta.7 (2024-01-11)
+## 1.0.0 (2024-01-17)
+
+This is the first stable release of Chaos client library.
+
+### Features Added
 
 - Update API version to 2023-11-01
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ## 1.0.0-beta.6 (2023-11-27)
 

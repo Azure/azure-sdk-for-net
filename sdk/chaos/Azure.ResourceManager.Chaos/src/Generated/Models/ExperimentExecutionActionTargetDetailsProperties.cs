@@ -6,41 +6,109 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents the Experiment action target details properties model. </summary>
+    /// <summary>
+    /// Model that represents the Experiment action target details properties model.
+    /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties
+    /// </summary>
     public partial class ExperimentExecutionActionTargetDetailsProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
         internal ExperimentExecutionActionTargetDetailsProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="target"> The target for the action. </param>
-        /// <param name="targetFailedOn"> String that represents the failed date time. </param>
-        /// <param name="targetCompletedOn"> String that represents the completed date time. </param>
-        /// <param name="error"> The error of the action. </param>
-        internal ExperimentExecutionActionTargetDetailsProperties(string status, string target, DateTimeOffset? targetFailedOn, DateTimeOffset? targetCompletedOn, ExperimentExecutionActionTargetDetailsError error)
+        /// <param name="status">
+        /// The status of the execution.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.status
+        /// </param>
+        /// <param name="target">
+        /// The target for the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.target
+        /// </param>
+        /// <param name="targetFailedOn">
+        /// String that represents the failed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetFailedTime
+        /// </param>
+        /// <param name="targetCompletedOn">
+        /// String that represents the completed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetCompletedTime
+        /// </param>
+        /// <param name="error">
+        /// The error of the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.error
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentExecutionActionTargetDetailsProperties(string status, string target, DateTimeOffset? targetFailedOn, DateTimeOffset? targetCompletedOn, ExperimentExecutionActionTargetDetailsError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Target = target;
             TargetFailedOn = targetFailedOn;
             TargetCompletedOn = targetCompletedOn;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the execution. </summary>
+        /// <summary>
+        /// The status of the execution.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The target for the action. </summary>
+        /// <summary>
+        /// The target for the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.target
+        /// </summary>
         public string Target { get; }
-        /// <summary> String that represents the failed date time. </summary>
+        /// <summary>
+        /// String that represents the failed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetFailedTime
+        /// </summary>
         public DateTimeOffset? TargetFailedOn { get; }
-        /// <summary> String that represents the completed date time. </summary>
+        /// <summary>
+        /// String that represents the completed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetCompletedTime
+        /// </summary>
         public DateTimeOffset? TargetCompletedOn { get; }
-        /// <summary> The error of the action. </summary>
+        /// <summary>
+        /// The error of the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.error
+        /// </summary>
         public ExperimentExecutionActionTargetDetailsError Error { get; }
     }
 }
