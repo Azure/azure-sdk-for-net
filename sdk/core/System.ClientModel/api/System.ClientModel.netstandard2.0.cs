@@ -67,6 +67,19 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
+    public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
+    {
+        public static readonly System.ClientModel.Primitives.HttpClientPipelineTransport Shared;
+        public HttpClientPipelineTransport() { }
+        public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
+        protected override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected virtual void OnReceivedResponse(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
+        protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
+        protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+    }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
         T Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
@@ -101,7 +114,9 @@ namespace System.ClientModel.Primitives
     public partial class PipelineMessage : System.IDisposable
     {
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
+        public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
         public void Dispose() { }
@@ -174,5 +189,11 @@ namespace System.ClientModel.Primitives
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
         protected abstract void ProcessCore(System.ClientModel.Primitives.PipelineMessage message);
         protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message);
+    }
+    public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public ResponseBufferingPolicy() { }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
 }

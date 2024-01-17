@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = await _experimentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ChaosArmOperation<ExperimentResource>(Response.FromValue(new ExperimentResource(Client, response), response.GetRawResponse()));
+                var operation = new ChaosArmOperation<ExperimentResource>(new ExperimentOperationSource(Client), _experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = _experimentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data, cancellationToken);
-                var operation = new ChaosArmOperation<ExperimentResource>(Response.FromValue(new ExperimentResource(Client, response), response.GetRawResponse()));
+                var operation = new ChaosArmOperation<ExperimentResource>(new ExperimentOperationSource(Client), _experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-15-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
