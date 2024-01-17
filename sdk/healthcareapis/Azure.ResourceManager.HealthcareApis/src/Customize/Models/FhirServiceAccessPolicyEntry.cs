@@ -56,6 +56,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             ObjectId = objectId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+        /// <summary> Initializes a new instance of <see cref="FhirServiceAccessPolicyEntry"/>. </summary>
+        public FhirServiceAccessPolicyEntry(string objectId)
+        {
+            Argument.AssertNotNull(objectId, nameof(objectId));
+
+            ObjectId = objectId;
+        }
 
         /// <summary> An Azure AD object ID (User or Apps) that is allowed access to the FHIR service. </summary>
         public string ObjectId { get; set; }
