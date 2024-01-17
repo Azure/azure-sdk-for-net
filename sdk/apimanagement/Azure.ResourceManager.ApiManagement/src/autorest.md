@@ -138,7 +138,7 @@ rename-mapping:
   RequestReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   RequestReportRecordContract.method: -|request-method
   RequestReportRecordContract.ipAddress: -|ip-address
-  RequestReportRecordContract.backendResponseCode: backendResponseCodeInteger
+  RequestReportRecordContract.backendResponseCode: backendResponseCodeInteger|integer
   ReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   SubscriptionsDelegationSettingsProperties: SubscriptionDelegationSettingProperties
   RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties
@@ -552,7 +552,5 @@ directive:
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy'
-  - from: definitions.json
-    where: $.definitions.RequestReportRecordContract.properties.backendResponseCode
-    transform: $.type = "integer"
+
 ```

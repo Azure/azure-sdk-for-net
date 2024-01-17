@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class RequestReportRecordContract
     {
         /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
-        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ObsoleteAttribute("This property has been replaced by BackendResponseCodeInteger", false)]
         public string BackendResponseCode => BackendResponseCodeInteger.ToString();
     }

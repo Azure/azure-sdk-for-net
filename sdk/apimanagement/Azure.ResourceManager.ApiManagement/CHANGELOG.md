@@ -9,7 +9,7 @@
 ### Bugs Fixed
 
 - Add property `PrivateUriString` instead of `PrivateUri` in ApiRevisionContract to fix Uri deserialization issue.
-- Add property `BackendResponseCodeInteger` instead of `BackendResponseCode` in RequestReportRecordContract to fix deserialization issue.
+- Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/38076) by adding property `BackendResponseCodeInteger` instead of `BackendResponseCode` in RequestReportRecordContract to fix deserialization issue.
 
 ### Other Changes
 
