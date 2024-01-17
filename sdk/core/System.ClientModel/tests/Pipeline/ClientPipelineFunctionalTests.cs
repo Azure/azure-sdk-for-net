@@ -365,9 +365,14 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
             });
 
         var cts = new CancellationTokenSource();
+
         using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = testServer.Address;
         message.BufferResponse = false;
+
+        // Set CancellationToken on the message.
+        RequestOptions options = new() { CancellationToken = cts.Token };
+        message.Apply(options);
 
         var task = Task.Run(() => pipeline.SendSyncOrAsync(message, IsAsync));
 
