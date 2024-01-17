@@ -74,7 +74,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            RetryPolicy = new ClientRetryPolicy(maxRetryCount, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
+            RetryPolicy = new MockRetryPolicy(maxRetryCount, i => TimeSpan.FromMilliseconds(10)),
             Transport = new MockPipelineTransport("Transport", i => 500)
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -97,26 +97,6 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CanConfigureDelay()
-    {
-        int maxRetryCount = 3;
-        MockMessageDelay delay = new MockMessageDelay(i => TimeSpan.FromMilliseconds(10));
-
-        ClientPipelineOptions options = new()
-        {
-            RetryPolicy = new ClientRetryPolicy(maxRetryCount, delay),
-            Transport = new MockPipelineTransport("Transport", i => 500)
-        };
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        Assert.AreEqual(maxRetryCount, delay.CompletionCount);
-        Assert.AreEqual(500, message.Response!.Status);
-    }
-
-    [Test]
     public async Task OnlyRetriesRetriableCodes()
     {
         // Retriable codes are hard-coded into the ClientModel retry policy today:
@@ -124,7 +104,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            RetryPolicy = new ClientRetryPolicy(maxRetries: 10, new MockMessageDelay()),
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 10),
             Transport = new MockPipelineTransport("Transport",
                 new int[] { 408, 429, 500, 502, 503, 504, 501 })
         };

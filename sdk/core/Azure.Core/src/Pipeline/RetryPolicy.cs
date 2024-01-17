@@ -144,9 +144,6 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         protected virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        internal void OnDelayComplete(PipelineMessage message)
-            => _policy.OnDelayComplete(message);
-
         internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
         {
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
