@@ -88,7 +88,6 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             var controlPlane = new ProvisionedClusterControlPlaneProfile();
             controlPlane.Count = 1;
             controlPlane.VmSize = "Standard_A4_v2";
-            controlPlane.OSType = "Linux";
 
             var networkProfile = new ProvisionedClusterNetworkProfile();
             networkProfile.LoadBalancerProfile = new ProvisionedClusterLoadBalancerProfile();
@@ -96,11 +95,15 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             networkProfile.NetworkPolicy = "calico";
             networkProfile.PodCidr = "10.244.0.0/16";
 
+            var storageProfile = new StorageProfile();
+
+            var clusterVmAccessProfile = new ClusterVmAccessProfile();
+
             var cloudProviderProfile = new ProvisionedClusterCloudProviderProfile();
             cloudProviderProfile.InfraNetworkProfile = new ProvisionedClusterInfraNetworkProfile(new List<ResourceIdentifier>());
             cloudProviderProfile.InfraNetworkProfile.VnetSubnetIds.Add(vnet.Value.Data.Id);
 
-            clusterData.Properties = new ProvisionedClusterProperties(linuxProfile, controlPlane, kubernetesVersion, networkProfile, agentPoolProfiles, cloudProviderProfile, null, null, null);
+            clusterData.Properties = new ProvisionedClusterProperties(linuxProfile, controlPlane, kubernetesVersion, networkProfile, storageProfile, clusterVmAccessProfile, agentPoolProfiles, cloudProviderProfile, null, null, null, null);
 
             var cluster = clusterClient.CreateOrUpdate(WaitUntil.Completed, clusterData);
             Assert.AreEqual(cluster.Value.Data.Properties.ProvisioningState, HybridContainerServiceResourceProvisioningState.Succeeded);

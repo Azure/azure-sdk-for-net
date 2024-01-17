@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailability()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/Locations_CheckTrialAvailability.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/Locations_CheckTrialAvailability.json
             // this example is just showing the usage of "Locations_CheckTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailabilityWithSku()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/Locations_CheckTrialAvailabilityWithSku.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/Locations_CheckTrialAvailabilityWithSku.json
             // this example is just showing the usage of "Locations_CheckTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckAvsQuotaAvailability_LocationsCheckQuotaAvailability()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/Locations_CheckQuotaAvailability.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/Locations_CheckQuotaAvailability.json
             // this example is just showing the usage of "Locations_CheckQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

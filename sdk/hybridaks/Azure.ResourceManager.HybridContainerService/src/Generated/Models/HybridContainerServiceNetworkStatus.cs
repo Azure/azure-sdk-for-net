@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> HybridAKSNetworkStatus defines the observed state of HybridAKSNetwork. </summary>
+    /// <summary> Status of the virtual network resource. </summary>
     internal partial class HybridContainerServiceNetworkStatus
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceNetworkStatus"/>. </summary>
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceNetworkStatus"/>. </summary>
-        /// <param name="operationStatus"> Contains Provisioning errors. </param>
+        /// <param name="operationStatus"> The detailed status of the long running operation. </param>
         internal HybridContainerServiceNetworkStatus(VirtualNetworkPropertiesStatusOperationStatus operationStatus)
         {
             OperationStatus = operationStatus;
         }
 
-        /// <summary> Contains Provisioning errors. </summary>
+        /// <summary> The detailed status of the long running operation. </summary>
         public VirtualNetworkPropertiesStatusOperationStatus OperationStatus { get; }
     }
 }

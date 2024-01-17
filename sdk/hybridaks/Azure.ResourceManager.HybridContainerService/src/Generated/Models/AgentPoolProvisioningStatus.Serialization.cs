@@ -21,11 +21,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(OperationStatus))
-            {
-                writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(OperationStatus);
-            }
             if (Optional.IsCollectionDefined(ReadyReplicas))
             {
                 writer.WritePropertyName("readyReplicas"u8);
@@ -45,23 +40,23 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
+            Optional<HybridContainerServiceResourceProvisioningState> currentState = default;
             Optional<string> errorMessage = default;
-            Optional<AgentPoolOperationStatus> operationStatus = default;
             Optional<IList<AgentPoolUpdateProfile>> readyReplicas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorMessage"u8))
-                {
-                    errorMessage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("operationStatus"u8))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationStatus = AgentPoolOperationStatus.DeserializeAgentPoolOperationStatus(property.Value);
+                    currentState = new HybridContainerServiceResourceProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("errorMessage"u8))
+                {
+                    errorMessage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("readyReplicas"u8))
@@ -79,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolProvisioningStatus(errorMessage.Value, operationStatus.Value, Optional.ToList(readyReplicas));
+            return new AgentPoolProvisioningStatus(Optional.ToNullable(currentState), errorMessage.Value, Optional.ToList(readyReplicas));
         }
     }
 }

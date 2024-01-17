@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM monitoring for AWS offering. </summary>
@@ -19,8 +22,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
-        internal CspmMonitorAwsOffering(OfferingType offeringType, string description, CspmMonitorAwsOfferingNativeCloudConnection nativeCloudConnection) : base(offeringType, description)
+        internal CspmMonitorAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, CspmMonitorAwsOfferingNativeCloudConnection nativeCloudConnection) : base(offeringType, description, serializedAdditionalRawData)
         {
             NativeCloudConnection = nativeCloudConnection;
             OfferingType = offeringType;
