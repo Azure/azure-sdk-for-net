@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -28,256 +29,248 @@ namespace Azure.Search.Documents.Tests.Models
         }
 
         [Test]
-        public void QueryLanguageOption()
-        {
-            SearchOptions searchOptions = new();
-
-            Assert.IsNull(searchOptions.QueryLanguage);
-
-            // We can set `QueryLanguage` to one of the known values, using either a string or a pre-defined value.
-            searchOptions.QueryLanguage = "en-us";
-            Assert.AreEqual(QueryLanguage.EnUs, searchOptions.QueryLanguage);
-
-            searchOptions.QueryLanguage = QueryLanguage.EnUs;
-            Assert.AreEqual(QueryLanguage.EnUs, searchOptions.QueryLanguage);
-
-            // We can also set `QueryLanguage` to a value unknown to the SDK.
-            searchOptions.QueryLanguage = "unknown";
-            Assert.AreEqual("unknown", searchOptions.QueryLanguage.ToString());
-        }
-
-        [Test]
         public void QueryAnswerOptionWithNoCountAndThreshold()
         {
             SearchOptions searchOptions = new();
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
 
-            searchOptions.QueryAnswer = QueryAnswerType.None;
-            Assert.AreEqual($"{QueryAnswerType.None}", searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.None);
+            Assert.AreEqual($"{QueryAnswerType.None}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
 
-            searchOptions.QueryAnswer = QueryAnswerType.Extractive;
-            Assert.AreEqual($"{QueryAnswerType.Extractive}", searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
+            Assert.AreEqual($"{QueryAnswerType.Extractive}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
 
-            searchOptions.QueryAnswerRaw = "none";
-            Assert.AreEqual(QueryAnswerType.None, searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer("none");
+            Assert.AreEqual(QueryAnswerType.None, searchOptions.SemanticSearch.QueryAnswer.AnswerType);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
         }
 
         [Test]
         public void QueryAnswerOptionWithOnlyCount()
         {
             SearchOptions searchOptions = new();
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
 
-            searchOptions.QueryAnswerCount = 0;
-            Assert.AreEqual(0, searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
+            searchOptions.SemanticSearch.QueryAnswer.Count = 0;
+            Assert.AreEqual(0, searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual("extractive|count-0", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.AreEqual(QueryAnswerType.Extractive, searchOptions.SemanticSearch.QueryAnswer.AnswerType);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
 
-            searchOptions.QueryAnswerCount = 100;
-            Assert.AreEqual(100, searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
+            searchOptions.SemanticSearch.QueryAnswer.Count = 100;
+            Assert.AreEqual(100, searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual("extractive|count-100", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.AreEqual(QueryAnswerType.Extractive, searchOptions.SemanticSearch.QueryAnswer.AnswerType);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
 
-            searchOptions.QueryAnswerRaw = "|count-3";
-            Assert.AreEqual(3, searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
+            searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|count-3";
+            Assert.AreEqual(3, searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual("unknown", $"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}");
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Threshold);
         }
 
         [Test]
         public void QueryAnswerOptionWithOnlyThreshold()
         {
             SearchOptions searchOptions = new();
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
 
-            searchOptions.QueryAnswerThreshold = 0;
-            Assert.AreEqual(0, searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
+            searchOptions.SemanticSearch.QueryAnswer.Threshold = 0;
+            Assert.AreEqual(0, searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual("extractive|threshold-0", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.AreEqual(QueryAnswerType.Extractive, searchOptions.SemanticSearch.QueryAnswer.AnswerType);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
 
-            searchOptions.QueryAnswerThreshold = 0.9;
-            Assert.AreEqual(0.9, searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
+            searchOptions.SemanticSearch.QueryAnswer.Threshold = 0.9;
+            Assert.AreEqual(0.9, searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual("extractive|threshold-0.9", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.AreEqual(QueryAnswerType.Extractive, searchOptions.SemanticSearch.QueryAnswer.AnswerType);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
 
-            searchOptions.QueryAnswerRaw = "|threshold-0.5";
-            Assert.AreEqual(0.5, searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
+            searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|threshold-0.5";
+            Assert.AreEqual(0.5, searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual("unknown", $"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}");
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer.Count);
         }
 
         [Test]
         public void QueryAnswerOptionWithCountAndThreshold()
         {
             SearchOptions searchOptions = new();
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.QueryAnswer);
-            Assert.IsNull(searchOptions.QueryAnswerCount);
-            Assert.IsNull(searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryAnswer);
 
-            searchOptions.QueryAnswerCount = 0;
-            searchOptions.QueryAnswerThreshold = 0;
-            Assert.AreEqual(0, searchOptions.QueryAnswerCount);
-            Assert.AreEqual(0, searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswer);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive);
+            searchOptions.SemanticSearch.QueryAnswer.Count = 0;
+            searchOptions.SemanticSearch.QueryAnswer.Threshold = 0;
+            Assert.AreEqual(0, searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual("extractive|count-0,threshold-0", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.AreEqual(QueryAnswerType.Extractive, searchOptions.SemanticSearch.QueryAnswer.AnswerType);
 
-            searchOptions.QueryAnswerCount = 100;
-            searchOptions.QueryAnswerThreshold = 0.9;
-            Assert.AreEqual(100, searchOptions.QueryAnswerCount);
-            Assert.AreEqual(0.9, searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswerRaw);
-            Assert.IsNull(searchOptions.QueryAnswer);
+            searchOptions.SemanticSearch.QueryAnswer.Count = 100;
+            searchOptions.SemanticSearch.QueryAnswer.Threshold = 0.9;
+            Assert.AreEqual(100, searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual(0.9, searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual("extractive|count-100,threshold-0.9", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.AreEqual(QueryAnswerType.Extractive, searchOptions.SemanticSearch.QueryAnswer.AnswerType);
 
-            searchOptions.QueryAnswerRaw = "|threshold-0.5,count-3";
-            Assert.AreEqual(3, searchOptions.QueryAnswerCount);
-            Assert.AreEqual(0.5, searchOptions.QueryAnswerThreshold);
-            Assert.IsNull(searchOptions.QueryAnswer);
+            searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|threshold-0.5,count-3";
+            Assert.AreEqual(3, searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual(0.5, searchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual("unknown", $"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}");
         }
 
         [Test]
         public void QueryAnswerOption()
         {
             SearchOptions searchOptions = new();
-            searchOptions.QueryAnswerCount = 3;
-            searchOptions.QueryAnswerThreshold = 0.9;
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
             // We can set `QueryAnswer` to one of the known values, using either a string or a pre-defined value.
-            searchOptions.QueryAnswer = "none";
-            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer("none") { Count = 3, Threshold = 0.9  };
+            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.SemanticSearch.QueryAnswer.Count},threshold-{searchOptions.SemanticSearch.QueryAnswer.Threshold}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = QueryAnswerType.None;
-            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.None) { Count = 3, Threshold = 0.9 };
+            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.SemanticSearch.QueryAnswer.Count},threshold-{searchOptions.SemanticSearch.QueryAnswer.Threshold}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = "extractive";
-            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer("extractive") { Count = 3, Threshold = 0.9 };
+            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.SemanticSearch.QueryAnswer.Count},threshold-{searchOptions.SemanticSearch.QueryAnswer.Threshold}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = QueryAnswerType.Extractive;
-            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive) { Count = 3, Threshold = 0.9 };
+            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.SemanticSearch.QueryAnswer.Count},threshold-{searchOptions.SemanticSearch.QueryAnswer.Threshold}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
 
             // We can also set `QueryAnswer` to a value unknown to the SDK.
-            searchOptions.QueryAnswer = "unknown";
-            Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer("unknown") { Count = 3, Threshold = 0.9 };
+            Assert.AreEqual($"unknown|count-{searchOptions.SemanticSearch.QueryAnswer.Count},threshold-{searchOptions.SemanticSearch.QueryAnswer.Threshold}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = new QueryAnswerType("unknown");
-            Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(new QueryAnswerType("unknown")) { Count = 3, Threshold = 0.9 };
+            Assert.AreEqual($"unknown|count-{searchOptions.SemanticSearch.QueryAnswer.Count},threshold-{searchOptions.SemanticSearch.QueryAnswer.Threshold}", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
 
-            searchOptions.QueryAnswerRaw = "unknown|count-10,threshold-0.8";
-            Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.AreEqual(10, searchOptions.QueryAnswerCount);
-            Assert.AreEqual(0.8, searchOptions.QueryAnswerThreshold);
+            searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw = "unknown|count-10,threshold-0.8";
+            Assert.AreEqual("unknown", $"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}");
+            Assert.AreEqual(10, searchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual(0.8, searchOptions.SemanticSearch.QueryAnswer.Threshold);
         }
 
         [Test]
         public void QueryCaptionOptionWithNoHighlight()
         {
             SearchOptions searchOptions = new();
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
-            Assert.IsNull(searchOptions.QueryCaptionRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryCaption);
 
-            searchOptions.QueryCaption = QueryCaptionType.None;
-            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
+            searchOptions.SemanticSearch.QueryCaption = new QueryCaption(QueryCaptionType.None);
+            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
+            Assert.True(searchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
 
-            searchOptions.QueryCaption = QueryCaptionType.Extractive;
-            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-True", searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
+            searchOptions.SemanticSearch.QueryCaption = new QueryCaption(QueryCaptionType.Extractive);
+            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-True", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
+            Assert.True(searchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
 
-            searchOptions.QueryCaptionRaw = "none";
-            Assert.AreEqual(QueryCaptionType.None, searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
+            searchOptions.SemanticSearch.QueryCaption = new QueryCaption("none");
+            Assert.AreEqual(QueryCaptionType.None, searchOptions.SemanticSearch.QueryCaption.CaptionType);
+            Assert.True(searchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
         }
 
         [Test]
-        public void QueryCaptionOptionWithOnlyHighlight()
+        public void QueryCaptionOptionWithHighlight()
         {
             SearchOptions searchOptions = new();
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
-            Assert.IsNull(searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
-            Assert.IsNull(searchOptions.QueryCaptionRaw);
+            Assert.IsNull(searchOptions.SemanticSearch.QueryCaption);
 
-            searchOptions.QueryCaptionHighlightEnabled = true;
-            Assert.IsNull(searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaption);
-
-            searchOptions.QueryCaptionHighlightEnabled = false;
-            Assert.IsNull(searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaption);
+            searchOptions.SemanticSearch.QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = false };
+            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-False", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
+            Assert.False(searchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
         }
 
         [Test]
         public void QueryCaptionOption()
         {
             SearchOptions searchOptions = new();
+            searchOptions.SemanticSearch = new SemanticSearchOptions();
 
             // We can set `QueryCaption` to one of the known values, using either a string or a predefined value.
-            searchOptions.QueryCaption = "none";
-            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.QueryCaptionRaw);
+            searchOptions.SemanticSearch.QueryCaption = new QueryCaption("none");
+            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
 
-            searchOptions.QueryCaption = QueryCaptionType.None;
-            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.QueryCaptionRaw);
+            searchOptions.SemanticSearch.QueryCaption = new QueryCaption(QueryCaptionType.None);
+            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlightEnabled = false;
+            searchOptions.SemanticSearch.QueryCaption.HighlightEnabled = false;
 
-            searchOptions.QueryCaption = "extractive";
-            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
+            searchOptions.SemanticSearch.QueryCaption.CaptionType = "extractive";
+            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-False", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
 
-            searchOptions.QueryCaption = QueryCaptionType.Extractive;
-            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
+            searchOptions.SemanticSearch.QueryCaption.CaptionType = QueryCaptionType.Extractive;
+            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-False", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlightEnabled = true;
+            searchOptions.SemanticSearch.QueryCaption.HighlightEnabled = true;
 
             // We can also set `QueryCaption` to a value unknown to the SDK.
-            searchOptions.QueryCaption = "unknown";
-            Assert.AreEqual($"unknown", searchOptions.QueryCaptionRaw);
+            searchOptions.SemanticSearch.QueryCaption.CaptionType = "unknown";
+            Assert.AreEqual($"unknown", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
 
-            searchOptions.QueryAnswer = new QueryAnswerType("unknown");
-            Assert.AreEqual($"unknown", searchOptions.QueryCaptionRaw);
+            searchOptions.SemanticSearch.QueryAnswer = new QueryAnswer(new QueryAnswerType("unknown"));
+            Assert.AreEqual($"unknown", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionRaw = "unknown";
-            Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
+            searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw = "unknown";
+            Assert.AreEqual("unknown", $"{searchOptions.SemanticSearch.QueryAnswer.AnswerType}");
+            Assert.True(searchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
         }
 
         [Test]
         public void SearchOptionsForSemanticSearch()
         {
-            SearchOptions semanticSearchOptions = new()
+            var searchOptions = new SearchOptions
             {
                 QueryType = SearchQueryType.Semantic,
-                QueryLanguage = QueryLanguage.EnUs,
-                QueryAnswer = QueryAnswerType.Extractive,
-                QueryAnswerCount = 5,
-                QueryAnswerThreshold = 0.8,
-                QueryCaption = QueryCaptionType.Extractive,
+                SemanticSearch = new()
+                {
+                    SemanticConfigurationName = "my-semantic-config",
+                    QueryCaption = new(QueryCaptionType.Extractive),
+                    QueryAnswer = new(QueryAnswerType.Extractive){ Count = 5, Threshold = 0.8 }
+                },
             };
 
-            Assert.AreEqual("extractive|count-5,threshold-0.8", semanticSearchOptions.QueryAnswerRaw);
-            Assert.AreEqual("extractive|highlight-True", semanticSearchOptions.QueryCaptionRaw);
+            Assert.AreEqual("extractive|count-5,threshold-0.8", searchOptions.SemanticSearch.QueryAnswer.QueryAnswerRaw);
+            Assert.AreEqual("extractive|highlight-True", searchOptions.SemanticSearch.QueryCaption.QueryCaptionRaw);
+        }
+
+        [Test]
+        public void VectorSearchOption()
+        {
+            SearchOptions searchOptions = new();
+            Assert.IsNull(searchOptions.VectorSearch);
+
+            searchOptions.VectorSearch = new();
+            ReadOnlyMemory<float> vectors = new float[] { -0.011113605f, -0.01902812f, 0.047524072f };
+            searchOptions.VectorSearch.Queries = new[] { new VectorizedQuery(vectors) };
+
+            Assert.AreEqual(1, searchOptions.VectorSearch.Queries.Count);
+            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorizedQuery).Vector);
+            Assert.IsNull(searchOptions.VectorSearch.FilterMode);
+
+            searchOptions.VectorSearch.FilterMode = VectorFilterMode.PostFilter;
+            Assert.AreEqual(1, searchOptions.VectorSearch.Queries.Count);
+            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorizedQuery).Vector);
+            Assert.AreEqual(VectorFilterMode.PostFilter, searchOptions.VectorSearch.FilterMode);
         }
     }
 }

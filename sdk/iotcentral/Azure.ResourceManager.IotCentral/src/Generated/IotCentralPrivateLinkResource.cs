@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

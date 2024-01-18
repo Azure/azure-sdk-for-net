@@ -106,6 +106,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Suppressions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SuppressionContractResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Suppressions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SuppressionContractResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
@@ -151,6 +167,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

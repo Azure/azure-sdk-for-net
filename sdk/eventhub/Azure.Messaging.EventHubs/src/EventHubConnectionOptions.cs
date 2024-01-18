@@ -15,6 +15,8 @@ namespace Azure.Messaging.EventHubs
     ///   to configure its behavior.
     /// </summary>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     public class EventHubConnectionOptions
     {
         // <summary>The amount of time to allow a connection to have no observed traffic before considering it idle.</summary>
