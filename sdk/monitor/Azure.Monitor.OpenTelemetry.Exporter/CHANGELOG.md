@@ -1,5 +1,19 @@
 # Release History
 
+## 1.2.0 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([]())
+  - OpenTelemetry 1.7.0
+
 ## 1.1.0 (2023-11-29)
 
 ### Features Added
