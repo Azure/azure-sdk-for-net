@@ -75,6 +75,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +137,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,6 +165,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +195,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,6 +223,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,6 +253,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,6 +278,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -246,6 +302,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,6 +342,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -316,6 +380,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,6 +422,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -390,6 +462,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,6 +504,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -465,6 +545,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
@@ -499,6 +583,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

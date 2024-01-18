@@ -107,6 +107,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +251,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -241,6 +281,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,6 +320,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupResourceEncryptionConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceEncryptionConfigExtendedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -294,6 +350,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceEncryptionConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceEncryptionConfigExtendedResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,6 +389,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -348,6 +420,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -384,6 +464,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -408,6 +496,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -443,6 +539,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>JobDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -466,6 +570,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,6 +613,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupEngines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupEngineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -526,6 +646,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupEngineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -560,6 +688,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -584,6 +720,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -620,6 +764,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceGuardProxy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -644,6 +796,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceGuardProxy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -667,6 +827,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupProtectionIntent_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -697,6 +861,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupProtectionIntent_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -726,6 +894,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupUsageSummaries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -754,6 +926,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupUsageSummaries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -781,6 +957,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Export</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -818,6 +998,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_Export</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -854,6 +1038,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupProtectedItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -883,6 +1071,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupProtectedItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -911,6 +1103,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectableContainers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -942,6 +1138,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectableContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -972,6 +1172,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Refresh</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1012,6 +1220,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Refresh</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1051,6 +1267,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupProtectableItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1081,6 +1301,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupProtectableItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1110,6 +1334,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupProtectionContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1137,6 +1365,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupProtectionContainers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1166,6 +1398,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedProtectionContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1194,6 +1430,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedProtectionContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1221,6 +1461,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityPINs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1258,6 +1502,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>SecurityPINs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1294,6 +1542,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FetchTieringCost_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1337,6 +1589,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>FetchTieringCost_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1378,6 +1634,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>GetTieringCostOperationResult_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -1414,6 +1674,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetTieringCostOperationResult_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -164,6 +164,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
@@ -185,6 +193,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
@@ -205,6 +221,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,6 +262,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +301,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +344,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -338,6 +386,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentTags"> Updated tag information to set into the component instance. </param>
@@ -371,6 +427,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,6 +473,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Purge</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
@@ -446,6 +518,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Purge</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
@@ -479,6 +559,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_GetPurgeStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,6 +603,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_GetPurgeStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="purgeId"> In a purge status request, this is the Id of the operation the status of which is returned. </param>
@@ -550,6 +646,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="start"> The start time to query from for annotations, cannot be older than 90 days from current date. </param>
@@ -576,6 +676,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Annotations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -604,6 +708,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationProperties"> Properties that need to be specified to create an annotation of a Application Insights component. </param>
@@ -629,6 +737,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationProperties"> Properties that need to be specified to create an annotation of a Application Insights component. </param>
@@ -653,6 +765,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Annotations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,6 +805,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
@@ -724,6 +844,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
@@ -749,6 +873,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Annotations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -776,6 +904,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -797,6 +929,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -817,6 +953,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>APIKeys_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -852,6 +992,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Properties that need to be specified to create an API key of a Application Insights component. </param>
@@ -885,6 +1029,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>APIKeys_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -921,6 +1069,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyId"> The API Key ID. This is unique within a Application Insights component. </param>
@@ -955,6 +1107,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>APIKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -991,6 +1147,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyId"> The API Key ID. This is unique within a Application Insights component. </param>
@@ -1026,6 +1186,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1047,6 +1211,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1067,6 +1235,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1093,6 +1265,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
@@ -1117,6 +1293,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1153,6 +1333,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
@@ -1187,6 +1371,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1223,6 +1411,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
@@ -1257,6 +1449,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1295,6 +1491,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
@@ -1332,6 +1532,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1362,6 +1566,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1391,6 +1599,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1426,6 +1638,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingFeaturesProperties"> Properties that need to be specified to update billing features for an Application Insights component. </param>
@@ -1460,6 +1676,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentQuotaStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1489,6 +1709,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentQuotaStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1520,6 +1744,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentFeatureCapabilities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1549,6 +1777,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentFeatureCapabilities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1580,6 +1812,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentAvailableFeatures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1609,6 +1845,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentAvailableFeatures_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1640,6 +1880,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1661,6 +1905,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1681,6 +1929,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1717,6 +1969,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
@@ -1751,6 +2007,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1789,6 +2049,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
@@ -1826,6 +2090,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1847,6 +2115,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1867,6 +2139,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1902,6 +2178,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigurationProperties"> Properties that need to be specified to create a work item configuration of a Application Insights component. </param>
@@ -1936,6 +2216,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1966,6 +2250,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1995,6 +2283,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2031,6 +2323,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigId"> The unique work item configuration Id. This can be either friendly name of connector as defined in connector configuration. </param>
@@ -2065,6 +2361,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetItem</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2101,6 +2401,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetItem</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigId"> The unique work item configuration Id. This can be either friendly name of connector as defined in connector configuration. </param>
@@ -2135,6 +2439,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_UpdateItem</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2173,6 +2481,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_UpdateItem</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigId"> The unique work item configuration Id. This can be either friendly name of connector as defined in connector configuration. </param>
@@ -2210,6 +2522,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
@@ -2235,6 +2551,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
@@ -2259,6 +2579,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2295,6 +2619,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2329,6 +2657,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Add</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2367,6 +2699,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Add</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2403,6 +2739,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2441,6 +2781,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2478,6 +2822,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2512,6 +2860,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2548,6 +2900,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>webTestLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2569,6 +2925,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>webTestLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2589,6 +2949,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebTests_ListByComponent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2612,6 +2980,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_ListByComponent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2633,6 +3009,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2659,6 +3039,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2683,6 +3067,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2717,6 +3105,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2749,6 +3141,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Put</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2786,6 +3182,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Put</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2822,6 +3222,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2855,6 +3259,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2887,6 +3295,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2942,6 +3358,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -2996,6 +3420,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -3045,6 +3477,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -3093,6 +3533,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3145,6 +3593,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

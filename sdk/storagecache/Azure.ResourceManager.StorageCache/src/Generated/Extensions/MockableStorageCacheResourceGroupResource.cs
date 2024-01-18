@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

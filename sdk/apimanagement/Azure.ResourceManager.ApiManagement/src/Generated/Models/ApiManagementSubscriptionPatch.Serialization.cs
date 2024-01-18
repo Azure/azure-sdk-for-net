@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementSubscriptionPatch : IUtf8JsonSerializable
+    public partial class ApiManagementSubscriptionPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementSubscriptionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSubscriptionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiManagementSubscriptionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -63,7 +74,164 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteBooleanValue(AllowTracing.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ApiManagementSubscriptionPatch IJsonModel<ApiManagementSubscriptionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementSubscriptionPatch(document.RootElement, options);
+        }
+
+        internal static ApiManagementSubscriptionPatch DeserializeApiManagementSubscriptionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> ownerId = default;
+            Optional<string> scope = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<string> displayName = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<SubscriptionState> state = default;
+            Optional<string> stateComment = default;
+            Optional<bool> allowTracing = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("ownerId"u8))
+                        {
+                            ownerId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("scope"u8))
+                        {
+                            scope = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("expirationDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            expirationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("primaryKey"u8))
+                        {
+                            primaryKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("secondaryKey"u8))
+                        {
+                            secondaryKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("state"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            state = property0.Value.GetString().ToSubscriptionState();
+                            continue;
+                        }
+                        if (property0.NameEquals("stateComment"u8))
+                        {
+                            stateComment = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("allowTracing"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowTracing = property0.Value.GetBoolean();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiManagementSubscriptionPatch(ownerId.Value, scope.Value, Optional.ToNullable(expirationDate), displayName.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(state), stateComment.Value, Optional.ToNullable(allowTracing), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ApiManagementSubscriptionPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApiManagementSubscriptionPatch IPersistableModel<ApiManagementSubscriptionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiManagementSubscriptionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiManagementSubscriptionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

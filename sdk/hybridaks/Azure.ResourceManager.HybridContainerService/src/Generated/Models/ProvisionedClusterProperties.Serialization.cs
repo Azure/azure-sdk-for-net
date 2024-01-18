@@ -36,6 +36,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
+            if (Optional.IsDefined(StorageProfile))
+            {
+                writer.WritePropertyName("storageProfile"u8);
+                writer.WriteObjectValue(StorageProfile);
+            }
+            if (Optional.IsDefined(ClusterVmAccessProfile))
+            {
+                writer.WritePropertyName("clusterVMAccessProfile"u8);
+                writer.WriteObjectValue(ClusterVmAccessProfile);
+            }
             if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
                 writer.WritePropertyName("agentPoolProfiles"u8);
@@ -56,6 +66,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("licenseProfile"u8);
                 writer.WriteObjectValue(LicenseProfile);
             }
+            if (Optional.IsDefined(AutoScalerProfile))
+            {
+                writer.WritePropertyName("autoScalerProfile"u8);
+                writer.WriteObjectValue(AutoScalerProfile);
+            }
             writer.WriteEndObject();
         }
 
@@ -69,11 +84,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<ProvisionedClusterControlPlaneProfile> controlPlane = default;
             Optional<string> kubernetesVersion = default;
             Optional<ProvisionedClusterNetworkProfile> networkProfile = default;
+            Optional<StorageProfile> storageProfile = default;
+            Optional<ClusterVmAccessProfile> clusterVmAccessProfile = default;
             Optional<IList<HybridContainerServiceNamedAgentPoolProfile>> agentPoolProfiles = default;
             Optional<ProvisionedClusterCloudProviderProfile> cloudProviderProfile = default;
             Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
             Optional<ProvisionedClusterStatus> status = default;
             Optional<ProvisionedClusterLicenseProfile> licenseProfile = default;
+            Optional<ProvisionedClusterPropertiesAutoScalerProfile> autoScalerProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxProfile"u8))
@@ -106,6 +124,24 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         continue;
                     }
                     networkProfile = ProvisionedClusterNetworkProfile.DeserializeProvisionedClusterNetworkProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("clusterVMAccessProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterVmAccessProfile = ClusterVmAccessProfile.DeserializeClusterVmAccessProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentPoolProfiles"u8))
@@ -158,8 +194,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     licenseProfile = ProvisionedClusterLicenseProfile.DeserializeProvisionedClusterLicenseProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("autoScalerProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoScalerProfile = ProvisionedClusterPropertiesAutoScalerProfile.DeserializeProvisionedClusterPropertiesAutoScalerProfile(property.Value);
+                    continue;
+                }
             }
-            return new ProvisionedClusterProperties(linuxProfile.Value, controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value, licenseProfile.Value);
+            return new ProvisionedClusterProperties(linuxProfile.Value, controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, storageProfile.Value, clusterVmAccessProfile.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value, licenseProfile.Value, autoScalerProfile.Value);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PatternReplaceCharFilter"/>. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the char filter. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of char filter. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="pattern"> A regular expression pattern. </param>
         /// <param name="replacement"> The replacement text. </param>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class InfraVnetProfile : IUtf8JsonSerializable
+    internal partial class InfraVnetProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 writer.WritePropertyName("hci"u8);
                 writer.WriteObjectValue(Hci);
-            }
-            if (Optional.IsDefined(Vmware))
-            {
-                writer.WritePropertyName("vmware"u8);
-                writer.WriteObjectValue(Vmware);
             }
             writer.WriteEndObject();
         }
@@ -35,7 +30,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<HciInfraVnetProfile> hci = default;
-            Optional<VMwareInfraVnetProfile> vmware = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hci"u8))
@@ -47,17 +41,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     hci = HciInfraVnetProfile.DeserializeHciInfraVnetProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vmware"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    vmware = VMwareInfraVnetProfile.DeserializeVMwareInfraVnetProfile(property.Value);
-                    continue;
-                }
             }
-            return new InfraVnetProfile(hci.Value, vmware.Value);
+            return new InfraVnetProfile(hci.Value);
         }
     }
 }
