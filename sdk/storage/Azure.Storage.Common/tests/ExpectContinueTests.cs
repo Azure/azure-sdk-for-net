@@ -132,6 +132,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/41368")]
         public async Task ThrottlePolicyRevertsAfterBackoff()
         {
             TimeSpan backoff = TimeSpan.FromMilliseconds(10);
