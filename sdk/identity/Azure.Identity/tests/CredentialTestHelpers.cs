@@ -45,8 +45,8 @@ namespace Azure.Identity.Tests
             var expiresOnString = expiresOn.ToLocalTime().ToString(expiresOnStringFormat);
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
             var json = includeExpiresOn ?
-                $$"""{ "accessToken": "{{token}}", "expiresOn": "{{expiresOnString}}", "expires_on": {{expiresOn.ToUnixTimeSeconds()}} }" :
-                $"{{ \"accessToken\": \"{token}\", \"expiresOn\": \"{expiresOnString}\" }}";
+                $$"""{ "accessToken": "{{token}}", "expiresOn": "{{expiresOnString}}", "expires_on": {{expiresOn.ToUnixTimeSeconds()}} }""" :
+                $$"""{ "accessToken": "{{token}}", "expiresOn": "{{expiresOnString}}" }""";
             return (token, json);
         }
 
