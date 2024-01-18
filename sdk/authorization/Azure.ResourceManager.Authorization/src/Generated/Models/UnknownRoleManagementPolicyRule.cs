@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             RuleType = ruleType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementPolicyRule"/> for deserialization. </summary>
+        internal UnknownRoleManagementPolicyRule()
+        {
+        }
     }
 }
