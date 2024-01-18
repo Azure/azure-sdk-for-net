@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             MetadataIdentifier = metadataIdentifier;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertsMetaDataProperties"/> for deserialization. </summary>
+        internal UnknownAlertsMetaDataProperties()
+        {
+        }
     }
 }

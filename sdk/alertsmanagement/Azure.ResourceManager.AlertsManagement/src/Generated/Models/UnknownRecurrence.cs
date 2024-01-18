@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             RecurrenceType = recurrenceType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRecurrence"/> for deserialization. </summary>
+        internal UnknownRecurrence()
+        {
+        }
     }
 }

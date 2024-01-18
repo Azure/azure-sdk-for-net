@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             ActionType = actionType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAction"/> for deserialization. </summary>
+        internal UnknownAction()
+        {
+        }
     }
 }
