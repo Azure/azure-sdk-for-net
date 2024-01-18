@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string OverlayValue = "Overlay";
+        private const string OverlayValue = "overlay";
 
-        /// <summary> Pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet reference plugins host-local and bridge. </summary>
+        /// <summary> Used with networkPlugin=azure, pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet's method of route tables. For more information visit https://aka.ms/aks/azure-cni-overlay. </summary>
         public static ContainerServiceNetworkPluginMode Overlay { get; } = new ContainerServiceNetworkPluginMode(OverlayValue);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPluginMode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPluginMode left, ContainerServiceNetworkPluginMode right) => left.Equals(right);

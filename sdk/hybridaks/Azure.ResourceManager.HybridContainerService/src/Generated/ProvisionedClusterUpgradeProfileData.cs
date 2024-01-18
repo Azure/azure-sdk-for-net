@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Models;
@@ -16,21 +14,18 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A class representing the ProvisionedClusterUpgradeProfile data model.
-    /// The list of available upgrades for compute pools.
+    /// The list of available kubernetes version upgrades for the provisioned cluster.
     /// </summary>
     public partial class ProvisionedClusterUpgradeProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
-        /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
-        /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
-        public ProvisionedClusterUpgradeProfileData(ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IEnumerable<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles)
+        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> is null. </exception>
+        public ProvisionedClusterUpgradeProfileData(ProvisionedClusterPoolUpgradeProfile controlPlaneProfile)
         {
             Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
-            Argument.AssertNotNull(agentPoolProfiles, nameof(agentPoolProfiles));
 
             ControlPlaneProfile = controlPlaneProfile;
-            AgentPoolProfiles = agentPoolProfiles.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
@@ -38,21 +33,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
-        /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
+        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ControlPlaneProfile = controlPlaneProfile;
-            AgentPoolProfiles = agentPoolProfiles;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> The list of available upgrade versions for the control plane. </summary>
+        /// <summary> Provisioning state of the resource. </summary>
+        public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
+        /// <summary> The list of available kubernetes version upgrades for the control plane. </summary>
         public ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get; set; }
-        /// <summary> The list of available upgrade versions for agent pools. </summary>
-        public IList<ProvisionedClusterPoolUpgradeProfile> AgentPoolProfiles { get; }
     }
 }

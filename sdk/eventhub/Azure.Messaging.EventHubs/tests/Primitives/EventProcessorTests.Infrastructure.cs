@@ -54,6 +54,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(ownedPartitions);
 
             mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
+
+            mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {

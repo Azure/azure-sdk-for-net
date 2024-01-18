@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -52,6 +52,14 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -65,7 +73,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -74,6 +82,14 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

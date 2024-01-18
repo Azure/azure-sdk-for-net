@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests
@@ -31,6 +32,25 @@ namespace Azure.Identity.Broker.Tests
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        public async Task GetPopToken(bool isAsync)
+        {
+            using var logger = AzureEventSourceListener.CreateConsoleLogger();
+            IntPtr parentWindowHandle = GetForegroundWindow();
+
+            var client = new PopTestClient(new InteractiveBrowserCredential(
+                new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true }),
+                new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
+            var response = isAsync ?
+                await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
+                client.Get(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(200, response.Status);
         }
 
         [Test]
@@ -60,7 +80,6 @@ namespace Azure.Identity.Broker.Tests
                 AccessToken token = isAsync ? await cred.GetTokenAsync(context).ConfigureAwait(false) : cred.GetToken(context);
                 Console.WriteLine("got token");
                 evt.Set();
-                // });
             });
 
             Thread thread2 = new Thread(async () =>
@@ -80,7 +99,6 @@ namespace Azure.Identity.Broker.Tests
                 AccessToken token = isAsync ? await cred.GetTokenAsync(context).ConfigureAwait(false) : cred.GetToken(context);
                 Console.WriteLine("got token");
                 thread.Start();
-                // });
             });
 #pragma warning disable CA1416 // Validate platform compatibility
             thread.SetApartmentState(ApartmentState.STA);

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
-        internal HybridComputePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal HybridComputePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridComputePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Resource properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        public HybridComputePrivateEndpointConnectionProperties Properties { get; set; }
     }
 }
