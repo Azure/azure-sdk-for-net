@@ -139,23 +139,6 @@ namespace Azure.Analytics.Defender.Easm
         public System.Guid? Uuid { get { throw null; } }
         public bool? Wildcard { get { throw null; } }
     }
-    public partial class Assets
-    {
-        protected Assets() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetAssetResource(string assetId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResource(string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAssetResourceAsync(string assetId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.AssetResource>> GetAssetResourceAsync(string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetAssetResources(string filter, string orderby, int? skip, int? maxpagesize, string mark, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResources(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), string mark = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetAssetResourcesAsync(string filter, string orderby, int? skip, int? maxpagesize, string mark, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResourcesAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), string mark = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.Task> UpdateAssets(string filter, Azure.Analytics.Defender.Easm.AssetUpdateData assetUpdateData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateAssets(string filter, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.Task>> UpdateAssetsAsync(string filter, Azure.Analytics.Defender.Easm.AssetUpdateData assetUpdateData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAssetsAsync(string filter, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
     public partial class AssetSecurityPolicy
     {
         internal AssetSecurityPolicy() { }
@@ -454,29 +437,6 @@ namespace Azure.Analytics.Defender.Easm
     {
         internal DataConnectionProperties() { }
     }
-    public partial class DataConnections
-    {
-        protected DataConnections() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateOrReplaceDataConnection(string dataConnectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceDataConnectionAsync(string dataConnectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteDataConnection(string dataConnectionName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataConnectionAsync(string dataConnectionName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetDataConnection(string dataConnectionName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnection(string dataConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDataConnectionAsync(string dataConnectionName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DataConnection>> GetDataConnectionAsync(string dataConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDataConnections(int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnections(int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDataConnectionsAsync(int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnectionsAsync(int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDataConnection(Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ValidateDataConnection(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDataConnectionAsync(Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDataConnectionAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
     public partial class DependentResource
     {
         internal DependentResource() { }
@@ -608,46 +568,6 @@ namespace Azure.Analytics.Defender.Easm
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.DiscoSource> Seeds { get { throw null; } }
         public string StateCode { get { throw null; } }
     }
-    public partial class DiscoveryGroups
-    {
-        protected DiscoveryGroups() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup> CreateOrReplaceDiscoGroup(string groupName, Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateOrReplaceDiscoGroup(string groupName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup>> CreateOrReplaceDiscoGroupAsync(string groupName, Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceDiscoGroupAsync(string groupName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetDiscoGroup(string groupName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup> GetDiscoGroup(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDiscoGroupAsync(string groupName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup>> GetDiscoGroupAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDiscoGroups(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoGroup> GetDiscoGroups(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoGroupsAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoGroup> GetDiscoGroupsAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetRuns(string groupName, string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoRunResult> GetRuns(string groupName, string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetRunsAsync(string groupName, string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoRunResult> GetRunsAsync(string groupName, string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RunDiscoGroup(string groupName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RunDiscoGroupAsync(string groupName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDiscoGroup(Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ValidateDiscoGroup(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDiscoGroupAsync(Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDiscoGroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
-    public partial class DiscoveryTemplates
-    {
-        protected DiscoveryTemplates() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetDiscoTemplate(string templateId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoTemplate> GetDiscoTemplate(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDiscoTemplateAsync(string templateId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoTemplate>> GetDiscoTemplateAsync(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDiscoTemplates(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoTemplate> GetDiscoTemplates(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoTemplatesAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoTemplate> GetDiscoTemplatesAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class DomainAsset : Azure.Analytics.Defender.Easm.InventoryAsset
     {
         internal DomainAsset() { }
@@ -691,16 +611,107 @@ namespace Azure.Analytics.Defender.Easm
     public partial class EasmClient
     {
         protected EasmClient() { }
-        public EasmClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public EasmClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Defender.Easm.EasmClientOptions options) { }
+        public EasmClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, Azure.Core.TokenCredential credential) { }
+        public EasmClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, Azure.Core.TokenCredential credential, Azure.Analytics.Defender.Easm.EasmClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Analytics.Defender.Easm.Assets GetAssetsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview") { throw null; }
-        public virtual Azure.Analytics.Defender.Easm.DataConnections GetDataConnectionsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview") { throw null; }
-        public virtual Azure.Analytics.Defender.Easm.DiscoveryGroups GetDiscoveryGroupsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview") { throw null; }
-        public virtual Azure.Analytics.Defender.Easm.DiscoveryTemplates GetDiscoveryTemplatesClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview") { throw null; }
-        public virtual Azure.Analytics.Defender.Easm.Reports GetReportsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview") { throw null; }
-        public virtual Azure.Analytics.Defender.Easm.SavedFilters GetSavedFiltersClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview") { throw null; }
-        public virtual Azure.Analytics.Defender.Easm.Tasks GetTasksClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview") { throw null; }
+        public virtual Azure.Response CancelTask(string taskId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.Task> CancelTask(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelTaskAsync(string taskId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.Task>> CancelTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrReplaceDataConnection(string dataConnectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceDataConnectionAsync(string dataConnectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup> CreateOrReplaceDiscoGroup(string groupName, Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrReplaceDiscoGroup(string groupName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup>> CreateOrReplaceDiscoGroupAsync(string groupName, Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceDiscoGroupAsync(string groupName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter> CreateOrReplaceSavedFilter(string filterName, Azure.Analytics.Defender.Easm.SavedFilterData savedFilterData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrReplaceSavedFilter(string filterName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, Azure.Analytics.Defender.Easm.SavedFilterData savedFilterData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceSavedFilterAsync(string filterName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteDataConnection(string dataConnectionName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataConnectionAsync(string dataConnectionName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteSavedFilter(string filterName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSavedFilterAsync(string filterName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetAssetResource(string assetId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResource(string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAssetResourceAsync(string assetId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.AssetResource>> GetAssetResourceAsync(string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetAssetResources(string filter, string orderby, int? skip, int? maxpagesize, string mark, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResources(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), string mark = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetAssetResourcesAsync(string filter, string orderby, int? skip, int? maxpagesize, string mark, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.AssetResource> GetAssetResourcesAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), string mark = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetBillable(Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult> GetBillable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetBillableAsync(Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult>> GetBillableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetDataConnection(string dataConnectionName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnection(string dataConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDataConnectionAsync(string dataConnectionName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DataConnection>> GetDataConnectionAsync(string dataConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDataConnections(int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnections(int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDataConnectionsAsync(int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DataConnection> GetDataConnectionsAsync(int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetDiscoGroup(string groupName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup> GetDiscoGroup(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDiscoGroupAsync(string groupName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoGroup>> GetDiscoGroupAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDiscoGroups(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoGroup> GetDiscoGroups(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoGroupsAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoGroup> GetDiscoGroupsAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetDiscoTemplate(string templateId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.DiscoTemplate> GetDiscoTemplate(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDiscoTemplateAsync(string templateId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.DiscoTemplate>> GetDiscoTemplateAsync(string templateId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDiscoTemplates(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoTemplate> GetDiscoTemplates(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDiscoTemplatesAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoTemplate> GetDiscoTemplatesAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetRuns(string groupName, string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.DiscoRunResult> GetRuns(string groupName, string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetRunsAsync(string groupName, string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.DiscoRunResult> GetRunsAsync(string groupName, string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetSavedFilter(string filterName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilter(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSavedFilterAsync(string filterName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter>> GetSavedFilterAsync(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSavedFilters(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilters(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFiltersAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult> GetSnapshot(Azure.Analytics.Defender.Easm.ReportAssetSnapshotRequest reportAssetSnapshotRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetSnapshot(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>> GetSnapshotAsync(Azure.Analytics.Defender.Easm.ReportAssetSnapshotRequest reportAssetSnapshotRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSnapshotAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult> GetSummary(Azure.Analytics.Defender.Easm.ReportAssetSummaryRequest reportAssetSummaryRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetSummary(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>> GetSummaryAsync(Azure.Analytics.Defender.Easm.ReportAssetSummaryRequest reportAssetSummaryRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSummaryAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetTask(string taskId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.Task> GetTask(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTaskAsync(string taskId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.Task>> GetTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTasks(string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.Task> GetTasks(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTasksAsync(string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.Task> GetTasksAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RunDiscoGroup(string groupName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RunDiscoGroupAsync(string groupName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.Task> UpdateAssets(string filter, Azure.Analytics.Defender.Easm.AssetUpdateData assetUpdateData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateAssets(string filter, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.Task>> UpdateAssetsAsync(string filter, Azure.Analytics.Defender.Easm.AssetUpdateData assetUpdateData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAssetsAsync(string filter, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDataConnection(Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ValidateDataConnection(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDataConnectionAsync(Azure.Analytics.Defender.Easm.DataConnectionData dataConnectionData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDataConnectionAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult> ValidateDiscoGroup(Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ValidateDiscoGroup(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ValidateResult>> ValidateDiscoGroupAsync(Azure.Analytics.Defender.Easm.DiscoGroupData discoGroupData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateDiscoGroupAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class EasmClientOptions : Azure.Core.ClientOptions
     {
@@ -1190,23 +1201,6 @@ namespace Azure.Analytics.Defender.Easm
         internal ReportBillableAssetSummaryResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Defender.Easm.ReportBillableAssetSnapshotResult> AssetSummaries { get { throw null; } }
     }
-    public partial class Reports
-    {
-        protected Reports() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetBillable(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult> GetBillable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetBillableAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportBillableAssetSummaryResult>> GetBillableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult> GetSnapshot(Azure.Analytics.Defender.Easm.ReportAssetSnapshotRequest reportAssetSnapshotRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetSnapshot(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSnapshotResult>> GetSnapshotAsync(Azure.Analytics.Defender.Easm.ReportAssetSnapshotRequest reportAssetSnapshotRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSnapshotAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult> GetSummary(Azure.Analytics.Defender.Easm.ReportAssetSummaryRequest reportAssetSummaryRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetSummary(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.ReportAssetSummaryResult>> GetSummaryAsync(Azure.Analytics.Defender.Easm.ReportAssetSummaryRequest reportAssetSummaryRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSummaryAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
     public partial class Reputation
     {
         internal Reputation() { }
@@ -1243,25 +1237,6 @@ namespace Azure.Analytics.Defender.Easm
         public SavedFilterData(string filter, string description) { }
         public string Description { get { throw null; } }
         public string Filter { get { throw null; } }
-    }
-    public partial class SavedFilters
-    {
-        protected SavedFilters() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter> CreateOrReplaceSavedFilter(string filterName, Azure.Analytics.Defender.Easm.SavedFilterData savedFilterData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateOrReplaceSavedFilter(string filterName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, Azure.Analytics.Defender.Easm.SavedFilterData savedFilterData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceSavedFilterAsync(string filterName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteSavedFilter(string filterName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSavedFilterAsync(string filterName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetSavedFilter(string filterName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilter(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSavedFilterAsync(string filterName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.SavedFilter>> GetSavedFilterAsync(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetSavedFilters(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFilters(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.SavedFilter> GetSavedFiltersAsync(string filter = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ScanMetadata
     {
@@ -1421,23 +1396,6 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator !=(Azure.Analytics.Defender.Easm.TaskPhase left, Azure.Analytics.Defender.Easm.TaskPhase right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Tasks
-    {
-        protected Tasks() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CancelTask(string taskId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.Task> CancelTask(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelTaskAsync(string taskId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.Task>> CancelTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetTask(string taskId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Defender.Easm.Task> GetTask(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTaskAsync(string taskId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Defender.Easm.Task>> GetTaskAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetTasks(string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Defender.Easm.Task> GetTasks(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetTasksAsync(string filter, string orderby, int? skip, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Defender.Easm.Task> GetTasksAsync(string filter = null, string orderby = null, int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TaskState : System.IEquatable<Azure.Analytics.Defender.Easm.TaskState>
     {
@@ -1488,7 +1446,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AnalyticsDefenderEasmClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Defender.Easm.EasmClient, Azure.Analytics.Defender.Easm.EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Defender.Easm.EasmClient, Azure.Analytics.Defender.Easm.EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Defender.Easm.EasmClient, Azure.Analytics.Defender.Easm.EasmClientOptions> AddEasmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
