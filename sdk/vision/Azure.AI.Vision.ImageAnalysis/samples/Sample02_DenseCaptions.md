@@ -12,7 +12,7 @@ The following sections provide code snippets using the `client` created above, u
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
 class. To configure a client for use with Azure Image Analysis, provide a valid endpoint URI to an Azure Computer Vision resource
-along with a corresponding key credential authorized to use the Azure Computer Vison resource.
+along with a corresponding key credential authorized to use the Azure Computer Vision resource.
 
 ```C# Snippet:ImageAnalysisAuth
 string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
@@ -26,7 +26,7 @@ Here we are using environment variables to hold the endpoint and key for the Com
 
 ### Generate dense captions for an image file
 
-This example demonstrates how to generate dense captions for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The `Analyze` method call returns an `ImageAnalysisResult` object, which contains the generated dense captions and their confidence scores in the range [0, 1]. By default, the captions may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
+This example demonstrates how to generate dense captions for the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The `Analyze` method call returns an `ImageAnalysisResult` object, which contains the generated dense captions and their confidence scores in the range [0, 1]. By default, the captions may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
 
 Notes:
 
@@ -45,6 +45,7 @@ ImageAnalysisResult result = client.Analyze(
 
 // Print dense caption results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" Dense Captions:");
 foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
 {
@@ -54,17 +55,18 @@ foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
 
 ### Generate dense captions for an image URL
 
-This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisDenseCaptionFromUrl
 // Get dense captions for the image.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.DenseCaptions,
     new ImageAnalysisOptions { GenderNeutralCaption = true });
 
 // Print dense caption results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" Dense Captions:");
 foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
 {

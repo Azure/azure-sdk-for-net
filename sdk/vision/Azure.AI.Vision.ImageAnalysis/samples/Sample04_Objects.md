@@ -12,7 +12,7 @@ The following sections provide code snippets using ImageAnalysis to detect objec
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
 class. To configure a client for use with Azure Image Analysis, provide a valid endpoint URI to an Azure Computer Vision resource
-along with a corresponding key credential authorized to use the Azure Computer Vison resource.
+along with a corresponding key credential authorized to use the Azure Computer Vision resource.
 
 ```C# Snippet:ImageAnalysisAuth
 string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
@@ -26,7 +26,7 @@ Here we are using environment variables to hold the endpoint and key for the Com
 
 ### Detect objects in an image file
 
-This example demonstrates how to detect objects in the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains the detected objects and their locations in the form of bounding boxes.
+This example demonstrates how to detect objects in the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains the detected objects and their locations in the form of bounding boxes.
 
 ```C# Snippet:ImageAnalysisObjectsFromFile
 // Use a file stream to pass the image data to the analyze call
@@ -39,6 +39,7 @@ ImageAnalysisResult result = client.Analyze(
 
 // Print object detection results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" Objects:");
 foreach (DetectedObject detectedObject in result.Objects.Values)
 {
@@ -48,16 +49,17 @@ foreach (DetectedObject detectedObject in result.Objects.Values)
 
 ### Detect objects in an image URL
 
-This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisObjectsFromUrl
 // Detect objects in the image.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.Objects);
 
 // Print object detection results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" Objects:");
 foreach (DetectedObject detectedObject in result.Objects.Values)
 {

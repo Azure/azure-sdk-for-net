@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Chaos.Tests.TestDependencies.Experiments
         {
             _ = vmssName ?? throw new ArgumentNullException(nameof(vmssName));
             IEnumerable<Models.KeyValuePair> actionParams = new List<Models.KeyValuePair>() { new Models.KeyValuePair("abruptShutdown", "true") };
-            Models.Action action = new ContinuousAction(
+            Models.ChaosExperimentAction action = new ContinuousAction(
                 "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0",
                 TimeSpan.FromMinutes(2),
                 actionParams,
                 "selector1");
-            IEnumerable<Models.Action> actions = new List<Models.Action>() { action };
-            IEnumerable<Models.Branch> branches = new List<Models.Branch>() { new Models.Branch("branch1", actions) };
-            IEnumerable<Models.Step> steps = new List<Models.Step>() { new Models.Step("step1", branches) };
+            IEnumerable<Models.ChaosExperimentAction> actions = new List<Models.ChaosExperimentAction>() { action };
+            IEnumerable<Models.ChaosExperimentBranch> branches = new List<Models.ChaosExperimentBranch>() { new Models.ChaosExperimentBranch("branch1", actions) };
+            IEnumerable<Models.ChaosExperimentStep> steps = new List<Models.ChaosExperimentStep>() { new Models.ChaosExperimentStep ("step1", branches) };
             IEnumerable<Models.TargetReference> targets = new List<Models.TargetReference>() { new Models.TargetReference(TargetReferenceType.ChaosTarget, $"/subscriptions/{this.subscriptionId}/resourceGroups/{this.resourceGroup}/providers/Microsoft.Compute/virtualMachineScaleSets/{this.vmssName}/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet") };
-            IEnumerable<Models.Selector> selectors = new List<Models.Selector>() { new Models.ListSelector("selector1", targets) };
+            IEnumerable<Models.ChaosTargetSelector> selectors = new List<Models.ChaosTargetSelector>() { new Models.ChaosTargetListSelector ("selector1", targets) };
             var experimentData = new ExperimentData(AzureLocation.WestUS2, steps, selectors);
             experimentData.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             return experimentData;
