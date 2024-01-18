@@ -24,6 +24,9 @@
   <ItemGroup>
     <!-- Workaround to fix CI build failure in macOS. This package is being used indirectly by Azure analyzers. -->
     <!--<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="7.0.0" />-->
+
+    <!-- Workaround to fix CI build failure. -->
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="8.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
