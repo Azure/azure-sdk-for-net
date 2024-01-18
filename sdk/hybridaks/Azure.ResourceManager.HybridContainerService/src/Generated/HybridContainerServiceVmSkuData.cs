@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="extendedLocation"> Extended Location definition. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="values"> Array of HybridAKS Support VM Skus. </param>
+        /// <param name="values"> List of supported VM SKUs. </param>
         internal HybridContainerServiceVmSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceExtendedLocation extendedLocation, HybridContainerServiceResourceProvisioningState? provisioningState, IList<HybridContainerServiceVmSkuProperties> values) : base(id, name, resourceType, systemData)
         {
             ExtendedLocation = extendedLocation;
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.HybridContainerService
             Values = values;
         }
 
-        /// <summary> Extended Location definition. </summary>
+        /// <summary> Extended location pointing to the underlying infrastructure. </summary>
         public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> Array of HybridAKS Support VM Skus. </summary>
+        /// <summary> List of supported VM SKUs. </summary>
         public IList<HybridContainerServiceVmSkuProperties> Values { get; }
     }
 }

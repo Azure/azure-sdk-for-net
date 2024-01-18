@@ -25,7 +25,10 @@ namespace Azure.ResourceManager.Models
                 using var document = JsonDocument.ParseValue(ref reader);
                 foreach (var property in document.RootElement.EnumerateObject())
                 {
-                    return new ManagedServiceIdentityType(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                        return default;
+                    else
+                        return new ManagedServiceIdentityType(property.Value.GetString());
                 }
                 return null;
             }

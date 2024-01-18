@@ -69,6 +69,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +163,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,6 +188,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -188,6 +212,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,6 +258,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
@@ -262,6 +302,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +349,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DomainNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

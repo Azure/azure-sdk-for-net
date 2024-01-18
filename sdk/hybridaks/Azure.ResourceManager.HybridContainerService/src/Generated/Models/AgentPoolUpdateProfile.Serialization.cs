@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             Optional<int> count = default;
             Optional<string> vmSize = default;
+            Optional<string> kubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -52,8 +53,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vmSize = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kubernetesVersion"u8))
+                {
+                    kubernetesVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AgentPoolUpdateProfile(Optional.ToNullable(count), vmSize.Value);
+            return new AgentPoolUpdateProfile(Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value);
         }
     }
 }

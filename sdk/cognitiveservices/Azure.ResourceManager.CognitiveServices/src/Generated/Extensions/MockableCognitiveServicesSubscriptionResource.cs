@@ -91,6 +91,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -115,6 +123,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,6 +157,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +186,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +217,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -206,6 +246,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +277,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,6 +303,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,6 +328,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +357,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -320,6 +384,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckSkuAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +415,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckSkuAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -372,6 +444,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckDomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,6 +483,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckDomainAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Check Domain Availability parameter. </param>
@@ -441,6 +521,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CommitmentTiers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -463,6 +547,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentTiers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -487,6 +575,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Models_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -509,6 +601,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Models_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,6 +629,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_ListPlansBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -554,6 +658,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_ListPlansBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

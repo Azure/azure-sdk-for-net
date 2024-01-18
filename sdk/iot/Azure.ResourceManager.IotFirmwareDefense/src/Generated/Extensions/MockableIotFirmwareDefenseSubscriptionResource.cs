@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +82,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

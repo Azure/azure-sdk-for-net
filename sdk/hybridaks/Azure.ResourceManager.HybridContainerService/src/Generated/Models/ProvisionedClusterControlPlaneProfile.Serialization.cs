@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,16 +15,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ControlPlaneEndpoint))
-            {
-                writer.WritePropertyName("controlPlaneEndpoint"u8);
-                writer.WriteObjectValue(ControlPlaneEndpoint);
-            }
-            if (Optional.IsDefined(LinuxProfile))
-            {
-                writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile);
-            }
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -36,35 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(ControlPlaneEndpoint))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
-            {
-                writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteStartArray();
-                foreach (var item in AvailabilityZones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(OSType))
-            {
-                writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
-            }
-            if (Optional.IsDefined(OSSku))
-            {
-                writer.WritePropertyName("osSKU"u8);
-                writer.WriteStringValue(OSSku.Value.ToString());
-            }
-            if (Optional.IsDefined(NodeImageVersion))
-            {
-                writer.WritePropertyName("nodeImageVersion"u8);
-                writer.WriteStringValue(NodeImageVersion);
+                writer.WritePropertyName("controlPlaneEndpoint"u8);
+                writer.WriteObjectValue(ControlPlaneEndpoint);
             }
             writer.WriteEndObject();
         }
@@ -75,35 +39,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ProvisionedClusterControlPlaneEndpoint> controlPlaneEndpoint = default;
-            Optional<LinuxProfileProperties> linuxProfile = default;
             Optional<int> count = default;
             Optional<string> vmSize = default;
-            Optional<string> name = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<HybridContainerServiceOSType> osType = default;
-            Optional<HybridContainerServiceOSSku> ossku = default;
-            Optional<string> nodeImageVersion = default;
+            Optional<ControlPlaneProfileControlPlaneEndpoint> controlPlaneEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("controlPlaneEndpoint"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    controlPlaneEndpoint = ProvisionedClusterControlPlaneEndpoint.DeserializeProvisionedClusterControlPlaneEndpoint(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("linuxProfile"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linuxProfile = LinuxProfileProperties.DeserializeLinuxProfileProperties(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -118,50 +58,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("availabilityZones"u8))
+                if (property.NameEquals("controlPlaneEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    availabilityZones = array;
-                    continue;
-                }
-                if (property.NameEquals("osType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    osType = new HybridContainerServiceOSType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("osSKU"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ossku = new HybridContainerServiceOSSku(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("nodeImageVersion"u8))
-                {
-                    nodeImageVersion = property.Value.GetString();
+                    controlPlaneEndpoint = ControlPlaneProfileControlPlaneEndpoint.DeserializeControlPlaneProfileControlPlaneEndpoint(property.Value);
                     continue;
                 }
             }
-            return new ProvisionedClusterControlPlaneProfile(Optional.ToList(availabilityZones), Optional.ToNullable(osType), Optional.ToNullable(ossku), nodeImageVersion.Value, Optional.ToNullable(count), vmSize.Value, name.Value, controlPlaneEndpoint.Value, linuxProfile.Value);
+            return new ProvisionedClusterControlPlaneProfile(Optional.ToNullable(count), vmSize.Value, controlPlaneEndpoint.Value);
         }
     }
 }

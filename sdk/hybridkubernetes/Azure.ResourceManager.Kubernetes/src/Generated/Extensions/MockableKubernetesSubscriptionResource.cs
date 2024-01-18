@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +82,14 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
