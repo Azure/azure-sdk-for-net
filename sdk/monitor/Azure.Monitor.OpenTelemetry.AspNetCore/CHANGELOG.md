@@ -15,7 +15,7 @@
   Now that these packages have released stable versions, we will directly reference those and users will be able to apply any customizations using the publicly available APIs.
   ([#41395](https://github.com/Azure/azure-sdk-for-net/pull/41395))
 - Update OpenTelemetry dependencies
-  ([]())
+  ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
   - OpenTelemetry 1.7.0
   - OpenTelemetry.Extensions.Hosting 1.7.0
   - NEW: OpenTelemetry.Instrumentation.AspNetCore 1.7.0
