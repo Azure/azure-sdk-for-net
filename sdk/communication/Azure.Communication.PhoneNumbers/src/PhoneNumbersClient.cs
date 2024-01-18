@@ -98,8 +98,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="apiVersion"> Api Version. </param>
         private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
-            InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, new System.Uri(endpoint), apiVersion);
+            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, new System.Uri(endpoint), apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _acceptedLanguage = acceptedLanguage;
