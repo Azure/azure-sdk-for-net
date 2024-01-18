@@ -38,6 +38,7 @@ class. To configure a client for use with Azure Image Analysis, provide a valid 
 along with a corresponding key credential authorized to use the Azure Computer Vision resource.
 
 ```C# Snippet:ImageAnalysisUsing
+using Azure;
 using Azure.AI.Vision.ImageAnalysis;
 using System;
 using System.IO;

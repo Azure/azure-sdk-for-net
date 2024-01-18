@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #region Snippet:ImageAnalysisUsing
+using Azure;
 using Azure.AI.Vision.ImageAnalysis;
 using System;
 using System.IO;
