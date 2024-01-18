@@ -141,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&
                                     Environment.GetEnvironmentVariable(WebSiteIsolationEnvironmentVariable) != WebSiteIsolationHyperV;
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     LiveMetricsExporterEventSource.Log.AccessingEnvironmentVariableFailedWarning(WebSiteEnvironmentVariable, ex);
                     return false;
