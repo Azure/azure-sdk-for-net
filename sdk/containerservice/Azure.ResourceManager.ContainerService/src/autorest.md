@@ -85,7 +85,7 @@ rename-mapping:
   # Change from ManagedServiceIdentity to ManagedClusterIdentity
   ManagedCluster.identity: ClusterIdentity
   DelegatedResource: ManagedClusterDelegatedIdentity
-  ManagedCluster.properties.resourceUID: -|arm-id
+  ManagedCluster.properties.resourceUID: ResourceID|arm-id
   IstioEgressGateway.enabled: IsEnabled
   IstioIngressGateway.enabled: IsEnabled
   ManagedClusterWorkloadAutoScalerProfileKeda.enabled: IsKedaEnabled

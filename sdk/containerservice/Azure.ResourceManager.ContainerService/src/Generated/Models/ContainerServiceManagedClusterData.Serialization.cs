@@ -291,10 +291,10 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("serviceMeshProfile"u8);
                 writer.WriteObjectValue(ServiceMeshProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceUID))
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUID"u8);
-                writer.WriteStringValue(ResourceUID);
+                writer.WriteStringValue(ResourceId);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
