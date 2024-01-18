@@ -1,16 +1,14 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.2.2 (2024-01-18)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
 
 ## 1.2.1 (2023-11-27)
 
