@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.ExceptionServices;
@@ -11,6 +12,8 @@ namespace System.ClientModel.Primitives;
 
 public class ClientRetryPolicy : PipelinePolicy
 {
+    public static readonly ClientRetryPolicy Default = new();
+
     private const int DefaultMaxRetries = 3;
     private const double DefaultJitterFactor = 0.2;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
@@ -22,11 +25,7 @@ public class ClientRetryPolicy : PipelinePolicy
     private readonly double _minJitterFactor;
     private readonly double _maxJitterFactor;
 
-    public ClientRetryPolicy() : this(DefaultMaxRetries)
-    {
-    }
-
-    public ClientRetryPolicy(int maxRetries)
+    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
@@ -36,9 +35,7 @@ public class ClientRetryPolicy : PipelinePolicy
     }
 
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).AsTask().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+        => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
 
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);

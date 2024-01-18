@@ -54,9 +54,7 @@ message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[]
 
 PipelineRequest request = message.Request;
 request.Method = "GET";
-
-UriBuilder uriBuilder = new("https://www.example.com/");
-request.Uri = uriBuilder.Uri;
+request.Uri = new Uri("https://www.example.com/");
 request.Headers.Add("Accept", "application/json");
 
 pipeline.Send(message);
