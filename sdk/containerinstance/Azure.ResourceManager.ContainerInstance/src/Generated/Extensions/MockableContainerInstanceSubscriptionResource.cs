@@ -58,6 +58,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,6 +87,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +118,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -124,6 +144,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -145,6 +169,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,6 +197,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -192,6 +224,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -214,6 +250,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>

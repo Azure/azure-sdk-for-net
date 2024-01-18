@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,11 +16,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SConnectionConfiguration : IUtf8JsonSerializable
+    public partial class P2SConnectionConfiguration : IUtf8JsonSerializable, IJsonModel<P2SConnectionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SConnectionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<P2SConnectionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -28,6 +43,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -46,12 +66,66 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
+            {
+                writer.WritePropertyName("configurationPolicyGroupAssociations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConfigurationPolicyGroupAssociations)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousConfigurationPolicyGroupAssociations))
+            {
+                writer.WritePropertyName("previousConfigurationPolicyGroupAssociations"u8);
+                writer.WriteStartArray();
+                foreach (var item in PreviousConfigurationPolicyGroupAssociations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static P2SConnectionConfiguration DeserializeP2SConnectionConfiguration(JsonElement element)
+        P2SConnectionConfiguration IJsonModel<P2SConnectionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeP2SConnectionConfiguration(document.RootElement, options);
+        }
+
+        internal static P2SConnectionConfiguration DeserializeP2SConnectionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +140,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<WritableSubResource>> configurationPolicyGroupAssociations = default;
             Optional<IReadOnlyList<VpnServerConfigurationPolicyGroupData>> previousConfigurationPolicyGroupAssociations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -176,8 +252,44 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToList(configurationPolicyGroupAssociations), Optional.ToList(previousConfigurationPolicyGroupAssociations), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToList(configurationPolicyGroupAssociations), Optional.ToList(previousConfigurationPolicyGroupAssociations), Optional.ToNullable(provisioningState));
         }
+
+        BinaryData IPersistableModel<P2SConnectionConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        P2SConnectionConfiguration IPersistableModel<P2SConnectionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeP2SConnectionConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<P2SConnectionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

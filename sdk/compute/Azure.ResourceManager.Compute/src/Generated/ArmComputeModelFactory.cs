@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
@@ -1838,18 +1839,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommunityGalleryInfo"/>. </summary>
-        /// <param name="publisherUri"> The link to the publisher website. Visible to all users. </param>
+        /// <param name="publisherUriString"> The link to the publisher website. Visible to all users. </param>
         /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
         /// <param name="eula"> End-user license agreement for community gallery image. </param>
         /// <param name="publicNamePrefix"> The prefix of the gallery name that will be displayed publicly. Visible to all users. </param>
         /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
         /// <param name="publicNames"> Community gallery public name list. </param>
         /// <returns> A new <see cref="Models.CommunityGalleryInfo"/> instance for mocking. </returns>
-        public static CommunityGalleryInfo CommunityGalleryInfo(Uri publisherUri = null, string publisherContact = null, string eula = null, string publicNamePrefix = null, bool? communityGalleryEnabled = null, IEnumerable<string> publicNames = null)
+        public static CommunityGalleryInfo CommunityGalleryInfo(string publisherUriString = null, string publisherContact = null, string eula = null, string publicNamePrefix = null, bool? communityGalleryEnabled = null, IEnumerable<string> publicNames = null)
         {
             publicNames ??= new List<string>();
 
-            return new CommunityGalleryInfo(publisherUri, publisherContact, eula, publicNamePrefix, communityGalleryEnabled, publicNames?.ToList());
+            return new CommunityGalleryInfo(publisherUriString, publisherContact, eula, publicNamePrefix, communityGalleryEnabled, publicNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharingStatus"/>. </summary>

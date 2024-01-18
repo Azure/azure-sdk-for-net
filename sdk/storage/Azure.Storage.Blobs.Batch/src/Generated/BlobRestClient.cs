@@ -21,7 +21,6 @@ namespace Azure.Storage.Blobs.Batch
         private readonly string _url;
         private readonly string _version;
         private readonly string _snapshot;
-        private readonly string _versionId;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -32,19 +31,17 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2020-06-12". </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, string snapshot = null, string versionId = null)
+        public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, string snapshot = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _version = version ?? throw new ArgumentNullException(nameof(version));
             _snapshot = snapshot;
-            _versionId = versionId;
         }
 
-        internal HttpMessage CreateSetAccessTierRequest(string containerName, string blob, BatchAccessTier tier, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
+        internal HttpMessage CreateSetAccessTierRequest(string containerName, string blob, BatchAccessTier tier, string versionId, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,9 +57,9 @@ namespace Azure.Storage.Blobs.Batch
             {
                 uri.AppendQuery("snapshot", _snapshot, true);
             }
-            if (_versionId != null)
+            if (versionId != null)
             {
-                uri.AppendQuery("versionid", _versionId, true);
+                uri.AppendQuery("versionid", versionId, true);
             }
             if (timeout != null)
             {
@@ -91,13 +88,14 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="tier"> Indicates the tier to be set on the blob. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="rehydratePriority"> Optional: Indicates the priority with which to rehydrate an archived blob. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(string containerName, string blob, BatchAccessTier tier, string versionId = null, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -108,7 +106,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetAccessTierRequest(containerName, blob, tier, timeout, rehydratePriority, leaseId, ifTags);
+            using var message = CreateSetAccessTierRequest(containerName, blob, tier, versionId, timeout, rehydratePriority, leaseId, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetAccessTierHeaders(message.Response);
             switch (message.Response.Status)
@@ -125,13 +123,14 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="tier"> Indicates the tier to be set on the blob. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="rehydratePriority"> Optional: Indicates the priority with which to rehydrate an archived blob. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(string containerName, string blob, BatchAccessTier tier, string versionId = null, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -142,7 +141,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateSetAccessTierRequest(containerName, blob, tier, timeout, rehydratePriority, leaseId, ifTags);
+            using var message = CreateSetAccessTierRequest(containerName, blob, tier, versionId, timeout, rehydratePriority, leaseId, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetAccessTierHeaders(message.Response);
             switch (message.Response.Status)
@@ -155,7 +154,7 @@ namespace Azure.Storage.Blobs.Batch
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string containerName, string blob, int? timeout, string leaseId, DeleteSnapshotsOptionType? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, BlobDeleteType? blobDeleteType)
+        internal HttpMessage CreateDeleteRequest(string containerName, string blob, string versionId, int? timeout, string leaseId, DeleteSnapshotsOptionType? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, BlobDeleteType? blobDeleteType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -170,9 +169,9 @@ namespace Azure.Storage.Blobs.Batch
             {
                 uri.AppendQuery("snapshot", _snapshot, true);
             }
-            if (_versionId != null)
+            if (versionId != null)
             {
-                uri.AppendQuery("versionid", _versionId, true);
+                uri.AppendQuery("versionid", versionId, true);
             }
             if (timeout != null)
             {
@@ -219,6 +218,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <summary> If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If the storage account's soft delete feature is enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot for the number of days specified by the DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob's data is permanently removed from the storage account. Note that you continue to be charged for the soft-deleted blob's storage until it is permanently removed. Use the List Blobs API and specify the "include=deleted" query parameter to discover which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot causes the service to return an HTTP status code of 404 (ResourceNotFound). </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="deleteSnapshots"> Required if the blob has associated snapshots. Specify one of the following two options: include: Delete the base blob and all of its snapshots. only: Delete only the blob's snapshots and not the blob itself. </param>
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="blobDeleteType"> Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string containerName, string blob, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string containerName, string blob, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -241,7 +241,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateDeleteRequest(containerName, blob, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType);
+            using var message = CreateDeleteRequest(containerName, blob, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobDeleteHeaders(message.Response);
             switch (message.Response.Status)
@@ -256,6 +256,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <summary> If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed from the storage account. If the storage account's soft delete feature is enabled, then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service retains the blob or snapshot for the number of days specified by the DeleteRetentionPolicy section of [Storage service properties] (Set-Blob-Service-Properties.md). After the specified number of days has passed, the blob's data is permanently removed from the storage account. Note that you continue to be charged for the soft-deleted blob's storage until it is permanently removed. Use the List Blobs API and specify the "include=deleted" query parameter to discover which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot causes the service to return an HTTP status code of 404 (ResourceNotFound). </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="deleteSnapshots"> Required if the blob has associated snapshots. Specify one of the following two options: include: Delete the base blob and all of its snapshots. only: Delete only the blob's snapshots and not the blob itself. </param>
@@ -267,7 +268,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="blobDeleteType"> Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string containerName, string blob, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string containerName, string blob, string versionId = null, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -278,7 +279,7 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            using var message = CreateDeleteRequest(containerName, blob, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType);
+            using var message = CreateDeleteRequest(containerName, blob, versionId, timeout, leaseId, deleteSnapshots, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobDeleteType);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobDeleteHeaders(message.Response);
             switch (message.Response.Status)

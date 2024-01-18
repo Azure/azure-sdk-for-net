@@ -156,7 +156,7 @@ public partial class ChatCompletionsOptions
     public IDictionary<int, int> TokenSelectionBiases { get; }
 
     /// <summary> A list of functions the model may generate JSON inputs for. </summary>
-    public IList<FunctionDefinition> Functions { get; set; }
+    public IList<FunctionDefinition> Functions { get; }
 
     /// <summary>
     /// Controls how the model will use provided Functions.
