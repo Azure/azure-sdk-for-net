@@ -36,8 +36,11 @@ public class ClientPipelineTests : SyncAsyncTestBase
     [Test]
     public async Task CanCreateWithPerCallPolicies()
     {
-        ClientPipelineOptions options = new();
-        options.Transport = new ObservableTransport("Transport");
+        ClientPipelineOptions options = new()
+        {
+            RetryPolicy = new ObservablePolicy("RetryPolicy"),
+            Transport = new ObservableTransport("Transport")
+        };
 
         PipelinePolicy[] perCallPolicies = new PipelinePolicy[]
         {
@@ -53,14 +56,12 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual(7, observations.Count);
         Assert.AreEqual("Request:PerCallPolicyA", observations[index++]);
         Assert.AreEqual("Request:PerCallPolicyB", observations[index++]);
-
-        // TODO: Validate that per call policy comes before retry policy
-
+        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
-
+        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:PerCallPolicyB", observations[index++]);
         Assert.AreEqual("Response:PerCallPolicyA", observations[index++]);
     }
@@ -68,8 +69,11 @@ public class ClientPipelineTests : SyncAsyncTestBase
     [Test]
     public async Task CanCreateWithPerTryPolicies()
     {
-        ClientPipelineOptions options = new();
-        options.Transport = new ObservableTransport("Transport");
+        ClientPipelineOptions options = new()
+        {
+            RetryPolicy = new ObservablePolicy("RetryPolicy"),
+            Transport = new ObservableTransport("Transport")
+        };
 
         PipelinePolicy[] perTryPolicies = new PipelinePolicy[]
         {
@@ -88,23 +92,24 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual(7, observations.Count);
+        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:PerTryPolicyA", observations[index++]);
         Assert.AreEqual("Request:PerTryPolicyB", observations[index++]);
-
-        // TODO: Validate that per try policy comes after retry policy
-
         Assert.AreEqual("Transport:Transport", observations[index++]);
-
         Assert.AreEqual("Response:PerTryPolicyB", observations[index++]);
         Assert.AreEqual("Response:PerTryPolicyA", observations[index++]);
+        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
     }
 
     [Test]
     public async Task CanCreateWithBeforeTransportPolicies()
     {
-        ClientPipelineOptions options = new();
-        options.Transport = new ObservableTransport("Transport");
+        ClientPipelineOptions options = new()
+        {
+            RetryPolicy = new ObservablePolicy("RetryPolicy"),
+            Transport = new ObservableTransport("Transport")
+        };
 
         PipelinePolicy[] beforeTransportPolicies = new PipelinePolicy[]
         {
@@ -123,16 +128,14 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual(7, observations.Count);
+        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:BeforeTransportPolicyA", observations[index++]);
         Assert.AreEqual("Request:BeforeTransportPolicyB", observations[index++]);
-
-        // TODO: Validate that before transport policy comes after retry policy
-
         Assert.AreEqual("Transport:Transport", observations[index++]);
-
         Assert.AreEqual("Response:BeforeTransportPolicyB", observations[index++]);
         Assert.AreEqual("Response:BeforeTransportPolicyA", observations[index++]);
+        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
     }
 
     [Test]
@@ -196,8 +199,11 @@ public class ClientPipelineTests : SyncAsyncTestBase
     [Test]
     public async Task CanCreateWithClientAuthorAndClientUserPolicies()
     {
-        ClientPipelineOptions options = new();
-        options.Transport = new ObservableTransport("Transport");
+        ClientPipelineOptions options = new()
+        {
+            RetryPolicy = new ObservablePolicy("RetryPolicy"),
+            Transport = new ObservableTransport("Transport")
+        };
 
         options.AddPolicy(new ObservablePolicy("UserPerCallPolicyA"), PipelinePosition.PerCall);
         options.AddPolicy(new ObservablePolicy("UserPerCallPolicyB"), PipelinePosition.PerCall);
@@ -237,13 +243,15 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(25, observations.Count);
+        Assert.AreEqual(27, observations.Count);
 
         Assert.AreEqual("Request:ClientPerCallPolicyA", observations[index++]);
         Assert.AreEqual("Request:ClientPerCallPolicyB", observations[index++]);
 
         Assert.AreEqual("Request:UserPerCallPolicyA", observations[index++]);
         Assert.AreEqual("Request:UserPerCallPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
 
         Assert.AreEqual("Request:ClientPerTryPolicyA", observations[index++]);
         Assert.AreEqual("Request:ClientPerTryPolicyB", observations[index++]);
@@ -270,6 +278,8 @@ public class ClientPipelineTests : SyncAsyncTestBase
 
         Assert.AreEqual("Response:ClientPerTryPolicyB", observations[index++]);
         Assert.AreEqual("Response:ClientPerTryPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
 
         Assert.AreEqual("Response:UserPerCallPolicyB", observations[index++]);
         Assert.AreEqual("Response:UserPerCallPolicyA", observations[index++]);

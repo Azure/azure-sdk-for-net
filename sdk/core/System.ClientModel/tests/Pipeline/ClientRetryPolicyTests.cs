@@ -104,7 +104,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            RetryPolicy = new ClientRetryPolicy(maxRetries: 10),
+            RetryPolicy = new MockRetryPolicy(maxRetries: 10, i => TimeSpan.FromMilliseconds(10)),
             Transport = new MockPipelineTransport("Transport",
                 new int[] { 408, 429, 500, 502, 503, 504, 501 })
         };

@@ -12,10 +12,15 @@ namespace System.ClientModel.Primitives;
 public class ClientRetryPolicy : PipelinePolicy
 {
     private const int DefaultMaxRetries = 3;
+    private const double DefaultJitterFactor = 0.2;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
 
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
+
+    private readonly Random _random = new Random();
+    private readonly double _minJitterFactor;
+    private readonly double _maxJitterFactor;
 
     public ClientRetryPolicy() : this(DefaultMaxRetries)
     {
@@ -25,6 +30,9 @@ public class ClientRetryPolicy : PipelinePolicy
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
+
+        _minJitterFactor = 1.0 - DefaultJitterFactor;
+        _maxJitterFactor = 1.0 + DefaultJitterFactor;
     }
 
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -175,7 +183,22 @@ public class ClientRetryPolicy : PipelinePolicy
         => new(ShouldRetryCore(message, exception));
 
     internal TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
-    => GetNextDelayCore(message, tryCount);
+    {
+        TimeSpan delay = GetNextDelayCore(message, tryCount);
+        return ApplyJitter(delay);
+    }
+
+    private TimeSpan ApplyJitter(TimeSpan delay)
+    {
+        // get a random double between 0 and 1
+        double randomDouble = _random.NextDouble();
+
+        // scale the double by the jitter range and then add it to the min
+        randomDouble = randomDouble * (_maxJitterFactor - _minJitterFactor) + _minJitterFactor;
+
+        // apply the jitter to the delay
+        return TimeSpan.FromMilliseconds(delay.TotalMilliseconds * randomDouble);
+    }
 
     protected virtual TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
     {

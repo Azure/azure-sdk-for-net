@@ -3,7 +3,6 @@
 
 using System.ClientModel.Internal;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -33,18 +32,8 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         return new ApiKeyAuthenticationPolicy(credential, headerName, KeyLocation.Header, keyPrefix);
     }
 
-    public static ApiKeyAuthenticationPolicy CreateQueryApiKeyPolicy(ApiKeyCredential credential, string queryName)
-    {
-        // TODO: Add tests for this implementation if the API is approved.
-        Argument.AssertNotNull(credential, nameof(credential));
-        Argument.AssertNotNullOrEmpty(queryName, nameof(queryName));
-
-        return new ApiKeyAuthenticationPolicy(credential, queryName, KeyLocation.Query);
-    }
-
     public static ApiKeyAuthenticationPolicy CreateBasicAuthorizationPolicy(ApiKeyCredential credential)
     {
-        // TODO: Add tests for this implementation if the API is approved.
         Argument.AssertNotNull(credential, nameof(credential));
 
         return new ApiKeyAuthenticationPolicy(credential, "Authorization", KeyLocation.Header, "Basic");
@@ -52,7 +41,6 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
 
     public static ApiKeyAuthenticationPolicy CreateBearerAuthorizationPolicy(ApiKeyCredential credential)
     {
-        // TODO: Add tests for this implementation if the API is approved.
         Argument.AssertNotNull(credential, nameof(credential));
 
         return new ApiKeyAuthenticationPolicy(credential, "Authorization", KeyLocation.Header, "Bearer");
@@ -91,9 +79,6 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
             case KeyLocation.Header:
                 SetHeader(message);
                 break;
-            case KeyLocation.Query:
-                AddQueryParameter(message);
-                break;
             default:
                 throw new InvalidOperationException($"Unsupported value for Key location: '{_location}'.");
         }
@@ -102,30 +87,14 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
     private void SetHeader(PipelineMessage message)
     {
         _credential.Deconstruct(out string key);
+
         message.Request.Headers.Set(_name, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
-    }
-
-    private void AddQueryParameter(PipelineMessage message)
-    {
-        // TODO: optimize using Span APIs
-        _credential.Deconstruct(out string key);
-
-        StringBuilder query = new StringBuilder();
-        query.Append(_name);
-        query.Append('=');
-        query.Append(Uri.EscapeDataString(key));
-
-        UriBuilder uriBuilder = new(message.Request.Uri);
-        uriBuilder.Query = (uriBuilder.Query != null && uriBuilder.Query.Length > 1) ?
-            uriBuilder.Query.Substring(1) + "&" + query.ToString() :
-            query.ToString();
-
-        message.Request.Uri = uriBuilder.Uri;
     }
 
     private enum KeyLocation
     {
         Header = 0,
-        Query = 1,
+        // Query-based keys are tracked by
+        // https://github.com/Azure/azure-sdk-for-net/issues/41391
     }
 }
