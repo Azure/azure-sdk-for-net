@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
@@ -137,6 +145,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
@@ -172,6 +188,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,6 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

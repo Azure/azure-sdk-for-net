@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -80,6 +81,16 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile);
+            }
+            if (Optional.IsDefined(ServiceArtifactReference))
+            {
+                writer.WritePropertyName("serviceArtifactReference"u8);
+                JsonSerializer.Serialize(writer, ServiceArtifactReference);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -127,7 +138,9 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<DiskEncryptionConfiguration> diskEncryptionConfiguration = default;
             Optional<NodePlacementConfiguration> nodePlacementConfiguration = default;
             Optional<IList<BatchVmExtension>> extensions = default;
-            Optional<OSDisk> osDisk = default;
+            Optional<BatchOSDisk> osDisk = default;
+            Optional<BatchSecurityProfile> securityProfile = default;
+            Optional<WritableSubResource> serviceArtifactReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +230,25 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(property.Value);
+                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("serviceArtifactReference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceArtifactReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -226,7 +257,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, serializedAdditionalRawData);
+            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)

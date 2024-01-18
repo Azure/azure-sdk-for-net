@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

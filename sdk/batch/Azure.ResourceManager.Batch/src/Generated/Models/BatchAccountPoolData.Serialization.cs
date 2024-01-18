@@ -233,6 +233,17 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("currentNodeCommunicationMode");
                 }
             }
+            if (Optional.IsCollectionDefined(ResourceTags))
+            {
+                writer.WritePropertyName("resourceTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in ResourceTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -305,6 +316,7 @@ namespace Azure.ResourceManager.Batch
             Optional<IList<BatchMountConfiguration>> mountConfiguration = default;
             Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
             Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
+            Optional<IDictionary<string, string>> resourceTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -626,6 +638,20 @@ namespace Azure.ResourceManager.Batch
                             currentNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();
                             continue;
                         }
+                        if (property0.NameEquals("resourceTags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            resourceTags = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -635,7 +661,7 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToDictionary(resourceTags), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolData>.Write(ModelReaderWriterOptions options)

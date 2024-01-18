@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="tags"> The user-specified tags associated with the account. </param>
         /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
-        /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Azure Active Directory. If the mode is UserSubscription, clients must use Azure Active Directory. The default is BatchService. </param>
+        /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService. </param>
         /// <param name="keyVaultReference"> A reference to the Azure key vault associated with the Batch account. </param>
         /// <param name="publicNetworkAccess"> If not specified, the default value is 'enabled'. </param>
         /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Batch.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The properties related to the auto-storage account. </summary>
         public BatchAccountAutoStorageBaseConfiguration AutoStorage { get; set; }
-        /// <summary> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Azure Active Directory. If the mode is UserSubscription, clients must use Azure Active Directory. The default is BatchService. </summary>
+        /// <summary> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService. </summary>
         public BatchAccountPoolAllocationMode? PoolAllocationMode { get; set; }
         /// <summary> A reference to the Azure key vault associated with the Batch account. </summary>
         public BatchKeyVaultReference KeyVaultReference { get; set; }

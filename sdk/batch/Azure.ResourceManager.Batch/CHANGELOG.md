@@ -1,14 +1,34 @@
 # Release History
 
-## 1.2.2 (2024-01-18)
+## 1.3.0 (2024-01-18)
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2023-05' to 'package-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/408db257fe67fc66d8c66c10881be8d414d5e5f3/specification/batch/resource-manager/readme.md.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
 
 - Upgraded dependent `Azure.ResourceManager` to 1.10.0.
+
+## 1.3.0-beta.1 (2024-01-09)
+
+### Features Added
+
+- Add `ResourceTags` support to Pool Creation
+  - Added `resourceTags` property to `BatchAccountPoolData` definition
+  - Added `resourceTags` property to `ArmBatchModelFactory` definition
+
+- Add `SecurityProfile` support to Pool Creation
+  - Added `serviceArtifactReference` property to `BatchVmConfiguration`definition
+  - Added `securityProfile` property to `BatchVmConfiguration` definition
+
+- Add `ServiceArtifactReference` and `OSDisk` support to Pool Creation
+  - Added `standardssd_lrs` value to `BatchStorageAccountType` enum
+  - Added `caching` property to `BatchNodePlacementPolicyType` definition
+  - Added `managedDisk` property to `BatchNodePlacementPolicyType` definition
+  - Added `diskSizeGB` property to `BatchNodePlacementPolicyType` definition
+  - Added `writeAcceleratorEnabled` property to `BatchNodePlacementPolicyType` definition
 
 ## 1.2.1 (2023-11-27)
 

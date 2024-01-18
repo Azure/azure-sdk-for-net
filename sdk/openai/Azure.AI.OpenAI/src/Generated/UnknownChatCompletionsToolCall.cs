@@ -5,22 +5,11 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI
 {
     /// <summary> Unknown version of ChatCompletionsToolCall. </summary>
     internal partial class UnknownChatCompletionsToolCall : ChatCompletionsToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownChatCompletionsToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal UnknownChatCompletionsToolCall(string id) : base(id)
-        {
-            Argument.AssertNotNull(id, nameof(id));
-        }
-
         /// <summary> Initializes a new instance of <see cref="UnknownChatCompletionsToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. </param>

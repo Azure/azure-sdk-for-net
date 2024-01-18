@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -93,6 +101,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -218,6 +234,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -247,6 +271,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -278,6 +310,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -307,6 +347,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
