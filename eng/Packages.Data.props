@@ -119,7 +119,7 @@
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.10.3" />
+    <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
@@ -233,6 +233,9 @@
     <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.6.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.1" />
+		<PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
+		<PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0-beta.1" />
+		<PackageReference Update="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
