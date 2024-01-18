@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed the setter of the `Functions` property of the `ChatCompletionsOptions` class as per the guidelines for collection properties.
+
 ### Bugs Fixed
 
 - Addressed an issue with the public constructor for `ChatCompletionsFunctionToolCall` that failed to set the tool call type in the corresponding request.

@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -84,6 +92,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +131,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
@@ -138,6 +162,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +234,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

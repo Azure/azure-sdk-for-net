@@ -183,6 +183,10 @@ namespace Azure.Search.Documents.Indexes
                                 ((ISearchFieldAttribute)simpleFieldAttribute).SetField(field);
                                 break;
 
+                            case VectorSearchFieldAttribute vectorSearchFieldAttribute:
+                                ((ISearchFieldAttribute)vectorSearchFieldAttribute).SetField(field);
+                                break;
+
                             default:
                                 Type attributeType = attribute.GetType();
 

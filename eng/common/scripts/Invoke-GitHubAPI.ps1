@@ -451,3 +451,23 @@ function Get-GithubReferenceCommitDate($commitUrl, $AuthToken) {
   }
   return $commitResponse.committer.date
 }
+
+function Search-GitHubCommit {
+  param (
+    [ValidateNotNullOrEmpty()]
+    $RepoOwner,
+    [ValidateNotNullOrEmpty()]
+    $RepoName,
+    [ValidateNotNullOrEmpty()]
+    $CommitHash,
+    [ValidateNotNullOrEmpty()]
+    $AuthToken
+  )
+  $uri = "https://api.github.com/search/commits?q=repo:$RepoOwner/$RepoName+hash:$CommitHash"
+
+  return Invoke-RestMethod `
+          -Method GET `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}

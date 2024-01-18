@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertProcessingRuleName"> The name of the alert processing rule that needs to be fetched. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

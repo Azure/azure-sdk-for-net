@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The default is Unmanaged, but may change to either NodeImage or SecurityPatch at GA. </summary>
+    /// <summary> Manner in which the OS on your nodes is updated. The default is NodeImage. </summary>
     public readonly partial struct ManagedClusterNodeOSUpgradeChannel : IEquatable<ManagedClusterNodeOSUpgradeChannel>
     {
         private readonly string _value;
@@ -24,15 +24,12 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string NoneValue = "None";
         private const string UnmanagedValue = "Unmanaged";
-        private const string SecurityPatchValue = "SecurityPatch";
         private const string NodeImageValue = "NodeImage";
 
         /// <summary> No attempt to update your machines OS will be made either by OS or by rolling VHDs. This means you are responsible for your security updates. </summary>
         public static ManagedClusterNodeOSUpgradeChannel None { get; } = new ManagedClusterNodeOSUpgradeChannel(NoneValue);
-        /// <summary> OS updates will be applied automatically through the OS built-in patching infrastructure. Newly scaled in machines will be unpatched initially, and will be patched at some later time by the OS's infrastructure. Behavior of this option depends on the OS in question. Ubuntu and Mariner apply security patches through unattended upgrade roughly once a day around 06:00 UTC. Windows does not apply security patches automatically and so for them this option is equivalent to None till further notice. </summary>
+        /// <summary> OS updates will be applied automatically through the OS built-in patching infrastructure. Newly scaled in machines will be unpatched initially and will be patched at some point by the OS's infrastructure. Behavior of this option depends on the OS in question. Ubuntu and Mariner apply security patches through unattended upgrade roughly once a day around 06:00 UTC. Windows does not apply security patches automatically and so for them this option is equivalent to None till further notice. </summary>
         public static ManagedClusterNodeOSUpgradeChannel Unmanaged { get; } = new ManagedClusterNodeOSUpgradeChannel(UnmanagedValue);
-        /// <summary> AKS will update the nodes VHD with patches from the image maintainer labelled "security only" on a regular basis. Where possible, patches will also be applied without reimaging to existing nodes. Some patches, such as kernel patches, cannot be applied to existing nodes without disruption. For such patches, the VHD will be updated, and machines will be rolling reimaged to that VHD following maintenance windows and surge settings. This option incurs the extra cost of hosting the VHDs in your node resource group. </summary>
-        public static ManagedClusterNodeOSUpgradeChannel SecurityPatch { get; } = new ManagedClusterNodeOSUpgradeChannel(SecurityPatchValue);
         /// <summary> AKS will update the nodes with a newly patched VHD containing security fixes and bugfixes on a weekly cadence. With the VHD update machines will be rolling reimaged to that VHD following maintenance windows and surge settings. No extra VHD cost is incurred when choosing this option as AKS hosts the images. </summary>
         public static ManagedClusterNodeOSUpgradeChannel NodeImage { get; } = new ManagedClusterNodeOSUpgradeChannel(NodeImageValue);
         /// <summary> Determines if two <see cref="ManagedClusterNodeOSUpgradeChannel"/> values are the same. </summary>

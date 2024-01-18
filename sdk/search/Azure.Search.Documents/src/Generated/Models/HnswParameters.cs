@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Contains the parameters specific to hnsw algorithm. </summary>
+    /// <summary> Contains the parameters specific to the HNSW algorithm. </summary>
     public partial class HnswParameters
     {
         /// <summary> Initializes a new instance of <see cref="HnswParameters"/>. </summary>

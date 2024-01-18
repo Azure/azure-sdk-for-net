@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
@@ -88,6 +92,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
@@ -120,6 +128,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,6 +167,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Set</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
@@ -189,6 +205,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Remove</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
@@ -221,6 +241,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
         /// </item>
         /// </list>
         /// </summary>

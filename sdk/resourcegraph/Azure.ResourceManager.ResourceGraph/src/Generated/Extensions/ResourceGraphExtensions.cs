@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <term>Operation Id</term>
         /// <description>Resources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -63,6 +67,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -92,6 +100,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <term>Operation Id</term>
         /// <description>ResourcesHistory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -119,6 +131,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourcesHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
