@@ -133,10 +133,10 @@ public class ClientRetryPolicy : PipelinePolicy
 
     protected virtual void OnTryComplete(PipelineMessage message) { }
 
-    private bool ShouldRetry(PipelineMessage message, Exception? exception)
+    public bool ShouldRetry(PipelineMessage message, Exception? exception)
         => ShouldRetrySyncOrAsync(message, exception, async: false).EnsureCompleted();
 
-    private async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+    public async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
         => await ShouldRetrySyncOrAsync(message, exception, async: true).ConfigureAwait(false);
 
     private async ValueTask<bool> ShouldRetrySyncOrAsync(PipelineMessage message, Exception? exception, bool async)
@@ -173,7 +173,7 @@ public class ClientRetryPolicy : PipelinePolicy
     protected virtual ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
         => new(ShouldRetryCore(message, exception));
 
-    internal TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
+    public TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
         => GetNextDelayCore(message, tryCount);
 
     protected virtual TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
@@ -189,7 +189,10 @@ public class ClientRetryPolicy : PipelinePolicy
 
     protected virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
     {
-        cancellationToken.WaitHandle.WaitOne(time);
+        if (cancellationToken.WaitHandle.WaitOne(time))
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+        }
     }
 
     #region Retry Classifier
