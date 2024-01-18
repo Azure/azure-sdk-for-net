@@ -434,7 +434,6 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     #region Test parallel connections
 
     [Test]
-    [Ignore("TODO: Fix")]
     public async Task Opens50ParallelConnections()
     {
         // Running 50 sync requests on the threadpool would cause starvation
