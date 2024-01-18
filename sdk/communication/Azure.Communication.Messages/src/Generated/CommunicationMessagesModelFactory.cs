@@ -45,14 +45,14 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
+        /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
-        public static MessageTemplateItem MessageTemplateItem(string kind = null, string name = null, string language = null, MessageTemplateStatus status = default)
+        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = "Unknown")
         {
-            return new UnknownMessageTemplateItem(kind, name, language, status);
+            return new UnknownMessageTemplateItem(name, language, status, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
@@ -67,7 +67,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
         public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
         {
-            return new WhatsAppMessageTemplateItem("whatsApp", name, language, status, content);
+            return new WhatsAppMessageTemplateItem(name, language, status, CommunicationMessagesChannel.WhatsApp, content);
         }
     }
 }

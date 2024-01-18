@@ -22,13 +22,13 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateBindings"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a template bindings type. </param>
         internal MessageTemplateBindings(string kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Discriminator. </summary>
+        /// <summary> The type discriminator describing a template bindings type. </summary>
         internal string Kind { get; set; }
     }
 }

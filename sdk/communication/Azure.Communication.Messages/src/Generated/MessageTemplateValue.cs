@@ -28,17 +28,17 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateValue"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> Name of the Template value. </param>
-        internal MessageTemplateValue(string kind, string name)
+        /// <param name="kind"> The type discriminator describing a template parameter type. </param>
+        internal MessageTemplateValue(string name, string kind)
         {
-            Kind = kind;
             Name = name;
+            Kind = kind;
         }
 
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
         /// <summary> Name of the Template value. </summary>
         public string Name { get; }
+        /// <summary> The type discriminator describing a template parameter type. </summary>
+        internal string Kind { get; set; }
     }
 }

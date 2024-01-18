@@ -25,7 +25,7 @@ namespace Azure.Communication.Messages.Models.Channels
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a template bindings type. </param>
         /// <param name="header"> The header template bindings. </param>
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>

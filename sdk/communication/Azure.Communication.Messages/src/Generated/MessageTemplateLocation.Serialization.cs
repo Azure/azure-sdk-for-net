@@ -25,20 +25,14 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(LatitudeInternal))
-            {
-                writer.WritePropertyName("latitude"u8);
-                writer.WriteNumberValue(LatitudeInternal.Value);
-            }
-            if (Optional.IsDefined(LongitudeInternal))
-            {
-                writer.WritePropertyName("longitude"u8);
-                writer.WriteNumberValue(LongitudeInternal.Value);
-            }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WritePropertyName("latitude"u8);
+            writer.WriteNumberValue(LatitudeInternal);
+            writer.WritePropertyName("longitude"u8);
+            writer.WriteNumberValue(LongitudeInternal);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 

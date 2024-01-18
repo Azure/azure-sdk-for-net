@@ -23,11 +23,11 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownMessageTemplateItem"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
-        internal UnknownMessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status) : base(kind, name, language, status)
+        /// <param name="kind"> The type discriminator describing a template type. </param>
+        internal UnknownMessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind) : base(name, language, status, kind)
         {
         }
     }

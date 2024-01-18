@@ -17,8 +17,6 @@ namespace Azure.Communication.Messages
             writer.WriteStartObject();
             writer.WritePropertyName("template"u8);
             writer.WriteObjectValue(Template);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -28,6 +26,8 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 

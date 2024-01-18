@@ -18,6 +18,8 @@ namespace Azure.Communication.Messages
     /// <summary> The MessageTemplate service client. </summary>
     public partial class MessageTemplateClient
     {
+        private const string AuthorizationHeader = "Authorization";
+        private readonly AzureKeyCredential _keyCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -29,6 +31,14 @@ namespace Azure.Communication.Messages
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary> Initializes a new instance of MessageTemplateClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public MessageTemplateClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        {
+        }
 
         /// <summary> Initializes a new instance of MessageTemplateClient. </summary>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>

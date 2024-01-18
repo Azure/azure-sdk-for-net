@@ -27,12 +27,12 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateImage"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> Name of the Template value. </param>
+        /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="url"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateImage(string kind, string name, Uri url, string caption, string fileName) : base(kind, name)
+        internal MessageTemplateImage(string name, string kind, Uri url, string caption, string fileName) : base(name, kind)
         {
             Url = url;
             Caption = caption;

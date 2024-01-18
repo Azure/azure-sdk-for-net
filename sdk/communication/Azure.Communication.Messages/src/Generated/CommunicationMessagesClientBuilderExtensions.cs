@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Communication.Messages;
 using Azure.Core.Extensions;
 
@@ -17,10 +18,30 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<NotificationMessagesClient, CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<NotificationMessagesClient, CommunicationMessagesClientOptions>((options) => new NotificationMessagesClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         public static IAzureClientBuilder<NotificationMessagesClient, CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<NotificationMessagesClient, CommunicationMessagesClientOptions>((options, cred) => new NotificationMessagesClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="MessageTemplateClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<MessageTemplateClient, CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>((options) => new MessageTemplateClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="MessageTemplateClient"/> instance. </summary>

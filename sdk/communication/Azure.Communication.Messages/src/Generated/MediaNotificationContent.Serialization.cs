@@ -22,8 +22,6 @@ namespace Azure.Communication.Messages
             }
             writer.WritePropertyName("mediaUri"u8);
             writer.WriteStringValue(MediaUri.AbsoluteUri);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -33,6 +31,8 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 

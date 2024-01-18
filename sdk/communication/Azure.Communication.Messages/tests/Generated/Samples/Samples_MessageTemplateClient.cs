@@ -26,10 +26,10 @@ namespace Azure.Communication.Messages.Samples
             foreach (BinaryData item in client.GetTemplates("<channelId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -42,10 +42,10 @@ namespace Azure.Communication.Messages.Samples
             await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -80,10 +80,10 @@ namespace Azure.Communication.Messages.Samples
             foreach (BinaryData item in client.GetTemplates("<channelId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -96,10 +96,10 @@ namespace Azure.Communication.Messages.Samples
             await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 

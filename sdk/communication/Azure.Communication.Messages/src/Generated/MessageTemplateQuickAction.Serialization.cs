@@ -25,10 +25,10 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 

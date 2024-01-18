@@ -32,21 +32,21 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        internal NotificationContent(string kind, Guid channelRegistrationId, IList<string> to)
+        /// <param name="kind"> The type discriminator describing a notification type. </param>
+        internal NotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageType kind)
         {
-            Kind = kind;
             ChannelRegistrationId = channelRegistrationId;
             To = to;
+            Kind = kind;
         }
 
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
         /// <summary> The Channel Registration ID for the Business Identifier. </summary>
         public Guid ChannelRegistrationId { get; }
         /// <summary> The native external platform user identifiers of the recipient. </summary>
         public IList<string> To { get; }
+        /// <summary> The type discriminator describing a notification type. </summary>
+        internal CommunicationMessageType Kind { get; set; }
     }
 }

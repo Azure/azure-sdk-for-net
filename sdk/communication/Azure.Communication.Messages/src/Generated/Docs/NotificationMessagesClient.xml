@@ -44,12 +44,12 @@ NotificationMessagesClient client = new NotificationMessagesClient(null);
 using RequestContent content = RequestContent.Create(new
 {
     content = "<content>",
-    kind = "text",
     channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     to = new object[]
     {
         "<to>"
     },
+    kind = "text",
 });
 Response response = await client.SendAsync(content);
 
@@ -64,12 +64,12 @@ NotificationMessagesClient client = new NotificationMessagesClient(null);
 using RequestContent content = RequestContent.Create(new
 {
     content = "<content>",
-    kind = "text",
     channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     to = new object[]
     {
         "<to>"
     },
+    kind = "text",
 });
 Response response = await client.SendAsync(content);
 
@@ -87,12 +87,12 @@ NotificationMessagesClient client = new NotificationMessagesClient(null);
 using RequestContent content = RequestContent.Create(new
 {
     content = "<content>",
-    kind = "text",
     channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     to = new object[]
     {
         "<to>"
     },
+    kind = "text",
 });
 Response response = client.Send(content);
 
@@ -107,18 +107,90 @@ NotificationMessagesClient client = new NotificationMessagesClient(null);
 using RequestContent content = RequestContent.Create(new
 {
     content = "<content>",
-    kind = "text",
     channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
     to = new object[]
     {
         "<to>"
     },
+    kind = "text",
 });
 Response response = client.Send(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
 Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("to").ToString());
+]]></code></example>
+    </member>
+    <member name="DownloadMediaAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call DownloadMediaAsync.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response<BinaryData> response = await client.DownloadMediaAsync("<id>");
+]]></code>
+This sample shows how to call DownloadMediaAsync with all parameters.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response<BinaryData> response = await client.DownloadMediaAsync("<id>");
+]]></code></example>
+    </member>
+    <member name="DownloadMedia(string,CancellationToken)">
+      <example>
+This sample shows how to call DownloadMedia.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response<BinaryData> response = client.DownloadMedia("<id>");
+]]></code>
+This sample shows how to call DownloadMedia with all parameters.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response<BinaryData> response = client.DownloadMedia("<id>");
+]]></code></example>
+    </member>
+    <member name="DownloadMediaAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DownloadMediaAsync and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response response = await client.DownloadMediaAsync("<id>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DownloadMediaAsync with all parameters and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response response = await client.DownloadMediaAsync("<id>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="DownloadMedia(string,RequestContext)">
+      <example>
+This sample shows how to call DownloadMedia and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response response = client.DownloadMedia("<id>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DownloadMedia with all parameters and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+Response response = client.DownloadMedia("<id>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
   </members>

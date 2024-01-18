@@ -24,16 +24,16 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(template, nameof(template));
 
-            Kind = "template";
+            Kind = CommunicationMessageType.Template;
             Template = template;
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateNotificationContent"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <param name="template"> The template object used to create templates. </param>
-        internal TemplateNotificationContent(string kind, Guid channelRegistrationId, IList<string> to, MessageTemplate template) : base(kind, channelRegistrationId, to)
+        internal TemplateNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageType kind, MessageTemplate template) : base(channelRegistrationId, to, kind)
         {
             Template = template;
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -47,6 +48,7 @@ namespace Azure.Communication.Messages
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
+            _keyCredential = credential;
         }
 
         #endregion

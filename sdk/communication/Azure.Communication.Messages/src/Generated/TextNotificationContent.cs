@@ -24,16 +24,16 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
-            Kind = "text";
+            Kind = CommunicationMessageType.Text;
             Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="TextNotificationContent"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <param name="content"> Message content. </param>
-        internal TextNotificationContent(string kind, Guid channelRegistrationId, IList<string> to, string content) : base(kind, channelRegistrationId, to)
+        internal TextNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageType kind, string content) : base(channelRegistrationId, to, kind)
         {
             Content = content;
         }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -27,12 +28,12 @@ namespace Azure.Communication.Messages.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 content = "<content>",
-                kind = "text",
                 channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 to = new object[]
             {
 "<to>"
             },
+                kind = "text",
             });
             Response response = client.Send(content);
 
@@ -50,12 +51,12 @@ namespace Azure.Communication.Messages.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 content = "<content>",
-                kind = "text",
                 channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 to = new object[]
             {
 "<to>"
             },
+                kind = "text",
             });
             Response response = await client.SendAsync(content);
 
@@ -93,12 +94,12 @@ namespace Azure.Communication.Messages.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 content = "<content>",
-                kind = "text",
                 channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 to = new object[]
             {
 "<to>"
             },
+                kind = "text",
             });
             Response response = client.Send(content);
 
@@ -116,12 +117,12 @@ namespace Azure.Communication.Messages.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 content = "<content>",
-                kind = "text",
                 channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 to = new object[]
             {
 "<to>"
             },
+                kind = "text",
             });
             Response response = await client.SendAsync(content);
 
@@ -148,6 +149,43 @@ namespace Azure.Communication.Messages.Samples
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
             Response<SendMessageResult> response = await client.SendAsync(notificationContent);
+        }
+
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_MessageDataStream_DownloadMedia_ShortVersion_Convenience()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            Response<Stream> response = client.DownloadMedia("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_MessageDataStream_DownloadMedia_ShortVersion_Convenience_Async()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            Response<Stream> response = await client.DownloadMediaAsync("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_MessageDataStream_DownloadMedia_AllParameters_Convenience()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            Response<Stream> response = client.DownloadMedia("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_MessageDataStream_DownloadMedia_AllParameters_Convenience_Async()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            Response<Stream> response = await client.DownloadMediaAsync("<id>");
         }
     }
 }

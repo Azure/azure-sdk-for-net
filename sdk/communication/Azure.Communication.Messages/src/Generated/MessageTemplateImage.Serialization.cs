@@ -27,10 +27,10 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 

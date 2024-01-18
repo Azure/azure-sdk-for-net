@@ -22,10 +22,10 @@ namespace Azure.Communication.Messages.Models.Channels
                 return null;
             }
             Optional<BinaryData> content = default;
-            string kind = default;
             string name = default;
             string language = default;
             MessageTemplateStatus status = default;
+            CommunicationMessagesChannel kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -35,11 +35,6 @@ namespace Azure.Communication.Messages.Models.Channels
                         continue;
                     }
                     content = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -57,8 +52,13 @@ namespace Azure.Communication.Messages.Models.Channels
                     status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new CommunicationMessagesChannel(property.Value.GetString());
+                    continue;
+                }
             }
-            return new WhatsAppMessageTemplateItem(kind, name, language, status, content.Value);
+            return new WhatsAppMessageTemplateItem(name, language, status, kind, content.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

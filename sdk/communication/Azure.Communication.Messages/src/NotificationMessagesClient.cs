@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
@@ -64,9 +65,11 @@ namespace Azure.Communication.Messages
            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         { }
 
-        private NotificationMessagesClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
-            : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
-        { }
+        private NotificationMessagesClient(string endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(credential), options)
+        {
+            _keyCredential = credential;
+        }
 
         private NotificationMessagesClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
@@ -91,8 +94,9 @@ namespace Azure.Communication.Messages
 
             try
             {
-                Response<BinaryData> binaryDataResponse = await GetMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await DownloadMediaAsync(mediaContentId, context).ConfigureAwait(false);
+                return Response.FromValue(response.Content.ToStream(), response);
             }
             catch (Exception ex)
             {
@@ -116,8 +120,9 @@ namespace Azure.Communication.Messages
 
             try
             {
-                Response<BinaryData> binaryDataResponse = GetMedia(mediaContentId, cancellationToken);
-                return Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = DownloadMedia(mediaContentId, context);
+                return Response.FromValue(response.Content.ToStream(), response);
             }
             catch (Exception ex)
             {
@@ -232,21 +237,15 @@ namespace Azure.Communication.Messages
 
         private async Task<Response> DownloadMediaToAsyncInternal(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            Response<BinaryData> binaryDataResponse = await GetMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
-            Response<Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
-
+            Response<Stream> initialResponse = await DownloadMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
             await CopyToAsync(initialResponse, destinationStream).ConfigureAwait(false);
-
             return initialResponse.GetRawResponse();
         }
 
         private Response DownloadMediaToInternal(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            Response<BinaryData> binaryDataResponse = GetMedia(mediaContentId, cancellationToken);
-            Response<Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
-
+            Response<Stream> initialResponse = DownloadMedia(mediaContentId, cancellationToken);
             CopyTo(initialResponse, destinationStream, cancellationToken);
-
             return initialResponse.GetRawResponse();
         }
 

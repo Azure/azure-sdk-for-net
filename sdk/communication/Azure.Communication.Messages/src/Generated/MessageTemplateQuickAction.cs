@@ -24,11 +24,11 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateQuickAction"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> Name of the Template value. </param>
+        /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="text"> The [Optional] quick action text. </param>
         /// <param name="payload"> The [Optional] quick action payload. </param>
-        internal MessageTemplateQuickAction(string kind, string name, string text, string payload) : base(kind, name)
+        internal MessageTemplateQuickAction(string name, string kind, string text, string payload) : base(name, kind)
         {
             Text = text;
             Payload = payload;

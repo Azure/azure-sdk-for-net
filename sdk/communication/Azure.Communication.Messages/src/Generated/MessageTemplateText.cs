@@ -27,10 +27,10 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateText"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> Name of the Template value. </param>
+        /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="text"> The text value. </param>
-        internal MessageTemplateText(string kind, string name, string text) : base(kind, name)
+        internal MessageTemplateText(string name, string kind, string text) : base(name, kind)
         {
             Text = text;
         }

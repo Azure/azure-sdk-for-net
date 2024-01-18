@@ -15,10 +15,10 @@ namespace Azure.Communication.Messages
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 

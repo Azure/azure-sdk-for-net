@@ -18,6 +18,8 @@ namespace Azure.Communication.Messages
     /// <summary> The NotificationMessages service client. </summary>
     public partial class NotificationMessagesClient
     {
+        private const string AuthorizationHeader = "Authorization";
+        private readonly AzureKeyCredential _keyCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -29,6 +31,14 @@ namespace Azure.Communication.Messages
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public NotificationMessagesClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        {
+        }
 
         /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
@@ -164,34 +174,6 @@ namespace Azure.Communication.Messages
             }
         }
 
-        /// <summary> Download the Media payload from a User to Business message. </summary>
-        /// <param name="id"> The stream ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<BinaryData>> GetMediaAsync(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetMediaAsync(id, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Download the Media payload from a User to Business message. </summary>
-        /// <param name="id"> The stream ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<BinaryData> GetMedia(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetMedia(id, context);
-            return Response.FromValue(response.Content, response);
-        }
-
         /// <summary>
         /// [Protocol Method] Download the Media payload from a User to Business message.
         /// <list type="bullet">
@@ -202,7 +184,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMediaAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DownloadMediaAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -213,15 +195,16 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetMediaAsync(string id, RequestContext context)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='DownloadMediaAsync(string,RequestContext)']/*" />
+        internal virtual async Task<Response> DownloadMediaAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.GetMedia");
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMedia");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMediaRequest(id, context);
+                using HttpMessage message = CreateDownloadMediaRequest(id, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -241,7 +224,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMedia(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DownloadMedia(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -252,15 +235,16 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetMedia(string id, RequestContext context)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='DownloadMedia(string,RequestContext)']/*" />
+        internal virtual Response DownloadMedia(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.GetMedia");
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMedia");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMediaRequest(id, context);
+                using HttpMessage message = CreateDownloadMediaRequest(id, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -288,7 +272,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateGetMediaRequest(string id, RequestContext context)
+        internal HttpMessage CreateDownloadMediaRequest(string id, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

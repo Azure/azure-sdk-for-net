@@ -31,25 +31,25 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateItem"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
-        internal MessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status)
+        /// <param name="kind"> The type discriminator describing a template type. </param>
+        internal MessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind)
         {
-            Kind = kind;
             Name = name;
             Language = language;
             Status = status;
+            Kind = kind;
         }
 
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
         /// <summary> The template's name. </summary>
         public string Name { get; }
         /// <summary> The template's language. </summary>
         public string Language { get; }
         /// <summary> The aggregated template status. </summary>
         public MessageTemplateStatus Status { get; }
+        /// <summary> The type discriminator describing a template type. </summary>
+        internal CommunicationMessagesChannel Kind { get; set; }
     }
 }

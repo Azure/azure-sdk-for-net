@@ -22,20 +22,20 @@ namespace Azure.Communication.Messages.Models.Channels
         {
             Argument.AssertNotNull(language, nameof(language));
 
-            Kind = "whatsApp";
+            Kind = CommunicationMessagesChannel.WhatsApp;
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
+        /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <param name="content">
         /// WhatsApp platform's template content
         /// This is the payload returned from WhatsApp
         /// API.
         /// </param>
-        internal WhatsAppMessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status, BinaryData content) : base(kind, name, language, status)
+        internal WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, BinaryData content) : base(name, language, status, kind)
         {
             Content = content;
         }

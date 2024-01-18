@@ -17,10 +17,10 @@ namespace Azure.Communication.Messages
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 

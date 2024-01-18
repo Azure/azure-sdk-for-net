@@ -27,20 +27,20 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
-            Kind = "image";
+            Kind = CommunicationMessageType.Image;
             MediaUri = mediaUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="MediaNotificationContent"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <param name="content"> Optional text content. </param>
         /// <param name="mediaUri">
         /// A media url for the file. Required if the type is one of the supported media
         /// types, e.g. image
         /// </param>
-        internal MediaNotificationContent(string kind, Guid channelRegistrationId, IList<string> to, string content, Uri mediaUri) : base(kind, channelRegistrationId, to)
+        internal MediaNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageType kind, string content, Uri mediaUri) : base(channelRegistrationId, to, kind)
         {
             Content = content;
             MediaUri = mediaUri;

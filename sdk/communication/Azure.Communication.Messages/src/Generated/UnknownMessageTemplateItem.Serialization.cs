@@ -18,17 +18,12 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            string kind = "Unknown";
             string name = default;
             string language = default;
             MessageTemplateStatus status = default;
+            CommunicationMessagesChannel kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -44,8 +39,13 @@ namespace Azure.Communication.Messages
                     status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new CommunicationMessagesChannel(property.Value.GetString());
+                    continue;
+                }
             }
-            return new UnknownMessageTemplateItem(kind, name, language, status);
+            return new UnknownMessageTemplateItem(name, language, status, kind);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
