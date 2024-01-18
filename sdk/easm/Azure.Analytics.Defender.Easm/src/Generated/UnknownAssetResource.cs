@@ -14,11 +14,6 @@ namespace Azure.Analytics.Defender.Easm
     internal partial class UnknownAssetResource : AssetResource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAssetResource"/>. </summary>
-        internal UnknownAssetResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAssetResource"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>

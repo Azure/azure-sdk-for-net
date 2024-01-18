@@ -13,11 +13,6 @@ namespace Azure.Analytics.Defender.Easm
     internal partial class UnknownDataConnection : DataConnection
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataConnection"/>. </summary>
-        internal UnknownDataConnection()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDataConnection"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
