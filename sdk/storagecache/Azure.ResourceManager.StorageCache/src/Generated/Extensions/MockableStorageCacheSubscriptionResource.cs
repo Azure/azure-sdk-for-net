@@ -76,10 +76,18 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AmlFileSystemResource> GetAmlFileSystemsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -98,10 +106,18 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AmlFileSystemResource> GetAmlFileSystems(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -119,6 +135,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>checkAmlFSSubnets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,6 +171,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>checkAmlFSSubnets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Information about the subnets to validate. </param>
@@ -181,6 +205,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +241,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>getRequiredAmlFSSubnetsSize</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
@@ -244,10 +276,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheSku> GetStorageCacheSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -266,10 +302,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheSku> GetStorageCacheSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -288,10 +328,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheUsageModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheUsageModel> GetUsageModelsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -310,10 +354,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheUsageModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheUsageModel> GetUsageModels(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -332,11 +380,15 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheUsage> GetStorageCacheUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -355,11 +407,15 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheUsage> GetStorageCacheUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -378,10 +434,18 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheResource> GetStorageCachesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -400,10 +464,18 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheResource> GetStorageCaches(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);

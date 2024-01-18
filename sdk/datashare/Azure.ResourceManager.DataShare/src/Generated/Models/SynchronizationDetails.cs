@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Synchronization details at data set level. </summary>
     public partial class SynchronizationDetails
     {
-        /// <summary> Initializes a new instance of SynchronizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynchronizationDetails"/>. </summary>
         internal SynchronizationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynchronizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynchronizationDetails"/>. </summary>
         /// <param name="dataSetId"> Id of data set. </param>
         /// <param name="dataSetType"> Type of the data set. </param>
         /// <param name="durationInMilliSeconds"> Duration of data set level copy. </param>

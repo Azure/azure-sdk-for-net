@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric
     /// </summary>
     public partial class ServiceFabricServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricServiceData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

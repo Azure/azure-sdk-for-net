@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Activity dependency information. </summary>
     public partial class PipelineActivityDependency
     {
-        /// <summary> Initializes a new instance of PipelineActivityDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityDependency"/>. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityDependency"/>. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

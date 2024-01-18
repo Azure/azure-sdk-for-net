@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceDtcData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcData"/>. </summary>
         public ManagedInstanceDtcData()
         {
             ExternalDnsSuffixSearchList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

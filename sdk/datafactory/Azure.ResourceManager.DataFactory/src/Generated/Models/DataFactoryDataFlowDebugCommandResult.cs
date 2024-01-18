@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Response body structure of data flow result for data preview, statistics or expression preview. </summary>
     public partial class DataFactoryDataFlowDebugCommandResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugCommandResult"/>. </summary>
         internal DataFactoryDataFlowDebugCommandResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugCommandResult"/>. </summary>
         /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
         /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
         internal DataFactoryDataFlowDebugCommandResult(string status, string data)

@@ -64,11 +64,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -87,11 +95,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobResource> GetStreamingJobs(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -110,11 +126,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_ListQuotas</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
@@ -132,11 +152,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_ListQuotas</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
@@ -153,6 +177,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,6 +221,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestQuery</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -232,6 +264,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_CompileQuery</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -267,6 +303,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_CompileQuery</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -301,6 +341,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_SampleInput</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,6 +385,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_SampleInput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -379,6 +427,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestInput</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -419,6 +471,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestInput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -457,6 +513,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestOutput</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -497,6 +557,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestOutput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -536,10 +600,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -558,10 +630,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

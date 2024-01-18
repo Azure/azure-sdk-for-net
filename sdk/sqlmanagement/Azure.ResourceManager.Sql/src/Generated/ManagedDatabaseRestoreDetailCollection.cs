@@ -18,9 +18,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedDatabaseRestoreDetailResource" /> and their operations.
-    /// Each <see cref="ManagedDatabaseRestoreDetailResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
-    /// To get a <see cref="ManagedDatabaseRestoreDetailCollection" /> instance call the GetManagedDatabaseRestoreDetails method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// A class representing a collection of <see cref="ManagedDatabaseRestoreDetailResource"/> and their operations.
+    /// Each <see cref="ManagedDatabaseRestoreDetailResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource"/>.
+    /// To get a <see cref="ManagedDatabaseRestoreDetailCollection"/> instance call the GetManagedDatabaseRestoreDetails method from an instance of <see cref="ManagedDatabaseResource"/>.
     /// </summary>
     public partial class ManagedDatabaseRestoreDetailCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +144,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
@@ -159,6 +183,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
@@ -189,6 +221,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

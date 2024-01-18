@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Represents applicable recovery vm sizes properties. </summary>
     public partial class TargetComputeSizeProperties
     {
-        /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSizeProperties"/>. </summary>
         internal TargetComputeSizeProperties()
         {
             Errors = new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>();
             HyperVGenerations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSizeProperties"/>. </summary>
         /// <param name="name"> Target compute size name. </param>
         /// <param name="friendlyName"> Target compute size display name. </param>
         /// <param name="cpuCoresCount"> The maximum cpu cores count supported by target compute size. </param>

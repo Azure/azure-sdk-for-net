@@ -941,8 +941,8 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNull(requestConditions.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
 
             using var scope = ClientDiagnostics.CreateScope("Container.AcquireLease");
             scope.Start();
@@ -977,8 +977,8 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual Response AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNull(requestConditions.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
 
             using var scope = ClientDiagnostics.CreateScope("Container.AcquireLease");
             scope.Start();

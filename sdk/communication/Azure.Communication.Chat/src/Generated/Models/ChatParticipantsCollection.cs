@@ -15,7 +15,7 @@ namespace Azure.Communication.Chat
     /// <summary> Collection of participants belong to a particular thread. </summary>
     internal partial class ChatParticipantsCollection
     {
-        /// <summary> Initializes a new instance of ChatParticipantsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatParticipantsCollection"/>. </summary>
         /// <param name="value"> Chat participants. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ChatParticipantsCollection(IEnumerable<ChatParticipantInternal> value)
@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ChatParticipantsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatParticipantsCollection"/>. </summary>
         /// <param name="value"> Chat participants. </param>
         /// <param name="nextLink"> If there are more chat participants that can be retrieved, the next link will be populated. </param>
         internal ChatParticipantsCollection(IReadOnlyList<ChatParticipantInternal> value, string nextLink)

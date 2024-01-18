@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of server extended auditing settings. </summary>
     internal partial class ExtendedServerBlobAuditingPolicyListResult
     {
-        /// <summary> Initializes a new instance of ExtendedServerBlobAuditingPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedServerBlobAuditingPolicyListResult"/>. </summary>
         internal ExtendedServerBlobAuditingPolicyListResult()
         {
             Value = new ChangeTrackingList<ExtendedServerBlobAuditingPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ExtendedServerBlobAuditingPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedServerBlobAuditingPolicyListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ExtendedServerBlobAuditingPolicyListResult(IReadOnlyList<ExtendedServerBlobAuditingPolicyData> value, string nextLink)

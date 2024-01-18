@@ -56,6 +56,14 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
@@ -89,6 +97,14 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,10 +140,18 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RelayNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -146,10 +170,18 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RelayNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RelayNamespaceResource> GetRelayNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);

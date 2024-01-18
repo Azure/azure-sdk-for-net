@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Weekly retention schedule. </summary>
     public partial class WeeklyRetentionSchedule
     {
-        /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeeklyRetentionSchedule"/>. </summary>
         public WeeklyRetentionSchedule()
         {
             DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
             RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeeklyRetentionSchedule"/>. </summary>
         /// <param name="daysOfTheWeek"> List of days of week for weekly retention policy. </param>
         /// <param name="retentionTimes"> Retention times of retention policy. </param>
         /// <param name="retentionDuration"> Retention duration of retention Policy. </param>

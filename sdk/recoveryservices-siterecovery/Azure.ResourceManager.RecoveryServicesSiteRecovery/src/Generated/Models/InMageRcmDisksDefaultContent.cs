@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm disk input. </summary>
     public partial class InMageRcmDisksDefaultContent
     {
-        /// <summary> Initializes a new instance of InMageRcmDisksDefaultContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDisksDefaultContent"/>. </summary>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logStorageAccountId"/> is null. </exception>
@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDisksDefaultContent"/>. </summary>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        internal InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
+        {
+            LogStorageAccountId = logStorageAccountId;
+            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
         }
 
         /// <summary> The log storage account ARM Id. </summary>

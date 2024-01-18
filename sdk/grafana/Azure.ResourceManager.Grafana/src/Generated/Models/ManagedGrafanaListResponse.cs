@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The ManagedGrafanaListResponse. </summary>
     internal partial class ManagedGrafanaListResponse
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResponse"/>. </summary>
         internal ManagedGrafanaListResponse()
         {
             Value = new ChangeTrackingList<ManagedGrafanaData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal ManagedGrafanaListResponse(IReadOnlyList<ManagedGrafanaData> value, string nextLink)

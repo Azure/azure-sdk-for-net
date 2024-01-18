@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The connection type property associated with the entity. </summary>
     public partial class ConnectionTypeAssociationProperty
     {
-        /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionTypeAssociationProperty"/>. </summary>
         public ConnectionTypeAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionTypeAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection type. </param>
         internal ConnectionTypeAssociationProperty(string name)
         {

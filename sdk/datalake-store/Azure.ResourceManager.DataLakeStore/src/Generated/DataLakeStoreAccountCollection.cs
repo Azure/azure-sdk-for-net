@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataLakeStore
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeStoreAccountResource" /> and their operations.
-    /// Each <see cref="DataLakeStoreAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataLakeStoreAccountCollection" /> instance call the GetDataLakeStoreAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataLakeStoreAccountResource"/> and their operations.
+    /// Each <see cref="DataLakeStoreAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataLakeStoreAccountCollection"/> instance call the GetDataLakeStoreAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataLakeStoreAccountCollection : ArmCollection, IEnumerable<DataLakeStoreAccountBasicData>, IAsyncEnumerable<DataLakeStoreAccountBasicData>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,11 +254,19 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAllAsync(DataLakeStoreAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new DataLakeStoreAccountCollectionGetAllOptions();
@@ -247,11 +287,19 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreAccountBasicData> GetAll(DataLakeStoreAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new DataLakeStoreAccountCollectionGetAllOptions();
@@ -271,6 +319,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,6 +363,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
@@ -341,6 +405,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +450,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

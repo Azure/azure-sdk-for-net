@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> When present, these are the credentials for the secure LDAP connection. </summary>
     public partial class StorageCacheUsernameDownloadCredential
     {
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadCredential"/>. </summary>
         public StorageCacheUsernameDownloadCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadCredential"/>. </summary>
         /// <param name="bindDistinguishedName"> The Bind Distinguished Name identity to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
         /// <param name="bindPassword"> The Bind password to be used in the secure LDAP connection. This value is stored encrypted and not returned on response. </param>
         internal StorageCacheUsernameDownloadCredential(string bindDistinguishedName, string bindPassword)

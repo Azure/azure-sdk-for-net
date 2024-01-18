@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Excel dataset. </summary>
     public partial class ExcelDataset : Dataset
     {
-        /// <summary> Initializes a new instance of ExcelDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExcelDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public ExcelDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Excel";
         }
 
-        /// <summary> Initializes a new instance of ExcelDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExcelDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

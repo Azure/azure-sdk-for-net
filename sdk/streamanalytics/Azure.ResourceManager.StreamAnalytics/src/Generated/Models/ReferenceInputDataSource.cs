@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class ReferenceInputDataSource
     {
-        /// <summary> Initializes a new instance of ReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceInputDataSource"/>. </summary>
         protected ReferenceInputDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of ReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceInputDataSource"/>. </summary>
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
         internal ReferenceInputDataSource(string referenceInputDataSourceType)
         {

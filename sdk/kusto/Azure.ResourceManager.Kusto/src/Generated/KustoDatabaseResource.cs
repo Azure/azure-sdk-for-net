@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource" /> using the GetKustoDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource"/> using the GetKustoDatabase method.
     /// </summary>
     public partial class KustoDatabaseResource : ArmResource
     {
@@ -49,12 +49,15 @@ namespace Azure.ResourceManager.Kusto
         private readonly DataConnectionsRestOperations _kustoDataConnectionDataConnectionsRestClient;
         private readonly KustoDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases";
+
         /// <summary> Initializes a new instance of the <see cref="KustoDatabaseResource"/> class for mocking. </summary>
         protected KustoDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoDatabaseResource(ArmClient client, KustoDatabaseData data) : this(client, data.Id)
@@ -86,9 +89,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -129,6 +129,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>DatabasePrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -151,6 +159,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabasePrincipalAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabasePrincipalAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +198,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Scripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoScriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
@@ -204,6 +228,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Scripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoScriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,6 +267,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>DataConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -258,6 +298,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>DataConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -280,6 +328,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,6 +369,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -344,6 +408,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,6 +451,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -412,6 +492,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,6 +540,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -491,10 +587,18 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_ListPrincipals</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> GetPrincipalsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -512,10 +616,18 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_ListPrincipals</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> GetPrincipals(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -533,12 +645,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_AddPrincipals</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToAdd"/> is null. </exception>
-        /// <returns> An async collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> AddPrincipalsAsync(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
@@ -558,12 +678,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_AddPrincipals</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToAdd"/> is null. </exception>
-        /// <returns> A collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> AddPrincipals(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
@@ -583,12 +711,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_RemovePrincipals</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToRemove"/> is null. </exception>
-        /// <returns> An async collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> RemovePrincipalsAsync(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
@@ -608,12 +744,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_RemovePrincipals</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToRemove"/> is null. </exception>
-        /// <returns> A collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> RemovePrincipals(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
@@ -632,6 +776,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Database_InviteFollower</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -667,6 +815,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Database_InviteFollower</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The follower invitation request parameters. </param>
@@ -700,6 +852,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabasePrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabasePrincipalAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -735,6 +895,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>DatabasePrincipalAssignments_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -768,6 +936,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Scripts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoScriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -803,6 +979,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Scripts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoScriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the script. </param>
@@ -836,6 +1020,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataConnections_dataConnectionValidation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDataConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -875,6 +1067,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>DataConnections_dataConnectionValidation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -913,6 +1113,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>DataConnections_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the data connection. </param>
@@ -946,6 +1154,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataConnections_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDataConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

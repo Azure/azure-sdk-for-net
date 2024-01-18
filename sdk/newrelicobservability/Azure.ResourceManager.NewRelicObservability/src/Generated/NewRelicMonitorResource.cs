@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
     /// A Class representing a NewRelicMonitorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NewRelicMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNewRelicMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNewRelicMonitorResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NewRelicMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNewRelicMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNewRelicMonitorResource method.
     /// </summary>
     public partial class NewRelicMonitorResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly MonitorsRestOperations _newRelicMonitorResourceMonitorsRestClient;
         private readonly NewRelicMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="NewRelicMonitorResource"/> class for mocking. </summary>
         protected NewRelicMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NewRelicMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NewRelicMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NewRelicMonitorResource(ArmClient client, NewRelicMonitorResourceData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.NewRelicObservability
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -111,6 +111,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Name of the TagRule. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Name of the TagRule. </param>
@@ -156,6 +172,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +213,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,6 +252,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,6 +299,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -297,6 +345,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
@@ -330,6 +386,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,6 +429,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_GetMetricRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The details of the get metrics status request. </param>
@@ -398,6 +470,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_GetMetricRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,6 +513,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_GetMetricStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The details of the get metrics status request. </param>
@@ -466,6 +554,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_GetMetricStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,12 +597,20 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_ListAppServices</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The details of the app services get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NewRelicObservabilityAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicObservabilityAppServiceInfo> GetAppServicesAsync(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -527,12 +631,20 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_ListAppServices</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The details of the app services get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NewRelicObservabilityAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicObservabilityAppServiceInfo> GetAppServices(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -552,6 +664,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_SwitchBilling</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,6 +707,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_SwitchBilling</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The details of the switch billing request. </param>
@@ -621,12 +749,20 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_ListHosts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The details of the Hosts get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicObservabilityVmInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicObservabilityVmInfo> GetHostsAsync(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -647,12 +783,20 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_ListHosts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The details of the Hosts get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicObservabilityVmInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicObservabilityVmInfo> GetHosts(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -673,10 +817,18 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_ListMonitoredResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NewRelicResourceMonitorResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicResourceMonitorResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicResourceMonitorResult> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -695,10 +847,18 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_ListMonitoredResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NewRelicResourceMonitorResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicResourceMonitorResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicResourceMonitorResult> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -716,6 +876,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_VmHostPayload</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -747,6 +915,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_VmHostPayload</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -776,6 +952,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -831,6 +1015,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -885,6 +1077,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -934,6 +1134,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -982,6 +1190,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1034,6 +1250,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

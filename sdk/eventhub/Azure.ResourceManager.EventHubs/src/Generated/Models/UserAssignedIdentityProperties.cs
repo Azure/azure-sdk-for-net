@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The UserAssignedIdentityProperties. </summary>
     internal partial class UserAssignedIdentityProperties
     {
-        /// <summary> Initializes a new instance of UserAssignedIdentityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityProperties"/>. </summary>
         public UserAssignedIdentityProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityProperties"/>. </summary>
         /// <param name="userAssignedIdentity"> ARM ID of user Identity selected for encryption. </param>
         internal UserAssignedIdentityProperties(string userAssignedIdentity)
         {

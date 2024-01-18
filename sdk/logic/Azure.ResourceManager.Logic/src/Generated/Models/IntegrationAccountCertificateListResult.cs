@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration account certificates. </summary>
     internal partial class IntegrationAccountCertificateListResult
     {
-        /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountCertificateListResult"/>. </summary>
         internal IntegrationAccountCertificateListResult()
         {
             Value = new ChangeTrackingList<IntegrationAccountCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountCertificateListResult"/>. </summary>
         /// <param name="value"> The list of integration account certificates. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountCertificateListResult(IReadOnlyList<IntegrationAccountCertificateData> value, string nextLink)

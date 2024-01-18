@@ -5,12 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Allow certain variables to be scrubbed on WAF logs. </summary>
     public partial class WebApplicationFirewallScrubbingRules
     {
-        /// <summary> Initializes a new instance of WebApplicationFirewallScrubbingRules. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallScrubbingRules"/>. </summary>
         /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
         public WebApplicationFirewallScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator)
@@ -19,17 +54,24 @@ namespace Azure.ResourceManager.Network.Models
             SelectorMatchOperator = selectorMatchOperator;
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallScrubbingRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallScrubbingRules"/>. </summary>
         /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </param>
         /// <param name="state"> Defines the state of log scrubbing rule. Default value is Enabled. </param>
-        internal WebApplicationFirewallScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator, string selector, ScrubbingRuleEntryState? state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationFirewallScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator, string selector, ScrubbingRuleEntryState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallScrubbingRules"/> for deserialization. </summary>
+        internal WebApplicationFirewallScrubbingRules()
+        {
         }
 
         /// <summary> The variable to be scrubbed from the logs. </summary>

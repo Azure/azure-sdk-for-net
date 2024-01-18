@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeerAsnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeerAsnResource"/> object. </returns>
         public static PeerAsnResource GetPeerAsnResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringRegisteredAsnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringRegisteredAsnResource"/> object. </returns>
         public static PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource"/> object. </returns>
         public static PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringResource"/> object. </returns>
         public static PeeringResource GetPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConnectionMonitorTestResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConnectionMonitorTestResource"/> object. </returns>
         public static ConnectionMonitorTestResource GetConnectionMonitorTestResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringServicePrefixResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringServicePrefixResource"/> object. </returns>
         public static PeeringServicePrefixResource GetPeeringServicePrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PeeringServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PeeringServiceResource"/> object. </returns>
         public static PeeringServiceResource GetPeeringServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -196,6 +196,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +233,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -273,6 +289,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -302,6 +326,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -350,6 +382,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeerAsns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeerAsnResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -379,6 +419,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeerAsns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeerAsnResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -410,6 +458,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>CdnPeeringPrefixes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -420,7 +472,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CdnPeeringPrefix"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -439,6 +491,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>CdnPeeringPrefixes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -449,7 +505,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> A collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CdnPeeringPrefix"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CdnPeeringPrefix> GetCdnPeeringPrefixes(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -467,6 +523,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckServiceProviderAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -496,6 +556,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>CheckServiceProviderAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -524,6 +588,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>LegacyPeerings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -537,7 +605,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="directPeeringType"> The direct peering type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -556,6 +624,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>LegacyPeerings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -569,7 +641,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="directPeeringType"> The direct peering type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="peeringLocation"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -587,6 +659,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -619,6 +695,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>LookingGlass_Invoke</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -650,6 +730,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -661,7 +745,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringLocation"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringLocation> GetPeeringLocationsAsync(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -680,6 +764,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -691,7 +779,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringLocation"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringLocation> GetPeeringLocations(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -710,6 +798,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -719,7 +815,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringResource> GetPeeringsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -738,6 +834,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -747,7 +851,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringResource> GetPeerings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -766,6 +870,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServiceCountries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -775,7 +883,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -794,6 +902,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServiceCountries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -803,7 +915,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -822,6 +934,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServiceLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -832,7 +948,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -851,6 +967,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServiceLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -861,7 +981,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -880,6 +1000,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServiceProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -889,7 +1013,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -908,6 +1032,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServiceProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -917,7 +1045,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -936,6 +1064,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -945,7 +1081,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceResource> GetPeeringServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -964,6 +1100,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>PeeringServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -973,7 +1117,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceResource> GetPeeringServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -991,6 +1135,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1018,6 +1170,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>

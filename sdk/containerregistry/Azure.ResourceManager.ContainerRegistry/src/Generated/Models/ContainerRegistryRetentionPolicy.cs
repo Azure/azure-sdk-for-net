@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The retention policy for a container registry. </summary>
     public partial class ContainerRegistryRetentionPolicy
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRetentionPolicy"/>. </summary>
         public ContainerRegistryRetentionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRetentionPolicy"/>. </summary>
         /// <param name="days"> The number of days to retain an untagged manifest after which it gets purged. </param>
         /// <param name="lastUpdatedOn"> The timestamp when the policy was last updated. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for diagnostics package API service call. </summary>
     internal partial class DiagnosticsPackageListResult
     {
-        /// <summary> Initializes a new instance of DiagnosticsPackageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsPackageListResult"/>. </summary>
         internal DiagnosticsPackageListResult()
         {
             Value = new ChangeTrackingList<MobileNetworkDiagnosticsPackageData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticsPackageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsPackageListResult"/>. </summary>
         /// <param name="value"> A list of diagnostics packages under a packet core control plane. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal DiagnosticsPackageListResult(IReadOnlyList<MobileNetworkDiagnosticsPackageData> value, string nextLink)

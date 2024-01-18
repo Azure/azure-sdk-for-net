@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryDataFlowData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowData"/>. </summary>
         /// <param name="properties">
         /// Data flow properties.
         /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

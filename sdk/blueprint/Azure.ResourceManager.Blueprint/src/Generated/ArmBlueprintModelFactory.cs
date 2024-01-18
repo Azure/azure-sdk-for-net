@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmBlueprintModelFactory
     {
-        /// <summary> Initializes a new instance of BlueprintData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Blueprint.BlueprintData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new BlueprintData(id, name, resourceType, systemData, displayName, description, status, targetScope, parameters, resourceGroups, versions, layout);
         }
 
-        /// <summary> Initializes a new instance of BlueprintStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlueprintStatus"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
         /// <returns> A new <see cref="Models.BlueprintStatus"/> instance for mocking. </returns>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new BlueprintStatus(timeCreated, lastModified);
         }
 
-        /// <summary> Initializes a new instance of BlueprintResourceStatusBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlueprintResourceStatusBase"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
         /// <returns> A new <see cref="Models.BlueprintResourceStatusBase"/> instance for mocking. </returns>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new BlueprintResourceStatusBase(timeCreated, lastModified);
         }
 
-        /// <summary> Initializes a new instance of ArtifactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Blueprint.ArtifactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <returns> A new <see cref="Blueprint.ArtifactData"/> instance for mocking. </returns>
         public static ArtifactData ArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new ArtifactData(id, name, resourceType, systemData, kind);
+            return new UnknownArtifact(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of PublishedBlueprintData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Blueprint.PublishedBlueprintData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new PublishedBlueprintData(id, name, resourceType, systemData, displayName, description, status, targetScope, parameters, resourceGroups, blueprintName, changeNotes);
         }
 
-        /// <summary> Initializes a new instance of AssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Blueprint.AssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new AssignmentData(id, name, resourceType, systemData, identity, displayName, description, blueprintId, scope, parameters, resourceGroups, status, locks, provisioningState, location);
         }
 
-        /// <summary> Initializes a new instance of AssignmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssignmentStatus"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
         /// <param name="managedResources"> List of resources that were created by the blueprint assignment. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new AssignmentStatus(timeCreated, lastModified, managedResources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of WhoIsBlueprintContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WhoIsBlueprintContract"/>. </summary>
         /// <param name="objectId"> AAD object Id of the Azure Blueprints service principal in the tenant. </param>
         /// <returns> A new <see cref="Models.WhoIsBlueprintContract"/> instance for mocking. </returns>
         public static WhoIsBlueprintContract WhoIsBlueprintContract(string objectId = null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new WhoIsBlueprintContract(objectId);
         }
 
-        /// <summary> Initializes a new instance of AssignmentOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Blueprint.AssignmentOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new AssignmentOperationData(id, name, resourceType, systemData, blueprintVersion, assignmentState, timeCreated, timeStarted, timeFinished, deployments?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AssignmentJobCreatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssignmentJobCreatedResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new AssignmentJobCreatedResult(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of TemplateArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new TemplateArtifact(id, name, resourceType, systemData, ArtifactKind.Template, displayName, description, dependsOn?.ToList(), template, resourceGroup, parameters);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleAssignmentArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new RoleAssignmentArtifact(id, name, resourceType, systemData, ArtifactKind.RoleAssignment, displayName, description, dependsOn?.ToList(), roleDefinitionId, principalIds, resourceGroup);
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

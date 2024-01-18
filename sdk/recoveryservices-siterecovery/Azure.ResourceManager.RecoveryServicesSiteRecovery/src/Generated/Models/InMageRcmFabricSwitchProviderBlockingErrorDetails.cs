@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFabric switch provider blocking error details. </summary>
     public partial class InMageRcmFabricSwitchProviderBlockingErrorDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSwitchProviderBlockingErrorDetails"/>. </summary>
         internal InMageRcmFabricSwitchProviderBlockingErrorDetails()
         {
             ErrorMessageParameters = new ChangeTrackingDictionary<string, string>();
             ErrorTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSwitchProviderBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>

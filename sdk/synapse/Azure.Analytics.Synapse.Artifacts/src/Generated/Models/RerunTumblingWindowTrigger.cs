@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time. </summary>
     public partial class RerunTumblingWindowTrigger : Trigger
     {
-        /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
         /// <param name="parentTrigger"> The parent trigger reference. </param>
         /// <param name="requestedStartTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "RerunTumblingWindowTrigger";
         }
 
-        /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

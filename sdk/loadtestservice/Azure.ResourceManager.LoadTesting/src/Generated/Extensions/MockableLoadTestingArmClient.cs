@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LoadTestingQuotaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadTestingQuotaResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LoadTestingQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadTestingQuotaResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LoadTestingQuotaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LoadTestingQuotaResource"/> object. </returns>
         public virtual LoadTestingQuotaResource GetLoadTestingQuotaResource(ResourceIdentifier id)
         {
             LoadTestingQuotaResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LoadTestingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadTestingResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LoadTestingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadTestingResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LoadTestingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LoadTestingResource"/> object. </returns>
         public virtual LoadTestingResource GetLoadTestingResource(ResourceIdentifier id)
         {
             LoadTestingResource.ValidateResourceId(id);

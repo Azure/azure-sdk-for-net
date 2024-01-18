@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class AgentPoolUpgradeProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService
             Upgrades = new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

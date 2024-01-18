@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HDInsightClusterPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightClusterPoolResource"/> object. </returns>
         public static HDInsightClusterPoolResource GetHDInsightClusterPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightClusterResource"/> object. </returns>
         public static HDInsightClusterResource GetHDInsightClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -170,7 +194,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HDInsightClusterPoolResource> GetHDInsightClusterPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -189,6 +213,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>ClusterPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -198,7 +230,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HDInsightClusterPoolResource> GetHDInsightClusterPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -216,6 +248,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -246,6 +282,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -275,6 +315,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>AvailableClusterPoolVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,7 +329,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ClusterPoolVersion"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -304,6 +348,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>AvailableClusterPoolVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -314,7 +362,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ClusterPoolVersion"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -333,6 +381,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>AvailableClusterVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -343,7 +395,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="HDInsightClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HDInsightClusterVersion> GetAvailableClusterVersionsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -362,6 +414,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <term>Operation Id</term>
         /// <description>AvailableClusterVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -372,7 +428,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="HDInsightClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HDInsightClusterVersion> GetAvailableClusterVersionsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

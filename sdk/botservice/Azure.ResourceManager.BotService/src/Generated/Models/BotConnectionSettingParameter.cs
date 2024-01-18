@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Extra Parameter in a Connection Setting Properties to indicate service provider specific properties. </summary>
     public partial class BotConnectionSettingParameter
     {
-        /// <summary> Initializes a new instance of BotConnectionSettingParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingParameter"/>. </summary>
         public BotConnectionSettingParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of BotConnectionSettingParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingParameter"/>. </summary>
         /// <param name="key"> Key for the Connection Setting Parameter. </param>
         /// <param name="value"> Value associated with the Connection Setting Parameter. </param>
         internal BotConnectionSettingParameter(string key, string value)

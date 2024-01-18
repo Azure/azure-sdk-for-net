@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MarketplaceAgreementTermResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MarketplaceAgreementTermResource"/> object. </returns>
         public static MarketplaceAgreementTermResource GetMarketplaceAgreementTermResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MarketplaceAgreementResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MarketplaceAgreementResource"/> object. </returns>
         public static MarketplaceAgreementResource GetMarketplaceAgreementResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -96,6 +96,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementTermResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -128,6 +136,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementTermResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -179,6 +195,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -210,6 +234,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementResource"/></description>
         /// </item>
         /// </list>
         /// <item>

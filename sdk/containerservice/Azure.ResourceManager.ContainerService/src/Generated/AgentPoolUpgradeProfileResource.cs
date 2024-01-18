@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A Class representing an AgentPoolUpgradeProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgentPoolUpgradeProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAgentPoolUpgradeProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceAgentPoolResource" /> using the GetAgentPoolUpgradeProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AgentPoolUpgradeProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAgentPoolUpgradeProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceAgentPoolResource"/> using the GetAgentPoolUpgradeProfile method.
     /// </summary>
     public partial class AgentPoolUpgradeProfileResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ContainerService
         private readonly AgentPoolsRestOperations _agentPoolUpgradeProfileAgentPoolsRestClient;
         private readonly AgentPoolUpgradeProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles";
+
         /// <summary> Initializes a new instance of the <see cref="AgentPoolUpgradeProfileResource"/> class for mocking. </summary>
         protected AgentPoolUpgradeProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AgentPoolUpgradeProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AgentPoolUpgradeProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AgentPoolUpgradeProfileResource(ArmClient client, AgentPoolUpgradeProfileData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>AgentPools_GetUpgradeProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolUpgradeProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AgentPools_GetUpgradeProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolUpgradeProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

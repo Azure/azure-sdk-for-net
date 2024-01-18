@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Instances of Event represent structured event records that can be grouped and searched by their properties. Event data item also creates a metric of event count by name. </summary>
     internal partial class TelemetryEventData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of TelemetryEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryEventData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="name"> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -25,6 +25,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Name = name;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TelemetryEventData"/>. </summary>
+        /// <param name="version"> Schema version. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="name"> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="measurements"> Collection of custom measurements. </param>
+        internal TelemetryEventData(int version, IDictionary<string, object> additionalProperties, string name, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        {
+            Name = name;
+            Properties = properties;
+            Measurements = measurements;
         }
 
         /// <summary> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </summary>

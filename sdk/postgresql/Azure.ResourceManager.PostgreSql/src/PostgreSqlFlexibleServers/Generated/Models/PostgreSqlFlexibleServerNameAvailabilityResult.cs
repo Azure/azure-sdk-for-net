@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a resource name availability. </summary>
     public partial class PostgreSqlFlexibleServerNameAvailabilityResult : PostgreSqlFlexibleServerNameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
         internal PostgreSqlFlexibleServerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the gallery image definition identifier. </summary>
     public partial class GalleryImageIdentifier
     {
-        /// <summary> Initializes a new instance of GalleryImageIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageIdentifier"/>. </summary>
         /// <param name="publisher"> The name of the gallery image definition publisher. </param>
         /// <param name="offer"> The name of the gallery image definition offer. </param>
         /// <param name="sku"> The name of the gallery image definition SKU. </param>

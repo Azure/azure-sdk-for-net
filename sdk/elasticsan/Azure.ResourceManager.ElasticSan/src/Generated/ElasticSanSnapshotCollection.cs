@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ElasticSanSnapshotResource" /> and their operations.
-    /// Each <see cref="ElasticSanSnapshotResource" /> in the collection will belong to the same instance of <see cref="ElasticSanVolumeGroupResource" />.
-    /// To get an <see cref="ElasticSanSnapshotCollection" /> instance call the GetElasticSanSnapshots method from an instance of <see cref="ElasticSanVolumeGroupResource" />.
+    /// A class representing a collection of <see cref="ElasticSanSnapshotResource"/> and their operations.
+    /// Each <see cref="ElasticSanSnapshotResource"/> in the collection will belong to the same instance of <see cref="ElasticSanVolumeGroupResource"/>.
+    /// To get an <see cref="ElasticSanSnapshotCollection"/> instance call the GetElasticSanSnapshots method from an instance of <see cref="ElasticSanVolumeGroupResource"/>.
     /// </summary>
     public partial class ElasticSanSnapshotCollection : ArmCollection, IEnumerable<ElasticSanSnapshotResource>, IAsyncEnumerable<ElasticSanSnapshotResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,11 +252,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_ListByVolumeGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticSanSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanSnapshotResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -243,11 +283,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_ListByVolumeGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanSnapshotResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotVolumeSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
@@ -335,6 +399,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +444,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

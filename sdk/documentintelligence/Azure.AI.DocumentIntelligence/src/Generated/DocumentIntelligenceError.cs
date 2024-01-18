@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> The error object. </summary>
     public partial class DocumentIntelligenceError
     {
-        /// <summary> Initializes a new instance of DocumentIntelligenceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
             Details = new ChangeTrackingList<DocumentIntelligenceError>();
         }
 
-        /// <summary> Initializes a new instance of DocumentIntelligenceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>

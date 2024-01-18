@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A FTP server Linked Service. </summary>
     public partial class FtpServerLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of FtpServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="FtpServerLinkedService"/>. </summary>
         /// <param name="host"> Host name of the FTP server. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public FtpServerLinkedService(object host)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "FtpServer";
         }
 
-        /// <summary> Initializes a new instance of FtpServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="FtpServerLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

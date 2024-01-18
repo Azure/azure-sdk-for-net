@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class BackupSchedulePolicy
     {
-        /// <summary> Initializes a new instance of BackupSchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSchedulePolicy"/>. </summary>
         protected BackupSchedulePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupSchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSchedulePolicy"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal BackupSchedulePolicy(string schedulePolicyType)
         {

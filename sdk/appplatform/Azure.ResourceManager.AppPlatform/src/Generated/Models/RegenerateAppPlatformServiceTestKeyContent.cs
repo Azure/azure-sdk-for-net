@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Regenerate test key request payload. </summary>
     public partial class RegenerateAppPlatformServiceTestKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateAppPlatformServiceTestKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenerateAppPlatformServiceTestKeyContent"/>. </summary>
         /// <param name="keyType"> Type of the test key. </param>
         public RegenerateAppPlatformServiceTestKeyContent(AppPlatformServiceTestKeyType keyType)
         {

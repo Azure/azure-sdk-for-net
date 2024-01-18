@@ -1,6 +1,6 @@
 # Release History
 
-## 11.6.0-beta.1 (Unreleased)
+## 11.6.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.6.0-beta.1 (2024-01-17)
+
+### Features Added
+- Added all the new types and updated the names as defined in the GA version [11.5.0](https://www.nuget.org/packages/Azure.Search.Documents/11.5.0).
+
+## 11.5.1 (2023-11-28)
+
+### Bugs Fixed
+- Fix paging issue for semantic and vector search ([#40137](https://github.com/Azure/azure-sdk-for-net/issues/40137)).
 
 ## 11.5.0 (2023-11-10)
 

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A Class representing a DeletedAppConfigurationStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedAppConfigurationStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedAppConfigurationStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedAppConfigurationStore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedAppConfigurationStoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeletedAppConfigurationStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedAppConfigurationStore method.
     /// </summary>
     public partial class DeletedAppConfigurationStoreResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly ConfigurationStoresRestOperations _deletedAppConfigurationStoreConfigurationStoresRestClient;
         private readonly DeletedAppConfigurationStoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/locations/deletedConfigurationStores";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedAppConfigurationStoreResource"/> class for mocking. </summary>
         protected DeletedAppConfigurationStoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedAppConfigurationStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedAppConfigurationStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeletedAppConfigurationStoreResource(ArmClient client, DeletedAppConfigurationStoreData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/locations/deletedConfigurationStores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_PurgeDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +222,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_PurgeDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,9 +12,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating the source code repository. </summary>
     public partial class SourceCodeRepoUpdateContent
     {
-        /// <summary> Initializes a new instance of SourceCodeRepoUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoUpdateContent"/>. </summary>
         public SourceCodeRepoUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoUpdateContent"/>. </summary>
+        /// <param name="sourceControlType"> The type of source control service. </param>
+        /// <param name="repositoryUri"> The full URL to the source code repository. </param>
+        /// <param name="branch"> The branch name of the source code. </param>
+        /// <param name="sourceControlAuthProperties">
+        /// The authorization properties for accessing the source code repository and to set up
+        /// webhooks for notifications.
+        /// </param>
+        internal SourceCodeRepoUpdateContent(SourceControlType? sourceControlType, Uri repositoryUri, string branch, SourceCodeRepoAuthInfoUpdateContent sourceControlAuthProperties)
+        {
+            SourceControlType = sourceControlType;
+            RepositoryUri = repositoryUri;
+            Branch = branch;
+            SourceControlAuthProperties = sourceControlAuthProperties;
         }
 
         /// <summary> The type of source control service. </summary>

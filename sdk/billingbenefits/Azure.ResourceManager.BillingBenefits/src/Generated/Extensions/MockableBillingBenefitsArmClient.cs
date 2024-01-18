@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsSavingsPlanOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsSavingsPlanOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> object. </returns>
         public virtual BillingBenefitsSavingsPlanOrderAliasResource GetBillingBenefitsSavingsPlanOrderAliasResource(ResourceIdentifier id)
         {
             BillingBenefitsSavingsPlanOrderAliasResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsSavingsPlanOrderResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsSavingsPlanOrderResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderResource"/> object. </returns>
         public virtual BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(ResourceIdentifier id)
         {
             BillingBenefitsSavingsPlanOrderResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsSavingsPlanResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsSavingsPlanResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanResource"/> object. </returns>
         public virtual BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(ResourceIdentifier id)
         {
             BillingBenefitsSavingsPlanResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsReservationOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsReservationOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsReservationOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsReservationOrderAliasResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsReservationOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsReservationOrderAliasResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingBenefitsReservationOrderAliasResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingBenefitsReservationOrderAliasResource"/> object. </returns>
         public virtual BillingBenefitsReservationOrderAliasResource GetBillingBenefitsReservationOrderAliasResource(ResourceIdentifier id)
         {
             BillingBenefitsReservationOrderAliasResource.ValidateResourceId(id);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformSupportedBuildpackResource" /> and their operations.
-    /// Each <see cref="AppPlatformSupportedBuildpackResource" /> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource" />.
-    /// To get an <see cref="AppPlatformSupportedBuildpackCollection" /> instance call the GetAppPlatformSupportedBuildpacks method from an instance of <see cref="AppPlatformBuildServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformSupportedBuildpackResource"/> and their operations.
+    /// Each <see cref="AppPlatformSupportedBuildpackResource"/> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource"/>.
+    /// To get an <see cref="AppPlatformSupportedBuildpackCollection"/> instance call the GetAppPlatformSupportedBuildpacks method from an instance of <see cref="AppPlatformBuildServiceResource"/>.
     /// </summary>
     public partial class AppPlatformSupportedBuildpackCollection : ArmCollection, IEnumerable<AppPlatformSupportedBuildpackResource>, IAsyncEnumerable<AppPlatformSupportedBuildpackResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListSupportedBuildpacks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformSupportedBuildpackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformSupportedBuildpackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformSupportedBuildpackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedBuildpackBuildServiceRestClient.CreateListSupportedBuildpacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListSupportedBuildpacks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformSupportedBuildpackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformSupportedBuildpackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformSupportedBuildpackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedBuildpackBuildServiceRestClient.CreateListSupportedBuildpacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

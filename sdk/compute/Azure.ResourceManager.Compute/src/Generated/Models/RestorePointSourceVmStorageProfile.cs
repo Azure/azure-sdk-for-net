@@ -13,24 +13,28 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the storage profile. </summary>
     public partial class RestorePointSourceVmStorageProfile
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
         public RestorePointSourceVmStorageProfile()
         {
             DataDiskList = new ChangeTrackingList<RestorePointSourceVmDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
         /// <param name="osDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
         /// <param name="dataDiskList"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
-        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IList<RestorePointSourceVmDataDisk> dataDiskList)
+        /// <param name="diskControllerType"> Gets the disk controller type of the VM captured at the time of the restore point creation. </param>
+        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IList<RestorePointSourceVmDataDisk> dataDiskList, DiskControllerType? diskControllerType)
         {
             OSDisk = osDisk;
             DataDiskList = dataDiskList;
+            DiskControllerType = diskControllerType;
         }
 
         /// <summary> Gets the OS disk of the VM captured at the time of the restore point creation. </summary>
         public RestorePointSourceVmOSDisk OSDisk { get; set; }
         /// <summary> Gets the data disks of the VM captured at the time of the restore point creation. </summary>
         public IList<RestorePointSourceVmDataDisk> DataDiskList { get; }
+        /// <summary> Gets the disk controller type of the VM captured at the time of the restore point creation. </summary>
+        public DiskControllerType? DiskControllerType { get; }
     }
 }

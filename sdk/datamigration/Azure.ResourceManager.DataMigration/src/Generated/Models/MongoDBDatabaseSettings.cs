@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes how an individual MongoDB database should be migrated. </summary>
     public partial class MongoDBDatabaseSettings
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseSettings"/>. </summary>
         /// <param name="collections"> The collections on the source database to migrate to the target. The keys are the unqualified names of the collections. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collections"/> is null. </exception>
         public MongoDBDatabaseSettings(IDictionary<string, MongoDBCollectionSettings> collections)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Collections = collections;
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseSettings"/>. </summary>
         /// <param name="collections"> The collections on the source database to migrate to the target. The keys are the unqualified names of the collections. </param>
         /// <param name="targetRUs"> The RUs that should be configured on a CosmosDB target, or null to use the default, or 0 if throughput should not be provisioned for the database. This has no effect on non-CosmosDB targets. </param>
         internal MongoDBDatabaseSettings(IDictionary<string, MongoDBCollectionSettings> collections, int? targetRUs)

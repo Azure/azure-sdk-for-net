@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define a ProactiveDetection configuration. </summary>
     public partial class ApplicationInsightsComponentProactiveDetectionConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/>. </summary>
         public ApplicationInsightsComponentProactiveDetectionConfiguration()
         {
             CustomEmails = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/>. </summary>
         /// <param name="name"> The rule name. </param>
         /// <param name="isEnabled"> A flag that indicates whether this rule is enabled by the user. </param>
         /// <param name="sendEmailsToSubscriptionOwners"> A flag that indicated whether notifications on this rule should be sent to subscription owners. </param>

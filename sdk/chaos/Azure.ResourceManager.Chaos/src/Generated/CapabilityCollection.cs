@@ -21,9 +21,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CapabilityResource" /> and their operations.
-    /// Each <see cref="CapabilityResource" /> in the collection will belong to the same instance of <see cref="TargetResource" />.
-    /// To get a <see cref="CapabilityCollection" /> instance call the GetCapabilities method from an instance of <see cref="TargetResource" />.
+    /// A class representing a collection of <see cref="CapabilityResource"/> and their operations.
+    /// Each <see cref="CapabilityResource"/> in the collection will belong to the same instance of <see cref="TargetResource"/>.
+    /// To get a <see cref="CapabilityCollection"/> instance call the GetCapabilities method from an instance of <see cref="TargetResource"/>.
     /// </summary>
     public partial class CapabilityCollection : ArmCollection, IEnumerable<CapabilityResource>, IAsyncEnumerable<CapabilityResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capabilities_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Capabilities_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Capabilities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capabilities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Capabilities_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapabilityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapabilityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapabilityResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
@@ -244,11 +284,19 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Capabilities_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapabilityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapabilityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapabilityResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capabilities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Capabilities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
@@ -336,6 +400,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capabilities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +445,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capabilities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

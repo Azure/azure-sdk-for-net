@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> ARM usage. </summary>
     public partial class InstancePoolUsage
     {
-        /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsage"/>. </summary>
         internal InstancePoolUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsage"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

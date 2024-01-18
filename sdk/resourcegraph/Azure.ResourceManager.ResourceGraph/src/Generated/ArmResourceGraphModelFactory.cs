@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourceGraphModelFactory
     {
-        /// <summary> Initializes a new instance of ResourceQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceQueryResult"/>. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken, data, facets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Facet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Facet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.Facet"/> instance for mocking. </returns>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new UnknownFacet(expression, resultType);
         }
 
-        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FacetErrorDetails"/>. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetErrorDetails(code, message, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FacetResult"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="totalRecords"> Number of total records in the facet results. </param>
         /// <param name="count"> Number of records returned in the facet response. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetResult(expression, "FacetResult", totalRecords, count, data);
         }
 
-        /// <summary> Initializes a new instance of FacetError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FacetError"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>
         /// <returns> A new <see cref="Models.FacetError"/> instance for mocking. </returns>

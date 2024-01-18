@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Diagnostics data table. </summary>
     public partial class ContainerAppDiagnosticDataTableResult
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataTableResult"/>. </summary>
         public ContainerAppDiagnosticDataTableResult()
         {
             Columns = new ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
             Rows = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataTableResult"/>. </summary>
         /// <param name="tableName"> Table name. </param>
         /// <param name="columns"> Columns in the table. </param>
         /// <param name="rows"> Rows in the table. </param>

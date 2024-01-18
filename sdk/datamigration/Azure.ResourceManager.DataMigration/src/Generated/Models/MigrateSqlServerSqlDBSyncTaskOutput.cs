@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class MigrateSqlServerSqlDBSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutput"/>. </summary>
         protected MigrateSqlServerSqlDBSyncTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal MigrateSqlServerSqlDBSyncTaskOutput(string id, string resultType)

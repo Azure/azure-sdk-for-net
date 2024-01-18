@@ -68,6 +68,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -91,6 +99,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,6 +140,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -147,6 +171,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,6 +212,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -202,6 +242,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,6 +282,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -257,6 +313,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +354,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -313,6 +385,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,6 +426,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -369,6 +457,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,6 +498,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -425,6 +529,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,6 +570,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -481,6 +601,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -514,6 +642,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -537,6 +673,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -570,6 +714,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -593,6 +745,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,6 +786,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -649,6 +817,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -674,13 +850,17 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>EligibleChildResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EligibleChildResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -701,13 +881,17 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>EligibleChildResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="EligibleChildResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EligibleChildResource> GetEligibleChildResources(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -717,11 +901,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "MockableAuthorizationArmClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
         /// <summary>
-        /// Gets an object representing a <see cref="DenyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DenyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DenyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DenyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DenyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DenyAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DenyAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DenyAssignmentResource"/> object. </returns>
         public virtual DenyAssignmentResource GetDenyAssignmentResource(ResourceIdentifier id)
         {
             DenyAssignmentResource.ValidateResourceId(id);
@@ -729,11 +913,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AuthorizationProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthorizationProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AuthorizationProviderOperationsMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationProviderOperationsMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource"/> object. </returns>
         public virtual AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(ResourceIdentifier id)
         {
             AuthorizationProviderOperationsMetadataResource.ValidateResourceId(id);
@@ -741,11 +925,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleAssignmentResource"/> object. </returns>
         public virtual RoleAssignmentResource GetRoleAssignmentResource(ResourceIdentifier id)
         {
             RoleAssignmentResource.ValidateResourceId(id);
@@ -753,11 +937,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AuthorizationRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthorizationRoleDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AuthorizationRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationRoleDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource"/> object. </returns>
         public virtual AuthorizationRoleDefinitionResource GetAuthorizationRoleDefinitionResource(ResourceIdentifier id)
         {
             AuthorizationRoleDefinitionResource.ValidateResourceId(id);
@@ -765,11 +949,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleAssignmentScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleAssignmentScheduleResource"/> object. </returns>
         public virtual RoleAssignmentScheduleResource GetRoleAssignmentScheduleResource(ResourceIdentifier id)
         {
             RoleAssignmentScheduleResource.ValidateResourceId(id);
@@ -777,11 +961,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleAssignmentScheduleInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentScheduleInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleAssignmentScheduleInstanceResource"/> object. </returns>
         public virtual RoleAssignmentScheduleInstanceResource GetRoleAssignmentScheduleInstanceResource(ResourceIdentifier id)
         {
             RoleAssignmentScheduleInstanceResource.ValidateResourceId(id);
@@ -789,11 +973,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleAssignmentScheduleRequestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentScheduleRequestResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleAssignmentScheduleRequestResource"/> object. </returns>
         public virtual RoleAssignmentScheduleRequestResource GetRoleAssignmentScheduleRequestResource(ResourceIdentifier id)
         {
             RoleAssignmentScheduleRequestResource.ValidateResourceId(id);
@@ -801,11 +985,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleEligibilityScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleEligibilityScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleEligibilityScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleEligibilityScheduleResource"/> object. </returns>
         public virtual RoleEligibilityScheduleResource GetRoleEligibilityScheduleResource(ResourceIdentifier id)
         {
             RoleEligibilityScheduleResource.ValidateResourceId(id);
@@ -813,11 +997,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleEligibilityScheduleInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleEligibilityScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleEligibilityScheduleInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleEligibilityScheduleInstanceResource"/> object. </returns>
         public virtual RoleEligibilityScheduleInstanceResource GetRoleEligibilityScheduleInstanceResource(ResourceIdentifier id)
         {
             RoleEligibilityScheduleInstanceResource.ValidateResourceId(id);
@@ -825,11 +1009,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleEligibilityScheduleRequestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleEligibilityScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleEligibilityScheduleRequestResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleEligibilityScheduleRequestResource"/> object. </returns>
         public virtual RoleEligibilityScheduleRequestResource GetRoleEligibilityScheduleRequestResource(ResourceIdentifier id)
         {
             RoleEligibilityScheduleRequestResource.ValidateResourceId(id);
@@ -837,11 +1021,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleManagementPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleManagementPolicyResource"/> object. </returns>
         public virtual RoleManagementPolicyResource GetRoleManagementPolicyResource(ResourceIdentifier id)
         {
             RoleManagementPolicyResource.ValidateResourceId(id);
@@ -849,11 +1033,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleManagementPolicyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleManagementPolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleManagementPolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleManagementPolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleManagementPolicyAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleManagementPolicyAssignmentResource"/> object. </returns>
         public virtual RoleManagementPolicyAssignmentResource GetRoleManagementPolicyAssignmentResource(ResourceIdentifier id)
         {
             RoleManagementPolicyAssignmentResource.ValidateResourceId(id);

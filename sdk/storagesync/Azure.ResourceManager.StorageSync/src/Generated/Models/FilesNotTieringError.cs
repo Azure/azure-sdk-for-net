@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Files not tiering error object. </summary>
     public partial class FilesNotTieringError
     {
-        /// <summary> Initializes a new instance of FilesNotTieringError. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesNotTieringError"/>. </summary>
         internal FilesNotTieringError()
         {
         }
 
-        /// <summary> Initializes a new instance of FilesNotTieringError. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesNotTieringError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="fileCount"> Count of files with this error. </param>
         internal FilesNotTieringError(int? errorCode, long? fileCount)

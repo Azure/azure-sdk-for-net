@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The parameters schema of integration account map. </summary>
     internal partial class IntegrationAccountMapPropertiesParametersSchema
     {
-        /// <summary> Initializes a new instance of IntegrationAccountMapPropertiesParametersSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountMapPropertiesParametersSchema"/>. </summary>
         public IntegrationAccountMapPropertiesParametersSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountMapPropertiesParametersSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountMapPropertiesParametersSchema"/>. </summary>
         /// <param name="ref"> The reference name. </param>
         internal IntegrationAccountMapPropertiesParametersSchema(string @ref)
         {

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryEvent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryEventResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryEventResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryEvent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryEventResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryEventResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryEvent method.
     /// </summary>
     public partial class SiteRecoveryEventResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationEventsRestOperations _siteRecoveryEventReplicationEventsRestClient;
         private readonly SiteRecoveryEventData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationEvents";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventResource"/> class for mocking. </summary>
         protected SiteRecoveryEventResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryEventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryEventResource(ArmClient client, SiteRecoveryEventData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationEvents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationEvents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationEvents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// </summary>
     public abstract partial class SynapseCustomSetupBase
     {
-        /// <summary> Initializes a new instance of SynapseCustomSetupBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseCustomSetupBase"/>. </summary>
         protected SynapseCustomSetupBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseCustomSetupBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseCustomSetupBase"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         internal SynapseCustomSetupBase(string customSetupBaseType)
         {

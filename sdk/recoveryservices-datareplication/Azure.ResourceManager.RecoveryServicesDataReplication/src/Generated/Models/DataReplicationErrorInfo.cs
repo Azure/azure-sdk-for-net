@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Error model. </summary>
     public partial class DataReplicationErrorInfo
     {
-        /// <summary> Initializes a new instance of DataReplicationErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationErrorInfo"/>. </summary>
         internal DataReplicationErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationErrorInfo"/>. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="errorModelType"> Gets or sets the error type. </param>
         /// <param name="severity"> Gets or sets the error severity. </param>

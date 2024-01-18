@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a ApplicationStack. </summary>
     public partial class ApplicationStackResource : ResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationStackResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationStackResource"/>. </summary>
         public ApplicationStackResource()
         {
             MajorVersions = new ChangeTrackingList<StackMajorVersion>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsDeprecated = new ChangeTrackingList<ApplicationStack>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationStackResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationStackResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

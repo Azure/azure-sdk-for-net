@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Twilio. </summary>
     public partial class TwilioLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwilioLinkedService"/>. </summary>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The auth token of Twilio service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Twilio";
         }
 
-        /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwilioLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

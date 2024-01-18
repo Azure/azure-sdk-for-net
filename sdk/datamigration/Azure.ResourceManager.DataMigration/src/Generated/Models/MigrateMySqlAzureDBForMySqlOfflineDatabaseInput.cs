@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for offline MySQL to Azure Database for MySQL migration task inputs. </summary>
     public partial class MigrateMySqlAzureDBForMySqlOfflineDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineDatabaseInput"/>. </summary>
         public MigrateMySqlAzureDBForMySqlOfflineDatabaseInput()
         {
             TableMap = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
         /// <param name="tableMap"> Mapping of source to target tables. </param>

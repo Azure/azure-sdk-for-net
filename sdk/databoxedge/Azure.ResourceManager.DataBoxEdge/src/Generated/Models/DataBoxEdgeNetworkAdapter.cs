@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Represents the networkAdapter on a device. </summary>
     public partial class DataBoxEdgeNetworkAdapter
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapter"/>. </summary>
         internal DataBoxEdgeNetworkAdapter()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapter"/>. </summary>
         /// <param name="adapterId"> Instance ID of network adapter. </param>
         /// <param name="adapterPosition"> Hardware position of network adapter. </param>
         /// <param name="index"> Logical index of the adapter. </param>

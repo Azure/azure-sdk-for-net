@@ -32,10 +32,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceDisplayName"u8);
                 writer.WriteStringValue(SourceDisplayName);
             }
-            if (Optional.IsDefined(SourceIdentity))
+            if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("sourceIdentity"u8);
-                writer.WriteObjectValue(SourceIdentity);
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -54,15 +54,15 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transcriptionConfiguration"u8);
                 writer.WriteObjectValue(TranscriptionConfiguration);
             }
-            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(CallIntelligenceOptions))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
-                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+                writer.WritePropertyName("callIntelligenceOptions"u8);
+                writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(CustomContext))
+            if (Optional.IsDefined(CustomCallingContext))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
             }
             writer.WriteEndObject();
         }

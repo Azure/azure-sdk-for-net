@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a metric value. </summary>
     public partial class MonitorMetricValue
     {
-        /// <summary> Initializes a new instance of MonitorMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricValue"/>. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         internal MonitorMetricValue(DateTimeOffset timeStamp)
         {
             TimeStamp = timeStamp;
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricValue"/>. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> the average value in the time range. </param>
         /// <param name="minimum"> the least value in the time range. </param>

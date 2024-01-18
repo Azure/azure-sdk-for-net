@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Inference Endpoint base definition. </summary>
     public partial class MachineLearningEndpointProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         public MachineLearningEndpointProperties(MachineLearningEndpointAuthMode authMode)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">

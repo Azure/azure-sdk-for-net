@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of L2 Isolation Domains. </summary>
     internal partial class L2IsolationDomainsListResult
     {
-        /// <summary> Initializes a new instance of L2IsolationDomainsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="L2IsolationDomainsListResult"/>. </summary>
         internal L2IsolationDomainsListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricL2IsolationDomainData>();
         }
 
-        /// <summary> Initializes a new instance of L2IsolationDomainsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="L2IsolationDomainsListResult"/>. </summary>
         /// <param name="value"> Displays list of L2 Isolation Domain resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal L2IsolationDomainsListResult(IReadOnlyList<NetworkFabricL2IsolationDomainData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a database or collection within a MongoDB data source. </summary>
     public partial class MongoDBObjectInfo
     {
-        /// <summary> Initializes a new instance of MongoDBObjectInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBObjectInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>

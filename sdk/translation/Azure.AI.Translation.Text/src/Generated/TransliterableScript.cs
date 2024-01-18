@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Script definition with list of script into which given script can be translitered. </summary>
     public partial class TransliterableScript : CommonScriptModel
     {
-        /// <summary> Initializes a new instance of TransliterableScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliterableScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text
             ToScripts = toScripts.ToList();
         }
 
-        /// <summary> Initializes a new instance of TransliterableScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliterableScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>

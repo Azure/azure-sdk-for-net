@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmConsumptionModelFactory
     {
-        /// <summary> Initializes a new instance of ConsumptionUsageDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionUsageDetail(id, name, resourceType, systemData, kind, etag, tags);
+            return new UnknownUsageDetail(id, name, resourceType, systemData, kind, etag, tags);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMarketplace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMarketplace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionMarketplace(id, name, resourceType, systemData, billingPeriodId, usageStartOn, usageEndOn, resourceRate, offerName, resourceGroup, additionalInfo, orderNumber, instanceName, instanceId, currency, consumedQuantity, unitOfMeasure, pretaxCost, isEstimated, meterId, subscriptionGuid, subscriptionName, accountName, departmentName, consumedService, costCenter, additionalProperties, publisherName, planName, isRecurringCharge, etag, tags);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Consumption.ConsumptionBudgetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionBudgetData(id, name, resourceType, systemData, category, amount, timeGrain, timePeriod, filter, currentSpend, notifications, forecastSpend, etag);
         }
 
-        /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BudgetCurrentSpend"/>. </summary>
         /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
         /// <returns> A new <see cref="Models.BudgetCurrentSpend"/> instance for mocking. </returns>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new BudgetCurrentSpend(amount, unit);
         }
 
-        /// <summary> Initializes a new instance of BudgetForecastSpend. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BudgetForecastSpend"/>. </summary>
         /// <param name="amount"> The forecasted cost for the total time period which is being tracked by the budget. This value is only provided if the budget contains a forecast alert type. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
         /// <returns> A new <see cref="Models.BudgetForecastSpend"/> instance for mocking. </returns>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new BudgetForecastSpend(amount, unit);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionTagsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionTagsResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionTagsResult(id, name, resourceType, systemData, tags?.ToList(), nextLink, previousLink, etag);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
         public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new ConsumptionChargeSummary(id, name, resourceType, systemData, kind, etag);
+            return new UnknownChargeSummary(id, name, resourceType, systemData, kind, etag);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionBalanceResult(id, name, resourceType, systemData, currency, beginningBalance, endingBalance, newPurchases, adjustments, utilized, serviceOverage, chargesBilledSeparately, totalOverage, totalUsage, azureMarketplaceServiceCharges, billingFrequency, isPriceHidden, newPurchasesDetails?.ToList(), adjustmentDetails?.ToList(), etag, tags);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceNewPurchasesDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/>. </summary>
         /// <param name="name"> the name of new purchase. </param>
         /// <param name="value"> the value of new purchase. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/> instance for mocking. </returns>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionBalanceNewPurchasesDetail(name, value);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceAdjustmentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceAdjustmentDetail"/>. </summary>
         /// <param name="name"> the name of new adjustment. </param>
         /// <param name="value"> the value of new adjustment. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceAdjustmentDetail"/> instance for mocking. </returns>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionBalanceAdjustmentDetail(name, value);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionReservationSummary(id, name, resourceType, systemData, reservationOrderId, reservationId, skuName, reservedHours, useOn, usedHours, minUtilizationPercentage, avgUtilizationPercentage, maxUtilizationPercentage, kind, purchasedQuantity, remainingQuantity, totalReservedQuantity, usedQuantity, utilizedPercentage, etag, tags);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionReservationDetail(id, name, resourceType, systemData, reservationOrderId, instanceFlexibilityRatio, instanceFlexibilityGroup, reservationId, skuName, reservedHours, consumptionOccurredOn, usedHours, instanceId, totalReservedQuantity, kind, etag, tags);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationRecommendation(id, name, resourceType, systemData, kind, etag, tags, location, sku);
+            return new UnknownReservationRecommendation(id, name, resourceType, systemData, kind, etag, tags, location, sku);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionReservationRecommendationDetails(id, name, resourceType, systemData, location, sku, currency, properties, resourceGroup, savings, scope, usage, etag, tags);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionResourceProperties"/>. </summary>
         /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
         /// <param name="onDemandRate"> On demand rate of the resource. </param>
         /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionResourceProperties(appliedScopes?.ToList(), onDemandRate, product, region, reservationRate, resourceType);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionSavingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSavingsProperties"/>. </summary>
         /// <param name="calculatedSavings"> List of calculated savings. </param>
         /// <param name="lookBackPeriod"> Number of days of usage to look back used for computing the recommendation. </param>
         /// <param name="recommendedQuantity"> Number of recommended units of the resource. </param>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionSavingsProperties(calculatedSavings?.ToList(), lookBackPeriod, recommendedQuantity, reservationOrderTerm, savingsType, unitOfMeasure);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionCalculatedSavingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCalculatedSavingsProperties"/>. </summary>
         /// <param name="onDemandCost"> The cost without reservation. </param>
         /// <param name="overageCost"> The difference between total reservation cost and reservation cost. </param>
         /// <param name="quantity"> The quantity for calculated savings. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionCalculatedSavingsProperties(onDemandCost, overageCost, quantity, reservationCost, totalReservationCost, reservedUnitCount, savings);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageProperties"/>. </summary>
         /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
         /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionUsageProperties(firstConsumptionDate, lastConsumptionDate, lookBackUnitType, usageData?.ToList(), usageGrain);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationTransaction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationTransaction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionReservationTransaction(id, name, resourceType, systemData, transactOn, reservationOrderId, description, eventType, quantity, amount, currency, reservationOrderName, purchasingEnrollment, purchasingSubscriptionGuid, purchasingSubscriptionName, armSkuName, term, region, accountName, accountOwnerEmail, departmentName, costCenter, currentEnrollment, billingFrequency, billingMonth, monetaryCommitment, overage, tags?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationTransaction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationTransaction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionModernReservationTransaction(id, name, resourceType, systemData, amount, armSkuName, billingFrequency, billingProfileId, billingProfileName, currency, description, transactOn, eventType, invoice, invoiceId, invoiceSectionId, invoiceSectionName, purchasingSubscriptionGuid, purchasingSubscriptionName, quantity, region, reservationOrderId, reservationOrderName, term, tags?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PriceSheetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new PriceSheetResult(id, name, resourceType, systemData, pricesheets?.ToList(), nextLink, download, etag, tags);
         }
 
-        /// <summary> Initializes a new instance of PriceSheetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetProperties"/>. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
         /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new PriceSheetProperties(billingPeriodId, meterId, meterDetails, unitOfMeasure, includedQuantity, partNumber, unitPrice, currencyCode, offerId);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMeterDetails"/>. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionMeterDetails(meterName, meterCategory, meterSubCategory, unit, meterLocation, totalIncludedQuantity, pretaxStandardRate, serviceName, serviceTier);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionAggregatedCostResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAggregatedCostResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionAggregatedCostResult(id, name, resourceType, systemData, billingPeriodId, usageStartOn, usageEndOn, azureCharges, marketplaceCharges, chargesBilledSeparately, currency, children?.ToList(), includedSubscriptions?.ToList(), excludedSubscriptions?.ToList(), etag, tags);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionEventSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionEventSummary(id, name, resourceType, systemData, transactOn, description, newCredit, adjustments, creditExpired, charges, closedBalance, eventType, invoiceNumber, billingProfileId, billingProfileDisplayName, lotId, lotSource, canceledCredit, creditCurrency, billingCurrency, reseller, creditExpiredInBillingCurrency, newCreditInBillingCurrency, adjustmentsInBillingCurrency, chargesInBillingCurrency, closedBalanceInBillingCurrency, etag);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmount"/>. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         /// <returns> A new <see cref="Models.ConsumptionAmount"/> instance for mocking. </returns>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionAmount(currency, value);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReseller. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReseller"/>. </summary>
         /// <param name="resellerId"> The reseller property ID. </param>
         /// <param name="resellerDescription"> The reseller property description. </param>
         /// <returns> A new <see cref="Models.ConsumptionReseller"/> instance for mocking. </returns>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionReseller(resellerId, resellerDescription);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionAmountWithExchangeRate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmountWithExchangeRate"/>. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         /// <param name="exchangeRate"> The exchange rate. </param>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionAmountWithExchangeRate(currency, value, exchangeRate, exchangeRateMonth);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLotSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLotSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionLotSummary(id, name, resourceType, systemData, originalAmount, closedBalance, source, startOn, expireOn, poNumber, purchasedOn, status, creditCurrency, billingCurrency, originalAmountInBillingCurrency, closedBalanceInBillingCurrency, reseller, etag);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionCreditSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCreditSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionCreditSummary(id, name, resourceType, systemData, balanceSummary, pendingCreditAdjustments, expiredCredit, pendingEligibleCharges, creditCurrency, billingCurrency, reseller, etag);
         }
 
-        /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreditBalanceSummary"/>. </summary>
         /// <param name="estimatedBalance"> Estimated balance. </param>
         /// <param name="currentBalance"> Current balance. </param>
         /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLegacyUsageDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyUsageDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionLegacyUsageDetail(id, name, resourceType, systemData, UsageDetailsKind.Legacy, etag, tags, billingAccountId, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, accountOwnerId, accountName, subscriptionId, subscriptionName, @on, product, partNumber, meterId, meterDetails, quantity, effectivePrice, cost, unitPrice, billingCurrency, resourceLocation, consumedService, resourceId, resourceName, serviceInfo1, serviceInfo2, additionalInfo, invoiceSection, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, offerId, isAzureCreditEligible, term, publisherName, publisherType, planName, chargeType, frequency, payGPrice, benefitId, benefitName, pricingModel);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMeterDetailsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMeterDetailsInfo"/>. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionMeterDetailsInfo(meterName, meterCategory, meterSubCategory, unitOfMeasure, serviceFamily);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernUsageDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernUsageDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionModernUsageDetail(id, name, resourceType, systemData, UsageDetailsKind.Modern, etag, tags, billingAccountId, effectivePrice, pricingModel, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, subscriptionGuid, subscriptionName, @on, product, meterId, meterName, meterRegion, meterCategory, meterSubCategory, serviceFamily, quantity, unitOfMeasure, instanceName, costInUSD, unitPrice, billingCurrencyCode, resourceLocation, consumedService, serviceInfo1, serviceInfo2, additionalInfo, invoiceSectionId, invoiceSectionName, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, isAzureCreditEligible, term, publisherName, publisherType, chargeType, frequency, costInBillingCurrency, costInPricingCurrency, exchangeRate, exchangeRateOn, invoiceId, previousInvoiceId, pricingCurrencyCode, productIdentifier, resourceLocationNormalized, servicePeriodStartOn, servicePeriodEndOn, customerTenantId, customerName, partnerTenantId, partnerName, resellerMpnId, resellerName, publisherId, marketPrice, exchangeRatePricingToBilling, paygCostInBillingCurrency, paygCostInUSD, partnerEarnedCreditRate, partnerEarnedCreditApplied, payGPrice, benefitId, benefitName, provider, costAllocationRuleName);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionSkuProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSkuProperty"/>. </summary>
         /// <param name="name"> The name of sku property. </param>
         /// <param name="value"> The value of sku property. </param>
         /// <returns> A new <see cref="Models.ConsumptionSkuProperty"/> instance for mocking. </returns>
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionSkuProperty(name, value);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionModernReservationRecommendation(id, name, resourceType, systemData, ReservationRecommendationKind.Modern, etag, tags, location, sku, locationPropertiesLocation, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, totalCostWithReservedInstances, netSavings, firstUsageOn, scope, skuProperties?.ToList(), skuName);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLegacyChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionLegacyChargeSummary(id, name, resourceType, systemData, ChargeSummaryKind.Legacy, etag, billingPeriodId, usageStart, usageEnd, azureCharges, chargesBilledSeparately, marketplaceCharges, currency);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

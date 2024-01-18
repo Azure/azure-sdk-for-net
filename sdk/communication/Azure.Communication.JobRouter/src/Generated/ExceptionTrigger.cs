@@ -14,12 +14,12 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of ExceptionTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionTrigger"/>. </summary>
         protected ExceptionTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of ExceptionTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         internal ExceptionTrigger(ExceptionTriggerKind kind)
         {

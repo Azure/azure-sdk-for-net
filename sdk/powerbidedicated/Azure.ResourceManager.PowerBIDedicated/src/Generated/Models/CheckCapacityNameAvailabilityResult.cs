@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> The checking result of capacity name availability. </summary>
     public partial class CheckCapacityNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckCapacityNameAvailabilityResult"/>. </summary>
         internal CheckCapacityNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckCapacityNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicator of availability of the capacity name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>

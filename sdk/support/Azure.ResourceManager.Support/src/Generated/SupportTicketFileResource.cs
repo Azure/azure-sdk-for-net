@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportTicketFile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketFileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketFileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionFileWorkspaceResource" /> using the GetSupportTicketFile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketFileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketFileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionFileWorkspaceResource"/> using the GetSupportTicketFile method.
     /// </summary>
     public partial class SupportTicketFileResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Support
         private readonly FilesRestOperations _supportTicketFileFilesRestClient;
         private readonly SupportFileDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketFileResource"/> class for mocking. </summary>
         protected SupportTicketFileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketFileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTicketFileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketFileResource(ArmClient client, SupportFileDetailData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Files_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,6 +227,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -241,6 +273,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Upload</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> UploadFile object. </param>
@@ -274,6 +314,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Files_Upload</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketFileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

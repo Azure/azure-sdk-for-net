@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Countries Response Object. </summary>
     internal partial class RulestackCountryListResult
     {
-        /// <summary> Initializes a new instance of RulestackCountryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/>. </summary>
         /// <param name="value"> List of countries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackCountryListResult(IEnumerable<RulestackCountry> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RulestackCountryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/>. </summary>
         /// <param name="value"> List of countries. </param>
         /// <param name="nextLink"> next link. </param>
         internal RulestackCountryListResult(IReadOnlyList<RulestackCountry> value, string nextLink)

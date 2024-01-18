@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </summary>
     public partial class ContainerServiceMaintenanceAbsoluteMonthlySchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceAbsoluteMonthlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/>. </summary>
         /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
         /// <param name="dayOfMonth"> The date of the month. </param>
         public ContainerServiceMaintenanceAbsoluteMonthlySchedule(int intervalMonths, int dayOfMonth)

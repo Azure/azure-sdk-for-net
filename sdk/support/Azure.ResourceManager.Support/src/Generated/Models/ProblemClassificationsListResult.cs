@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Collection of ProblemClassification resources. </summary>
     internal partial class ProblemClassificationsListResult
     {
-        /// <summary> Initializes a new instance of ProblemClassificationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsListResult"/>. </summary>
         internal ProblemClassificationsListResult()
         {
             Value = new ChangeTrackingList<ProblemClassificationData>();
         }
 
-        /// <summary> Initializes a new instance of ProblemClassificationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsListResult"/>. </summary>
         /// <param name="value"> List of ProblemClassification resources. </param>
         internal ProblemClassificationsListResult(IReadOnlyList<ProblemClassificationData> value)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Details of an AzureKB search result. </summary>
     public partial class SearchResult
     {
-        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         public SearchResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         /// <param name="solutionId"> Unique id of the result. </param>
         /// <param name="content"> Content of the search result. </param>
         /// <param name="title"> Title of the search result. </param>

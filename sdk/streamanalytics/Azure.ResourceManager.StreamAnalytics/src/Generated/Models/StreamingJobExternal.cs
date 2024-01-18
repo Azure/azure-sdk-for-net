@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The storage account where the custom code artifacts are located. </summary>
     public partial class StreamingJobExternal
     {
-        /// <summary> Initializes a new instance of StreamingJobExternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobExternal"/>. </summary>
         public StreamingJobExternal()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobExternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobExternal"/>. </summary>
         /// <param name="storageAccount"> The properties that are associated with an Azure Storage account. </param>
         /// <param name="container"> The UserCustomCode container. </param>
         /// <param name="path"> The UserCustomCode path. </param>

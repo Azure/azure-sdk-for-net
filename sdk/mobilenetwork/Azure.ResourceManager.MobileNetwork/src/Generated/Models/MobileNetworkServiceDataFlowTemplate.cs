@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Data flow template. </summary>
     public partial class MobileNetworkServiceDataFlowTemplate
     {
-        /// <summary> Initializes a new instance of MobileNetworkServiceDataFlowTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkServiceDataFlowTemplate"/>. </summary>
         /// <param name="templateName"> The name of the data flow template. This must be unique within the parent data flow policy rule. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="direction"> The direction of this flow. </param>
         /// <param name="protocol"> A list of the allowed protocol(s) for this flow. If you want this flow to be able to use any protocol within the internet protocol suite, use the value `ip`. If you only want to allow a selection of protocols, you must use the corresponding IANA Assigned Internet Protocol Number for each protocol, as described in https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml. For example, for UDP, you must use 17. If you use the value `ip` then you must leave the field `port` unspecified. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Ports = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkServiceDataFlowTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkServiceDataFlowTemplate"/>. </summary>
         /// <param name="templateName"> The name of the data flow template. This must be unique within the parent data flow policy rule. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="direction"> The direction of this flow. </param>
         /// <param name="protocol"> A list of the allowed protocol(s) for this flow. If you want this flow to be able to use any protocol within the internet protocol suite, use the value `ip`. If you only want to allow a selection of protocols, you must use the corresponding IANA Assigned Internet Protocol Number for each protocol, as described in https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml. For example, for UDP, you must use 17. If you use the value `ip` then you must leave the field `port` unspecified. </param>

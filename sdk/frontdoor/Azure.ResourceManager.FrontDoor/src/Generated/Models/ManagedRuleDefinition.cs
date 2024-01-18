@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Describes a managed rule definition. </summary>
     public partial class ManagedRuleDefinition
     {
-        /// <summary> Initializes a new instance of ManagedRuleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleDefinition"/>. </summary>
         internal ManagedRuleDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleDefinition"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="defaultState"> Describes the default state for the managed rule. </param>
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>

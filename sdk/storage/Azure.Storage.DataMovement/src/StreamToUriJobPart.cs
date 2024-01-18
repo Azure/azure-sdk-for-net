@@ -252,12 +252,21 @@ namespace Azure.Storage.DataMovement
                 // Whether or not we continue is up to whether this was single put call or not.
                 return !singleCall;
             }
-            catch (RequestFailedException exception)
-                when (_createMode == StorageResourceCreationPreference.SkipIfExists
-                    && exception.ErrorCode == "BlobAlreadyExists")
+            catch (RequestFailedException r)
+            when (r.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreationPreference.SkipIfExists)
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
+            catch (InvalidOperationException i)
+            when (i.Message.Contains("Cannot overwrite file.") && _createMode == StorageResourceCreationPreference.SkipIfExists)
+            {
+                await InvokeSkippedArg().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await InvokeFailedArg(ex).ConfigureAwait(false);
+            }
+
             // Do not continue if we need to skip or there was an error.
             return false;
         }
@@ -268,66 +277,49 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private async Task InitialUploadCall(long blockSize, long expectedLength, bool singleCall)
         {
-            try
+            if (singleCall)
             {
-                if (singleCall)
-                {
-                    StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
+                StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                using Stream stream = result.Content;
+                await _destinationResource.CopyFromStreamAsync(
+                        stream: stream,
+                        overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                        streamLength: blockSize,
+                        completeLength: expectedLength,
                         cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                    using Stream stream = result.Content;
+                // Report bytes written before completion
+                ReportBytesWritten(blockSize);
+
+                // Set completion status to completed
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+            }
+            else
+            {
+                Stream slicedStream = Stream.Null;
+                StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
+                    position: 0,
+                    length: blockSize,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+                using (Stream stream = result.Content)
+                {
+                    slicedStream = await GetOffsetPartitionInternal(
+                        stream,
+                        0L,
+                        blockSize,
+                        UploadArrayPool,
+                        _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.CopyFromStreamAsync(
-                            stream: stream,
-                            overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                            streamLength: blockSize,
-                            completeLength: expectedLength,
-                            cancellationToken: _cancellationToken).ConfigureAwait(false);
-
-                    // Report bytes written before completion
-                    ReportBytesWritten(blockSize);
-
-                    // Set completion status to completed
-                    await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
-                }
-                else
-                {
-                    Stream slicedStream = Stream.Null;
-                    StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
-                        position: 0,
-                        length: blockSize,
+                        stream: slicedStream,
+                        streamLength: blockSize,
+                        overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                        completeLength: expectedLength,
                         cancellationToken: _cancellationToken).ConfigureAwait(false);
-                    using (Stream stream = result.Content)
-                    {
-                        slicedStream = await GetOffsetPartitionInternal(
-                            stream,
-                            0L,
-                            blockSize,
-                            UploadArrayPool,
-                            _cancellationToken).ConfigureAwait(false);
-                        await _destinationResource.CopyFromStreamAsync(
-                            stream: slicedStream,
-                            streamLength: blockSize,
-                            overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                            completeLength: expectedLength,
-                            cancellationToken: _cancellationToken).ConfigureAwait(false);
-                    }
-
-                    ReportBytesWritten(blockSize);
                 }
-            }
-            catch (RequestFailedException ex)
-            when (ex.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreationPreference.SkipIfExists)
-            {
-                await InvokeSkippedArg().ConfigureAwait(false);
-            }
-            catch (InvalidOperationException ex)
-            when (ex.Message.Contains("Cannot overwrite file.") && _createMode == StorageResourceCreationPreference.SkipIfExists)
-            {
-                await InvokeSkippedArg().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+
+                ReportBytesWritten(blockSize);
             }
         }
 
@@ -389,16 +381,21 @@ namespace Azure.Storage.DataMovement
                         },
                         cancellationToken: _cancellationToken).ConfigureAwait(false);
                 }
-                // Invoke event handler to keep track of all the stage blocks
-                await _commitBlockHandler.InvokeEvent(
-                    new StageChunkEventArgs(
-                        transferId: _dataTransfer.Id,
-                        success: true,
-                        offset: offset,
-                        bytesTransferred: blockLength,
-                        exception: default,
-                        isRunningSynchronously: true,
-                        cancellationToken: _cancellationToken)).ConfigureAwait(false);
+
+                // The chunk handler may have been disposed in failure case
+                if (_commitBlockHandler != null)
+                {
+                    // Invoke event handler to keep track of all the stage blocks
+                    await _commitBlockHandler.InvokeEvent(
+                        new StageChunkEventArgs(
+                            transferId: _dataTransfer.Id,
+                            success: true,
+                            offset: offset,
+                            bytesTransferred: blockLength,
+                            exception: default,
+                            isRunningSynchronously: true,
+                            cancellationToken: _cancellationToken)).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -445,10 +442,17 @@ namespace Azure.Storage.DataMovement
             // Partition the stream into individual blocks
             foreach ((long Offset, long Length) block in rangeList)
             {
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 // Queue partitioned block task
                 await QueueStageBlockRequest(block.Offset, block.Length, completeLength).ConfigureAwait(false);
             }
+
             _queueingTasks = false;
+            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
         }
 
         private Task QueueStageBlockRequest(long offset, long blockSize, long expectedLength)
@@ -517,6 +521,7 @@ namespace Azure.Storage.DataMovement
             if (_commitBlockHandler != default)
             {
                 _commitBlockHandler.Dispose();
+                _commitBlockHandler = null;
             }
         }
     }

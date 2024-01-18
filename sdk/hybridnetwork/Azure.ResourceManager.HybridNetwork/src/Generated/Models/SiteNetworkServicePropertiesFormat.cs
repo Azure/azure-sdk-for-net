@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Site network service properties. </summary>
     public partial class SiteNetworkServicePropertiesFormat
     {
-        /// <summary> Initializes a new instance of SiteNetworkServicePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
         public SiteNetworkServicePropertiesFormat()
         {
             DesiredStateConfigurationGroupValueReferences = new ChangeTrackingDictionary<string, WritableSubResource>();
             LastStateConfigurationGroupValueReferences = new ChangeTrackingDictionary<string, WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of SiteNetworkServicePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site network service resource. </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="siteReference"> The site details. </param>

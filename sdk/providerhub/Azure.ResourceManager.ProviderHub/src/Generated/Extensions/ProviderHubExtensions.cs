@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CustomRolloutResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
         public static CustomRolloutResource GetCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DefaultRolloutResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DefaultRolloutResource"/> object. </returns>
         public static DefaultRolloutResource GetDefaultRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NotificationRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NotificationRegistrationResource"/> object. </returns>
         public static NotificationRegistrationResource GetNotificationRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProviderRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProviderRegistrationResource"/> object. </returns>
         public static ProviderRegistrationResource GetProviderRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceTypeRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ResourceTypeRegistrationResource"/> object. </returns>
         public static ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceTypeSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ResourceTypeSkuResource"/> object. </returns>
         public static ResourceTypeSkuResource GetResourceTypeSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource"/> object. </returns>
         public static NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource"/> object. </returns>
         public static NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource"/> object. </returns>
         public static NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -228,6 +228,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>ProviderRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -257,6 +265,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// <item>

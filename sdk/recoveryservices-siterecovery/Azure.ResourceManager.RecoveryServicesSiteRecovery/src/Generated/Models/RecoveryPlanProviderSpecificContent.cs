@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RecoveryPlanProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanProviderSpecificContent"/>. </summary>
         protected RecoveryPlanProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        internal RecoveryPlanProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> Gets the Instance type. </summary>

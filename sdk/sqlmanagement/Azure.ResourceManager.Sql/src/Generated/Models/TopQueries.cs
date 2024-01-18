@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The TopQueries. </summary>
     public partial class TopQueries
     {
-        /// <summary> Initializes a new instance of TopQueries. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopQueries"/>. </summary>
         internal TopQueries()
         {
             Queries = new ChangeTrackingList<QueryStatisticsProperties>();
         }
 
-        /// <summary> Initializes a new instance of TopQueries. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopQueries"/>. </summary>
         /// <param name="numberOfQueries"> Requested number of top queries. </param>
         /// <param name="aggregationFunction"> Aggregation function used to calculate query metrics. </param>
         /// <param name="observationMetric"> Metric used to rank queries. </param>

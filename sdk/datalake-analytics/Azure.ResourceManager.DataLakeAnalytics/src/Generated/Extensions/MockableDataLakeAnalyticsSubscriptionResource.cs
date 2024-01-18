@@ -60,11 +60,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
@@ -85,11 +93,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
@@ -109,6 +125,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +169,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -180,6 +212,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -210,6 +246,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
         /// </item>
         /// </list>
         /// </summary>

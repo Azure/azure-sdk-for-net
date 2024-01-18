@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Eloqua server linked service. </summary>
     public partial class EloquaLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of EloquaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="EloquaLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Eloqua server. (i.e. eloqua.example.com). </param>
         /// <param name="username"> The site name and user name of your Eloqua account in the form: sitename/username. (i.e. Eloqua/Alice). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="username"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Eloqua";
         }
 
-        /// <summary> Initializes a new instance of EloquaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="EloquaLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

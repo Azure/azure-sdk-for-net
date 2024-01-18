@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedGrafanaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedGrafanaResource"/> object. </returns>
         public static ManagedGrafanaResource GetManagedGrafanaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource"/> object. </returns>
         public static GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GrafanaPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GrafanaPrivateLinkResource"/> object. </returns>
         public static GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource"/> object. </returns>
         public static ManagedPrivateEndpointModelResource GetManagedPrivateEndpointModelResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -138,6 +138,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -167,6 +175,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +214,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -207,7 +231,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -226,6 +250,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -235,7 +267,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedGrafanaResource> GetManagedGrafanas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

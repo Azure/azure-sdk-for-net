@@ -12,9 +12,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Get User Token parameters. </summary>
     public partial class UserTokenContent
     {
-        /// <summary> Initializes a new instance of UserTokenContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserTokenContent"/>. </summary>
         public UserTokenContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserTokenContent"/>. </summary>
+        /// <param name="keyType"> The Key to be used to generate token for user. </param>
+        /// <param name="expireOn">
+        /// The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
+        ///
+        /// </param>
+        internal UserTokenContent(TokenGenerationUsedKeyType? keyType, DateTimeOffset? expireOn)
+        {
+            KeyType = keyType;
+            ExpireOn = expireOn;
         }
 
         /// <summary> The Key to be used to generate token for user. </summary>

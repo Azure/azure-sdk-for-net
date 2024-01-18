@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownAutomationAction. </summary>
     internal partial class UnknownAutomationAction : SecurityAutomationAction
     {
-        /// <summary> Initializes a new instance of UnknownAutomationAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAutomationAction"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
-        internal UnknownAutomationAction(ActionType actionType) : base(actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAutomationAction(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(actionType, serializedAdditionalRawData)
         {
             ActionType = actionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAutomationAction"/> for deserialization. </summary>
+        internal UnknownAutomationAction()
+        {
         }
     }
 }

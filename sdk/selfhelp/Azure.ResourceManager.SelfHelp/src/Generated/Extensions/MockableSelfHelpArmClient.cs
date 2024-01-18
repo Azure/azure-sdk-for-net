@@ -72,6 +72,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -95,6 +103,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +144,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>Solution_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -151,6 +175,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Solution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +216,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>Troubleshooters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TroubleshooterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -208,6 +248,14 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>Troubleshooters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TroubleshooterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -231,6 +279,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +319,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -302,6 +358,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>DiscoverySolution_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -309,7 +369,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -330,6 +390,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>DiscoverySolution_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -337,7 +401,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -347,11 +411,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata, DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
         }
         /// <summary>
-        /// Gets an object representing a <see cref="SelfHelpDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SelfHelpDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SelfHelpDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SelfHelpDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SelfHelpDiagnosticResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SelfHelpDiagnosticResource"/> object. </returns>
         public virtual SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(ResourceIdentifier id)
         {
             SelfHelpDiagnosticResource.ValidateResourceId(id);
@@ -359,11 +423,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SolutionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SolutionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
         public virtual SolutionResource GetSolutionResource(ResourceIdentifier id)
         {
             SolutionResource.ValidateResourceId(id);
@@ -371,11 +435,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TroubleshooterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TroubleshooterResource.CreateResourceIdentifier" /> to create a <see cref="TroubleshooterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TroubleshooterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TroubleshooterResource.CreateResourceIdentifier" /> to create a <see cref="TroubleshooterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TroubleshooterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TroubleshooterResource"/> object. </returns>
         public virtual TroubleshooterResource GetTroubleshooterResource(ResourceIdentifier id)
         {
             TroubleshooterResource.ValidateResourceId(id);

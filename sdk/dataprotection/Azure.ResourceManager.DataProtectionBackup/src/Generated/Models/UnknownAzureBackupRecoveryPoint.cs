@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownAzureBackupRecoveryPoint. </summary>
     internal partial class UnknownAzureBackupRecoveryPoint : DataProtectionBackupRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of UnknownAzureBackupRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAzureBackupRecoveryPoint"/>. </summary>
         /// <param name="objectType"></param>
         internal UnknownAzureBackupRecoveryPoint(string objectType) : base(objectType)
         {

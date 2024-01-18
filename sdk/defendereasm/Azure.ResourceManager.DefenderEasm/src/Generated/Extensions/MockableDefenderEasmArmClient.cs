@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EasmWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EasmWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="EasmWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EasmWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EasmWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="EasmWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EasmWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EasmWorkspaceResource"/> object. </returns>
         public virtual EasmWorkspaceResource GetEasmWorkspaceResource(ResourceIdentifier id)
         {
             EasmWorkspaceResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EasmLabelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EasmLabelResource.CreateResourceIdentifier" /> to create an <see cref="EasmLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EasmLabelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EasmLabelResource.CreateResourceIdentifier" /> to create an <see cref="EasmLabelResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EasmLabelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EasmLabelResource"/> object. </returns>
         public virtual EasmLabelResource GetEasmLabelResource(ResourceIdentifier id)
         {
             EasmLabelResource.ValidateResourceId(id);

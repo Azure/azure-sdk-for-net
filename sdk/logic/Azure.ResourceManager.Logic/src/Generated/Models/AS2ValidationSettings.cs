@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement validation settings. </summary>
     public partial class AS2ValidationSettings
     {
-        /// <summary> Initializes a new instance of AS2ValidationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2ValidationSettings"/>. </summary>
         /// <param name="overrideMessageProperties"> The value indicating whether to override incoming message properties with those in agreement. </param>
         /// <param name="encryptMessage"> The value indicating whether the message has to be encrypted. </param>
         /// <param name="signMessage"> The value indicating whether the message has to be signed. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             EncryptionAlgorithm = encryptionAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of AS2ValidationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2ValidationSettings"/>. </summary>
         /// <param name="overrideMessageProperties"> The value indicating whether to override incoming message properties with those in agreement. </param>
         /// <param name="encryptMessage"> The value indicating whether the message has to be encrypted. </param>
         /// <param name="signMessage"> The value indicating whether the message has to be signed. </param>

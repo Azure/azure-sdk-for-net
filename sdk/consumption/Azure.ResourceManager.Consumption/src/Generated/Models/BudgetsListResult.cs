@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing budgets. It contains a list of available budgets in the scope provided. </summary>
     internal partial class BudgetsListResult
     {
-        /// <summary> Initializes a new instance of BudgetsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetsListResult"/>. </summary>
         internal BudgetsListResult()
         {
             Value = new ChangeTrackingList<ConsumptionBudgetData>();
         }
 
-        /// <summary> Initializes a new instance of BudgetsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetsListResult"/>. </summary>
         /// <param name="value"> The list of budgets. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal BudgetsListResult(IReadOnlyList<ConsumptionBudgetData> value, string nextLink)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes the allowed inbound and outbound traffic of an Azure resource. </summary>
     public partial class ConnectableResourceInfo
     {
-        /// <summary> Initializes a new instance of ConnectableResourceInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectableResourceInfo"/>. </summary>
         internal ConnectableResourceInfo()
         {
             InboundConnectedResources = new ChangeTrackingList<ConnectedResourceInfo>();
             OutboundConnectedResources = new ChangeTrackingList<ConnectedResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of ConnectableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectableResourceInfo"/>. </summary>
         /// <param name="id"> The Azure resource id. </param>
         /// <param name="inboundConnectedResources"> The list of Azure resources that the resource has inbound allowed connection from. </param>
         /// <param name="outboundConnectedResources"> The list of Azure resources that the resource has outbound allowed connection to. </param>
-        internal ConnectableResourceInfo(ResourceIdentifier id, IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources, IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectableResourceInfo(ResourceIdentifier id, IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources, IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             InboundConnectedResources = inboundConnectedResources;
             OutboundConnectedResources = outboundConnectedResources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource id. </summary>

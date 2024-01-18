@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The policies for a container registry. </summary>
     public partial class ContainerRegistryPolicies
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPolicies"/>. </summary>
         public ContainerRegistryPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPolicies"/>. </summary>
         /// <param name="quarantinePolicy"> The quarantine policy for a container registry. </param>
         /// <param name="trustPolicy"> The content trust policy for a container registry. </param>
         /// <param name="retentionPolicy"> The retention policy for a container registry. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The response to a list metric definitions request. </summary>
     internal partial class CosmosDBMetricDefinitionsListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBMetricDefinitionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricDefinitionsListResult"/>. </summary>
         internal CosmosDBMetricDefinitionsListResult()
         {
             Value = new ChangeTrackingList<CosmosDBMetricDefinition>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMetricDefinitionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricDefinitionsListResult"/>. </summary>
         /// <param name="value"> The list of metric definitions for the account. </param>
         internal CosmosDBMetricDefinitionsListResult(IReadOnlyList<CosmosDBMetricDefinition> value)
         {

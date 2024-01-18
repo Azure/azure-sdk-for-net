@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A Class representing an Experiment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExperimentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExperimentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetExperiment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExperimentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExperimentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetExperiment method.
     /// </summary>
     public partial class ExperimentResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Chaos
         private readonly ExperimentsRestOperations _experimentRestClient;
         private readonly ExperimentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Chaos/experiments";
+
         /// <summary> Initializes a new instance of the <see cref="ExperimentResource"/> class for mocking. </summary>
         protected ExperimentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExperimentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExperimentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExperimentResource(ArmClient client, ExperimentData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Chaos
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Chaos/experiments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,110 +91,73 @@ namespace Azure.ResourceManager.Chaos
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ExperimentStatusResources in the Experiment. </summary>
-        /// <returns> An object representing collection of ExperimentStatusResources and their operations over a ExperimentStatusResource. </returns>
-        public virtual ExperimentStatusCollection GetExperimentStatuses()
+        /// <summary> Gets a collection of ExperimentExecutionResources in the Experiment. </summary>
+        /// <returns> An object representing collection of ExperimentExecutionResources and their operations over a ExperimentExecutionResource. </returns>
+        public virtual ExperimentExecutionCollection GetExperimentExecutions()
         {
-            return GetCachedClient(client => new ExperimentStatusCollection(client, Id));
+            return GetCachedClient(client => new ExperimentExecutionCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a status of a Experiment resource.
+        /// Get an execution of an Experiment resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/statuses/{statusId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executions/{executionId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetStatus</description>
+        /// <description>Experiments_GetExecution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="statusId"> GUID that represents a Experiment status. </param>
+        /// <param name="executionId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExperimentStatusResource>> GetExperimentStatusAsync(string statusId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExperimentExecutionResource>> GetExperimentExecutionAsync(string executionId, CancellationToken cancellationToken = default)
         {
-            return await GetExperimentStatuses().GetAsync(statusId, cancellationToken).ConfigureAwait(false);
+            return await GetExperimentExecutions().GetAsync(executionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a status of a Experiment resource.
+        /// Get an execution of an Experiment resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/statuses/{statusId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executions/{executionId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetStatus</description>
+        /// <description>Experiments_GetExecution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="statusId"> GUID that represents a Experiment status. </param>
+        /// <param name="executionId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExperimentStatusResource> GetExperimentStatus(string statusId, CancellationToken cancellationToken = default)
+        public virtual Response<ExperimentExecutionResource> GetExperimentExecution(string executionId, CancellationToken cancellationToken = default)
         {
-            return GetExperimentStatuses().Get(statusId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExperimentExecutionDetailResources in the Experiment. </summary>
-        /// <returns> An object representing collection of ExperimentExecutionDetailResources and their operations over a ExperimentExecutionDetailResource. </returns>
-        public virtual ExperimentExecutionDetailCollection GetExperimentExecutionDetails()
-        {
-            return GetCachedClient(client => new ExperimentExecutionDetailCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get an execution detail of a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecutionDetails</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionDetailsId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExperimentExecutionDetailResource>> GetExperimentExecutionDetailAsync(string executionDetailsId, CancellationToken cancellationToken = default)
-        {
-            return await GetExperimentExecutionDetails().GetAsync(executionDetailsId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get an execution detail of a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecutionDetails</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionDetailsId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ExperimentExecutionDetailResource> GetExperimentExecutionDetail(string executionDetailsId, CancellationToken cancellationToken = default)
-        {
-            return GetExperimentExecutionDetails().Get(executionDetailsId, cancellationToken);
+            return GetExperimentExecutions().Get(executionId, cancellationToken);
         }
 
         /// <summary>
@@ -207,6 +170,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,6 +211,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,6 +251,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -283,7 +270,7 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = await _experimentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ChaosArmOperation(response);
+                var operation = new ChaosArmOperation(_experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -306,6 +293,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -317,7 +312,7 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = _experimentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ChaosArmOperation(response);
+                var operation = new ChaosArmOperation(_experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -340,12 +335,21 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to the Update experiment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ExperimentResource>> UpdateAsync(ExperimentPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExperimentResource>> UpdateAsync(WaitUntil waitUntil, ExperimentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -354,7 +358,10 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = await _experimentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
+                var operation = new ChaosArmOperation<ExperimentResource>(new ExperimentOperationSource(Client), _experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -374,12 +381,21 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to the Update experiment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ExperimentResource> Update(ExperimentPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExperimentResource> Update(WaitUntil waitUntil, ExperimentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -388,7 +404,10 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = _experimentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
+                var operation = new ChaosArmOperation<ExperimentResource>(new ExperimentOperationSource(Client), _experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -408,17 +427,29 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExperimentCancelOperationResult>> CancelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _experimentClientDiagnostics.CreateScope("ExperimentResource.Cancel");
             scope.Start();
             try
             {
                 var response = await _experimentRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                var operation = new ChaosArmOperation(_experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -438,17 +469,29 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExperimentCancelOperationResult> Cancel(CancellationToken cancellationToken = default)
+        public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _experimentClientDiagnostics.CreateScope("ExperimentResource.Cancel");
             scope.Start();
             try
             {
                 var response = _experimentRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                var operation = new ChaosArmOperation(_experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -468,17 +511,29 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExperimentStartOperationResult>> StartAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _experimentClientDiagnostics.CreateScope("ExperimentResource.Start");
             scope.Start();
             try
             {
                 var response = await _experimentRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                var operation = new ChaosArmOperation(_experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -498,17 +553,29 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExperimentStartOperationResult> Start(CancellationToken cancellationToken = default)
+        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _experimentClientDiagnostics.CreateScope("ExperimentResource.Start");
             scope.Start();
             try
             {
                 var response = _experimentRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                var operation = new ChaosArmOperation(_experimentClientDiagnostics, Pipeline, _experimentRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

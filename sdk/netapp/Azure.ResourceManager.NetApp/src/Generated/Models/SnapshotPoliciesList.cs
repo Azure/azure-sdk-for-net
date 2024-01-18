@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Snapshot Policies. </summary>
     internal partial class SnapshotPoliciesList
     {
-        /// <summary> Initializes a new instance of SnapshotPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPoliciesList"/>. </summary>
         internal SnapshotPoliciesList()
         {
             Value = new ChangeTrackingList<SnapshotPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPoliciesList"/>. </summary>
         /// <param name="value"> A list of snapshot policies. </param>
         internal SnapshotPoliciesList(IReadOnlyList<SnapshotPolicyData> value)
         {

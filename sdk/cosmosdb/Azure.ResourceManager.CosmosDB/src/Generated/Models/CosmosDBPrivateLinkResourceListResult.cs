@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class CosmosDBPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateLinkResourceListResult"/>. </summary>
         internal CosmosDBPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<CosmosDBPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal CosmosDBPrivateLinkResourceListResult(IReadOnlyList<CosmosDBPrivateLinkResourceData> value)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Schema metadata for search. </summary>
     internal partial class SearchMetadataSchema
     {
-        /// <summary> Initializes a new instance of SearchMetadataSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchMetadataSchema"/>. </summary>
         internal SearchMetadataSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchMetadataSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchMetadataSchema"/>. </summary>
         /// <param name="name"> The name of the metadata schema. </param>
         /// <param name="version"> The version of the metadata schema. </param>
         internal SearchMetadataSchema(string name, int? version)

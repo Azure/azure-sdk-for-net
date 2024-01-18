@@ -56,6 +56,7 @@ namespace Azure.Storage.Blobs
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
+        public Azure.Storage.ExpectContinueOptions ExpectContinueBehavior { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public bool TrimBlobNameSlashes { get { throw null; } set { } }

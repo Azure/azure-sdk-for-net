@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CapabilityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CapabilityResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CapabilityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapabilityResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CapabilityResource"/> object. </returns>
         public virtual CapabilityResource GetCapabilityResource(ResourceIdentifier id)
         {
             CapabilityResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CapabilityTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CapabilityTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CapabilityTypeResource"/> object. </returns>
         public virtual CapabilityTypeResource GetCapabilityTypeResource(ResourceIdentifier id)
         {
             CapabilityTypeResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExperimentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ExperimentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExperimentResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExperimentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ExperimentResource"/> object. </returns>
         public virtual ExperimentResource GetExperimentResource(ResourceIdentifier id)
         {
             ExperimentResource.ValidateResourceId(id);
@@ -73,35 +73,23 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExperimentStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentStatusResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ExperimentExecutionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExperimentExecutionResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentExecutionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExperimentStatusResource" /> object. </returns>
-        public virtual ExperimentStatusResource GetExperimentStatusResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExperimentExecutionResource"/> object. </returns>
+        public virtual ExperimentExecutionResource GetExperimentExecutionResource(ResourceIdentifier id)
         {
-            ExperimentStatusResource.ValidateResourceId(id);
-            return new ExperimentStatusResource(Client, id);
+            ExperimentExecutionResource.ValidateResourceId(id);
+            return new ExperimentExecutionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExperimentExecutionDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentExecutionDetailResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentExecutionDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TargetTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="TargetTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExperimentExecutionDetailResource" /> object. </returns>
-        public virtual ExperimentExecutionDetailResource GetExperimentExecutionDetailResource(ResourceIdentifier id)
-        {
-            ExperimentExecutionDetailResource.ValidateResourceId(id);
-            return new ExperimentExecutionDetailResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TargetTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="TargetTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetTypeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TargetTypeResource"/> object. </returns>
         public virtual TargetTypeResource GetTargetTypeResource(ResourceIdentifier id)
         {
             TargetTypeResource.ValidateResourceId(id);
@@ -109,11 +97,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TargetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TargetResource"/> object. </returns>
         public virtual TargetResource GetTargetResource(ResourceIdentifier id)
         {
             TargetResource.ValidateResourceId(id);

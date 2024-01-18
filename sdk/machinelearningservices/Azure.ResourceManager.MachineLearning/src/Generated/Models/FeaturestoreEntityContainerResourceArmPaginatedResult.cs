@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of FeaturestoreEntityContainer entities. </summary>
     internal partial class FeaturestoreEntityContainerResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeaturestoreEntityContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturestoreEntityContainerResourceArmPaginatedResult"/>. </summary>
         internal FeaturestoreEntityContainerResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeatureStoreEntityContainerData>();
         }
 
-        /// <summary> Initializes a new instance of FeaturestoreEntityContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturestoreEntityContainerResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturestoreEntityContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturestoreEntityContainer. </param>
         internal FeaturestoreEntityContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureStoreEntityContainerData> value)

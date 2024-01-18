@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class RedisEnterprisePrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResourceListResult"/>. </summary>
         internal RedisEnterprisePrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<RedisEnterprisePrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal RedisEnterprisePrivateLinkResourceListResult(IReadOnlyList<RedisEnterprisePrivateLinkResource> value)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Response to force reboot for Redis cache. </summary>
     public partial class RedisForceRebootResult
     {
-        /// <summary> Initializes a new instance of RedisForceRebootResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResult"/>. </summary>
         internal RedisForceRebootResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisForceRebootResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResult"/>. </summary>
         /// <param name="message"> Status message. </param>
         internal RedisForceRebootResult(string message)
         {

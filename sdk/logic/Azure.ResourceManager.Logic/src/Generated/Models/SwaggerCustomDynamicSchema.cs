@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger custom dynamic schema. </summary>
     public partial class SwaggerCustomDynamicSchema
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicSchema"/>. </summary>
         public SwaggerCustomDynamicSchema()
         {
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicSchema"/>. </summary>
         /// <param name="operationId"> The operation id to fetch dynamic schema. </param>
         /// <param name="valuePath"> Json pointer to the dynamic schema on the response body. </param>
         /// <param name="parameters"> The operation parameters. </param>

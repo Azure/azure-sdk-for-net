@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents a discrete action. </summary>
-    public partial class DiscreteAction : Action
+    public partial class DiscreteAction : ChaosExperimentAction
     {
-        /// <summary> Initializes a new instance of DiscreteAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscreteAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Chaos.Models
             ActionType = "discrete";
         }
 
-        /// <summary> Initializes a new instance of DiscreteAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscreteAction"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="parameters"> List of key value pairs. </param>

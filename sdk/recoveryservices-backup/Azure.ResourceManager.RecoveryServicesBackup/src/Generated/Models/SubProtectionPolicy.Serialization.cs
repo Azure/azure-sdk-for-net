@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(SnapshotBackupAdditionalDetails))
+            {
+                writer.WritePropertyName("snapshotBackupAdditionalDetails"u8);
+                writer.WriteObjectValue(SnapshotBackupAdditionalDetails);
+            }
             writer.WriteEndObject();
         }
 
@@ -55,6 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupSchedulePolicy> schedulePolicy = default;
             Optional<BackupRetentionPolicy> retentionPolicy = default;
             Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
+            Optional<SnapshotBackupAdditionalDetails> snapshotBackupAdditionalDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyType"u8))
@@ -98,8 +104,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     tieringPolicy = dictionary;
                     continue;
                 }
+                if (property.NameEquals("snapshotBackupAdditionalDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotBackupAdditionalDetails = SnapshotBackupAdditionalDetails.DeserializeSnapshotBackupAdditionalDetails(property.Value);
+                    continue;
+                }
             }
-            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy));
+            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy), snapshotBackupAdditionalDetails.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Properties for Helm operator. </summary>
     public partial class HelmOperatorProperties
     {
-        /// <summary> Initializes a new instance of HelmOperatorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmOperatorProperties"/>. </summary>
         public HelmOperatorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmOperatorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmOperatorProperties"/>. </summary>
         /// <param name="chartVersion"> Version of the operator Helm chart. </param>
         /// <param name="chartValues"> Values override for the operator Helm chart. </param>
         internal HelmOperatorProperties(string chartVersion, string chartValues)

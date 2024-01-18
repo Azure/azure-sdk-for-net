@@ -60,11 +60,19 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
@@ -85,11 +93,19 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreAccountBasicData> GetAccounts(SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SubscriptionResourceGetAccountsOptions();
@@ -109,6 +125,14 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +169,14 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -180,6 +212,10 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -210,6 +246,10 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,11 +282,15 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_GetUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeStoreUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);
@@ -264,11 +308,15 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_GetUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeStoreUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateGetUsageRequest(Id.SubscriptionId, location);

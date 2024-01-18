@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The access control configuration policy. </summary>
     public partial class FlowAccessControlConfigurationPolicy
     {
-        /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         public FlowAccessControlConfigurationPolicy()
         {
             AllowedCallerIPAddresses = new ChangeTrackingList<FlowAccessControlIPAddressRange>();
         }
 
-        /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
         /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
         internal FlowAccessControlConfigurationPolicy(IList<FlowAccessControlIPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies)

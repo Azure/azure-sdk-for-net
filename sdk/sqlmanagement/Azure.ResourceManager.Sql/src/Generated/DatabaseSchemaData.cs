@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class DatabaseSchemaData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSchemaData"/>. </summary>
         public DatabaseSchemaData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

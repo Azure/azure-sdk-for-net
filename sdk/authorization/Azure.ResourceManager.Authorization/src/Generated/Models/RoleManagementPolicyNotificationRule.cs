@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The role management policy notification rule. </summary>
     public partial class RoleManagementPolicyNotificationRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyNotificationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyNotificationRule"/>. </summary>
         public RoleManagementPolicyNotificationRule()
         {
             NotificationRecipients = new ChangeTrackingList<string>();
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule;
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyNotificationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyNotificationRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>

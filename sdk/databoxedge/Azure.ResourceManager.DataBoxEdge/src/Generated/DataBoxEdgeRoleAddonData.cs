@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeRoleAddonData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeRoleAddonData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleAddonData"/>. </summary>
         public DataBoxEdgeRoleAddonData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeRoleAddonData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleAddonData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

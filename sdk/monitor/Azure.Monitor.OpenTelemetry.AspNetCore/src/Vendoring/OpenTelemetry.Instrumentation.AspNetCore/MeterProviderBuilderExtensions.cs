@@ -14,83 +14,67 @@
 // limitations under the License.
 // </copyright>
 
-using System;
+#if !NET8_0_OR_GREATER
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Instrumentation.AspNetCore.Implementation;
+#endif
 using OpenTelemetry.Internal;
 
-namespace OpenTelemetry.Metrics
+namespace OpenTelemetry.Metrics;
+
+/// <summary>
+/// Extension methods to simplify registering of ASP.NET Core request instrumentation.
+/// </summary>
+internal static class MeterProviderBuilderExtensions
 {
     /// <summary>
-    /// Extension methods to simplify registering of ASP.NET Core request instrumentation.
+    /// Enables the incoming requests automatic data collection for ASP.NET Core.
     /// </summary>
-    internal static class MeterProviderBuilderExtensions
+    /// <param name="builder"><see cref="MeterProviderBuilder"/> being configured.</param>
+    /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
+    public static MeterProviderBuilder AddAspNetCoreInstrumentation(
+        this MeterProviderBuilder builder)
     {
-        /// <summary>
-        /// Enables the incoming requests automatic data collection for ASP.NET Core.
-        /// </summary>
-        /// <param name="builder"><see cref="MeterProviderBuilder"/> being configured.</param>
-        /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
-        public static MeterProviderBuilder AddAspNetCoreInstrumentation(
-            this MeterProviderBuilder builder)
-            => AddAspNetCoreInstrumentation(builder, name: null, configureAspNetCoreInstrumentationOptions: null);
+        Guard.ThrowIfNull(builder);
 
-        /// <summary>
-        /// Enables the incoming requests automatic data collection for ASP.NET Core.
-        /// </summary>
-        /// <param name="builder"><see cref="MeterProviderBuilder"/> being configured.</param>
-        /// <param name="configureAspNetCoreInstrumentationOptions">Callback action for configuring <see cref="AspNetCoreMetricsInstrumentationOptions"/>.</param>
-        /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
-        public static MeterProviderBuilder AddAspNetCoreInstrumentation(
-            this MeterProviderBuilder builder,
-            Action<AspNetCoreMetricsInstrumentationOptions> configureAspNetCoreInstrumentationOptions)
-            => AddAspNetCoreInstrumentation(builder, name: null, configureAspNetCoreInstrumentationOptions);
+#if NET8_0_OR_GREATER
+        return builder.ConfigureMeters();
+#else
+        // Note: Warm-up the status code and method mapping.
+        _ = TelemetryHelper.BoxedStatusCodes;
+        _ = RequestMethodHelper.KnownMethods;
 
-        /// <summary>
-        /// Enables the incoming requests automatic data collection for ASP.NET Core.
-        /// </summary>
-        /// <param name="builder"><see cref="MeterProviderBuilder"/> being configured.</param>
-        /// <param name="name">Name which is used when retrieving options.</param>
-        /// <param name="configureAspNetCoreInstrumentationOptions">Callback action for configuring <see cref="AspNetCoreMetricsInstrumentationOptions"/>.</param>
-        /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
-        public static MeterProviderBuilder AddAspNetCoreInstrumentation(
-            this MeterProviderBuilder builder,
-            string name,
-            Action<AspNetCoreMetricsInstrumentationOptions> configureAspNetCoreInstrumentationOptions)
+        builder.ConfigureServices(services =>
         {
-            Guard.ThrowIfNull(builder);
+            services.RegisterOptionsFactory(configuration => new AspNetCoreMetricsInstrumentationOptions(configuration));
+        });
 
-            // Note: Warm-up the status code mapping.
-            _ = TelemetryHelper.BoxedStatusCodes;
+        builder.AddMeter(AspNetCoreMetrics.InstrumentationName);
 
-            name ??= Options.DefaultName;
+        builder.AddInstrumentation(sp =>
+        {
+            var options = sp.GetRequiredService<IOptionsMonitor<AspNetCoreMetricsInstrumentationOptions>>().Get(Options.DefaultName);
 
-            builder.ConfigureServices(services =>
-            {
-                if (configureAspNetCoreInstrumentationOptions != null)
-                {
-                    services.Configure(name, configureAspNetCoreInstrumentationOptions);
-                }
+            // TODO: Add additional options to AspNetCoreMetricsInstrumentationOptions ?
+            //   RecordException - probably doesn't make sense for metric instrumentation
+            //   EnableGrpcAspNetCoreSupport - this instrumentation will also need to also handle gRPC requests
+            return new AspNetCoreMetrics(options);
+        });
 
-                services.RegisterOptionsFactory(configuration => new AspNetCoreMetricsInstrumentationOptions(configuration));
-            });
+        return builder;
+#endif
+    }
 
-            builder.AddMeter(AspNetCoreMetrics.InstrumentationName);
-
-            builder.AddInstrumentation(sp =>
-            {
-                var options = sp.GetRequiredService<IOptionsMonitor<AspNetCoreMetricsInstrumentationOptions>>().Get(name);
-
-                // TODO: Add additional options to AspNetCoreMetricsInstrumentationOptions ?
-                //   RecordException - probably doesn't make sense for metric instrumentation
-                //   EnableGrpcAspNetCoreSupport - this instrumentation will also need to also handle gRPC requests
-
-                return new AspNetCoreMetrics(options);
-            });
-
-            return builder;
-        }
+    internal static MeterProviderBuilder ConfigureMeters(this MeterProviderBuilder builder)
+    {
+        return builder
+             .AddMeter("Microsoft.AspNetCore.Hosting")
+             .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
+             .AddMeter("Microsoft.AspNetCore.Http.Connections")
+             .AddMeter("Microsoft.AspNetCore.Routing")
+             .AddMeter("Microsoft.AspNetCore.Diagnostics")
+             .AddMeter("Microsoft.AspNetCore.RateLimiting");
     }
 }

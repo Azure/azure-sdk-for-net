@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseServerBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerBlobAuditingPolicyData"/>. </summary>
         public SynapseServerBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The connection used to execute the SQL script. </summary>
     public partial class SqlConnection
     {
-        /// <summary> Initializes a new instance of SqlConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnection"/>. </summary>
         public SqlConnection()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of SqlConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnection"/>. </summary>
         /// <param name="type"> The type of the connection. </param>
         /// <param name="name"> The identifier of the connection. </param>
         /// <param name="poolName"> The associated SQL pool name (supported by SQL pool v3). </param>

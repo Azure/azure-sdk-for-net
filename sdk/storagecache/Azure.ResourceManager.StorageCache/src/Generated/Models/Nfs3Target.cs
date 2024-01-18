@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Properties pertaining to the Nfs3Target. </summary>
     public partial class Nfs3Target
     {
-        /// <summary> Initializes a new instance of Nfs3Target. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nfs3Target"/>. </summary>
         public Nfs3Target()
         {
         }
 
-        /// <summary> Initializes a new instance of Nfs3Target. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nfs3Target"/>. </summary>
         /// <param name="target"> IP address or host name of an NFSv3 host (e.g., 10.0.44.44). </param>
         /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
         /// <param name="verificationDelayInSeconds"> Amount of time (in seconds) the cache waits before it checks the back-end storage for file updates. </param>

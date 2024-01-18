@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> NUMA node data. </summary>
     public partial class NumaNodeInfo
     {
-        /// <summary> Initializes a new instance of NumaNodeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumaNodeInfo"/>. </summary>
         public NumaNodeInfo()
         {
             FreeVCpuIndexesForHpn = new ChangeTrackingList<int>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             VCpuIndexesForRoot = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of NumaNodeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumaNodeInfo"/>. </summary>
         /// <param name="numaNodeIndex"> The NUMA node index. </param>
         /// <param name="totalMemoryInMB"> The total memory on the NUMA node. </param>
         /// <param name="logicalCoreCountPerCore"> The logical cores per core count. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The lab user list management profile. </summary>
     public partial class LabRosterProfile
     {
-        /// <summary> Initializes a new instance of LabRosterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabRosterProfile"/>. </summary>
         public LabRosterProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabRosterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabRosterProfile"/>. </summary>
         /// <param name="activeDirectoryGroupId"> The AAD group ID which this lab roster is populated from. Having this set enables AAD sync mode. </param>
         /// <param name="ltiContextId"> The unique context identifier for the lab in the lms. </param>
         /// <param name="lmsInstance"> The base URI identifying the lms instance. </param>

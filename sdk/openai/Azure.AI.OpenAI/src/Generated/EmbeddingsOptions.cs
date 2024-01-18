@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class EmbeddingsOptions
     {
-        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
         /// <param name="user">
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
@@ -48,5 +48,13 @@ namespace Azure.AI.OpenAI
         /// or rate-limiting purposes.
         /// </summary>
         public string User { get; set; }
+        /// <summary>
+        /// Input texts to get embeddings for, encoded as a an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        ///
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </summary>
+        public IList<string> Input { get; }
     }
 }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Information about current network profile. </summary>
     public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile()
         {
             AccessRules = new ChangeTrackingList<EventHubsNspAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDigitalTwinsModelFactory
     {
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwins.DigitalTwinsDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsDescriptionData(id, name, resourceType, systemData, tags, location, createdOn, lastUpdatedOn, provisioningState, hostName, privateEndpointConnections?.ToList(), publicNetworkAccess, identity);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwins.DigitalTwinsPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsPrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpointId"> The private endpoint. </param>
         /// <param name="groupIds"> The list of group ids for the private endpoint connection. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsPrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), privateLinkServiceConnectionState);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwins.DigitalTwinsEndpointResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsEndpointResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsEndpointResourceProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsNameResult"/>. </summary>
         /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
         /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsNameResult(isNameAvailable, message, reason);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwins.DigitalTwinsPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsPrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwins.TimeSeriesDatabaseConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new TimeSeriesDatabaseConnectionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TimeSeriesDatabaseConnectionProperties"/>. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, provisioningState, identity);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsServiceBusProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsServiceBusProperties(EndpointType.ServiceBus, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, primaryConnectionString, secondaryConnectionString, endpointUri, entityPath);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsEventHubProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsEventHubProperties(EndpointType.EventHub, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, connectionStringPrimaryKey, connectionStringSecondaryKey, endpointUri, entityPath);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsEventGridProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </param>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsEventGridProperties(EndpointType.EventGrid, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, topicEndpoint, accessKey1, accessKey2);
         }
 
-        /// <summary> Initializes a new instance of DataExplorerConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataExplorerConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
         /// <param name="adxResourceId"> The resource ID of the Azure Data Explorer cluster. </param>

@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/0762e82bcccef4a032e29dda5e4c07fd7cc822a6/specification/network/resource-manager/readme.md
-# tag: package-2023-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/network/resource-manager/readme.md
+# tag: package-2023-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -26,6 +26,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
@@ -83,7 +84,6 @@ rename-mapping:
   Resource: NetworkTrackedResourceData
   ConnectivityIssue.context: Contexts
   VpnClientConnectionHealthDetail.vpnConnectionDuration: vpnConnectionDurationInSeconds
-  VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
   ConnectivityIssue.type: ConnectivityIssueType
   HttpHeader: NetworkWatcherHttpHeader
@@ -100,9 +100,7 @@ rename-mapping:
   AuthenticationMethod: NetworkAuthenticationMethod
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
-  DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
   CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
-  ProtocolCustomSettingsFormat: ProtocolCustomSettings
   ServiceEndpointPropertiesFormat: ServiceEndpointProperties
   ConnectionStatus: NetworkConnectionStatus
   IssueType: ConnectivityIssueType
@@ -191,6 +189,7 @@ rename-mapping:
   SyncMode: BackendAddressSyncMode
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
+  NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -308,6 +307,9 @@ override-operation-name:
   VirtualMachineScaleSets_GetIpConfiguration: GetIPConfiguration
   VirtualMachineScaleSetVMs_ListNetworkInterfaces: GetNetworkInterfaces
   VirtualMachineScaleSetVMs_ListPublicIPAddresses: GetPublicIPAddresses
+
+suppress-abstract-base-class:
+- BaseAdminRuleData
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

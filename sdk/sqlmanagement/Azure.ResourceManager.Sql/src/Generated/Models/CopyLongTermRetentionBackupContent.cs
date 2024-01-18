@@ -12,9 +12,26 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform long term retention backup copy operation. </summary>
     public partial class CopyLongTermRetentionBackupContent
     {
-        /// <summary> Initializes a new instance of CopyLongTermRetentionBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyLongTermRetentionBackupContent"/>. </summary>
         public CopyLongTermRetentionBackupContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyLongTermRetentionBackupContent"/>. </summary>
+        /// <param name="targetSubscriptionId"> The subscription that owns the target server. </param>
+        /// <param name="targetResourceGroup"> The resource group that owns the target server. </param>
+        /// <param name="targetServerResourceId"> The resource Id of the target server that owns the database. </param>
+        /// <param name="targetServerFullyQualifiedDomainName"> The fully qualified domain name of the target server. </param>
+        /// <param name="targetDatabaseName"> The name of the database owns the copied backup. </param>
+        /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
+        internal CopyLongTermRetentionBackupContent(string targetSubscriptionId, string targetResourceGroup, ResourceIdentifier targetServerResourceId, string targetServerFullyQualifiedDomainName, string targetDatabaseName, SqlBackupStorageRedundancy? targetBackupStorageRedundancy)
+        {
+            TargetSubscriptionId = targetSubscriptionId;
+            TargetResourceGroup = targetResourceGroup;
+            TargetServerResourceId = targetServerResourceId;
+            TargetServerFullyQualifiedDomainName = targetServerFullyQualifiedDomainName;
+            TargetDatabaseName = targetDatabaseName;
+            TargetBackupStorageRedundancy = targetBackupStorageRedundancy;
         }
 
         /// <summary> The subscription that owns the target server. </summary>

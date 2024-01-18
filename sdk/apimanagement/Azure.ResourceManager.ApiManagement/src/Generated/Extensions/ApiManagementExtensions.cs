@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiResource"/> object. </returns>
         public static ApiResource GetApiResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiReleaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiReleaseResource"/> object. </returns>
         public static ApiReleaseResource GetApiReleaseResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiOperationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiOperationResource"/> object. </returns>
         public static ApiOperationResource GetApiOperationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiOperationPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiOperationPolicyResource"/> object. </returns>
         public static ApiOperationPolicyResource GetApiOperationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiPolicyResource"/> object. </returns>
         public static ApiPolicyResource GetApiPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPolicyResource"/> object. </returns>
         public static ApiManagementPolicyResource GetApiManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementProductPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementProductPolicyResource"/> object. </returns>
         public static ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiOperationTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiOperationTagResource"/> object. </returns>
         public static ApiOperationTagResource GetApiOperationTagResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiTagResource"/> object. </returns>
         public static ApiTagResource GetApiTagResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementProductTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementProductTagResource"/> object. </returns>
         public static ApiManagementProductTagResource GetApiManagementProductTagResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementTagResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementTagResource"/> object. </returns>
         public static ApiManagementTagResource GetApiManagementTagResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiSchemaResource"/> object. </returns>
         public static ApiSchemaResource GetApiSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiDiagnosticResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiDiagnosticResource"/> object. </returns>
         public static ApiDiagnosticResource GetApiDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementDiagnosticResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementDiagnosticResource"/> object. </returns>
         public static ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiIssueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiIssueResource"/> object. </returns>
         public static ApiIssueResource GetApiIssueResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementIssueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementIssueResource"/> object. </returns>
         public static ApiManagementIssueResource GetApiManagementIssueResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiIssueCommentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiIssueCommentResource"/> object. </returns>
         public static ApiIssueCommentResource GetApiIssueCommentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiIssueAttachmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiIssueAttachmentResource"/> object. </returns>
         public static ApiIssueAttachmentResource GetApiIssueAttachmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiTagDescriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiTagDescriptionResource"/> object. </returns>
         public static ApiTagDescriptionResource GetApiTagDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiVersionSetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiVersionSetResource"/> object. </returns>
         public static ApiVersionSetResource GetApiVersionSetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource"/> object. </returns>
         public static ApiManagementAuthorizationServerResource GetApiManagementAuthorizationServerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementBackendResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementBackendResource"/> object. </returns>
         public static ApiManagementBackendResource GetApiManagementBackendResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementCacheResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementCacheResource"/> object. </returns>
         public static ApiManagementCacheResource GetApiManagementCacheResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementCertificateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementCertificateResource"/> object. </returns>
         public static ApiManagementCertificateResource GetApiManagementCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource"/> object. </returns>
         public static ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementServiceResource"/> object. </returns>
         public static ApiManagementServiceResource GetApiManagementServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource"/> object. </returns>
         public static ApiManagementEmailTemplateResource GetApiManagementEmailTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementGatewayResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGatewayResource"/> object. </returns>
         public static ApiManagementGatewayResource GetApiManagementGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource"/> object. </returns>
         public static ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource"/> object. </returns>
         public static ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGroupResource"/> object. </returns>
         public static ApiManagementGroupResource GetApiManagementGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource"/> object. </returns>
         public static ApiManagementIdentityProviderResource GetApiManagementIdentityProviderResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementLoggerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementLoggerResource"/> object. </returns>
         public static ApiManagementLoggerResource GetApiManagementLoggerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementNamedValueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementNamedValueResource"/> object. </returns>
         public static ApiManagementNamedValueResource GetApiManagementNamedValueResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementNotificationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementNotificationResource"/> object. </returns>
         public static ApiManagementNotificationResource GetApiManagementNotificationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource"/> object. </returns>
         public static ApiManagementOpenIdConnectProviderResource GetApiManagementOpenIdConnectProviderResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource"/> object. </returns>
         public static ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public static ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
         public static ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
         public static ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource"/> object. </returns>
         public static ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource"/> object. </returns>
         public static ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementProductResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementProductResource"/> object. </returns>
         public static ApiManagementProductResource GetApiManagementProductResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource"/> object. </returns>
         public static ApiManagementGlobalSchemaResource GetApiManagementGlobalSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementTenantSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementTenantSettingResource"/> object. </returns>
         public static ApiManagementTenantSettingResource GetApiManagementTenantSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementSubscriptionResource"/> object. </returns>
         public static ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource"/> object. </returns>
         public static ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TenantAccessInfoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantAccessInfoResource"/> object. </returns>
         public static TenantAccessInfoResource GetTenantAccessInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementUserResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementUserResource"/> object. </returns>
         public static ApiManagementUserResource GetApiManagementUserResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -994,6 +994,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1023,6 +1031,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1071,6 +1087,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1101,6 +1125,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1133,6 +1165,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1142,7 +1182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1161,6 +1201,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1170,7 +1218,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1189,6 +1237,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1198,7 +1254,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1217,6 +1273,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1226,7 +1290,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1244,6 +1308,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1273,6 +1345,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1301,6 +1381,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1327,6 +1415,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1355,6 +1451,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1364,7 +1464,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1383,6 +1483,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1392,7 +1496,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementSku> GetApiManagementSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

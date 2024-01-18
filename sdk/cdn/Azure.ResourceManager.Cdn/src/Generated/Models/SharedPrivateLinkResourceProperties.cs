@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes the properties of an existing Shared Private Link Resource to use when connecting to a private origin. </summary>
     public partial class SharedPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceProperties"/>. </summary>
         public SharedPrivateLinkResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceProperties"/>. </summary>
         /// <param name="privateLink"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="privateLinkLocation"> The location of the shared private link resource. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>

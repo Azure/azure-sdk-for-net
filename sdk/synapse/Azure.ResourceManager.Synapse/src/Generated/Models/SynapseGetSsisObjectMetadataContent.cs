@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class SynapseGetSsisObjectMetadataContent
     {
-        /// <summary> Initializes a new instance of SynapseGetSsisObjectMetadataContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGetSsisObjectMetadataContent"/>. </summary>
         public SynapseGetSsisObjectMetadataContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseGetSsisObjectMetadataContent"/>. </summary>
+        /// <param name="metadataPath"> Metadata path. </param>
+        internal SynapseGetSsisObjectMetadataContent(string metadataPath)
+        {
+            MetadataPath = metadataPath;
         }
 
         /// <summary> Metadata path. </summary>

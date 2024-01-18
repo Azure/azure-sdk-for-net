@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Restore file specs like file path, type and target folder path info. </summary>
     public partial class RestoreFileSpecs
     {
-        /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpecs"/>. </summary>
         public RestoreFileSpecs()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreFileSpecs. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpecs"/>. </summary>
         /// <param name="path"> Source File/Folder path. </param>
         /// <param name="fileSpecType"> Indicates what the Path variable stands for. </param>
         /// <param name="targetFolderPath"> Destination folder path in target FileShare. </param>

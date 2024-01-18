@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceConnectorApplianceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ResourceConnectorApplianceResource"/> object. </returns>
         public static ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +119,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +158,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -151,7 +175,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -170,6 +194,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -179,7 +211,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -197,6 +229,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -224,6 +264,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// <item>

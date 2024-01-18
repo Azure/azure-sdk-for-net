@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HubResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HubResource"/> object. </returns>
         public static HubResource GetHubResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProfileResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProfileResourceFormatResource"/> object. </returns>
         public static ProfileResourceFormatResource GetProfileResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InteractionResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="InteractionResourceFormatResource"/> object. </returns>
         public static InteractionResourceFormatResource GetInteractionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RelationshipResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RelationshipResourceFormatResource"/> object. </returns>
         public static RelationshipResourceFormatResource GetRelationshipResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RelationshipLinkResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RelationshipLinkResourceFormatResource"/> object. </returns>
         public static RelationshipLinkResourceFormatResource GetRelationshipLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AuthorizationPolicyResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AuthorizationPolicyResourceFormatResource"/> object. </returns>
         public static AuthorizationPolicyResourceFormatResource GetAuthorizationPolicyResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConnectorResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConnectorResourceFormatResource"/> object. </returns>
         public static ConnectorResourceFormatResource GetConnectorResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConnectorMappingResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConnectorMappingResourceFormatResource"/> object. </returns>
         public static ConnectorMappingResourceFormatResource GetConnectorMappingResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KpiResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KpiResourceFormatResource"/> object. </returns>
         public static KpiResourceFormatResource GetKpiResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WidgetTypeResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WidgetTypeResourceFormatResource"/> object. </returns>
         public static WidgetTypeResourceFormatResource GetWidgetTypeResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ViewResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ViewResourceFormatResource"/> object. </returns>
         public static ViewResourceFormatResource GetViewResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LinkResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LinkResourceFormatResource"/> object. </returns>
         public static LinkResourceFormatResource GetLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RoleAssignmentResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleAssignmentResourceFormatResource"/> object. </returns>
         public static RoleAssignmentResourceFormatResource GetRoleAssignmentResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PredictionResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PredictionResourceFormatResource"/> object. </returns>
         public static PredictionResourceFormatResource GetPredictionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -328,6 +328,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Hubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -357,6 +365,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -388,6 +404,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Hubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -397,7 +421,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HubResource> GetHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -416,6 +440,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Hubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -425,7 +457,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HubResource> GetHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

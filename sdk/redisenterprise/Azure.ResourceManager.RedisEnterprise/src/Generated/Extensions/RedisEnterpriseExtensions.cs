@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RedisEnterpriseClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RedisEnterpriseClusterResource"/> object. </returns>
         public static RedisEnterpriseClusterResource GetRedisEnterpriseClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource"/> object. </returns>
         public static RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
         public static RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -120,6 +120,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -149,6 +157,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -180,6 +196,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>OperationsStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -209,6 +229,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationsStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -240,6 +264,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -249,7 +281,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -268,6 +300,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -277,7 +317,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisEnterpriseClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -296,6 +336,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -306,7 +350,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisEnterpriseRegionSkuDetail"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -325,6 +369,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -335,7 +383,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RedisEnterpriseRegionSkuDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisEnterpriseRegionSkuDetail"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

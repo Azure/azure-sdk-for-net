@@ -59,10 +59,18 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -80,10 +88,18 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -101,6 +117,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -108,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -128,6 +148,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -135,7 +159,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -155,6 +179,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_GetByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -163,7 +191,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -183,6 +211,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_GetByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -191,7 +223,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
@@ -211,11 +243,15 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -233,11 +269,15 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -255,12 +295,16 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_ListByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
@@ -278,12 +322,16 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_ListByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterCodeVersionsResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);

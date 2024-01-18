@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Tag. </summary>
     public partial class RulestackTagInfo
     {
-        /// <summary> Initializes a new instance of RulestackTagInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackTagInfo"/>. </summary>
         /// <param name="key"> tag name. </param>
         /// <param name="value"> tag value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>

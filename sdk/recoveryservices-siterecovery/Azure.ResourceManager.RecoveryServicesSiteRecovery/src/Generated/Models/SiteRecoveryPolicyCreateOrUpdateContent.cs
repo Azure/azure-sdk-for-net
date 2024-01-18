@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection Policy input. </summary>
     public partial class SiteRecoveryPolicyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryPolicyCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Policy creation properties. </param>
+        internal SiteRecoveryPolicyCreateOrUpdateContent(SiteRecoveryCreatePolicyProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Policy creation properties. </summary>

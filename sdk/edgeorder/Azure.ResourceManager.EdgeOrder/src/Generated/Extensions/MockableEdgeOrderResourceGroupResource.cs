@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>GetAddressByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -84,6 +92,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetAddressByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +131,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -138,6 +162,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,6 +202,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>GetOrderItemByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
@@ -193,6 +233,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderItemByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,11 +266,15 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListOrderAtResourceGroupLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
@@ -241,11 +293,15 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListOrderAtResourceGroupLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines a Sampling Algorithm that generates values randomly. </summary>
     public partial class RandomSamplingAlgorithm : SamplingAlgorithm
     {
-        /// <summary> Initializes a new instance of RandomSamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         public RandomSamplingAlgorithm()
         {
             SamplingAlgorithmType = SamplingAlgorithmType.Random;
         }
 
-        /// <summary> Initializes a new instance of RandomSamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         /// <param name="logbase"> An optional positive number or e in string format to be used as base for log based random sampling. </param>
         /// <param name="rule"> The specific type of random algorithm. </param>

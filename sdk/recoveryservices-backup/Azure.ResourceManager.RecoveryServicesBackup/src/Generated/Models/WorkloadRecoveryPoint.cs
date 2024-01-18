@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRecoveryPoint"/>. </summary>
         public WorkloadRecoveryPoint()
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "AzureWorkloadRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
         /// <param name="restorePointType"> Type of restore point. </param>

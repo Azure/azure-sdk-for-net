@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,19 +16,20 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Load Distribution Target of an application gateway. </summary>
     public partial class ApplicationGatewayLoadDistributionTarget : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         public ApplicationGatewayLoadDistributionTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="weightPerServer"> Weight per server. Range between 1 and 100. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of the application gateway. </param>
-        internal ApplicationGatewayLoadDistributionTarget(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? weightPerServer, WritableSubResource backendAddressPool) : base(id, name, resourceType)
+        internal ApplicationGatewayLoadDistributionTarget(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? weightPerServer, WritableSubResource backendAddressPool) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             WeightPerServer = weightPerServer;

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A collection of endpoints that the managed instance service requires outbound network access to. </summary>
     internal partial class SqlOutboundEnvironmentEndpointCollection
     {
-        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlOutboundEnvironmentEndpointCollection"/>. </summary>
         internal SqlOutboundEnvironmentEndpointCollection()
         {
             Value = new ChangeTrackingList<SqlOutboundEnvironmentEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlOutboundEnvironmentEndpointCollection"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SqlOutboundEnvironmentEndpointCollection(IReadOnlyList<SqlOutboundEnvironmentEndpoint> value, string nextLink)

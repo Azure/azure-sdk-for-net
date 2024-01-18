@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application logs to file system configuration. </summary>
     internal partial class FileSystemApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemApplicationLogsConfig"/>. </summary>
         public FileSystemApplicationLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemApplicationLogsConfig"/>. </summary>
         /// <param name="level"> Log level. </param>
         internal FileSystemApplicationLogsConfig(WebAppLogLevel? level)
         {

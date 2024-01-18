@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> List of Users Identity list representation. </summary>
     internal partial class UserIdentityListResult
     {
-        /// <summary> Initializes a new instance of UserIdentityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserIdentityListResult"/>. </summary>
         internal UserIdentityListResult()
         {
             Value = new ChangeTrackingList<UserIdentityContract>();
         }
 
-        /// <summary> Initializes a new instance of UserIdentityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserIdentityListResult"/>. </summary>
         /// <param name="value"> User Identity values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

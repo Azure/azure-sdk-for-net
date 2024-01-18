@@ -13,13 +13,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Live pipeline properties. </summary>
     public partial class LivePipelineProperties
     {
-        /// <summary> Initializes a new instance of LivePipelineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineProperties"/>. </summary>
         public LivePipelineProperties()
         {
             Parameters = new ChangeTrackingList<ParameterDefinition>();
         }
 
-        /// <summary> Initializes a new instance of LivePipelineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineProperties"/>. </summary>
         /// <param name="description"> An optional description of the live pipeline. </param>
         /// <param name="topologyName"> The reference to an existing pipeline topology defined for real-time content processing. When activated, this live pipeline will process content according to the pipeline topology definition. </param>
         /// <param name="parameters"> List of the instance level parameter values for the user-defined topology parameters. A pipeline can only define or override parameters values for parameters which have been declared in the referenced topology. Topology parameters without a default value must be defined. Topology parameters with a default value can be optionally be overridden. </param>

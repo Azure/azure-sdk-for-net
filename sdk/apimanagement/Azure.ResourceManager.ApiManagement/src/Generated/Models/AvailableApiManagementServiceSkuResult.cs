@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes an available API Management service SKU. </summary>
     public partial class AvailableApiManagementServiceSkuResult
     {
-        /// <summary> Initializes a new instance of AvailableApiManagementServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableApiManagementServiceSkuResult"/>. </summary>
         internal AvailableApiManagementServiceSkuResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableApiManagementServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableApiManagementServiceSkuResult"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="sku"> Specifies API Management SKU. </param>
         /// <param name="capacity"> Specifies the number of API Management units. </param>

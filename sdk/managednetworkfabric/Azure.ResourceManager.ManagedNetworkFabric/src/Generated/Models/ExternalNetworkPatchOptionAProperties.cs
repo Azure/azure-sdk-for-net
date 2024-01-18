@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> option A properties object. </summary>
     public partial class ExternalNetworkPatchOptionAProperties : Layer3IPPrefixProperties
     {
-        /// <summary> Initializes a new instance of ExternalNetworkPatchOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworkPatchOptionAProperties"/>. </summary>
         public ExternalNetworkPatchOptionAProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ExternalNetworkPatchOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworkPatchOptionAProperties"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>

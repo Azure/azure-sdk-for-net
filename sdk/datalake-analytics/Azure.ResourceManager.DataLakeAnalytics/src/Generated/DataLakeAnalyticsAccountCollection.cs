@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeAnalyticsAccountResource" /> and their operations.
-    /// Each <see cref="DataLakeAnalyticsAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataLakeAnalyticsAccountCollection" /> instance call the GetDataLakeAnalyticsAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataLakeAnalyticsAccountResource"/> and their operations.
+    /// Each <see cref="DataLakeAnalyticsAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataLakeAnalyticsAccountCollection"/> instance call the GetDataLakeAnalyticsAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataLakeAnalyticsAccountCollection : ArmCollection, IEnumerable<DataLakeAnalyticsAccountBasic>, IAsyncEnumerable<DataLakeAnalyticsAccountBasic>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Analytics account. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,11 +254,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsAccountBasic> GetAllAsync(DataLakeAnalyticsAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new DataLakeAnalyticsAccountCollectionGetAllOptions();
@@ -247,11 +287,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsAccountBasic> GetAll(DataLakeAnalyticsAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new DataLakeAnalyticsAccountCollectionGetAllOptions();
@@ -271,6 +319,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,6 +363,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Analytics account. </param>
@@ -341,6 +405,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +450,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

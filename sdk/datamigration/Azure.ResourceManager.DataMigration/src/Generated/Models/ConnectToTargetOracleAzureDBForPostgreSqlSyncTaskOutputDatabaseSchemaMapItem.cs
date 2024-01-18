@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem. </summary>
     public partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem
     {
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem"/>. </summary>
         internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem()
         {
             Schemas = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem"/>. </summary>
         /// <param name="database"></param>
         /// <param name="schemas"></param>
         internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem(string database, IReadOnlyList<string> schemas)

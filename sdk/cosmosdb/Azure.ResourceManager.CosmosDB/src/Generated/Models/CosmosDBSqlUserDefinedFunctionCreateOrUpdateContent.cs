@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update Cosmos DB userDefinedFunction. </summary>
     public partial class CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a userDefinedFunction. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

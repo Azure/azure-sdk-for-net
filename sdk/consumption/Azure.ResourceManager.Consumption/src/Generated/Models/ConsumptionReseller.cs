@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The reseller properties. </summary>
     public partial class ConsumptionReseller
     {
-        /// <summary> Initializes a new instance of ConsumptionReseller. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReseller"/>. </summary>
         internal ConsumptionReseller()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReseller. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReseller"/>. </summary>
         /// <param name="resellerId"> The reseller property ID. </param>
         /// <param name="resellerDescription"> The reseller property description. </param>
         internal ConsumptionReseller(ResourceIdentifier resellerId, string resellerDescription)

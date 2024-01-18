@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterImageData : ResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageData"/>. </summary>
         public DevCenterImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

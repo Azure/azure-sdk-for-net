@@ -13,10 +13,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB Mongo User Definition. </summary>
     public partial class MongoDBUserDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/>. </summary>
         public MongoDBUserDefinitionCreateOrUpdateContent()
         {
             Roles = new ChangeTrackingList<MongoDBRole>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/>. </summary>
+        /// <param name="userName"> The user name for User Definition. </param>
+        /// <param name="password"> The password for User Definition. Response does not contain user password. </param>
+        /// <param name="databaseName"> The database name for which access is being granted for this User Definition. </param>
+        /// <param name="customData"> A custom definition for the USer Definition. </param>
+        /// <param name="roles"> The set of roles inherited by the User Definition. </param>
+        /// <param name="mechanisms"> The Mongo Auth mechanism. For now, we only support auth mechanism SCRAM-SHA-256. </param>
+        internal MongoDBUserDefinitionCreateOrUpdateContent(string userName, string password, string databaseName, string customData, IList<MongoDBRole> roles, string mechanisms)
+        {
+            UserName = userName;
+            Password = password;
+            DatabaseName = databaseName;
+            CustomData = customData;
+            Roles = roles;
+            Mechanisms = mechanisms;
         }
 
         /// <summary> The user name for User Definition. </summary>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Encryption details for the fabric. </summary>
     public partial class SiteRecoveryEncryptionDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEncryptionDetails"/>. </summary>
         internal SiteRecoveryEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEncryptionDetails"/>. </summary>
         /// <param name="kekState"> The key encryption key state for the Vmm. </param>
         /// <param name="kekCertThumbprint"> The key encryption key certificate thumbprint. </param>
         /// <param name="kekCertExpireOn"> The key encryption key certificate expiry date. </param>

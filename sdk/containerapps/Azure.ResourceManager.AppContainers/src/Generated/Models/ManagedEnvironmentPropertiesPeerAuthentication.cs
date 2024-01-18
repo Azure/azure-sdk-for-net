@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Peer authentication settings for the Managed Environment. </summary>
     internal partial class ManagedEnvironmentPropertiesPeerAuthentication
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentPropertiesPeerAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentPropertiesPeerAuthentication"/>. </summary>
         public ManagedEnvironmentPropertiesPeerAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentPropertiesPeerAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentPropertiesPeerAuthentication"/>. </summary>
         /// <param name="mtls"> Mutual TLS authentication settings for the Managed Environment. </param>
         internal ManagedEnvironmentPropertiesPeerAuthentication(Mtls mtls)
         {

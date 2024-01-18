@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeAnalyticsComputePolicyListResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyListResult"/>. </summary>
         internal DataLakeAnalyticsComputePolicyListResult()
         {
             Value = new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: ComputePolicyListResult.value

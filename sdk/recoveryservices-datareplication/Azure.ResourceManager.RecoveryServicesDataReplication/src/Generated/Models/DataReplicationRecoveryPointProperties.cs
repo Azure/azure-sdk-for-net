@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Recovery point model properties. </summary>
     public partial class DataReplicationRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> Gets or sets the recovery point time. </param>
         /// <param name="recoveryPointType"> Gets or sets the recovery point type. </param>
         /// <param name="customProperties">

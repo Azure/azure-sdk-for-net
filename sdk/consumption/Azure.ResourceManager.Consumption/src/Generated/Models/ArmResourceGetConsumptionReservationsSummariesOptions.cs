@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The ArmResourceGetConsumptionReservationsSummariesOptions. </summary>
     public partial class ArmResourceGetConsumptionReservationsSummariesOptions
     {
-        /// <summary> Initializes a new instance of ArmResourceGetConsumptionReservationsSummariesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceGetConsumptionReservationsSummariesOptions"/>. </summary>
         /// <param name="grain"> Can be daily or monthly. </param>
         public ArmResourceGetConsumptionReservationsSummariesOptions(ReservationSummaryDataGrain grain)
         {

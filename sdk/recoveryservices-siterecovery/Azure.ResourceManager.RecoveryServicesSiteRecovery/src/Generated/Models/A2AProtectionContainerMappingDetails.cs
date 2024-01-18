@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific settings. </summary>
     public partial class A2AProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionContainerMappingDetails"/>. </summary>
         internal A2AProtectionContainerMappingDetails()
         {
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2AProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionContainerMappingDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
         /// <param name="automationAccountArmId"> The automation account arm id. </param>

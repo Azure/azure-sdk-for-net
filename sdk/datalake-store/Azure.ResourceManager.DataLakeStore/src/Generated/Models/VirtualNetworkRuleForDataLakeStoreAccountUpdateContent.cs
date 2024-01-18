@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to update a virtual network rule while updating a Data Lake Store account. </summary>
     public partial class VirtualNetworkRuleForDataLakeStoreAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRuleForDataLakeStoreAccountUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
         /// <param name="name"> The unique name of the virtual network rule to update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(string name)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
+        /// <param name="name"> The unique name of the virtual network rule to update. </param>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        internal VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(string name, ResourceIdentifier subnetId)
+        {
+            Name = name;
+            SubnetId = subnetId;
         }
 
         /// <summary> The unique name of the virtual network rule to update. </summary>

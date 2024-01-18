@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB MongoDB collection index options. </summary>
     public partial class MongoDBIndexConfig
     {
-        /// <summary> Initializes a new instance of MongoDBIndexConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBIndexConfig"/>. </summary>
         public MongoDBIndexConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBIndexConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBIndexConfig"/>. </summary>
         /// <param name="expireAfterSeconds"> Expire after seconds. </param>
         /// <param name="isUnique"> Is unique or not. </param>
         internal MongoDBIndexConfig(int? expireAfterSeconds, bool? isUnique)

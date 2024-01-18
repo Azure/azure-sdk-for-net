@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact message filter for odata query. </summary>
     public partial class EdifactMessageFilter
     {
-        /// <summary> Initializes a new instance of EdifactMessageFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageFilter"/>. </summary>
         /// <param name="messageFilterType"> The message filter type. </param>
         public EdifactMessageFilter(MessageFilterType messageFilterType)
         {

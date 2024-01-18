@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The parameters of a managed instance operation. </summary>
     public partial class ManagedInstanceOperationParametersPair
     {
-        /// <summary> Initializes a new instance of ManagedInstanceOperationParametersPair. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationParametersPair"/>. </summary>
         internal ManagedInstanceOperationParametersPair()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationParametersPair. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationParametersPair"/>. </summary>
         /// <param name="currentParameters"> The current parameters. </param>
         /// <param name="requestedParameters"> The requested parameters. </param>
         internal ManagedInstanceOperationParametersPair(UpsertManagedServerOperationParameters currentParameters, UpsertManagedServerOperationParameters requestedParameters)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> List response for get source share Synchronization settings. </summary>
     internal partial class SourceShareSynchronizationSettingList
     {
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSettingList"/>. </summary>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.
         /// Please note <see cref="SourceShareSynchronizationSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSettingList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.

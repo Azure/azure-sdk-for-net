@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable
+    public partial class IPv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable, IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
@@ -41,11 +52,40 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element)
+        IPv6ExpressRouteCircuitPeeringConfig IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
+        }
+
+        internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +95,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
             Optional<WritableSubResource> routeFilter = default;
             Optional<ExpressRouteCircuitPeeringState> state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryPeerAddressPrefix"u8))
@@ -94,8 +136,44 @@ namespace Azure.ResourceManager.Network.Models
                     state = new ExpressRouteCircuitPeeringState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IPv6ExpressRouteCircuitPeeringConfig IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIPv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

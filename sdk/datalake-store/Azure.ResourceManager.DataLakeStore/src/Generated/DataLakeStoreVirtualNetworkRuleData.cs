@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.DataLakeStore
     /// </summary>
     public partial class DataLakeStoreVirtualNetworkRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleData"/>. </summary>
         internal DataLakeStoreVirtualNetworkRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

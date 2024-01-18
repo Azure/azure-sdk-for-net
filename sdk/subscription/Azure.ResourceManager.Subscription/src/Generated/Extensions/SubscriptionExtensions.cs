@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubscriptionAliasResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SubscriptionAliasResource"/> object. </returns>
         public static SubscriptionAliasResource GetSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public static TenantPolicyResource GetTenantPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingAccountPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public static BillingAccountPolicyResource GetBillingAccountPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -156,6 +164,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_Rename</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -213,6 +229,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_Enable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -239,6 +259,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -284,6 +308,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -314,6 +346,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -342,7 +382,7 @@ namespace Azure.ResourceManager.Subscription
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public static TenantPolicyResource GetTenantPolicy(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -378,6 +418,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -407,6 +455,14 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -438,6 +494,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnership</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -447,7 +507,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="content"> The AcceptOwnershipContent to use. </param>
+        /// <param name="content"> The <see cref="AcceptOwnershipContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -469,6 +529,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnership</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -478,7 +542,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="content"> The AcceptOwnershipContent to use. </param>
+        /// <param name="content"> The <see cref="AcceptOwnershipContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -499,6 +563,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -528,6 +596,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>

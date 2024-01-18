@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Task model custom properties. </summary>
     internal partial class TaskModelCustomProperties
     {
-        /// <summary> Initializes a new instance of TaskModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceType"/> is null. </exception>
         internal TaskModelCustomProperties(string instanceType)

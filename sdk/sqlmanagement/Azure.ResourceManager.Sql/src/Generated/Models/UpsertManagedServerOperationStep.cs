@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The UpsertManagedServerOperationStep. </summary>
     public partial class UpsertManagedServerOperationStep
     {
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
         internal UpsertManagedServerOperationStep()
         {
         }
 
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
         /// <param name="order"></param>
         /// <param name="name"></param>
         /// <param name="status"></param>

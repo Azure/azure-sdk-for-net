@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VMwareCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VMwareClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVMwareClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVMwareCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VMwareClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVMwareClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVMwareCluster method.
     /// </summary>
     public partial class VMwareClusterResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly ClustersRestOperations _vMwareClusterClustersRestClient;
         private readonly VMwareClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="VMwareClusterResource"/> class for mocking. </summary>
         protected VMwareClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VMwareClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VMwareClusterResource(ArmClient client, VMwareClusterData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +103,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +226,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -237,6 +269,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Resource properties to update. </param>
@@ -271,6 +311,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Resource properties to update. </param>
@@ -304,6 +352,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,6 +415,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -413,6 +477,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -462,6 +534,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -510,6 +590,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,6 +650,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

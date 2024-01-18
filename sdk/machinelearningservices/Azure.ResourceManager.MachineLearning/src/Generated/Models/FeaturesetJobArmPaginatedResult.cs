@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of FeaturesetJob entities. </summary>
     internal partial class FeaturesetJobArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeaturesetJobArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetJobArmPaginatedResult"/>. </summary>
         internal FeaturesetJobArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeatureSetJob>();
         }
 
-        /// <summary> Initializes a new instance of FeaturesetJobArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetJobArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturesetJob objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturesetJob. </param>
         internal FeaturesetJobArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetJob> value)

@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Base tracked resource type for all PATCH updates. </summary>
     public partial class LabServicesPatchBaseInfo
     {
-        /// <summary> Initializes a new instance of LabServicesPatchBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesPatchBaseInfo"/>. </summary>
         public LabServicesPatchBaseInfo()
         {
             Tags = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesPatchBaseInfo"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal LabServicesPatchBaseInfo(IList<string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

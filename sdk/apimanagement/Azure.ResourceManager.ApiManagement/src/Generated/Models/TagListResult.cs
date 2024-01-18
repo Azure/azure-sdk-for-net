@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Tag list representation. </summary>
     internal partial class TagListResult
     {
-        /// <summary> Initializes a new instance of TagListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagListResult"/>. </summary>
         internal TagListResult()
         {
             Value = new ChangeTrackingList<TagContractData>();
         }
 
-        /// <summary> Initializes a new instance of TagListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

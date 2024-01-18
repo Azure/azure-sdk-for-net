@@ -71,6 +71,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted API Management service. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,10 +135,18 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -141,10 +165,18 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -163,10 +195,18 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementServiceRestClient.CreateListRequest(Id.SubscriptionId);
@@ -185,10 +225,18 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementServiceResource> GetApiManagementServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementServiceRestClient.CreateListRequest(Id.SubscriptionId);
@@ -206,6 +254,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +297,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability operation. </param>
@@ -275,6 +339,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,6 +376,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,10 +415,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementSkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -357,10 +441,14 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementSku> GetApiManagementSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementSkusRestClient.CreateListRequest(Id.SubscriptionId);

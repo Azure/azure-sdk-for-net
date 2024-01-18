@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// A Class representing a ResourceHealthEvent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceHealthEventResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceHealthEventResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceHealthEvent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceHealthEventResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceHealthEventResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetResourceHealthEvent method.
     /// </summary>
     public partial class ResourceHealthEventResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly SecurityAdvisoryImpactedResourcesRestOperations _securityAdvisoryImpactedResourcesRestClient;
         private readonly ResourceHealthEventData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceHealthEventResource"/> class for mocking. </summary>
         protected ResourceHealthEventResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceHealthEventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceHealthEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceHealthEventResource(ArmClient client, ResourceHealthEventData data) : this(client, data.Id)
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.ResourceHealth
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -112,6 +112,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
@@ -157,6 +173,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,6 +216,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -226,11 +258,15 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>SecurityAdvisoryImpactedResources_ListBySubscriptionIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthEventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
@@ -249,11 +285,15 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>SecurityAdvisoryImpactedResources_ListBySubscriptionIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
@@ -271,6 +311,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +349,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

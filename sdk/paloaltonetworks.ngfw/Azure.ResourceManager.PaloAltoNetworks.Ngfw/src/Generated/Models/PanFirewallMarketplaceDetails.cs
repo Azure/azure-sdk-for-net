@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> MarketplaceDetails of PAN Firewall resource. </summary>
     public partial class PanFirewallMarketplaceDetails
     {
-        /// <summary> Initializes a new instance of PanFirewallMarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PanFirewallMarketplaceDetails"/>. </summary>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="publisherId"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             PublisherId = publisherId;
         }
 
-        /// <summary> Initializes a new instance of PanFirewallMarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PanFirewallMarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>

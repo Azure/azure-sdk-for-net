@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -53,10 +53,18 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NginxDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NginxDeploymentResource> GetNginxDeploymentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -65,7 +73,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -75,10 +83,18 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NginxDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NginxDeploymentResource> GetNginxDeployments(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);

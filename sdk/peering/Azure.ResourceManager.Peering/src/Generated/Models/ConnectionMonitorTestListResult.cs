@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of Connection Monitor Tests. </summary>
     internal partial class ConnectionMonitorTestListResult
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestListResult"/>. </summary>
         internal ConnectionMonitorTestListResult()
         {
             Value = new ChangeTrackingList<ConnectionMonitorTestData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestListResult"/>. </summary>
         /// <param name="value"> The list of Connection Monitor Tests. </param>
         /// <param name="nextLink"> The link to fetch the next page of Connection Monitor Tests. </param>
         internal ConnectionMonitorTestListResult(IReadOnlyList<ConnectionMonitorTestData> value, string nextLink)

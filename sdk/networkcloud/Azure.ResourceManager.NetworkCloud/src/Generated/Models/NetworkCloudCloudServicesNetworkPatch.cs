@@ -13,11 +13,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> CloudServicesNetworkPatchParameters represents the body of the request to patch the cloud services network. </summary>
     public partial class NetworkCloudCloudServicesNetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudCloudServicesNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkPatch"/>. </summary>
         public NetworkCloudCloudServicesNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="additionalEgressEndpoints"> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </param>
+        /// <param name="enableDefaultEgressEndpoints"> The indicator of whether the platform default endpoints are allowed for the egress traffic. </param>
+        internal NetworkCloudCloudServicesNetworkPatch(IDictionary<string, string> tags, IList<EgressEndpoint> additionalEgressEndpoints, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints)
+        {
+            Tags = tags;
+            AdditionalEgressEndpoints = additionalEgressEndpoints;
+            EnableDefaultEgressEndpoints = enableDefaultEgressEndpoints;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> LDAP search scope. </summary>
     public partial class NetAppLdapSearchScopeConfiguration
     {
-        /// <summary> Initializes a new instance of NetAppLdapSearchScopeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppLdapSearchScopeConfiguration"/>. </summary>
         public NetAppLdapSearchScopeConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppLdapSearchScopeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppLdapSearchScopeConfiguration"/>. </summary>
         /// <param name="userDN"> This specifies the user DN, which overrides the base DN for user lookups. </param>
         /// <param name="groupDN"> This specifies the group DN, which overrides the base DN for group lookups. </param>
         /// <param name="groupMembershipFilter"> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </param>

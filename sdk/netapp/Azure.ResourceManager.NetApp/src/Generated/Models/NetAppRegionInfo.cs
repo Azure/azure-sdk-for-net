@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Provides region specific information. </summary>
     public partial class NetAppRegionInfo
     {
-        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppRegionInfo"/>. </summary>
         internal NetAppRegionInfo()
         {
             AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMapping>();
         }
 
-        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppRegionInfo"/>. </summary>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
         internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings)

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Slim version of policy metadata resource definition, excluding properties with large strings. </summary>
     public partial class SlimPolicyMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlimPolicyMetadata"/>. </summary>
         internal SlimPolicyMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlimPolicyMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

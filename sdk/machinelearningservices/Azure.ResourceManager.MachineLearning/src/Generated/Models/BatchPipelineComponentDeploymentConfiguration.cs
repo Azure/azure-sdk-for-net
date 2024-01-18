@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties for a Batch Pipeline Component Deployment. </summary>
     public partial class BatchPipelineComponentDeploymentConfiguration : BatchDeploymentConfiguration
     {
-        /// <summary> Initializes a new instance of BatchPipelineComponentDeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPipelineComponentDeploymentConfiguration"/>. </summary>
         public BatchPipelineComponentDeploymentConfiguration()
         {
             Settings = new ChangeTrackingDictionary<string, string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DeploymentConfigurationType = BatchDeploymentConfigurationType.PipelineComponent;
         }
 
-        /// <summary> Initializes a new instance of BatchPipelineComponentDeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPipelineComponentDeploymentConfiguration"/>. </summary>
         /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
         /// <param name="componentId"> The ARM id of the component to be run. </param>
         /// <param name="description"> The description which will be applied to the job. </param>

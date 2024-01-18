@@ -1,12 +1,28 @@
 # Release History
 
-## 1.2.0-beta.3 (2023-11-16)
+## 1.2.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.4 (2023-11-16)
 
 ### Features Added
 
 - Added support for Email Suppression List and Address resources.
 - Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 - Upgraded api-version tag from 'package-preview-2023-04' to 'package-preview-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5775c90db370eb73a5cd7ccb36e16c34630a5c8c/specification/communication/resource-manager/readme.md#tag-package-preview-2023-06
+
+## 1.2.0-beta.3 (2023-11-08)
+
+### Features Added
+
+- Added support for Email Suppression List and Address resources.
 
 ### Other Changes
 

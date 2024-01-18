@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Description of a Check Name availability request properties. </summary>
     public partial class ServiceBusNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of ServiceBusNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNameAvailabilityResult"/>. </summary>
         internal ServiceBusNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNameAvailabilityResult"/>. </summary>
         /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
         /// <param name="isNameAvailable"> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a namespace. </param>

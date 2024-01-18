@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Available scope request properties. </summary>
     internal partial class AvailableScopeRequestProperties
     {
-        /// <summary> Initializes a new instance of AvailableScopeRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableScopeRequestProperties"/>. </summary>
         public AvailableScopeRequestProperties()
         {
             Scopes = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvailableScopeRequestProperties"/>. </summary>
+        /// <param name="scopes"></param>
+        internal AvailableScopeRequestProperties(IList<string> scopes)
+        {
+            Scopes = scopes;
         }
 
         /// <summary> Gets the scopes. </summary>

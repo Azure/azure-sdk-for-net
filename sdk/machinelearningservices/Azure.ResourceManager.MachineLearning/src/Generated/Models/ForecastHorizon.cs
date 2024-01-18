@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class ForecastHorizon
     {
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         protected ForecastHorizon()
         {
         }
 
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
         internal ForecastHorizon(ForecastHorizonMode mode)
         {

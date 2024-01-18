@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> A rule which is evaluated upon event interception. The rule is configured by comparing a specific value from the event model to an expected value. This comparison is done by using one of the supported operators set. </summary>
     public partial class SecurityAutomationTriggeringRule
     {
-        /// <summary> Initializes a new instance of SecurityAutomationTriggeringRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationTriggeringRule"/>. </summary>
         public SecurityAutomationTriggeringRule()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationTriggeringRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationTriggeringRule"/>. </summary>
         /// <param name="propertyJPath"> The JPath of the entity model property that should be checked. </param>
         /// <param name="propertyType"> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </param>
         /// <param name="expectedValue"> The expected value. </param>
         /// <param name="operator"> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </param>
-        internal SecurityAutomationTriggeringRule(string propertyJPath, AutomationTriggeringRulePropertyType? propertyType, string expectedValue, AutomationTriggeringRuleOperator? @operator)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAutomationTriggeringRule(string propertyJPath, AutomationTriggeringRulePropertyType? propertyType, string expectedValue, AutomationTriggeringRuleOperator? @operator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PropertyJPath = propertyJPath;
             PropertyType = propertyType;
             ExpectedValue = expectedValue;
             Operator = @operator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The JPath of the entity model property that should be checked. </summary>

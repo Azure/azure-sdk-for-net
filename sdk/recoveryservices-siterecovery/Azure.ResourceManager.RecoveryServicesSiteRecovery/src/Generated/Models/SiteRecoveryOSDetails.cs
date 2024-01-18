@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk Details. </summary>
     public partial class SiteRecoveryOSDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryOSDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSDetails"/>. </summary>
         internal SiteRecoveryOSDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSDetails"/>. </summary>
         /// <param name="osType"> VM Disk details. </param>
         /// <param name="productType"> Product type. </param>
         /// <param name="osEdition"> The OSEdition. </param>

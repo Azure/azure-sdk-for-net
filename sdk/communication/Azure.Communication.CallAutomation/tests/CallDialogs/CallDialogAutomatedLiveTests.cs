@@ -94,7 +94,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // send the dialog to the target user
                 var dialogContext = new Dictionary<string, object>();
-                StartDialogOptions dialogOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                StartDialog dialogOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
                 {
                     OperationContext = "context"
                 };
@@ -203,7 +203,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // send the dialog to the target user
                 var dialogContext = new Dictionary<string, object>();
-                StartDialogOptions dialogOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                StartDialog dialogOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
                 {
                     OperationContext = "context"
                 };
@@ -218,7 +218,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 Assert.IsTrue(dialogStartedReceived is DialogStarted);
 
                 // send a new dialog with same ID but different context, should fail
-                dialogOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                dialogOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
                 {
                     OperationContext = "new context"
                 };
@@ -226,7 +226,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // send a new dialog with different ID, should fail
                 string secondDialogId = "de7fcbc8-1803-4ec1-80ed-2c9c087587f6";
-                dialogOptions = new StartDialogOptions(secondDialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                dialogOptions = new StartDialog(secondDialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
                 {
                     OperationContext = "context"
                 };
@@ -324,7 +324,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // send the dialog to the target user
                 var dialogContext = new Dictionary<string, object>();
-                StartDialogOptions dialogOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                StartDialog dialogOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
                 {
                     OperationContext = "context"
                 };
@@ -361,7 +361,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         }
 
         [RecordedTest]
-        public async Task ConsecutiveDialogsTest()
+        public async Task SubsequentDialogsTest()
         {
             // ignores test if botAppId or PMA Endpoint is not set in environment variables
             var botAppId = TestEnvironment.BotAppId;
@@ -434,7 +434,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // send the dialog to the target user
                 var dialogContext = new Dictionary<string, object>();
-                StartDialogOptions dialogOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                StartDialog dialogOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
                 {
                     OperationContext = "context"
                 };
@@ -457,12 +457,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 Assert.IsNotNull(dialogStoppedReceived);
                 Assert.IsTrue(dialogStoppedReceived is DialogCompleted);
 
+                string secondDialogId = "de7fcbc8-1803-4ec1-80ed-2c9c087587fd";
+                dialogOptions = new StartDialog(secondDialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
+                {
+                    OperationContext = "context"
+                };
+
                 // Start and stop the dialog again, it should work fine
                 dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
 
                 Assert.NotNull(dialogResponse.Value.DialogId);
-                Assert.AreEqual(dialogId, dialogResponse.Value.DialogId);
+                Assert.AreEqual(secondDialogId, dialogResponse.Value.DialogId);
 
                 stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);

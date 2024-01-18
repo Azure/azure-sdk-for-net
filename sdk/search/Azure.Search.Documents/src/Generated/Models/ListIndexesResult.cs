@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Response from a List Indexes request. If successful, it includes the full definitions of all indexes. </summary>
     internal partial class ListIndexesResult
     {
-        /// <summary> Initializes a new instance of ListIndexesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListIndexesResult"/>. </summary>
         /// <param name="indexes"> The indexes in the Search service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
         internal ListIndexesResult(IEnumerable<SearchIndex> indexes)
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Indexes = indexes.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListIndexesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListIndexesResult"/>. </summary>
         /// <param name="indexes"> The indexes in the Search service. </param>
         internal ListIndexesResult(IReadOnlyList<SearchIndex> indexes)
         {

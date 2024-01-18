@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The Batch List supported SKUs operation response. </summary>
     internal partial class SupportedSkusResult
     {
-        /// <summary> Initializes a new instance of SupportedSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedSkusResult"/>. </summary>
         /// <param name="value"> The list of SKUs available for the Batch service in the location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SupportedSkusResult(IEnumerable<BatchSupportedSku> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SupportedSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedSkusResult"/>. </summary>
         /// <param name="value"> The list of SKUs available for the Batch service in the location. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal SupportedSkusResult(IReadOnlyList<BatchSupportedSku> value, string nextLink)

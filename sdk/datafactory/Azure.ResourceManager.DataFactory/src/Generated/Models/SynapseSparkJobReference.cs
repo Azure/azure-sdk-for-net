@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Synapse spark job reference type. </summary>
     public partial class SynapseSparkJobReference
     {
-        /// <summary> Initializes a new instance of SynapseSparkJobReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/>. </summary>
         /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
         /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

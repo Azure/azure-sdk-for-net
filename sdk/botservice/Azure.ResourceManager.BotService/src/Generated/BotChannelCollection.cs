@@ -21,9 +21,9 @@ using Azure.ResourceManager.BotService.Models;
 namespace Azure.ResourceManager.BotService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BotChannelResource" /> and their operations.
-    /// Each <see cref="BotChannelResource" /> in the collection will belong to the same instance of <see cref="BotResource" />.
-    /// To get a <see cref="BotChannelCollection" /> instance call the GetBotChannels method from an instance of <see cref="BotResource" />.
+    /// A class representing a collection of <see cref="BotChannelResource"/> and their operations.
+    /// Each <see cref="BotChannelResource"/> in the collection will belong to the same instance of <see cref="BotResource"/>.
+    /// To get a <see cref="BotChannelCollection"/> instance call the GetBotChannels method from an instance of <see cref="BotResource"/>.
     /// </summary>
     public partial class BotChannelCollection : ArmCollection, IEnumerable<BotChannelResource>, IAsyncEnumerable<BotChannelResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Channels_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -103,6 +111,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Channels_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
@@ -175,6 +199,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,10 +241,18 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Channels_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotChannelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -231,10 +271,18 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Channels_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotChannelResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +340,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
@@ -314,6 +378,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +419,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

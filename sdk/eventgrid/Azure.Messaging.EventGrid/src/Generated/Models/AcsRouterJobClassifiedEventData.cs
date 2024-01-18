@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassified event. </summary>
     public partial class AcsRouterJobClassifiedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobClassifiedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
         internal AcsRouterJobClassifiedEventData()
         {
             AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobClassifiedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

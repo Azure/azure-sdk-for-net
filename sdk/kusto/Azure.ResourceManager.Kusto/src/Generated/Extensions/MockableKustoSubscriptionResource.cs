@@ -60,10 +60,18 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoClusterResource> GetKustoClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -81,10 +89,18 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoClusterResource> GetKustoClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -102,10 +118,18 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
@@ -123,10 +147,18 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoSkuDescription> GetKustoEligibleSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
@@ -143,6 +175,14 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,6 +219,14 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -214,11 +262,15 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoSkuDescription> GetSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -236,11 +288,15 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoSkuDescription> GetSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);

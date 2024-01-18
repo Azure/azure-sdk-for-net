@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-10-03-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Get call connection. </summary>
+        /// <summary> Get the detail properties of an ongoing call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -80,7 +80,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Get call connection. </summary>
+        /// <summary> Get the detail properties of an ongoing call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -122,7 +122,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Hangup the call. </summary>
+        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -144,7 +144,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Hangup the call. </summary>
+        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -406,9 +406,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="addParticipantRequest"> The AddParticipantRequest to use. </param>
+        /// <param name="addParticipantRequest"> The <see cref="AddParticipantRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequest"/> is null. </exception>
         public async Task<Response<AddParticipantResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantRequestInternal addParticipantRequest, CancellationToken cancellationToken = default)
@@ -438,9 +438,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="addParticipantRequest"> The AddParticipantRequest to use. </param>
+        /// <param name="addParticipantRequest"> The <see cref="AddParticipantRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequest"/> is null. </exception>
         public Response<AddParticipantResponseInternal> AddParticipant(string callConnectionId, AddParticipantRequestInternal addParticipantRequest, CancellationToken cancellationToken = default)
@@ -492,7 +492,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Remove participant from the call using identifier. </summary>
+        /// <summary> Remove a participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="removeParticipantRequest"> The participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -524,7 +524,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Remove participant from the call using identifier. </summary>
+        /// <summary> Remove a participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="removeParticipantRequest"> The participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -583,7 +583,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="muteParticipantsRequest"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
-        public async Task<Response<MuteParticipantsResult>> MuteAsync(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<MuteParticipantResult>> MuteAsync(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -600,9 +600,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 200:
                     {
-                        MuteParticipantsResult value = default;
+                        MuteParticipantResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MuteParticipantsResult.DeserializeMuteParticipantsResult(document.RootElement);
+                        value = MuteParticipantResult.DeserializeMuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -615,7 +615,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="muteParticipantsRequest"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
-        public Response<MuteParticipantsResult> Mute(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<MuteParticipantResult> Mute(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -632,9 +632,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 200:
                     {
-                        MuteParticipantsResult value = default;
+                        MuteParticipantResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MuteParticipantsResult.DeserializeMuteParticipantsResult(document.RootElement);
+                        value = MuteParticipantResult.DeserializeMuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -669,7 +669,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="unmuteParticipantsRequest"> The participants to be unmuted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequest"/> is null. </exception>
-        public async Task<Response<UnmuteParticipantsResult>> UnmuteAsync(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<UnmuteParticipantResult>> UnmuteAsync(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -684,11 +684,11 @@ namespace Azure.Communication.CallAutomation
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                     {
-                        UnmuteParticipantsResult value = default;
+                        UnmuteParticipantResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UnmuteParticipantsResult.DeserializeUnmuteParticipantsResult(document.RootElement);
+                        value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -701,7 +701,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="unmuteParticipantsRequest"> The participants to be unmuted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequest"/> is null. </exception>
-        public Response<UnmuteParticipantsResult> Unmute(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<UnmuteParticipantResult> Unmute(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -716,11 +716,11 @@ namespace Azure.Communication.CallAutomation
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                     {
-                        UnmuteParticipantsResult value = default;
+                        UnmuteParticipantResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UnmuteParticipantsResult.DeserializeUnmuteParticipantsResult(document.RootElement);
+                        value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

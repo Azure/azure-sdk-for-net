@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 agreement protocol settings. </summary>
     public partial class X12ProtocolSettings
     {
-        /// <summary> Initializes a new instance of X12ProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12ProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The X12 validation settings. </param>
         /// <param name="framingSettings"> The X12 framing settings. </param>
         /// <param name="envelopeSettings"> The X12 envelope settings. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
             X12DelimiterOverrides = new ChangeTrackingList<X12DelimiterOverrides>();
         }
 
-        /// <summary> Initializes a new instance of X12ProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12ProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The X12 validation settings. </param>
         /// <param name="framingSettings"> The X12 framing settings. </param>
         /// <param name="envelopeSettings"> The X12 envelope settings. </param>

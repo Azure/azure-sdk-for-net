@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The properties of a DigitalTwinsInstance. </summary>
     internal partial class DigitalTwinsPatchProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPatchProperties"/>. </summary>
         public DigitalTwinsPatchProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPatchProperties"/>. </summary>
+        /// <param name="publicNetworkAccess"> Public network access for the DigitalTwinsInstance. </param>
+        internal DigitalTwinsPatchProperties(DigitalTwinsPublicNetworkAccess? publicNetworkAccess)
+        {
+            PublicNetworkAccess = publicNetworkAccess;
         }
 
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>

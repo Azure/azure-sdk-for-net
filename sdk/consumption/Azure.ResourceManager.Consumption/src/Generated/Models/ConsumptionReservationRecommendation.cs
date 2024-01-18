@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Consumption.Models
     /// Please note <see cref="ConsumptionReservationRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConsumptionLegacyReservationRecommendation"/> and <see cref="ConsumptionModernReservationRecommendation"/>.
     /// </summary>
-    public partial class ConsumptionReservationRecommendation : ResourceData
+    public abstract partial class ConsumptionReservationRecommendation : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendation. </summary>
-        internal ConsumptionReservationRecommendation()
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendation"/>. </summary>
+        protected ConsumptionReservationRecommendation()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

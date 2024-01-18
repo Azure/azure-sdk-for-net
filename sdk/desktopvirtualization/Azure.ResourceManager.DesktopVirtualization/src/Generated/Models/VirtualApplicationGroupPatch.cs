@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> ApplicationGroup properties that can be patched. </summary>
     public partial class VirtualApplicationGroupPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualApplicationGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupPatch"/>. </summary>
         public VirtualApplicationGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Labeling MLAssist configuration definition when MLAssist is enabled. </summary>
     public partial class MachineLearningAssistEnabledConfiguration : MachineLearningAssistConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningAssistEnabledConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistEnabledConfiguration"/>. </summary>
         /// <param name="inferencingComputeBinding"> [Required] AML compute binding used in inferencing. </param>
         /// <param name="trainingComputeBinding"> [Required] AML compute binding used in training. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inferencingComputeBinding"/> or <paramref name="trainingComputeBinding"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MlAssist = MLAssistConfigurationType.Enabled;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssistEnabledConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistEnabledConfiguration"/>. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
         /// <param name="inferencingComputeBinding"> [Required] AML compute binding used in inferencing. </param>
         /// <param name="trainingComputeBinding"> [Required] AML compute binding used in training. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
     /// A Class representing a BillingAccountPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingAccountPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingAccountPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingAccountPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAccountPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingAccountPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingAccountPolicy method.
     /// </summary>
     public partial class BillingAccountPolicyResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Subscription
         private readonly BillingAccountRestOperations _billingAccountPolicyBillingAccountRestClient;
         private readonly BillingAccountPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
+
         /// <summary> Initializes a new instance of the <see cref="BillingAccountPolicyResource"/> class for mocking. </summary>
         protected BillingAccountPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingAccountPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingAccountPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingAccountPolicyResource(ArmClient client, BillingAccountPolicyData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Subscription
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

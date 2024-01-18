@@ -8,7 +8,7 @@ csharp: true
 library-name: Chaos
 namespace: Azure.ResourceManager.Chaos
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/eb29c07a0f08110c932b384d5dc41241dc0b03ab/specification/chaos/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4af52aaac2c3b4af4a0e61378d33c5bc050e65e2/specification/chaos/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

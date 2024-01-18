@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Network Rule Set Properties of IotHub. </summary>
     public partial class IotHubNetworkRuleSetProperties
     {
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetProperties"/>. </summary>
         /// <param name="applyToBuiltInEventHubEndpoint"> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </param>
         /// <param name="ipRules"> List of IP Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipRules"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IPRules = ipRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetProperties"/>. </summary>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="applyToBuiltInEventHubEndpoint"> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </param>
         /// <param name="ipRules"> List of IP Rules. </param>

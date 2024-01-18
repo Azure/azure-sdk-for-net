@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataLakeStore
     /// </summary>
     public partial class DataLakeStoreAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountData"/>. </summary>
         internal DataLakeStoreAccountData()
         {
             FirewallRules = new ChangeTrackingList<DataLakeStoreFirewallRuleData>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataLakeStore
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

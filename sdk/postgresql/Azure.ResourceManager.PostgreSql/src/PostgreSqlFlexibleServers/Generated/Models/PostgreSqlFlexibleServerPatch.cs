@@ -13,10 +13,45 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
         public PostgreSqlFlexibleServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="identity"> Describes the identity of the application. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <param name="version"> PostgreSQL Server version. </param>
+        /// <param name="storage"> Storage properties of a server. </param>
+        /// <param name="backup"> Backup properties of a server. </param>
+        /// <param name="highAvailability"> High availability properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
+        /// <param name="authConfig"> AuthConfig properties of a server. </param>
+        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
+        /// <param name="createMode"> The mode to update a new PostgreSQL server. </param>
+        /// <param name="replicationRole"> Replication role of the server. </param>
+        /// <param name="network"> Network properties of a server. These are required to be passed only in case if server is a private access server. </param>
+        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServerNetwork network)
+        {
+            Sku = sku;
+            Identity = identity;
+            Tags = tags;
+            Location = location;
+            AdministratorLoginPassword = administratorLoginPassword;
+            Version = version;
+            Storage = storage;
+            Backup = backup;
+            HighAvailability = highAvailability;
+            MaintenanceWindow = maintenanceWindow;
+            AuthConfig = authConfig;
+            DataEncryption = dataEncryption;
+            CreateMode = createMode;
+            ReplicationRole = replicationRole;
+            Network = network;
         }
 
         /// <summary> The SKU (pricing tier) of the server. </summary>

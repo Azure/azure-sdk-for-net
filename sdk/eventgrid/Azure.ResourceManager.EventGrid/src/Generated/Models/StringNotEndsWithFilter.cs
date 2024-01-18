@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> StringNotEndsWith Filter. </summary>
     public partial class StringNotEndsWithFilter : EventGridFilter
     {
-        /// <summary> Initializes a new instance of StringNotEndsWithFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringNotEndsWithFilter"/>. </summary>
         public StringNotEndsWithFilter()
         {
             Values = new ChangeTrackingList<string>();
             OperatorType = FilterOperatorType.StringNotEndsWith;
         }
 
-        /// <summary> Initializes a new instance of StringNotEndsWithFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringNotEndsWithFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         /// <param name="values"> The set of filter values. </param>

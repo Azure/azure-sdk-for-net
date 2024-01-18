@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VoiceServicesCommunicationsGatewayResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VoiceServicesCommunicationsGatewayResource"/> object. </returns>
         public static VoiceServicesCommunicationsGatewayResource GetVoiceServicesCommunicationsGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VoiceServicesTestLineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="VoiceServicesTestLineResource"/> object. </returns>
         public static VoiceServicesTestLineResource GetVoiceServicesTestLineResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -170,7 +194,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -189,6 +213,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -198,7 +230,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -216,6 +248,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NameAvailability_CheckLocal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
         /// </item>
         /// </list>
         /// <item>
@@ -245,6 +281,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NameAvailability_CheckLocal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
         /// </item>
         /// </list>
         /// <item>

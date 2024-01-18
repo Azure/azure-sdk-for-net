@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
             WorkloadResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

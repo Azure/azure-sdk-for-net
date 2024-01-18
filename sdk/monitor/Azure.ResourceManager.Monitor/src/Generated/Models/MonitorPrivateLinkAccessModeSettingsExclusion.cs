@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Properties that define the scope private link mode settings exclusion item. This setting applies to a specific private endpoint connection and overrides the default settings for that private endpoint connection. </summary>
     public partial class MonitorPrivateLinkAccessModeSettingsExclusion
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettingsExclusion. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkAccessModeSettingsExclusion"/>. </summary>
         public MonitorPrivateLinkAccessModeSettingsExclusion()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettingsExclusion. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkAccessModeSettingsExclusion"/>. </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name associated to the private endpoint on which we want to apply the specific access mode settings. </param>
         /// <param name="queryAccessMode"> Specifies the access mode of queries through the specified private endpoint connection in the exclusion. </param>
         /// <param name="ingestionAccessMode"> Specifies the access mode of ingestion through the specified private endpoint connection in the exclusion. </param>

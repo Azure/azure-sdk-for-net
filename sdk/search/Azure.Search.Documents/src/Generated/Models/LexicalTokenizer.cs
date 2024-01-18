@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class LexicalTokenizer
     {
-        /// <summary> Initializes a new instance of LexicalTokenizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="LexicalTokenizer"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal LexicalTokenizer(string oDataType, string name)

@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// Please note <see cref="AzureArcKubernetesNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureArcKubernetesHelmApplication"/>.
     /// </summary>
-    public partial class AzureArcKubernetesNetworkFunctionApplication : NetworkFunctionApplication
+    public abstract partial class AzureArcKubernetesNetworkFunctionApplication : NetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureArcKubernetesNetworkFunctionApplication. </summary>
-        public AzureArcKubernetesNetworkFunctionApplication()
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
+        protected AzureArcKubernetesNetworkFunctionApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureArcKubernetesNetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

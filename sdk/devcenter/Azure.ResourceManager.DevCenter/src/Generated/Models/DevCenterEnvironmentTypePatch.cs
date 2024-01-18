@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The environment type for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterEnvironmentTypePatch
     {
-        /// <summary> Initializes a new instance of DevCenterEnvironmentTypePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentTypePatch"/>. </summary>
         public DevCenterEnvironmentTypePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentTypePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal DevCenterEnvironmentTypePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

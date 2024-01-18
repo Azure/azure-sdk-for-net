@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a PaloAltoNetworksFirewall along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PaloAltoNetworksFirewallResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPaloAltoNetworksFirewallResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPaloAltoNetworksFirewall method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PaloAltoNetworksFirewallResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPaloAltoNetworksFirewallResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPaloAltoNetworksFirewall method.
     /// </summary>
     public partial class PaloAltoNetworksFirewallResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly FirewallsRestOperations _paloAltoNetworksFirewallFirewallsRestClient;
         private readonly PaloAltoNetworksFirewallData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls";
+
         /// <summary> Initializes a new instance of the <see cref="PaloAltoNetworksFirewallResource"/> class for mocking. </summary>
         protected PaloAltoNetworksFirewallResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PaloAltoNetworksFirewallResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PaloAltoNetworksFirewallResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PaloAltoNetworksFirewallResource(ArmClient client, PaloAltoNetworksFirewallData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary> Gets an object representing a PaloAltoNetworksFirewallStatusResource along with the instance operations that can be performed on it in the PaloAltoNetworksFirewall. </summary>
-        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public virtual PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatus()
         {
             return new PaloAltoNetworksFirewallStatusResource(Client, Id.AppendChildResource("statuses", "default"));
@@ -109,6 +109,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +150,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,6 +189,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +232,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -241,6 +273,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +316,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
@@ -310,6 +358,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_getGlobalRulestack</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -339,6 +395,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_getGlobalRulestack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +434,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_getLogProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -400,6 +472,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_getLogProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -429,6 +509,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_getSupportInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -461,6 +549,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_getSupportInfo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="email"> email address on behalf of which this API called. </param>
@@ -492,9 +588,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_saveLogProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SaveLogProfileAsync(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {
@@ -523,9 +627,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_saveLogProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SaveLogProfile(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {
@@ -553,6 +665,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -608,6 +728,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -662,6 +790,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -711,6 +847,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -759,6 +903,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -811,6 +963,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

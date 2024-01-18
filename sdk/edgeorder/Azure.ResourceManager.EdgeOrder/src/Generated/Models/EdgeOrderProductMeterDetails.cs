@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// </summary>
     public abstract partial class EdgeOrderProductMeterDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderProductMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>
         protected EdgeOrderProductMeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>

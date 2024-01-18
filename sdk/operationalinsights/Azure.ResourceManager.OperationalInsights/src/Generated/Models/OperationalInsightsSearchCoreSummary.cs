@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The core summary of a search. </summary>
     internal partial class OperationalInsightsSearchCoreSummary
     {
-        /// <summary> Initializes a new instance of OperationalInsightsSearchCoreSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchCoreSummary"/>. </summary>
         /// <param name="numberOfDocuments"> The number of documents of a core summary. </param>
         internal OperationalInsightsSearchCoreSummary(long numberOfDocuments)
         {
             NumberOfDocuments = numberOfDocuments;
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSearchCoreSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchCoreSummary"/>. </summary>
         /// <param name="status"> The status of a core summary. </param>
         /// <param name="numberOfDocuments"> The number of documents of a core summary. </param>
         internal OperationalInsightsSearchCoreSummary(string status, long numberOfDocuments)

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateMySqlAzureDBForMySqlOfflineTaskOutputError. </summary>
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputError : MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputError()
         {
             ResultType = "ErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="error"> Migration error. </param>

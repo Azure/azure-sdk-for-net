@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorData(AzureLocation location) : base(location)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A single Amazon Simple Storage Service (S3) object or a set of S3 objects. </summary>
     public partial class AmazonS3Dataset : Dataset
     {
-        /// <summary> Initializes a new instance of AmazonS3Dataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AmazonS3Object";
         }
 
-        /// <summary> Initializes a new instance of AmazonS3Dataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

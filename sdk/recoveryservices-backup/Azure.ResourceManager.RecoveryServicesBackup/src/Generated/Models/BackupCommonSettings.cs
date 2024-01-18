@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Common settings field for backup management. </summary>
     public partial class BackupCommonSettings
     {
-        /// <summary> Initializes a new instance of BackupCommonSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupCommonSettings"/>. </summary>
         public BackupCommonSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupCommonSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupCommonSettings"/>. </summary>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="isSqlCompression"> SQL compression flag. </param>
         /// <param name="isCompression">

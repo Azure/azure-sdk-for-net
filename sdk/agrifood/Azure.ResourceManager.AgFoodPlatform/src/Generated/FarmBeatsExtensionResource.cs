@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
     /// A Class representing a FarmBeatsExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FarmBeatsExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFarmBeatsExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetFarmBeatsExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FarmBeatsExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFarmBeatsExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetFarmBeatsExtension method.
     /// </summary>
     public partial class FarmBeatsExtensionResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
         private readonly FarmBeatsExtensionsRestOperations _farmBeatsExtensionRestClient;
         private readonly FarmBeatsExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="FarmBeatsExtensionResource"/> class for mocking. </summary>
         protected FarmBeatsExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FarmBeatsExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FarmBeatsExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FarmBeatsExtensionResource(ArmClient client, FarmBeatsExtensionData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatsExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

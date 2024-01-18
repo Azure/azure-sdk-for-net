@@ -13,14 +13,14 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system and architecture values are listed in the Go language documentation for $GOOS and $GOARCH. </summary>
     internal partial class Platform
     {
-        /// <summary> Initializes a new instance of Platform. </summary>
+        /// <summary> Initializes a new instance of <see cref="Platform"/>. </summary>
         internal Platform()
         {
             OsFeatures = new ChangeTrackingList<string>();
             Features = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Platform. </summary>
+        /// <summary> Initializes a new instance of <see cref="Platform"/>. </summary>
         /// <param name="architecture"> Specifies the CPU architecture, for example amd64 or ppc64le. </param>
         /// <param name="os"> The os field specifies the operating system, for example linux or windows. </param>
         /// <param name="osVersion"> The optional os.version field specifies the operating system version, for example 10.0.10586. </param>

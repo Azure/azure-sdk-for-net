@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
     /// A Class representing a DataLakeAnalyticsAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeAnalyticsAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeAnalyticsAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataLakeAnalyticsAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataLakeAnalyticsAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataLakeAnalyticsAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataLakeAnalyticsAccount method.
     /// </summary>
     public partial class DataLakeAnalyticsAccountResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         private readonly AccountsRestOperations _dataLakeAnalyticsAccountAccountsRestClient;
         private readonly DataLakeAnalyticsAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsAccountResource"/> class for mocking. </summary>
         protected DataLakeAnalyticsAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataLakeAnalyticsAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataLakeAnalyticsAccountResource(ArmClient client, DataLakeAnalyticsAccountData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -109,6 +109,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>DataLakeStoreAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataLakeStoreAccountName"> The name of the Data Lake Store account to retrieve. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataLakeStoreAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountInformationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +178,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsStorageAccountInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsStorageAccountInformationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +247,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>ComputePolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsComputePolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="computePolicyName"> The name of the compute policy to retrieve. </param>
@@ -237,6 +277,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComputePolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsComputePolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +316,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
@@ -291,6 +347,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
@@ -313,6 +377,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,6 +418,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -377,6 +457,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,6 +500,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -445,6 +541,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -483,6 +587,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Expanded info of resource scope. </summary>
     public partial class RoleManagementPolicyProperties
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyProperties"/>. </summary>
         internal RoleManagementPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyProperties"/>. </summary>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>

@@ -5,19 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentMetadataProperties : IUtf8JsonSerializable
+    public partial class SecurityAssessmentMetadataProperties : IUtf8JsonSerializable, IJsonModel<SecurityAssessmentMetadataProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentMetadataProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityAssessmentMetadataProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
+            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionId))
+            {
+                writer.WritePropertyName("policyDefinitionId"u8);
+                writer.WriteStringValue(PolicyDefinitionId);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -72,11 +87,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("partnerData"u8);
                 writer.WriteObjectValue(PartnerData);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element)
+        SecurityAssessmentMetadataProperties IJsonModel<SecurityAssessmentMetadataProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAssessmentMetadataProperties(document.RootElement, options);
+        }
+
+        internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,6 +137,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> preview = default;
             SecurityAssessmentType assessmentType = default;
             Optional<SecurityAssessmentMetadataPartner> partnerData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -193,8 +239,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), assessmentType, partnerData.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), assessmentType, partnerData.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityAssessmentMetadataProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityAssessmentMetadataProperties IPersistableModel<SecurityAssessmentMetadataProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityAssessmentMetadataProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityAssessmentMetadataProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

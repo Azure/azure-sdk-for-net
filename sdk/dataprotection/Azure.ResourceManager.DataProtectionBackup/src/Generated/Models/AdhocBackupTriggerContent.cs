@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Trigger backup request. </summary>
     public partial class AdhocBackupTriggerContent
     {
-        /// <summary> Initializes a new instance of AdhocBackupTriggerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupTriggerContent"/>. </summary>
         /// <param name="backupRules"> Name for the Rule of the Policy which needs to be applied for this backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupRules"/> is null. </exception>
         public AdhocBackupTriggerContent(AdhocBackupRules backupRules)

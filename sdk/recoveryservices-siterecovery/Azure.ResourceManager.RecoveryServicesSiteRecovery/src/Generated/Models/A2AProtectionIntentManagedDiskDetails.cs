@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure VM managed disk input details. </summary>
     public partial class A2AProtectionIntentManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectionIntentManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public A2AProtectionIntentManagedDiskDetails(string diskId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskId = diskId;
         }
 
-        /// <summary> Initializes a new instance of A2AProtectionIntentManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="primaryStagingStorageAccountCustomContent">
         /// The primary staging storage account input.

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the control family. </summary>
     public partial class ControlFamily
     {
-        /// <summary> Initializes a new instance of ControlFamily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlFamily"/>. </summary>
         internal ControlFamily()
         {
             Controls = new ChangeTrackingList<Control>();
         }
 
-        /// <summary> Initializes a new instance of ControlFamily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlFamily"/>. </summary>
         /// <param name="familyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
         /// <param name="familyType"> The control family type. </param>
         /// <param name="familyStatus"> Control family status. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ComponentResource" /> and their operations.
-    /// Each <see cref="ComponentResource" /> in the collection will belong to the same instance of <see cref="NetworkFunctionResource" />.
-    /// To get a <see cref="ComponentCollection" /> instance call the GetComponents method from an instance of <see cref="NetworkFunctionResource" />.
+    /// A class representing a collection of <see cref="ComponentResource"/> and their operations.
+    /// Each <see cref="ComponentResource"/> in the collection will belong to the same instance of <see cref="NetworkFunctionResource"/>.
+    /// To get a <see cref="ComponentCollection"/> instance call the GetComponents method from an instance of <see cref="NetworkFunctionResource"/>.
     /// </summary>
     public partial class ComponentCollection : ArmCollection, IEnumerable<ComponentResource>, IAsyncEnumerable<ComponentResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> The name of the component. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Components_ListByNetworkFunction</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _componentRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Components_ListByNetworkFunction</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _componentRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> The name of the component. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

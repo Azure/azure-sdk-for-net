@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Settings for upgrading an agentpool. </summary>
     internal partial class AgentPoolUpgradeSettings
     {
-        /// <summary> Initializes a new instance of AgentPoolUpgradeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeSettings"/>. </summary>
         public AgentPoolUpgradeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolUpgradeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeSettings"/>. </summary>
         /// <param name="maxSurge"> This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. For more information, including best practices, see: https://docs.microsoft.com/azure/aks/upgrade-cluster#customize-node-surge-upgrade. </param>
         internal AgentPoolUpgradeSettings(string maxSurge)
         {

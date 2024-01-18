@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The available private link resources for an IotHub. </summary>
     internal partial class IotHubPrivateLinkResources
     {
-        /// <summary> Initializes a new instance of IotHubPrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkResources"/>. </summary>
         internal IotHubPrivateLinkResources()
         {
             Value = new ChangeTrackingList<IotHubPrivateEndpointGroupInformationData>();
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkResources"/>. </summary>
         /// <param name="value"> The list of available private link resources for an IotHub. </param>
         internal IotHubPrivateLinkResources(IReadOnlyList<IotHubPrivateEndpointGroupInformationData> value)
         {

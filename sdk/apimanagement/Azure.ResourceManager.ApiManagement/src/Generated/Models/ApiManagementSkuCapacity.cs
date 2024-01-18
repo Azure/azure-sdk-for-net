@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes scaling information of a SKU. </summary>
     public partial class ApiManagementSkuCapacity
     {
-        /// <summary> Initializes a new instance of ApiManagementSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuCapacity"/>. </summary>
         internal ApiManagementSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity that can be set. </param>
         /// <param name="default"> The default capacity. </param>

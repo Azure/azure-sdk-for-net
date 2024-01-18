@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabDiskData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabDiskData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

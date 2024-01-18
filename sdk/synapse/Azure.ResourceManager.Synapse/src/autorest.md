@@ -438,6 +438,12 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/connectionPolicies/{connectionPolicyName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 
+suppress-abstract-base-class:
+- SynapseDatabaseData
+- SynapseDataConnectionData
+- SynapseIntegrationRuntimeProperties
+- SynapseIntegrationRuntimeStatus
+
 directive:
   - remove-operation: Get_IntegrationRuntimeStart
   - remove-operation: Get_IntegrationRuntimeStop

@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the create checkpoint action properties. </summary>
     public partial class VirtualMachineCreateCheckpoint
     {
-        /// <summary> Initializes a new instance of VirtualMachineCreateCheckpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCreateCheckpoint"/>. </summary>
         public VirtualMachineCreateCheckpoint()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCreateCheckpoint"/>. </summary>
+        /// <param name="name"> Name of the checkpoint. </param>
+        /// <param name="description"> Description of the checkpoint. </param>
+        internal VirtualMachineCreateCheckpoint(string name, string description)
+        {
+            Name = name;
+            Description = description;
         }
 
         /// <summary> Name of the checkpoint. </summary>

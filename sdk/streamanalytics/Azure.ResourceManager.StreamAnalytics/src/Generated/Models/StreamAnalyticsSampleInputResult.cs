@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The result of the sample input request. </summary>
     public partial class StreamAnalyticsSampleInputResult : StreamAnalyticsError
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSampleInputResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSampleInputResult"/>. </summary>
         internal StreamAnalyticsSampleInputResult()
         {
             Diagnostics = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsSampleInputResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSampleInputResult"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>

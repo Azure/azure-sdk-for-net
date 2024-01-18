@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
     public partial class AppliedScopeProperties
     {
-        /// <summary> Initializes a new instance of AppliedScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedScopeProperties"/>. </summary>
         public AppliedScopeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppliedScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedScopeProperties"/>. </summary>
         /// <param name="tenantId"> Tenant ID where the savings plan should apply benefit. </param>
         /// <param name="managementGroupId"> Fully-qualified identifier of the management group where the benefit must be applied. </param>
         /// <param name="subscriptionId"> Fully-qualified identifier of the subscription. </param>

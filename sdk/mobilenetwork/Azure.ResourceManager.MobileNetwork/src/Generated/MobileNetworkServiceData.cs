@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="servicePrecedence"> A precedence value that is used to decide between services when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all services configured in the mobile network. </param>
         /// <param name="pccRules"> The set of data flow policy rules that make up this service. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork
             PccRules = pccRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

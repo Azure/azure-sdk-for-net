@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a cloud service extension profile. </summary>
     internal partial class CloudServiceExtensionProfile
     {
-        /// <summary> Initializes a new instance of CloudServiceExtensionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceExtensionProfile"/>. </summary>
         public CloudServiceExtensionProfile()
         {
             Extensions = new ChangeTrackingList<CloudServiceExtension>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceExtensionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceExtensionProfile"/>. </summary>
         /// <param name="extensions"> List of extensions for the cloud service. </param>
         internal CloudServiceExtensionProfile(IList<CloudServiceExtension> extensions)
         {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -14,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         internal RouterWorker()
         {
             Queues = new ChangeTrackingList<string>();
@@ -25,8 +26,8 @@ namespace Azure.Communication.JobRouter
             AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
         }
 
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
-        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a worker. </param>
         /// <param name="state"> Current state of a worker. </param>
         /// <param name="queues"> Collection of queue(s) that this worker can receive work from. </param>
@@ -38,9 +39,9 @@ namespace Azure.Communication.JobRouter
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
         /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
-        internal RouterWorker(string etag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
+        internal RouterWorker(ETag eTag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
         {
-            _etag = etag;
+            ETag = eTag;
             Id = id;
             State = state;
             Queues = queues;

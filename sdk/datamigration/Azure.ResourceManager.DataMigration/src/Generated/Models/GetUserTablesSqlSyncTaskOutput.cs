@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output of the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
         internal GetUserTablesSqlSyncTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
         /// <param name="databasesToSourceTables"> Mapping from database name to list of source tables. </param>
         /// <param name="databasesToTargetTables"> Mapping from database name to list of target tables. </param>
         /// <param name="tableValidationErrors"> Mapping from database name to list of validation errors. </param>

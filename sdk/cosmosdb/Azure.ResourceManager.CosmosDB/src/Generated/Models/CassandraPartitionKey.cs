@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table partition key. </summary>
     public partial class CassandraPartitionKey
     {
-        /// <summary> Initializes a new instance of CassandraPartitionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraPartitionKey"/>. </summary>
         public CassandraPartitionKey()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraPartitionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraPartitionKey"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table partition key. </param>
         internal CassandraPartitionKey(string name)
         {

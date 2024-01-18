@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     public partial class NetworkFabricErrorResult
     {
-        /// <summary> Initializes a new instance of NetworkFabricErrorResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricErrorResult"/>. </summary>
         internal NetworkFabricErrorResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricErrorResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricErrorResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         internal NetworkFabricErrorResult(ResponseError error)
         {

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A Class representing a SignalR along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SignalRResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSignalRResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSignalR method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSignalRResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSignalR method.
     /// </summary>
     public partial class SignalRResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.SignalR
         private readonly SignalRPrivateLinkResourcesRestOperations _signalRPrivateLinkResourcesRestClient;
         private readonly SignalRData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR";
+
         /// <summary> Initializes a new instance of the <see cref="SignalRResource"/> class for mocking. </summary>
         protected SignalRResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SignalRResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SignalRResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SignalRResource(ArmClient client, SignalRData data) : this(client, data.Id)
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.SignalR
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -115,6 +115,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalRCustomCertificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRCustomCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Custom certificate name. </param>
@@ -137,6 +145,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalRCustomCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +184,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalRCustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Custom domain name. </param>
@@ -190,6 +214,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalRCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +253,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalRPrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -243,6 +283,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalRPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +322,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalRSharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRSharedPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
@@ -297,6 +353,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalRSharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRSharedPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
@@ -319,6 +383,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,6 +424,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -383,6 +463,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,6 +506,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -451,6 +547,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,6 +594,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -528,6 +640,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -558,6 +678,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -587,6 +715,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,6 +762,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -664,6 +808,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -697,6 +849,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Restart</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -732,10 +892,18 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -753,10 +921,18 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -774,10 +950,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalRPrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRPrivateLinkResource> GetSignalRPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -796,10 +976,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalRPrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRPrivateLinkResource> GetSignalRPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -817,6 +1001,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -872,6 +1064,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -926,6 +1126,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -975,6 +1183,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1023,6 +1239,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1075,6 +1299,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

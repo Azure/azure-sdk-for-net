@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> Peering location is where connectivity could be established to the Microsoft Cloud Edge. </summary>
     public partial class PeeringLocation : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLocation"/>. </summary>
         public PeeringLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLocation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

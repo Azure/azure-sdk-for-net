@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AlertProcessingRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AlertProcessingRuleResource"/> object. </returns>
         public static AlertProcessingRuleResource GetAlertProcessingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ServiceAlertResource"/> object. </returns>
         public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SmartGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SmartGroupResource"/> object. </returns>
         public static SmartGroupResource GetSmartGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -125,6 +125,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -154,6 +162,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -202,6 +218,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -230,6 +254,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -277,6 +309,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -305,6 +345,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -335,6 +383,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -344,7 +400,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -363,6 +419,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertProcessingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -372,7 +436,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -390,6 +454,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -419,6 +491,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSummary</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -447,6 +527,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -474,6 +562,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
         /// </item>
         /// </list>
         /// <item>

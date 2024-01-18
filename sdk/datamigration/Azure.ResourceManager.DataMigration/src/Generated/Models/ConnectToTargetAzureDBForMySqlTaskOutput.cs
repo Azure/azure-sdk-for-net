@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to Azure Database for MySQL and target server requirements. </summary>
     public partial class ConnectToTargetAzureDBForMySqlTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForMySqlTaskOutput"/>. </summary>
         internal ConnectToTargetAzureDBForMySqlTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForMySqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="serverVersion"> Version of the target server. </param>
         /// <param name="databases"> List of databases on target server. </param>

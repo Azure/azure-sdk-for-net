@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Chaos.Mocking;
+using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CapabilityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CapabilityResource"/> object. </returns>
         public static CapabilityResource GetCapabilityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CapabilityTypeResource"/> object. </returns>
         public static CapabilityTypeResource GetCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExperimentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ExperimentResource"/> object. </returns>
         public static ExperimentResource GetExperimentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -92,41 +93,22 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExperimentStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentStatusResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ExperimentExecutionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExperimentExecutionResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetExperimentStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetExperimentExecutionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExperimentStatusResource" /> object. </returns>
-        public static ExperimentStatusResource GetExperimentStatusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExperimentExecutionResource"/> object. </returns>
+        public static ExperimentExecutionResource GetExperimentExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableChaosArmClient(client).GetExperimentStatusResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ExperimentExecutionDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExperimentExecutionDetailResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentExecutionDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetExperimentExecutionDetailResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExperimentExecutionDetailResource" /> object. </returns>
-        public static ExperimentExecutionDetailResource GetExperimentExecutionDetailResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableChaosArmClient(client).GetExperimentExecutionDetailResource(id);
+            return GetMockableChaosArmClient(client).GetExperimentExecutionResource(id);
         }
 
         /// <summary>
@@ -140,7 +122,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TargetTypeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TargetTypeResource"/> object. </returns>
         public static TargetTypeResource GetTargetTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -159,7 +141,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TargetResource"/> object. </returns>
         public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -195,6 +177,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -224,6 +214,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -276,6 +274,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -308,6 +314,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -361,6 +375,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -391,6 +413,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -423,6 +453,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -434,7 +472,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExperimentResource> GetExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -453,6 +491,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExperimentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -464,12 +510,80 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExperimentResource> GetExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChaosSubscriptionResource(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the status of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationsStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The region name of operation. </param>
+        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="asyncOperationId"/> is null. </exception>
+        public static async Task<Response<OperationStatus>> GetOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableChaosSubscriptionResource(subscriptionResource).GetOperationStatusAsync(location, asyncOperationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationsStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The region name of operation. </param>
+        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="asyncOperationId"/> is null. </exception>
+        public static Response<OperationStatus> GetOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetOperationStatus(location, asyncOperationId, cancellationToken);
         }
     }
 }

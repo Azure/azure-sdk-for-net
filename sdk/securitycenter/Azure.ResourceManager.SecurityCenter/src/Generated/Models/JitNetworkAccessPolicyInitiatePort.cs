@@ -6,19 +6,70 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The JitNetworkAccessPolicyInitiatePort. </summary>
     public partial class JitNetworkAccessPolicyInitiatePort
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyInitiatePort. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="endOn"> The time to close the request in UTC. </param>
         public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endOn)
         {
             Number = number;
             EndOn = endOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
+        /// <param name="number"></param>
+        /// <param name="allowedSourceAddressPrefix"> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPolicyInitiatePort(int number, string allowedSourceAddressPrefix, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Number = number;
+            AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
+            EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/> for deserialization. </summary>
+        internal JitNetworkAccessPolicyInitiatePort()
+        {
         }
 
         /// <summary> Gets the number. </summary>

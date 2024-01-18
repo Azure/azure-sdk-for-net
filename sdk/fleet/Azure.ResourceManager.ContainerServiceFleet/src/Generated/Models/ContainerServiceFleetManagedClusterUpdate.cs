@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The update to be applied to the ManagedClusters. </summary>
     public partial class ContainerServiceFleetManagedClusterUpdate
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetManagedClusterUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpdate"/>. </summary>
         /// <param name="upgrade"> The upgrade to apply to the ManagedClusters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="upgrade"/> is null. </exception>
         public ContainerServiceFleetManagedClusterUpdate(ContainerServiceFleetManagedClusterUpgradeSpec upgrade)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Upgrade = upgrade;
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetManagedClusterUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpdate"/>. </summary>
         /// <param name="upgrade"> The upgrade to apply to the ManagedClusters. </param>
         /// <param name="nodeImageSelection"> The node image upgrade to be applied to the target nodes in update run. </param>
         internal ContainerServiceFleetManagedClusterUpdate(ContainerServiceFleetManagedClusterUpgradeSpec upgrade, NodeImageSelection nodeImageSelection)

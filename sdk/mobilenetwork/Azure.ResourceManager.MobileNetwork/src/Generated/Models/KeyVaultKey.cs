@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> An Azure key vault key. </summary>
     internal partial class KeyVaultKey
     {
-        /// <summary> Initializes a new instance of KeyVaultKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKey"/>. </summary>
         public KeyVaultKey()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKey"/>. </summary>
         /// <param name="keyUri"> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </param>
         internal KeyVaultKey(Uri keyUri)
         {

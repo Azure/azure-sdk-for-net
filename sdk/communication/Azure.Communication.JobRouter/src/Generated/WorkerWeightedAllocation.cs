@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Contains the weight percentage and worker selectors to be applied if selected for weighted distributions. </summary>
     public partial class WorkerWeightedAllocation
     {
-        /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
         internal WorkerWeightedAllocation(double weight, IReadOnlyList<RouterWorkerSelector> workerSelectors)

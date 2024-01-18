@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the region. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,10 +146,18 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRResource> GetSignalRsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SignalRRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -152,10 +176,18 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRResource> GetSignalRs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SignalRRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -174,11 +206,15 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the location like "eastus". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -197,11 +233,15 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the location like "eastus". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);

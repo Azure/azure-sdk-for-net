@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App executions collection ARM resource. </summary>
     public partial class ContainerAppJobExecutions
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecutions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutions"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContainerAppJobExecutions(IEnumerable<ContainerAppJobExecutionData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutions"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal ContainerAppJobExecutions(IReadOnlyList<ContainerAppJobExecutionData> value, string nextLink)

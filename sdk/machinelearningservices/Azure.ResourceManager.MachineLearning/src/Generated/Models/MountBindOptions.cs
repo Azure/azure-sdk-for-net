@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MountBindOptions. </summary>
     public partial class MountBindOptions
     {
-        /// <summary> Initializes a new instance of MountBindOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         public MountBindOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of MountBindOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         /// <param name="propagation"> Type of Bind Option. </param>
         /// <param name="doesCreateHostPath"> Indicate whether to create host path. </param>
         /// <param name="selinux"> Mention the selinux options. </param>

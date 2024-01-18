@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The service resource for patch operations. </summary>
     public partial class ServiceFabricServicePatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServicePatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricServicePatch(AzureLocation location) : base(location)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServicePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownOutboundRule. </summary>
     internal partial class UnknownOutboundRule : MachineLearningOutboundRule
     {
-        /// <summary> Initializes a new instance of UnknownOutboundRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>

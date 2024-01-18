@@ -64,10 +64,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -86,10 +94,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -107,6 +123,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +164,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -179,6 +203,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_GetByEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +245,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_GetByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -254,11 +286,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -276,11 +312,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -298,12 +338,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_ListByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
@@ -321,12 +365,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_ListByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
@@ -344,11 +392,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => managedUnsupportedVMSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -367,11 +419,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => managedUnsupportedVMSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -389,6 +445,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,6 +485,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

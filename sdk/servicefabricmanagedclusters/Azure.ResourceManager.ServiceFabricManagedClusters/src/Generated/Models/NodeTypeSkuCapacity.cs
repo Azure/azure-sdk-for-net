@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Provides information about how node type can be scaled. </summary>
     public partial class NodeTypeSkuCapacity
     {
-        /// <summary> Initializes a new instance of NodeTypeSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeSkuCapacity"/>. </summary>
         internal NodeTypeSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of NodeTypeSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeSkuCapacity"/>. </summary>
         /// <param name="minimum"> Lowest permitted node count in a node type. </param>
         /// <param name="maximum"> Highest permitted node count in a node type. </param>
         /// <param name="default"> Default node count in a node type. </param>

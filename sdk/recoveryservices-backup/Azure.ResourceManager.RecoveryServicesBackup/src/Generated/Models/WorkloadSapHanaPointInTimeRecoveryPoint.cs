@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Recovery point specific to PointInTime in SAPHana. </summary>
     public partial class WorkloadSapHanaPointInTimeRecoveryPoint : WorkloadPointInTimeRecoveryPoint
     {
-        /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>. </summary>
         public WorkloadSapHanaPointInTimeRecoveryPoint()
         {
             ObjectType = "AzureWorkloadSAPHanaPointInTimeRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
         /// <param name="restorePointType"> Type of restore point. </param>

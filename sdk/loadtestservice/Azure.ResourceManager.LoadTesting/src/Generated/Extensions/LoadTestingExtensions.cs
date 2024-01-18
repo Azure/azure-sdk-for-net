@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LoadTestingQuotaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LoadTestingQuotaResource"/> object. </returns>
         public static LoadTestingQuotaResource GetLoadTestingQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LoadTestingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LoadTestingResource"/> object. </returns>
         public static LoadTestingResource GetLoadTestingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -178,6 +194,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -208,6 +232,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -240,6 +272,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -249,7 +289,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -268,6 +308,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -277,7 +325,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LoadTestingResource> GetLoadTestingResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

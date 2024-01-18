@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the collection of Virtual Instance for SAP solutions resources. </summary>
     internal partial class SapVirtualInstanceList
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceList"/>. </summary>
         internal SapVirtualInstanceList()
         {
             Value = new ChangeTrackingList<SapVirtualInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceList"/>. </summary>
         /// <param name="value"> Gets the list of Virtual Instances for SAP solutions resources. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
         internal SapVirtualInstanceList(IReadOnlyList<SapVirtualInstanceData> value, string nextLink)

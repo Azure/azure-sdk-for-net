@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestUri match conditions. </summary>
     public partial class RequestUriMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestUriMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestUriMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestUriOperator"> Describes operator to be matched. </param>
         public RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator requestUriOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of RequestUriMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestUriMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestUriOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

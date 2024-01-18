@@ -14,20 +14,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The List Extension Metadata response. </summary>
     internal partial class ExtensionValueListResult
     {
-        /// <summary> Initializes a new instance of ExtensionValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionValueListResult"/>. </summary>
         internal ExtensionValueListResult()
         {
-            Value = new ChangeTrackingList<ExtensionValueData>();
+            Value = new ChangeTrackingList<HybridComputeExtensionValueData>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionValueListResult"/>. </summary>
         /// <param name="value"> The list of extension metadata. </param>
-        internal ExtensionValueListResult(IReadOnlyList<ExtensionValueData> value)
+        internal ExtensionValueListResult(IReadOnlyList<HybridComputeExtensionValueData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of extension metadata. </summary>
-        public IReadOnlyList<ExtensionValueData> Value { get; }
+        public IReadOnlyList<HybridComputeExtensionValueData> Value { get; }
     }
 }

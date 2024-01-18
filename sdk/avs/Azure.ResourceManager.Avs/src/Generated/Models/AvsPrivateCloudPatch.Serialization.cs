@@ -63,6 +63,16 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            {
+                writer.WritePropertyName("extendedNetworkBlocks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExtendedNetworkBlocks)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

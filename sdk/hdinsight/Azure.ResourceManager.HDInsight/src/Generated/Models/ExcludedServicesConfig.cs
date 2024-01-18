@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The configuration that services will be excluded when creating cluster. </summary>
     public partial class ExcludedServicesConfig
     {
-        /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExcludedServicesConfig"/>. </summary>
         public ExcludedServicesConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExcludedServicesConfig"/>. </summary>
         /// <param name="excludedServicesConfigId"> The config id of excluded services. </param>
         /// <param name="excludedServicesList"> The list of excluded services. </param>
         internal ExcludedServicesConfig(string excludedServicesConfigId, string excludedServicesList)

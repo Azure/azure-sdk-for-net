@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Response for the ListContacts API service call. </summary>
     internal partial class OrbitalContactListResult
     {
-        /// <summary> Initializes a new instance of OrbitalContactListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactListResult"/>. </summary>
         internal OrbitalContactListResult()
         {
             Value = new ChangeTrackingList<OrbitalContactData>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactListResult"/>. </summary>
         /// <param name="value"> A list of contact resources in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal OrbitalContactListResult(IReadOnlyList<OrbitalContactData> value, string nextLink)

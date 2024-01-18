@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Describes restrictions of a SKU. </summary>
     public partial class CognitiveServicesSkuRestrictions
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuRestrictions"/>. </summary>
         internal CognitiveServicesSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>

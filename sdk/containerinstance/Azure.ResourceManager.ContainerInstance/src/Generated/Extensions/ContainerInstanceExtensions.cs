@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ContainerGroupResource"/> object. </returns>
         public static ContainerGroupResource GetContainerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -112,6 +120,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -141,6 +157,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -173,6 +193,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -204,6 +228,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -213,7 +245,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -232,6 +264,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -241,7 +281,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerGroupResource> GetContainerGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -260,6 +300,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -270,7 +314,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -289,6 +333,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -299,7 +347,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -318,6 +366,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -328,7 +380,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -347,6 +399,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -357,7 +413,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -376,6 +432,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -386,7 +446,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -405,6 +465,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -415,7 +479,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

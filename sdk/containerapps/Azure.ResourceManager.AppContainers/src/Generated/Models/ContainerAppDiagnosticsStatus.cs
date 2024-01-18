@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Rendering details of a diagnostics table. </summary>
     public partial class ContainerAppDiagnosticsStatus
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsStatus"/>. </summary>
         public ContainerAppDiagnosticsStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsStatus"/>. </summary>
         /// <param name="message"> Diagnostic message. </param>
         /// <param name="statusId"> Status. </param>
         internal ContainerAppDiagnosticsStatus(string message, int? statusId)

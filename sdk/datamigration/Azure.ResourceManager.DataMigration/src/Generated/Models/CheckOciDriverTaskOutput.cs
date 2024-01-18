@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the service task to check for OCI drivers. </summary>
     public partial class CheckOciDriverTaskOutput
     {
-        /// <summary> Initializes a new instance of CheckOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskOutput"/>. </summary>
         internal CheckOciDriverTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of CheckOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskOutput"/>. </summary>
         /// <param name="installedDriver"> Information about the installed driver if found and valid. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         internal CheckOciDriverTaskOutput(OracleOciDriverInfo installedDriver, IReadOnlyList<ReportableException> validationErrors)

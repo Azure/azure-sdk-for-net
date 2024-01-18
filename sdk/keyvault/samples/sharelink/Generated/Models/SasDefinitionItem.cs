@@ -13,13 +13,13 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The SAS definition item containing storage SAS definition metadata. </summary>
     public partial class SasDefinitionItem
     {
-        /// <summary> Initializes a new instance of SasDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionItem"/>. </summary>
         internal SasDefinitionItem()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SasDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionItem"/>. </summary>
         /// <param name="id"> The storage SAS identifier. </param>
         /// <param name="secretId"> The storage account SAS definition secret id. </param>
         /// <param name="attributes"> The SAS definition management attributes. </param>

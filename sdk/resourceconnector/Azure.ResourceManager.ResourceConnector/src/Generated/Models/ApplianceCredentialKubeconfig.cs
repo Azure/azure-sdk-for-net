@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Cluster User Credential appliance. </summary>
     public partial class ApplianceCredentialKubeconfig
     {
-        /// <summary> Initializes a new instance of ApplianceCredentialKubeconfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceCredentialKubeconfig"/>. </summary>
         internal ApplianceCredentialKubeconfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceCredentialKubeconfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceCredentialKubeconfig"/>. </summary>
         /// <param name="name"> Name which contains the role of the kubeconfig. </param>
         /// <param name="value"> Contains the kubeconfig value. </param>
         internal ApplianceCredentialKubeconfig(AccessProfileType? name, string value)

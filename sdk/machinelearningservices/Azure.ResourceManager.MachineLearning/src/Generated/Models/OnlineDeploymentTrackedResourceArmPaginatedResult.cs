@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of OnlineDeployment entities. </summary>
     internal partial class OnlineDeploymentTrackedResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineDeploymentTrackedResourceArmPaginatedResult"/>. </summary>
         internal OnlineDeploymentTrackedResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningOnlineDeploymentData>();
         }
 
-        /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineDeploymentTrackedResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of OnlineDeployment objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type OnlineDeployment. </param>
         internal OnlineDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningOnlineDeploymentData> value)

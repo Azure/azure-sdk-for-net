@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The Dsc configuration property associated with the entity. </summary>
     public partial class DscConfigurationAssociationProperty
     {
-        /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationAssociationProperty"/>. </summary>
         public DscConfigurationAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationAssociationProperty"/>. </summary>
         /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
         internal DscConfigurationAssociationProperty(string configurationName)
         {

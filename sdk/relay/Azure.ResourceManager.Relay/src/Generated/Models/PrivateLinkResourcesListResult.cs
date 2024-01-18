@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Result of the List private link resources operation. </summary>
     internal partial class PrivateLinkResourcesListResult
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
         internal PrivateLinkResourcesListResult()
         {
             Value = new ChangeTrackingList<RelayPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
         /// <param name="value"> A collection of private link resources. </param>
         /// <param name="nextLink"> A link for the next page of private link resources. </param>
         internal PrivateLinkResourcesListResult(IReadOnlyList<RelayPrivateLinkResourceData> value, string nextLink)
