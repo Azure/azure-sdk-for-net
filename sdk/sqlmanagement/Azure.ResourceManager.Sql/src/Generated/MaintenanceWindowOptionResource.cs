@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindowOptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowOptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
@@ -136,6 +144,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

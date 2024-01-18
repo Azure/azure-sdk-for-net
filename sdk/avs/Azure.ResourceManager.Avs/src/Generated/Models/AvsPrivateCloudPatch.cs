@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
+            ExtendedNetworkBlocks = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
@@ -29,7 +30,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
         /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
         /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
-        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption)
+        /// <param name="extendedNetworkBlocks"> Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X). </param>
+        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks)
         {
             Tags = tags;
             Identity = identity;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
             IdentitySources = identitySources;
             Availability = availability;
             Encryption = encryption;
+            ExtendedNetworkBlocks = extendedNetworkBlocks;
         }
 
         /// <summary> Resource tags. </summary>
@@ -54,5 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
         public PrivateCloudAvailabilityProperties Availability { get; set; }
         /// <summary> Customer managed key encryption, can be enabled or disabled. </summary>
         public CustomerManagedEncryption Encryption { get; set; }
+        /// <summary> Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X). </summary>
+        public IList<string> ExtendedNetworkBlocks { get; }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -27,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 Debug.WriteLine($"{DateTime.Now}: OnPing invoked.");
 
-                var response = _quickPulseSDKClientAPIsRestClient.PingCustom(
+                var response = _quickPulseSDKClientAPIsRestClient.CustomPing(
                     ikey: _connectionVars.InstrumentationKey,
                     apikey: null,
                     xMsQpsTransmissionTime: null,
@@ -40,29 +41,26 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     monitoringDataPoint: null,
                     cancellationToken: default);
 
-                if (IsResponseSuccess(response))
+                if (response.Success)
                 {
                     _lastSuccessfulPing = DateTimeOffset.UtcNow;
 
-                    if (response.GetRawResponse().Headers.TryGetValue("x-ms-qps-configuration-etag", out string? etagValue) && etagValue != _etag)
+                    if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
                     {
-                        Debug.WriteLine($"OnPing: updated etag: {etagValue}");
-                        _etag = etagValue;
+                        Debug.WriteLine($"OnPing: updated etag: {response.ConfigurationEtag}");
+                        _etag = response.ConfigurationEtag;
                     }
 
-                    if (response.GetRawResponse().Headers.TryGetValue("x-ms-qps-subscribed", out string? subscribedValue) && Convert.ToBoolean(subscribedValue))
+                    if (response.Subscribed)
                     {
-                        Debug.WriteLine($"OnPing: Subscribed: {subscribedValue}");
+                        Debug.WriteLine($"OnPing: Subscribed: {response.Subscribed}");
                         SetPostState();
                     }
                 }
-                else
-                {
-                    // TODO: NEED TO INSPECT THE ServiceError OBJECT AND LOG.
-                }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
+                LiveMetricsExporterEventSource.Log.PingFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
             }
         }
@@ -91,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 var dataPoint = GetDataPoint();
 
-                var response = _quickPulseSDKClientAPIsRestClient.PostCustom(
+                var response = _quickPulseSDKClientAPIsRestClient.CustomPost(
                     ikey: _connectionVars.InstrumentationKey,
                     apikey: null,
                     xMsQpsConfigurationEtag: _etag,
@@ -99,38 +97,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     monitoringDataPoints: new MonitoringDataPoint[] { dataPoint }, // TODO: CHECK WITH SERVICE TEAM. WHY DOES THIS NEED TO BE A COLLECITON?
                     cancellationToken: default);
 
-                if (IsResponseSuccess(response))
+                if (response.Success)
                 {
                     _lastSuccessfulPost = DateTimeOffset.UtcNow;
 
-                    if (response.GetRawResponse().Headers.TryGetValue("x-ms-qps-configuration-etag", out string? etagValue) && etagValue != _etag)
+                    if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
                     {
-                        Debug.WriteLine($"OnPost: updated etag: {etagValue}");
-                        _etag = etagValue;
+                        Debug.WriteLine($"OnPost: updated etag: {response.ConfigurationEtag}");
+                        _etag = response.ConfigurationEtag;
                     }
 
-                    if (response.GetRawResponse().Headers.TryGetValue("x-ms-qps-subscribed", out string? subscribedValue) && !Convert.ToBoolean(subscribedValue))
+                    if (response.Subscribed)
                     {
-                        Debug.WriteLine($"OnPost: Subscribed: {subscribedValue}");
+                        Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}");
                         _etag = string.Empty;
                         SetPingState();
                     }
                 }
-                else
-                {
-                    // TODO: NEED TO INSPECT THE ServiceError OBJECT AND LOG.
-                }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
+                LiveMetricsExporterEventSource.Log.PostFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
             }
-        }
-
-        private bool IsResponseSuccess(Response response)
-        {
-            // TODO: COULD THIS BE MOVED INTO THE REST CLIENT CUSTOMIZATION? ie: avoid checking Status code twice?
-            return response.Status >= 200 && response.Status < 300;
         }
     }
 }

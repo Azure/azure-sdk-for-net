@@ -56,6 +56,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The object containing information for the availability request. </param>
@@ -89,6 +97,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,6 +140,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -145,6 +169,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

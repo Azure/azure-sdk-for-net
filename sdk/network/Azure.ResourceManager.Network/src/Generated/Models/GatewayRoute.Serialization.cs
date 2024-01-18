@@ -5,15 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GatewayRoute
+    public partial class GatewayRoute : IUtf8JsonSerializable, IJsonModel<GatewayRoute>
     {
-        internal static GatewayRoute DeserializeGatewayRoute(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GatewayRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LocalAddress))
+            {
+                writer.WritePropertyName("localAddress"u8);
+                writer.WriteStringValue(LocalAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteStringValue(Network);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextHop))
+            {
+                writer.WritePropertyName("nextHop"u8);
+                writer.WriteStringValue(NextHop);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourcePeer))
+            {
+                writer.WritePropertyName("sourcePeer"u8);
+                writer.WriteStringValue(SourcePeer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Origin))
+            {
+                writer.WritePropertyName("origin"u8);
+                writer.WriteStringValue(Origin);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AsPath))
+            {
+                writer.WritePropertyName("asPath"u8);
+                writer.WriteStringValue(AsPath);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GatewayRoute IJsonModel<GatewayRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGatewayRoute(document.RootElement, options);
+        }
+
+        internal static GatewayRoute DeserializeGatewayRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> origin = default;
             Optional<string> asPath = default;
             Optional<int> weight = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localAddress"u8))
@@ -66,8 +149,44 @@ namespace Azure.ResourceManager.Network.Models
                     weight = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GatewayRoute>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GatewayRoute IPersistableModel<GatewayRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGatewayRoute(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GatewayRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
