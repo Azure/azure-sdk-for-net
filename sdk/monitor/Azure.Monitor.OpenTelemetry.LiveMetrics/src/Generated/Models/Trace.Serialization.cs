@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class TraceDocumentIngress : IUtf8JsonSerializable
+    internal partial class Trace : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,11 +20,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WritePropertyName("Message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(DocumentType))
-            {
-                writer.WritePropertyName("DocumentType"u8);
-                writer.WriteStringValue(DocumentType.Value.ToString());
-            }
+            writer.WritePropertyName("DocumentType"u8);
+            writer.WriteStringValue(DocumentType.ToString());
             if (Optional.IsCollectionDefined(DocumentStreamIds))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
@@ -44,11 +41,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AdditionalProperties))
-            {
-                writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteStringValue(AdditionalProperties);
             }
             writer.WriteEndObject();
         }
