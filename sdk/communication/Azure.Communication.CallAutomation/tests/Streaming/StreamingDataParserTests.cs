@@ -69,10 +69,10 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             JObject jsonData = new JObject();
             jsonData["kind"] = "AudioData";
             jsonData["audioData"] = new JObject();
-            jsonData["audioData"]["data"] = "AQIDBAU=";
-            jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonData["audioData"]["participantRawID"] = "participantId";
-            jsonData["audioData"]["silent"] = false;
+            jsonData["audioData"]!["data"] = "AQIDBAU=";
+            jsonData["audioData"]!["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonData["audioData"]!["participantRawID"] = "participantId";
+            jsonData["audioData"]!["silent"] = false;
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
@@ -86,10 +86,10 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             JObject jsonData = new JObject();
             jsonData["kind"] = "AudioData";
             jsonData["audioData"] = new JObject();
-            jsonData["audioData"]["data"] = "AQIDBAU=";
-            jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
-            jsonData["audioData"]["participantRawID"] = "participantId";
-            jsonData["audioData"]["silent"] = false;
+            jsonData["audioData"]!["data"] = "AQIDBAU=";
+            jsonData["audioData"]!["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonData["audioData"]!["participantRawID"] = "participantId";
+            jsonData["audioData"]!["silent"] = false;
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
             AudioData parsedPackage = (AudioData)StreamingDataParser.Parse(receivedBytes);
@@ -188,13 +188,13 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 ["kind"] = "TranscriptionData",
                 ["transcriptionData"] = new JObject()
             };
-            jsonData["transcriptionData"]["text"] = "Hello World!";
-            jsonData["transcriptionData"]["format"] = "display";
-            jsonData["transcriptionData"]["confidence"] = 0.98d;
-            jsonData["transcriptionData"]["offset"] = 1;
+            jsonData["transcriptionData"]!["text"] = "Hello World!";
+            jsonData["transcriptionData"]!["format"] = "display";
+            jsonData["transcriptionData"]!["confidence"] = 0.98d;
+            jsonData["transcriptionData"]!["offset"] = 1;
 
             JArray words = new();
-            jsonData["transcriptionData"]["words"] = words;
+            jsonData["transcriptionData"]!["words"] = words;
 
             JObject word0 = new()
             {
@@ -210,8 +210,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             };
             words.Add(word1);
 
-            jsonData["transcriptionData"]["participantRawID"] = "abc12345";
-            jsonData["transcriptionData"]["resultStatus"] = "final";
+            jsonData["transcriptionData"]!["participantRawID"] = "abc12345";
+            jsonData["transcriptionData"]!["resultStatus"] = "final";
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
@@ -227,13 +227,13 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 ["kind"] = "TranscriptionData",
                 ["transcriptionData"] = new JObject()
             };
-            jsonData["transcriptionData"]["text"] = "Hello World!";
-            jsonData["transcriptionData"]["format"] = "display";
-            jsonData["transcriptionData"]["confidence"] = 0.98d;
-            jsonData["transcriptionData"]["offset"] = 1;
+            jsonData["transcriptionData"]!["text"] = "Hello World!";
+            jsonData["transcriptionData"]!["format"] = "display";
+            jsonData["transcriptionData"]!["confidence"] = 0.98d;
+            jsonData["transcriptionData"]!["offset"] = 1;
 
             JArray words = new();
-            jsonData["transcriptionData"]["words"] = words;
+            jsonData["transcriptionData"]!["words"] = words;
 
             JObject word0 = new()
             {
@@ -249,8 +249,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             };
             words.Add(word1);
 
-            jsonData["transcriptionData"]["participantRawID"] = "abc12345";
-            jsonData["transcriptionData"]["resultStatus"] = "final";
+            jsonData["transcriptionData"]!["participantRawID"] = "abc12345";
+            jsonData["transcriptionData"]!["resultStatus"] = "final";
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
             TranscriptionData parsedPackage = (TranscriptionData)StreamingDataParser.Parse(receivedBytes);

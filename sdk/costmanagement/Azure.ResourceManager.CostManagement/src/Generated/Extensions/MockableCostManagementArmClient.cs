@@ -84,6 +84,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Exports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementExportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -108,6 +116,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Exports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementExportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +158,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -165,6 +189,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +230,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -220,6 +260,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -276,6 +332,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -299,6 +363,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitRecommendations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,6 +397,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>BenefitRecommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -357,6 +429,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Forecast_Usage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,6 +471,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Forecast_Usage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -432,6 +512,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Dimensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -461,6 +545,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Dimensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -489,6 +577,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Query_Usage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,6 +618,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Query_Usage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -562,6 +658,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -597,6 +697,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>

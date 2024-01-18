@@ -6,15 +6,120 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientConnectionHealthDetail
+    public partial class VpnClientConnectionHealthDetail : IUtf8JsonSerializable, IJsonModel<VpnClientConnectionHealthDetail>
     {
-        internal static VpnClientConnectionHealthDetail DeserializeVpnClientConnectionHealthDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnClientConnectionHealthDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VpnClientConnectionHealthDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionId))
+            {
+                writer.WritePropertyName("vpnConnectionId"u8);
+                writer.WriteStringValue(VpnConnectionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionDurationInSeconds))
+            {
+                writer.WritePropertyName("vpnConnectionDuration"u8);
+                writer.WriteNumberValue(VpnConnectionDurationInSeconds.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionOn))
+            {
+                writer.WritePropertyName("vpnConnectionTime"u8);
+                writer.WriteStringValue(VpnConnectionOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            {
+                writer.WritePropertyName("publicIpAddress"u8);
+                writer.WriteStringValue(PublicIPAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteStringValue(PrivateIPAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VpnUserName))
+            {
+                writer.WritePropertyName("vpnUserName"u8);
+                writer.WriteStringValue(VpnUserName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxBandwidth))
+            {
+                writer.WritePropertyName("maxBandwidth"u8);
+                writer.WriteNumberValue(MaxBandwidth.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EgressPacketsTransferred))
+            {
+                writer.WritePropertyName("egressPacketsTransferred"u8);
+                writer.WriteNumberValue(EgressPacketsTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
+            {
+                writer.WritePropertyName("egressBytesTransferred"u8);
+                writer.WriteNumberValue(EgressBytesTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IngressPacketsTransferred))
+            {
+                writer.WritePropertyName("ingressPacketsTransferred"u8);
+                writer.WriteNumberValue(IngressPacketsTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
+            {
+                writer.WritePropertyName("ingressBytesTransferred"u8);
+                writer.WriteNumberValue(IngressBytesTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxPacketsPerSecond))
+            {
+                writer.WritePropertyName("maxPacketsPerSecond"u8);
+                writer.WriteNumberValue(MaxPacketsPerSecond.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VpnClientConnectionHealthDetail IJsonModel<VpnClientConnectionHealthDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnClientConnectionHealthDetail(document.RootElement, options);
+        }
+
+        internal static VpnClientConnectionHealthDetail DeserializeVpnClientConnectionHealthDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +136,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> ingressPacketsTransferred = default;
             Optional<long> ingressBytesTransferred = default;
             Optional<long> maxPacketsPerSecond = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnConnectionId"u8))
@@ -125,8 +232,44 @@ namespace Azure.ResourceManager.Network.Models
                     maxPacketsPerSecond = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VpnClientConnectionHealthDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VpnClientConnectionHealthDetail IPersistableModel<VpnClientConnectionHealthDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVpnClientConnectionHealthDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VpnClientConnectionHealthDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

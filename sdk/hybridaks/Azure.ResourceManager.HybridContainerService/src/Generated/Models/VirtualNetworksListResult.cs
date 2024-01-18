@@ -11,7 +11,7 @@ using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The VirtualNetworksListResult. </summary>
+    /// <summary> A list of virtual network resources. </summary>
     internal partial class VirtualNetworksListResult
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>

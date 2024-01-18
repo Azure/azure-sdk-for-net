@@ -30,14 +30,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="securityProfile"> The security profile of a gallery image version. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
             StorageProfile = storageProfile;
             SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
+            SecurityProfile = securityProfile;
             Tags = tags;
         }
 
@@ -51,6 +53,20 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryImageVersionSafetyProfile SafetyProfile { get; set; }
         /// <summary> This is the replication status of the gallery image version. </summary>
         public ReplicationStatus ReplicationStatus { get; }
+        /// <summary> The security profile of a gallery image version. </summary>
+        internal ImageVersionSecurityProfile SecurityProfile { get; set; }
+        /// <summary> Contains UEFI settings for the image version. </summary>
+        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        {
+            get => SecurityProfile is null ? default : SecurityProfile.UefiSettings;
+            set
+            {
+                if (SecurityProfile is null)
+                    SecurityProfile = new ImageVersionSecurityProfile();
+                SecurityProfile.UefiSettings = value;
+            }
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains stats associated with the peering. </summary>
     public partial class ExpressRouteCircuitStats
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitStats"/>. </summary>
         public ExpressRouteCircuitStats()
         {
@@ -20,12 +55,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="primarybytesOut"> The primary BytesOut of the peering. </param>
         /// <param name="secondarybytesIn"> The secondary BytesIn of the peering. </param>
         /// <param name="secondarybytesOut"> The secondary BytesOut of the peering. </param>
-        internal ExpressRouteCircuitStats(long? primarybytesIn, long? primarybytesOut, long? secondarybytesIn, long? secondarybytesOut)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitStats(long? primarybytesIn, long? primarybytesOut, long? secondarybytesIn, long? secondarybytesOut, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimarybytesIn = primarybytesIn;
             PrimarybytesOut = primarybytesOut;
             SecondarybytesIn = secondarybytesIn;
             SecondarybytesOut = secondarybytesOut;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Primary BytesIn of the peering. </summary>

@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilities_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
@@ -95,6 +99,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilities_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
@@ -117,6 +125,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,6 +164,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
@@ -185,6 +201,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityWithLocation_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +241,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityWithLocation_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
@@ -256,6 +280,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,6 +310,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,6 +339,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkSubnetUsage_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,6 +378,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkSubnetUsage_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
