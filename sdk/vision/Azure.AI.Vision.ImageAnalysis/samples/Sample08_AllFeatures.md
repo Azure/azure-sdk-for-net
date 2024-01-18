@@ -10,6 +10,11 @@ The following sections provide code snippets using ImageAnalysis to analyze an i
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class] class. To configure a client for use with Azure Image Analysis, provide a valid endpoint URI to an Azure Computer Vision resource along with a corresponding key credential authorized to use the Azure Computer Vision resource.
 
+```C# Snippet:ImageAnalysisUsing
+using Azure.AI.Vision.ImageAnalysis;
+using System;
+using System.IO;
+```
 ```C# Snippet:ImageAnalysisAuth
 string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
 string key = Environment.GetEnvironmentVariable("VISION_KEY");
