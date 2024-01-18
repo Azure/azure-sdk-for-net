@@ -133,7 +133,13 @@ public class ClientRetryPolicy : PipelinePolicy
 
     protected virtual void OnTryComplete(PipelineMessage message) { }
 
-    internal bool ShouldRetry(PipelineMessage message, Exception? exception)
+    private bool ShouldRetry(PipelineMessage message, Exception? exception)
+        => ShouldRetrySyncOrAsync(message, exception, async: false).EnsureCompleted();
+
+    private async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+        => await ShouldRetrySyncOrAsync(message, exception, async: true).ConfigureAwait(false);
+
+    private async ValueTask<bool> ShouldRetrySyncOrAsync(PipelineMessage message, Exception? exception, bool async)
     {
         // If there was no exception and we got a success response, don't retry.
         if (exception is null && message.Response is not null && !message.Response.IsError)
@@ -141,18 +147,14 @@ public class ClientRetryPolicy : PipelinePolicy
             return false;
         }
 
-        return ShouldRetryCore(message, exception);
-    }
-
-    internal async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
-    {
-        // If there was no exception and we got a success response, don't retry.
-        if (exception is null && message.Response is not null && !message.Response.IsError)
+        if (async)
         {
-            return false;
+            return await ShouldRetryCoreAsync(message, exception).ConfigureAwait(false);
         }
-
-        return await ShouldRetryCoreAsync(message, exception).ConfigureAwait(false);
+        else
+        {
+            return ShouldRetryCore(message, exception);
+        }
     }
 
     protected virtual bool ShouldRetryCore(PipelineMessage message, Exception? exception)
