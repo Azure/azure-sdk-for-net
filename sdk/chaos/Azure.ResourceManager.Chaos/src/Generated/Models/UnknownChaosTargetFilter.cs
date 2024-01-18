@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> The UnknownChaosTargetFilter. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetFilter"/>. </summary>
         /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
-        internal UnknownChaosTargetFilter(FilterType filterType) : base(filterType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownChaosTargetFilter(FilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(filterType, serializedAdditionalRawData)
         {
             FilterType = filterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetFilter"/> for deserialization. </summary>
+        internal UnknownChaosTargetFilter()
+        {
         }
     }
 }
