@@ -1,19 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CA1822 // Mark members as static
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using System.ClientModel.Primitives;
+
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
+    /// <summary> IdentityAssociatedResourceData </summary>
     public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData
     {
         internal IdentityAssociatedResourceData() { }
-
+        /// <summary>
+        /// ResourceGroupInstance
+        /// </summary>
         public string ResourceGroup { get { throw null; } }
-
+        /// <summary>
+        /// SubscriptionDisplayName
+        /// </summary>
         public string SubscriptionDisplayName { get { throw null; } }
+        /// <summary>
+        /// SubscriptionDisplayName
+        /// </summary>
         public string SubscriptionId { get { throw null; } }
     }
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning restore CA1822 // Mark members as static
