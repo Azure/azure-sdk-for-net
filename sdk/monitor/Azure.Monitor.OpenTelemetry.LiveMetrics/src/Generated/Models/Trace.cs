@@ -10,22 +10,23 @@ using System.Collections.Generic;
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> Trace type name. </summary>
-    internal partial class TraceDocumentIngress : DocumentIngress
+    internal partial class Trace : DocumentIngress
     {
-        /// <summary> Initializes a new instance of <see cref="TraceDocumentIngress"/>. </summary>
-        public TraceDocumentIngress()
+        /// <summary> Initializes a new instance of <see cref="Trace"/>. </summary>
+        public Trace()
         {
+            DocumentType = DocumentIngressDocumentType.Trace;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TraceDocumentIngress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Trace"/>. </summary>
         /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
-        /// <param name="additionalProperties"> Additional properties to be provided by a child type of DocumentIngress. </param>
         /// <param name="message"> Trace message. </param>
-        internal TraceDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string additionalProperties, string message) : base(documentType, documentStreamIds, properties, additionalProperties)
+        internal Trace(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string message) : base(documentType, documentStreamIds, properties)
         {
             Message = message;
+            DocumentType = documentType;
         }
 
         /// <summary> Trace message. </summary>
