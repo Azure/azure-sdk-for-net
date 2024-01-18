@@ -118,12 +118,14 @@ public class MockPipelineTransport : PipelineTransport
 
     private class TransportRequest : PipelineRequest
     {
-        public TransportRequest() { }
+        private readonly PipelineMessageHeaders _headers;
 
-        public override void Dispose()
+        public TransportRequest()
         {
-            throw new NotImplementedException();
+            _headers = new MockMessageHeaders();
         }
+
+        public override void Dispose() { }
 
         protected override BinaryContent? GetContentCore()
         {
@@ -131,9 +133,7 @@ public class MockPipelineTransport : PipelineTransport
         }
 
         protected override PipelineMessageHeaders GetHeadersCore()
-        {
-            throw new NotImplementedException();
-        }
+            => _headers;
 
         protected override string GetMethodCore()
         {
@@ -183,9 +183,6 @@ public class MockPipelineTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
-        public override void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        public override void Dispose() { }
     }
 }
