@@ -26,5 +26,10 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             SelectorType = selectorType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetSelector"/> for deserialization. </summary>
+        internal UnknownChaosTargetSelector()
+        {
+        }
     }
 }
