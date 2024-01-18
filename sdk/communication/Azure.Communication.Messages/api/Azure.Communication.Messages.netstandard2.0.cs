@@ -208,10 +208,10 @@ namespace Azure.Communication.Messages.Models.Channels
     public partial class WhatsAppMessageTemplateBindings : Azure.Communication.Messages.MessageTemplateBindings
     {
         public WhatsAppMessageTemplateBindings() { }
-        public System.Collections.Generic.IList<string> Body { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<string, Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType>> Buttons { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Footer { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Header { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Body { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton> Buttons { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Footer { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Header { get { throw null; } }
     }
     public partial class WhatsAppMessageTemplateBindingsButton
     {

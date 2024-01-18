@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications/:send?api-version=2024-02-01",
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -10,20 +10,20 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-496fd6394c4858254858b4d1b83aa76a-59009d59275fdc5d-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231220.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "ee3a77e3365bb09a8bb88b77674b780a",
+        "traceparent": "00-7972b001f41d0565c0702d07034fbddd-8cd0e3eb3680ca5e-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240116.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "a6b9078590a1e763cbc859141f82486b",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 21 Dec 2023 07:56:36 GMT",
+        "x-ms-date": "Wed, 17 Jan 2024 01:22:44 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "content": "LiveTest",
+        "kind": "text",
         "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
           "\u002B16041234567"
-        ],
-        "type": "text",
-        "content": "LiveTest"
+        ]
       },
       "StatusCode": 202,
       "ResponseHeaders": {
@@ -31,18 +31,18 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Dec 2023 07:56:37 GMT",
-        "MS-CV": "8h1pT04sc06AVLdPoUMVeQ.0",
+        "Date": "Wed, 17 Jan 2024 01:22:42 GMT",
+        "MS-CV": "cHnCXHlf00uXigJLZJcDHw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20231221T075637Z-h103g5m3n54c31dcez93unauug00000001hg000000005nyu",
+        "x-azure-ref": "20240117T012241Z-n2zu1scpch1m1ev8a0hcg2n4y400000001z000000000y8qu",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "486ms"
+        "X-Processing-Time": "572ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "098a1e80-5493-40d3-8620-53dca2c47503",
+            "messageId": "5a4e2d8e-9e9c-487b-ab1b-f9faf601dea6",
             "to": "\u002B16041234567"
           }
         ]
@@ -50,6 +50,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2030541451"
+    "RandomSeed": "1213391417"
   }
 }

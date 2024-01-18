@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications/:send?api-version=2024-02-01",
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -10,19 +10,14 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-4df6b3bb9a2433d5a208184f9fb6724b-1d7e22e95e9d1016-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231220.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "e6a2a5f2b57053263546ed053620f4c3",
+        "traceparent": "00-3d60265b8d91d5adc50c33f173b5d4b2-b1860590302a8d40-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240116.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "80553674a60f337b47cba8ba84517500",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 21 Dec 2023 07:56:41 GMT",
+        "x-ms-date": "Wed, 17 Jan 2024 01:22:48 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
-        "to": [
-          "\u002B16041234567"
-        ],
-        "type": "template",
         "template": {
           "name": "sample_happy_hour_announcement",
           "language": "en_us",
@@ -59,7 +54,12 @@
             ],
             "kind": "whatsApp"
           }
-        }
+        },
+        "kind": "template",
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "to": [
+          "\u002B16041234567"
+        ]
       },
       "StatusCode": 202,
       "ResponseHeaders": {
@@ -67,18 +67,18 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Dec 2023 07:56:42 GMT",
-        "MS-CV": "iZcBAGegeU29JPVXEu6oKw.0",
+        "Date": "Wed, 17 Jan 2024 01:22:46 GMT",
+        "MS-CV": "fBXneYuZJE\u002BtdEVHOVcEIA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20231221T075642Z-h103g5m3n54c31dcez93unauug00000001hg000000005nzw",
+        "x-azure-ref": "20240117T012246Z-n2zu1scpch1m1ev8a0hcg2n4y400000001z000000000y91w",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "574ms"
+        "X-Processing-Time": "625ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "53f83284-c6ff-457e-8c8b-06ad25101091",
+            "messageId": "d4204256-4f4a-4514-9380-0068fba9ef13",
             "to": "\u002B16041234567"
           }
         ]
@@ -86,6 +86,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1627642075"
+    "RandomSeed": "2114423515"
   }
 }
