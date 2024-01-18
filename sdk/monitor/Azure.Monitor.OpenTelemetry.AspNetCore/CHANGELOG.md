@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+- Removed the code of internal vendored instrumentation libraries `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http`.
+  Previously users needed to manually add package references to these instrumentation libraries to apply any customizations. This will no longer be necessary.
+  ([#41395](https://github.com/Azure/azure-sdk-for-net/pull/41395))
+
 ## 1.0.0 (2023-11-29)
 
 ### Other Changes
