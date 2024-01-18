@@ -91,7 +91,7 @@ See the [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/visio
 
 ### Generate an image caption for an image file
 
-This example demonstrates how to generate a one-sentence caption for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous  `Analyze` method call returns a `CaptionResult` object, which contains the generated caption and its confidence score in the range [0, 1]. By default, the caption may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
+This example demonstrates how to generate a one-sentence caption for the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous  `Analyze` method call returns a `CaptionResult` object, which contains the generated caption and its confidence score in the range [0, 1]. By default, the caption may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
 
 Notes:
 * Caption is only available in some Azure regions. See [Prerequisites](#prerequisites).
@@ -115,12 +115,12 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 
 ### Generate an image caption for an image URL
 
-This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisGenerateCaptionFromUrl
 // Get a caption for the image.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.Caption,
     new ImageAnalysisOptions { GenderNeutralCaption = true });
 
@@ -132,7 +132,7 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 
 ### Extract text from an image file
 
-This example demonstrates how to extract printed or hand-written text for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `Analyze` method call returns a `ReadResult` object. This object includes a list of text lines and a bounding polygon surrounding each text line. For each line, it also returns a list of words in the text line and a bounding polygon surrounding each word.
+This example demonstrates how to extract printed or hand-written text for the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `Analyze` method call returns a `ReadResult` object. This object includes a list of text lines and a bounding polygon surrounding each text line. For each line, it also returns a list of words in the text line and a bounding polygon surrounding each word.
 
 ```C# Snippet:ImageAnalysisExtractTextFromFile
 // Load image to analyze into a stream
@@ -160,12 +160,12 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
 
 ### Extract text from an image URL
 
-This example demonstrates how to extract printed or hand-written text for a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg).
+This example demonstrates how to extract printed or hand-written text for a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg).
 
 ```C# Snippet:ImageAnalysisExtractTextFromUrl
 // Extract text (OCR) from an image stream.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
     VisualFeatures.Read);
 
 // Print text (OCR) analysis results to the console

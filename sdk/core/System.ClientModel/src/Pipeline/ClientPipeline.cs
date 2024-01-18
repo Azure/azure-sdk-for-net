@@ -162,17 +162,16 @@ public sealed partial class ClientPipeline
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
-        // TODO: RequestOptions will come in a later PR.
-        //if (message.CustomRequestPipeline)
-        //{
-        //    return new RequestOptionsProcessor(_policies,
-        //        message.PerCallPolicies,
-        //        message.PerTryPolicies,
-        //        message.BeforeTransportPolicies,
-        //        _perCallIndex,
-        //        _perTryIndex,
-        //        _beforeTransportIndex);
-        //}
+        if (message.UseCustomRequestPipeline)
+        {
+            return new RequestOptionsProcessor(_policies,
+                message.PerCallPolicies,
+                message.PerTryPolicies,
+                message.BeforeTransportPolicies,
+                _perCallIndex,
+                _perTryIndex,
+                _beforeTransportIndex);
+        }
 
         return new PipelineProcessor(_policies);
     }

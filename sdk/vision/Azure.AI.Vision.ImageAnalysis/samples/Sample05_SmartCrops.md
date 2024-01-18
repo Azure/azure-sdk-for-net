@@ -12,7 +12,7 @@ The following sections provide code snippets using ImageAnalysis to generate sma
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
 class. To configure a client for use with Azure Image Analysis, provide a valid endpoint URI to an Azure Computer Vision resource
-along with a corresponding key credential authorized to use the Azure Computer Vison resource.
+along with a corresponding key credential authorized to use the Azure Computer Vision resource.
 
 ```C# Snippet:ImageAnalysisAuth
 string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
@@ -26,7 +26,7 @@ Here we are using environment variables to hold the endpoint and key for the Com
 
 ### Generate smart-cropped thumbnails for an image file
 
-This example demonstrates how to generate smart-cropped thumbnails for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains a list of `CropRegion` objects representing the regions identified for smart-cropping. Each `CropRegion` has an aspect ratio and a bounding box that defines the region in the image. You can then crop and return the image using those coordinates.
+This example demonstrates how to generate smart-cropped thumbnails for the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous `Analyze` method call returns an `ImageAnalysisResult` object, which contains a list of `CropRegion` objects representing the regions identified for smart-cropping. Each `CropRegion` has an aspect ratio and a bounding box that defines the region in the image. You can then crop and return the image using those coordinates.
 
 ```C# Snippet:ImageAnalysisSmartCropsFromFile
 // Use a file stream to pass the image data to the analyze call
@@ -35,10 +35,12 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 // Get the smart-cropped thumbnails for the image.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
-    VisualFeatures.SmartCrops);
+    VisualFeatures.SmartCrops,
+    new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
 // Print smart-crops analysis results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" SmartCrops:");
 foreach (CropRegion cropRegion in result.SmartCrops.Values)
 {
@@ -48,16 +50,18 @@ foreach (CropRegion cropRegion in result.SmartCrops.Values)
 
 ### Generate smart-cropped thumbnails for an image URL
 
-This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisSmartCropsFromUrl
 // Get the smart-cropped thumbnails for the image.
 ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
-    VisualFeatures.SmartCrops);
+    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
+    VisualFeatures.SmartCrops,
+    new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
 // Print smart-crops analysis results to the console
 Console.WriteLine($"Image analysis results:");
+Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
 Console.WriteLine($" SmartCrops:");
 foreach (CropRegion cropRegion in result.SmartCrops.Values)
 {

@@ -42,7 +42,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisGenerateCaptionFromUrl
             // Get a caption for the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.Caption,
                 new ImageAnalysisOptions { GenderNeutralCaption = true });
 
@@ -91,7 +91,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisExtractTextFromUrl
             // Extract text (OCR) from an image stream.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.Read);
 
             // Print text (OCR) analysis results to the console
