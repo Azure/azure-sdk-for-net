@@ -150,6 +150,8 @@
     <PackageReference Update="OpenTelemetry" Version="1.7.0" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.7.0" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.7.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.7.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.7.0" />
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="[2.1.1,6.0)" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
@@ -308,8 +310,6 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Update="OpenTelemetry" Version="1.7.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.7.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.7.0" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
