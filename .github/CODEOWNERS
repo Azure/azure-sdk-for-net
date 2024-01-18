@@ -832,8 +832,6 @@
 
 # ServiceLabel: %Playwright %Service Attention
 #/<NotInRepo>/                                                       @shreyaanand @mjmadhu
-# PRLabel: %Playwright Testing
-/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
 
 # ######## Management Plane ########
 
