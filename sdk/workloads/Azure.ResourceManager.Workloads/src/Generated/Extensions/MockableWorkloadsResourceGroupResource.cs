@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,15 +16,38 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class P2SVpnGatewayData : IUtf8JsonSerializable
+    public partial class P2SVpnGatewayData : IUtf8JsonSerializable, IJsonModel<P2SVpnGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SVpnGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<P2SVpnGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -57,6 +82,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(VpnGatewayScaleUnit))
             {
                 writer.WritePropertyName("vpnGatewayScaleUnit"u8);
@@ -66,6 +96,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("vpnServerConfiguration"u8);
                 JsonSerializer.Serialize(writer, VpnServerConfiguration);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
+            {
+                writer.WritePropertyName("vpnClientConnectionHealth"u8);
+                writer.WriteObjectValue(VpnClientConnectionHealth);
             }
             if (Optional.IsCollectionDefined(CustomDnsServers))
             {
@@ -83,11 +118,40 @@ namespace Azure.ResourceManager.Network
                 writer.WriteBooleanValue(IsRoutingPreferenceInternet.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static P2SVpnGatewayData DeserializeP2SVpnGatewayData(JsonElement element)
+        P2SVpnGatewayData IJsonModel<P2SVpnGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeP2SVpnGatewayData(document.RootElement, options);
+        }
+
+        internal static P2SVpnGatewayData DeserializeP2SVpnGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,6 +170,8 @@ namespace Azure.ResourceManager.Network
             Optional<VpnClientConnectionHealth> vpnClientConnectionHealth = default;
             Optional<IList<string>> customDnsServers = default;
             Optional<bool> isRoutingPreferenceInternet = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -257,8 +323,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new P2SVpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualHub, Optional.ToList(p2sConnectionConfigurations), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration, vpnClientConnectionHealth.Value, Optional.ToList(customDnsServers), Optional.ToNullable(isRoutingPreferenceInternet));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new P2SVpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), virtualHub, Optional.ToList(p2sConnectionConfigurations), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration, vpnClientConnectionHealth.Value, Optional.ToList(customDnsServers), Optional.ToNullable(isRoutingPreferenceInternet));
         }
+
+        BinaryData IPersistableModel<P2SVpnGatewayData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        P2SVpnGatewayData IPersistableModel<P2SVpnGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeP2SVpnGatewayData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<P2SVpnGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,8 +8,8 @@ Let's consider the example of a `Hotel`. First, we need to create an index for s
 
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingTextVectors
-string vectorSearchProfile = "my-vector-profile";
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
+string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 string modelName = "text-embedding-ada-002";
 int modelDimensions = 1536;
@@ -22,32 +22,22 @@ SearchIndex searchIndex = new(indexName)
         new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
         new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
         new SearchableField("Description") { IsFilterable = true },
-        new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-        {
-            IsSearchable = true,
-            VectorSearchDimensions = modelDimensions,
-            VectorSearchProfile = vectorSearchProfile
-        },
+        new VectorSearchField("DescriptionVector", modelDimensions, vectorSearchProfileName),
         new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-        {
-            IsSearchable = true,
-            VectorSearchDimensions = modelDimensions,
-            VectorSearchProfile = vectorSearchProfile
-        },
+        new VectorSearchField("CategoryVector", modelDimensions, vectorSearchProfileName),
     },
     VectorSearch = new()
     {
         Profiles =
         {
-            new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+            new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
             {
                 Vectorizer = "openai"
             }
         },
         Algorithms =
         {
-            new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+            new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
         },
         Vectorizers =
         {
@@ -67,7 +57,7 @@ SearchIndex searchIndex = new(indexName)
 
 After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingTextVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingVectorizableTextQuery
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 AzureKeyCredential credential = new(key);
@@ -86,9 +76,9 @@ public class Hotel
     public string HotelId { get; set; }
     public string HotelName { get; set; }
     public string Description { get; set; }
-    public IReadOnlyList<float> DescriptionVector { get; set; }
+    public ReadOnlyMemory<float> DescriptionVector { get; set; }
     public string Category { get; set; }
-    public IReadOnlyList<float> CategoryVector { get; set; }
+    public ReadOnlyMemory<float> CategoryVector { get; set; }
 }
 ```
 
@@ -96,20 +86,22 @@ Next, we will create sample hotel documents. The vector field requires submittin
 
 ### Get Embeddings using `Azure.AI.OpenAI`
 
-```C# Snippet:Azure_Search_Tests_Samples_Readme_GetEmbeddings
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-AzureKeyCredential credential = new AzureKeyCredential(key);
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_GetEmbeddings
+public static ReadOnlyMemory<float> GetEmbeddings(string input)
+{
+    Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
+    string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
+    AzureKeyCredential credential = new AzureKeyCredential(key);
 
-OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-string description = "Very popular hotel in town.";
-EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { description });
+    OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
+    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
 
-Embeddings embeddings = await openAIClient.GetEmbeddingsAsync(embeddingsOptions);
-ReadOnlyMemory<float> descriptionVector = embeddings.Data[0].Embedding;
+    Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
+    return embeddings.Data[0].Embedding;
+}
 ```
 
-In the sample code below, we are using hardcoded embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
+In the sample code below, we are using `GetEmbeddings` method mentioned above to get embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Hotel_Document
 public static Hotel[] GetHotelDocuments()
@@ -124,27 +116,30 @@ public static Hotel[] GetHotelDocuments()
                 "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                 "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                 "the tourist attractions. We highly recommend this hotel.",
-            DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
+            DescriptionVector = GetEmbeddings(
+                "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
+                "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
+                "the tourist attractions. We highly recommend this hotel."),
             Category = "Luxury",
-            CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
+            CategoryVector = GetEmbeddings("Luxury")
         },
         new Hotel()
         {
             HotelId = "2",
             HotelName = "Roach Motel",
             Description = "Cheapest hotel in town. Infact, a motel.",
-            DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
+            DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
             Category = "Budget",
-            CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
+            CategoryVector = GetEmbeddings("Luxury")
         },
-         // Add more hotel documents here...
+        // Add more hotel documents here...
     };
 }
 ```
 
 Now, we can instantiate the `SearchClient` and upload the documents to the `Hotel` index we created earlier:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingTextVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingVectorizableTextQuery
 SearchClient searchClient = new(endpoint, indexName, credential);
 Hotel[] hotelDocuments = GetHotelDocuments();
 await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments));
@@ -160,14 +155,16 @@ Let's query the index and make sure everything works as implemented. You can als
 
 In this vector query, the `VectorQueries` contains the vectorizable text of the query input. The `Fields` property specifies which vector fields are searched. The `KNearestNeighborsCount` property specifies the number of nearest neighbors to return as top hits.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingTextVectors
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorizableTextQuery
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = { new VectorizableTextQuery() {
-            Text = "Top hotels in town",
+        VectorSearch = new()
+        {
+            Queries = { new VectorizableTextQuery("Top hotels in town") {
             KNearestNeighborsCount = 3,
             Fields = { "DescriptionVector" } } },
+        }
     });
 
 int count = 0;
@@ -185,14 +182,16 @@ Console.WriteLine($"Total number of search results:{count}");
 
 In addition to the vector query mentioned above, we can also apply a filter to narrow down the search results.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingTextVectors
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorizableTextQuery
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = { new VectorizableTextQuery() {
-            Text = "Top hotels in town",
+        VectorSearch = new()
+        {
+            Queries = { new VectorizableTextQuery("Top hotels in town") {
             KNearestNeighborsCount = 3,
             Fields = { "DescriptionVector" } } },
+        },
         Filter = "Category eq 'Luxury'"
     });
 
@@ -209,20 +208,22 @@ Console.WriteLine($"Total number of search results:{count}");
 
 ### Hybrid Search
 
-A hybrid query combines full text search, semantic search (reranking), and vector search. The search engine runs full text and vector queries in parallel. Semantic ranking is applied to the results from the text search. A single result set is returned in the response.
+A hybrid query combines full text search and vector search. The search engine runs full text and vector queries in parallel. Semantic ranking is applied to the results from the text search. A single result set is returned in the response.
 
 #### Simple Hybrid Search
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingTextVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorizableTextQuery
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
-        "Luxury hotels in town",
-        new SearchOptions
+    "Luxury hotels in town",
+    new SearchOptions
+    {
+        VectorSearch = new()
         {
-            VectorQueries = { new VectorizableTextQuery() {
-                Text = "Top hotels in town",
-                KNearestNeighborsCount = 3,
-                Fields = { "DescriptionVector" } } },
-        });
+            Queries = { new VectorizableTextQuery("Top hotels in town") {
+            KNearestNeighborsCount = 3,
+            Fields = { "DescriptionVector" } } },
+        },
+    });
 
 int count = 0;
 Console.WriteLine($"Simple Hybrid Search Results:");
@@ -239,17 +240,15 @@ Console.WriteLine($"Total number of search results:{count}");
 
 You can search containing multiple queries using the `SearchOptions.VectorQueries` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingTextVectors
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorizableTextQuery
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = {
-            new VectorizableTextQuery() {
-                Text = "Top hotels in town", KNearestNeighborsCount = 3, Fields = { "DescriptionVector" }
-            },
-            new VectorizableTextQuery() {
-                Text = "Luxury hotels in town", KNearestNeighborsCount = 3, Fields = { "CategoryVector" }
-            }
+        VectorSearch = new()
+        {
+            Queries = {
+                new VectorizableTextQuery("Top hotels in town") { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+                new VectorizableTextQuery("Luxury hotels in town") { KNearestNeighborsCount = 3, Fields = { "CategoryVector" } } }
         },
     });
 
@@ -266,16 +265,16 @@ Console.WriteLine($"Total number of search results:{count}");
 
 ### Multi-field Vector Search
 
-You can set the `SearchOptions.VectorQueries.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields.
+You can set the `SearchOptions.VectorSearch.Queries.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingTextVectors
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorizableTextQuery
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = { new VectorizableTextQuery() {
-            Text = "Top hotels in town",
-            KNearestNeighborsCount = 3,
-            Fields = { "DescriptionVector", "CategoryVector" } } }
+        VectorSearch = new()
+        {
+            Queries = { new VectorizableTextQuery("Top hotels in town") { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
+        }
     });
 
 int count = 0;

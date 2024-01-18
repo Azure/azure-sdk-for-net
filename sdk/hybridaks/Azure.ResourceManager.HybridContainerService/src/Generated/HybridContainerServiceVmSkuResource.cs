@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the supported VM skus from the underlying custom location
+        /// Lists the supported VM skus for the specified custom location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -97,6 +97,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetVMSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVmSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +128,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the supported VM skus from the underlying custom location
+        /// Lists the supported VM skus for the specified custom location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetVMSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVmSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +168,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Deletes the Vm Sku resource type
+        /// Deletes the default VM skus resource type
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeleteVMSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVmSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +210,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Deletes the Vm Sku resource type
+        /// Deletes the default VM skus resource type
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -195,6 +219,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeleteVMSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVmSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,7 +252,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Puts the VM SKUs resource type
+        /// Puts the default VM skus resource type (one time operation, before listing the VM skus)
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,6 +261,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PutVMSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVmSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +298,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Puts the VM SKUs resource type
+        /// Puts the default VM skus resource type (one time operation, before listing the VM skus)
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,6 +307,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PutVMSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVmSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

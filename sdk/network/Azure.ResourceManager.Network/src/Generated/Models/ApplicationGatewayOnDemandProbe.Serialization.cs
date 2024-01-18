@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayOnDemandProbe : IUtf8JsonSerializable
+    public partial class ApplicationGatewayOnDemandProbe : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayOnDemandProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayOnDemandProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationGatewayOnDemandProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayOnDemandProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayOnDemandProbe)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
@@ -55,7 +67,158 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("backendHttpSettings"u8);
                 JsonSerializer.Serialize(writer, BackendHttpSettings);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ApplicationGatewayOnDemandProbe IJsonModel<ApplicationGatewayOnDemandProbe>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayOnDemandProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayOnDemandProbe)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayOnDemandProbe(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayOnDemandProbe DeserializeApplicationGatewayOnDemandProbe(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ApplicationGatewayProtocol> protocol = default;
+            Optional<string> host = default;
+            Optional<string> path = default;
+            Optional<int> timeout = default;
+            Optional<bool> pickHostNameFromBackendHttpSettings = default;
+            Optional<ApplicationGatewayProbeHealthResponseMatch> match = default;
+            Optional<WritableSubResource> backendAddressPool = default;
+            Optional<WritableSubResource> backendHttpSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("protocol"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protocol = new ApplicationGatewayProtocol(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("host"u8))
+                {
+                    host = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("path"u8))
+                {
+                    path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("timeout"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeout = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("pickHostNameFromBackendHttpSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pickHostNameFromBackendHttpSettings = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("match"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("backendAddressPool"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("backendHttpSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationGatewayOnDemandProbe(Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(timeout), Optional.ToNullable(pickHostNameFromBackendHttpSettings), match.Value, backendAddressPool, backendHttpSettings, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ApplicationGatewayOnDemandProbe>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayOnDemandProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayOnDemandProbe)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayOnDemandProbe IPersistableModel<ApplicationGatewayOnDemandProbe>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayOnDemandProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewayOnDemandProbe(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayOnDemandProbe)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayOnDemandProbe>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
