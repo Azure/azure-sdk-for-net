@@ -9,7 +9,7 @@
 - Renamed `StorageResourceReadStreamResult.ContentRange` to `Range`
 - Removed the following members from `StorageResourceReadStreamResult`:
     - `AcceptRanges`
-    -`RangeContentHash`
+    - `RangeContentHash`
 
 ### Bugs Fixed
 - Fixed a bug where `ChannelClosedException` could occur and be sent as an event to `ItemTransferFailed` when there was a failure during a transfer.

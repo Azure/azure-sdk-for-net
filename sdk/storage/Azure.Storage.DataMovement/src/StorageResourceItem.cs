@@ -45,7 +45,7 @@ namespace Azure.Storage.DataMovement
         protected internal abstract long? Length { get; }
 
         /// <summary>
-        /// TODO
+        /// Properties of the Storage Resource Item.
         /// </summary>
         protected StorageResourceItemProperties ResourceProperties { get; set; }
 

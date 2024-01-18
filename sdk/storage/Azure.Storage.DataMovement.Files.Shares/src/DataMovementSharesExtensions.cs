@@ -43,10 +43,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, fileProperties.Metadata);
             }
-            if (fileProperties.ETag != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ETag, fileProperties.ETag);
-            }
             if (fileProperties.LastModified != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.LastModified, fileProperties.LastModified);
@@ -80,7 +76,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 properties.Add(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
             }
             return new StorageResourceItemProperties(
-                contentLength: fileProperties.ContentLength,
+                resourceLength: fileProperties.ContentLength,
+                eTag: fileProperties.ETag,
                 properties: properties);
         }
 
@@ -101,10 +98,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (info.Details.Metadata != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, info.Details.Metadata);
-            }
-            if (info.Details.ETag != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ETag, info.Details.ETag);
             }
             if (info.Details.LastModified != default)
             {
@@ -133,7 +126,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             HttpRange range = default;
             long? size = default;
-            ContentRange contentRange = ContentRange.Parse(info.Details.ContentRange);
+            ContentRange contentRange = !string.IsNullOrWhiteSpace(info?.Details?.ContentRange) ? ContentRange.Parse(info.Details.ContentRange) : default;
             if (contentRange != default)
             {
                 range = ContentRange.ToHttpRange(contentRange);
@@ -144,7 +137,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 content: info.Content,
                 range: range,
                 properties: new StorageResourceItemProperties(
-                    contentLength: size.HasValue ? size : info.ContentLength,
+                    resourceLength: size.HasValue ? size : info.ContentLength,
+                    eTag: info.Details.ETag,
                     properties: properties));
         }
     }

@@ -168,9 +168,10 @@ namespace Azure.Storage.DataMovement
     public partial class StorageResourceItemProperties
     {
         protected StorageResourceItemProperties() { }
-        public StorageResourceItemProperties(long? contentLength, System.Collections.Generic.Dictionary<string, object> properties) { }
-        public long? ContentLength { get { throw null; } }
+        public StorageResourceItemProperties(long? resourceLength, Azure.ETag? eTag, System.Collections.Generic.Dictionary<string, object> properties) { }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.Dictionary<string, object> RawProperties { get { throw null; } }
+        public long? ResourceLength { get { throw null; } }
     }
     public abstract partial class StorageResourceProvider
     {
@@ -182,7 +183,8 @@ namespace Azure.Storage.DataMovement
     public partial class StorageResourceReadStreamResult
     {
         public readonly System.IO.Stream Content;
-        public readonly Azure.HttpRange Range;
+        public readonly long? ContentLength;
+        public readonly long? ResourceLength;
         public StorageResourceReadStreamResult(System.IO.Stream content, Azure.HttpRange range, Azure.Storage.DataMovement.StorageResourceItemProperties properties) { }
     }
     public partial class StorageResourceWriteToOffsetOptions

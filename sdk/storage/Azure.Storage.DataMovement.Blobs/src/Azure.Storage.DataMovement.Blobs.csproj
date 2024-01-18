@@ -34,6 +34,10 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)ContentRange.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared\Storage" />
@@ -44,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementSharedSources)CheckpointerExtensions.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)ContentRange.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)Errors.DataMovement.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementConstants.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)DataTransferStatusInternal.cs" LinkBase="Shared\DataMovement" />

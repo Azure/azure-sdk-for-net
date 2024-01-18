@@ -16,10 +16,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, blobProperties.Metadata);
             }
-            if (blobProperties.ETag != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ETag, blobProperties.ETag);
-            }
             if (blobProperties.LastModified != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.LastModified, blobProperties.LastModified);
@@ -58,34 +54,28 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             return new StorageResourceItemProperties(
-                contentLength: blobProperties.ContentLength,
+                resourceLength: blobProperties.ContentLength,
+                eTag: blobProperties.ETag,
                 properties: properties);
         }
 
         internal static StorageResourceItemProperties ToStorageResourceProperties(this BlobDownloadDetails blobProperties)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            if (blobProperties.ETag != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ETag, blobProperties.ETag);
-            }
             if (blobProperties.LastModified != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.LastModified, blobProperties.LastModified);
             }
 
             return new StorageResourceItemProperties(
-                contentLength: blobProperties.ContentLength,
+                resourceLength: blobProperties.ContentLength,
+                eTag: blobProperties.ETag,
                 properties: properties);
         }
 
         internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            if (result.Details.ETag != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ETag, result.Details.ETag);
-            }
             if (result.Details.LastModified != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.LastModified, result.Details.LastModified);
@@ -93,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             HttpRange range = default;
             long? size = default;
-            ContentRange contentRange = ContentRange.Parse(result.Details.ContentRange);
+            ContentRange contentRange = !string.IsNullOrWhiteSpace(result?.Details?.ContentRange) ? ContentRange.Parse(result.Details.ContentRange) : default;
             if (contentRange != default)
             {
                 range = ContentRange.ToHttpRange(contentRange);
@@ -104,7 +94,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 content: result.Content,
                 range: range,
                 properties: new StorageResourceItemProperties(
-                    contentLength: size.HasValue ? size : result.Details.ContentLength,
+                    resourceLength: size.HasValue ? size : result.Details.ContentLength,
+                    eTag: result.Details.ETag,
                     properties: properties));
         }
 
@@ -534,17 +525,9 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             return new StorageResourceItemProperties(
-                contentLength: blobItem.Properties.ContentLength,
+                resourceLength: blobItem.Properties.ContentLength,
+                eTag: blobItem.Properties.ETag,
                 properties: properties);
-        }
-
-        internal static ETag? ParseETagProperty(this Dictionary<string, object> properties)
-        {
-            if (properties.TryGetValue(DataMovementConstants.ResourceProperties.ETag, out object rawETag))
-            {
-                return (ETag?) rawETag;
-            }
-            return default;
         }
     }
 }

@@ -119,7 +119,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 string.Concat(DirectoryPrefix, Constants.PathBackSlashDelimiter);
 
             AsyncPageable<BlobItem> pages = BlobContainerClient.GetBlobsAsync(
-                traits: BlobTraits.Metadata | BlobTraits.Tags,
+                traits: BlobTraits.Metadata,
                 prefix: fullPrefix,
                 cancellationToken: cancellationToken);
 

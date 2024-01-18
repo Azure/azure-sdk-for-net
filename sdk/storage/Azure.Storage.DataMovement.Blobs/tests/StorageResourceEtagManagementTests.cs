@@ -35,11 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            Dictionary<string, object> etagProperties = new()
-            {
-                { DataMovementConstants.ResourceProperties.ETag, etag }
-            };
-            StorageResourceItemProperties properties = new(0, etagProperties);
+            StorageResourceItemProperties properties = new(0, etag, default);
 
             BlockBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
@@ -63,11 +59,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            Dictionary<string, object> etagProperties = new()
-            {
-                { DataMovementConstants.ResourceProperties.ETag, etag }
-            };
-            StorageResourceItemProperties properties = new(0, etagProperties);
+            StorageResourceItemProperties properties = new(0, etag, default);
 
             PageBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
@@ -91,11 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            Dictionary<string, object> etagProperties = new()
-            {
-                { DataMovementConstants.ResourceProperties.ETag, etag }
-            };
-            StorageResourceItemProperties properties = new(0, etagProperties);
+            StorageResourceItemProperties properties = new(0, etag, default);
 
             AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.GetPropertiesInternalAsync();
@@ -120,15 +108,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            Dictionary<string, object> properties = new()
-            {
-                { DataMovementConstants.ResourceProperties.ETag, etag }
-            };
-
             StorageResourceItemProperties resourceProperties = new(
-                contentLength: default,
-                properties: properties
-            );
+                resourceLength: default,
+                eTag: etag,
+                properties: default);
 
             BlockBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
@@ -152,15 +135,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            Dictionary<string, object> properties = new()
-            {
-                { DataMovementConstants.ResourceProperties.ETag, etag }
-            };
-
             StorageResourceItemProperties resourceProperties = new(
-                contentLength: default,
-                properties: properties
-            );
+                resourceLength: default,
+                eTag: etag,
+                properties: default);
 
             PageBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
@@ -184,11 +162,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            Dictionary<string, object> etagProperties = new()
-            {
-                { DataMovementConstants.ResourceProperties.ETag, etag }
-            };
-            StorageResourceItemProperties properties = new(0, etagProperties);
+            StorageResourceItemProperties properties = new(0, etag, default);
 
             AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();

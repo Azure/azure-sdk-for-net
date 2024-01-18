@@ -183,7 +183,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                fileLength = properties.ContentLength;
+                fileLength = properties.ResourceLength;
             }
             catch (Exception ex)
             {

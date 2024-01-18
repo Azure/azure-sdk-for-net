@@ -13,7 +13,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The length of the resource.
         /// </summary>
-        public long? ContentLength { get; }
+        public long? ResourceLength { get; }
+
+        /// <summary>
+        /// The HTTP ETag of the Storage Resource.
+        /// </summary>
+        public ETag? ETag { get; }
 
         /// <summary>
         /// Dictionary of the properties associated with this resource.
@@ -31,13 +36,16 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructor for StorageResourceProperties
         /// </summary>
-        /// <param name="contentLength"></param>
+        /// <param name="resourceLength"></param>
+        /// <param name="eTag"></param>
         /// <param name="properties"></param>
         public StorageResourceItemProperties(
-            long? contentLength,
+            long? resourceLength,
+            ETag? eTag,
             Dictionary<string, object> properties)
         {
-            ContentLength = contentLength;
+            ResourceLength = resourceLength;
+            ETag = eTag;
             RawProperties = properties;
         }
     }

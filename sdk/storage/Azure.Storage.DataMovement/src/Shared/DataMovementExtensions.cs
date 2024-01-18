@@ -20,7 +20,8 @@ namespace Azure.Storage.DataMovement
             }
 
             return new StorageResourceItemProperties(
-                contentLength: fileInfo.Length,
+                resourceLength: fileInfo.Length,
+                eTag: default,
                 properties: properties);
         }
 

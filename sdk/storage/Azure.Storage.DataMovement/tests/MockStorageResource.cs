@@ -73,7 +73,8 @@ namespace Azure.Storage.DataMovement.Tests
         protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         {
             return Task.FromResult(new StorageResourceItemProperties(
-                contentLength: Length ?? 0,
+                resourceLength: Length ?? 0,
+                eTag: new ETag("etag"),
                 properties: default));
         }
 

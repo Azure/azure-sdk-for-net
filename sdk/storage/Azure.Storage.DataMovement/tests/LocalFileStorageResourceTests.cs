@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, size);
+            Assert.AreEqual(result.ResourceLength, size);
             Assert.NotNull(result.RawProperties);
         }
 

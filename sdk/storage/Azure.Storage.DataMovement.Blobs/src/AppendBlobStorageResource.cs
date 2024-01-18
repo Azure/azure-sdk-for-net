@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        protected override long? Length => ResourceProperties?.ContentLength;
+        protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>
         /// ETag Download lock. Used when reading from the storage resource to confirm the storage resource has not changed
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs
             : this(blobClient, options)
         {
             ResourceProperties = resourceProperties;
-            ETagDownloadLock = resourceProperties?.RawProperties?.ParseETagProperty();
+            ETagDownloadLock = resourceProperties?.ETag;
         }
 
         /// <summary>
@@ -247,13 +247,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 BlobProperties blobProperties = (await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
                 StorageResourceItemProperties resourceProperties = blobProperties.ToStorageResourceProperties();
-
-                // If there are blob tags, they need to be fetched separately
-                if (blobProperties.TagCount > 0)
-                {
-                    GetBlobTagResult tagResult = (await BlobClient.GetTagsAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
-                    resourceProperties.RawProperties.Add(DataMovementConstants.ResourceProperties.Tags, tagResult.Tags);
-                }
 
                 ResourceProperties = resourceProperties;
                 return ResourceProperties;

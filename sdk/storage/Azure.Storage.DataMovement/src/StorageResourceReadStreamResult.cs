@@ -11,19 +11,19 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceReadStreamResult
     {
         /// <summary>
-        /// Content
+        /// Content.
         /// </summary>
         public readonly Stream Content;
 
         /// <summary>
-        /// Indicates the range of bytes returned if the client requested a subset of the storage resource by setting the Range request header.
+        /// Length of the content.
         /// </summary>
-        public readonly HttpRange Range;
+        public readonly long? ContentLength;
 
         /// <summary>
-        /// The properties for the storage resource
+        /// Length of the resource.
         /// </summary>
-        internal StorageResourceItemProperties Properties { get; set; }
+        public readonly long? ResourceLength;
 
         internal StorageResourceReadStreamResult() { }
 
@@ -39,8 +39,8 @@ namespace Azure.Storage.DataMovement
             StorageResourceItemProperties properties)
         {
             Content = content;
-            Range = range;
-            Properties = properties;
+            ContentLength = range.Length;
+            ResourceLength = properties.ResourceLength;
         }
 
         /// <summary>
@@ -51,6 +51,8 @@ namespace Azure.Storage.DataMovement
             Stream content)
         {
             Content = content;
+            ContentLength = content.Length;
+            ResourceLength = content.Length;
         }
     }
 }

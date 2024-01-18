@@ -611,7 +611,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, Constants.KB);
+            Assert.AreEqual(result.ResourceLength, Constants.KB);
             Assert.NotNull(result.RawProperties);
         }
 
