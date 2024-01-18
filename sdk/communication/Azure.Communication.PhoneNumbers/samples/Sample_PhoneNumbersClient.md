@@ -20,7 +20,7 @@ var client = new PhoneNumbersClient(connectionString);
 Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
 
 ```C# Snippet:SearchPhoneNumbers
-var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
+var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.InboundOutbound, sms: PhoneNumberCapabilityType.None);
 
 var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
 
@@ -37,7 +37,7 @@ while (!searchOperation.HasCompleted)
 Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseSearch
-var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Value.SearchId);
+var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Value.SearchId, true);
 while (!purchaseOperation.HasCompleted)
 {
     Thread.Sleep(2000);
@@ -64,7 +64,7 @@ foreach (var phoneNumber in purchasedPhoneNumbers)
 Phone number's capabilities can be updated by started by `StartUpdateCapabilities` function.
 
 ```C# Snippet:UpdateCapabilitiesNumbers
-var updateCapabilitiesOperation = client.StartUpdateCapabilities(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
+var updateCapabilitiesOperation = client.StartUpdateCapabilities(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.None);
 
 while (!updateCapabilitiesOperation.HasCompleted)
 {
