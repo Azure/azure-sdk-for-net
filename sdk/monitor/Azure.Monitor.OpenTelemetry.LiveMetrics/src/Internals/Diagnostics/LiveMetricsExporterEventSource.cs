@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(2, errorMessage);
 
         [NonEvent]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, Exception ex)
+        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(5, typeName, value);
 
         [NonEvent]
-        public void ErrorInitializingPartOfSdkVersion(string typeName, Exception ex)
+        public void ErrorInitializingPartOfSdkVersion(string typeName, System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
