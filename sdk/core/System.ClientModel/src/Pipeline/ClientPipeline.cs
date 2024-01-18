@@ -93,7 +93,7 @@ public sealed partial class ClientPipeline
         int perCallIndex = index;
 
         // Add retry policy.
-        policies[index++] = options.RetryPolicy ?? new ClientRetryPolicy();
+        policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
 
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
@@ -108,7 +108,7 @@ public sealed partial class ClientPipeline
         int perTryIndex = index;
 
         // Response buffering comes before the transport.
-        policies[index++] = ResponseBufferingPolicy.Shared;
+        policies[index++] = ResponseBufferingPolicy.Default;
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));

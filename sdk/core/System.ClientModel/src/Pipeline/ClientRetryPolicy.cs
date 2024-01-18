@@ -12,6 +12,8 @@ namespace System.ClientModel.Primitives;
 
 public class ClientRetryPolicy : PipelinePolicy
 {
+    public static readonly ClientRetryPolicy Default = new();
+
     private const int DefaultMaxRetries = 3;
     private const double DefaultJitterFactor = 0.2;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
@@ -23,11 +25,7 @@ public class ClientRetryPolicy : PipelinePolicy
     private readonly double _minJitterFactor;
     private readonly double _maxJitterFactor;
 
-    public ClientRetryPolicy() : this(DefaultMaxRetries)
-    {
-    }
-
-    public ClientRetryPolicy(int maxRetries)
+    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;

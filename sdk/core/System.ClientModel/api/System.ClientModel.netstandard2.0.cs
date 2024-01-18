@@ -84,8 +84,8 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ClientRetryPolicy() { }
-        public ClientRetryPolicy(int maxRetries) { }
+        public static readonly System.ClientModel.Primitives.ClientRetryPolicy Default;
+        public ClientRetryPolicy(int maxRetries = 3) { }
         protected virtual System.TimeSpan GetNextDelayCore(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
         protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
