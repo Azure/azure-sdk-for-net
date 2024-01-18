@@ -860,3 +860,6 @@
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                    @sunkun99
+
+# PRLabel: %EASM
+/sdk/easm/                                                         @thang-bit
