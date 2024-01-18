@@ -8,19 +8,9 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabric
 namespace: Azure.ResourceManager.ServiceFabric
-require: https://github.com/Azure/azure-rest-api-specs/blob/33a08abd715bd9d671ade5aaf4e3810e003792f1/specification/servicefabric/resource-manager/readme.md
-
-
-input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/33a08abd715bd9d671ade5aaf4e3810e003792f1/specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/cluster.json
-- https://github.com/Azure/azure-rest-api-specs/blob/33a08abd715bd9d671ade5aaf4e3810e003792f1/specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/application.json	
-
-#tag: package-2021-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/servicefabric/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -92,7 +82,7 @@ prepend-rp-prefix:
   - ProvisioningState
   - ServiceResource
 
-acronym-mapping:
+rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
