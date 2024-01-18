@@ -3,11 +3,10 @@
 
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
-using System.Threading;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.ClientModel.Primitives;
+using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Pipeline;
 
@@ -18,7 +17,7 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task SetsKey()
+    public async Task HeaderPolicySetsKey()
     {
         string keyValue = "test_key";
         string header = "api_key";
@@ -41,7 +40,7 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task SetsKeyWithPrefix()
+    public async Task HeaderPolicySetsKeyWithPrefix()
     {
         string keyValue = "test_key";
         string header = "api_key";
@@ -65,7 +64,7 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task VerifyRetry()
+    public async Task HeaderPolicyAddsSingleKeyWhenRetried()
     {
         string keyValue = "test_key";
         string header = "api_key";
@@ -89,7 +88,7 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task VerifyRetrySetsPrefix()
+    public async Task HeaderPolicyWithPrefixAddsSingleKeyWhenRetried()
     {
         string keyValue = "test_key";
         string header = "api_key";
@@ -111,5 +110,94 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
 
         Assert.True(message.Request.Headers.TryGetValue(header, out var requestHeaderValue));
         Assert.AreEqual($"{prefix} {keyValue}", requestHeaderValue);
+    }
+
+    [Test]
+    public async Task BasicPolicySetsKey()
+    {
+        string keyValue = "test_key";
+
+        ApiKeyCredential credential = new(keyValue);
+        ApiKeyAuthenticationPolicy keyPolicy = ApiKeyAuthenticationPolicy.CreateBasicAuthorizationPolicy(credential);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", new int[] { 200 })
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        Assert.True(message.Request.Headers.TryGetValue("Authorization", out var requestHeaderValue));
+        Assert.AreEqual($"Basic {keyValue}", requestHeaderValue);
+    }
+
+    [Test]
+    public async Task BearerPolicySetsKey()
+    {
+        string keyValue = "test_key";
+
+        ApiKeyCredential credential = new(keyValue);
+        ApiKeyAuthenticationPolicy keyPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", new int[] { 200 })
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        Assert.True(message.Request.Headers.TryGetValue("Authorization", out var requestHeaderValue));
+        Assert.AreEqual($"Bearer {keyValue}", requestHeaderValue);
+    }
+
+    [Test]
+    public async Task QueryPolicySetsKey()
+    {
+        string keyValue = "test_key";
+        string queryName = "api_key";
+
+        ApiKeyCredential credential = new(keyValue);
+        ApiKeyAuthenticationPolicy keyPolicy = ApiKeyAuthenticationPolicy.CreateQueryApiKeyPolicy(credential, queryName);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", new int[] { 200 })
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual($"?{queryName}={keyValue}", message.Request.Uri.Query);
+    }
+
+    [Test]
+    public async Task QueryPolicySetsKeyOnceWhenRetried()
+    {
+        string keyValue = "test_key";
+        string queryName = "api_key";
+
+        ApiKeyCredential credential = new(keyValue);
+        ApiKeyAuthenticationPolicy keyPolicy = ApiKeyAuthenticationPolicy.CreateQueryApiKeyPolicy(credential, queryName);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", new int[] { 200, 200 })
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual($"?{queryName}={keyValue}", message.Request.Uri.Query);
     }
 }

@@ -44,7 +44,6 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
 
     public static ApiKeyAuthenticationPolicy CreateBasicAuthorizationPolicy(ApiKeyCredential credential)
     {
-        // TODO: Add tests for this implementation if the API is approved.
         Argument.AssertNotNull(credential, nameof(credential));
 
         return new ApiKeyAuthenticationPolicy(credential, "Authorization", KeyLocation.Header, "Basic");
@@ -52,7 +51,6 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
 
     public static ApiKeyAuthenticationPolicy CreateBearerAuthorizationPolicy(ApiKeyCredential credential)
     {
-        // TODO: Add tests for this implementation if the API is approved.
         Argument.AssertNotNull(credential, nameof(credential));
 
         return new ApiKeyAuthenticationPolicy(credential, "Authorization", KeyLocation.Header, "Bearer");
@@ -108,7 +106,6 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
 
     private void AddQueryParameter(PipelineMessage message)
     {
-        // TODO: optimize using Span APIs
         _credential.Deconstruct(out string key);
 
         StringBuilder query = new StringBuilder();

@@ -118,11 +118,13 @@ public class MockPipelineTransport : PipelineTransport
 
     private class TransportRequest : PipelineRequest
     {
+        private Uri _uri;
         private readonly PipelineMessageHeaders _headers;
 
         public TransportRequest()
         {
             _headers = new MockMessageHeaders();
+            _uri = new Uri("https://www.example.com");
         }
 
         public override void Dispose() { }
@@ -141,9 +143,7 @@ public class MockPipelineTransport : PipelineTransport
         }
 
         protected override Uri GetUriCore()
-        {
-            throw new NotImplementedException();
-        }
+            => _uri;
 
         protected override void SetContentCore(BinaryContent? content)
         {
@@ -156,9 +156,7 @@ public class MockPipelineTransport : PipelineTransport
         }
 
         protected override void SetUriCore(Uri uri)
-        {
-            throw new NotImplementedException();
-        }
+            => _uri = uri;
     }
 
     private class RetriableTransportResponse : PipelineResponse
