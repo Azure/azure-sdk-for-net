@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             int index = 0;
             foreach (AssetResource asset in response)
             {
-                Console.WriteLine($"Asset Name: {asset.Name}, Kind: {asset.GetType}");
+                Console.WriteLine($"Asset Name: {asset.Name}, Kind: {asset.GetType()}");
                 if (index++ > 5)
                 {
                     break;
