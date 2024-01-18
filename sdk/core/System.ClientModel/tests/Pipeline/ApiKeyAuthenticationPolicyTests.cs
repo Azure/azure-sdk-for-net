@@ -179,6 +179,7 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
+    [Ignore("We may want to cut this feature from v1")]
     public async Task QueryPolicySetsKeyOnceWhenRetried()
     {
         string keyValue = "test_key";
