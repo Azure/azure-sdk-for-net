@@ -52,6 +52,13 @@ var devBoxesClient = new DevBoxesClient(endpoint, credential);
 var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
 ```
 
+Alternatively  use `DevCenterClient` to create `DevBoxesClient` and `DeploymentEnvironmentsClient` sharing same endpoint and credential across clients. 
+
+```C# Snippet:Azure_DevCenter_CreateClientsFromDevCenterClient_Scenario
+devBoxesClient = devCenterClient.GetDevBoxesClient();
+environmentsClient = devCenterClient.GetDeploymentEnvironmentsClient();
+```
+
 ### Thread safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -77,10 +84,9 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
+await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    targetProjectName = result.GetProperty("name").ToString();
+    targetProjectName = project.Name;
 }
 ```
 
@@ -90,10 +96,9 @@ Interaction with DevBox pools is facilitated through the `DevBoxesClient`. Pools
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, null, null, null))
+await foreach (DevBoxPool pool in devBoxesClient.GetPoolsAsync(targetProjectName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    targetPoolName = result.GetProperty("name").ToString();
+    targetPoolName = pool.Name;
 }
 ```
 
@@ -102,21 +107,17 @@ await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName
 To create a new DevBox, provide the pool name in the content and specify the desired DevBox name. Upon successful execution of this operation, a DevBox should appear in the portal.
 
 ```C# Snippet:Azure_DevCenter_CreateDevBox_Scenario
-var content = new
-{
-    poolName = targetPoolName,
-};
+var content = new DevBox(targetPoolName);
 
-Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
+Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
     WaitUntil.Completed,
     targetProjectName,
     "me",
     "MyDevBox",
-    RequestContent.Create(content));
+    content);
 
-BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
-JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
-Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetProperty("provisioningState")}.");
+DevBox devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+Console.WriteLine($"Completed provisioning for dev box with status {devBox.ProvisioningState}.");
 ```
 
 ### Connect to your Dev Box
@@ -124,13 +125,12 @@ Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetPr
 Once a DevBox is provisioned, you can connect to it using an RDP connection string. Below is a sample code that demonstrates how to retrieve it.
 
 ```C# Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
-Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
+RemoteConnection remoteConnection = await devBoxesClient.GetRemoteConnectionAsync(
     targetProjectName,
     "me",
-    "MyDevBox",
-    null);
-JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
-Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
+    "MyDevBox");
+
+Console.WriteLine($"Connect using web URL {remoteConnection.WebUri}.");
 ```
 
 ### Delete the Dev Box
@@ -154,10 +154,9 @@ Console.WriteLine($"Completed dev box deletion.");
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
 string catalogName = null;
 
-await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, null, null))
+await foreach (DevCenterCatalog catalog in environmentsClient.GetCatalogsAsync(projectName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    catalogName = result.GetProperty("name").ToString();
+    catalogName = catalog.Name;
 }
 ```
 
@@ -167,10 +166,9 @@ Environment definitions are a part of the catalog associated with your project. 
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
 string environmentDefinitionName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1, context: new()))
+await foreach (EnvironmentDefinition environmentDefinition in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    environmentDefinitionName = result.GetProperty("name").ToString();
+    environmentDefinitionName = environmentDefinition.Name;
 }
 ```
 
@@ -180,10 +178,9 @@ Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
 string environmentTypeName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, null, null))
+await foreach (DevCenterEnvironmentType environmentType in environmentsClient.GetEnvironmentTypesAsync(projectName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    environmentTypeName = result.GetProperty("name").ToString();
+    environmentTypeName = environmentType.Name;
 }
 ```
 
@@ -192,24 +189,23 @@ await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(pr
 Issue a request to create an environment using a specific definition item and environment type.
 
 ```C# Snippet:Azure_DevCenter_CreateEnvironment_Scenario
-var content = new
-{
-    catalogName = catalogName,
-    environmentType = environmentTypeName,
-    environmentDefinitionName = environmentDefinitionName,
-};
+var requestEnvironment = new DevCenterEnvironment
+(
+    environmentTypeName,
+    catalogName,
+    environmentDefinitionName
+);
 
 // Deploy the environment
-Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
+Operation<DevCenterEnvironment> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
     WaitUntil.Completed,
     projectName,
     "me",
     "DevEnvironment",
-    RequestContent.Create(content));
+    requestEnvironment);
 
-BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
-JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
-Console.WriteLine($"Completed provisioning for environment with status {environment.GetProperty("provisioningState")}.");
+DevCenterEnvironment environment = await environmentCreateOperation.WaitForCompletionAsync();
+Console.WriteLine($"Completed provisioning for environment with status {environment.ProvisioningState}.");
 ```
 
 ## Delete an environment

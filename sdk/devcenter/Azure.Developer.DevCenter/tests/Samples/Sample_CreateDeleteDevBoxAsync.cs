@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter.Tests.Samples
 {
@@ -13,16 +15,15 @@ namespace Azure.Developer.DevCenter.Tests.Samples
     {
         public async Task CreateDeleteDevBoxAsync(Uri endpoint)
         {
-            // Create and delete a user devbox
+            // Create and delete a Dev Box
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
 
             #region Snippet:Azure_DevCenter_GetProjects_Scenario
             string targetProjectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
+            await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
             {
-                JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-                targetProjectName = result.GetProperty("name").ToString();
+                targetProjectName = project.Name;
             }
             #endregion
 
@@ -37,10 +38,9 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             // Grab a pool
             #region Snippet:Azure_DevCenter_GetPools_Scenario
             string targetPoolName = null;
-            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, null, null, null))
+            await foreach (DevBoxPool pool in devBoxesClient.GetPoolsAsync(targetProjectName))
             {
-                JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-                targetPoolName = result.GetProperty("name").ToString();
+                targetPoolName = pool.Name;
             }
             #endregion
 
@@ -51,32 +51,28 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             // Provision your dev box in the selected pool
             #region Snippet:Azure_DevCenter_CreateDevBox_Scenario
-            var content = new
-            {
-                poolName = targetPoolName,
-            };
+            var content = new DevBox(targetPoolName);
 
-            Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
+            Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
                 WaitUntil.Completed,
                 targetProjectName,
                 "me",
                 "MyDevBox",
-                RequestContent.Create(content));
+                content);
 
-            BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
-            JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
-            Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetProperty("provisioningState")}.");
+            DevBox devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+            Console.WriteLine($"Completed provisioning for dev box with status {devBox.ProvisioningState}.");
             #endregion
 
             // Fetch the web connection URL to access your dev box from the browser
             #region Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
-            Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
+
+            RemoteConnection remoteConnection = await devBoxesClient.GetRemoteConnectionAsync(
                 targetProjectName,
                 "me",
-                "MyDevBox",
-                null);
-            JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
-            Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
+                "MyDevBox");
+
+            Console.WriteLine($"Connect using web URL {remoteConnection.WebUri}.");
             #endregion
 
             // Delete your dev box when finished

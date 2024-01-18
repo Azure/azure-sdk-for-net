@@ -8,10 +8,9 @@ Create a `DevCenterClient` and issue a request to get all projects the signed-in
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
+await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    targetProjectName = result.GetProperty("name").ToString();
+    targetProjectName = project.Name;
 }
 ```
 
@@ -21,10 +20,9 @@ Create a `DevBoxesClient` and issue a request to get all pools in a project.
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, null, null, null))
+await foreach (DevBoxPool pool in devBoxesClient.GetPoolsAsync(targetProjectName))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    targetPoolName = result.GetProperty("name").ToString();
+    targetPoolName = pool.Name;
 }
 ```
 
@@ -33,21 +31,17 @@ await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName
 Issue a request to create a dev box in a project using a specific pool.
 
 ```C# Snippet:Azure_DevCenter_CreateDevBox_Scenario
-var content = new
-{
-    poolName = targetPoolName,
-};
+var content = new DevBox(targetPoolName);
 
-Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
+Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
     WaitUntil.Completed,
     targetProjectName,
     "me",
     "MyDevBox",
-    RequestContent.Create(content));
+    content);
 
-BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
-JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
-Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetProperty("provisioningState")}.");
+DevBox devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+Console.WriteLine($"Completed provisioning for dev box with status {devBox.ProvisioningState}.");
 ```
 
 ## Connect to a dev box
@@ -55,13 +49,12 @@ Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetPr
 Once your dev box is created, issue a request to get URLs for connecting to it via either web or desktop.
 
 ```C# Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
-Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
+RemoteConnection remoteConnection = await devBoxesClient.GetRemoteConnectionAsync(
     targetProjectName,
     "me",
-    "MyDevBox",
-    null);
-JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
-Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
+    "MyDevBox");
+
+Console.WriteLine($"Connect using web URL {remoteConnection.WebUri}.");
 ```
 
 ## Delete a dev box

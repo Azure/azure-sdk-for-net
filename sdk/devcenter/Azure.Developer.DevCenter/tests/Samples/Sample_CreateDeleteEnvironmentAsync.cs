@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter.Tests.Samples
 {
@@ -17,10 +18,9 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
             string projectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
+            await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
             {
-                JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-                projectName = result.GetProperty("name").ToString();
+                projectName = project.Name;
             }
 
             if (projectName is null)
@@ -34,10 +34,9 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             #region Snippet:Azure_DevCenter_GetCatalogs_Scenario
             string catalogName = null;
 
-            await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, null, null))
+            await foreach (DevCenterCatalog catalog in environmentsClient.GetCatalogsAsync(projectName))
             {
-                JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-                catalogName = result.GetProperty("name").ToString();
+                catalogName = catalog.Name;
             }
             #endregion
 
@@ -48,24 +47,22 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             #region Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
             string environmentDefinitionName = null;
-            await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1, context: new()))
+            await foreach (EnvironmentDefinition environmentDefinition in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName))
             {
-                JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-                environmentDefinitionName = result.GetProperty("name").ToString();
+                environmentDefinitionName = environmentDefinition.Name;
             }
             #endregion
 
             if (environmentDefinitionName is null)
             {
-                throw new InvalidOperationException($"No valid environemtn definitions were found in Project {projectName}/DevCenter {endpoint}.");
+                throw new InvalidOperationException($"No valid environment definitions were found in Project {projectName}/DevCenter {endpoint}.");
             }
 
             #region Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
             string environmentTypeName = null;
-            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, null, null))
+            await foreach (DevCenterEnvironmentType environmentType in environmentsClient.GetEnvironmentTypesAsync(projectName))
             {
-                JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-                environmentTypeName = result.GetProperty("name").ToString();
+                environmentTypeName = environmentType.Name;
             }
             #endregion
 
@@ -75,24 +72,23 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             }
 
             #region Snippet:Azure_DevCenter_CreateEnvironment_Scenario
-            var content = new
-            {
-                catalogName = catalogName,
-                environmentType = environmentTypeName,
-                environmentDefinitionName = environmentDefinitionName,
-            };
+            var requestEnvironment = new DevCenterEnvironment
+            (
+                environmentTypeName,
+                catalogName,
+                environmentDefinitionName
+            );
 
             // Deploy the environment
-            Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
+            Operation<DevCenterEnvironment> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
                 WaitUntil.Completed,
                 projectName,
                 "me",
                 "DevEnvironment",
-                RequestContent.Create(content));
+                requestEnvironment);
 
-            BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
-            JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
-            Console.WriteLine($"Completed provisioning for environment with status {environment.GetProperty("provisioningState")}.");
+            DevCenterEnvironment environment = await environmentCreateOperation.WaitForCompletionAsync();
+            Console.WriteLine($"Completed provisioning for environment with status {environment.ProvisioningState}.");
             #endregion
 
             // Delete the environment when finished

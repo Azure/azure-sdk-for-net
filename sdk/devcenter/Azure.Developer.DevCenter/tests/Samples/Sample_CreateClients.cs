@@ -17,6 +17,12 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var devBoxesClient = new DevBoxesClient(endpoint, credential);
             var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
             #endregion
+
+            #region Snippet:Azure_DevCenter_CreateClientsFromDevCenterClient_Scenario
+            devBoxesClient = devCenterClient.GetDevBoxesClient();
+            environmentsClient = devCenterClient.GetDeploymentEnvironmentsClient();
+            #endregion
+
         }
     }
 }
