@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,6 +125,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
@@ -139,6 +151,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +207,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Quotas_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for update quota is queried. </param>
@@ -213,6 +237,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Quotas_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -235,6 +263,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,6 +291,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -281,6 +321,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -302,6 +350,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,6 +382,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

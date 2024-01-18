@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The extended location type. </summary>
+    /// <summary> The extended location type. Allowed value: 'CustomLocation'. </summary>
     public readonly partial struct HybridContainerServiceExtendedLocationType : IEquatable<HybridContainerServiceExtendedLocationType>
     {
         private readonly string _value;

@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateZones_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

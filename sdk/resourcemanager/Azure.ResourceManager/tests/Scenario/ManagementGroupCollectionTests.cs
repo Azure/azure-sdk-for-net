@@ -96,5 +96,18 @@ namespace Azure.ResourceManager.Tests
             var rs = await Client.GetManagementGroups().CheckNameAvailabilityAsync(rq);
             Assert.IsTrue(rs.Value.NameAvailable);
         }
+
+        [RecordedTest]
+        public async Task GetEntities()
+        {
+            var mgmtGroupCollection = Client.GetManagementGroups();
+            var rq = new ManagementGroupCollectionGetEntitiesOptions();
+            EntityData entity;
+            await foreach(var item in mgmtGroupCollection.GetEntitiesAsync(rq))
+            {
+                entity = item;
+                break;
+            }
+        }
     }
 }

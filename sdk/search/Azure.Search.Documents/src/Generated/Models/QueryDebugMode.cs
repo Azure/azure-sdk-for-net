@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> No query debugging information will be returned. </summary>
         public static QueryDebugMode Disabled { get; } = new QueryDebugMode(DisabledValue);
-        /// <summary> Allows the user to further explore their Semantic search results. </summary>
+        /// <summary> Allows the user to further explore their reranked results. </summary>
         public static QueryDebugMode Semantic { get; } = new QueryDebugMode(SemanticValue);
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are the same. </summary>
         public static bool operator ==(QueryDebugMode left, QueryDebugMode right) => left.Equals(right);
