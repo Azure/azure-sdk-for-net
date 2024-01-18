@@ -49,6 +49,12 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Primitives
 {
+    [System.FlagsAttribute]
+    public enum ClientErrorBehaviors
+    {
+        Default = 0,
+        NoThrow = 1,
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -116,14 +122,22 @@ namespace System.ClientModel.Primitives
     {
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public bool BufferResponse { get { throw null; } set { } }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } protected internal set { } }
+        public System.ClientModel.Primitives.PipelineMessageClassifier? MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
+        public void Apply(System.ClientModel.Primitives.RequestOptions options) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+    }
+    public partial class PipelineMessageClassifier
+    {
+        protected internal PipelineMessageClassifier() { }
+        public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
+        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     public abstract partial class PipelineMessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {
@@ -190,6 +204,14 @@ namespace System.ClientModel.Primitives
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
         protected abstract void ProcessCore(System.ClientModel.Primitives.PipelineMessage message);
         protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message);
+    }
+    public partial class RequestOptions
+    {
+        public RequestOptions() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
+        public void AddHeader(string name, string value) { }
+        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {

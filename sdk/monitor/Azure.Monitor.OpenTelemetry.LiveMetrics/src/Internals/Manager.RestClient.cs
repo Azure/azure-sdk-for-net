@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     }
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 LiveMetricsExporterEventSource.Log.PingFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
@@ -115,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     }
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 LiveMetricsExporterEventSource.Log.PostFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
