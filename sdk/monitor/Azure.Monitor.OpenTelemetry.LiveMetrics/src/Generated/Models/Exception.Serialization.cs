@@ -10,36 +10,23 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class RemoteDependencyDocumentIngress : IUtf8JsonSerializable
+    internal partial class Exception : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(ExceptionType))
             {
-                writer.WritePropertyName("Name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("ExceptionType"u8);
+                writer.WriteStringValue(ExceptionType);
             }
-            if (Optional.IsDefined(CommandName))
+            if (Optional.IsDefined(ExceptionMessage))
             {
-                writer.WritePropertyName("CommandName"u8);
-                writer.WriteStringValue(CommandName);
+                writer.WritePropertyName("ExceptionMessage"u8);
+                writer.WriteStringValue(ExceptionMessage);
             }
-            if (Optional.IsDefined(ResultCode))
-            {
-                writer.WritePropertyName("ResultCode"u8);
-                writer.WriteStringValue(ResultCode);
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("Duration"u8);
-                writer.WriteStringValue(Duration);
-            }
-            if (Optional.IsDefined(DocumentType))
-            {
-                writer.WritePropertyName("DocumentType"u8);
-                writer.WriteStringValue(DocumentType.Value.ToString());
-            }
+            writer.WritePropertyName("DocumentType"u8);
+            writer.WriteStringValue(DocumentType.ToString());
             if (Optional.IsCollectionDefined(DocumentStreamIds))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
@@ -59,11 +46,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AdditionalProperties))
-            {
-                writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteStringValue(AdditionalProperties);
             }
             writer.WriteEndObject();
         }

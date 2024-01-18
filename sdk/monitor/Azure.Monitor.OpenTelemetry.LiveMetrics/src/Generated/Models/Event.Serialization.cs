@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class RequestDocumentIngress : IUtf8JsonSerializable
+    internal partial class Event : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,26 +20,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Url))
-            {
-                writer.WritePropertyName("Url"u8);
-                writer.WriteStringValue(Url);
-            }
-            if (Optional.IsDefined(ResponseCode))
-            {
-                writer.WritePropertyName("ResponseCode"u8);
-                writer.WriteStringValue(ResponseCode);
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("Duration"u8);
-                writer.WriteStringValue(Duration);
-            }
-            if (Optional.IsDefined(DocumentType))
-            {
-                writer.WritePropertyName("DocumentType"u8);
-                writer.WriteStringValue(DocumentType.Value.ToString());
-            }
+            writer.WritePropertyName("DocumentType"u8);
+            writer.WriteStringValue(DocumentType.ToString());
             if (Optional.IsCollectionDefined(DocumentStreamIds))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
@@ -59,11 +41,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AdditionalProperties))
-            {
-                writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteStringValue(AdditionalProperties);
             }
             writer.WriteEndObject();
         }
