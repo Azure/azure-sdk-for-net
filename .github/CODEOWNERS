@@ -131,7 +131,7 @@
 /sdk/automation/Microsoft.Azure.Management.Automation/             @jaspkaur28 @omairabdullah
 
 # ServiceLabel: %AVS %Service Attention
-/sdk/avs/Microsoft.Azure.Management.Avs/                           @divka78 @amitchat @aishu
+/sdk/avs/Microsoft.Azure.Management.Avs/                           @cataggar @nivasn-msft @amitchat @aishu
 
 # ServiceLabel: %Azure Data Explorer
 #/<NotInRepo>/          @ilayrn @orhasban @zoharHenMicrosoft @sagivf @Aviv-Yaniv
@@ -197,13 +197,13 @@
 /sdk/anomalydetector/Azure.AI.AnomalyDetector/                     @conhua @mengaims @juaduan @moreOver0
 
 # PRLabel: %Cognitive - Health Insights
-/sdk/healthinsights/                                              @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/                                              @asaflevi-ms
 
 # ServiceLabel: %Cognitive - Health Insights Cancer Profiling %Service Attention
-/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms
 
 # ServiceLabel: %Cognitive - Health Insights Clinical Matching %Service Attention
-/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms
 
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
@@ -284,7 +284,7 @@
 #/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @sandeepraichura @hilaryw29 @MsGabsta @ushnaarshadkhan
 
 # PRLabel: %Compute
-/sdk/compute/                                                      @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT
+/sdk/compute/                                                      @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT @melina5656
 
 # ServiceLabel: %Compute - Extensions %Service Attention
 #/<NotInRepo>/                                                     @MsGabsta @TravisCragg-MSFT
@@ -662,6 +662,12 @@
 # ServiceLabel: %OpenAI %Service Attention
 #/<NotInRepo>/                                                     @jpalvarezl @trrwilson
 
+# PRLabel: %Image Analysis
+/sdk/vision/Azure.AI.Vision.ImageAnalysis/                         @rhurey @dargilco
+
+# ServiceLabel: %Image Analysis %Service Attention
+#/<NotInRepo>/                                                     @rhurey @dargilco
+
 # ServiceLabel: %Monitor - Operational Insights %Service Attention
 #/<NotInRepo>/                                                     zy@omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 
@@ -678,7 +684,7 @@
 /sdk/quantum/Azure.Quantum.Jobs/                                   @xfield
 
 # ServiceLabel: %Recovery Services Backup %Service Attention
-/sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/ @pvrk @Daya-Patil
+/sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup/ @Daya-Patil
 
 # ServiceLabel: %Recovery Services Site-Recovery %Service Attention
 /sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery/ @Sharmistha-Rai
@@ -839,7 +845,7 @@
 /sdk/servicebus/tests.data.yml                                     @shankarsama @DorothySun216
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978 
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978
 
 # ######## DPG ########
 

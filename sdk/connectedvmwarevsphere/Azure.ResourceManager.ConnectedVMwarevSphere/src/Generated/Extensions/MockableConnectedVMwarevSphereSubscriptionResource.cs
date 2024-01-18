@@ -77,6 +77,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourcePools_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareResourcePoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,6 +106,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourcePools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareResourcePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +137,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,6 +166,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +197,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Hosts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,6 +226,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hosts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareHostResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +257,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,6 +286,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,6 +317,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VCenters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVCenterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,6 +346,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VCenters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVCenterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +377,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVmTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,6 +406,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVmTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,6 +437,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,6 +466,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

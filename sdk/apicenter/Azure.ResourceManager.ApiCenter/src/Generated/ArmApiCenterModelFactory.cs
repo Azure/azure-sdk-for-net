@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.ApiCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ApiCenterServiceData(id, name, resourceType, systemData, tags, location, identity, provisioningState);
+            return new ApiCenterServiceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiCenterServicePatch"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.ApiCenterServicePatch"/> instance for mocking. </returns>
+        public static ApiCenterServicePatch ApiCenterServicePatch(ApiCenterProvisioningState? provisioningState = null)
+        {
+            return new ApiCenterServicePatch(provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

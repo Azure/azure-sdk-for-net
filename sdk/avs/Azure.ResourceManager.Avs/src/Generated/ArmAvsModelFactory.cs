@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
         /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
         /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
+        /// <param name="extendedNetworkBlocks"> Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X). </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="circuit"> An ExpressRoute Circuit. </param>
         /// <param name="endpoints"> The endpoints. </param>
@@ -67,13 +69,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="secondaryCircuit"> A secondary expressRoute circuit from a separate AZ. Only present in a stretched private cloud. </param>
         /// <param name="nsxPublicIPQuotaRaised"> Flag to indicate whether the private cloud has the quota for provisioned NSX Public IP count raised from 64 to 1024. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string skuName = null, ManagedServiceIdentity identity = null, AvsManagementCluster managementCluster = null, InternetConnectivityState? internet = null, IEnumerable<SingleSignOnIdentitySource> identitySources = null, PrivateCloudAvailabilityProperties availability = null, CustomerManagedEncryption encryption = null, AvsPrivateCloudProvisioningState? provisioningState = null, ExpressRouteCircuit circuit = null, AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, IEnumerable<ResourceIdentifier> externalCloudLinks = null, ExpressRouteCircuit secondaryCircuit = null, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = null)
+        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string skuName = null, ManagedServiceIdentity identity = null, AvsManagementCluster managementCluster = null, InternetConnectivityState? internet = null, IEnumerable<SingleSignOnIdentitySource> identitySources = null, PrivateCloudAvailabilityProperties availability = null, CustomerManagedEncryption encryption = null, IEnumerable<string> extendedNetworkBlocks = null, AvsPrivateCloudProvisioningState? provisioningState = null, ExpressRouteCircuit circuit = null, AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, IEnumerable<ResourceIdentifier> externalCloudLinks = null, ExpressRouteCircuit secondaryCircuit = null, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = null)
         {
             tags ??= new Dictionary<string, string>();
             identitySources ??= new List<SingleSignOnIdentitySource>();
+            extendedNetworkBlocks ??= new List<string>();
             externalCloudLinks ??= new List<ResourceIdentifier>();
 
-            return new AvsPrivateCloudData(id, name, resourceType, systemData, tags, location, skuName != null ? new AvsSku(skuName) : null, identity, managementCluster, internet, identitySources?.ToList(), availability, encryption, provisioningState, circuit, endpoints, networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork, vCenterPassword, nsxtPassword, vCenterCertificateThumbprint, nsxtCertificateThumbprint, externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised);
+            return new AvsPrivateCloudData(id, name, resourceType, systemData, tags, location, skuName != null ? new AvsSku(skuName) : null, identity, managementCluster, internet, identitySources?.ToList(), availability, encryption, extendedNetworkBlocks?.ToList(), provisioningState, circuit, endpoints, networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork, vCenterPassword, nsxtPassword, vCenterCertificateThumbprint, nsxtCertificateThumbprint, externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExpressRouteCircuit"/>. </summary>

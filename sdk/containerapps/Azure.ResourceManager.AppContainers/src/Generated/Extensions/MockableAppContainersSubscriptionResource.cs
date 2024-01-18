@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableWorkloadProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -96,6 +100,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,6 +128,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingMeters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -141,6 +153,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +240,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,6 +269,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -273,6 +329,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +360,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,6 +389,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

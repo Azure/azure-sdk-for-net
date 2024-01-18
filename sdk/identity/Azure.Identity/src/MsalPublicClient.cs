@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Azure.Core;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -14,8 +14,8 @@ namespace Azure.Identity
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;
-
         internal string RedirectUrl { get; }
+        internal bool IsProofOfPossessionRequired { get; }
 
         protected MsalPublicClient()
         { }
@@ -25,7 +25,11 @@ namespace Azure.Identity
         {
             RedirectUrl = redirectUrl;
 
-            _beforeBuildClient = (options as IMsalPublicClientInitializerOptions)?.BeforeBuildClient;
+            if (options is IMsalPublicClientInitializerOptions initializerOptions)
+            {
+                _beforeBuildClient = initializerOptions.BeforeBuildClient;
+                IsProofOfPossessionRequired = initializerOptions.IsProofOfPossessionRequired;
+            };
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
@@ -132,7 +136,7 @@ namespace Azure.Identity
                            .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, PopTokenRequestContext popTokenRequestContext, bool async, CancellationToken cancellationToken)
         {
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
             {
@@ -146,7 +150,7 @@ namespace Azure.Identity
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 return Task.Run(async () =>
                 {
-                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, true, cancellationToken).ConfigureAwait(false);
+                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, popTokenRequestContext, true, cancellationToken).ConfigureAwait(false);
                     LogAccountDetails(result);
                     return result;
                 }).GetAwaiter().GetResult();
@@ -155,12 +159,12 @@ namespace Azure.Identity
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, popTokenRequestContext, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, PopTokenRequestContext popTokenRequestContext, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
@@ -189,6 +193,10 @@ namespace Azure.Identity
                 {
                     builder.WithSystemWebViewOptions(browserOptions.SystemBrowserOptions);
                 }
+            }
+            if (IsProofOfPossessionRequired)
+            {
+                builder.WithProofOfPossession(popTokenRequestContext.ProofOfPossessionNonce, popTokenRequestContext.HttpMethod, popTokenRequestContext.Uri);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)

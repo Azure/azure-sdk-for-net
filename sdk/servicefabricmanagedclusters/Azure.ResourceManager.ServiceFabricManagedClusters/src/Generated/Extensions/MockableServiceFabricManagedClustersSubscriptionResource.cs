@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,6 +94,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,6 +123,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +164,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -179,6 +203,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_GetByEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +245,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_GetByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -254,6 +286,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -276,6 +312,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -297,6 +337,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_ListByEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,6 +365,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_ListByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -343,6 +391,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,6 +419,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -389,6 +445,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,6 +485,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

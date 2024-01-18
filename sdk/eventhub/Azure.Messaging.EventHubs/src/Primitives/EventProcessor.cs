@@ -43,6 +43,9 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///   when all processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     /// </remarks>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples">Event Hubs event processor samples and discussion</seealso>
+    ///
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
@@ -720,7 +723,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             // properties from the active consumer, which can change during processing in the event of
             // error scenarios.
 
-            LastEnqueuedEventProperties readLastEnquedEventInformation()
+            LastEnqueuedEventProperties readLastEnqueuedEventProperties()
             {
                 // This is not an expected scenario; the guard exists to prevent a race condition that is
                 // unlikely, but possible, when partition processing is being stopped or consumer creation
@@ -814,6 +817,9 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                         while (!cancellationSource.IsCancellationRequested)
                         {
+                            var stopWatch = ValueStopwatch.StartNew();
+                            var cycleStartTime = Logger.GetLogFormattedUtcNow();
+
                             try
                             {
                                 eventBatch = await consumer.ReceiveAsync(EventBatchMaximumCount, Options.MaximumWaitTime, cancellationSource.Token).ConfigureAwait(false);
@@ -877,6 +883,21 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                                 await Task.Delay(retryDelay.Value, cancellationSource.Token).ConfigureAwait(false);
                             }
+
+                            // Capture the end-to-end cycle information for the partition.  This is intended to provide an
+                            // all-up view for partition processing, showing when and how long it took for a batch be read and
+                            // processed.
+
+                            var startingSequence = default(string);
+                            var endingSequence = default(string);
+
+                            if (eventBatch != null && eventBatch.Count > 0)
+                            {
+                                startingSequence = eventBatch[0].SequenceNumber.ToString();
+                                endingSequence = eventBatch[eventBatch.Count - 1].SequenceNumber.ToString();
+                            }
+
+                            Logger.EventProcessorPartitionProcessingCycleComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, eventBatch?.Count ?? 0, startingSequence, endingSequence, cycleStartTime, Logger.GetLogFormattedUtcNow(), stopWatch.GetElapsedTime().TotalSeconds);
                         }
                     }
                     catch (TaskCanceledException)
@@ -961,7 +982,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             (
                 Task.Run(performProcessing),
                 partition,
-                readLastEnquedEventInformation,
+                readLastEnqueuedEventProperties,
                 cancellationSource
             );
         }
@@ -1956,9 +1977,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                   CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.EventProcessorPartitionProcessingStop(partitionId, Identifier, EventHubName, ConsumerGroup);
 
             var partition = default(TPartition);
+            var stopWatch = Stopwatch.StartNew();
 
             try
             {
@@ -1981,6 +2002,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // Attempt to stop the processor; any exceptions should be treated as a problem with processing, not
                 // associated with the attempt to stop.
 
+                Logger.EventProcessorPartitionProcessingStop(partitionId, Identifier, EventHubName, ConsumerGroup);
                 partition = partitionProcessor.Partition;
 
                 // If developer code in a handler registered a callback for cancellation, it is possible that
@@ -2003,7 +2025,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var stopContinuation = partitionProcessor.ProcessingTask.ContinueWith(async (task, state) =>
                 {
                     var innerPartition = default(TPartition);
-                    var (innerId, innerReason) = ((string, ProcessingStoppedReason))state;
+                    var (innerId, innerReason, innerWatch) = ((string, ProcessingStoppedReason, Stopwatch))state;
 
                     try
                     {
@@ -2070,7 +2092,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                     finally
                     {
-                        Logger.EventProcessorPartitionProcessingStopComplete(innerId, Identifier, EventHubName, ConsumerGroup);
+                        innerWatch.Stop();
+                        Logger.EventProcessorPartitionProcessingStopComplete(innerId, Identifier, EventHubName, ConsumerGroup, innerWatch.Elapsed.TotalSeconds);
                     }
 
                     // If the partition processor is still being tracked, dispose it and remove it from the
@@ -2081,7 +2104,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         disposeProcessor.Dispose();
                     }
-                }, (partitionId, reason), default, TaskContinuationOptions.RunContinuationsAsynchronously, TaskScheduler.Current);
+                }, (partitionId, reason, stopWatch), default, TaskContinuationOptions.RunContinuationsAsynchronously, TaskScheduler.Current);
 
                 // Set the processing task to the continuation, which allows it to be awaited when the processor is
                 // stopping or otherwise needs to be ensure completion.
