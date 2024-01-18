@@ -6,6 +6,10 @@
 #nullable disable
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,6 +23,10 @@ namespace Azure.Analytics.Defender.Easm
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
+        private readonly string _workspaceName;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -33,20 +41,31 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Initializes a new instance of EasmClient. </summary>
         /// <param name="endpoint"> The endpoint hosting the requested resource. For example, https://{region}.easm.defender.microsoft.com. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
+        /// <param name="workspaceName"> The name of the Workspace. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EasmClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EasmClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public EasmClient(Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, workspaceName, credential, new EasmClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of EasmClient. </summary>
         /// <param name="endpoint"> The endpoint hosting the requested resource. For example, https://{region}.easm.defender.microsoft.com. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
+        /// <param name="workspaceName"> The name of the Workspace. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EasmClient(Uri endpoint, TokenCredential credential, EasmClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public EasmClient(Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, TokenCredential credential, EasmClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EasmClientOptions();
 
@@ -54,125 +73,3419 @@ namespace Azure.Analytics.Defender.Easm
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
+            _workspaceName = workspaceName;
+            _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of Assets. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Workspace. </param>
-        /// <param name="apiVersion"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Assets GetAssetsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview")
+        /// <summary> Update labels on assets matching the provided filter. </summary>
+        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
+        /// <param name="assetUpdateData"> A request body used to update an asset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="assetUpdateData"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,AssetUpdateData,CancellationToken)']/*" />
+        public virtual async Task<Response<Task>> UpdateAssetsAsync(string filter, AssetUpdateData assetUpdateData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(assetUpdateData, nameof(assetUpdateData));
 
-            return new Assets(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, subscriptionId, resourceGroupName, workspaceName, apiVersion);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = assetUpdateData.ToRequestContent();
+            Response response = await UpdateAssetsAsync(filter, content, context).ConfigureAwait(false);
+            return Response.FromValue(Task.FromResponse(response), response);
         }
 
-        /// <summary> Initializes a new instance of DataConnections. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Workspace. </param>
-        /// <param name="apiVersion"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual DataConnections GetDataConnectionsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview")
+        /// <summary> Update labels on assets matching the provided filter. </summary>
+        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
+        /// <param name="assetUpdateData"> A request body used to update an asset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="assetUpdateData"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,AssetUpdateData,CancellationToken)']/*" />
+        public virtual Response<Task> UpdateAssets(string filter, AssetUpdateData assetUpdateData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(assetUpdateData, nameof(assetUpdateData));
 
-            return new DataConnections(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, subscriptionId, resourceGroupName, workspaceName, apiVersion);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = assetUpdateData.ToRequestContent();
+            Response response = UpdateAssets(filter, content, context);
+            return Response.FromValue(Task.FromResponse(response), response);
         }
 
-        /// <summary> Initializes a new instance of DiscoveryGroups. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Workspace. </param>
-        /// <param name="apiVersion"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual DiscoveryGroups GetDiscoveryGroupsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview")
+        /// <summary>
+        /// [Protocol Method] Update labels on assets matching the provided filter.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateAssetsAsync(string,AssetUpdateData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateAssetsAsync(string filter, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return new DiscoveryGroups(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, subscriptionId, resourceGroupName, workspaceName, apiVersion);
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.UpdateAssets");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateAssetsRequest(filter, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Initializes a new instance of DiscoveryTemplates. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Workspace. </param>
-        /// <param name="apiVersion"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual DiscoveryTemplates GetDiscoveryTemplatesClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview")
+        /// <summary>
+        /// [Protocol Method] Update labels on assets matching the provided filter.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateAssets(string,AssetUpdateData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateAssets(string filter, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return new DiscoveryTemplates(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, subscriptionId, resourceGroupName, workspaceName, apiVersion);
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.UpdateAssets");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateAssetsRequest(filter, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Initializes a new instance of Reports. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Workspace. </param>
-        /// <param name="apiVersion"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Reports GetReportsClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview")
+        /// <summary> Retrieve an asset by assetId. </summary>
+        /// <param name="assetId"> The system generated unique id for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourceAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<AssetResource>> GetAssetResourceAsync(string assetId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            return new Reports(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, subscriptionId, resourceGroupName, workspaceName, apiVersion);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAssetResourceAsync(assetId, context).ConfigureAwait(false);
+            return Response.FromValue(AssetResource.FromResponse(response), response);
         }
 
-        /// <summary> Initializes a new instance of SavedFilters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Workspace. </param>
-        /// <param name="apiVersion"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual SavedFilters GetSavedFiltersClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview")
+        /// <summary> Retrieve an asset by assetId. </summary>
+        /// <param name="assetId"> The system generated unique id for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResource(string,CancellationToken)']/*" />
+        public virtual Response<AssetResource> GetAssetResource(string assetId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            return new SavedFilters(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, subscriptionId, resourceGroupName, workspaceName, apiVersion);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAssetResource(assetId, context);
+            return Response.FromValue(AssetResource.FromResponse(response), response);
         }
 
-        /// <summary> Initializes a new instance of Tasks. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Workspace. </param>
-        /// <param name="apiVersion"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Tasks GetTasksClient(string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion = "2023-03-01-preview")
+        /// <summary>
+        /// [Protocol Method] Retrieve an asset by assetId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAssetResourceAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assetId"> The system generated unique id for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourceAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetAssetResourceAsync(string assetId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            return new Tasks(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, subscriptionId, resourceGroupName, workspaceName, apiVersion);
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAssetResourceRequest(assetId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve an asset by assetId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAssetResource(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assetId"> The system generated unique id for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResource(string,RequestContext)']/*" />
+        public virtual Response GetAssetResource(string assetId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAssetResourceRequest(assetId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Validate a data connection with a given dataConnectionName. </summary>
+        /// <param name="dataConnectionData"> The <see cref="DataConnectionData"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionData"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnectionAsync(DataConnectionData,CancellationToken)']/*" />
+        public virtual async Task<Response<ValidateResult>> ValidateDataConnectionAsync(DataConnectionData dataConnectionData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataConnectionData, nameof(dataConnectionData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = dataConnectionData.ToRequestContent();
+            Response response = await ValidateDataConnectionAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ValidateResult.FromResponse(response), response);
+        }
+
+        /// <summary> Validate a data connection with a given dataConnectionName. </summary>
+        /// <param name="dataConnectionData"> The <see cref="DataConnectionData"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionData"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnection(DataConnectionData,CancellationToken)']/*" />
+        public virtual Response<ValidateResult> ValidateDataConnection(DataConnectionData dataConnectionData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataConnectionData, nameof(dataConnectionData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = dataConnectionData.ToRequestContent();
+            Response response = ValidateDataConnection(content, context);
+            return Response.FromValue(ValidateResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Validate a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ValidateDataConnectionAsync(DataConnectionData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnectionAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> ValidateDataConnectionAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateValidateDataConnectionRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Validate a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ValidateDataConnection(DataConnectionData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnection(RequestContent,RequestContext)']/*" />
+        public virtual Response ValidateDataConnection(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateValidateDataConnectionRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve a data connection with a given dataConnectionName. </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<DataConnection>> GetDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDataConnectionAsync(dataConnectionName, context).ConfigureAwait(false);
+            return Response.FromValue(DataConnection.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieve a data connection with a given dataConnectionName. </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnection(string,CancellationToken)']/*" />
+        public virtual Response<DataConnection> GetDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDataConnection(dataConnectionName, context);
+            return Response.FromValue(DataConnection.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDataConnectionAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetDataConnectionAsync(string dataConnectionName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDataConnectionRequest(dataConnectionName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDataConnection(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnection(string,RequestContext)']/*" />
+        public virtual Response GetDataConnection(string dataConnectionName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDataConnectionRequest(dataConnectionName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or replace a data connection with a given dataConnectionName. </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="dataConnectionData"> The <see cref="DataConnectionData"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="dataConnectionData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnectionAsync(string,DataConnectionData,CancellationToken)']/*" />
+        public virtual async Task<Response<DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, DataConnectionData dataConnectionData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(dataConnectionData, nameof(dataConnectionData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = dataConnectionData.ToRequestContent();
+            Response response = await CreateOrReplaceDataConnectionAsync(dataConnectionName, content, context).ConfigureAwait(false);
+            return Response.FromValue(DataConnection.FromResponse(response), response);
+        }
+
+        /// <summary> Create or replace a data connection with a given dataConnectionName. </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="dataConnectionData"> The <see cref="DataConnectionData"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="dataConnectionData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnection(string,DataConnectionData,CancellationToken)']/*" />
+        public virtual Response<DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, DataConnectionData dataConnectionData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(dataConnectionData, nameof(dataConnectionData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = dataConnectionData.ToRequestContent();
+            Response response = CreateOrReplaceDataConnection(dataConnectionName, content, context);
+            return Response.FromValue(DataConnection.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create or replace a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceDataConnectionAsync(string,DataConnectionData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnectionAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrReplaceDataConnectionAsync(string dataConnectionName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceDataConnectionRequest(dataConnectionName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create or replace a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceDataConnection(string,DataConnectionData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnection(string,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrReplaceDataConnection(string dataConnectionName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceDataConnectionRequest(dataConnectionName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Delete a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteDataConnectionAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteDataConnectionAsync(string dataConnectionName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDataConnectionRequest(dataConnectionName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Delete a data connection with a given dataConnectionName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteDataConnection(string,RequestContext)']/*" />
+        public virtual Response DeleteDataConnection(string dataConnectionName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteDataConnection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDataConnectionRequest(dataConnectionName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Validate a discovery group with a given groupName. </summary>
+        /// <param name="discoGroupData"> A request body used to create a discovery group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoGroupData"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoGroupAsync(DiscoGroupData,CancellationToken)']/*" />
+        public virtual async Task<Response<ValidateResult>> ValidateDiscoGroupAsync(DiscoGroupData discoGroupData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(discoGroupData, nameof(discoGroupData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = discoGroupData.ToRequestContent();
+            Response response = await ValidateDiscoGroupAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ValidateResult.FromResponse(response), response);
+        }
+
+        /// <summary> Validate a discovery group with a given groupName. </summary>
+        /// <param name="discoGroupData"> A request body used to create a discovery group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoGroupData"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoGroup(DiscoGroupData,CancellationToken)']/*" />
+        public virtual Response<ValidateResult> ValidateDiscoGroup(DiscoGroupData discoGroupData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(discoGroupData, nameof(discoGroupData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = discoGroupData.ToRequestContent();
+            Response response = ValidateDiscoGroup(content, context);
+            return Response.FromValue(ValidateResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Validate a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ValidateDiscoGroupAsync(DiscoGroupData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoGroupAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> ValidateDiscoGroupAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateValidateDiscoGroupRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Validate a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ValidateDiscoGroup(DiscoGroupData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoGroup(RequestContent,RequestContext)']/*" />
+        public virtual Response ValidateDiscoGroup(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.ValidateDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateValidateDiscoGroupRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve a discovery group with a given groupName. </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroupAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<DiscoGroup>> GetDiscoGroupAsync(string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDiscoGroupAsync(groupName, context).ConfigureAwait(false);
+            return Response.FromValue(DiscoGroup.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieve a discovery group with a given groupName. </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroup(string,CancellationToken)']/*" />
+        public virtual Response<DiscoGroup> GetDiscoGroup(string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDiscoGroup(groupName, context);
+            return Response.FromValue(DiscoGroup.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoGroupAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroupAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetDiscoGroupAsync(string groupName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDiscoGroupRequest(groupName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoGroup(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroup(string,RequestContext)']/*" />
+        public virtual Response GetDiscoGroup(string groupName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDiscoGroupRequest(groupName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a discovery group with a given groupName. </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="discoGroupData"> A request body used to create a discovery group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="discoGroupData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoGroupAsync(string,DiscoGroupData,CancellationToken)']/*" />
+        public virtual async Task<Response<DiscoGroup>> CreateOrReplaceDiscoGroupAsync(string groupName, DiscoGroupData discoGroupData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(discoGroupData, nameof(discoGroupData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = discoGroupData.ToRequestContent();
+            Response response = await CreateOrReplaceDiscoGroupAsync(groupName, content, context).ConfigureAwait(false);
+            return Response.FromValue(DiscoGroup.FromResponse(response), response);
+        }
+
+        /// <summary> Create a discovery group with a given groupName. </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="discoGroupData"> A request body used to create a discovery group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="discoGroupData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoGroup(string,DiscoGroupData,CancellationToken)']/*" />
+        public virtual Response<DiscoGroup> CreateOrReplaceDiscoGroup(string groupName, DiscoGroupData discoGroupData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(discoGroupData, nameof(discoGroupData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = discoGroupData.ToRequestContent();
+            Response response = CreateOrReplaceDiscoGroup(groupName, content, context);
+            return Response.FromValue(DiscoGroup.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceDiscoGroupAsync(string,DiscoGroupData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoGroupAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrReplaceDiscoGroupAsync(string groupName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceDiscoGroupRequest(groupName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceDiscoGroup(string,DiscoGroupData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoGroup(string,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrReplaceDiscoGroup(string groupName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceDiscoGroupRequest(groupName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Run a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='RunDiscoGroupAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> RunDiscoGroupAsync(string groupName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.RunDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRunDiscoGroupRequest(groupName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Run a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='RunDiscoGroup(string,RequestContext)']/*" />
+        public virtual Response RunDiscoGroup(string groupName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.RunDiscoGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRunDiscoGroupRequest(groupName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve a disco template with a given templateId. </summary>
+        /// <param name="templateId"> The system generated unique id for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplateAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<DiscoTemplate>> GetDiscoTemplateAsync(string templateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDiscoTemplateAsync(templateId, context).ConfigureAwait(false);
+            return Response.FromValue(DiscoTemplate.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieve a disco template with a given templateId. </summary>
+        /// <param name="templateId"> The system generated unique id for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplate(string,CancellationToken)']/*" />
+        public virtual Response<DiscoTemplate> GetDiscoTemplate(string templateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDiscoTemplate(templateId, context);
+            return Response.FromValue(DiscoTemplate.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a disco template with a given templateId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoTemplateAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="templateId"> The system generated unique id for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplateAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetDiscoTemplateAsync(string templateId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoTemplate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDiscoTemplateRequest(templateId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a disco template with a given templateId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoTemplate(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="templateId"> The system generated unique id for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplate(string,RequestContext)']/*" />
+        public virtual Response GetDiscoTemplate(string templateId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoTemplate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDiscoTemplateRequest(templateId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get billable assets summary for the workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetBillableAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<ReportBillableAssetSummaryResult>> GetBillableAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetBillableAsync(context).ConfigureAwait(false);
+            return Response.FromValue(ReportBillableAssetSummaryResult.FromResponse(response), response);
+        }
+
+        /// <summary> Get billable assets summary for the workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetBillable(CancellationToken)']/*" />
+        public virtual Response<ReportBillableAssetSummaryResult> GetBillable(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetBillable(context);
+            return Response.FromValue(ReportBillableAssetSummaryResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get billable assets summary for the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetBillableAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetBillableAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetBillableAsync(RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetBillable");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBillableRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get billable assets summary for the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetBillable(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetBillable(RequestContext)']/*" />
+        public virtual Response GetBillable(RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetBillable");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBillableRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
+        /// <param name="reportAssetSnapshotRequest"> A request body used to retrieve an asset report snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSnapshotRequest"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(ReportAssetSnapshotRequest,CancellationToken)']/*" />
+        public virtual async Task<Response<ReportAssetSnapshotResult>> GetSnapshotAsync(ReportAssetSnapshotRequest reportAssetSnapshotRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(reportAssetSnapshotRequest, nameof(reportAssetSnapshotRequest));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = reportAssetSnapshotRequest.ToRequestContent();
+            Response response = await GetSnapshotAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ReportAssetSnapshotResult.FromResponse(response), response);
+        }
+
+        /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
+        /// <param name="reportAssetSnapshotRequest"> A request body used to retrieve an asset report snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSnapshotRequest"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(ReportAssetSnapshotRequest,CancellationToken)']/*" />
+        public virtual Response<ReportAssetSnapshotResult> GetSnapshot(ReportAssetSnapshotRequest reportAssetSnapshotRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(reportAssetSnapshotRequest, nameof(reportAssetSnapshotRequest));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = reportAssetSnapshotRequest.ToRequestContent();
+            Response response = GetSnapshot(content, context);
+            return Response.FromValue(ReportAssetSnapshotResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the most recent snapshot of asset summary values for the snapshot request.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSnapshotAsync(ReportAssetSnapshotRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> GetSnapshotAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSnapshotRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the most recent snapshot of asset summary values for the snapshot request.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSnapshot(ReportAssetSnapshotRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(RequestContent,RequestContext)']/*" />
+        public virtual Response GetSnapshot(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSnapshotRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get asset summary details for the summary request. </summary>
+        /// <param name="reportAssetSummaryRequest"> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSummaryRequest"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(ReportAssetSummaryRequest,CancellationToken)']/*" />
+        public virtual async Task<Response<ReportAssetSummaryResult>> GetSummaryAsync(ReportAssetSummaryRequest reportAssetSummaryRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(reportAssetSummaryRequest, nameof(reportAssetSummaryRequest));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = reportAssetSummaryRequest.ToRequestContent();
+            Response response = await GetSummaryAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ReportAssetSummaryResult.FromResponse(response), response);
+        }
+
+        /// <summary> Get asset summary details for the summary request. </summary>
+        /// <param name="reportAssetSummaryRequest"> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSummaryRequest"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(ReportAssetSummaryRequest,CancellationToken)']/*" />
+        public virtual Response<ReportAssetSummaryResult> GetSummary(ReportAssetSummaryRequest reportAssetSummaryRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(reportAssetSummaryRequest, nameof(reportAssetSummaryRequest));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = reportAssetSummaryRequest.ToRequestContent();
+            Response response = GetSummary(content, context);
+            return Response.FromValue(ReportAssetSummaryResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get asset summary details for the summary request.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSummaryAsync(ReportAssetSummaryRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> GetSummaryAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSummary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSummaryRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get asset summary details for the summary request.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSummary(ReportAssetSummaryRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(RequestContent,RequestContext)']/*" />
+        public virtual Response GetSummary(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSummary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSummaryRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve a saved filter by filterName. </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilterAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<SavedFilter>> GetSavedFilterAsync(string filterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetSavedFilterAsync(filterName, context).ConfigureAwait(false);
+            return Response.FromValue(SavedFilter.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieve a saved filter by filterName. </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilter(string,CancellationToken)']/*" />
+        public virtual Response<SavedFilter> GetSavedFilter(string filterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetSavedFilter(filterName, context);
+            return Response.FromValue(SavedFilter.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a saved filter by filterName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSavedFilterAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilterAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetSavedFilterAsync(string filterName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSavedFilterRequest(filterName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a saved filter by filterName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSavedFilter(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilter(string,RequestContext)']/*" />
+        public virtual Response GetSavedFilter(string filterName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSavedFilterRequest(filterName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or replace a saved filter with a given filterName. </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="savedFilterData"> A request body used to create a saved filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="savedFilterData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilterAsync(string,SavedFilterData,CancellationToken)']/*" />
+        public virtual async Task<Response<SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, SavedFilterData savedFilterData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(savedFilterData, nameof(savedFilterData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = savedFilterData.ToRequestContent();
+            Response response = await CreateOrReplaceSavedFilterAsync(filterName, content, context).ConfigureAwait(false);
+            return Response.FromValue(SavedFilter.FromResponse(response), response);
+        }
+
+        /// <summary> Create or replace a saved filter with a given filterName. </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="savedFilterData"> A request body used to create a saved filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="savedFilterData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilter(string,SavedFilterData,CancellationToken)']/*" />
+        public virtual Response<SavedFilter> CreateOrReplaceSavedFilter(string filterName, SavedFilterData savedFilterData, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(savedFilterData, nameof(savedFilterData));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = savedFilterData.ToRequestContent();
+            Response response = CreateOrReplaceSavedFilter(filterName, content, context);
+            return Response.FromValue(SavedFilter.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create or replace a saved filter with a given filterName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceSavedFilterAsync(string,SavedFilterData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilterAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrReplaceSavedFilterAsync(string filterName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceSavedFilter");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceSavedFilterRequest(filterName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create or replace a saved filter with a given filterName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceSavedFilter(string,SavedFilterData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilter(string,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrReplaceSavedFilter(string filterName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CreateOrReplaceSavedFilter");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceSavedFilterRequest(filterName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Delete a saved filter with a given filterName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteSavedFilterAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteSavedFilterAsync(string filterName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteSavedFilter");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteSavedFilterRequest(filterName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Delete a saved filter with a given filterName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filterName"> The caller provided unique name for the resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='DeleteSavedFilter(string,RequestContext)']/*" />
+        public virtual Response DeleteSavedFilter(string filterName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.DeleteSavedFilter");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteSavedFilterRequest(filterName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve a task by taskId. </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTaskAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<Task>> GetTaskAsync(string taskId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetTaskAsync(taskId, context).ConfigureAwait(false);
+            return Response.FromValue(Task.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieve a task by taskId. </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTask(string,CancellationToken)']/*" />
+        public virtual Response<Task> GetTask(string taskId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetTask(taskId, context);
+            return Response.FromValue(Task.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a task by taskId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTaskAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTaskAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetTaskAsync(string taskId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetTask");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTaskRequest(taskId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a task by taskId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTask(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTask(string,RequestContext)']/*" />
+        public virtual Response GetTask(string taskId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.GetTask");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTaskRequest(taskId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancel a task by taskId. </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTaskAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<Task>> CancelTaskAsync(string taskId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CancelTaskAsync(taskId, context).ConfigureAwait(false);
+            return Response.FromValue(Task.FromResponse(response), response);
+        }
+
+        /// <summary> Cancel a task by taskId. </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTask(string,CancellationToken)']/*" />
+        public virtual Response<Task> CancelTask(string taskId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CancelTask(taskId, context);
+            return Response.FromValue(Task.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Cancel a task by taskId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelTaskAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTaskAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> CancelTaskAsync(string taskId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CancelTask");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelTaskRequest(taskId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Cancel a task by taskId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelTask(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="taskId"> The unique identifier of the task. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTask(string,RequestContext)']/*" />
+        public virtual Response CancelTask(string taskId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+
+            using var scope = ClientDiagnostics.CreateScope("EasmClient.CancelTask");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelTaskRequest(taskId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieve a list of assets for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourcesAsync(string,string,int?,int?,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<AssetResource> GetAssetResourcesAsync(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, string mark = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AssetResource.DeserializeAssetResource, ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of assets for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResources(string,string,int?,int?,string,CancellationToken)']/*" />
+        public virtual Pageable<AssetResource> GetAssetResources(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, string mark = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AssetResource.DeserializeAssetResource, ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of assets for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAssetResourcesAsync(string,string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourcesAsync(string,string,int?,int?,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAssetResourcesAsync(string filter, string orderby, int? skip, int? maxpagesize, string mark, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of assets for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAssetResources(string,string,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResources(string,string,int?,int?,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAssetResources(string filter, string orderby, int? skip, int? maxpagesize, string mark, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of data connections. </summary>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionsAsync(int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<DataConnection> GetDataConnectionsAsync(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataConnection.DeserializeDataConnection, ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of data connections. </summary>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnections(int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<DataConnection> GetDataConnections(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataConnection.DeserializeDataConnection, ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of data connections.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDataConnectionsAsync(int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionsAsync(int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDataConnectionsAsync(int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of data connections.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDataConnections(int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnections(int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDataConnections(int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of discovery group for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroupsAsync(string,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<DiscoGroup> GetDiscoGroupsAsync(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoGroupsRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiscoGroup.DeserializeDiscoGroup, ClientDiagnostics, _pipeline, "EasmClient.GetDiscoGroups", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of discovery group for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroups(string,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<DiscoGroup> GetDiscoGroups(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoGroupsRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiscoGroup.DeserializeDiscoGroup, ClientDiagnostics, _pipeline, "EasmClient.GetDiscoGroups", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of discovery group for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoGroupsAsync(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroupsAsync(string,int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDiscoGroupsAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoGroupsRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoGroups", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of discovery group for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoGroups(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoGroups(string,int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDiscoGroups(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoGroupsRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoGroups", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a collection of discovery run results for a discovery group with a given groupName. </summary>
+        /// <param name="groupName"> The unique identifier for the discovery group. </param>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetRunsAsync(string,string,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<DiscoRunResult> GetRunsAsync(string groupName, string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(groupName, filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiscoRunResult.DeserializeDiscoRunResult, ClientDiagnostics, _pipeline, "EasmClient.GetRuns", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a collection of discovery run results for a discovery group with a given groupName. </summary>
+        /// <param name="groupName"> The unique identifier for the discovery group. </param>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetRuns(string,string,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<DiscoRunResult> GetRuns(string groupName, string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(groupName, filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiscoRunResult.DeserializeDiscoRunResult, ClientDiagnostics, _pipeline, "EasmClient.GetRuns", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a collection of discovery run results for a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRunsAsync(string,string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The unique identifier for the discovery group. </param>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetRunsAsync(string,string,int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(groupName, filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetRuns", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a collection of discovery run results for a discovery group with a given groupName.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRuns(string,string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The unique identifier for the discovery group. </param>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetRuns(string,string,int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetRuns(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(groupName, filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetRuns", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of disco templates for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplatesAsync(string,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<DiscoTemplate> GetDiscoTemplatesAsync(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoTemplatesRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiscoTemplate.DeserializeDiscoTemplate, ClientDiagnostics, _pipeline, "EasmClient.GetDiscoTemplates", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of disco templates for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplates(string,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<DiscoTemplate> GetDiscoTemplates(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoTemplatesRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiscoTemplate.DeserializeDiscoTemplate, ClientDiagnostics, _pipeline, "EasmClient.GetDiscoTemplates", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of disco templates for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoTemplatesAsync(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplatesAsync(string,int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDiscoTemplatesAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoTemplatesRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoTemplates", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of disco templates for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDiscoTemplates(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoTemplates(string,int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDiscoTemplates(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoTemplatesRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoTemplates", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of saved filters for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFiltersAsync(string,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<SavedFilter> GetSavedFiltersAsync(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavedFilter.DeserializeSavedFilter, ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of saved filters for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilters(string,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<SavedFilter> GetSavedFilters(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavedFilter.DeserializeSavedFilter, ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of saved filters for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSavedFiltersAsync(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFiltersAsync(string,int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of saved filters for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSavedFilters(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilters(string,int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSavedFilters(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of tasks for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTasksAsync(string,string,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<Task> GetTasksAsync(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Task.DeserializeTask, ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+        }
+
+        /// <summary> Retrieve a list of tasks for the provided search parameters. </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTasks(string,string,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<Task> GetTasks(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Task.DeserializeTask, ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of tasks for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTasksAsync(string,string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTasksAsync(string,string,int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTasksAsync(string filter, string orderby, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieve a list of tasks for the provided search parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTasks(string,string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTasks(string,string,int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTasks(string filter, string orderby, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+        }
+
+        internal HttpMessage CreateGetAssetResourcesRequest(string filter, string orderby, int? skip, int? maxpagesize, string mark, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/assets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            if (mark != null)
+            {
+                uri.AppendQuery("mark", mark, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateAssetsRequest(string filter, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/assets", false);
+            uri.AppendQuery("filter", filter, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetAssetResourceRequest(string assetId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/assets/", false);
+            uri.AppendPath(assetId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDataConnectionsRequest(int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/dataConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateValidateDataConnectionRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/dataConnections:validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetDataConnectionRequest(string dataConnectionName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/dataConnections/", false);
+            uri.AppendPath(dataConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrReplaceDataConnectionRequest(string dataConnectionName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/dataConnections/", false);
+            uri.AppendPath(dataConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteDataConnectionRequest(string dataConnectionName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/dataConnections/", false);
+            uri.AppendPath(dataConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDiscoGroupsRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateValidateDiscoGroupRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoGroups:validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetDiscoGroupRequest(string groupName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrReplaceDiscoGroupRequest(string groupName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRunDiscoGroupRequest(string groupName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath(":run", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetRunsRequest(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/runs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDiscoTemplatesRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoTemplates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDiscoTemplateRequest(string templateId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/discoTemplates/", false);
+            uri.AppendPath(templateId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBillableRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/reports/assets:getBillable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSnapshotRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/reports/assets:getSnapshot", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSummaryRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/reports/assets:getSummary", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSavedFiltersRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/savedFilters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSavedFilterRequest(string filterName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/savedFilters/", false);
+            uri.AppendPath(filterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrReplaceSavedFilterRequest(string filterName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/savedFilters/", false);
+            uri.AppendPath(filterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteSavedFilterRequest(string filterName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/savedFilters/", false);
+            uri.AppendPath(filterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTasksRequest(string filter, string orderby, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/tasks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTaskRequest(string taskId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/tasks/", false);
+            uri.AppendPath(taskId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCancelTaskRequest(string taskId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendPath("/tasks/", false);
+            uri.AppendPath(taskId, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAssetResourcesNextPageRequest(string nextLink, string filter, string orderby, int? skip, int? maxpagesize, string mark, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDataConnectionsNextPageRequest(string nextLink, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDiscoGroupsNextPageRequest(string nextLink, string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetRunsNextPageRequest(string nextLink, string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDiscoTemplatesNextPageRequest(string nextLink, string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSavedFiltersNextPageRequest(string nextLink, string filter, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTasksNextPageRequest(string nextLink, string filter, string orderby, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/workspaces/", false);
+            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

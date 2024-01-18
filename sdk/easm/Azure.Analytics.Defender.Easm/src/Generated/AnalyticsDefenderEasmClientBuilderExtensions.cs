@@ -17,10 +17,13 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="EasmClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The endpoint hosting the requested resource. For example, https://{region}.easm.defender.microsoft.com. </param>
-        public static IAzureClientBuilder<EasmClient, EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
+        /// <param name="workspaceName"> The name of the Workspace. </param>
+        public static IAzureClientBuilder<EasmClient, EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EasmClient, EasmClientOptions>((options, cred) => new EasmClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<EasmClient, EasmClientOptions>((options, cred) => new EasmClient(endpoint, subscriptionId, resourceGroupName, workspaceName, cred, options));
         }
 
         /// <summary> Registers a <see cref="EasmClient"/> instance. </summary>
