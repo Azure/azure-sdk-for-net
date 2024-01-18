@@ -24,5 +24,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             InventoryType = inventoryType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownInventoryItemProperties"/> for deserialization. </summary>
+        internal UnknownInventoryItemProperties()
+        {
+        }
     }
 }
