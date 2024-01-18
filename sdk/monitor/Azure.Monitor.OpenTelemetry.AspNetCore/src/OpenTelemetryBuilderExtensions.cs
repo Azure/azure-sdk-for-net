@@ -96,6 +96,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.WithTracing(b => b
                             .AddSource("Azure.*")
                             .AddVendorInstrumentationIfPackageNotReferenced()
+                            .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
