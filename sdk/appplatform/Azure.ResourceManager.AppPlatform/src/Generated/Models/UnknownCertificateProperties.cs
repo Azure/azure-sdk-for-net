@@ -28,5 +28,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             CertificatePropertiesType = certificatePropertiesType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCertificateProperties"/> for deserialization. </summary>
+        internal UnknownCertificateProperties()
+        {
+        }
     }
 }

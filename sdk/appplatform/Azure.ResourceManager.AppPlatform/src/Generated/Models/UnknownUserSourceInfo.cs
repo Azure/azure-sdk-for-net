@@ -21,5 +21,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             UserSourceInfoType = userSourceInfoType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownUserSourceInfo"/> for deserialization. </summary>
+        internal UnknownUserSourceInfo()
+        {
+        }
     }
 }

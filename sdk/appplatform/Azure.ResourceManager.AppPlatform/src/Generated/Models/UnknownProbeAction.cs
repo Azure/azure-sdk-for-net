@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             ProbeActionType = probeActionType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProbeAction"/> for deserialization. </summary>
+        internal UnknownProbeAction()
+        {
+        }
     }
 }

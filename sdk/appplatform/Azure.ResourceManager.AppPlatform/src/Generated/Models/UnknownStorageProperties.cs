@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             StorageType = storageType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStorageProperties"/> for deserialization. </summary>
+        internal UnknownStorageProperties()
+        {
+        }
     }
 }
