@@ -198,11 +198,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             {
                 new Func<CallDialog, Task<Response>>?[]
                 {
-                    callDialog => callDialog.UpdateDialogAsync(new UpdateDialog(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithObject)))
+                    callDialog => callDialog.UpdateDialogAsync(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithObject)))
                 },
                 new Func<CallDialog, Task<Response>>?[]
                 {
-                    callDialog => callDialog.UpdateDialogAsync(new UpdateDialog(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithString)))
+                    callDialog => callDialog.UpdateDialogAsync(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithString)))
                 },
             };
         }
@@ -212,11 +212,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             {
                 new Func<CallDialog, Response>?[]
                 {
-                    callDialog => callDialog.UpdateDialog(new UpdateDialog(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithObject)))
+                    callDialog => callDialog.UpdateDialog(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithObject)))
                 },
                 new Func<CallDialog, Response>?[]
                 {
-                    callDialog => callDialog.UpdateDialog(new UpdateDialog(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithString)))
+                    callDialog => callDialog.UpdateDialog(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithString)))
                 },
             };
         }

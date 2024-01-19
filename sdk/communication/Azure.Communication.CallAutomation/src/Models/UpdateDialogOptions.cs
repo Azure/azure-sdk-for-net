@@ -10,14 +10,14 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Update Dialog Options bag
     /// </summary>
-    public class UpdateDialog
+    public class UpdateDialogOptions
     {
         /// <summary>
         /// Creates a new instance of the UpdateDialogOptions.
         /// </summary>
         /// <param name="dialogId"></param>
         /// <param name="dialog"></param>
-        public UpdateDialog(string dialogId, DialogUpdateBase dialog)
+        public UpdateDialogOptions(string dialogId, DialogUpdateBase dialog)
         {
             DialogId = dialogId;
             Dialog = dialog;

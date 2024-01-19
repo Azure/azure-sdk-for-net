@@ -339,7 +339,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 Assert.IsTrue(dialogStartedReceived is DialogStarted);
 
                 // send an UpdateDialog call, it does not currently cause a returning event
-                var updateDialogOptions = new UpdateDialog(dialogId, new AzureOpenAIDialogUpdate(dialogId, dialogContext));
+                var updateDialogOptions = new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogId, dialogContext));
                 var updateDialogResponse = await callDialog.UpdateDialogAsync(updateDialogOptions).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status200OK, updateDialogResponse.Status);
 
