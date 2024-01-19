@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,15 +20,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryInfo"/>. </summary>
-        /// <param name="publisherUri"> The link to the publisher website. Visible to all users. </param>
+        /// <param name="publisherUriString"> The link to the publisher website. Visible to all users. </param>
         /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
         /// <param name="eula"> End-user license agreement for community gallery image. </param>
         /// <param name="publicNamePrefix"> The prefix of the gallery name that will be displayed publicly. Visible to all users. </param>
         /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
         /// <param name="publicNames"> Community gallery public name list. </param>
-        internal CommunityGalleryInfo(Uri publisherUri, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames)
+        internal CommunityGalleryInfo(string publisherUriString, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames)
         {
-            PublisherUri = publisherUri;
+            PublisherUriString = publisherUriString;
             PublisherContact = publisherContact;
             Eula = eula;
             PublicNamePrefix = publicNamePrefix;
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The link to the publisher website. Visible to all users. </summary>
-        public Uri PublisherUri { get; set; }
+        public string PublisherUriString { get; set; }
         /// <summary> Community gallery publisher support email. The email address of the publisher. Visible to all users. </summary>
         public string PublisherContact { get; set; }
         /// <summary> End-user license agreement for community gallery image. </summary>

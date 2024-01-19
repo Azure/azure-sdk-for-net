@@ -48,7 +48,16 @@ namespace Azure.Identity
             scope.Start();
             return scope;
         }
+#if PREVIEW_FEATURE_FLAG
+        public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, PopTokenRequestContext context)
+        {
+            IScopeHandler scopeHandler = ScopeGroupHandler.Current ?? _defaultScopeHandler;
 
+            CredentialDiagnosticScope scope = new CredentialDiagnosticScope(Diagnostics, fullyQualifiedMethod, context, scopeHandler);
+            scope.Start();
+            return scope;
+        }
+#endif
         public CredentialDiagnosticScope StartGetTokenScopeGroup(string fullyQualifiedMethod, TokenRequestContext context)
         {
             var scopeHandler = new ScopeGroupHandler(fullyQualifiedMethod);

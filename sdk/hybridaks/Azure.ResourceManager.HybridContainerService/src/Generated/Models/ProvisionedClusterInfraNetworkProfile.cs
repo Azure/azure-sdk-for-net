@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </summary>
+    /// <summary> The profile for the infrastructure networks used by the provisioned cluster. </summary>
     internal partial class ProvisionedClusterInfraNetworkProfile
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterInfraNetworkProfile"/>. </summary>
@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterInfraNetworkProfile"/>. </summary>
-        /// <param name="vnetSubnetIds"> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
+        /// <param name="vnetSubnetIds"> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
         internal ProvisionedClusterInfraNetworkProfile(IList<ResourceIdentifier> vnetSubnetIds)
         {
             VnetSubnetIds = vnetSubnetIds;
         }
 
-        /// <summary> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
+        /// <summary> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
         public IList<ResourceIdentifier> VnetSubnetIds { get; }
     }
 }

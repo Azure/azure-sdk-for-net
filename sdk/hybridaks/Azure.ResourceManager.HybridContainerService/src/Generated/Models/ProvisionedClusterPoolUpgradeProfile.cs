@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The list of available upgrade versions. </summary>
+    /// <summary> The list of available kubernetes versions for upgrade. </summary>
     public partial class ProvisionedClusterPoolUpgradeProfile
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfile"/>. </summary>
@@ -21,24 +21,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfile"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="name"> The Agent Pool name. </param>
-        /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
-        /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
-        internal ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion, string name, HybridContainerServiceOSType? osType, IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades)
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
+        /// <param name="upgrades"> List of available kubernetes versions for upgrade. </param>
+        internal ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion, HybridContainerServiceOSType? osType, IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades)
         {
             KubernetesVersion = kubernetesVersion;
-            Name = name;
             OSType = osType;
             Upgrades = upgrades;
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
         public string KubernetesVersion { get; }
-        /// <summary> The Agent Pool name. </summary>
-        public string Name { get; }
-        /// <summary> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </summary>
+        /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
         public HybridContainerServiceOSType? OSType { get; }
-        /// <summary> List of orchestrator types and versions available for upgrade. </summary>
+        /// <summary> List of available kubernetes versions for upgrade. </summary>
         public IList<ProvisionedClusterPoolUpgradeProfileProperties> Upgrades { get; }
     }
 }

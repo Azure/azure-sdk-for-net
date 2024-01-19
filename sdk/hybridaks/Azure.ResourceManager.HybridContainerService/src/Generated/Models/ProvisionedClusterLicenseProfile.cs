@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterLicenseProfile"/>. </summary>
-        /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
+        /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. Default value is false. </param>
         internal ProvisionedClusterLicenseProfile(ProvisionedClusterAzureHybridBenefit? azureHybridBenefit)
         {
             AzureHybridBenefit = azureHybridBenefit;
         }
 
-        /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
+        /// <summary> Indicates whether Azure Hybrid Benefit is opted in. Default value is false. </summary>
         public ProvisionedClusterAzureHybridBenefit? AzureHybridBenefit { get; set; }
     }
 }

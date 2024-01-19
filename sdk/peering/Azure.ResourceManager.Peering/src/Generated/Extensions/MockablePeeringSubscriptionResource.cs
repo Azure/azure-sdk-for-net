@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeerAsns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeerAsnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peerAsnName"> The peer ASN name. </param>
@@ -122,6 +130,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeerAsns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeerAsnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peerAsnName"> The peer ASN name. </param>
@@ -144,6 +160,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnPeeringPrefixes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,6 +191,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>CdnPeeringPrefixes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peeringLocation"> The peering location. </param>
@@ -196,6 +220,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckServiceProviderAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,6 +259,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckServiceProviderAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
@@ -265,6 +297,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>LegacyPeerings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peeringLocation"> The location of the peering. </param>
@@ -294,6 +330,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>LegacyPeerings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peeringLocation"> The location of the peering. </param>
@@ -322,6 +362,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LookingGlass_Invoke</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,6 +405,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>LookingGlass_Invoke</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="command"> The command to be executed: ping, traceroute, bgpRoute. </param>
@@ -399,6 +447,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="kind"> The kind of the peering. </param>
@@ -422,6 +474,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringLocations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,6 +503,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>Peerings_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -468,6 +532,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -491,6 +563,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServiceCountries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -513,6 +589,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServiceCountries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -534,6 +614,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServiceLocations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -558,6 +642,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServiceLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
@@ -581,6 +669,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServiceProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -602,6 +694,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServiceProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -625,6 +721,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -647,6 +751,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -668,6 +780,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -698,6 +818,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
