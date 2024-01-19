@@ -16,17 +16,50 @@ public class ClientPipelineOptions
     private static readonly ClientPipelineOptions _defaultOptions = new();
     internal static ClientPipelineOptions Default => _defaultOptions;
 
+    private bool _frozen;
+
+    private PipelinePolicy? _retryPolicy;
+    private PipelineTransport? _transport;
+    private TimeSpan? _timeout;
+
     #region Pipeline creation: Overrides of default pipeline policies
 
-    public PipelinePolicy? RetryPolicy { get; set; }
+    public PipelinePolicy? RetryPolicy
+    {
+        get => _retryPolicy;
+        set
+        {
+            AssertNotFrozen();
 
-    public PipelineTransport? Transport { get; set; }
+            _retryPolicy = value;
+        }
+    }
+
+    public PipelineTransport? Transport
+    {
+        get => _transport;
+        set
+        {
+            AssertNotFrozen();
+
+            _transport = value;
+        }
+    }
 
     #endregion
 
     #region Pipeline creation: Policy settings
 
-    public TimeSpan? NetworkTimeout { get; set; }
+    public TimeSpan? NetworkTimeout
+    {
+        get => _timeout;
+        set
+        {
+            AssertNotFrozen();
+
+            _timeout = value;
+        }
+    }
 
     #endregion
 
@@ -41,6 +74,7 @@ public class ClientPipelineOptions
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
         Argument.AssertNotNull(policy, nameof(policy));
+        AssertNotFrozen();
 
         switch (position)
         {
@@ -76,4 +110,14 @@ public class ClientPipelineOptions
     }
 
     #endregion
+
+    internal void Freeze() => _frozen = true;
+
+    private void AssertNotFrozen()
+    {
+        if (_frozen)
+        {
+            throw new InvalidOperationException("Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.");
+        }
+    }
 }
