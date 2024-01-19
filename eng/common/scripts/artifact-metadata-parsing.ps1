@@ -68,7 +68,7 @@ function GetExistingTags($apiUrl) {
       return ,@()
     }
 
-    exit(1)
+    exit 1
   }
 }
 
@@ -116,7 +116,7 @@ function RetrievePackages($artifactLocation) {
 }
 
 # Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
-function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
+function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseSha, $packageFilter, $continueOnError = $false) {
   $pkgList = [array]@()
   $pkgs, $parsePkgInfoFn = RetrievePackages -artifactLocation $artifactLocation
 
@@ -128,10 +128,15 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
         continue
       }
 
+      if ($packageFilter -and $parsedPackage.PackageId -notlike $packageFilter) {
+        Write-Host "Skipping package $($parsedPackage.PackageId) not matching filter $packageFilter"
+        continue
+      }
+
       if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
         Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
         Write-Host "Maybe a pkg version wasn't updated properly?"
-        exit(1)
+        exit 1
       }
       $docsReadMeName = $parsedPackage.PackageId
       if ($parsedPackage.DocsReadMeName) {
@@ -150,7 +155,7 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
     }
     catch {
       Write-Host $_.Exception.Message
-      exit(1)
+      exit 1
     }
   }
 
@@ -197,6 +202,6 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
 
   if ($unmatchedTags.Length -gt 0 -and !$continueOnError) {
     Write-Host "Tags already existing with different SHA versions. Exiting."
-    exit(1)
+    exit 1
   }
 }

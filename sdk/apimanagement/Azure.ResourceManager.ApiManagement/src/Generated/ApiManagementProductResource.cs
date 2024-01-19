@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productApiRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productApiRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductApiData.DeserializeProductApiData, _productApiClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductApis", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductApiData.DeserializeProductApiData(e), _productApiClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductApis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productApiRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productApiRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductApiData.DeserializeProductApiData, _productApiClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductApis", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductApiData.DeserializeProductApiData(e), _productApiClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductApis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productGroupRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productGroupRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductGroupData.DeserializeProductGroupData, _productGroupClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductGroupData.DeserializeProductGroupData(e), _productGroupClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productGroupRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productGroupRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductGroupData.DeserializeProductGroupData, _productGroupClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductGroupData.DeserializeProductGroupData(e), _productGroupClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
