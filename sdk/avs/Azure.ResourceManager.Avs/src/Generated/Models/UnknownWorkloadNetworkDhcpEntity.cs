@@ -24,5 +24,10 @@ namespace Azure.ResourceManager.Avs.Models
         {
             DhcpType = dhcpType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkloadNetworkDhcpEntity"/> for deserialization. </summary>
+        internal UnknownWorkloadNetworkDhcpEntity()
+        {
+        }
     }
 }

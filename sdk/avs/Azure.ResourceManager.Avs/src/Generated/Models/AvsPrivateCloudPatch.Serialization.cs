@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            {
+                writer.WritePropertyName("extendedNetworkBlocks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExtendedNetworkBlocks)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -121,6 +131,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
             Optional<PrivateCloudAvailabilityProperties> availability = default;
             Optional<CustomerManagedEncryption> encryption = default;
+            Optional<IList<string>> extendedNetworkBlocks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,6 +218,20 @@ namespace Azure.ResourceManager.Avs.Models
                             encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("extendedNetworkBlocks"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            extendedNetworkBlocks = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -216,7 +241,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudPatch(Optional.ToDictionary(tags), identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, serializedAdditionalRawData);
+            return new AvsPrivateCloudPatch(Optional.ToDictionary(tags), identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToList(extendedNetworkBlocks), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudPatch>.Write(ModelReaderWriterOptions options)

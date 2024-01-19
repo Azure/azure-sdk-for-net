@@ -14,6 +14,9 @@ namespace Azure.Messaging.EventHubs
     ///   to configure its behavior.
     /// </summary>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples">Event Hubs event processor samples and discussion</seealso>
+    ///
     public class EventProcessorClientOptions
     {
         /// <summary>The maximum amount of time to wait for an event to become available before emitting an <c>null</c> value.</summary>

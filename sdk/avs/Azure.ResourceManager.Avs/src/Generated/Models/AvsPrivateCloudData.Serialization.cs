@@ -100,6 +100,16 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            {
+                writer.WritePropertyName("extendedNetworkBlocks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExtendedNetworkBlocks)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -232,6 +242,7 @@ namespace Azure.ResourceManager.Avs
             Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
             Optional<PrivateCloudAvailabilityProperties> availability = default;
             Optional<CustomerManagedEncryption> encryption = default;
+            Optional<IList<string>> extendedNetworkBlocks = default;
             Optional<AvsPrivateCloudProvisioningState> provisioningState = default;
             Optional<ExpressRouteCircuit> circuit = default;
             Optional<AvsPrivateCloudEndpoints> endpoints = default;
@@ -366,6 +377,20 @@ namespace Azure.ResourceManager.Avs
                             encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("extendedNetworkBlocks"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            extendedNetworkBlocks = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -481,7 +506,7 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised), serializedAdditionalRawData);
+            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToList(extendedNetworkBlocks), Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudData>.Write(ModelReaderWriterOptions options)

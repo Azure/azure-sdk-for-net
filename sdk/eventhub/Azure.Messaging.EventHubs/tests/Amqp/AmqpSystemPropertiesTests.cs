@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using Azure.Core.Amqp;
 using Azure.Messaging.EventHubs.Amqp;
+using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -63,12 +65,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Validate that the properties match.
 
-            Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId), "The message identifier should match.");
+            Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier should match.");
             Assert.That(systemProps[Properties.UserIdName], Is.EqualTo(message.Properties.UserId), "The user identifier should match.");
-            Assert.That(systemProps[Properties.ToName], Is.EqualTo(message.Properties.To), "The \"to\" property should match.");
+            Assert.That(systemProps[Properties.ToName], Is.EqualTo(message.Properties.To.ToString()), "The \"to\" property should match.");
             Assert.That(systemProps[Properties.SubjectName], Is.EqualTo(message.Properties.Subject), "The subject should match.");
-            Assert.That(systemProps[Properties.ReplyToName], Is.EqualTo(message.Properties.ReplyTo), "The \"reply to\" property should match.");
-            Assert.That(systemProps[Properties.CorrelationIdName], Is.EqualTo(message.Properties.CorrelationId), "The correlation identifier should match.");
+            Assert.That(systemProps[Properties.ReplyToName], Is.EqualTo(message.Properties.ReplyTo.ToString()), "The \"reply to\" property should match.");
+            Assert.That(systemProps[Properties.CorrelationIdName], Is.EqualTo(message.Properties.CorrelationId.ToString()), "The correlation identifier should match.");
             Assert.That(systemProps[Properties.ContentTypeName], Is.EqualTo(message.Properties.ContentType), "The content type should match.");
             Assert.That(systemProps[Properties.ContentEncodingName], Is.EqualTo(message.Properties.ContentEncoding), "The content encoding should match.");
             Assert.That(systemProps[Properties.AbsoluteExpiryTimeName], Is.EqualTo(message.Properties.AbsoluteExpiryTime), "The expiration time should match.");
@@ -163,11 +165,16 @@ namespace Azure.Messaging.EventHubs.Tests
             message.MessageAnnotations.Add("first", "one");
 
             var unexpectedKey = Guid.NewGuid().ToString();
-            var expectedValues = new HashSet<object> { message.Properties.MessageId };
+            var expectedValues = new HashSet<object> { message.Properties.MessageId.ToString() };
 
             foreach (var value in message.MessageAnnotations.Values)
             {
-                expectedValues.Add(value);
+                expectedValues.Add(value switch
+                {
+                    AmqpMessageId id => id.ToString(),
+                    AmqpAddress address => address.ToString(),
+                    _ => value
+                });
             }
 
             // Count
@@ -176,9 +183,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // System property values are correct.
 
-            Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId), "The message identifier did not match when read through the indexer.");
+            Assert.That(systemProps[Properties.MessageIdName], Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier did not match when read through the indexer.");
             Assert.That(systemProps.TryGetValue(Properties.MessageIdName, out var messageId), Is.True, "The message identifier was not contained when read through TryGetValue.");
-            Assert.That(messageId, Is.EqualTo(message.Properties.MessageId), "The message identifier did not match when read through TryGetValue.");
+            Assert.That(messageId, Is.EqualTo(message.Properties.MessageId.ToString()), "The message identifier did not match when read through TryGetValue.");
 
             // Message annotation values are correct.
 
@@ -217,12 +224,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedItems = new Dictionary<string, object>
             {
-                { Properties.MessageIdName, message.Properties.MessageId }
+                { Properties.MessageIdName, message.Properties.MessageId.ToString() }
             };
 
             foreach (var item in message.MessageAnnotations)
             {
-                expectedItems.Add(item.Key, item.Value);
+                expectedItems.Add(item.Key, item.Value switch
+                {
+                    AmqpMessageId id => id.ToString(),
+                    AmqpAddress address => address.ToString(),
+                    _ => item.Value
+                });
             }
 
             // Count

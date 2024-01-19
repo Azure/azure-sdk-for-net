@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Name of the attestation provider. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

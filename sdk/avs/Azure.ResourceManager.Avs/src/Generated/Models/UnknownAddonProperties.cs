@@ -21,5 +21,10 @@ namespace Azure.ResourceManager.Avs.Models
         {
             AddonType = addonType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/> for deserialization. </summary>
+        internal UnknownAddonProperties()
+        {
+        }
     }
 }

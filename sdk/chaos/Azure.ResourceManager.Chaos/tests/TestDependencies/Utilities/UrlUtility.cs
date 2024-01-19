@@ -7,14 +7,9 @@ namespace Azure.ResourceManager.Chaos.Tests.TestDependencies.Utilities
 {
     internal static class UrlUtility
     {
-        internal static string GetStatusId(string url)
+        internal static string GetExecutionsId(string url)
         {
-            return url.Substring(url.IndexOf("statuses", StringComparison.OrdinalIgnoreCase)).Split('/')[1].Split('?')[0];
-        }
-
-        internal static string GetDetailsId(string url)
-        {
-            return url.Substring(url.IndexOf("executionDetails", StringComparison.OrdinalIgnoreCase)).Split('/')[1].Split('?')[0];
+            return url.Substring(url.IndexOf("executions", StringComparison.OrdinalIgnoreCase)).Split('/')[1].Split('?')[0];
         }
     }
 }

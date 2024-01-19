@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Contains the parameters specific to generating vector embeddings via a custom endpoint. </summary>
+    /// <summary> Specifies a user-defined vectorizer for generating the vector embedding of a query string. Integration of an external vectorizer is achieved using the custom Web API interface of a skillset. </summary>
     public partial class CustomVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="CustomVectorizer"/>. </summary>
@@ -26,14 +26,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="CustomVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="customVectorizerParameters"> Contains the parameters specific to generating vector embeddings via a custom endpoint. </param>
-        internal CustomVectorizer(string name, VectorSearchVectorizerKind kind, CustomVectorizerParameters customVectorizerParameters) : base(name, kind)
+        /// <param name="customWebApiParameters"> Specifies the properties of the user-defined vectorizer. </param>
+        internal CustomVectorizer(string name, VectorSearchVectorizerKind kind, CustomWebApiParameters customWebApiParameters) : base(name, kind)
         {
-            CustomVectorizerParameters = customVectorizerParameters;
+            CustomWebApiParameters = customWebApiParameters;
             Kind = kind;
         }
 
-        /// <summary> Contains the parameters specific to generating vector embeddings via a custom endpoint. </summary>
-        public CustomVectorizerParameters CustomVectorizerParameters { get; set; }
+        /// <summary> Specifies the properties of the user-defined vectorizer. </summary>
+        public CustomWebApiParameters CustomWebApiParameters { get; set; }
     }
 }

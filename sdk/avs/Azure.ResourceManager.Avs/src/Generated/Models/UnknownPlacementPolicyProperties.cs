@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.Avs.Models
         {
             PolicyType = policyType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownPlacementPolicyProperties"/> for deserialization. </summary>
+        internal UnknownPlacementPolicyProperties()
+        {
+        }
     }
 }

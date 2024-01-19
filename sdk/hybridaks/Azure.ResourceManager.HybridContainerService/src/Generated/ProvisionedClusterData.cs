@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A class representing the ProvisionedCluster data model.
-    /// The provisionedClusterInstances resource definition.
+    /// The provisioned cluster resource definition.
     /// </summary>
     public partial class ProvisionedClusterData : ResourceData
     {
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> All properties of the provisioned cluster. </param>
-        /// <param name="extendedLocation"> Extended Location definition. </param>
+        /// <param name="properties"> Properties of the provisioned cluster. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
         internal ProvisionedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisionedClusterProperties properties, HybridContainerServiceExtendedLocation extendedLocation) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
         }
 
-        /// <summary> All properties of the provisioned cluster. </summary>
+        /// <summary> Properties of the provisioned cluster. </summary>
         public ProvisionedClusterProperties Properties { get; set; }
-        /// <summary> Extended Location definition. </summary>
+        /// <summary> Extended location pointing to the underlying infrastructure. </summary>
         public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
     }
 }

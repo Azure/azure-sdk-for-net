@@ -1,14 +1,16 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2024-01-22)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2022-05-01' to 'package-2023-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a032c2413b49d297196a0c64393e862433fccbb1/specification/vmware/resource-manager/readme.md.
+    - Added ExtendedNetworkBlocks to AvsPrivateCloudData class
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
 
 ## 1.2.0 (2023-11-27)
 
@@ -25,7 +27,6 @@
 ### Features Added
 
 - Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
 
