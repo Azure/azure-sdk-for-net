@@ -195,16 +195,19 @@ namespace Azure.Core.Pipeline
 
             public void AddTag(string name, object value)
             {
-                if (_currentActivity == null)
+                if (_sampleOutActivity == null)
                 {
-                    // Activity is not started yet, add the value to the collection
-                    // that is going to be passed to StartActivity
-                    _tagCollection ??= new ActivityTagsCollection();
-                    _tagCollection[name] = value!;
-                }
-                else
-                {
-                    AddObjectTag(name, value);
+                    if (_currentActivity == null)
+                    {
+                        // Activity is not started yet, add the value to the collection
+                        // that is going to be passed to StartActivity
+                        _tagCollection ??= new ActivityTagsCollection();
+                        _tagCollection[name] = value!;
+                    }
+                    else
+                    {
+                        AddObjectTag(name, value);
+                    }
                 }
             }
 
@@ -429,6 +432,9 @@ namespace Azure.Core.Pipeline
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
                 activity.Dispose();
+
+                _currentActivity = null;
+                _sampleOutActivity = null;
             }
         }
     }

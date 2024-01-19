@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Defines the addon status profile. </summary>
+    /// <summary> The status profile of the addons and other kubernetes components. </summary>
     public partial class ProvisionedClusterAddonStatusProfile
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterAddonStatusProfile"/>. </summary>
@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterAddonStatusProfile"/>. </summary>
-        /// <param name="name"> Name of the addon. </param>
-        /// <param name="phase"> Observed phase of the addon on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
-        /// <param name="ready"> Indicates whether the addon is ready. </param>
-        /// <param name="errorMessage"> Error message while deploying the addon. </param>
+        /// <param name="name"> Name of the addon or component. </param>
+        /// <param name="phase"> Observed phase of the addon or component on the provisioned cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
+        /// <param name="ready"> Indicates whether the addon or component is ready. </param>
+        /// <param name="errorMessage"> Observed error message from the addon or component. </param>
         internal ProvisionedClusterAddonStatusProfile(string name, ProvisionedClusterAddonPhase? phase, bool? ready, string errorMessage)
         {
             Name = name;
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             ErrorMessage = errorMessage;
         }
 
-        /// <summary> Name of the addon. </summary>
+        /// <summary> Name of the addon or component. </summary>
         public string Name { get; }
-        /// <summary> Observed phase of the addon on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </summary>
+        /// <summary> Observed phase of the addon or component on the provisioned cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </summary>
         public ProvisionedClusterAddonPhase? Phase { get; }
-        /// <summary> Indicates whether the addon is ready. </summary>
+        /// <summary> Indicates whether the addon or component is ready. </summary>
         public bool? Ready { get; }
-        /// <summary> Error message while deploying the addon. </summary>
+        /// <summary> Observed error message from the addon or component. </summary>
         public string ErrorMessage { get; }
     }
 }

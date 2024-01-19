@@ -52,6 +52,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -82,6 +90,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -132,6 +148,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -163,6 +187,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesRegistrationAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -214,6 +246,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -244,6 +284,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// <item>

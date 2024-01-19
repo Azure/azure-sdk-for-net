@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Extended Location definition. </summary>
+    /// <summary> Extended location pointing to the underlying infrastructure. </summary>
     public partial class HybridContainerServiceExtendedLocation
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceExtendedLocation"/>. </summary>
@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceExtendedLocation"/>. </summary>
-        /// <param name="extendedLocationType"> The extended location type. </param>
-        /// <param name="name"> The extended location name. </param>
+        /// <param name="extendedLocationType"> The extended location type. Allowed value: 'CustomLocation'. </param>
+        /// <param name="name"> ARM Id of the extended location. </param>
         internal HybridContainerServiceExtendedLocation(HybridContainerServiceExtendedLocationType? extendedLocationType, string name)
         {
             ExtendedLocationType = extendedLocationType;
             Name = name;
         }
 
-        /// <summary> The extended location type. </summary>
+        /// <summary> The extended location type. Allowed value: 'CustomLocation'. </summary>
         public HybridContainerServiceExtendedLocationType? ExtendedLocationType { get; set; }
-        /// <summary> The extended location name. </summary>
+        /// <summary> ARM Id of the extended location. </summary>
         public string Name { get; set; }
     }
 }

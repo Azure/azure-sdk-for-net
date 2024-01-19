@@ -22,10 +22,12 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             // Get the smart-cropped thumbnails for the image.
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
-                VisualFeatures.SmartCrops);
+                VisualFeatures.SmartCrops,
+                new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
             // Print smart-crops analysis results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" SmartCrops:");
             foreach (CropRegion cropRegion in result.SmartCrops.Values)
             {
@@ -42,42 +44,17 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisSmartCropsFromUrl
             // Get the smart-cropped thumbnails for the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
-                VisualFeatures.SmartCrops);
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
+                VisualFeatures.SmartCrops,
+                new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
             // Print smart-crops analysis results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" SmartCrops:");
             foreach (CropRegion cropRegion in result.SmartCrops.Values)
             {
                 Console.WriteLine($"   Aspect ratio: {cropRegion.AspectRatio}, Bounding box: {cropRegion.BoundingBox}");
-            }
-            #endregion
-        }
-
-        [TestCase]
-        public void ImageAnalysisSmartCropsException()
-        {
-            var client = ImageAnalysisAuth();
-
-            #region Snippet:ImageAnalysisSmartCropsException
-            var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
-
-            try
-            {
-                var result = client.Analyze(imageUrl, VisualFeatures.SmartCrops);
-            }
-            catch (RequestFailedException e)
-            {
-                if (e.Status == 400)
-                {
-                    Console.WriteLine("Error analyzing image.");
-                    Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
-                }
-                else
-                {
-                    throw;
-                }
             }
             #endregion
         }

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
         /// </item>
         /// </list>
         /// </summary>

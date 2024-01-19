@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HighWaterMarkChangeDetectionPolicy"/>. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
         internal HighWaterMarkChangeDetectionPolicy(string oDataType, string highWaterMarkColumnName) : base(oDataType)
         {

@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderPermission
+    public partial class ProviderPermission : IUtf8JsonSerializable, IJsonModel<ProviderPermission>
     {
-        internal static ProviderPermission DeserializeProviderPermission(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderPermission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProviderPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (Optional.IsDefined(RoleDefinition))
+            {
+                writer.WritePropertyName("roleDefinition"u8);
+                writer.WriteObjectValue(RoleDefinition);
+            }
+            if (Optional.IsDefined(ManagedByRoleDefinition))
+            {
+                writer.WritePropertyName("managedByRoleDefinition"u8);
+                writer.WriteObjectValue(ManagedByRoleDefinition);
+            }
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
+            {
+                writer.WritePropertyName("providerAuthorizationConsentState"u8);
+                writer.WriteStringValue(ProviderAuthorizationConsentState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProviderPermission IJsonModel<ProviderPermission>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderPermission(document.RootElement, options);
+        }
+
+        internal static ProviderPermission DeserializeProviderPermission(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<AzureRoleDefinition> roleDefinition = default;
             Optional<AzureRoleDefinition> managedByRoleDefinition = default;
             Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -56,8 +124,44 @@ namespace Azure.ResourceManager.Resources.Models
                     providerAuthorizationConsentState = new ProviderAuthorizationConsentState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderPermission(applicationId.Value, roleDefinition.Value, managedByRoleDefinition.Value, Optional.ToNullable(providerAuthorizationConsentState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProviderPermission(applicationId.Value, roleDefinition.Value, managedByRoleDefinition.Value, Optional.ToNullable(providerAuthorizationConsentState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderPermission>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProviderPermission IPersistableModel<ProviderPermission>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProviderPermission(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderPermission>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
