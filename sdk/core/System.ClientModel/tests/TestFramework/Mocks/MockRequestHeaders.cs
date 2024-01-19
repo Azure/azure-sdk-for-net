@@ -7,11 +7,11 @@ using System.Collections.Generic;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockMessageHeaders : PipelineMessageHeaders
+public class MockRequestHeaders : PipelineRequestHeaders
 {
     private readonly Dictionary<string, string> _headers;
 
-    public MockMessageHeaders()
+    public MockRequestHeaders()
     {
         _headers = new Dictionary<string, string>();
     }

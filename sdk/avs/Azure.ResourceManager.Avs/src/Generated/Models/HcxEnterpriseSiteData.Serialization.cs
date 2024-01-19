@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -12,19 +15,86 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class HcxEnterpriseSiteData : IUtf8JsonSerializable
+    public partial class HcxEnterpriseSiteData : IUtf8JsonSerializable, IJsonModel<HcxEnterpriseSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HcxEnterpriseSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HcxEnterpriseSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HcxEnterpriseSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HcxEnterpriseSiteData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ActivationKey))
+            {
+                writer.WritePropertyName("activationKey"u8);
+                writer.WriteStringValue(ActivationKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HcxEnterpriseSiteData DeserializeHcxEnterpriseSiteData(JsonElement element)
+        HcxEnterpriseSiteData IJsonModel<HcxEnterpriseSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HcxEnterpriseSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HcxEnterpriseSiteData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHcxEnterpriseSiteData(document.RootElement, options);
+        }
+
+        internal static HcxEnterpriseSiteData DeserializeHcxEnterpriseSiteData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +105,8 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> activationKey = default;
             Optional<HcxEnterpriseSiteStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,8 +159,44 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HcxEnterpriseSiteData(id, name, type, systemData.Value, activationKey.Value, Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HcxEnterpriseSiteData(id, name, type, systemData.Value, activationKey.Value, Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HcxEnterpriseSiteData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HcxEnterpriseSiteData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HcxEnterpriseSiteData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HcxEnterpriseSiteData IPersistableModel<HcxEnterpriseSiteData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HcxEnterpriseSiteData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHcxEnterpriseSiteData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HcxEnterpriseSiteData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HcxEnterpriseSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

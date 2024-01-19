@@ -119,11 +119,11 @@ public class MockPipelineTransport : PipelineTransport
     private class TransportRequest : PipelineRequest
     {
         private Uri _uri;
-        private readonly PipelineMessageHeaders _headers;
+        private readonly PipelineRequestHeaders _headers;
 
         public TransportRequest()
         {
-            _headers = new MockMessageHeaders();
+            _headers = new MockRequestHeaders();
             _uri = new Uri("https://www.example.com");
         }
 
@@ -134,7 +134,7 @@ public class MockPipelineTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineRequestHeaders GetHeadersCore()
             => _headers;
 
         protected override string GetMethodCore()
@@ -176,7 +176,7 @@ public class MockPipelineTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineResponseHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }

@@ -19,14 +19,14 @@ public class RequestOptions
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
 
-    private readonly PipelineMessageHeaders _addHeaders;
+    private readonly PipelineRequestHeaders _addHeaders;
 
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
         ErrorOptions = ClientErrorBehaviors.Default;
 
-        _addHeaders = new PipelineRequestHeaders();
+        _addHeaders = new ArrayBackedRequestHeaders();
     }
 
     public CancellationToken CancellationToken { get; set; }
