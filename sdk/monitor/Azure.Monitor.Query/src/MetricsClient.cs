@@ -26,11 +26,11 @@ namespace Azure.Monitor.Query
         /// <param name="endpoint">The data plane service endpoint to use. For example <c>https://metrics.monitor.azure.com/.default</c> for public cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
-        public MetricsClient(Uri endpoint, TokenCredential credential, MetricsBatchQueryClientOptions options = null)
+        public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsBatchQueryClientOptions();
+            options ??= new MetricsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
@@ -61,7 +61,7 @@ namespace Azure.Monitor.Query
         /// <param name="resourceIds">The resource URIs for which the metrics is requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
-        /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
+        /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
         public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
@@ -95,7 +95,7 @@ namespace Azure.Monitor.Query
         /// <param name="resourceIds">The resource URIs for which the metrics is requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
-        /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
+        /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
         public virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)

@@ -11,7 +11,7 @@ namespace Azure.Monitor.Query
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Monitor Metrics service.
     /// </summary>
-    public class MetricsBatchQueryClientOptions: ClientOptions
+    public class MetricsClientOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
 
@@ -21,13 +21,13 @@ namespace Azure.Monitor.Query
         internal const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsBatchQueryClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="MetricsClientOptions"/> class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public MetricsBatchQueryClientOptions(ServiceVersion version = LatestVersion)
+        public MetricsClientOptions(ServiceVersion version = LatestVersion)
         {
             _version = version;
         }
