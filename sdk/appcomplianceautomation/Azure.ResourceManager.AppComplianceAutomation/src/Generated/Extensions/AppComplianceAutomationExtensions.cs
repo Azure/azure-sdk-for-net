@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppComplianceAutomation.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -18,65 +19,69 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppComplianceAutomation. </summary>
     public static partial class AppComplianceAutomationExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MockableAppComplianceAutomationArmClient GetMockableAppComplianceAutomationArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableAppComplianceAutomationArmClient(client0));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableAppComplianceAutomationTenantResource GetMockableAppComplianceAutomationTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableAppComplianceAutomationTenantResource(client, resource.Id));
         }
-        #region ReportResource
+
         /// <summary>
         /// Gets an object representing a <see cref="ReportResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ReportResource.CreateResourceIdentifier" /> to create a <see cref="ReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetReportResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReportResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReportResource"/> object. </returns>
         public static ReportResource GetReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ReportResource.ValidateResourceId(id);
-                return new ReportResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SnapshotResource
+            return GetMockableAppComplianceAutomationArmClient(client).GetReportResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationArmClient.GetSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
         public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SnapshotResource.ValidateResourceId(id);
-                return new SnapshotResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of ReportResources in the TenantResource. </summary>
+            return GetMockableAppComplianceAutomationArmClient(client).GetSnapshotResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ReportResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetReportResources()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
         public static ReportResourceCollection GetReportResources(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetReportResources();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResources();
         }
 
         /// <summary>
@@ -90,17 +95,31 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReportResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetReportResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ReportResource>> GetReportResourceAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetReportResources().GetAsync(reportName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResourceAsync(reportName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,17 +133,31 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReportResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppComplianceAutomationTenantResource.GetReportResource(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ReportResource> GetReportResource(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetReportResources().Get(reportName, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResource(reportName, cancellationToken);
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeExtension. </summary>
     public partial class ResourceTypeExtension
     {
-        /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtension"/>. </summary>
         public ResourceTypeExtension()
         {
             ExtensionCategories = new ChangeTrackingList<ResourceTypeExtensionCategory>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtension"/>. </summary>
         /// <param name="endpointUri"></param>
         /// <param name="extensionCategories"></param>
         /// <param name="timeout"></param>

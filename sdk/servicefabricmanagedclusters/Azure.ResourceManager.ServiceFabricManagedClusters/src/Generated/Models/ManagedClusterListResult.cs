@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Managed Cluster list results. </summary>
     internal partial class ManagedClusterListResult
     {
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         internal ManagedClusterListResult()
         {
             Value = new ChangeTrackingList<ServiceFabricManagedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ManagedClusterListResult(IReadOnlyList<ServiceFabricManagedClusterData> value, string nextLink)

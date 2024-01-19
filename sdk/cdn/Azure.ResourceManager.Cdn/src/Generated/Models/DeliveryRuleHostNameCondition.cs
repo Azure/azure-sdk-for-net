@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the HostName condition for the delivery rule. </summary>
     public partial class DeliveryRuleHostNameCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleHostNameCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleHostNameCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleHostNameCondition(HostNameMatchCondition properties)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.HostName;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleHostNameCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleHostNameCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         internal DeliveryRuleHostNameCondition(MatchVariable name, HostNameMatchCondition properties) : base(name)

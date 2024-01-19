@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             }.ToArray;
             #endregion
 
-            #region Valid
+#region Valid
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { new(), new() },

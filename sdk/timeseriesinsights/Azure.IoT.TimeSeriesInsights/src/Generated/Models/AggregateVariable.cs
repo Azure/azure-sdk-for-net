@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Aggregate variable represents any aggregation calculation. Aggregate Variables does not support interpolation. </summary>
     public partial class AggregateVariable : TimeSeriesVariable
     {
-        /// <summary> Initializes a new instance of AggregateVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateVariable"/>. </summary>
         /// <param name="aggregation"> Aggregation time series expression when kind is "aggregate" is used to represent the aggregation that needs to be performed directly using event properties like "$event.Temperature". For example, aggregation for calculating range of temperature changes can be written as: "max($event.Temperature)-min($event.Temperature)". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public AggregateVariable(TimeSeriesExpression aggregation)
@@ -24,7 +24,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Kind = "aggregate";
         }
 
-        /// <summary> Initializes a new instance of AggregateVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
         /// <param name="aggregation"> Aggregation time series expression when kind is "aggregate" is used to represent the aggregation that needs to be performed directly using event properties like "$event.Temperature". For example, aggregation for calculating range of temperature changes can be written as: "max($event.Temperature)-min($event.Temperature)". </param>

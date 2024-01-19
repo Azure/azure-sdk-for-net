@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of BackupGenericProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectedItem"/>. </summary>
         protected BackupGenericProtectedItem()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
-        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays)
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
+        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId)
         {
             ProtectedItemType = protectedItemType;
             BackupManagementType = backupManagementType;
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsArchiveEnabled = isArchiveEnabled;
             PolicyName = policyName;
             SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
+            VaultId = vaultId;
         }
 
         /// <summary> backup item type. </summary>
@@ -101,5 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string PolicyName { get; set; }
         /// <summary> Soft delete retention period in days. </summary>
         public int? SoftDeleteRetentionPeriodInDays { get; set; }
+        /// <summary> ID of the vault which protects this item. </summary>
+        public string VaultId { get; }
     }
 }

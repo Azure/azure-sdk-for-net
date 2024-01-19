@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan A2A specific details. </summary>
     public partial class RecoveryPlanA2ADetails : RecoveryPlanProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2ADetails"/>. </summary>
         internal RecoveryPlanA2ADetails()
         {
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2ADetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="primaryZone"> The primary zone. </param>
         /// <param name="recoveryZone"> The recovery zone. </param>

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerJobExecutionStepTargetResource" /> and their operations.
-    /// Each <see cref="SqlServerJobExecutionStepTargetResource" /> in the collection will belong to the same instance of <see cref="SqlServerJobExecutionStepResource" />.
-    /// To get a <see cref="SqlServerJobExecutionStepTargetCollection" /> instance call the GetSqlServerJobExecutionStepTargets method from an instance of <see cref="SqlServerJobExecutionStepResource" />.
+    /// A class representing a collection of <see cref="SqlServerJobExecutionStepTargetResource"/> and their operations.
+    /// Each <see cref="SqlServerJobExecutionStepTargetResource"/> in the collection will belong to the same instance of <see cref="SqlServerJobExecutionStepResource"/>.
+    /// To get a <see cref="SqlServerJobExecutionStepTargetCollection"/> instance call the GetSqlServerJobExecutionStepTargets method from an instance of <see cref="SqlServerJobExecutionStepResource"/>.
     /// </summary>
     public partial class SqlServerJobExecutionStepTargetCollection : ArmCollection, IEnumerable<SqlServerJobExecutionStepTargetResource>, IAsyncEnumerable<SqlServerJobExecutionStepTargetResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,11 +147,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_ListByStep</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobExecutionStepTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobExecutionStepTargetResource> GetAllAsync(SqlServerJobExecutionStepTargetCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobExecutionStepTargetCollectionGetAllOptions();
@@ -156,11 +180,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_ListByStep</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobExecutionStepTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobExecutionStepTargetResource> GetAll(SqlServerJobExecutionStepTargetCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobExecutionStepTargetCollectionGetAllOptions();
@@ -180,6 +212,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,6 +252,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
@@ -242,6 +290,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +331,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

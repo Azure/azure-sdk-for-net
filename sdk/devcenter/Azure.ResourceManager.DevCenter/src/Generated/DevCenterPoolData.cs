@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevCenterPoolData(AzureLocation location) : base(location)
         {
             HealthStatusDetails = new ChangeTrackingList<DevCenterHealthStatusDetail>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

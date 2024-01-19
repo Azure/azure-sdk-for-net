@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Fabric properties. </summary>
     public partial class SiteRecoveryFabricProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProperties"/>. </summary>
         internal SiteRecoveryFabricProperties()
         {
             HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProperties"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the fabric. </param>
         /// <param name="encryptionDetails"> Encryption details for the fabric. </param>
         /// <param name="rolloverEncryptionDetails"> Rollover encryption details for the fabric. </param>

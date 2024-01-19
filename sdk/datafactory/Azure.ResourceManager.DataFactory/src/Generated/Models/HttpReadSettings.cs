@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Http read settings. </summary>
     public partial class HttpReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of HttpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpReadSettings"/>. </summary>
         public HttpReadSettings()
         {
             StoreReadSettingsType = "HttpReadSettings";
         }
 
-        /// <summary> Initializes a new instance of HttpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

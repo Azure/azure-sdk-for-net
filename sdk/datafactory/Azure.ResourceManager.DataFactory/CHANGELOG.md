@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2023-11-16)
+
+### Features Added
+
+- Upgraded API version.
+  - Added Some Properties on GoogleAds Connector.
+  - Added Support LakeHouse Connector In ADF.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ## 1.0.0-beta.4 (2023-09-26)
 

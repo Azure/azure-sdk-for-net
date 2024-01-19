@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Details of storage account to be used for the Registry. </summary>
     public partial class StorageAccountDetails
     {
-        /// <summary> Initializes a new instance of StorageAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountDetails"/>. </summary>
         public StorageAccountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountDetails"/>. </summary>
         /// <param name="systemCreatedStorageAccount"> Details of system created storage account to be used for the registry. </param>
         /// <param name="userCreatedStorageAccount"> Details of user created storage account to be used for the registry.  Not supported in most cases and will throw 400 error if provided. </param>
         internal StorageAccountDetails(SystemCreatedStorageAccount systemCreatedStorageAccount, UserCreatedStorageAccount userCreatedStorageAccount)

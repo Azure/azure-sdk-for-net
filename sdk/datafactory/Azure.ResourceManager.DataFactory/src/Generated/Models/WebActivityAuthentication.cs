@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Web activity authentication properties. </summary>
     public partial class WebActivityAuthentication
     {
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         public WebActivityAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         /// <param name="webActivityAuthenticationType"> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal. </param>
         /// <param name="username"> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </param>

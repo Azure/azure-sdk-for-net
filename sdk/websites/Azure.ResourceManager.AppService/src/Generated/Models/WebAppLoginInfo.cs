@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
     public partial class WebAppLoginInfo
     {
-        /// <summary> Initializes a new instance of WebAppLoginInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppLoginInfo"/>. </summary>
         public WebAppLoginInfo()
         {
             AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WebAppLoginInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppLoginInfo"/>. </summary>
         /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
         /// <param name="tokenStore"> The configuration settings of the token store. </param>
         /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>

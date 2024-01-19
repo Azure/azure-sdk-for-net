@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderManagement. </summary>
     public partial class ResourceProviderManagement
     {
-        /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManagement"/>. </summary>
         public ResourceProviderManagement()
         {
             SchemaOwners = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceAccessRoles = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManagement"/>. </summary>
         /// <param name="schemaOwners"></param>
         /// <param name="manifestOwners"></param>
         /// <param name="incidentRoutingService"></param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

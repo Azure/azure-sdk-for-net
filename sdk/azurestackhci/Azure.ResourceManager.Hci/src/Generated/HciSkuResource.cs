@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing a HciSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HciSkuResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHciSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OfferResource" /> using the GetHciSku method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciSkuResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHciSkuResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OfferResource"/> using the GetHciSku method.
     /// </summary>
     public partial class HciSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HciSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="offerName"> The offerName. </param>
+        /// <param name="skuName"> The skuName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string skuName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}";
@@ -35,12 +41,15 @@ namespace Azure.ResourceManager.Hci
         private readonly SkusRestOperations _hciSkuSkusRestClient;
         private readonly HciSkuData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers/offers/skus";
+
         /// <summary> Initializes a new instance of the <see cref="HciSkuResource"/> class for mocking. </summary>
         protected HciSkuResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HciSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciSkuResource(ArmClient client, HciSkuData data) : this(client, data.Id)
@@ -61,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers/offers/skus";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +103,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
@@ -129,6 +143,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

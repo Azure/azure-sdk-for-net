@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -133,6 +134,21 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }
+        }
+
+        [Test]
+        public void GetChildStorageResourceContainer()
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            string folderPath = test.DirectoryPath;
+
+            StorageResourceContainer container = new LocalDirectoryStorageResourceContainer(folderPath);
+
+            string childPath = "childPath";
+            StorageResourceContainer childContainer = container.GetChildStorageResourceContainer(childPath);
+
+            string fullPath = Path.Combine(folderPath, childPath);
+            Assert.AreEqual(childContainer.Uri, new Uri(fullPath));
         }
     }
 }

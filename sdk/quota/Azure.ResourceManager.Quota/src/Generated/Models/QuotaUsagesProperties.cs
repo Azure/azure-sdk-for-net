@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Usage properties for the specified resource. </summary>
     public partial class QuotaUsagesProperties
     {
-        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesProperties"/>. </summary>
         internal QuotaUsagesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesProperties"/>. </summary>
         /// <param name="usages"> The quota limit properties for this resource. </param>
         /// <param name="unit"> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -14,12 +15,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Request Report data. </summary>
     public partial class RequestReportRecordContract
     {
-        /// <summary> Initializes a new instance of RequestReportRecordContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequestReportRecordContract"/>. </summary>
         internal RequestReportRecordContract()
         {
         }
 
-        /// <summary> Initializes a new instance of RequestReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestReportRecordContract"/>. </summary>
         /// <param name="apiId"> API identifier path. /apis/{apiId}. </param>
         /// <param name="operationId"> Operation identifier path. /apis/{apiId}/operations/{operationId}. </param>
         /// <param name="productId"> Product identifier path. /products/{productId}. </param>
@@ -27,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="method"> The HTTP method associated with this request.. </param>
         /// <param name="uri"> The full URL associated with this request. </param>
         /// <param name="ipAddress"> The client IP address associated with this request. </param>
-        /// <param name="backendResponseCodeInteger"> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </param>
+        /// <param name="backendResponseCode"> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </param>
         /// <param name="responseCode"> The HTTP status code returned by the gateway. </param>
         /// <param name="responseSize"> The size of the response returned by the gateway. </param>
         /// <param name="timestamp"> The date and time when this request was received by the gateway in ISO 8601 format. </param>
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
         /// <param name="requestId"> Request Identifier. </param>
         /// <param name="requestSize"> The size of this request.. </param>
-        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, RequestMethod? method, Uri uri, IPAddress ipAddress, int? backendResponseCodeInteger, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, RequestMethod? method, Uri uri, IPAddress ipAddress, string backendResponseCode, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApiId = apiId;
             OperationId = operationId;
@@ -47,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Method = method;
             Uri = uri;
             IPAddress = ipAddress;
-            BackendResponseCodeInteger = backendResponseCodeInteger;
+            BackendResponseCode = backendResponseCode;
             ResponseCode = responseCode;
             ResponseSize = responseSize;
             Timestamp = timestamp;
@@ -58,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             SubscriptionResourceId = subscriptionResourceId;
             RequestId = requestId;
             RequestSize = requestSize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> API identifier path. /apis/{apiId}. </summary>
@@ -75,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The client IP address associated with this request. </summary>
         public IPAddress IPAddress { get; }
         /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
-        public int? BackendResponseCodeInteger { get; }
+        public string BackendResponseCode { get; }
         /// <summary> The HTTP status code returned by the gateway. </summary>
         public int? ResponseCode { get; }
         /// <summary> The size of the response returned by the gateway. </summary>

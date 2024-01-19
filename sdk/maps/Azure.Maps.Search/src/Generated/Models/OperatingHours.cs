@@ -13,13 +13,13 @@ namespace Azure.Maps.Search.Models
     /// <summary> Opening hours for a POI (Points of Interest). </summary>
     public partial class OperatingHours
     {
-        /// <summary> Initializes a new instance of OperatingHours. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatingHours"/>. </summary>
         internal OperatingHours()
         {
             TimeRanges = new ChangeTrackingList<OperatingHoursTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of OperatingHours. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatingHours"/>. </summary>
         /// <param name="mode"> Value used in the request: none or "nextSevenDays". </param>
         /// <param name="timeRanges"> List of time ranges for the next 7 days. </param>
         internal OperatingHours(string mode, IReadOnlyList<OperatingHoursTimeRange> timeRanges)

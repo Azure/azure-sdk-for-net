@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Key Encryption Key (KEK) information. </summary>
     public partial class SiteRecoveryKeyEncryptionKeyInfo
     {
-        /// <summary> Initializes a new instance of SiteRecoveryKeyEncryptionKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryKeyEncryptionKeyInfo"/>. </summary>
         public SiteRecoveryKeyEncryptionKeyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryKeyEncryptionKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryKeyEncryptionKeyInfo"/>. </summary>
         /// <param name="keyIdentifier"> The key URL / identifier. </param>
         /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM Id for key. </param>
         internal SiteRecoveryKeyEncryptionKeyInfo(string keyIdentifier, ResourceIdentifier keyVaultResourceArmId)

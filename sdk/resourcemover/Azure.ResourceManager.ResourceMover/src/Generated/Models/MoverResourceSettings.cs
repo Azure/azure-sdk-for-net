@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// </summary>
     public abstract partial class MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of MoverResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSettings"/>. </summary>
         protected MoverResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

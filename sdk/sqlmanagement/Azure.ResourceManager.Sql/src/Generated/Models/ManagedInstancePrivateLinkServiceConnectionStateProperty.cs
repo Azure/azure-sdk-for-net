@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
     public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The private link service connection description. </param>

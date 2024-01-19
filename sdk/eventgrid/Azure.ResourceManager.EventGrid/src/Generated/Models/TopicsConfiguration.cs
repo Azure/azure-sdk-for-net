@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Topics Configuration. </summary>
     internal partial class TopicsConfiguration
     {
-        /// <summary> Initializes a new instance of TopicsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicsConfiguration"/>. </summary>
         public TopicsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TopicsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicsConfiguration"/>. </summary>
         /// <param name="hostname"> The hostname for the topics configuration. This is a read-only property. </param>
         internal TopicsConfiguration(string hostname)
         {

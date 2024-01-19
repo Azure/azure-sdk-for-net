@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </summary>
     public partial class PipelineDiagnosticSettings
     {
-        /// <summary> Initializes a new instance of PipelineDiagnosticSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineDiagnosticSettings"/>. </summary>
         public PipelineDiagnosticSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PipelineDiagnosticSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineDiagnosticSettings"/>. </summary>
         /// <param name="request"> Diagnostic settings for request. </param>
         /// <param name="response"> Diagnostic settings for response. </param>
-        internal PipelineDiagnosticSettings(HttpMessageDiagnostic request, HttpMessageDiagnostic response)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineDiagnosticSettings(HttpMessageDiagnostic request, HttpMessageDiagnostic response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Request = request;
             Response = response;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Diagnostic settings for request. </summary>

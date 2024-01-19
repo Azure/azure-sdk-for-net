@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Maintenance window time range. </summary>
     public partial class MaintenanceWindowTimeRange
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowTimeRange"/>. </summary>
         public MaintenanceWindowTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowTimeRange"/>. </summary>
         /// <param name="dayOfWeek"> Day of maintenance window. </param>
         /// <param name="startTime"> Start time minutes offset from 12am. </param>
         /// <param name="duration"> Duration of maintenance window in minutes. </param>

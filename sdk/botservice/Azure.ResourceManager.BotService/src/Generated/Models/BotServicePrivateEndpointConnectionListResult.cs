@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class BotServicePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateEndpointConnectionListResult"/>. </summary>
         internal BotServicePrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal BotServicePrivateEndpointConnectionListResult(IReadOnlyList<BotServicePrivateEndpointConnectionData> value)
         {

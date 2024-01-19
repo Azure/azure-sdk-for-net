@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of server trust certificates in instance. </summary>
     internal partial class ServerTrustCertificatesListResult
     {
-        /// <summary> Initializes a new instance of ServerTrustCertificatesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificatesListResult"/>. </summary>
         internal ServerTrustCertificatesListResult()
         {
             Value = new ChangeTrackingList<ServerTrustCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of ServerTrustCertificatesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificatesListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ServerTrustCertificatesListResult(IReadOnlyList<ServerTrustCertificateData> value, string nextLink)

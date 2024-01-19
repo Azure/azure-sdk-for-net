@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> The GeoJsonGeometryCollectionData. </summary>
     internal partial class GeoJsonGeometryCollectionData
     {
-        /// <summary> Initializes a new instance of GeoJsonGeometryCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonGeometryCollectionData"/>. </summary>
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,6 +27,17 @@ namespace Azure.Maps.Routing.Models
             Argument.AssertNotNull(geometries, nameof(geometries));
 
             Geometries = geometries.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonGeometryCollectionData"/>. </summary>
+        /// <param name="geometries">
+        /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/> and <see cref="GeoJsonMultiPoint"/>.
+        /// </param>
+        internal GeoJsonGeometryCollectionData(IList<GeoJsonGeometry> geometries)
+        {
+            Geometries = geometries;
         }
 
         /// <summary>

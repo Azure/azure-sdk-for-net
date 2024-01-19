@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The TasksStateTasks. </summary>
     internal partial class AnalyzeTasks
     {
-        /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             Items = new ChangeTrackingList<AnalyzeTextLROResult>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>

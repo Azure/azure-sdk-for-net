@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API contract properties for the Tag Resources. </summary>
     public partial class AssociatedApiProperties : ApiEntityBaseContract
     {
-        /// <summary> Initializes a new instance of AssociatedApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedApiProperties"/>. </summary>
         internal AssociatedApiProperties()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
-        /// <summary> Initializes a new instance of AssociatedApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedApiProperties"/>. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
         /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
@@ -36,12 +36,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> API identifier in the form /apis/{apiId}. </param>
         /// <param name="name"> API name. </param>
         /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
-        internal AssociatedApiProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, string id, string name, Uri serviceUri, string path, IReadOnlyList<ApiOperationInvokableProtocol> protocols) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license)
+        internal AssociatedApiProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData, string id, string name, Uri serviceUri, string path, IReadOnlyList<ApiOperationInvokableProtocol> protocols) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, serializedAdditionalRawData)
         {
             Id = id;
             Name = name;

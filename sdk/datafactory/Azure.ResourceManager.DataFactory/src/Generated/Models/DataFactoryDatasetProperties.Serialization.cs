@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -75,7 +78,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -139,6 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element);
                     case "Json": return JsonDataset.DeserializeJsonDataset(element);
+                    case "LakeHouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element);
                     case "MagentoObject": return MagentoObjectDataset.DeserializeMagentoObjectDataset(element);
                     case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element);
                     case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element);

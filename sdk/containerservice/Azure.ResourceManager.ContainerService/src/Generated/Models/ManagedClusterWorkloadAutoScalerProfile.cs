@@ -5,29 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Workload Auto-scaler profile for the managed cluster. </summary>
     public partial class ManagedClusterWorkloadAutoScalerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterWorkloadAutoScalerProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfile"/>. </summary>
         public ManagedClusterWorkloadAutoScalerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterWorkloadAutoScalerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfile"/>. </summary>
         /// <param name="keda"> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </param>
-        /// <param name="verticalPodAutoscaler"></param>
-        internal ManagedClusterWorkloadAutoScalerProfile(ManagedClusterWorkloadAutoScalerProfileKeda keda, ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler)
+        /// <param name="verticalPodAutoscaler"> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterWorkloadAutoScalerProfile(ManagedClusterWorkloadAutoScalerProfileKeda keda, ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keda = keda;
             VerticalPodAutoscaler = verticalPodAutoscaler;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </summary>
         internal ManagedClusterWorkloadAutoScalerProfileKeda Keda { get; set; }
+        /// <summary> Whether to enable KEDA. </summary>
+        public bool? IsKedaEnabled
+        {
+            get => Keda is null ? default(bool?) : Keda.IsKedaEnabled;
+            set
+            {
+                Keda = value.HasValue ? new ManagedClusterWorkloadAutoScalerProfileKeda(value.Value) : null;
+            }
+        }
 
-        /// <summary> Gets or sets the vertical pod autoscaler. </summary>
-        public ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }
+        /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
+        internal ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }
+        /// <summary> Whether to enable VPA. Default value is false. </summary>
+        public bool? IsVpaEnabled
+        {
+            get => VerticalPodAutoscaler is null ? default(bool?) : VerticalPodAutoscaler.IsVpaEnabled;
+            set
+            {
+                VerticalPodAutoscaler = value.HasValue ? new ManagedClusterVerticalPodAutoscaler(value.Value) : null;
+            }
+        }
     }
 }

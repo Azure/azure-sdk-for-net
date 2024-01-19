@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        protected override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
@@ -325,28 +325,19 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData();
+            return new BlobSourceCheckpointData(BlobType.Block);
         }
 
-        /// <summary>
-        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
                 BlobType.Block,
-                _options.HttpHeaders,
-                _options.AccessTier,
-                _options.Metadata,
-                _options.Tags,
-                default); // TODO: Update when we support encryption scopes
+                _options?.HttpHeaders,
+                _options?.AccessTier,
+                _options?.Metadata,
+                _options?.Tags);
         }
 
         private void GrabEtag(Response response)

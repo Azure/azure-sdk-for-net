@@ -5,13 +5,21 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A schedule. </summary>
     public partial class DevTestLabSchedulePatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSchedulePatch"/>. </summary>
         public DevTestLabSchedulePatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSchedulePatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabSchedulePatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

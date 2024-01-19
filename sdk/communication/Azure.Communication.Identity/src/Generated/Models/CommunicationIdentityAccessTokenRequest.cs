@@ -16,7 +16,7 @@ namespace Azure.Communication.Identity.Models
     /// <summary> The CommunicationIdentityAccessTokenRequest. </summary>
     internal partial class CommunicationIdentityAccessTokenRequest
     {
-        /// <summary> Initializes a new instance of CommunicationIdentityAccessTokenRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessTokenRequest"/>. </summary>
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes)
@@ -24,6 +24,15 @@ namespace Azure.Communication.Identity.Models
             Argument.AssertNotNull(scopes, nameof(scopes));
 
             Scopes = scopes.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessTokenRequest"/>. </summary>
+        /// <param name="scopes"> List of scopes attached to the token. </param>
+        /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
+        internal CommunicationIdentityAccessTokenRequest(IList<CommunicationTokenScope> scopes, int? expiresInMinutes)
+        {
+            Scopes = scopes;
+            ExpiresInMinutes = expiresInMinutes;
         }
 
         /// <summary> List of scopes attached to the token. </summary>

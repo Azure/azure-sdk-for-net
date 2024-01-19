@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment script parameters to be updated. </summary>
     public partial class ArmDeploymentScriptPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPatch"/>. </summary>
         public ArmDeploymentScriptPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

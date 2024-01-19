@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Position where the route error happened. </summary>
     public partial class RouteErrorPosition
     {
-        /// <summary> Initializes a new instance of RouteErrorPosition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteErrorPosition"/>. </summary>
         internal RouteErrorPosition()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteErrorPosition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteErrorPosition"/>. </summary>
         /// <param name="line"> Line where the route error happened. </param>
         /// <param name="column"> Column where the route error happened. </param>
         internal RouteErrorPosition(int? line, int? column)

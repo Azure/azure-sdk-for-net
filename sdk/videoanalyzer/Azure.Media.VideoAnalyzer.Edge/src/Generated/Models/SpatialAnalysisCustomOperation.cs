@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Defines a Spatial Analysis custom operation. This requires the Azure Cognitive Services Spatial analysis module to be deployed alongside the Video Analyzer module, please see https://aka.ms/ava-spatial-analysis for more information. </summary>
     public partial class SpatialAnalysisCustomOperation : SpatialAnalysisOperationBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisCustomOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisCustomOperation"/>. </summary>
         /// <param name="extensionConfiguration"> Custom configuration to pass to the Azure Cognitive Services Spatial Analysis module. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionConfiguration"/> is null. </exception>
         public SpatialAnalysisCustomOperation(string extensionConfiguration)
@@ -24,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.SpatialAnalysisCustomOperation";
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisCustomOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisCustomOperation"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="extensionConfiguration"> Custom configuration to pass to the Azure Cognitive Services Spatial Analysis module. </param>
         internal SpatialAnalysisCustomOperation(string type, string extensionConfiguration) : base(type)

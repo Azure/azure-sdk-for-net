@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Pairs of Managed Instances in the failover group. </summary>
     public partial class ManagedInstancePairInfo
     {
-        /// <summary> Initializes a new instance of ManagedInstancePairInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePairInfo"/>. </summary>
         public ManagedInstancePairInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePairInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePairInfo"/>. </summary>
         /// <param name="primaryManagedInstanceId"> Id of Primary Managed Instance in pair. </param>
         /// <param name="partnerManagedInstanceId"> Id of Partner Managed Instance in pair. </param>
         internal ManagedInstancePairInfo(ResourceIdentifier primaryManagedInstanceId, ResourceIdentifier partnerManagedInstanceId)

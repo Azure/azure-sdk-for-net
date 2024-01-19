@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> billing information. </summary>
     public partial class ReservationRefundBillingInformation
     {
-        /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundBillingInformation"/>. </summary>
         internal ReservationRefundBillingInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundBillingInformation"/>. </summary>
         /// <param name="billingPlan"> Represent the billing plans. </param>
         /// <param name="completedTransactions"> The number of completed transactions in this reservation's payment. </param>
         /// <param name="totalTransactions"> The number of total transactions in this reservation's payment. </param>

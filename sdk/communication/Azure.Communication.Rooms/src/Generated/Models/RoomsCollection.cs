@@ -15,7 +15,7 @@ namespace Azure.Communication.Rooms
     /// <summary> A collection of rooms. </summary>
     internal partial class RoomsCollection
     {
-        /// <summary> Initializes a new instance of RoomsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoomsCollection"/>. </summary>
         /// <param name="value"> A collection of rooms. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RoomsCollection(IEnumerable<CommunicationRoom> value)
@@ -25,7 +25,7 @@ namespace Azure.Communication.Rooms
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RoomsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoomsCollection"/>. </summary>
         /// <param name="value"> A collection of rooms. </param>
         /// <param name="nextLink"> If there are more rooms that can be retrieved, the next link will be populated. </param>
         internal RoomsCollection(IReadOnlyList<CommunicationRoom> value, string nextLink)

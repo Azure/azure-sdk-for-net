@@ -14,10 +14,19 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> ArcSetting details to update. </summary>
     public partial class ArcSettingPatch
     {
-        /// <summary> Initializes a new instance of ArcSettingPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcSettingPatch"/>. </summary>
         public ArcSettingPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArcSettingPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        internal ArcSettingPatch(IDictionary<string, string> tags, BinaryData connectivityProperties)
+        {
+            Tags = tags;
+            ConnectivityProperties = connectivityProperties;
         }
 
         /// <summary> Resource tags. </summary>
@@ -28,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

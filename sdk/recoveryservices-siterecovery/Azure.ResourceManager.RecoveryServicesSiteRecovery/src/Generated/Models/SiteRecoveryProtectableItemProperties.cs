@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication protected item custom data details. </summary>
     public partial class SiteRecoveryProtectableItemProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectableItemProperties"/>. </summary>
         internal SiteRecoveryProtectableItemProperties()
         {
             ProtectionReadinessErrors = new ChangeTrackingList<string>();
             SupportedReplicationProviders = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectableItemProperties"/>. </summary>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="protectionStatus"> The protection status. </param>
         /// <param name="replicationProtectedItemId"> The ARM resource of protected items. </param>

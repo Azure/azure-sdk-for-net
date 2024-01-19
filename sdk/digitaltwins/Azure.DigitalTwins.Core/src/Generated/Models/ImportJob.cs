@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A job which contains a reference to the operations to perform, results, and execution metadata. </summary>
     public partial class ImportJob
     {
-        /// <summary> Initializes a new instance of ImportJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportJob"/>. </summary>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobUri"/> or <paramref name="outputBlobUri"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
             OutputBlobUri = outputBlobUri;
         }
 
-        /// <summary> Initializes a new instance of ImportJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportJob"/>. </summary>
         /// <param name="id"> The identifier of the import job. </param>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>

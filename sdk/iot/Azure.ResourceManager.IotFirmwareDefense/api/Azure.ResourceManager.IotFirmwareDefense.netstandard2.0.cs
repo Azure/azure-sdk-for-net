@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     }
     public partial class FirmwareWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FirmwareWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FirmwareWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class FirmwareWorkspaceResource : Azure.ResourceManager.ArmResource
@@ -124,6 +124,28 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         public static Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceCollection GetFirmwareWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource> GetFirmwareWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource> GetFirmwareWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
+{
+    public partial class MockableIotFirmwareDefenseArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotFirmwareDefenseArmClient() { }
+        public virtual Azure.ResourceManager.IotFirmwareDefense.FirmwareResource GetFirmwareResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource GetFirmwareWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableIotFirmwareDefenseResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotFirmwareDefenseResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource> GetFirmwareWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource>> GetFirmwareWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceCollection GetFirmwareWorkspaces() { throw null; }
+    }
+    public partial class MockableIotFirmwareDefenseSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotFirmwareDefenseSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource> GetFirmwareWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource> GetFirmwareWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.IotFirmwareDefense.Models

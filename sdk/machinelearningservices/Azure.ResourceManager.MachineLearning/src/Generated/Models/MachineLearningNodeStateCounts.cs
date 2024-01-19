@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Counts of various compute node states on the amlCompute. </summary>
     public partial class MachineLearningNodeStateCounts
     {
-        /// <summary> Initializes a new instance of MachineLearningNodeStateCounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNodeStateCounts"/>. </summary>
         internal MachineLearningNodeStateCounts()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNodeStateCounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNodeStateCounts"/>. </summary>
         /// <param name="idleNodeCount"> Number of compute nodes in idle state. </param>
         /// <param name="runningNodeCount"> Number of compute nodes which are running jobs. </param>
         /// <param name="preparingNodeCount"> Number of compute nodes which are being prepared. </param>

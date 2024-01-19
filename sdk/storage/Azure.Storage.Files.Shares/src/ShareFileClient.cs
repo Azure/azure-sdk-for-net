@@ -523,7 +523,7 @@ namespace Azure.Storage.Files.Shares
             if (client.ClientConfiguration.TokenCredential != default)
             {
                 AccessToken accessToken = await client.ClientConfiguration.TokenCredential.GetTokenAsync(
-                    new TokenRequestContext(new string[] { client.ClientConfiguration.Audience.ToString() }),
+                    new TokenRequestContext(new string[] { client.ClientConfiguration.Audience.CreateDefaultScope() }),
                     cancellationToken).ConfigureAwait(false);
                 return new HttpAuthorization(
                     Constants.CopyHttpAuthorization.BearerScheme,
@@ -6622,6 +6622,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new ShareSasBuilder(permissions, expiresOn)
             {
@@ -6653,6 +6654,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

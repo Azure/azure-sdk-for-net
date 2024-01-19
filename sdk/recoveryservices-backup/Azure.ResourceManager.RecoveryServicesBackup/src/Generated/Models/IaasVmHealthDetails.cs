@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure IaaS VM workload-specific Health Details. </summary>
     public partial class IaasVmHealthDetails : ResourceHealthDetails
     {
-        /// <summary> Initializes a new instance of IaasVmHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmHealthDetails"/>. </summary>
         public IaasVmHealthDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmHealthDetails"/>. </summary>
         /// <param name="code"> Health Code. </param>
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>

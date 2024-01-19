@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List restore point collection operation response. </summary>
     internal partial class RestorePointGroupListResult
     {
-        /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
         internal RestorePointGroupListResult()
         {
             Value = new ChangeTrackingList<RestorePointGroupData>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
         /// <param name="value"> Gets the list of restore point collections. </param>
         /// <param name="nextLink"> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </param>
         internal RestorePointGroupListResult(IReadOnlyList<RestorePointGroupData> value, string nextLink)

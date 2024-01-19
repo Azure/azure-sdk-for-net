@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Binary hardening of a firmware. </summary>
     public partial class BinaryHardening
     {
-        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardening"/>. </summary>
         internal BinaryHardening()
         {
         }
 
-        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardening"/>. </summary>
         /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
         /// <param name="architecture"> The architecture of the uploaded firmware. </param>
         /// <param name="path"> path for binary hardening. </param>

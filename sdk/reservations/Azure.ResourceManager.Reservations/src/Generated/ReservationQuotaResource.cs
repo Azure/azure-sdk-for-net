@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
     /// A Class representing a ReservationQuota along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationQuotaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReservationQuotaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetReservationQuota method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReservationQuotaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReservationQuotaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetReservationQuota method.
     /// </summary>
     public partial class ReservationQuotaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReservationQuotaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerId"> The providerId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Reservations
         private readonly QuotaRestOperations _reservationQuotaQuotaRestClient;
         private readonly ReservationQuotaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimits";
+
         /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class for mocking. </summary>
         protected ReservationQuotaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReservationQuotaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReservationQuotaResource(ArmClient client, ReservationQuotaData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Reservations
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimits";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +185,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,6 +235,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> Trial data which is of interest to the potential participant. </summary>
     public partial class ClinicalTrialMetadata
     {
-        /// <summary> Initializes a new instance of ClinicalTrialMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialMetadata"/>. </summary>
         /// <param name="conditions"> Medical conditions and their synonyms which are relevant for the clinical trial, given as strings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conditions"/> is null. </exception>
         public ClinicalTrialMetadata(IEnumerable<string> conditions)
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Facilities = new ChangeTrackingList<ClinicalTrialResearchFacility>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialMetadata"/>. </summary>
         /// <param name="phases">
         /// Phases which are relevant for the clinical trial.
         /// Each clinical trial can be in a certain phase or in multiple phases.

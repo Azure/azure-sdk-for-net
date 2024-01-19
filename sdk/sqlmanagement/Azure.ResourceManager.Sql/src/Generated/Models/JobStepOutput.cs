@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The output configuration of a job step. </summary>
     public partial class JobStepOutput
     {
-        /// <summary> Initializes a new instance of JobStepOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepOutput"/>. </summary>
         /// <param name="serverName"> The output destination server name. </param>
         /// <param name="databaseName"> The output destination database. </param>
         /// <param name="tableName"> The output destination table. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
             Credential = credential;
         }
 
-        /// <summary> Initializes a new instance of JobStepOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepOutput"/>. </summary>
         /// <param name="outputType"> The output destination type. </param>
         /// <param name="subscriptionId"> The output destination subscription id. </param>
         /// <param name="resourceGroupName"> The output destination resource group. </param>

@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSanSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanSnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource" /> using the GetElasticSanSnapshot method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanSnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource"/> using the GetElasticSanSnapshot method.
     /// </summary>
     public partial class ElasticSanSnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticSanSnapshotResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="elasticSanName"> The elasticSanName. </param>
+        /// <param name="volumeGroupName"> The volumeGroupName. </param>
+        /// <param name="snapshotName"> The snapshotName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly VolumeSnapshotsRestOperations _elasticSanSnapshotVolumeSnapshotsRestClient;
         private readonly ElasticSanSnapshotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotResource"/> class for mocking. </summary>
         protected ElasticSanSnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanSnapshotResource(ArmClient client, ElasticSanSnapshotData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +142,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +181,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +224,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +265,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +311,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeSnapshots_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

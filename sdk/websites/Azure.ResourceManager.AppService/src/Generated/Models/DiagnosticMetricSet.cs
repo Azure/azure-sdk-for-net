@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing Diagnostic Metric information. </summary>
     public partial class DiagnosticMetricSet
     {
-        /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
         public DiagnosticMetricSet()
         {
             Values = new ChangeTrackingList<DiagnosticMetricSample>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="unit"> Metric's unit. </param>
         /// <param name="startOn"> Start time of the period. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The resource name object where the specified values will be full resource names of the corresponding resources in a three tier SAP system. </summary>
     public partial class ThreeTierFullResourceNames : ThreeTierCustomResourceNames
     {
-        /// <summary> Initializes a new instance of ThreeTierFullResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierFullResourceNames"/>. </summary>
         public ThreeTierFullResourceNames()
         {
             NamingPatternType = SapNamingPatternType.FullResourceName;
         }
 
-        /// <summary> Initializes a new instance of ThreeTierFullResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierFullResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
         /// <param name="centralServer"> The full resource names object for central server layer resources. </param>
         /// <param name="applicationServer"> The full resource names object for application layer resources. The number of entries in this list should be equal to the number VMs to be created for application layer. </param>

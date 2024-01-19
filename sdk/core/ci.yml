@@ -50,10 +50,14 @@ extends:
       safeName: MicrosoftAzureCoreSpatial
     - name: Microsoft.Azure.Core.Spatial.NewtonsoftJson
       safeName: MicrosoftAzureCoreSpatialNewtonsoftJson
-    - name: System.Memory.Data
-      safeName: SystemMemoryData
     - name: Azure.Core.Amqp
       safeName: AzureCoreAmqp
+    - name: System.ClientModel
+      safeName: SystemClientModel
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Core
+      ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

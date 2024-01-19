@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetManagedGrafanas_GrafanaList()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2022-08-01/examples/Grafana_List.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_List.json
             // this example is just showing the usage of "Grafana_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GrafanaGet()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2022-08-01/examples/Grafana_Get.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_Get.json
             // this example is just showing the usage of "Grafana_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GrafanaUpdate()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2022-08-01/examples/Grafana_Update.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_Update.json
             // this example is just showing the usage of "Grafana_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.Grafana.Samples
             // invoke the operation
             ManagedGrafanaPatch patch = new ManagedGrafanaPatch()
             {
+                SkuName = "Standard",
                 Tags =
 {
 ["Environment"] = "Dev 2",
@@ -121,6 +122,27 @@ new MonitorWorkspaceIntegration()
 MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.monitor/accounts/myAzureMonitorWorkspace"),
 }
 },
+                    EnterpriseConfigurations = new EnterpriseConfigurations()
+                    {
+                        MarketplacePlanId = "myPlanId",
+                        MarketplaceAutoRenew = MarketplaceAutoRenew.Enabled,
+                    },
+                    GrafanaConfigurationsSmtp = new Smtp()
+                    {
+                        Enabled = true,
+                        Host = "smtp.sendemail.com:587",
+                        User = "username",
+                        Password = "<password>",
+                        FromAddress = "test@sendemail.com",
+                        FromName = "emailsender",
+                        StartTLSPolicy = StartTLSPolicy.OpportunisticStartTLS,
+                        SkipVerify = true,
+                    },
+                    GrafanaPlugins =
+{
+["sample-plugin-id"] = new GrafanaPlugin(),
+},
+                    GrafanaMajorVersion = "9",
                 },
             };
             ManagedGrafanaResource result = await managedGrafana.UpdateAsync(patch);
@@ -137,7 +159,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GrafanaDelete()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2022-08-01/examples/Grafana_Delete.json
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_Delete.json
             // this example is just showing the usage of "Grafana_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,6 +177,90 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
 
             // invoke the operation
             await managedGrafana.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // EnterpriseDetails_Post
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CheckEnterpriseDetails_EnterpriseDetailsPost()
+        {
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/EnterpriseDetails_Post.json
+            // this example is just showing the usage of "Grafana_CheckEnterpriseDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedGrafanaResource created on azure
+            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string workspaceName = "myWorkspace";
+            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+
+            // invoke the operation
+            EnterpriseDetails result = await managedGrafana.CheckEnterpriseDetailsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Grafana_FetchAvailablePlugins
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task FetchAvailablePlugins_GrafanaFetchAvailablePlugins()
+        {
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_FetchAvailablePlugins.json
+            // this example is just showing the usage of "Grafana_FetchAvailablePlugins" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedGrafanaResource created on azure
+            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string workspaceName = "myWorkspace";
+            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (GrafanaAvailablePlugin item in managedGrafana.FetchAvailablePluginsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // ManagedPrivateEndpoint_Refresh
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task RefreshManagedPrivateEndpoint_ManagedPrivateEndpointRefresh()
+        {
+            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Refresh.json
+            // this example is just showing the usage of "ManagedPrivateEndpoints_Refresh" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedGrafanaResource created on azure
+            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string workspaceName = "myWorkspace";
+            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+
+            // invoke the operation
+            await managedGrafana.RefreshManagedPrivateEndpointAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

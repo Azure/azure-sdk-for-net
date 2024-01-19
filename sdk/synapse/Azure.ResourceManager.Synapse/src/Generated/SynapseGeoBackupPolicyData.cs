@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseGeoBackupPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseGeoBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGeoBackupPolicyData"/>. </summary>
         /// <param name="state"> The state of the geo backup policy. </param>
         public SynapseGeoBackupPolicyData(SynapseGeoBackupPolicyState state)
         {
             State = state;
         }
 
-        /// <summary> Initializes a new instance of SynapseGeoBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGeoBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

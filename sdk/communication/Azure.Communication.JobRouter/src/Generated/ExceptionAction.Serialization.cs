@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter
                 switch (discriminator.GetString())
                 {
                     case "cancel": return CancelExceptionAction.DeserializeCancelExceptionAction(element);
-                    case "manual-reclassify": return ManualReclassifyExceptionAction.DeserializeManualReclassifyExceptionAction(element);
+                    case "manualReclassify": return ManualReclassifyExceptionAction.DeserializeManualReclassifyExceptionAction(element);
                     case "reclassify": return ReclassifyExceptionAction.DeserializeReclassifyExceptionAction(element);
                 }
             }

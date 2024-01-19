@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthBot.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHealthBotModelFactory
     {
-        /// <summary> Initializes a new instance of HealthBotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBot.HealthBotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             return new HealthBotData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new HealthBotSku(skuName.Value) : null, identity, properties);
         }
 
-        /// <summary> Initializes a new instance of HealthBotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthBotProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
         /// <param name="botManagementPortalLink"> The link. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>

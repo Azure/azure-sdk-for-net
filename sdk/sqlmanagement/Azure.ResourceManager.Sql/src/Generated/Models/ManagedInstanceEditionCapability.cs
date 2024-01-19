@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed server capability. </summary>
     public partial class ManagedInstanceEditionCapability
     {
-        /// <summary> Initializes a new instance of ManagedInstanceEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEditionCapability"/>. </summary>
         internal ManagedInstanceEditionCapability()
         {
             SupportedFamilies = new ChangeTrackingList<ManagedInstanceFamilyCapability>();
             SupportedStorageCapabilities = new ChangeTrackingList<StorageCapability>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEditionCapability"/>. </summary>
         /// <param name="name"> The managed server version name. </param>
         /// <param name="supportedFamilies"> The supported families. </param>
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>

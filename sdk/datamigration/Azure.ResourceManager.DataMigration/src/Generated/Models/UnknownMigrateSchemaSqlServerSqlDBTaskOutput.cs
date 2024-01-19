@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownMigrateSchemaSqlServerSqlDBTaskOutput. </summary>
     internal partial class UnknownMigrateSchemaSqlServerSqlDBTaskOutput : MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of UnknownMigrateSchemaSqlServerSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSchemaSqlServerSqlDBTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal UnknownMigrateSchemaSqlServerSqlDBTaskOutput(string id, string resultType) : base(id, resultType)

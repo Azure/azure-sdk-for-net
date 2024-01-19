@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CostManagement.Mocking;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,158 +20,32 @@ namespace Azure.ResourceManager.CostManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.CostManagement. </summary>
     public static partial class CostManagementExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableCostManagementArmClient GetMockableCostManagementArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableCostManagementArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableCostManagementTenantResource GetMockableCostManagementTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableCostManagementTenantResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region CostManagementExportResource
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementExportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of CostManagementExportResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExports(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementExportResource" /> object. </returns>
-        public static CostManagementExportResource GetCostManagementExportResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CostManagementExportResource.ValidateResourceId(id);
-                return new CostManagementExportResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region TenantsCostManagementViewsResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource" /> object. </returns>
-        public static TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TenantsCostManagementViewsResource.ValidateResourceId(id);
-                return new TenantsCostManagementViewsResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region CostManagementViewsResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementViewsResource" /> object. </returns>
-        public static CostManagementViewsResource GetCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CostManagementViewsResource.ValidateResourceId(id);
-                return new CostManagementViewsResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region CostManagementAlertResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CostManagementAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementAlertResource" /> object. </returns>
-        public static CostManagementAlertResource GetCostManagementAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CostManagementAlertResource.ValidateResourceId(id);
-                return new CostManagementAlertResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region TenantScheduledActionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantScheduledActionResource" /> object. </returns>
-        public static TenantScheduledActionResource GetTenantScheduledActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TenantScheduledActionResource.ValidateResourceId(id);
-                return new TenantScheduledActionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ScheduledActionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledActionResource" /> object. </returns>
-        public static ScheduledActionResource GetScheduledActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ScheduledActionResource.ValidateResourceId(id);
-                return new ScheduledActionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of CostManagementExportResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
         public static CostManagementExportCollection GetCostManagementExports(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetCostManagementExports();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementExports(scope);
         }
 
         /// <summary>
@@ -184,19 +59,33 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Exports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementExportResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExportAsync(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="exportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await client.GetCostManagementExports(scope).GetAsync(exportName, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableCostManagementArmClient(client).GetCostManagementExportAsync(scope, exportName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -210,28 +99,51 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Exports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementExportResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExport(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="exportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<CostManagementExportResource> GetCostManagementExport(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return client.GetCostManagementExports(scope).Get(exportName, expand, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementExport(scope, exportName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CostManagementViewsResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of CostManagementViewsResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetAllCostManagementViews(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
         public static CostManagementViewsCollection GetAllCostManagementViews(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAllCostManagementViews();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetAllCostManagementViews(scope);
         }
 
         /// <summary>
@@ -245,18 +157,32 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViewsAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            return await client.GetAllCostManagementViews(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableCostManagementArmClient(client).GetCostManagementViewsAsync(scope, viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -270,27 +196,50 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViews(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<CostManagementViewsResource> GetCostManagementViews(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            return client.GetAllCostManagementViews(scope).Get(viewName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementViews(scope, viewName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CostManagementAlertResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of CostManagementAlertResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlerts(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
         public static CostManagementAlertCollection GetCostManagementAlerts(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetCostManagementAlerts();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementAlerts(scope);
         }
 
         /// <summary>
@@ -304,17 +253,31 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlertAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="alertId"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            return await client.GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableCostManagementArmClient(client).GetCostManagementAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -328,26 +291,49 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlert(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="alertId"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<CostManagementAlertResource> GetCostManagementAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            return client.GetCostManagementAlerts(scope).Get(alertId, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementAlert(scope, alertId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScheduledActionResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of ScheduledActionResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActions(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
         public static ScheduledActionCollection GetScheduledActions(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetScheduledActions();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetScheduledActions(scope);
         }
 
         /// <summary>
@@ -361,18 +347,32 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await client.GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableCostManagementArmClient(client).GetScheduledActionAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -386,18 +386,32 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledAction(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ScheduledActionResource> GetScheduledAction(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return client.GetScheduledActions(scope).Get(name, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetScheduledAction(scope, name, cancellationToken);
         }
 
         /// <summary>
@@ -411,7 +425,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitRecommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitRecommendations(ResourceIdentifier,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -419,9 +441,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetBenefitRecommendationsAsync(filter, orderby, expand, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetBenefitRecommendationsAsync(scope, filter, orderby, expand, cancellationToken);
         }
 
         /// <summary>
@@ -435,7 +460,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitRecommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitRecommendations(ResourceIdentifier,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -443,9 +476,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<BenefitRecommendationModel> GetBenefitRecommendations(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetBenefitRecommendations(filter, orderby, expand, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetBenefitRecommendations(scope, filter, orderby, expand, cancellationToken);
         }
 
         /// <summary>
@@ -459,19 +495,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Forecast_Usage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageForecast(ResourceIdentifier,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static async Task<Response<ForecastResult>> UsageForecastAsync(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetArmResourceExtensionClient(client, scope).UsageForecastAsync(forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).UsageForecastAsync(scope, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -485,19 +529,27 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Forecast_Usage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageForecast(ResourceIdentifier,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static Response<ForecastResult> UsageForecast(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetArmResourceExtensionClient(client, scope).UsageForecast(forecastDefinition, filter, cancellationToken);
+            return GetMockableCostManagementArmClient(client).UsageForecast(scope, forecastDefinition, filter, cancellationToken);
         }
 
         /// <summary>
@@ -511,7 +563,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Dimensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetDimensions(ResourceIdentifier,string,string,string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -520,9 +580,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<CostManagementDimension> GetDimensionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDimensionsAsync(filter, expand, skiptoken, top, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetDimensionsAsync(scope, filter, expand, skiptoken, top, cancellationToken);
         }
 
         /// <summary>
@@ -536,7 +599,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Dimensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetDimensions(ResourceIdentifier,string,string,string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -545,9 +616,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<CostManagementDimension> GetDimensions(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDimensions(filter, expand, skiptoken, top, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetDimensions(scope, filter, expand, skiptoken, top, cancellationToken);
         }
 
         /// <summary>
@@ -561,18 +635,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Query_Usage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageQuery(ResourceIdentifier,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static async Task<Response<QueryResult>> UsageQueryAsync(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetArmResourceExtensionClient(client, scope).UsageQueryAsync(queryDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).UsageQueryAsync(scope, queryDefinition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -586,18 +668,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Query_Usage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageQuery(ResourceIdentifier,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static Response<QueryResult> UsageQuery(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetArmResourceExtensionClient(client, scope).UsageQuery(queryDefinition, cancellationToken);
+            return GetMockableCostManagementArmClient(client).UsageQuery(scope, queryDefinition, cancellationToken);
         }
 
         /// <summary>
@@ -611,18 +701,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier,CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetArmResourceExtensionClient(client, scope).CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -636,26 +734,157 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier,CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="content"/> is null. </exception>
         public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetArmResourceExtensionClient(client, scope).CheckCostManagementNameAvailabilityByScopeScheduledAction(content, cancellationToken);
+            return GetMockableCostManagementArmClient(client).CheckCostManagementNameAvailabilityByScopeScheduledAction(scope, content, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantsCostManagementViewsResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CostManagementExportResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExportResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
+        public static CostManagementExportResource GetCostManagementExportResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementExportResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetTenantsCostManagementViewsResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
+        public static TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetTenantsCostManagementViewsResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CostManagementViewsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViewsResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
+        public static CostManagementViewsResource GetCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementViewsResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CostManagementAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlertResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CostManagementAlertResource"/> object. </returns>
+        public static CostManagementAlertResource GetCostManagementAlertResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetCostManagementAlertResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetTenantScheduledActionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
+        public static TenantScheduledActionResource GetTenantScheduledActionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetTenantScheduledActionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
+        public static ScheduledActionResource GetScheduledActionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetScheduledActionResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of TenantsCostManagementViewsResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetAllTenantsCostManagementViews()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
         public static TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAllTenantsCostManagementViews();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableCostManagementTenantResource(tenantResource).GetAllTenantsCostManagementViews();
         }
 
         /// <summary>
@@ -669,17 +898,31 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantsCostManagementViewsAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetAllTenantsCostManagementViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViewsAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -693,25 +936,48 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantsCostManagementViews(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="viewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetAllTenantsCostManagementViews().Get(viewName, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViews(viewName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantScheduledActionResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of TenantScheduledActionResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledActions()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of TenantScheduledActionResources and their operations over a TenantScheduledActionResource. </returns>
         public static TenantScheduledActionCollection GetTenantScheduledActions(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantScheduledActions();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActions();
         }
 
         /// <summary>
@@ -725,17 +991,31 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantScheduledActionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledActionAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetTenantScheduledActions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -749,17 +1029,31 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantScheduledActionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledAction(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<TenantScheduledActionResource> GetTenantScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetTenantScheduledActions().Get(name, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledAction(name, cancellationToken);
         }
 
         /// <summary>
@@ -773,7 +1067,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId(string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
@@ -781,13 +1083,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="billingAccountId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -801,7 +1103,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId(string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
@@ -809,13 +1119,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="billingAccountId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesByBillingAccountId(billingAccountId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingAccountId(billingAccountId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -829,7 +1139,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId(string,string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
@@ -838,14 +1156,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -859,7 +1176,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId(string,string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
@@ -868,14 +1193,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesByBillingProfileId(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingProfileId(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -889,7 +1213,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder(string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
@@ -897,13 +1229,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="savingsPlanOrderId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -917,7 +1249,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder(string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
@@ -925,13 +1265,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="savingsPlanOrderId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrder(savingsPlanOrderId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrder(savingsPlanOrderId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -945,7 +1285,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId(string,string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
@@ -954,14 +1302,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -975,7 +1322,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId(string,string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
@@ -984,14 +1339,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanId(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanId(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -1005,7 +1359,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1013,13 +1375,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(waitUntil, billingAccountId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(waitUntil, billingAccountId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1033,7 +1394,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1041,13 +1410,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScope(waitUntil, billingAccountId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScope(waitUntil, billingAccountId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1061,7 +1429,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1070,14 +1446,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1091,7 +1465,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1100,14 +1482,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, billingAccountId, billingProfileId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, billingAccountId, billingProfileId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1121,7 +1501,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1129,13 +1517,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(waitUntil, reservationOrderId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(waitUntil, reservationOrderId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1149,7 +1536,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1157,13 +1552,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScope(waitUntil, reservationOrderId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScope(waitUntil, reservationOrderId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1177,7 +1571,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1186,14 +1588,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1207,7 +1607,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1216,14 +1624,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, reservationOrderId, reservationId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, reservationOrderId, reservationId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1237,7 +1643,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1245,13 +1659,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(waitUntil, savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(waitUntil, savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1265,7 +1678,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1273,13 +1694,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(waitUntil, savingsPlanOrderId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(waitUntil, savingsPlanOrderId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1293,7 +1713,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1302,14 +1730,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1323,7 +1749,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1332,14 +1766,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1353,20 +1785,32 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_ListExternal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetCostManagementAlerts(ExternalCloudProviderType,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="externalCloudProviderId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId, cancellationToken);
         }
 
         /// <summary>
@@ -1380,20 +1824,32 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_ListExternal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetCostManagementAlerts(ExternalCloudProviderType,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
-        /// <returns> A collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="externalCloudProviderId"/> is null. </exception>
+        /// <returns> A collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CostManagementAlertResource> GetCostManagementAlerts(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetCostManagementAlerts(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetCostManagementAlerts(externalCloudProviderType, externalCloudProviderId, cancellationToken);
         }
 
         /// <summary>
@@ -1407,7 +1863,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Forecast_ExternalCloudProviderUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ExternalCloudProviderUsageForecast(ExternalCloudProviderType,string,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -1416,13 +1880,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1436,7 +1899,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Forecast_ExternalCloudProviderUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ExternalCloudProviderUsageForecast(ExternalCloudProviderType,string,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -1445,13 +1916,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static Response<ForecastResult> ExternalCloudProviderUsageForecast(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).ExternalCloudProviderUsageForecast(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ExternalCloudProviderUsageForecast(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1465,18 +1935,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Dimensions_ByExternalCloudProviderType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).ByExternalCloudProviderTypeDimensionsAsync(options, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByExternalCloudProviderTypeDimensionsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1490,18 +1968,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Dimensions_ByExternalCloudProviderType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).ByExternalCloudProviderTypeDimensions(options, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByExternalCloudProviderTypeDimensions(options, cancellationToken);
         }
 
         /// <summary>
@@ -1515,7 +2001,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Query_UsageByExternalCloudProviderType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType,string,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -1523,13 +2017,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1543,7 +2036,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Query_UsageByExternalCloudProviderType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType,string,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -1551,13 +2052,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static Response<QueryResult> UsageByExternalCloudProviderTypeQuery(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).UsageByExternalCloudProviderTypeQuery(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).UsageByExternalCloudProviderTypeQuery(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
         }
 
         /// <summary>
@@ -1571,7 +2071,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1580,14 +2088,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).ByBillingAccountIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).ByBillingAccountIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1601,7 +2107,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1610,14 +2124,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).ByBillingAccountIdGenerateReservationDetailsReport(waitUntil, billingAccountId, startDate, endDate, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByBillingAccountIdGenerateReservationDetailsReport(waitUntil, billingAccountId, startDate, endDate, cancellationToken);
         }
 
         /// <summary>
@@ -1631,7 +2143,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingProfileId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1641,15 +2161,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1663,7 +2180,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingProfileId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1673,15 +2198,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
         }
 
         /// <summary>
@@ -1695,7 +2217,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Download</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadPriceSheet(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1704,14 +2234,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public static async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).DownloadPriceSheetAsync(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).DownloadPriceSheetAsync(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1725,7 +2253,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Download</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadPriceSheet(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1734,14 +2270,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public static ArmOperation<DownloadURL> DownloadPriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).DownloadPriceSheet(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).DownloadPriceSheet(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken);
         }
 
         /// <summary>
@@ -1755,7 +2289,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>PriceSheet_DownloadByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet(WaitUntil,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1763,13 +2305,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public static async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).DownloadByBillingProfilePriceSheetAsync(waitUntil, billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheetAsync(waitUntil, billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1783,7 +2324,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>PriceSheet_DownloadByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet(WaitUntil,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1791,13 +2340,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public static ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountName, billingProfileName, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountName, billingProfileName, cancellationToken);
         }
 
         /// <summary>
@@ -1811,17 +2359,25 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckCostManagementNameAvailabilityByScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).CheckCostManagementNameAvailabilityByScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1835,17 +2391,25 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckCostManagementNameAvailabilityByScheduledAction(content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).CheckCostManagementNameAvailabilityByScheduledAction(content, cancellationToken);
         }
     }
 }

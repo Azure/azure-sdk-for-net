@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the provider properties. </summary>
     public partial class SapNetWeaverProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of SapNetWeaverProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapNetWeaverProviderInstanceProperties"/>. </summary>
         public SapNetWeaverProviderInstanceProperties()
         {
             SapHostFileEntries = new ChangeTrackingList<string>();
             ProviderType = "SapNetWeaver";
         }
 
-        /// <summary> Initializes a new instance of SapNetWeaverProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapNetWeaverProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
         /// <param name="sapHostname"> Gets or sets the target virtual machine IP Address/FQDN. </param>

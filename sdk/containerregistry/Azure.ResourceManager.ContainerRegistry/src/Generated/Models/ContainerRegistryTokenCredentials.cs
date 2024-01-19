@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of the credentials that can be used for authenticating the token. </summary>
     public partial class ContainerRegistryTokenCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCredentials"/>. </summary>
         public ContainerRegistryTokenCredentials()
         {
             Certificates = new ChangeTrackingList<ContainerRegistryTokenCertificate>();
             Passwords = new ChangeTrackingList<ContainerRegistryTokenPassword>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCredentials"/>. </summary>
         /// <param name="certificates"></param>
         /// <param name="passwords"></param>
         internal ContainerRegistryTokenCredentials(IList<ContainerRegistryTokenCertificate> certificates, IList<ContainerRegistryTokenPassword> passwords)

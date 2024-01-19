@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication appliance properties. </summary>
     internal partial class SiteRecoveryReplicationApplianceProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationApplianceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationApplianceProperties"/>. </summary>
         internal SiteRecoveryReplicationApplianceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationApplianceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationApplianceProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// Provider specific settings.
         /// Please note <see cref="SiteRecoveryApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

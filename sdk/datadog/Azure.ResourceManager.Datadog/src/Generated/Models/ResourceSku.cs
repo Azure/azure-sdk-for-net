@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The ResourceSku. </summary>
     internal partial class ResourceSku
     {
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         /// <param name="name"> Name of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceSku(string name)

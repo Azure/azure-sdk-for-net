@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Managed resource group configuration. </summary>
     internal partial class ManagedRGConfiguration
     {
-        /// <summary> Initializes a new instance of ManagedRGConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRGConfiguration"/>. </summary>
         public ManagedRGConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedRGConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRGConfiguration"/>. </summary>
         /// <param name="name"> Managed resource group name. </param>
         internal ManagedRGConfiguration(string name)
         {

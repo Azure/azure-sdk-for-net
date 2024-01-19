@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Webhook details specific for Azure DevOps. </summary>
     public partial class AzureDevOpsWebhook : MachineLearningWebhook
     {
-        /// <summary> Initializes a new instance of AzureDevOpsWebhook. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsWebhook"/>. </summary>
         public AzureDevOpsWebhook()
         {
             WebhookType = MachineLearningWebhookType.AzureDevOps;
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsWebhook. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsWebhook"/>. </summary>
         /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
         internal AzureDevOpsWebhook(string eventType, MachineLearningWebhookType webhookType) : base(eventType, webhookType)

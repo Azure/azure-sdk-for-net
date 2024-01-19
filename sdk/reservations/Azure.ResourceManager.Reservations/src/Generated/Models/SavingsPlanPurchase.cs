@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Request body for savings plan purchase. </summary>
     public partial class SavingsPlanPurchase
     {
-        /// <summary> Initializes a new instance of SavingsPlanPurchase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchase"/>. </summary>
         public SavingsPlanPurchase()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanPurchase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchase"/>. </summary>
         /// <param name="sku"> The name of sku. </param>
         /// <param name="displayName"> Friendly name of the savings plan. </param>
         /// <param name="billingScopeId"> Subscription that will be charged for purchasing reservation or savings plan. </param>

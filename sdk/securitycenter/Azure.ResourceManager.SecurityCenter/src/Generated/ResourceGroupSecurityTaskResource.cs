@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a ResourceGroupSecurityTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupSecurityTaskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupSecurityTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGroupSecurityTask method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGroupSecurityTaskResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceGroupSecurityTaskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetResourceGroupSecurityTask method.
     /// </summary>
     public partial class ResourceGroupSecurityTaskResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupSecurityTaskResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="taskName"> The taskName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly TasksRestOperations _resourceGroupSecurityTaskTasksRestClient;
         private readonly SecurityTaskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/tasks";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityTaskResource"/> class for mocking. </summary>
         protected ResourceGroupSecurityTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupSecurityTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceGroupSecurityTaskResource(ArmClient client, SecurityTaskData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/tasks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

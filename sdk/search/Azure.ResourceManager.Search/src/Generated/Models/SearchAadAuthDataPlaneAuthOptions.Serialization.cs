@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.Search.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ApiKeyOnly);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ApiKeyOnly.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ApiKeyOnly))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(AadOrApiKey))

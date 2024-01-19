@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the origin group override action. </summary>
     public partial class OriginGroupOverrideActionProperties
     {
-        /// <summary> Initializes a new instance of OriginGroupOverrideActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>

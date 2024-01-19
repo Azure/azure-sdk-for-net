@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Response of Unlock Delete API. </summary>
     public partial class DataProtectionUnlockDeleteResult
     {
-        /// <summary> Initializes a new instance of DataProtectionUnlockDeleteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteResult"/>. </summary>
         internal DataProtectionUnlockDeleteResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionUnlockDeleteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionUnlockDeleteResult"/>. </summary>
         /// <param name="unlockDeleteExpiryTime"> This is the time when unlock delete privileges will get expired. </param>
         internal DataProtectionUnlockDeleteResult(string unlockDeleteExpiryTime)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Staging info for execute data flow activity. </summary>
     public partial class DataFlowStagingInfo
     {
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
         public DataFlowStagingInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
         /// <param name="linkedService"> Staging linked service reference. </param>
         /// <param name="folderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
         internal DataFlowStagingInfo(DataFactoryLinkedServiceReference linkedService, DataFactoryElement<string> folderPath)

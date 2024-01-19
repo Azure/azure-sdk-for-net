@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> User info. </summary>
     public partial class UserInfo
     {
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         public UserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         /// <param name="name"> Name of the user. </param>
         /// <param name="emailAddress"> Email of the user used by Datadog for contacting them if needed. </param>
         /// <param name="phoneNumber"> Phone number of the user used by Datadog for contacting them if needed. </param>

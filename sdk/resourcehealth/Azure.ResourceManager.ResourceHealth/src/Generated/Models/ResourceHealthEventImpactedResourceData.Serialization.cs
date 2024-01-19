@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<ResourceType> targetResourceType = default;
             Optional<ResourceIdentifier> targetResourceId = default;
             Optional<string> targetRegion = default;
+            Optional<string> resourceName = default;
+            Optional<string> resourceGroup = default;
+            Optional<string> status = default;
+            Optional<string> maintenanceStartTime = default;
+            Optional<string> maintenanceEndTime = default;
             Optional<IReadOnlyList<ResourceHealthKeyValueItem>> info = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,6 +92,31 @@ namespace Azure.ResourceManager.ResourceHealth
                             targetRegion = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("resourceName"u8))
+                        {
+                            resourceName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceGroup"u8))
+                        {
+                            resourceGroup = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            status = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceStartTime"u8))
+                        {
+                            maintenanceStartTime = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceEndTime"u8))
+                        {
+                            maintenanceEndTime = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("info"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -105,7 +135,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, Optional.ToList(info));
+            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, Optional.ToList(info));
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The complete operation. </summary>
     public partial class ConnectorMappingCompleteOperation
     {
-        /// <summary> Initializes a new instance of ConnectorMappingCompleteOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingCompleteOperation"/>. </summary>
         public ConnectorMappingCompleteOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingCompleteOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingCompleteOperation"/>. </summary>
         /// <param name="completionOperationType"> The type of completion operation. </param>
         /// <param name="destinationFolder"> The destination folder where files will be moved to once the import is done. </param>
         internal ConnectorMappingCompleteOperation(CompletionOperationType? completionOperationType, string destinationFolder)

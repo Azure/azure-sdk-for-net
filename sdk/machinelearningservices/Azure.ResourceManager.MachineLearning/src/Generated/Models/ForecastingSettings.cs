@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting specific parameters. </summary>
     public partial class ForecastingSettings
     {
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         public ForecastingSettings()
         {
             FeaturesUnknownAtForecastTime = new ChangeTrackingList<string>();
             TimeSeriesIdColumnNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         /// <param name="countryOrRegionForHolidays">
         /// Country or region for holidays for forecasting tasks.
         /// These should be ISO 3166 two-letter country/region codes, for example 'US' or 'GB'.

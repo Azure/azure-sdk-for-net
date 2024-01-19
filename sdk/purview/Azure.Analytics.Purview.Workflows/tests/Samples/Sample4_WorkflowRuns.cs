@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             string password = Environment.GetEnvironmentVariable("Password");
 
             TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-            var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
+            var client = new WorkflowRunClient(endpoint, usernamePasswordCredential);
 
             #region Snippet:Azure_Analytics_Purview_Workflows_CancelWorkflowRun
             // This workflowRunId represents an existing workflow run. The id can be obtained by calling GetWorkflowRunsAsync API.
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 
             string request = "{\"comment\":\"Thanks!\"}";
 
-            Response cancelResult = await client.CancelWorkflowRunAsync(workflowRunId, RequestContent.Create(request));
+            Response cancelResult = await client.CancelAsync(workflowRunId, RequestContent.Create(request));
 
             #endregion
 

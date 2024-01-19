@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kubernetes
     }
     public partial class ConnectedClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConnectedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string agentPublicKeyCertificate) : base (default(Azure.Core.AzureLocation)) { }
+        public ConnectedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string agentPublicKeyCertificate) { }
         public string AgentPublicKeyCertificate { get { throw null; } set { } }
         public string AgentVersion { get { throw null; } }
         public Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus? ConnectivityStatus { get { throw null; } }
@@ -66,6 +66,27 @@ namespace Azure.ResourceManager.Kubernetes
         public static Azure.ResourceManager.Kubernetes.ConnectedClusterCollection GetConnectedClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Kubernetes.Mocking
+{
+    public partial class MockableKubernetesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesArmClient() { }
+        public virtual Azure.ResourceManager.Kubernetes.ConnectedClusterResource GetConnectedClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableKubernetesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kubernetes.ConnectedClusterResource>> GetConnectedClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Kubernetes.ConnectedClusterCollection GetConnectedClusters() { throw null; }
+    }
+    public partial class MockableKubernetesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Kubernetes.Models

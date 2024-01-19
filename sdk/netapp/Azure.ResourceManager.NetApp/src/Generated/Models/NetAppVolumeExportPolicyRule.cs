@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume Export Policy Rule. </summary>
     public partial class NetAppVolumeExportPolicyRule
     {
-        /// <summary> Initializes a new instance of NetAppVolumeExportPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeExportPolicyRule"/>. </summary>
         public NetAppVolumeExportPolicyRule()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeExportPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeExportPolicyRule"/>. </summary>
         /// <param name="ruleIndex"> Order index. </param>
         /// <param name="isUnixReadOnly"> Read only access. </param>
         /// <param name="isUnixReadWrite"> Read and write access. </param>

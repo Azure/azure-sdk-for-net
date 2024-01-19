@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class OutboundEnvironmentEndpointListResult
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointListResult"/>. </summary>
         internal OutboundEnvironmentEndpointListResult()
         {
             Value = new ChangeTrackingList<LoadTestingOutboundEnvironmentEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointListResult"/>. </summary>
         /// <param name="value"> The collection of outbound network dependency endpoints returned by the listing operation. </param>
         /// <param name="nextLink"> The continuation token. </param>
         internal OutboundEnvironmentEndpointListResult(IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint> value, string nextLink)

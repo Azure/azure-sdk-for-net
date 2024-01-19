@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a ScriptLog along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScriptLogResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScriptLogResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmDeploymentScriptResource" /> using the GetScriptLog method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptLogResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptLogResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmDeploymentScriptResource"/> using the GetScriptLog method.
     /// </summary>
     public partial class ScriptLogResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScriptLogResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scriptName"> The scriptName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs/default";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.Resources
         private readonly DeploymentScriptsRestOperations _scriptLogDeploymentScriptsRestClient;
         private readonly ScriptLogData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/deploymentScripts/logs";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptLogResource"/> class for mocking. </summary>
         protected ScriptLogResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScriptLogResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptLogResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptLogResource(ArmClient client, ScriptLogData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/deploymentScripts/logs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_GetLogsDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptLogResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If 'tail' is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
@@ -129,6 +140,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_GetLogsDefault</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptLogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

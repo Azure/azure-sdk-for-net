@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Used for getting PHP error logging flag. </summary>
     public partial class SitePhpErrorLogFlag : ResourceData
     {
-        /// <summary> Initializes a new instance of SitePhpErrorLogFlag. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlag"/>. </summary>
         public SitePhpErrorLogFlag()
         {
         }
 
-        /// <summary> Initializes a new instance of SitePhpErrorLogFlag. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlag"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

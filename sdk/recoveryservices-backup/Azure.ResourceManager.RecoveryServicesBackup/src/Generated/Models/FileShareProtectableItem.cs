@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Protectable item for Azure Fileshare workloads. </summary>
     public partial class FileShareProtectableItem : WorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of FileShareProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProtectableItem"/>. </summary>
         public FileShareProtectableItem()
         {
             ProtectableItemType = "AzureFileShare";
         }
 
-        /// <summary> Initializes a new instance of FileShareProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>

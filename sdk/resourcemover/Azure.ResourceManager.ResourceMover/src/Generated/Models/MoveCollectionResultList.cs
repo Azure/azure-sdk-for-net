@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the collection of move collections. </summary>
     internal partial class MoveCollectionResultList
     {
-        /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveCollectionResultList"/>. </summary>
         internal MoveCollectionResultList()
         {
             Value = new ChangeTrackingList<MoverResourceSetData>();
         }
 
-        /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveCollectionResultList"/>. </summary>
         /// <param name="value"> Gets the list of move collections. </param>
         /// <param name="nextLink"> Gets the value of  next link. </param>
         internal MoveCollectionResultList(IReadOnlyList<MoverResourceSetData> value, string nextLink)

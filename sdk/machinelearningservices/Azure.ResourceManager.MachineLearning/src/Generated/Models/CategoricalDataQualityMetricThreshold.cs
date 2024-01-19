@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CategoricalDataQualityMetricThreshold. </summary>
     public partial class CategoricalDataQualityMetricThreshold : DataQualityMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of CategoricalDataQualityMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="CategoricalDataQualityMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The categorical data quality metric to calculate. </param>
         public CategoricalDataQualityMetricThreshold(CategoricalDataQualityMetric metric)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = MonitoringFeatureDataType.Categorical;
         }
 
-        /// <summary> Initializes a new instance of CategoricalDataQualityMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="CategoricalDataQualityMetricThreshold"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         /// <param name="metric"> [Required] The categorical data quality metric to calculate. </param>

@@ -16,7 +16,12 @@ namespace Azure.Identity.Broker
         /// Gets or sets whether Microsoft Account (MSA) passthrough is enabled.
         /// </summary>
         /// <value></value>
-        public bool? IsMsaPassthroughEnabled { get; set; }
+        public bool? IsLegacyMsaPassthroughEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether proof of possession is required.
+        /// </summary>
+        public bool IsProofOfPossessionRequired { get; set; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
@@ -39,9 +44,9 @@ namespace Azure.Identity.Broker
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
             var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
-            if (IsMsaPassthroughEnabled.HasValue)
+            if (IsLegacyMsaPassthroughEnabled.HasValue)
             {
-                options.MsaPassthrough = IsMsaPassthroughEnabled.Value;
+                options.MsaPassthrough = IsLegacyMsaPassthroughEnabled.Value;
             }
             builder.WithBroker(options);
         }

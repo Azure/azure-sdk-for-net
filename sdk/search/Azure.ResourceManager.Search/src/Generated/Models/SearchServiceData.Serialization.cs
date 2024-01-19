@@ -90,6 +90,18 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("authOptions"u8);
                 writer.WriteObjectValue(AuthOptions);
             }
+            if (Optional.IsDefined(SemanticSearch))
+            {
+                if (SemanticSearch != null)
+                {
+                    writer.WritePropertyName("semanticSearch"u8);
+                    writer.WriteStringValue(SemanticSearch.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("semanticSearch");
+                }
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -120,6 +132,7 @@ namespace Azure.ResourceManager.Search
             Optional<bool?> disableLocalAuth = default;
             Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
             Optional<IReadOnlyList<SearchPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<SearchSemanticSearch?> semanticSearch = default;
             Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -303,6 +316,16 @@ namespace Azure.ResourceManager.Search
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("semanticSearch"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                semanticSearch = null;
+                                continue;
+                            }
+                            semanticSearch = new SearchSemanticSearch(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("sharedPrivateLinkResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -321,7 +344,7 @@ namespace Azure.ResourceManager.Search
                     continue;
                 }
             }
-            return new SearchServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(replicaCount), Optional.ToNullable(partitionCount), Optional.ToNullable(hostingMode), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(provisioningState), networkRuleSet.Value, encryptionWithCmk.Value, Optional.ToNullable(disableLocalAuth), authOptions.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources));
+            return new SearchServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(replicaCount), Optional.ToNullable(partitionCount), Optional.ToNullable(hostingMode), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(provisioningState), networkRuleSet.Value, encryptionWithCmk.Value, Optional.ToNullable(disableLocalAuth), authOptions.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(semanticSearch), Optional.ToList(sharedPrivateLinkResources));
         }
     }
 }

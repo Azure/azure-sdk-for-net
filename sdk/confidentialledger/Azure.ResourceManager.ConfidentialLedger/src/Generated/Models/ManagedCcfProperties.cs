@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Additional Managed CCF properties. </summary>
     public partial class ManagedCcfProperties
     {
-        /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfProperties"/>. </summary>
         public ManagedCcfProperties()
         {
             MemberIdentityCertificates = new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>();
         }
 
-        /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfProperties"/>. </summary>
         /// <param name="appName"> Unique name for the Managed CCF. </param>
         /// <param name="appUri"> Endpoint for calling Managed CCF Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>

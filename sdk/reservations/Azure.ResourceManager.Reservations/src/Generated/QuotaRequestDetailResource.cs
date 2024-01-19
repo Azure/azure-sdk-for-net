@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
     /// A Class representing a QuotaRequestDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="QuotaRequestDetailResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetQuotaRequestDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetQuotaRequestDetail method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="QuotaRequestDetailResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetQuotaRequestDetailResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetQuotaRequestDetail method.
     /// </summary>
     public partial class QuotaRequestDetailResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="QuotaRequestDetailResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerId"> The providerId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="id"> The id. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, Guid id)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Reservations
         private readonly QuotaRequestStatusRestOperations _quotaRequestDetailQuotaRequestStatusRestClient;
         private readonly QuotaRequestDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests";
+
         /// <summary> Initializes a new instance of the <see cref="QuotaRequestDetailResource"/> class for mocking. </summary>
         protected QuotaRequestDetailResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "QuotaRequestDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QuotaRequestDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal QuotaRequestDetailResource(ArmClient client, QuotaRequestDetailData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Reservations
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

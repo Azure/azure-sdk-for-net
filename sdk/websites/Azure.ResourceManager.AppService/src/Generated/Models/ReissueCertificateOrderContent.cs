@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing certificate reissue request. </summary>
     public partial class ReissueCertificateOrderContent : ResourceData
     {
-        /// <summary> Initializes a new instance of ReissueCertificateOrderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReissueCertificateOrderContent"/>. </summary>
         public ReissueCertificateOrderContent()
         {
         }
 
-        /// <summary> Initializes a new instance of ReissueCertificateOrderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReissueCertificateOrderContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

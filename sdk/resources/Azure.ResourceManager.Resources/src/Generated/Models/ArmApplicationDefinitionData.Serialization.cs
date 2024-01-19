@@ -92,7 +92,10 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MainTemplate);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MainTemplate.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(MainTemplate))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(CreateUiDefinition))
@@ -101,7 +104,10 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CreateUiDefinition);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CreateUiDefinition.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(CreateUiDefinition))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(NotificationPolicy))

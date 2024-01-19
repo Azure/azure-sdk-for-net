@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact one way agreement. </summary>
     public partial class EdifactOneWayAgreement
     {
-        /// <summary> Initializes a new instance of EdifactOneWayAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactOneWayAgreement"/>. </summary>
         /// <param name="senderBusinessIdentity"> The sender business identity. </param>
         /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
         /// <param name="protocolSettings"> The EDIFACT protocol settings. </param>

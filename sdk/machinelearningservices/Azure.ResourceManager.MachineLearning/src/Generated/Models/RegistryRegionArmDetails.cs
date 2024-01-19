@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Details for each region the registry is in. </summary>
     public partial class RegistryRegionArmDetails
     {
-        /// <summary> Initializes a new instance of RegistryRegionArmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryRegionArmDetails"/>. </summary>
         public RegistryRegionArmDetails()
         {
             AcrDetails = new ChangeTrackingList<RegistryAcrDetails>();
             StorageAccountDetails = new ChangeTrackingList<StorageAccountDetails>();
         }
 
-        /// <summary> Initializes a new instance of RegistryRegionArmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryRegionArmDetails"/>. </summary>
         /// <param name="acrDetails"> List of ACR accounts. </param>
         /// <param name="location"> The location where the registry exists. </param>
         /// <param name="storageAccountDetails"> List of storage accounts. </param>

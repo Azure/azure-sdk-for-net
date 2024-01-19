@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetwork
     }
     public partial class ManagedNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedNetworkData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection Connectivity { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -184,6 +184,33 @@ namespace Azure.ResourceManager.ManagedNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ManagedNetwork.Mocking
+{
+    public partial class MockableManagedNetworkArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkArmClient() { }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource GetManagedNetworkGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource GetManagedNetworkPeeringPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource GetManagedNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> GetScopeAssignment(Azure.Core.ResourceIdentifier scope, string scopeAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> GetScopeAssignmentAsync(Azure.Core.ResourceIdentifier scope, string scopeAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource GetScopeAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ScopeAssignmentCollection GetScopeAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+    }
+    public partial class MockableManagedNetworkResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetwork(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>> GetManagedNetworkAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkCollection GetManagedNetworks() { throw null; }
+    }
+    public partial class MockableManagedNetworkSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetworks(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetworksAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ManagedNetwork.Models

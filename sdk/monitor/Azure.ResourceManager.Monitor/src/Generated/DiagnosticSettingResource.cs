@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a DiagnosticSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiagnosticSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiagnosticSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetDiagnosticSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiagnosticSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSetting method.
     /// </summary>
     public partial class DiagnosticSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiagnosticSettingResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly DiagnosticSettingsRestOperations _diagnosticSettingRestClient;
         private readonly DiagnosticSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettings";
+
         /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class for mocking. </summary>
         protected DiagnosticSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiagnosticSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiagnosticSettingResource(ArmClient client, DiagnosticSettingData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +178,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +221,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +262,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +308,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

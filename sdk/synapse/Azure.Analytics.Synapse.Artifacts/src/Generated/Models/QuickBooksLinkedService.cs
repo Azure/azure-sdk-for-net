@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> QuickBooks server linked service. </summary>
     public partial class QuickBooksLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of QuickBooksLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
         /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
         /// <param name="consumerKey"> The consumer key for OAuth 1.0 authentication. </param>
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "QuickBooks";
         }
 
-        /// <summary> Initializes a new instance of QuickBooksLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickBooksLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

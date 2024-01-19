@@ -10,13 +10,26 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Data used for requesting a SAS. </summary>
     public partial class GrantAccessData
     {
-        /// <summary> Initializes a new instance of GrantAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrantAccessData"/>. </summary>
         /// <param name="access"> The Access Level, accepted values include None, Read, Write. </param>
         /// <param name="durationInSeconds"> Time duration in seconds until the SAS access expires. </param>
         public GrantAccessData(AccessLevel access, int durationInSeconds)
         {
             Access = access;
             DurationInSeconds = durationInSeconds;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GrantAccessData"/>. </summary>
+        /// <param name="access"> The Access Level, accepted values include None, Read, Write. </param>
+        /// <param name="durationInSeconds"> Time duration in seconds until the SAS access expires. </param>
+        /// <param name="getSecureVmGuestStateSas"> Set this flag to true to get additional SAS for VM guest state. </param>
+        /// <param name="fileFormat"> Used to specify the file format when making request for SAS on a VHDX file format snapshot. </param>
+        internal GrantAccessData(AccessLevel access, int durationInSeconds, bool? getSecureVmGuestStateSas, DiskImageFileFormat? fileFormat)
+        {
+            Access = access;
+            DurationInSeconds = durationInSeconds;
+            GetSecureVmGuestStateSas = getSecureVmGuestStateSas;
+            FileFormat = fileFormat;
         }
 
         /// <summary> The Access Level, accepted values include None, Read, Write. </summary>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Dynatrace
     /// </summary>
     public partial class DynatraceTagRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleData"/>. </summary>
         public DynatraceTagRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

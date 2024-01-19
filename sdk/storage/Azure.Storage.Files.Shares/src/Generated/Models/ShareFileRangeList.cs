@@ -13,14 +13,14 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> The list of file ranges. </summary>
     internal partial class ShareFileRangeList
     {
-        /// <summary> Initializes a new instance of ShareFileRangeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
         internal ShareFileRangeList()
         {
             Ranges = new ChangeTrackingList<FileRange>();
             ClearRanges = new ChangeTrackingList<ClearRange>();
         }
 
-        /// <summary> Initializes a new instance of ShareFileRangeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
         /// <param name="ranges"></param>
         /// <param name="clearRanges"></param>
         internal ShareFileRangeList(IReadOnlyList<FileRange> ranges, IReadOnlyList<ClearRange> clearRanges)

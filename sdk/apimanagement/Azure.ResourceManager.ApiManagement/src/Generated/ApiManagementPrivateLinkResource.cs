@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPrivateLinkResource method.
     /// </summary>
     public partial class ApiManagementPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="privateLinkSubResourceName"> The privateLinkSubResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly PrivateEndpointConnectionRestOperations _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient;
         private readonly ApiManagementPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateLinkResource"/> class for mocking. </summary>
         protected ApiManagementPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementPrivateLinkResource(ArmClient client, ApiManagementPrivateLinkResourceData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

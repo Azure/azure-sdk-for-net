@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The IP address of self-hosted integration runtime node. </summary>
     public partial class IntegrationRuntimeNodeIPAddress
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
         internal IntegrationRuntimeNodeIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
         internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
         {

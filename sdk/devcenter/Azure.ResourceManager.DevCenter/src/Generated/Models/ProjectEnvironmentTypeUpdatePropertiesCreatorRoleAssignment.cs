@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
     internal partial class ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment
     {
-        /// <summary> Initializes a new instance of ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment"/>. </summary>
         public ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment()
         {
             Roles = new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
         }
 
-        /// <summary> Initializes a new instance of ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment"/>. </summary>
         /// <param name="roles"> A map of roles to assign to the environment creator. </param>
         internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(IDictionary<string, DevCenterEnvironmentRole> roles)
         {

@@ -18,13 +18,14 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a TenantPolicyDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantPolicyDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantPolicyDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPolicyDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantPolicyDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantPolicyDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantPolicyDefinition method.
     /// </summary>
     public partial class TenantPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPolicyDefinitionResource"/> instance. </summary>
+        /// <param name="policyDefinitionName"> The policyDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string policyDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicyDefinitionsRestOperations _tenantPolicyDefinitionPolicyDefinitionsRestClient;
         private readonly PolicyDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinitionResource"/> class for mocking. </summary>
         protected TenantPolicyDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantPolicyDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantPolicyDefinitionResource(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)
@@ -61,9 +65,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +98,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetBuiltIn</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicyDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +137,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

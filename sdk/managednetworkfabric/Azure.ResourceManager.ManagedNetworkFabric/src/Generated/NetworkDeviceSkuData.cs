@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkDeviceSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
         /// <param name="model"> Model of the network device. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public NetworkDeviceSkuData(string model)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Interfaces = new ChangeTrackingList<NetworkDeviceInterfaceProperties>();
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

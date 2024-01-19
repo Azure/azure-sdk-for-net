@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Output of virtual machine capture operation. </summary>
     public partial class VirtualMachineCaptureResult : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureResult"/>. </summary>
         public VirtualMachineCaptureResult()
         {
             Resources = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureResult"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="schema"> the schema of the captured virtual machine. </param>
         /// <param name="contentVersion"> the version of the content. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

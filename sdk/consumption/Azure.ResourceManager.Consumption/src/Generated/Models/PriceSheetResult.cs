@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> An pricesheet resource. </summary>
     public partial class PriceSheetResult : ResourceData
     {
-        /// <summary> Initializes a new instance of PriceSheetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PriceSheetResult"/>. </summary>
         internal PriceSheetResult()
         {
             Pricesheets = new ChangeTrackingList<PriceSheetProperties>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PriceSheetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PriceSheetResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

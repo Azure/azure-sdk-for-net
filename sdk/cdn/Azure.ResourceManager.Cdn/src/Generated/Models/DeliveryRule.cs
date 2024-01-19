@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> A rule that specifies a set of actions and conditions. </summary>
     public partial class DeliveryRule
     {
-        /// <summary> Initializes a new instance of DeliveryRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRule"/>. </summary>
         /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
         /// <param name="actions">
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of DeliveryRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
         /// <param name="conditions">

@@ -42,25 +42,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ContainerServiceFleetCollection fleetCollection = resourceGroupResource.GetContainerServiceFleets();
 
             string fleetName = Recording.GenerateAssetName("fleet-");
-            ContainerServiceFleetData fleetData = new ContainerServiceFleetData(DefaultLocation)
-            {
-                HubProfile = new FleetHubProfile()
-                {
-                    DnsPrefix = "dnsprefix1",
-                    AgentProfile = new ContainerServiceFleetAgentProfile()
-                },
-                Tags =
-                {
-                    ["archv2"] = "",
-                    ["tier"] = "production",
-                },
-            };
+            ContainerServiceFleetData fleetData = new ContainerServiceFleetData(DefaultLocation);
+
             ResourceIdentifier fleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             // Test Fleet operations
             ArmOperation<ContainerServiceFleetResource> createFleetLRO = await fleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, fleetData);
             ContainerServiceFleetResource fleetResource = createFleetLRO.Value;
             Console.WriteLine($"Succeeded on id: {fleetResource.Data.Id}");
-            Console.WriteLine($"Created Fleet was: {fleetResource.Data.ToString}");
+            Console.WriteLine($"Created Fleet was: {fleetResource.Data}");
 
             // Test GetFleet
             // Test GetAllAsync - Get all fleets in RG, which should just be 1
@@ -79,7 +68,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             fleetResource.Data.Tags.Add("newtag1", "newtagvalue");
             ArmOperation<ContainerServiceFleetResource> updateFleetLRO = await fleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetResource.Data.Name, fleetResource.Data);
             Console.WriteLine($"Succeeded on id: {updateFleetLRO.Value.Data.Id}");
-            Console.WriteLine($"Updated Fleet was: {updateFleetLRO.Value.Data.ToString}");
+            Console.WriteLine($"Updated Fleet was: {updateFleetLRO.Value.Data}");
             Debug.Assert(updateFleetLRO.Value.Data.Tags.ContainsKey("newtag1"), "new tag was not found, update failed");
 
             // Create a managed cluster to be able to become a Fleet Member
@@ -95,7 +84,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ArmOperation<ContainerServiceFleetMemberResource> createMemberLRO = await memberCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetMemberName, memberData);
             ContainerServiceFleetMemberResource memberResource = createMemberLRO.Value;
             Console.WriteLine($"Succeeded on id: {createMemberLRO.Value.Data.Id}");
-            Console.WriteLine($"Created FleetMember was: {memberResource.Data.ToString}");
+            Console.WriteLine($"Created FleetMember was: {memberResource.Data}");
 
             // Test GetFleetMember
             // Test GetAllAsync

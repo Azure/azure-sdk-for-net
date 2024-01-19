@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Value for the specified parameter. Can be either 'value' or 'reference' but not both. </summary>
     public partial class ParameterValue
     {
-        /// <summary> Initializes a new instance of ParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterValue"/>. </summary>
         public ParameterValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterValue"/>. </summary>
         /// <param name="value"> Parameter value. Any valid JSON value is allowed including objects, arrays, strings, numbers and booleans. </param>
         /// <param name="reference"> Parameter value as reference type. </param>
         internal ParameterValue(BinaryData value, SecretValueReference reference)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

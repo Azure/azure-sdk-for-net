@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm last source agent upgrade error details. </summary>
     public partial class InMageRcmLastAgentUpgradeErrorDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmLastAgentUpgradeErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmLastAgentUpgradeErrorDetails"/>. </summary>
         internal InMageRcmLastAgentUpgradeErrorDetails()
         {
             ErrorMessageParameters = new ChangeTrackingDictionary<string, string>();
             ErrorTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmLastAgentUpgradeErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmLastAgentUpgradeErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>

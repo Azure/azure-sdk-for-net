@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Defines the options for how the data plane API of a Search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </summary>
     public partial class SearchAadAuthDataPlaneAuthOptions
     {
-        /// <summary> Initializes a new instance of SearchAadAuthDataPlaneAuthOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAadAuthDataPlaneAuthOptions"/>. </summary>
         public SearchAadAuthDataPlaneAuthOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchAadAuthDataPlaneAuthOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAadAuthDataPlaneAuthOptions"/>. </summary>
         /// <param name="apiKeyOnly"> Indicates that only the API key needs to be used for authentication. </param>
         /// <param name="aadOrApiKey"> Indicates that either the API key or an access token from Azure Active Directory can be used for authentication. </param>
         internal SearchAadAuthDataPlaneAuthOptions(BinaryData apiKeyOnly, DataPlaneAadOrApiKeyAuthOption aadOrApiKey)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

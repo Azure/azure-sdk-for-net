@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaLiveOutputData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaLiveOutputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveOutputData"/>. </summary>
         public MediaLiveOutputData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveOutputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveOutputData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HealthBot.Models
     /// <summary> The resource model definition representing SKU. </summary>
     public partial class HealthBotSku
     {
-        /// <summary> Initializes a new instance of HealthBotSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBotSku"/>. </summary>
         /// <param name="name"> The name of the Azure Health Bot SKU. </param>
         public HealthBotSku(HealthBotSkuName name)
         {

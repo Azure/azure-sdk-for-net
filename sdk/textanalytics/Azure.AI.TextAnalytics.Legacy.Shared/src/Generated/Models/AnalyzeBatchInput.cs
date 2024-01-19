@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The AnalyzeBatchInput. </summary>
     internal partial class AnalyzeBatchInput : JobDescriptor
     {
-        /// <summary> Initializes a new instance of AnalyzeBatchInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchInput"/>. </summary>
         /// <param name="analysisInput"> Contains a set of input documents to be analyzed by the service. </param>
         /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="tasks"/> is null. </exception>
@@ -22,6 +22,16 @@ namespace Azure.AI.TextAnalytics.Legacy
             Argument.AssertNotNull(analysisInput, nameof(analysisInput));
             Argument.AssertNotNull(tasks, nameof(tasks));
 
+            AnalysisInput = analysisInput;
+            Tasks = tasks;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchInput"/>. </summary>
+        /// <param name="displayName"> Optional display name for the analysis job. </param>
+        /// <param name="analysisInput"> Contains a set of input documents to be analyzed by the service. </param>
+        /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>
+        internal AnalyzeBatchInput(string displayName, MultiLanguageBatchInput analysisInput, JobManifestTasks tasks) : base(displayName)
+        {
             AnalysisInput = analysisInput;
             Tasks = tasks;
         }

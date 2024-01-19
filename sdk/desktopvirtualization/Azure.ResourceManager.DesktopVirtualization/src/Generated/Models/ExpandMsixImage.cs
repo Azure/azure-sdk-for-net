@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents the definition of contents retrieved after expanding the MSIX Image. </summary>
     public partial class ExpandMsixImage : ResourceData
     {
-        /// <summary> Initializes a new instance of ExpandMsixImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpandMsixImage"/>. </summary>
         public ExpandMsixImage()
         {
             PackageDependencies = new ChangeTrackingList<MsixPackageDependencies>();
             PackageApplications = new ChangeTrackingList<MsixPackageApplications>();
         }
 
-        /// <summary> Initializes a new instance of ExpandMsixImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpandMsixImage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

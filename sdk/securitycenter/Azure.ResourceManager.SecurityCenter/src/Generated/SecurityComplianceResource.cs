@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityCompliance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityComplianceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityComplianceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetSecurityCompliance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityComplianceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityComplianceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetSecurityCompliance method.
     /// </summary>
     public partial class SecurityComplianceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityComplianceResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="complianceName"> The complianceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string complianceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/compliances/{complianceName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly CompliancesRestOperations _securityComplianceCompliancesRestClient;
         private readonly SecurityComplianceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/compliances";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityComplianceResource"/> class for mocking. </summary>
         protected SecurityComplianceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityComplianceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityComplianceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityComplianceResource(ArmClient client, SecurityComplianceData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/compliances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Compliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Compliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityComplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

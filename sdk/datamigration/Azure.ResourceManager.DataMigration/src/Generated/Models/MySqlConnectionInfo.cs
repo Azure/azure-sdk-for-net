@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information for connecting to MySQL server. </summary>
     public partial class MySqlConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of MySqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlConnectionInfo"/>. </summary>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="port"> Port for Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "MySqlConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of MySqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

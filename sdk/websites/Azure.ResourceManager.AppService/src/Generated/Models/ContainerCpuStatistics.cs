@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ContainerCpuStatistics. </summary>
     public partial class ContainerCpuStatistics
     {
-        /// <summary> Initializes a new instance of ContainerCpuStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCpuStatistics"/>. </summary>
         public ContainerCpuStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerCpuStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCpuStatistics"/>. </summary>
         /// <param name="cpuUsage"></param>
         /// <param name="systemCpuUsage"></param>
         /// <param name="onlineCpuCount"></param>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceLongTermRetentionBackupData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionBackupData"/>. </summary>
         public ManagedInstanceLongTermRetentionBackupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

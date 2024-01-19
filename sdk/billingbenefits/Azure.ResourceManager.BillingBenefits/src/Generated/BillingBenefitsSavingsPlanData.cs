@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BillingBenefits
     /// </summary>
     public partial class BillingBenefitsSavingsPlanData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/>. </summary>
         /// <param name="sku"> Savings plan SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public BillingBenefitsSavingsPlanData(BillingBenefitsSku sku)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

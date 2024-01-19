@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> A collection of workflow run action repetitions. </summary>
     internal partial class LogicWorkflowRunActionRepetitionDefinitionList
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionList"/>. </summary>
         internal LogicWorkflowRunActionRepetitionDefinitionList()
         {
             Value = new ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="value"></param>
         internal LogicWorkflowRunActionRepetitionDefinitionList(string nextLink, IReadOnlyList<LogicWorkflowRunActionRepetitionDefinitionData> value)

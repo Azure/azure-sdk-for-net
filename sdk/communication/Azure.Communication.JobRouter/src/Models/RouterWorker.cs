@@ -9,30 +9,42 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterWorker")]
     public partial class RouterWorker : IUtf8JsonSerializable
     {
-        /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
-        /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        /// <summary> Initializes a new instance of a worker. </summary>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        public RouterWorker(string workerId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
+
+            Id = workerId;
+
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
+        }
 
         /// <summary>
-        /// A set of non-identifying attributes attached to this worker.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
-        public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
+        /// <summary>
+        /// A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.
+        /// </summary>
+        public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, RouterQueueAssignment> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment>();
+        /// <summary> Collection of channel(s) this worker can handle and their impact on the workers capacity. </summary>
+        public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
+
+        /// <summary> Collection of queue(s) that this worker can receive work from. </summary>
+        public IList<string> Queues { get; } = new List<string>();
 
         /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
-        public int? TotalCapacity { get; internal set; }
+        public int? Capacity { get; set; }
 
-        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
-        public bool? AvailableForOffers { get; internal set; }
+        /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
+        public bool? AvailableForOffers { get; set; }
 
         [CodeGenMember("Labels")]
         internal IDictionary<string, BinaryData> _labels
@@ -49,7 +61,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
+                        Labels[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -70,68 +82,33 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value.ToObjectFromJson());
+                        Tags[tag.Key] = new RouterValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
         }
 
-        [CodeGenMember("ChannelConfigurations")]
-        internal IDictionary<string, ChannelConfiguration> _channelConfigurations {
-            get
-            {
-                return ChannelConfigurations ?? new ChangeTrackingDictionary<string, ChannelConfiguration>();
-            }
-            set
-            {
-                foreach (var channelConfiguration in value)
-                {
-                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob, channelConfiguration.Value.MaxNumberOfJobs);
-                }
-            }
-        }
-
-        [CodeGenMember("QueueAssignments")]
-        internal IReadOnlyDictionary<string, RouterQueueAssignment> _queueAssignments
-        {
-            get
-            {
-                return QueueAssignments != null
-                    ? QueueAssignments.ToDictionary(x => x.Key, x => x.Value)
-                    : new ChangeTrackingDictionary<string, RouterQueueAssignment>();
-            }
-            set
-            {
-                foreach (var queueAssignment in value)
-                {
-                    QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
-                }
-            }
-        }
+        /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(_queueAssignments))
+            if (Optional.IsCollectionDefined(Queues))
             {
-                writer.WritePropertyName("queueAssignments"u8);
-                writer.WriteStartObject();
-                foreach (var item in _queueAssignments)
+                writer.WritePropertyName("queues"u8);
+                writer.WriteStartArray();
+                foreach (var item in Queues)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TotalCapacity))
+            if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("totalCapacity"u8);
-                writer.WriteNumberValue(TotalCapacity.Value);
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteNumberValue(Capacity.Value);
             }
             if (Optional.IsCollectionDefined(_labels))
             {
@@ -165,21 +142,25 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(_channelConfigurations))
+            if (Optional.IsCollectionDefined(Channels))
             {
-                writer.WritePropertyName("channelConfigurations"u8);
-                writer.WriteStartObject();
-                foreach (var item in _channelConfigurations)
+                writer.WritePropertyName("channels"u8);
+                writer.WriteStartArray();
+                foreach (var item in Channels)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AvailableForOffers))
             {
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
             }
             writer.WriteEndObject();
         }

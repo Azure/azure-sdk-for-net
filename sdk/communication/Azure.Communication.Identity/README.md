@@ -92,6 +92,14 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
+The `GetToken` function takes in a list of `CommunicationTokenScope`. Scope options include:
+- `Chat` (Use this for full access to Chat APIs)
+- `VoIP` (Use this for full access to Calling APIs)
+- `ChatJoin` (Access to Chat APIs but without the authorization to create, delete or update chat threads)
+- `ChatJoinLimited` (A more limited version of ChatJoin that doesn't allow to add or remove participants)
+- `VoIPJoin` (Access to Calling APIs but without the authorization to start new calls)
+
+
 It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [1,24] hours range. If not provided, the default value of 24 hours will be used.
 
 ```C# Snippet:CreateCommunicationTokenAsyncWithCustomExpiration

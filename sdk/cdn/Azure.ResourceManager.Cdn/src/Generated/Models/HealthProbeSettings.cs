@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The JSON object that contains the properties to send health probes to origin. </summary>
     public partial class HealthProbeSettings
     {
-        /// <summary> Initializes a new instance of HealthProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthProbeSettings"/>. </summary>
         public HealthProbeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthProbeSettings"/>. </summary>
         /// <param name="probePath"> The path relative to the origin that is used to determine the health of the origin. </param>
         /// <param name="probeRequestType"> The type of health probe request that is made. </param>
         /// <param name="probeProtocol"> Protocol to use for health probe. </param>

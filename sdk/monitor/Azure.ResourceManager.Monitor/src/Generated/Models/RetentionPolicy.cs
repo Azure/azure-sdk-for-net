@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies the retention policy for the log. </summary>
     public partial class RetentionPolicy
     {
-        /// <summary> Initializes a new instance of RetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicy"/>. </summary>
         /// <param name="isEnabled"> a value indicating whether the retention policy is enabled. </param>
         /// <param name="days"> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </param>
         public RetentionPolicy(bool isEnabled, int days)

@@ -13,13 +13,13 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> The instances matching the query based on the input. May be empty or null. </summary>
     internal partial class SearchInstancesResponse
     {
-        /// <summary> Initializes a new instance of SearchInstancesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchInstancesResponse"/>. </summary>
         internal SearchInstancesResponse()
         {
             Hits = new ChangeTrackingList<InstanceHit>();
         }
 
-        /// <summary> Initializes a new instance of SearchInstancesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchInstancesResponse"/>. </summary>
         /// <param name="hits"> The list of instances matching the query based on the input. May be empty. </param>
         /// <param name="hitCount"> Total number of instances matching the query based on the input. </param>
         /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>

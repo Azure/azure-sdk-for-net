@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Describes the properties of a VM size. </summary>
     public partial class MachineLearningVmSize
     {
-        /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSize"/>. </summary>
         internal MachineLearningVmSize()
         {
             SupportedComputeTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSize"/>. </summary>
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="family"> The family name of the virtual machine size. </param>
         /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Description about the errors happen while performing migration validation. </summary>
     public partial class ValidationError
     {
-        /// <summary> Initializes a new instance of ValidationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationError"/>. </summary>
         internal ValidationError()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationError"/>. </summary>
         /// <param name="text"> Error Text. </param>
         /// <param name="severity"> Severity of the error. </param>
         internal ValidationError(string text, Severity? severity)

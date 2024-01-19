@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
     public partial class StorageLifecyclePolicyActionSummaryDetail
     {
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyActionSummaryDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         internal StorageLifecyclePolicyActionSummaryDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyActionSummaryDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         /// <param name="totalObjectsCount"> Total number of objects to be acted on by this action. </param>
         /// <param name="successCount"> Number of success operations of this action. </param>
         /// <param name="errorList"> Error messages of this action if any. </param>

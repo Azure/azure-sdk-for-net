@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a migration name's availability. </summary>
     public partial class PostgreSqlCheckMigrationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlCheckMigrationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlCheckMigrationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>

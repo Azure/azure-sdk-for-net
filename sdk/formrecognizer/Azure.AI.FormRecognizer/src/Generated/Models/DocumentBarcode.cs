@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A barcode object. </summary>
     public partial class DocumentBarcode
     {
-        /// <summary> Initializes a new instance of DocumentBarcode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentBarcode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentBarcode"/>. </summary>
         /// <param name="kind"> Barcode kind. </param>
         /// <param name="value"> Barcode value. </param>
         /// <param name="polygon"> Bounding polygon of the barcode. </param>

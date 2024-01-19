@@ -168,6 +168,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
+{
+    public partial class MockableKubernetesConfigurationArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesConfigurationArmClient() { }
+        public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableKubernetesConfigurationResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesConfigurationResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource> GetKubernetesClusterExtension(string clusterRp, string clusterResourceName, string clusterName, string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(string clusterRp, string clusterResourceName, string clusterName, string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(string clusterRp, string clusterResourceName, string clusterName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource> GetKubernetesFluxConfiguration(string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource>> GetKubernetesFluxConfigurationAsync(string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationCollection GetKubernetesFluxConfigurations(string clusterRp, string clusterResourceName, string clusterName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource> GetKubernetesSourceControlConfiguration(string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource>> GetKubernetesSourceControlConfigurationAsync(string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationCollection GetKubernetesSourceControlConfigurations(string clusterRp, string clusterResourceName, string clusterName) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public static partial class ArmKubernetesConfigurationModelFactory

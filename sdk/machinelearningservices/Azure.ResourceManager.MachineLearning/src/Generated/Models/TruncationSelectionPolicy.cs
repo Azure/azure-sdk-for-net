@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an early termination policy that cancels a given percentage of runs at each evaluation interval. </summary>
     public partial class TruncationSelectionPolicy : MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of TruncationSelectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TruncationSelectionPolicy"/>. </summary>
         public TruncationSelectionPolicy()
         {
             PolicyType = EarlyTerminationPolicyType.TruncationSelection;
         }
 
-        /// <summary> Initializes a new instance of TruncationSelectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TruncationSelectionPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>

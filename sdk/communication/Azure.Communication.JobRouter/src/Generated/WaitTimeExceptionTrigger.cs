@@ -5,17 +5,19 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     public partial class WaitTimeExceptionTrigger : ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        /// <param name="thresholdSeconds"> Threshold for wait time for this trigger. </param>
-        internal WaitTimeExceptionTrigger(string kind, double thresholdSeconds) : base(kind)
+        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
+        /// <param name="threshold"> Threshold for wait time for this trigger. </param>
+        internal WaitTimeExceptionTrigger(ExceptionTriggerKind kind, TimeSpan threshold) : base(kind)
         {
-            _thresholdSeconds = thresholdSeconds;
+            Threshold = threshold;
         }
     }
 }

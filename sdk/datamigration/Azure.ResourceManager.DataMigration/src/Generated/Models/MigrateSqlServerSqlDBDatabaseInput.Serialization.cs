@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SchemaSetting);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SchemaSetting.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(SchemaSetting))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Id))

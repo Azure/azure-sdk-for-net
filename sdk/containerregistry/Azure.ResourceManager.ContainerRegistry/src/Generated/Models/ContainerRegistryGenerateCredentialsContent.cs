@@ -13,9 +13,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters used to generate credentials for a specified token or user of a container registry. </summary>
     public partial class ContainerRegistryGenerateCredentialsContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryGenerateCredentialsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsContent"/>. </summary>
         public ContainerRegistryGenerateCredentialsContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsContent"/>. </summary>
+        /// <param name="tokenId"> The resource ID of the token for which credentials have to be generated. </param>
+        /// <param name="expireOn"> The expiry date of the generated credentials after which the credentials become invalid. </param>
+        /// <param name="name"> Specifies name of the password which should be regenerated if any -- password1 or password2. </param>
+        internal ContainerRegistryGenerateCredentialsContent(ResourceIdentifier tokenId, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name)
+        {
+            TokenId = tokenId;
+            ExpireOn = expireOn;
+            Name = name;
         }
 
         /// <summary> The resource ID of the token for which credentials have to be generated. </summary>

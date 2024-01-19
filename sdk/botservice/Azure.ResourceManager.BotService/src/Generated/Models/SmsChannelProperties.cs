@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Sms channel. </summary>
     public partial class SmsChannelProperties
     {
-        /// <summary> Initializes a new instance of SmsChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsChannelProperties"/>. </summary>
         /// <param name="phone"> The Sms phone. </param>
         /// <param name="accountSID"> The Sms account SID. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of SmsChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsChannelProperties"/>. </summary>
         /// <param name="phone"> The Sms phone. </param>
         /// <param name="accountSID"> The Sms account SID. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="authToken"> The Sms auth token. Value only returned through POST to the action Channel List API, otherwise empty. </param>

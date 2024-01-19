@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelSettingsObjectDetection : ImageModelSettings
     {
-        /// <summary> Initializes a new instance of ImageModelSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         public ImageModelSettingsObjectDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>

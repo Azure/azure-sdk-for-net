@@ -21,6 +21,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
+            ETag etag = default;
             string id = default;
             Optional<string> channelReference = default;
             Optional<RouterJobStatus> status = default;
@@ -35,11 +36,16 @@ namespace Azure.Communication.JobRouter
             Optional<IDictionary<string, BinaryData>> labels = default;
             Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
             Optional<IDictionary<string, BinaryData>> tags = default;
-            Optional<IDictionary<string, string>> notes = default;
+            Optional<IList<RouterJobNote>> notes = default;
             Optional<DateTimeOffset> scheduledAt = default;
             Optional<JobMatchingMode> matchingMode = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -187,12 +193,12 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<RouterJobNote> array = new List<RouterJobNote>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        array.Add(RouterJobNote.DeserializeRouterJobNote(item));
                     }
-                    notes = dictionary;
+                    notes = array;
                     continue;
                 }
                 if (property.NameEquals("scheduledAt"u8))
@@ -214,7 +220,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RouterJob(id, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToDictionary(notes), Optional.ToNullable(scheduledAt), matchingMode.Value);
+            return new RouterJob(etag, id, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToList(notes), Optional.ToNullable(scheduledAt), matchingMode.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

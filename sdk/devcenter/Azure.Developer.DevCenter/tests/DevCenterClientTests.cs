@@ -18,7 +18,7 @@ namespace Azure.Developer.DevCenter.Tests
             InstrumentClient(new DevCenterClient(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new DevCenterClientOptions())));
+                InstrumentClientOptions(new AzureDeveloperDevCenterClientOptions())));
 
         public DevCenterClientTests(bool isAsync) : base(isAsync)
         {
@@ -34,7 +34,10 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetProjectsSucceeds()
         {
             var numberOfReturnedProjects = 0;
-            await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync())
+            await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync(
+                TestEnvironment.filter,
+                TestEnvironment.maxCount,
+                TestEnvironment.context))
             {
                 numberOfReturnedProjects++;
                 JsonElement projectResponseData = JsonDocument.Parse(projectData.ToStream()).RootElement;
@@ -54,7 +57,7 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetProjectSucceeds()
         {
-            Response getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
+            Response getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName, TestEnvironment.context);
 
             JsonElement getProjectData = JsonDocument.Parse(getProjectResponse.ContentStream).RootElement;
 

@@ -8,10 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CapacityReservationGroupInstanceView
+    public partial class CapacityReservationGroupInstanceView
     {
         internal static CapacityReservationGroupInstanceView DeserializeCapacityReservationGroupInstanceView(JsonElement element)
         {
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<IReadOnlyList<CapacityReservationInstanceViewWithName>> capacityReservations = default;
+            Optional<IReadOnlyList<SubResource>> sharedSubscriptionIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityReservations"u8))
@@ -36,8 +38,22 @@ namespace Azure.ResourceManager.Compute.Models
                     capacityReservations = array;
                     continue;
                 }
+                if (property.NameEquals("sharedSubscriptionIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SubResource> array = new List<SubResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                    }
+                    sharedSubscriptionIds = array;
+                    continue;
+                }
             }
-            return new CapacityReservationGroupInstanceView(Optional.ToList(capacityReservations));
+            return new CapacityReservationGroupInstanceView(Optional.ToList(capacityReservations), Optional.ToList(sharedSubscriptionIds));
         }
     }
 }

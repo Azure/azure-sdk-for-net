@@ -10,16 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    /// <summary> Defines the resource update properties. </summary>
+    /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
     internal partial class StorageProfileUpdate
     {
-        /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
         public StorageProfileUpdate()
         {
-            Disks = new ChangeTrackingList<VirtualDiskUpdate>();
+            Disks = new ChangeTrackingList<VMwareVirtualDiskUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
+        /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
+        internal StorageProfileUpdate(IList<VMwareVirtualDiskUpdate> disks)
+        {
+            Disks = disks;
         }
 
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>
-        public IList<VirtualDiskUpdate> Disks { get; }
+        public IList<VMwareVirtualDiskUpdate> Disks { get; }
     }
 }

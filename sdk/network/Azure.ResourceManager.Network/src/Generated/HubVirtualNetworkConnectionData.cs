@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -18,15 +20,16 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class HubVirtualNetworkConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         public HubVirtualNetworkConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="remoteVirtualNetwork"> Reference to the remote virtual network. </param>
         /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
-        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             RemoteVirtualNetwork = remoteVirtualNetwork;

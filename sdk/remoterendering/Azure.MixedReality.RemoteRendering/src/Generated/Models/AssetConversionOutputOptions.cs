@@ -13,7 +13,7 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> Conversion output settings describe the destination of conversion output. </summary>
     public partial class AssetConversionOutputOptions
     {
-        /// <summary> Initializes a new instance of AssetConversionOutputOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOutputOptions"/>. </summary>
         /// <param name="storageContainerUri"> The URI of the Azure blob storage container where the result of the conversion should be written to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerUri"/> is null. </exception>
         public AssetConversionOutputOptions(Uri storageContainerUri)
@@ -23,7 +23,7 @@ namespace Azure.MixedReality.RemoteRendering
             StorageContainerUri = storageContainerUri;
         }
 
-        /// <summary> Initializes a new instance of AssetConversionOutputOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOutputOptions"/>. </summary>
         /// <param name="storageContainerUri"> The URI of the Azure blob storage container where the result of the conversion should be written to. </param>
         /// <param name="storageContainerWriteSas"> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not provided, the Azure Remote Rendering account needs to be linked with the storage account containing the blob container. See https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account#link-storage-accounts for details. For security purposes this field will never be filled out in responses bodies. </param>
         /// <param name="blobPrefix"> A prefix which gets prepended in front of all files produced by the conversion process. Will be treated as a virtual folder. Optional. If not provided, output files will be stored at the container root. </param>

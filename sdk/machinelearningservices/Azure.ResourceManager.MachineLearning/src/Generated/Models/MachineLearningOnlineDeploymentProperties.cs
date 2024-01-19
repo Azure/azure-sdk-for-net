@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentProperties"/>. </summary>
         public MachineLearningOnlineDeploymentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentProperties"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>

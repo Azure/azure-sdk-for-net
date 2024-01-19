@@ -7,18 +7,22 @@
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The StaticRoutingEnrichment. </summary>
-    public partial class StaticRoutingEnrichment
+    /// <summary>
+    /// Static routing enrichment details.
+    /// Please note <see cref="StaticRoutingEnrichment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="StaticStringRoutingEnrichment"/>.
+    /// </summary>
+    public abstract partial class StaticRoutingEnrichment
     {
-        /// <summary> Initializes a new instance of StaticRoutingEnrichment. </summary>
-        public StaticRoutingEnrichment()
+        /// <summary> Initializes a new instance of <see cref="StaticRoutingEnrichment"/>. </summary>
+        protected StaticRoutingEnrichment()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticRoutingEnrichment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRoutingEnrichment"/>. </summary>
         /// <param name="key"> Static routing enrichment key. </param>
         /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
-        internal StaticRoutingEnrichment(string key, StaticRoutingEnrichmentType? valueType)
+        internal StaticRoutingEnrichment(string key, StaticRoutingEnrichmentType valueType)
         {
             Key = key;
             ValueType = valueType;
@@ -27,6 +31,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Static routing enrichment key. </summary>
         public string Key { get; set; }
         /// <summary> Static routing enrichment value type. For e.g. this property value can be 'String'. </summary>
-        public StaticRoutingEnrichmentType? ValueType { get; set; }
+        internal StaticRoutingEnrichmentType ValueType { get; set; }
     }
 }

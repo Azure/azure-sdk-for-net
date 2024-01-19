@@ -34,7 +34,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new instance of the <see cref="WorkloadIdentityCredential"/> with the specified options.
         /// </summary>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public WorkloadIdentityCredential(WorkloadIdentityCredentialOptions options)
         {
             options = options ?? new();
@@ -44,7 +44,6 @@ namespace Azure.Identity
                 _tokenFileCache = new FileContentsCache(options.TokenFilePath);
 
                 ClientAssertionCredentialOptions clientAssertionCredentialOptions = options.Clone<ClientAssertionCredentialOptions>();
-
                 clientAssertionCredentialOptions.Pipeline = options.Pipeline;
                 clientAssertionCredentialOptions.MsalClient = options.MsalClient;
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure ML Batch Execution activity. </summary>
     public partial class AzureMLBatchExecutionActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "AzureMLBatchExecution";
         }
 
-        /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

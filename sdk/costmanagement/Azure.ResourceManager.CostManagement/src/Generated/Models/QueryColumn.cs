@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> QueryColumn properties. </summary>
     public partial class QueryColumn
     {
-        /// <summary> Initializes a new instance of QueryColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryColumn"/>. </summary>
         internal QueryColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of QueryColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryColumn"/>. </summary>
         /// <param name="name"> The name of column. </param>
         /// <param name="queryColumnType"> The type of column. </param>
         internal QueryColumn(string name, string queryColumnType)

@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> Parameters for updating an Azure Dev Spaces Controller. </summary>
     public partial class ControllerPatch
     {
-        /// <summary> Initializes a new instance of ControllerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControllerPatch"/>. </summary>
         public ControllerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ControllerPatch"/>. </summary>
+        /// <param name="tags"> Tags for the Azure Dev Spaces Controller. </param>
+        /// <param name="targetContainerHostCredentialsBase64"> Credentials of the target container host (base64). </param>
+        internal ControllerPatch(IDictionary<string, string> tags, string targetContainerHostCredentialsBase64)
+        {
+            Tags = tags;
+            TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
         }
 
         /// <summary> Tags for the Azure Dev Spaces Controller. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileAttachedDataNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileAttachedDataNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneDataInterface, System.Collections.Generic.IEnumerable<string> dnsAddresses) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileAttachedDataNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneDataInterface, System.Collections.Generic.IEnumerable<string> dnsAddresses) { }
         public System.Collections.Generic.IList<string> DnsAddresses { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.NaptConfiguration NaptConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileDataNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileDataNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileDataNetworkData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId publicLandMobileNetworkIdentifier) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId publicLandMobileNetworkIdentifier) { }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId PublicLandMobileNetworkIdentifier { get { throw null; } set { } }
         public string ServiceKey { get { throw null; } }
@@ -214,6 +214,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public long? BytesToCapturePerPacket { get { throw null; } set { } }
         public System.DateTimeOffset? CaptureStartOn { get { throw null; } }
         public System.Collections.Generic.IList<string> NetworkInterfaces { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> OutputFiles { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? Status { get { throw null; } }
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileNetworkServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileNetworkServiceData(Azure.Core.AzureLocation location, int servicePrecedence, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration> pccRules) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileNetworkServiceData(Azure.Core.AzureLocation location, int servicePrecedence, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration> pccRules) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration> PccRules { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public int ServicePrecedence { get { throw null; } set { } }
@@ -368,7 +369,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileNetworkSimGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileNetworkSimGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileNetworkSimGroupData(Azure.Core.AzureLocation location) { }
         public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MobileNetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -422,7 +423,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileNetworkSimPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileNetworkSimPolicyData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.Ambr ueAmbr, Azure.ResourceManager.Resources.Models.WritableSubResource defaultSlice, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration> sliceConfigurations) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileNetworkSimPolicyData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.Ambr ueAmbr, Azure.ResourceManager.Resources.Models.WritableSubResource defaultSlice, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration> sliceConfigurations) { }
         public Azure.Core.ResourceIdentifier DefaultSliceId { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public int? RegistrationTimer { get { throw null; } set { } }
@@ -484,7 +485,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileNetworkSiteData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileNetworkSiteData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileNetworkSiteData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> NetworkFunctions { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -529,7 +530,7 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class MobileNetworkSliceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MobileNetworkSliceData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.Snssai snssai) : base (default(Azure.Core.AzureLocation)) { }
+        public MobileNetworkSliceData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.Snssai snssai) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.Snssai Snssai { get { throw null; } set { } }
@@ -573,14 +574,17 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class PacketCoreControlPlaneData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PacketCoreControlPlaneData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess) : base (default(Azure.Core.AzureLocation)) { }
+        public PacketCoreControlPlaneData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess) { }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties ControlPlaneAccessInterface { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ControlPlaneAccessVirtualIPv4Addresses { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? CoreNetworkTechnology { get { throw null; } set { } }
         public System.Uri DiagnosticsUploadStorageAccountContainerUri { get { throw null; } set { } }
+        public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration EventHub { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation Installation { get { throw null; } set { } }
         public string InstalledVersion { get { throw null; } }
         public System.BinaryData InteropSettings { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration LocalDiagnosticsAccess { get { throw null; } set { } }
+        public int? NasRerouteMacroMmeGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration Platform { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string RollbackVersion { get { throw null; } }
@@ -650,9 +654,10 @@ namespace Azure.ResourceManager.MobileNetwork
     }
     public partial class PacketCoreDataPlaneData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PacketCoreDataPlaneData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneAccessInterface) : base (default(Azure.Core.AzureLocation)) { }
+        public PacketCoreDataPlaneData(Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneAccessInterface) { }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties UserPlaneAccessInterface { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> UserPlaneAccessVirtualIPv4Addresses { get { throw null; } }
     }
     public partial class PacketCoreDataPlaneResource : Azure.ResourceManager.ArmResource
     {
@@ -728,6 +733,61 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.MobileNetwork.Mocking
+{
+    public partial class MockableMobileNetworkArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMobileNetworkArmClient() { }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource GetMobileAttachedDataNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileDataNetworkResource GetMobileDataNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureResource GetMobileNetworkPacketCaptureResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkResource GetMobileNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkServiceResource GetMobileNetworkServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource GetMobileNetworkSimGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyResource GetMobileNetworkSimPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSimResource GetMobileNetworkSimResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSiteResource GetMobileNetworkSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSliceResource GetMobileNetworkSliceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource GetPacketCoreControlPlaneResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource GetPacketCoreDataPlaneResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource GetSubscriptionPacketCoreControlPlaneVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource GetTenantPacketCoreControlPlaneVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableMobileNetworkResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMobileNetworkResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetwork(string mobileNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource>> GetMobileNetworkAsync(string mobileNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkCollection GetMobileNetworks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> GetMobileNetworkSimGroup(string simGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource>> GetMobileNetworkSimGroupAsync(string simGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupCollection GetMobileNetworkSimGroups() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource> GetPacketCoreControlPlane(string packetCoreControlPlaneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(string packetCoreControlPlaneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneCollection GetPacketCoreControlPlanes() { throw null; }
+    }
+    public partial class MockableMobileNetworkSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMobileNetworkSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> GetMobileNetworkSimGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions() { throw null; }
+    }
+    public partial class MockableMobileNetworkTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMobileNetworkTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class Ambr
@@ -746,7 +806,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData MobileNetworkDiagnosticsPackageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus? status = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate MobileNetworkHttpsServerCertificate(System.Uri certificateUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning provisioning = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation MobileNetworkInstallation(Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState? desiredState = default(Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState? state = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired? reinstallRequired = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason> reasons = null, Azure.Core.ResourceIdentifier operationId = null) { throw null; }
-        public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? status = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus?), string reason = null, System.DateTimeOffset? captureStartOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> networkInterfaces = null, long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? status, string reason, System.DateTimeOffset? captureStartOn, System.Collections.Generic.IEnumerable<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? status = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus?), string reason = null, System.DateTimeOffset? captureStartOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> networkInterfaces = null, long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), System.Collections.Generic.IEnumerable<string> outputFiles = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration MobileNetworkPlatformConfiguration(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType platformType = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType), Azure.Core.ResourceIdentifier azureStackEdgeDeviceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> azureStackEdgeDevices = null, Azure.Core.ResourceIdentifier azureStackHciClusterId = null, Azure.Core.ResourceIdentifier connectedClusterId = null, Azure.Core.ResourceIdentifier customLocationId = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkServiceData MobileNetworkServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), int servicePrecedence = 0, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkQosPolicy serviceQosPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.PccRuleConfiguration> pccRules = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSimData MobileNetworkSimData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState? simState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, Azure.Core.ResourceIdentifier simPolicyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null) { throw null; }
@@ -754,9 +816,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData MobileNetworkSimPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState> siteProvisioningState = null, Azure.ResourceManager.MobileNetwork.Models.Ambr ueAmbr = null, Azure.Core.ResourceIdentifier defaultSliceId = null, int? rfspIndex = default(int?), int? registrationTimer = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration> sliceConfigurations = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData MobileNetworkSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> networkFunctions = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData MobileNetworkSliceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.Snssai snssai = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, System.BinaryData interopSettings = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku, int? ueMtu, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, System.Uri diagnosticsUploadStorageAccountContainerUri, System.BinaryData interopSettings) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub = null, int? nasRerouteMacroMmeGroupId = default(int?), System.BinaryData interopSettings = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData PacketCoreControlPlaneVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform> platforms = null) { throw null; }
-        public static Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData PacketCoreDataPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneAccessInterface = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData PacketCoreDataPlaneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneAccessInterface) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData PacketCoreDataPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> userPlaneAccessVirtualIPv4Addresses = null) { throw null; }
     }
     public partial class AsyncOperationStatus
     {
@@ -903,6 +969,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator !=(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MobileNetworkEventHubConfiguration
+    {
+        public MobileNetworkEventHubConfiguration(Azure.Core.ResourceIdentifier id) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public int? ReportingInterval { get { throw null; } set { } }
+    }
     public partial class MobileNetworkHttpsServerCertificate
     {
         public MobileNetworkHttpsServerCertificate(System.Uri certificateUri) { }
@@ -924,9 +996,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MobileNetworkInstallationReason(string value) { throw null; }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason ControlPlaneAccessInterfaceHasChanged { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason ControlPlaneAccessVirtualIPv4AddressesHasChanged { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason NoAttachedDataNetworks { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason NoPacketCoreDataPlane { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason NoSlices { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason PublicLandMobileNetworkIdentifierHasChanged { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason UserPlaneAccessInterfaceHasChanged { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason UserPlaneAccessVirtualIPv4AddressesHasChanged { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason UserPlaneDataInterfaceHasChanged { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The TaskState. </summary>
     internal partial class TaskState
     {
-        /// <summary> Initializes a new instance of TaskState. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskState"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TaskState(DateTimeOffset lastUpdateDateTime, State status)
@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of TaskState. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskState"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

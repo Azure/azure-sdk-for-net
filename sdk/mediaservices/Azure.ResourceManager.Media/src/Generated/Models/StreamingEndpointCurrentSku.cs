@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The streaming endpoint current sku. </summary>
     public partial class StreamingEndpointCurrentSku
     {
-        /// <summary> Initializes a new instance of StreamingEndpointCurrentSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointCurrentSku"/>. </summary>
         public StreamingEndpointCurrentSku()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointCurrentSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointCurrentSku"/>. </summary>
         /// <param name="name"> The streaming endpoint sku name. </param>
         /// <param name="capacity"> The streaming endpoint sku capacity. </param>
         internal StreamingEndpointCurrentSku(string name, int? capacity)

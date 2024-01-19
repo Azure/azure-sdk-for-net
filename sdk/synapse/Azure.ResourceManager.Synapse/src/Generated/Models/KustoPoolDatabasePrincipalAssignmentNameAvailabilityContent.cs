@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A principal assignment check name availability request. </summary>
     public partial class KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Principal Assignment resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Synapse.Models
 
             Name = name;
             ResourceType = SynapseDatabasePrincipalAssignmentType.MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignments;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </param>
+        internal KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name, SynapseDatabasePrincipalAssignmentType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Principal Assignment resource name. </summary>

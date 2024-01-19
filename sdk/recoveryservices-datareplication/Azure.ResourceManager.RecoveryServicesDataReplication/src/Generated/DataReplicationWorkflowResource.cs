@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A Class representing a DataReplicationWorkflow along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataReplicationWorkflowResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataReplicationWorkflowResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource" /> using the GetDataReplicationWorkflow method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationWorkflowResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationWorkflowResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationWorkflow method.
     /// </summary>
     public partial class DataReplicationWorkflowResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataReplicationWorkflowResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="jobName"> The jobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly WorkflowRestOperations _dataReplicationWorkflowWorkflowRestClient;
         private readonly DataReplicationWorkflowData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/jobs";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationWorkflowResource"/> class for mocking. </summary>
         protected DataReplicationWorkflowResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataReplicationWorkflowResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationWorkflowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationWorkflowResource(ArmClient client, DataReplicationWorkflowData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/jobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

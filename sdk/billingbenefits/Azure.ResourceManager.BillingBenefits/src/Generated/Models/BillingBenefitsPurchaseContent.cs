@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The BillingBenefitsPurchaseContent. </summary>
     public partial class BillingBenefitsPurchaseContent
     {
-        /// <summary> Initializes a new instance of BillingBenefitsPurchaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsPurchaseContent"/>. </summary>
         public BillingBenefitsPurchaseContent()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsPurchaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsPurchaseContent"/>. </summary>
         /// <param name="sku"> The SKU to be applied for this resource. </param>
         /// <param name="displayName"> Friendly name of the savings plan. </param>
         /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>

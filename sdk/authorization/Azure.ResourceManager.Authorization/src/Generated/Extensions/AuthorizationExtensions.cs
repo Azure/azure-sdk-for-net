@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Mocking;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,312 +20,47 @@ namespace Azure.ResourceManager.Authorization
     /// <summary> A class to add extension methods to Azure.ResourceManager.Authorization. </summary>
     public static partial class AuthorizationExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableAuthorizationArmClient GetMockableAuthorizationArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableAuthorizationArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableAuthorizationArmResource GetMockableAuthorizationArmResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableAuthorizationArmResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableAuthorizationResourceGroupResource GetMockableAuthorizationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableAuthorizationResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableAuthorizationSubscriptionResource GetMockableAuthorizationSubscriptionResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableAuthorizationSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableAuthorizationTenantResource GetMockableAuthorizationTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableAuthorizationTenantResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region DenyAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="DenyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DenyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DenyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of DenyAssignmentResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetDenyAssignments(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DenyAssignmentResource" /> object. </returns>
-        public static DenyAssignmentResource GetDenyAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DenyAssignmentResource.ValidateResourceId(id);
-                return new DenyAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AuthorizationProviderOperationsMetadataResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthorizationProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthorizationProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource" /> object. </returns>
-        public static AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AuthorizationProviderOperationsMetadataResource.ValidateResourceId(id);
-                return new AuthorizationProviderOperationsMetadataResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentResource" /> object. </returns>
-        public static RoleAssignmentResource GetRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleAssignmentResource.ValidateResourceId(id);
-                return new RoleAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AuthorizationRoleDefinitionResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthorizationRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthorizationRoleDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource" /> object. </returns>
-        public static AuthorizationRoleDefinitionResource GetAuthorizationRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AuthorizationRoleDefinitionResource.ValidateResourceId(id);
-                return new AuthorizationRoleDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleAssignmentScheduleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentScheduleResource" /> object. </returns>
-        public static RoleAssignmentScheduleResource GetRoleAssignmentScheduleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleAssignmentScheduleResource.ValidateResourceId(id);
-                return new RoleAssignmentScheduleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleAssignmentScheduleInstanceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentScheduleInstanceResource" /> object. </returns>
-        public static RoleAssignmentScheduleInstanceResource GetRoleAssignmentScheduleInstanceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleAssignmentScheduleInstanceResource.ValidateResourceId(id);
-                return new RoleAssignmentScheduleInstanceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleAssignmentScheduleRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentScheduleRequestResource" /> object. </returns>
-        public static RoleAssignmentScheduleRequestResource GetRoleAssignmentScheduleRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleAssignmentScheduleRequestResource.ValidateResourceId(id);
-                return new RoleAssignmentScheduleRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleEligibilityScheduleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleEligibilityScheduleResource" /> object. </returns>
-        public static RoleEligibilityScheduleResource GetRoleEligibilityScheduleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleEligibilityScheduleResource.ValidateResourceId(id);
-                return new RoleEligibilityScheduleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleEligibilityScheduleInstanceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleEligibilityScheduleInstanceResource" /> object. </returns>
-        public static RoleEligibilityScheduleInstanceResource GetRoleEligibilityScheduleInstanceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleEligibilityScheduleInstanceResource.ValidateResourceId(id);
-                return new RoleEligibilityScheduleInstanceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleEligibilityScheduleRequestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleEligibilityScheduleRequestResource" /> object. </returns>
-        public static RoleEligibilityScheduleRequestResource GetRoleEligibilityScheduleRequestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleEligibilityScheduleRequestResource.ValidateResourceId(id);
-                return new RoleEligibilityScheduleRequestResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleManagementPolicyResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleManagementPolicyResource" /> object. </returns>
-        public static RoleManagementPolicyResource GetRoleManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleManagementPolicyResource.ValidateResourceId(id);
-                return new RoleManagementPolicyResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleManagementPolicyAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleManagementPolicyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleManagementPolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleManagementPolicyAssignmentResource" /> object. </returns>
-        public static RoleManagementPolicyAssignmentResource GetRoleManagementPolicyAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleManagementPolicyAssignmentResource.ValidateResourceId(id);
-                return new RoleManagementPolicyAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of DenyAssignmentResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
-        public static DenyAssignmentCollection GetDenyAssignments(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetDenyAssignments();
-        }
-
-        /// <summary> Gets a collection of DenyAssignmentResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
         public static DenyAssignmentCollection GetDenyAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDenyAssignments();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetDenyAssignments(scope);
         }
 
         /// <summary>
@@ -338,42 +74,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(this ArmResource armResource, string denyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetDenyAssignments().GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified deny assignment.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetDenyAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="denyAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            return await client.GetDenyAssignments(scope).GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetDenyAssignmentAsync(scope, denyAssignmentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -387,59 +113,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DenyAssignmentResource> GetDenyAssignment(this ArmResource armResource, string denyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetDenyAssignments().Get(denyAssignmentId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified deny assignment.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetDenyAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="denyAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DenyAssignmentResource> GetDenyAssignment(this ArmClient client, ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            return client.GetDenyAssignments(scope).Get(denyAssignmentId, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetDenyAssignment(scope, denyAssignmentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
-        public static RoleAssignmentCollection GetRoleAssignments(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignments();
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleAssignmentResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignments(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
         public static RoleAssignmentCollection GetRoleAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignments();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignments(scope);
         }
 
         /// <summary>
@@ -453,42 +170,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
-        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(this ArmResource armResource, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleAssignments().GetAsync(roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a role assignment by scope and name.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignments_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentAsync(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleAssignments(scope).GetAsync(roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleAssignmentAsync(scope, roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -502,59 +209,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
-        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleAssignmentResource> GetRoleAssignment(this ArmResource armResource, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleAssignments().Get(roleAssignmentName, tenantId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a role assignment by scope and name.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignments_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignment(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleAssignmentResource> GetRoleAssignment(this ArmClient client, ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleAssignments(scope).Get(roleAssignmentName, tenantId, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignment(scope, roleAssignmentName, tenantId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
-        public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetAuthorizationRoleDefinitions();
-        }
-
-        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of AuthorizationRoleDefinitionResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAuthorizationRoleDefinitions(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
         public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAuthorizationRoleDefinitions();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetAuthorizationRoleDefinitions(scope);
         }
 
         /// <summary>
@@ -568,40 +266,31 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetAuthorizationRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleDefinitions_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAuthorizationRoleDefinitionAsync(ResourceIdentifier,ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return await client.GetAuthorizationRoleDefinitions(scope).GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetAuthorizationRoleDefinitionAsync(scope, roleDefinitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -615,57 +304,49 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetAuthorizationRoleDefinitions().Get(roleDefinitionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleDefinitions_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAuthorizationRoleDefinition(ResourceIdentifier,ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return client.GetAuthorizationRoleDefinitions(scope).Get(roleDefinitionId, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetAuthorizationRoleDefinition(scope, roleDefinitionId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
-        public static RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignmentSchedules();
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleAssignmentScheduleResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentSchedules(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
         public static RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignmentSchedules();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentSchedules(scope);
         }
 
         /// <summary>
@@ -679,42 +360,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleAssignmentScheduleResource>> GetRoleAssignmentScheduleAsync(this ArmResource armResource, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleAssignmentSchedules().GetAsync(roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule for a resource scope
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentSchedules_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleAssignmentScheduleResource>> GetRoleAssignmentScheduleAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleAssignmentSchedules(scope).GetAsync(roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleAsync(scope, roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -728,59 +399,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleAssignmentScheduleResource> GetRoleAssignmentSchedule(this ArmResource armResource, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleAssignmentSchedules().Get(roleAssignmentScheduleName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule for a resource scope
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentSchedules_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentSchedule(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleAssignmentScheduleResource> GetRoleAssignmentSchedule(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleAssignmentSchedules(scope).Get(roleAssignmentScheduleName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentSchedule(scope, roleAssignmentScheduleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
-        public static RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignmentScheduleInstances();
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleInstances(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
         public static RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignmentScheduleInstances();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleInstances(scope);
         }
 
         /// <summary>
@@ -794,42 +456,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleAssignmentScheduleInstanceResource>> GetRoleAssignmentScheduleInstanceAsync(this ArmResource armResource, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleAssignmentScheduleInstances().GetAsync(roleAssignmentScheduleInstanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified role assignment schedule instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleInstanceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleAssignmentScheduleInstanceResource>> GetRoleAssignmentScheduleInstanceAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleAssignmentScheduleInstances(scope).GetAsync(roleAssignmentScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleInstanceAsync(scope, roleAssignmentScheduleInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -843,59 +495,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleAssignmentScheduleInstanceResource> GetRoleAssignmentScheduleInstance(this ArmResource armResource, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleAssignmentScheduleInstances().Get(roleAssignmentScheduleInstanceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the specified role assignment schedule instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleInstance(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleAssignmentScheduleInstanceResource> GetRoleAssignmentScheduleInstance(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleAssignmentScheduleInstances(scope).Get(roleAssignmentScheduleInstanceName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleInstance(scope, roleAssignmentScheduleInstanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleAssignmentScheduleRequestResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
-        public static RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleAssignmentScheduleRequests();
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentScheduleRequestResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleAssignmentScheduleRequestResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleRequests(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
         public static RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleAssignmentScheduleRequests();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleRequests(scope);
         }
 
         /// <summary>
@@ -909,42 +552,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleAssignmentScheduleRequestResource>> GetRoleAssignmentScheduleRequestAsync(this ArmResource armResource, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleAssignmentScheduleRequests().GetAsync(roleAssignmentScheduleRequestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule request.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleRequestAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleAssignmentScheduleRequestResource>> GetRoleAssignmentScheduleRequestAsync(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleAssignmentScheduleRequests(scope).GetAsync(roleAssignmentScheduleRequestName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleRequestAsync(scope, roleAssignmentScheduleRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -958,59 +591,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleAssignmentScheduleRequestResource> GetRoleAssignmentScheduleRequest(this ArmResource armResource, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleAssignmentScheduleRequests().Get(roleAssignmentScheduleRequestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule request.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleRequest(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleAssignmentScheduleRequestResource> GetRoleAssignmentScheduleRequest(this ArmClient client, ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleAssignmentScheduleRequests(scope).Get(roleAssignmentScheduleRequestName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleRequest(scope, roleAssignmentScheduleRequestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleEligibilityScheduleResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
-        public static RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleEligibilitySchedules();
-        }
-
-        /// <summary> Gets a collection of RoleEligibilityScheduleResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleEligibilityScheduleResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilitySchedules(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
         public static RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleEligibilitySchedules();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilitySchedules(scope);
         }
 
         /// <summary>
@@ -1024,42 +648,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleEligibilityScheduleResource>> GetRoleEligibilityScheduleAsync(this ArmResource armResource, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleEligibilitySchedules().GetAsync(roleEligibilityScheduleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule for a resource scope
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilitySchedules_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleEligibilityScheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleEligibilityScheduleResource>> GetRoleEligibilityScheduleAsync(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleEligibilitySchedules(scope).GetAsync(roleEligibilityScheduleName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleAsync(scope, roleEligibilityScheduleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1073,59 +687,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleEligibilityScheduleResource> GetRoleEligibilitySchedule(this ArmResource armResource, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleEligibilitySchedules().Get(roleEligibilityScheduleName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule for a resource scope
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilitySchedules_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilitySchedule(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleEligibilityScheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleEligibilityScheduleResource> GetRoleEligibilitySchedule(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleEligibilitySchedules(scope).Get(roleEligibilityScheduleName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilitySchedule(scope, roleEligibilityScheduleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
-        public static RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleEligibilityScheduleInstances();
-        }
-
-        /// <summary> Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleInstances(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
         public static RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleEligibilityScheduleInstances();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleInstances(scope);
         }
 
         /// <summary>
@@ -1139,42 +744,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleEligibilityScheduleInstanceResource>> GetRoleEligibilityScheduleInstanceAsync(this ArmResource armResource, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleEligibilityScheduleInstances().GetAsync(roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified role eligibility schedule instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleInstanceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleEligibilityScheduleInstanceResource>> GetRoleEligibilityScheduleInstanceAsync(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleEligibilityScheduleInstances(scope).GetAsync(roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleInstanceAsync(scope, roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1188,59 +783,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleEligibilityScheduleInstanceResource> GetRoleEligibilityScheduleInstance(this ArmResource armResource, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleEligibilityScheduleInstances().Get(roleEligibilityScheduleInstanceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the specified role eligibility schedule instance.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleInstance(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleEligibilityScheduleInstanceResource> GetRoleEligibilityScheduleInstance(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleEligibilityScheduleInstances(scope).Get(roleEligibilityScheduleInstanceName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleInstance(scope, roleEligibilityScheduleInstanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleEligibilityScheduleRequestResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
-        public static RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleEligibilityScheduleRequests();
-        }
-
-        /// <summary> Gets a collection of RoleEligibilityScheduleRequestResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleEligibilityScheduleRequestResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleRequests(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
         public static RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleEligibilityScheduleRequests();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleRequests(scope);
         }
 
         /// <summary>
@@ -1254,42 +840,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleEligibilityScheduleRequestResource>> GetRoleEligibilityScheduleRequestAsync(this ArmResource armResource, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleEligibilityScheduleRequests().GetAsync(roleEligibilityScheduleRequestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule request.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleRequestAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleEligibilityScheduleRequestResource>> GetRoleEligibilityScheduleRequestAsync(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleEligibilityScheduleRequests(scope).GetAsync(roleEligibilityScheduleRequestName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleRequestAsync(scope, roleEligibilityScheduleRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1303,59 +879,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleEligibilityScheduleRequestResource> GetRoleEligibilityScheduleRequest(this ArmResource armResource, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleEligibilityScheduleRequests().Get(roleEligibilityScheduleRequestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule request.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleRequest(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleEligibilityScheduleRequestResource> GetRoleEligibilityScheduleRequest(this ArmClient client, ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleEligibilityScheduleRequests(scope).Get(roleEligibilityScheduleRequestName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleRequest(scope, roleEligibilityScheduleRequestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleManagementPolicyResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
-        public static RoleManagementPolicyCollection GetRoleManagementPolicies(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleManagementPolicies();
-        }
-
-        /// <summary> Gets a collection of RoleManagementPolicyResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleManagementPolicyResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicies(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
         public static RoleManagementPolicyCollection GetRoleManagementPolicies(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleManagementPolicies();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementPolicies(scope);
         }
 
         /// <summary>
@@ -1369,42 +936,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(this ArmResource armResource, string roleManagementPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleManagementPolicies().GetAsync(roleManagementPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role management policy for a resource scope
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicyAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleManagementPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleManagementPolicies(scope).GetAsync(roleManagementPolicyName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleManagementPolicyAsync(scope, roleManagementPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1418,59 +975,50 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleManagementPolicyResource> GetRoleManagementPolicy(this ArmResource armResource, string roleManagementPolicyName, CancellationToken cancellationToken = default)
-        {
-            return armResource.GetRoleManagementPolicies().Get(roleManagementPolicyName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified role management policy for a resource scope
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicy(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleManagementPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<RoleManagementPolicyResource> GetRoleManagementPolicy(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleManagementPolicies(scope).Get(roleManagementPolicyName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementPolicy(scope, roleManagementPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoleManagementPolicyAssignmentResources in the ArmResource. </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
-        public static RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(this ArmResource armResource)
-        {
-            return GetArmResourceExtensionClient(armResource).GetRoleManagementPolicyAssignments();
-        }
-
-        /// <summary> Gets a collection of RoleManagementPolicyAssignmentResources in the ArmResource. </summary>
+        /// <summary>
+        /// Gets a collection of RoleManagementPolicyAssignmentResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicyAssignments(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
         public static RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetRoleManagementPolicyAssignments();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementPolicyAssignments(scope);
         }
 
         /// <summary>
@@ -1484,42 +1032,32 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleManagementPolicyAssignmentResource>> GetRoleManagementPolicyAssignmentAsync(this ArmResource armResource, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return await armResource.GetRoleManagementPolicyAssignments().GetAsync(roleManagementPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role management policy assignment for a resource scope
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicyAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RoleManagementPolicyAssignmentResource>> GetRoleManagementPolicyAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await client.GetRoleManagementPolicyAssignments(scope).GetAsync(roleManagementPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAuthorizationArmClient(client).GetRoleManagementPolicyAssignmentAsync(scope, roleManagementPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1533,17 +1071,1309 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicyAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementPolicyAssignment(scope, roleManagementPolicyAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EligibleChildResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetEligibleChildResources(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetEligibleChildResourcesAsync(scope, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EligibleChildResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetEligibleChildResources(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Pageable<EligibleChildResource> GetEligibleChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetEligibleChildResources(scope, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DenyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DenyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DenyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetDenyAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DenyAssignmentResource"/> object. </returns>
+        public static DenyAssignmentResource GetDenyAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetDenyAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AuthorizationProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAuthorizationProviderOperationsMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource"/> object. </returns>
+        public static AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetAuthorizationProviderOperationsMetadataResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleAssignmentResource"/> object. </returns>
+        public static RoleAssignmentResource GetRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AuthorizationRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationRoleDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAuthorizationRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource"/> object. </returns>
+        public static AuthorizationRoleDefinitionResource GetAuthorizationRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetAuthorizationRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleAssignmentScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleAssignmentScheduleResource"/> object. </returns>
+        public static RoleAssignmentScheduleResource GetRoleAssignmentScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleAssignmentScheduleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleAssignmentScheduleInstanceResource"/> object. </returns>
+        public static RoleAssignmentScheduleInstanceResource GetRoleAssignmentScheduleInstanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleInstanceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleAssignmentScheduleRequestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleAssignmentScheduleRequestResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleAssignmentScheduleRequestResource"/> object. </returns>
+        public static RoleAssignmentScheduleRequestResource GetRoleAssignmentScheduleRequestResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleAssignmentScheduleRequestResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleEligibilityScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleEligibilityScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleEligibilityScheduleResource"/> object. </returns>
+        public static RoleEligibilityScheduleResource GetRoleEligibilityScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleEligibilityScheduleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleEligibilityScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleEligibilityScheduleInstanceResource"/> object. </returns>
+        public static RoleEligibilityScheduleInstanceResource GetRoleEligibilityScheduleInstanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleInstanceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleEligibilityScheduleRequestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleEligibilityScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleEligibilityScheduleRequestResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleEligibilityScheduleRequestResource"/> object. </returns>
+        public static RoleEligibilityScheduleRequestResource GetRoleEligibilityScheduleRequestResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleEligibilityScheduleRequestResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleManagementPolicyResource"/> object. </returns>
+        public static RoleManagementPolicyResource GetRoleManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleManagementPolicyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleManagementPolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementPolicyAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoleManagementPolicyAssignmentResource"/> object. </returns>
+        public static RoleManagementPolicyAssignmentResource GetRoleManagementPolicyAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementPolicyAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of DenyAssignmentResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetDenyAssignments()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
+        public static DenyAssignmentCollection GetDenyAssignments(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetDenyAssignments();
+        }
+
+        /// <summary>
+        /// Get the specified deny assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetDenyAssignmentAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(this ArmResource armResource, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetDenyAssignmentAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified deny assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetDenyAssignment(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<DenyAssignmentResource> GetDenyAssignment(this ArmResource armResource, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetDenyAssignment(denyAssignmentId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleAssignmentResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignments()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
+        public static RoleAssignmentCollection GetRoleAssignments(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignments();
+        }
+
+        /// <summary>
+        /// Get a role assignment by scope and name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(this ArmResource armResource, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentAsync(roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a role assignment by scope and name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignment(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentResource> GetRoleAssignment(this ArmResource armResource, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignment(roleAssignmentName, tenantId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AuthorizationRoleDefinitionResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetAuthorizationRoleDefinitions()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
+        public static AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetAuthorizationRoleDefinitions();
+        }
+
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetAuthorizationRoleDefinitionAsync(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetAuthorizationRoleDefinitionAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get role definition by name (GUID).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetAuthorizationRoleDefinition(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetAuthorizationRoleDefinition(roleDefinitionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleAssignmentScheduleResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentSchedules()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
+        public static RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentSchedules();
+        }
+
+        /// <summary>
+        /// Get the specified role assignment schedule for a resource scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentScheduleAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentScheduleResource>> GetRoleAssignmentScheduleAsync(this ArmResource armResource, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentScheduleAsync(roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role assignment schedule for a resource scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentSchedule(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentScheduleResource> GetRoleAssignmentSchedule(this ArmResource armResource, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentSchedule(roleAssignmentScheduleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentScheduleInstances()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
+        public static RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentScheduleInstances();
+        }
+
+        /// <summary>
+        /// Gets the specified role assignment schedule instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentScheduleInstanceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentScheduleInstanceResource>> GetRoleAssignmentScheduleInstanceAsync(this ArmResource armResource, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentScheduleInstanceAsync(roleAssignmentScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified role assignment schedule instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentScheduleInstance(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentScheduleInstanceResource> GetRoleAssignmentScheduleInstance(this ArmResource armResource, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentScheduleInstance(roleAssignmentScheduleInstanceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleAssignmentScheduleRequestResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentScheduleRequests()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
+        public static RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentScheduleRequests();
+        }
+
+        /// <summary>
+        /// Get the specified role assignment schedule request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentScheduleRequestAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleAssignmentScheduleRequestResource>> GetRoleAssignmentScheduleRequestAsync(this ArmResource armResource, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentScheduleRequestAsync(roleAssignmentScheduleRequestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role assignment schedule request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleAssignmentScheduleRequest(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleAssignmentScheduleRequestResource> GetRoleAssignmentScheduleRequest(this ArmResource armResource, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleAssignmentScheduleRequest(roleAssignmentScheduleRequestName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleEligibilityScheduleResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilitySchedules()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
+        public static RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleEligibilitySchedules();
+        }
+
+        /// <summary>
+        /// Get the specified role eligibility schedule for a resource scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilitySchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilityScheduleAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleEligibilityScheduleResource>> GetRoleEligibilityScheduleAsync(this ArmResource armResource, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleEligibilityScheduleAsync(roleEligibilityScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role eligibility schedule for a resource scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilitySchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilitySchedule(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleEligibilityScheduleResource> GetRoleEligibilitySchedule(this ArmResource armResource, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleEligibilitySchedule(roleEligibilityScheduleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilityScheduleInstances()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
+        public static RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleEligibilityScheduleInstances();
+        }
+
+        /// <summary>
+        /// Gets the specified role eligibility schedule instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilityScheduleInstanceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleEligibilityScheduleInstanceResource>> GetRoleEligibilityScheduleInstanceAsync(this ArmResource armResource, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleEligibilityScheduleInstanceAsync(roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified role eligibility schedule instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilityScheduleInstance(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleEligibilityScheduleInstanceResource> GetRoleEligibilityScheduleInstance(this ArmResource armResource, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleEligibilityScheduleInstance(roleEligibilityScheduleInstanceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleEligibilityScheduleRequestResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilityScheduleRequests()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
+        public static RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleEligibilityScheduleRequests();
+        }
+
+        /// <summary>
+        /// Get the specified role eligibility schedule request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilityScheduleRequestAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleEligibilityScheduleRequestResource>> GetRoleEligibilityScheduleRequestAsync(this ArmResource armResource, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleEligibilityScheduleRequestAsync(roleEligibilityScheduleRequestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role eligibility schedule request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleEligibilityScheduleRequest(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleEligibilityScheduleRequestResource> GetRoleEligibilityScheduleRequest(this ArmResource armResource, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleEligibilityScheduleRequest(roleEligibilityScheduleRequestName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleManagementPolicyResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleManagementPolicies()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
+        public static RoleManagementPolicyCollection GetRoleManagementPolicies(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleManagementPolicies();
+        }
+
+        /// <summary>
+        /// Get the specified role management policy for a resource scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleManagementPolicyAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleManagementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(this ArmResource armResource, string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleManagementPolicyAsync(roleManagementPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified role management policy for a resource scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleManagementPolicy(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleManagementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RoleManagementPolicyResource> GetRoleManagementPolicy(this ArmResource armResource, string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleManagementPolicy(roleManagementPolicyName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RoleManagementPolicyAssignmentResources in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleManagementPolicyAssignments()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
+        public static RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(this ArmResource armResource)
+        {
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableAuthorizationArmResource(armResource).GetRoleManagementPolicyAssignments();
+        }
+
+        /// <summary>
+        /// Get the specified role management policy assignment for a resource scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleManagementPolicyAssignmentAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(this ArmResource armResource, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleManagementPolicyAssignmentResource>> GetRoleManagementPolicyAssignmentAsync(this ArmResource armResource, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
-            return armResource.GetRoleManagementPolicyAssignments().Get(roleManagementPolicyAssignmentName, cancellationToken);
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return await GetMockableAuthorizationArmResource(armResource).GetRoleManagementPolicyAssignmentAsync(roleManagementPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1557,62 +2387,31 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationArmResource.GetRoleManagementPolicyAssignment(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> or <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(this ArmClient client, ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(this ArmResource armResource, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
-            return client.GetRoleManagementPolicyAssignments(scope).Get(roleManagementPolicyAssignmentName, cancellationToken);
-        }
+            Argument.AssertNotNull(armResource, nameof(armResource));
 
-        /// <summary>
-        /// Get the child resources of a resource on which user has eligible access
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EligibleChildResources_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetEligibleChildResourcesAsync(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the child resources of a resource on which user has eligible access
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EligibleChildResources_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<EligibleChildResource> GetEligibleChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetEligibleChildResources(filter, cancellationToken);
+            return GetMockableAuthorizationArmResource(armResource).GetRoleManagementPolicyAssignment(roleManagementPolicyAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -1626,14 +2425,25 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResourceGroup_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroupsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResourceGroupsAsync(cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAuthorizationResourceGroupResource(resourceGroupResource).GetAzurePermissionsForResourceGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1647,14 +2457,25 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResourceGroup_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroups(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResourceGroups(cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAuthorizationResourceGroupResource(resourceGroupResource).GetAzurePermissionsForResourceGroups(cancellationToken);
         }
 
         /// <summary>
@@ -1668,7 +2489,15 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResource_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -1677,16 +2506,13 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
-            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResourcesAsync(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
+            return GetMockableAuthorizationResourceGroupResource(resourceGroupResource).GetAzurePermissionsForResourcesAsync(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1700,7 +2526,15 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResource_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -1709,16 +2543,13 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
-            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzurePermissionsForResources(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
+            return GetMockableAuthorizationResourceGroupResource(resourceGroupResource).GetAzurePermissionsForResources(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1732,14 +2563,25 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ClassicAdministrators_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-07-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationSubscriptionResource.GetClassicAdministrators(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AuthorizationClassicAdministrator"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AuthorizationClassicAdministrator> GetClassicAdministratorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClassicAdministratorsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAuthorizationSubscriptionResource(subscriptionResource).GetClassicAdministratorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1753,22 +2595,42 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ClassicAdministrators_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-07-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationSubscriptionResource.GetClassicAdministrators(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthorizationClassicAdministrator" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AuthorizationClassicAdministrator"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AuthorizationClassicAdministrator> GetClassicAdministrators(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClassicAdministrators(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAuthorizationSubscriptionResource(subscriptionResource).GetClassicAdministrators(cancellationToken);
         }
 
-        /// <summary> Gets a collection of AuthorizationProviderOperationsMetadataResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of AuthorizationProviderOperationsMetadataResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAllAuthorizationProviderOperationsMetadata()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of AuthorizationProviderOperationsMetadataResources and their operations over a AuthorizationProviderOperationsMetadataResource. </returns>
         public static AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAllAuthorizationProviderOperationsMetadata();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetAllAuthorizationProviderOperationsMetadata();
         }
 
         /// <summary>
@@ -1782,17 +2644,31 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAuthorizationProviderOperationsMetadataAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AuthorizationProviderOperationsMetadataResource>> GetAuthorizationProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetAllAuthorizationProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAuthorizationTenantResource(tenantResource).GetAuthorizationProviderOperationsMetadataAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1806,17 +2682,31 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAuthorizationProviderOperationsMetadata(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<AuthorizationProviderOperationsMetadataResource> GetAuthorizationProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetAllAuthorizationProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).GetAuthorizationProviderOperationsMetadata(resourceProviderNamespace, expand, cancellationToken);
         }
 
         /// <summary>
@@ -1830,13 +2720,24 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>GlobalAdministrator_ElevateAccess</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-07-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationTenantResource.ElevateAccessGlobalAdministrator(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response> ElevateAccessGlobalAdministratorAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return await GetTenantResourceExtensionClient(tenantResource).ElevateAccessGlobalAdministratorAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAuthorizationTenantResource(tenantResource).ElevateAccessGlobalAdministratorAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1850,13 +2751,24 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>GlobalAdministrator_ElevateAccess</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-07-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationTenantResource.ElevateAccessGlobalAdministrator(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response ElevateAccessGlobalAdministrator(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).ElevateAccessGlobalAdministrator(cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAuthorizationTenantResource(tenantResource).ElevateAccessGlobalAdministrator(cancellationToken);
         }
     }
 }

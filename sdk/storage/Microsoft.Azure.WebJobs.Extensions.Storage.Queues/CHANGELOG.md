@@ -7,8 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- When binding to a CancellationToken, the token will no longer be signaled when in Drain Mode. To detect if the function app is in Drain Mode, use dependency injection to inject the IDrainModeManager, and check the IsDrainModeEnabled property.
 
 ### Other Changes
+
+## 5.2.1 (2023-12-12)
+### Other Changes
+- This release contains bug fixes to improve quality.
 
 ## 5.2.0 (2023-09-25)
 ### Other Changes

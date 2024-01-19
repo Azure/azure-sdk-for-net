@@ -8,7 +8,6 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -35,44 +34,7 @@ namespace Azure.ResourceManager.DataShare
                     case "ScheduleBased": return ScheduledSynchronizationSetting.DeserializeScheduledSynchronizationSetting(element);
                 }
             }
-            SynchronizationSettingKind kind = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new SynchronizationSettingKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-            }
-            return new DataShareSynchronizationSettingData(id, name, type, systemData.Value, kind);
+            return UnknownSynchronizationSetting.DeserializeUnknownSynchronizationSetting(element);
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Platform specific packet core control plane version properties. </summary>
     public partial class MobileNetworkPlatform
     {
-        /// <summary> Initializes a new instance of MobileNetworkPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatform"/>. </summary>
         public MobileNetworkPlatform()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatform"/>. </summary>
         /// <param name="platformType"> The platform type where this version can be deployed. </param>
         /// <param name="versionState"> The state of this packet core control plane version on this platform. </param>
         /// <param name="minimumPlatformSoftwareVersion"> The minimum software version of the platform where this packet core version can be deployed. </param>

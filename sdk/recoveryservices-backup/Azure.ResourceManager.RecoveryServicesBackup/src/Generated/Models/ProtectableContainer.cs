@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class ProtectableContainer
     {
-        /// <summary> Initializes a new instance of ProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainer"/>. </summary>
         protected ProtectableContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">

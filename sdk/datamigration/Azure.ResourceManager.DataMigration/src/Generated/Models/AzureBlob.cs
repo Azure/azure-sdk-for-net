@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Azure Blob Details. </summary>
     public partial class AzureBlob
     {
-        /// <summary> Initializes a new instance of AzureBlob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlob"/>. </summary>
         public AzureBlob()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureBlob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlob"/>. </summary>
         /// <param name="storageAccountResourceId"> Resource Id of the storage account where backups are stored. </param>
         /// <param name="accountKey"> Storage Account Key. </param>
         /// <param name="blobContainerName"> Blob container name where backups are stored. </param>

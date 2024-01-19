@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the SQL server provider properties. </summary>
     public partial class MsSqlServerProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of MsSqlServerProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsSqlServerProviderInstanceProperties"/>. </summary>
         public MsSqlServerProviderInstanceProperties()
         {
             ProviderType = "MsSqlServer";
         }
 
-        /// <summary> Initializes a new instance of MsSqlServerProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsSqlServerProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="hostname"> Gets or sets the SQL server host name. </param>
         /// <param name="dbPort"> Gets or sets the database sql port. </param>

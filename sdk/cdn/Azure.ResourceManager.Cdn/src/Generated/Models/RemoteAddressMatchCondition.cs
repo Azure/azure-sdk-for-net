@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RemoteAddress match conditions. </summary>
     public partial class RemoteAddressMatchCondition
     {
-        /// <summary> Initializes a new instance of RemoteAddressMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
         public RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, RemoteAddressOperator remoteAddressOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of RemoteAddressMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

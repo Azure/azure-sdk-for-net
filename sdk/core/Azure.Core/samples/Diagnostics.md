@@ -162,22 +162,133 @@ using AzureEventSourceListener listener = new AzureEventSourceListener((args, me
 
 If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
 
-## ActivitySource support
+## Distributed tracing
 
-Azure SDKs released after October 2021 include experimental support for ActivitySource, which is a simplified way to create and listen to activities added in .NET 5.
-Azure SDKs produce the following kinds of Activities:
+Azure client libraries are instrumented for distributed tracing using OpenTelemetry or ApplicationInsights SDK.
 
-- *HTTP calls*: every HTTP call originating from Azure SDKs
+Distributed tracing relies on `ActivitySource` and `Activity` primitives defined in .NET. Check out [Adding distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) guide for more details.
+
+Azure client libraries produce the following kinds of activities:
+
+- *HTTP calls*: every HTTP call originating from an Azure SDK
 - *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
 - *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
-Because `ActivitySource` support is experimental, the shape of Activities may change in the future without notice.  This includes:
+Prior to November 2023, OpenTelemetry support was experimental for all Azure client libraries (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details). 
+Most of Azure client libraries released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental. 
 
+More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md).
+
+### OpenTelemetry configuration
+
+OpenTelemetry relies on `ActivitySource` to collect distributed traces. 
+Follow the [OpenTelemetry configuration guide](https://opentelemetry.io/docs/instrumentation/net/getting-started/#instrumentation) to configure collection and exporting pipeline.
+
+Your observability vendor may enable Azure SDK activities by default. For example, stable Azure SDK instrumentations are enabled by [Azure Monitor OpenTelemetry Distro](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md#enable-azure-sdk-instrumentation).
+
+If your observability vendor does not enable Azure SDK instrumentation, your can enable it manually:
+
+```csharp
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracerProviderBuilder => tracerProviderBuilder
+        .AddSource("Azure.*")
+        .AddOtlpExporter())
+```
+
+_Note: check out [Enable experimental tracing features](#enabling-experimental-tracing-features) in case you're using one of the messaging libraries._
+
+By calling into `AddSource("Azure.*")` we're telling OpenTelemetry SDK to listen to all sources which name starts with `Azure.`.
+
+Azure SDK `ActivitySource` names match `{root library namespace}.{client name}` pattern. For example, Azure Blob Storage creates multiple `ActivitySource`s such as `Azure.Storage.Blobs.BlobContainerClient`, `Azure.Storage.Blobs.BlobClient`, or `Azure.Storage.Blobs.BlobServiceClient`.
+Even though you might enable them one-by-one, it's recommended to enable all clients in a specific namespace.
+
+For example, by calling `AddSource("Azure.Storage.Blobs.*")` we can enable distributed tracing for all clients in `Azure.Storage.Blobs` namespace and `"Azure.Storage.*"` would enable tracing for `Azure.Storage.Queues`, `Azure.Storage.Files.Shares`, and other Azure Storage libraries.
+
+### Avoiding double-collection of HTTP activities
+
+_Note: if you use Azure Monitor Distro for ASP.NET Core, you may skip this section. The distro configures telemetry collection preventing duplication._
+
+Azure SDK traces all HTTP calls using `Azure.Core.Http` source. If you enable it along with generic HTTP client instrumentation such as `OpenTelemetry.Instrumentation.Http`, it would lead to double-collection of HTTP calls originating from Azure client libraries.
+
+Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure services in `x-ms-client-request-id`, `x-ms-request-id` or similar request and response headers. This data may be important when correlating client and server telemetry or creating support tickets.
+
+To avoid double-collection you may either 
+- enrich generic HTTP client activities with Azure request identifiers and disable Azure SDK HTTP activities.
+- filter out duplicated generic HTTP client activities.
+
+#### Enriching generic HTTP activities with Azure request identifiers
+
+For example, you can do it with the following code snippet on .NET Core.
+
+```csharp
+// Messaging libraries still require feature flag.
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true)
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracerProviderBuilder => tracerProviderBuilder
+        .AddSource("Azure.Storage.*")
+        .AddSource("Azure.Messaging.*")
+        .AddHttpClientInstrumentation(o => {
+            o.EnrichWithHttpResponseMessage = (activity, response) =>
+            {
+                if (response.RequestMessage.Headers.TryGetValues("x-ms-client-request-id", out var clientRequestId))
+                {
+                    activity.SetTag("az.client_request_id", clientRequestId);
+                }
+                if (response.Headers.TryGetValues("x-ms-request-id", out var requestId))
+                {
+                    activity.SetTag("az.service_request_id", requestId);
+                }
+            };
+        })
+        ...)
+```
+
+Here we enabled tracing for storage and messaging groups and also enabled HTTP client instrumentation providing hooks to collect request id headers. It's recommended to use provided attribute names to stay consistent with Azure SDK behavior.
+
+_Note: request identifiers are also stamped on HTTP logs emitted by `Azure.Core`. If you collect such logs, or record request identifiers using other means, you might not need to record them on traces as well._
+
+#### Filtering out duplicated HTTP client activities
+
+Another approach would be to filter out generic HTTP client activities:
+
+```csharp
+.WithTracing(tracerProviderBuilder => tracerProviderBuilder
+    .AddSource("Azure.*")
+    .AddHttpClientInstrumentation(o => {
+        o => o.FilterHttpRequestMessage = (_) => Activity.Current?.Parent?.Source?.Name != "Azure.Core.Http";
+    })
+    ...)
+```
+
+Here we enabled all `Azure.*` sources, but added filter to drop HTTP client activities that would be duplicates of `Azure` activities.
+
+_Note: filtering does not prevent new activity from being created and new [`traceparent`](https://www.w3.org/TR/trace-context/#traceparent-header) from being generated._
+
+## HTTP metrics
+
+Azure client libraries do not collect HTTP-level metrics. Please use metrics coming from .NET platform and/or generic HTTP client instrumentation.
+
+## Azure Monitor
+
+Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app.
+
+To setup Azure Monitor for your application follow the [Start Monitoring Application](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore) guide.
+
+If your application uses ApplicationInsights SDK (classic), automatic collection of Azure SDK traces is supported since version `2.12.0` ([Microsoft.ApplicationInsights on NuGet](https://www.nuget.org/packages/Microsoft.ApplicationInsights/)).
+
+### Sample
+
+To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure client libraries.
+
+### Enabling experimental tracing features
+
+Certain tracing features remain experimental and still need to be enabled explicitly. Check out [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md) to see which conventions are considered experimental.
+
+The shape of experimental Activities may change in the future without notice. This includes:
 - the kinds of operations that are tracked
 - relationships between telemetry spans
 - attributes attached to telemetry spans
-
-More detailed distributed tracing convention can be found at https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml .
 
 ActivitySource support can be enabled through either of these three steps:
 
@@ -196,11 +307,14 @@ AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
   </ItemGroup>
 ```
 
-You'll need `System.Diagnostics.DiagnosticSource` package with version `5.0` or later consume Azure SDK Activities.
+### Consume activities with `ActivityListener`
+
+While it's common to use OpenTelemetry to record and export activities, it's also possible to consume them in your application with `ActivityListener`.
+You'll need `System.Diagnostics.DiagnosticSource` package with version `6.0` or later consume Azure SDK Activities.
 
 ```xml
  <ItemGroup>
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.1" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
   </ItemGroup>
 ```
 
@@ -221,31 +335,9 @@ var secretClient = new SecretClient(new Uri("https://example.com"), new DefaultA
 secretClient.GetSecret("<secret-name>");
 ```
 
-## Distributed tracing
+## Setting `x-ms-client-request-id` value sent with requests
 
-Azure SDKs are instrumented for distributed tracing using ApplicationsInsights or OpenTelemetry.
-
-### ApplicationInsights with Azure Monitor
-
-Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
-
-If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0` ([Microsoft.ApplicationInsights on NuGet](https://www.nuget.org/packages/Microsoft.ApplicationInsights/)).
-
-To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
-
-### OpenTelemetry with Azure Monitor, Zipkin and others
-
-OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#activitysource-support) section before proceeding to OpenTelemetry configuration.
-
-Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
-
-### Sample
-
-To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure SDKs.
-
-## Setting x-ms-client-request-id value sent with requests
-
-By default x-ms-client-request-id header gets a unique value per client method call. If you would like to use a specific value for a set of requests use the `HttpPipeline.CreateClientRequestIdScope` method.
+By default `x-ms-client-request-id` header gets a unique value per client method call. If you would like to use a specific value for a set of requests use the `HttpPipeline.CreateClientRequestIdScope` method.
 
 ```C# Snippet:ClientRequestId
 var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementTenantSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementTenantSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementTenantSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementTenantSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementTenantSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementTenantSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementTenantSetting method.
     /// </summary>
     public partial class ApiManagementTenantSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementTenantSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="settingsType"> The settingsType. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, SettingsType settingsType)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly TenantSettingsRestOperations _apiManagementTenantSettingTenantSettingsRestClient;
         private readonly ApiManagementTenantSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/settings";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingResource"/> class for mocking. </summary>
         protected ApiManagementTenantSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementTenantSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementTenantSettingResource(ArmClient client, ApiManagementTenantSettingData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/settings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

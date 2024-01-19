@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of StartMenuItem definitions. </summary>
     internal partial class StartMenuItemList
     {
-        /// <summary> Initializes a new instance of StartMenuItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartMenuItemList"/>. </summary>
         internal StartMenuItemList()
         {
             Value = new ChangeTrackingList<DesktopVirtualizationStartMenuItem>();
         }
 
-        /// <summary> Initializes a new instance of StartMenuItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartMenuItemList"/>. </summary>
         /// <param name="value"> List of StartMenuItem definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal StartMenuItemList(IReadOnlyList<DesktopVirtualizationStartMenuItem> value, string nextLink)

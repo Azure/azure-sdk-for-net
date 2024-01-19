@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A stream analytics output. </summary>
     public partial class StreamAnalyticsTestOutput
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsTestOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestOutput"/>. </summary>
         /// <param name="output"> The stream analytics output to test. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
         public StreamAnalyticsTestOutput(StreamingJobOutputData output)

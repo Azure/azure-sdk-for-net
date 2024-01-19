@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ResourceNotifications.HealthResources.ResourceAnnotated event. </summary>
     public partial class ResourceNotificationsHealthResourcesAnnotatedEventData : ResourceNotificationsResourceUpdatedEventData
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsHealthResourcesAnnotatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAnnotatedEventData"/>. </summary>
         internal ResourceNotificationsHealthResourcesAnnotatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsHealthResourcesAnnotatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAnnotatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>

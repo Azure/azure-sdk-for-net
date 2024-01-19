@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a blob input data source that contains stream data. </summary>
     public partial class GatewayMessageBusStreamInputDataSource : StreamInputDataSource
     {
-        /// <summary> Initializes a new instance of GatewayMessageBusStreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayMessageBusStreamInputDataSource"/>. </summary>
         public GatewayMessageBusStreamInputDataSource()
         {
             StreamInputDataSourceType = "GatewayMessageBus";
         }
 
-        /// <summary> Initializes a new instance of GatewayMessageBusStreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayMessageBusStreamInputDataSource"/>. </summary>
         /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="topic"> The name of the Service Bus topic. </param>
         internal GatewayMessageBusStreamInputDataSource(string streamInputDataSourceType, string topic) : base(streamInputDataSourceType)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Workspace features. </summary>
     public partial class OperationalInsightsWorkspaceFeatures
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceFeatures"/>. </summary>
         public OperationalInsightsWorkspaceFeatures()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceFeatures"/>. </summary>
         /// <param name="isDataExportEnabled"> Flag that indicate if data should be exported. </param>
         /// <param name="immediatePurgeDataOn30Days"> Flag that describes if we want to remove the data after 30 days. </param>
         /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

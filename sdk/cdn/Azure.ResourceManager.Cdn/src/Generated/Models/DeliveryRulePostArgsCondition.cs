@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the PostArgs condition for the delivery rule. </summary>
     public partial class DeliveryRulePostArgsCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRulePostArgsCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRulePostArgsCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRulePostArgsCondition(PostArgsMatchCondition properties)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.PostArgs;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRulePostArgsCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRulePostArgsCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         internal DeliveryRulePostArgsCondition(MatchVariable name, PostArgsMatchCondition properties) : base(name)

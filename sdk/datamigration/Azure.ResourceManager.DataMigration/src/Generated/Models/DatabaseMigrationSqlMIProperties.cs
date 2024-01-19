@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database Migration Resource properties for SQL Managed Instance. </summary>
     public partial class DatabaseMigrationSqlMIProperties : DatabaseMigrationProperties
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlMIProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlMIProperties"/>. </summary>
         public DatabaseMigrationSqlMIProperties()
         {
             Kind = ResourceType.SqlMI;
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlMIProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlMIProperties"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>

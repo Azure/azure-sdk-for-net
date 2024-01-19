@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Standard Apache Lucene analyzer; Composed of the standard tokenizer, lowercase filter and stop filter. </summary>
     public partial class LuceneStandardAnalyzer : LexicalAnalyzer
     {
-        /// <summary> Initializes a new instance of LuceneStandardAnalyzer. </summary>
+        /// <summary> Initializes a new instance of <see cref="LuceneStandardAnalyzer"/>. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LuceneStandardAnalyzer(string name) : base(name)
@@ -25,8 +25,8 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Azure.Search.StandardAnalyzer";
         }
 
-        /// <summary> Initializes a new instance of LuceneStandardAnalyzer. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
+        /// <summary> Initializes a new instance of <see cref="LuceneStandardAnalyzer"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
         /// <param name="stopwords"> A list of stopwords. </param>

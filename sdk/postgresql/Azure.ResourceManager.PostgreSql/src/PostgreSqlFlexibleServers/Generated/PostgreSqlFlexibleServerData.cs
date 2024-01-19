@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PostgreSqlFlexibleServerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

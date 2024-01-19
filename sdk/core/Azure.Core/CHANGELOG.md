@@ -1,6 +1,6 @@
 # Release History
 
-## 1.36.0-beta.1 (Unreleased)
+## 1.38.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,33 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.37.0 (2024-01-11)
+
+### Bugs Fixed
+
+- Fixed exponential retry behavior so that delay milliseconds greater than `Int32.MaxValue` do not trigger an exception.
+- Fixed `DelayStrategy` behavior to no longer shift the delay to be used over by one attempt. Previously, the first delay would be what should have been used for the second, and the second was what should have been used for the third, etc. Note, this would only be observed when using `DelayStrategy` outside of a `RetryPolicy` or `RetryOptions`.
+- Do not add the `error.type` attribute twice when tracing is enabled.
+- Do not suppress nested activities when they occur in the context of Consumer/Server activities (e.g. `BlobClient.Download` is no longer suppressed under `EventHubs.Process`).
+
+### Other Changes
+- Remove targets for .NET Core 2.1 and .NET 5 since they are out of support. Azure.Core is no longer compatible with .NET Core 2.1 after removal of target. The remaining targets are unchanged.
+
+## 1.36.0 (2023-11-10)
+
+### Features Added
+
+- Added `RequiresUnreferencedCode` attribute to `RequestContent.Create(object)` overloads that use reflection to serialize the input object.  This provides support for native AOT compilation when Azure.Core is used for diagnostics.
+- Use System.Text.Json source generation to deserialize the error response in `RequestFailedException` on `net6.0` and above targets.
+
+### Breaking Changes
+
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+- Suppress client activity creation by Azure clients if it happens in scope of another activity created by an Azure client.
+- Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot).  We now append provided activity name as is to the client namespace name. Previously, the provided activity name was omitted and the `ActivitySource` name matched the provided client namespace.
+- Distributed tracing with `ActivitySource` for HTTP and REST-based client libraries is declared stable. [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) is no longer required for most of the newly released libraries. Tracing for messaging libraries remains experimental.
+- Added nullable annotation to `ResourceIdentifier.TryParse` parameter `input`.
 
 ## 1.35.0 (2023-09-07)
 

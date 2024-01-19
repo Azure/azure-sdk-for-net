@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for a docker quick build. </summary>
     public partial class ContainerRegistryDockerBuildContent : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryDockerBuildContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryDockerBuildContent"/>. </summary>
         /// <param name="dockerFilePath"> The Docker file path relative to the source location. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dockerFilePath"/> or <paramref name="platform"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = "DockerBuildRequest";
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryDockerBuildContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryDockerBuildContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>

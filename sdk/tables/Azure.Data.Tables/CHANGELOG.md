@@ -1,6 +1,16 @@
 # Release History
 
-## 12.8.2 (2023-10-10)
+## 12.9.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.8.2 (2023-11-13)
 
 ### Acknowledgments
 
@@ -11,6 +21,9 @@ Thank you to our developer community members who helped to make Azure Tables bet
 ### Bugs Fixed
 
 - Fixed an issue where custom models decorated with the `DataMemberAttribute` were not properly considered in query filters (A community contribution, courtesy of _[metjuperry]_ ([#38884](https://github.com/Azure/azure-sdk-for-net/issues/38884))
+
+### Other Changes
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## 12.8.1 (2023-08-15)
 

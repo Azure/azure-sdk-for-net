@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The RestoreJobRecoveryPointDetails. </summary>
     public partial class RestoreJobRecoveryPointDetails
     {
-        /// <summary> Initializes a new instance of RestoreJobRecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreJobRecoveryPointDetails"/>. </summary>
         internal RestoreJobRecoveryPointDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreJobRecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreJobRecoveryPointDetails"/>. </summary>
         /// <param name="recoveryPointId"></param>
         /// <param name="recoverOn"></param>
         internal RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn)

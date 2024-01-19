@@ -1,6 +1,6 @@
 # Release History
 
-## 4.21.0-beta.1 (Unreleased)
+## 4.22.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.21.0 (2023-11-07)
+
+### Features Added
+
+- Added new system events for Resource Notifications
+- Added the `Metadata` property to various Azure Communication Services events.
 
 ## 4.20.0 (2023-10-18)
 

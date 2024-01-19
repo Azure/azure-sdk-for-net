@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a run command parameter. </summary>
     public partial class RunCommandInputParameter
     {
-        /// <summary> Initializes a new instance of RunCommandInputParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandInputParameter"/>. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="value"> The run command parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

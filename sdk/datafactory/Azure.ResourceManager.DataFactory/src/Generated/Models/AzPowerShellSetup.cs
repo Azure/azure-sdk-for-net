@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The express custom setup of installing Azure PowerShell. </summary>
     public partial class AzPowerShellSetup : CustomSetupBase
     {
-        /// <summary> Initializes a new instance of AzPowerShellSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/>. </summary>
         /// <param name="version"> The required version of Azure PowerShell to install. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public AzPowerShellSetup(string version)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CustomSetupBaseType = "AzPowerShellSetup";
         }
 
-        /// <summary> Initializes a new instance of AzPowerShellSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="version"> The required version of Azure PowerShell to install. </param>
         internal AzPowerShellSetup(string customSetupBaseType, string version) : base(customSetupBaseType)

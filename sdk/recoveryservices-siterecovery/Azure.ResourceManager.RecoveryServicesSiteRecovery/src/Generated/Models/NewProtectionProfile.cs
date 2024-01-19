@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> New Protection profile input. </summary>
     public partial class NewProtectionProfile : ProtectionProfileCustomDetails
     {
-        /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewProtectionProfile"/>. </summary>
         /// <param name="policyName"> The protection profile input. </param>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceType = "New";
         }
 
-        /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewProtectionProfile"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         /// <param name="policyName"> The protection profile input. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>

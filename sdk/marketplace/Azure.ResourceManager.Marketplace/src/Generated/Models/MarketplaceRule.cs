@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The MarketplaceRule. </summary>
     public partial class MarketplaceRule
     {
-        /// <summary> Initializes a new instance of MarketplaceRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRule"/>. </summary>
         public MarketplaceRule()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRule"/>. </summary>
         /// <param name="ruleType"> Rule type. </param>
         /// <param name="value"></param>
         internal MarketplaceRule(MarketplaceRuleType? ruleType, IList<string> value)

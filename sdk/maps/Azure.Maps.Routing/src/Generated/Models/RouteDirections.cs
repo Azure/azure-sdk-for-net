@@ -13,14 +13,14 @@ namespace Azure.Maps.Routing.Models
     /// <summary> This object is returned from a successful Route Directions call. </summary>
     public partial class RouteDirections
     {
-        /// <summary> Initializes a new instance of RouteDirections. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteDirections"/>. </summary>
         internal RouteDirections()
         {
             Routes = new ChangeTrackingList<RouteData>();
             OptimizedWaypoints = new ChangeTrackingList<RouteOptimizedWaypoint>();
         }
 
-        /// <summary> Initializes a new instance of RouteDirections. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteDirections"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="routes"> Routes array. </param>
         /// <param name="optimizedWaypoints">

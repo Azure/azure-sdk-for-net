@@ -9,18 +9,18 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Contains the parameters specific to using an Azure Open AI service for vectorization at query time. </summary>
+    /// <summary> Specifies the parameters for connecting to the Azure OpenAI resource. </summary>
     public partial class AzureOpenAIParameters
     {
-        /// <summary> Initializes a new instance of AzureOpenAIParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIParameters"/>. </summary>
         public AzureOpenAIParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureOpenAIParameters. </summary>
-        /// <param name="resourceUri"> The resource uri for your Azure Open AI resource. </param>
-        /// <param name="deploymentId"> ID of your Azure Open AI model deployment on the designated resource. </param>
-        /// <param name="apiKey"> API key for the designated Azure Open AI resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIParameters"/>. </summary>
+        /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
+        /// <param name="deploymentId"> ID of the Azure OpenAI model deployment on the designated resource. </param>
+        /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
         /// <param name="authIdentity">
         /// The user-assigned managed identity used for outbound connections.
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -34,11 +34,11 @@ namespace Azure.Search.Documents.Indexes.Models
             AuthIdentity = authIdentity;
         }
 
-        /// <summary> The resource uri for your Azure Open AI resource. </summary>
+        /// <summary> The resource URI of the Azure OpenAI resource. </summary>
         public Uri ResourceUri { get; set; }
-        /// <summary> ID of your Azure Open AI model deployment on the designated resource. </summary>
+        /// <summary> ID of the Azure OpenAI model deployment on the designated resource. </summary>
         public string DeploymentId { get; set; }
-        /// <summary> API key for the designated Azure Open AI resource. </summary>
+        /// <summary> API key of the designated Azure OpenAI resource. </summary>
         public string ApiKey { get; set; }
         /// <summary>
         /// The user-assigned managed identity used for outbound connections.

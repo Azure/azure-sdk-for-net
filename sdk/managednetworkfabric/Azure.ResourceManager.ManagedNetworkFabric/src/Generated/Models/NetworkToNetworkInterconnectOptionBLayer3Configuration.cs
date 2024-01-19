@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Common properties for Layer3Configuration. </summary>
     public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : OptionBLayer3Configuration
     {
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectOptionBLayer3Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
         public NetworkToNetworkInterconnectOptionBLayer3Configuration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectOptionBLayer3Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>

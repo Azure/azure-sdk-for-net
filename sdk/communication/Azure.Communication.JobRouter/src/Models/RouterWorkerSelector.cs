@@ -2,28 +2,34 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterWorkerSelector")]
-    [CodeGenSuppress("RouterWorkerSelector", typeof(string), typeof(LabelOperator))]
     public partial class RouterWorkerSelector : IUtf8JsonSerializable
     {
         /// <summary> Describes how long this label selector is valid for. </summary>
+        [CodeGenMember("ExpiresAfterSeconds")]
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
         public TimeSpan? ExpiresAfter { get; set; }
 
-        [CodeGenMember("ExpiresAfterSeconds")]
-        internal double? _expiresAfterSeconds {
-            get
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteExpiresAfter(Utf8JsonWriter writer)
+        {
+            writer.WriteNumberValue(ExpiresAfter.Value.TotalSeconds);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadExpiresAfter(JsonProperty property, ref Optional<TimeSpan> expiresAfter)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                return ExpiresAfter?.TotalSeconds is null or 0 ? null : ExpiresAfter?.TotalSeconds;
+                return;
             }
-            set
-            {
-                ExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
-            }
+            var value = property.Value.GetDouble();
+            expiresAfter = TimeSpan.FromSeconds(value);
         }
 
         [CodeGenMember("Value")]
@@ -35,21 +41,21 @@ namespace Azure.Communication.JobRouter
             }
             set
             {
-                Value = new LabelValue(value.ToObjectFromJson());
+                Value = new RouterValue(value.ToObjectFromJson());
             }
         }
 
-        /// <summary> The value to compare against the actual label value with the given operator. </summary>
-        public LabelValue Value { get; set; }
+        /// <summary> The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean. </summary>
+        public RouterValue Value { get; internal set; }
 
-        /// <summary> The time at which this worker selector expires in UTC. </summary>
-        public DateTimeOffset? ExpiresAt { get; set; }
+        /// <summary> Pushes the job to the front of the queue as long as this selector is active. </summary>
+        public bool? Expedite { get; set; }
 
         /// <summary> Initializes a new instance of WorkerSelector. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
-        public RouterWorkerSelector(string key, LabelOperator labelOperator, LabelValue value)
+        public RouterWorkerSelector(string key, LabelOperator labelOperator, RouterValue value)
         {
             Key = key;
             LabelOperator = labelOperator;
@@ -68,10 +74,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value.ToObjectFromJson<object>());
             }
-            if (Optional.IsDefined(_expiresAfterSeconds))
+            if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
-                writer.WriteNumberValue(_expiresAfterSeconds.Value);
+                WriteExpiresAfter(writer);
             }
             if (Optional.IsDefined(Expedite))
             {

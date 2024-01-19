@@ -8,7 +8,7 @@ using Microsoft.Identity.Client.Broker;
 namespace Azure.Identity.Broker
 {
     /// <summary>
-    /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieu of the system browser if available.
+    /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieu of an embedded web view or the system browser.
     /// </summary>
     public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
     {
@@ -19,6 +19,11 @@ namespace Azure.Identity.Broker
         /// </summary>
         /// <value></value>
         public bool? IsLegacyMsaPassthroughEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether proof of possession is required.
+        /// </summary>
+        public bool IsProofOfPossessionRequired { get; set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.

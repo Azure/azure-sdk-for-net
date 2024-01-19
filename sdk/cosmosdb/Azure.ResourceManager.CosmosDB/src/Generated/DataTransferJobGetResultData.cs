@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class DataTransferJobGetResultData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataTransferJobGetResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobGetResultData"/>. </summary>
         public DataTransferJobGetResultData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTransferJobGetResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobGetResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

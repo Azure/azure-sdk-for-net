@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningFlowModelJobOutput. </summary>
     public partial class MachineLearningFlowModelJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningFlowModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobOutput"/>. </summary>
         public MachineLearningFlowModelJobOutput()
         {
             JobOutputType = JobOutputType.MlflowModel;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFlowModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="assetName"> Output Asset Name. </param>

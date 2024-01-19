@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Dedicated Host sizes operation response. </summary>
     internal partial class DedicatedHostSizeListResult
     {
-        /// <summary> Initializes a new instance of DedicatedHostSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostSizeListResult"/>. </summary>
         internal DedicatedHostSizeListResult()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DedicatedHostSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostSizeListResult"/>. </summary>
         /// <param name="value"> The list of dedicated host sizes. </param>
         internal DedicatedHostSizeListResult(IReadOnlyList<string> value)
         {

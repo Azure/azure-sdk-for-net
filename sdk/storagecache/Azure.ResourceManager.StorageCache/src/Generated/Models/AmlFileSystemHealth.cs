@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> An indication of AML file system health. Gives more information about health than just that related to provisioning. </summary>
     public partial class AmlFileSystemHealth
     {
-        /// <summary> Initializes a new instance of AmlFileSystemHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemHealth"/>. </summary>
         internal AmlFileSystemHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemHealth"/>. </summary>
         /// <param name="state"> List of AML file system health states. </param>
         /// <param name="statusCode"> Server-defined error code for the AML file system health. </param>
         /// <param name="statusDescription"> Describes the health state. </param>

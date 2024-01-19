@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The group by expression to be used in the report. </summary>
     public partial class ReportConfigGrouping
     {
-        /// <summary> Initializes a new instance of ReportConfigGrouping. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportConfigGrouping"/>. </summary>
         /// <param name="queryColumnType"> Has type of the column to group. </param>
         /// <param name="name"> The name of the column to group. This version supports subscription lowest possible grain. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

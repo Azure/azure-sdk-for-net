@@ -77,7 +77,10 @@ namespace Azure.ResourceManager.Avs
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NamedOutputs);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamedOutputs.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(NamedOutputs))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

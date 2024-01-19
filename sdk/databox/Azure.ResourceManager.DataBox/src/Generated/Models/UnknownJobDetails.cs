@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The UnknownJobDetails. </summary>
     internal partial class UnknownJobDetails : DataBoxBasicJobDetails
     {
-        /// <summary> Initializes a new instance of UnknownJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public abstract partial class AlertRuleCondition
     {
-        /// <summary> Initializes a new instance of AlertRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleCondition"/>. </summary>
         protected AlertRuleCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleCondition"/>. </summary>
         /// <param name="odataType"> specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric). </param>
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.

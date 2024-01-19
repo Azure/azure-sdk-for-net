@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> The SelectiveKeyRestoreOperationParameters. </summary>
     internal partial class SelectiveKeyRestoreOperationParameters
     {
-        /// <summary> Initializes a new instance of SelectiveKeyRestoreOperationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"></param>
         /// <param name="folder"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folder"/> is null. </exception>

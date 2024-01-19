@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized leaf certificate. </summary>
     public partial class IotHubCertificateVerificationContent
     {
-        /// <summary> Initializes a new instance of IotHubCertificateVerificationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateVerificationContent"/>. </summary>
         public IotHubCertificateVerificationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateVerificationContent"/>. </summary>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        internal IotHubCertificateVerificationContent(BinaryData certificate)
+        {
+            Certificate = certificate;
         }
 
         /// <summary>
@@ -23,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

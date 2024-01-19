@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -24,7 +25,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             Response response = client.GetWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -43,7 +44,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             Response response = await client.GetWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -62,7 +63,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             Response response = client.GetWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -88,7 +89,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             Response response = await client.GetWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -114,7 +115,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -129,7 +130,7 @@ type = "when_term_creation_is_requested",
                 isEnabled = true,
                 description = "<description>",
             });
-            Response response = client.CreateOrReplaceWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.CreateOrReplace(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -146,7 +147,7 @@ type = "when_term_creation_is_requested",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -161,7 +162,7 @@ type = "when_term_creation_is_requested",
                 isEnabled = true,
                 description = "<description>",
             });
-            Response response = await client.CreateOrReplaceWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.CreateOrReplaceAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -178,7 +179,7 @@ type = "when_term_creation_is_requested",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -197,7 +198,7 @@ underGlossary = "<underGlossary>",
                 description = "<description>",
                 actionDag = new object(),
             });
-            Response response = client.CreateOrReplaceWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.CreateOrReplace(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -221,7 +222,7 @@ underGlossary = "<underGlossary>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -240,7 +241,7 @@ underGlossary = "<underGlossary>",
                 description = "<description>",
                 actionDag = new object(),
             });
-            Response response = await client.CreateOrReplaceWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.CreateOrReplaceAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -264,9 +265,9 @@ underGlossary = "<underGlossary>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
-            Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = client.Delete(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
@@ -277,9 +278,9 @@ underGlossary = "<underGlossary>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
-            Response response = await client.DeleteWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = await client.DeleteAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
@@ -290,9 +291,9 @@ underGlossary = "<underGlossary>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
-            Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = client.Delete(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
@@ -303,9 +304,9 @@ underGlossary = "<underGlossary>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowClient client = new WorkflowClient(endpoint, credential);
 
-            Response response = await client.DeleteWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response response = await client.DeleteAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 
             Console.WriteLine(response.Status);
         }
@@ -316,7 +317,7 @@ underGlossary = "<underGlossary>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -329,7 +330,7 @@ payload = new object(),
 }
             },
             });
-            Response response = client.SubmitUserRequests(content);
+            Response response = client.Submit(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -345,7 +346,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -358,7 +359,7 @@ payload = new object(),
 }
             },
             });
-            Response response = await client.SubmitUserRequestsAsync(content);
+            Response response = await client.SubmitAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -374,7 +375,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -388,7 +389,7 @@ payload = new object(),
             },
                 comment = "<comment>",
             });
-            Response response = client.SubmitUserRequests(content);
+            Response response = client.Submit(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -406,7 +407,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -420,7 +421,7 @@ payload = new object(),
             },
                 comment = "<comment>",
             });
-            Response response = await client.SubmitUserRequestsAsync(content);
+            Response response = await client.SubmitAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -438,7 +439,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             Response response = client.GetWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -454,7 +455,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             Response response = await client.GetWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -470,7 +471,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             Response response = client.GetWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -498,7 +499,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             Response response = await client.GetWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -526,10 +527,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Cancel(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -540,10 +541,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.CancelAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -554,13 +555,13 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
-            Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Cancel(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -571,13 +572,13 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
-            Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.CancelAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -588,7 +589,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             Response response = client.GetWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -610,7 +611,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             Response response = await client.GetWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -632,7 +633,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             Response response = client.GetWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -664,7 +665,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             Response response = await client.GetWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -696,10 +697,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Approve(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -710,10 +711,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.ApproveAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -724,13 +725,13 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
-            Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Approve(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -741,13 +742,13 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
-            Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.ApproveAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -758,10 +759,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Reject(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -772,10 +773,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.RejectAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -786,13 +787,13 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
-            Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Reject(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -803,13 +804,13 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            ApprovalClient client = new ApprovalClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 comment = "<comment>",
             });
-            Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.RejectAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -820,10 +821,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Reassign(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -834,10 +835,10 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.ReassignAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -848,7 +849,7 @@ payload = new object(),
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -861,7 +862,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 }
             },
             });
-            Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Reassign(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -872,7 +873,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTaskClient client = new WorkflowTaskClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -885,7 +886,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 }
             },
             });
-            Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.ReassignAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -896,13 +897,13 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
             });
-            Response response = client.UpdateTaskStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Update(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -913,13 +914,13 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
             });
-            Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.UpdateAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -930,14 +931,14 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
                 comment = "<comment>",
             });
-            Response response = client.UpdateTaskStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = client.Update(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -948,14 +949,14 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            TaskStatusClient client = new TaskStatusClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 newStatus = "NotStarted",
                 comment = "<comment>",
             });
-            Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+            Response response = await client.UpdateAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
 
             Console.WriteLine(response.Status);
         }
@@ -966,7 +967,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowsClient client = new WorkflowsClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetWorkflows(null))
             {
@@ -985,7 +986,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowsClient client = new WorkflowsClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetWorkflowsAsync(null))
             {
@@ -1004,7 +1005,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowsClient client = new WorkflowsClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetWorkflows(null))
             {
@@ -1030,7 +1031,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowsClient client = new WorkflowsClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetWorkflowsAsync(null))
             {
@@ -1056,9 +1057,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowRuns(null, null, null, null, null, null))
+            foreach (BinaryData item in client.GetWorkflowRuns(null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1077,9 +1078,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowRunsAsync(null, null, null, null, null, null))
+            await foreach (BinaryData item in client.GetWorkflowRunsAsync(null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1098,9 +1099,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
+            foreach (BinaryData item in client.GetWorkflowRuns("<viewMode>", "1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, new string[] { "<requestorIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1123,9 +1124,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
+            await foreach (BinaryData item in client.GetWorkflowRunsAsync("<viewMode>", "1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, new string[] { "<requestorIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1148,9 +1149,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowTasks(null, null, null, null, null, null, null, null, null))
+            foreach (BinaryData item in client.GetWorkflowTasks(null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -1171,9 +1172,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowTasksAsync(null, null, null, null, null, null, null, null, null))
+            await foreach (BinaryData item in client.GetWorkflowTasksAsync(null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -1194,9 +1195,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
+            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, new string[] { "<requestorIds>" }, new string[] { "<assigneeIds>" }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -1227,9 +1228,9 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
+            WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
+            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "<requestorIds>" }, new string[] { "<assigneeIds>" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());

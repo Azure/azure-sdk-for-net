@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Global configuration for services in the cluster. </summary>
     public partial class GlobalServiceConfiguration
     {
-        /// <summary> Initializes a new instance of GlobalServiceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalServiceConfiguration"/>. </summary>
         public GlobalServiceConfiguration()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of GlobalServiceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalServiceConfiguration"/>. </summary>
         /// <param name="etag"> The configuration ETag for updates. </param>
         /// <param name="ssl"> The SSL configuration properties. </param>
         /// <param name="serviceAuth"> Optional global authorization keys for all user services deployed in cluster. These are used if the service does not have auth keys. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

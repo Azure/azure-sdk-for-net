@@ -73,6 +73,25 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         public static Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
     }
 }
+namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
+{
+    public partial class MockableMarketplaceOrderingArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMarketplaceOrderingArmClient() { }
+        public virtual Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource GetMarketplaceAgreementResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource GetMarketplaceAgreementTermResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableMarketplaceOrderingSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMarketplaceOrderingSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource> GetMarketplaceAgreement(string publisherId, string offerId, string planId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource>> GetMarketplaceAgreementAsync(string publisherId, string offerId, string planId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementCollection GetMarketplaceAgreements() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource> GetMarketplaceAgreementTerm(Azure.ResourceManager.MarketplaceOrdering.Models.AgreementOfferType offerType, string publisherId, string offerId, string planId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource>> GetMarketplaceAgreementTermAsync(Azure.ResourceManager.MarketplaceOrdering.Models.AgreementOfferType offerType, string publisherId, string offerId, string planId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.MarketplaceOrdering.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

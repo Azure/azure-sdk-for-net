@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public static IEnumerable<object[]> RetriableExceptionTestCases()
         {
             yield return new object[] { new TimeoutException() };
-            yield return new object[] { new SocketException(500) };
+            yield return new object[] { new SocketException((int)SocketError.ConnectionReset) };
             yield return new object[] { new IOException() };
             yield return new object[] { new UnauthorizedAccessException() };
 
@@ -60,6 +60,8 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { new NullReferenceException() };
             yield return new object[] { new OutOfMemoryException() };
             yield return new object[] { new ObjectDisposedException("dummy") };
+            yield return new object[] { new SocketException((int)SocketError.HostNotFound) };
+            yield return new object[] { new SocketException((int)SocketError.HostUnreachable) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 

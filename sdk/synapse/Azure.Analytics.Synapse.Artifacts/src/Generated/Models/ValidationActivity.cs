@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> This activity verifies that an external resource exists. </summary>
     public partial class ValidationActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of ValidationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Validation activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Validation";
         }
 
-        /// <summary> Initializes a new instance of ValidationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceDiagnoseProperties. </summary>
     public partial class MachineLearningWorkspaceDiagnoseProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceDiagnoseProperties"/>. </summary>
         public MachineLearningWorkspaceDiagnoseProperties()
         {
             ApplicationInsights = new ChangeTrackingDictionary<string, BinaryData>();
@@ -28,13 +28,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Udr = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceDiagnoseProperties"/>. </summary>
+        /// <param name="applicationInsights"> Setting for diagnosing dependent application insights. </param>
+        /// <param name="containerRegistry"> Setting for diagnosing dependent container registry. </param>
+        /// <param name="dnsResolution"> Setting for diagnosing dns resolution. </param>
+        /// <param name="keyVault"> Setting for diagnosing dependent key vault. </param>
+        /// <param name="nsg"> Setting for diagnosing network security group. </param>
+        /// <param name="others"> Setting for diagnosing unclassified category of problems. </param>
+        /// <param name="resourceLock"> Setting for diagnosing resource lock. </param>
+        /// <param name="storageAccount"> Setting for diagnosing dependent storage account. </param>
+        /// <param name="udr"> Setting for diagnosing user defined routing. </param>
+        internal MachineLearningWorkspaceDiagnoseProperties(IDictionary<string, BinaryData> applicationInsights, IDictionary<string, BinaryData> containerRegistry, IDictionary<string, BinaryData> dnsResolution, IDictionary<string, BinaryData> keyVault, IDictionary<string, BinaryData> nsg, IDictionary<string, BinaryData> others, IDictionary<string, BinaryData> resourceLock, IDictionary<string, BinaryData> storageAccount, IDictionary<string, BinaryData> udr)
+        {
+            ApplicationInsights = applicationInsights;
+            ContainerRegistry = containerRegistry;
+            DnsResolution = dnsResolution;
+            KeyVault = keyVault;
+            Nsg = nsg;
+            Others = others;
+            ResourceLock = resourceLock;
+            StorageAccount = storageAccount;
+            Udr = udr;
+        }
+
         /// <summary>
         /// Setting for diagnosing dependent application insights
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -65,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -96,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -127,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -158,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -189,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -220,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -251,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -282,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The result summary of an installation operation. </summary>
     public partial class MachineInstallPatchesResult
     {
-        /// <summary> Initializes a new instance of MachineInstallPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesResult"/>. </summary>
         internal MachineInstallPatchesResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineInstallPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesResult"/>. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </param>
         /// <param name="installationActivityId"> The activity ID of the operation that produced this result. </param>
         /// <param name="rebootStatus"> The reboot state of the VM following completion of the operation. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="patchServiceUsed"> Specifies the patch service used for the operation. </param>
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal MachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, OSType? osType, ResponseError errorDetails)
+        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </summary>
-        public PatchOperationStatus? Status { get; }
+        public MachineOperationStatus? Status { get; }
         /// <summary> The activity ID of the operation that produced this result. </summary>
         public string InstallationActivityId { get; }
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the patch service used for the operation. </summary>
         public PatchServiceUsed? PatchServiceUsed { get; }
         /// <summary> The operating system type of the machine. </summary>
-        public OSType? OSType { get; }
+        public HybridComputeOSType? OSType { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
         public ResponseError ErrorDetails { get; }
     }

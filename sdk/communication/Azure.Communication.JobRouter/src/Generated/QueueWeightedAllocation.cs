@@ -12,33 +12,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// Contains the weight percentage and queue selectors to be applied if selected
-    /// for weighted distributions.
-    /// </summary>
+    /// <summary> Contains the weight percentage and queue selectors to be applied if selected for weighted distributions. </summary>
     public partial class QueueWeightedAllocation
     {
-        /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="queueSelectors">
-        /// A collection of queue selectors that will be applied if this allocation is
-        /// selected.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueSelectors"/> is null. </exception>
-        internal QueueWeightedAllocation(double weight, IEnumerable<RouterQueueSelector> queueSelectors)
-        {
-            Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
-
-            Weight = weight;
-            QueueSelectors = queueSelectors.ToList();
-        }
-
-        /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
-        /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="queueSelectors">
-        /// A collection of queue selectors that will be applied if this allocation is
-        /// selected.
-        /// </param>
+        /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
         internal QueueWeightedAllocation(double weight, IReadOnlyList<RouterQueueSelector> queueSelectors)
         {
             Weight = weight;
@@ -47,10 +26,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>
         public double Weight { get; }
-        /// <summary>
-        /// A collection of queue selectors that will be applied if this allocation is
-        /// selected.
-        /// </summary>
+        /// <summary> A collection of queue selectors that will be applied if this allocation is selected. </summary>
         public IReadOnlyList<RouterQueueSelector> QueueSelectors { get; }
     }
 }

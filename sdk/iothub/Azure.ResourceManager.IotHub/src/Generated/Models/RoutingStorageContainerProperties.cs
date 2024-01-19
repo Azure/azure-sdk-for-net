@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to a storage container endpoint. </summary>
     public partial class RoutingStorageContainerProperties
     {
-        /// <summary> Initializes a new instance of RoutingStorageContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingStorageContainerProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="containerName"> The name of storage container in the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="containerName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             ContainerName = containerName;
         }
 
-        /// <summary> Initializes a new instance of RoutingStorageContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingStorageContainerProperties"/>. </summary>
         /// <param name="id"> Id of the storage container endpoint. </param>
         /// <param name="connectionString"> The connection string of the storage account. </param>
         /// <param name="endpoint"> The url of the storage endpoint. It must include the protocol https://. </param>

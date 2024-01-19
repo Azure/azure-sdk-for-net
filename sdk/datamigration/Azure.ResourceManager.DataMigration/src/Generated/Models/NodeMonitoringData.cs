@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The NodeMonitoringData. </summary>
     public partial class NodeMonitoringData
     {
-        /// <summary> Initializes a new instance of NodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeMonitoringData"/>. </summary>
         internal NodeMonitoringData()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of NodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeMonitoringData"/>. </summary>
         /// <param name="additionalProperties"> Unmatched properties from the message are deserialized in this collection. </param>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

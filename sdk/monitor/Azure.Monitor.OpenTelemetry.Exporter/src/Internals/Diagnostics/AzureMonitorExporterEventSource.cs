@@ -282,6 +282,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
+        [NonEvent]
+        public void ErrorAddingActivityTagsAsCustomProperties(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                ErrorAddingActivityTagsAsCustomProperties(ex.FlattenException().ToInvariantString());
+            }
+        }
+
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(25, Message = "Failed to transmit from storage due to an exception. AAD Enabled: {0}. Instrumentation Key: {1}. {2}", Level = EventLevel.Error)]
         public void FailedToTransmitFromStorage(bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(25, isAadEnabled, instrumentationKey, exceptionMessage);
@@ -395,5 +404,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(39, Message = "Received a partial success from ingestion. This status code is not handled and telemetry will be lost. Error StatusCode: {0}. Error Message: {1}", Level = EventLevel.Warning)]
         public void PartialContentResponseUnhandled(string errorStatusCode, string errorMessage) => WriteEvent(39, errorStatusCode, errorMessage);
+
+        [NonEvent]
+        public void FailedToAddScopeItem(string key, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToAddScopeItem(key, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(40, Message = "An exception {1} occurred while adding the scope value associated with the key {0}", Level = EventLevel.Warning)]
+        public void FailedToAddScopeItem(string key, string exceptionMessage) => WriteEvent(40, key, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToAddLogAttribute(string key, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToAddLogAttribute(key, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(41, Message = "An exception {1} occurred while adding the log attribute associated with the key {0}", Level = EventLevel.Warning)]
+        public void FailedToAddLogAttribute(string key, string exceptionMessage) => WriteEvent(41, key, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToReadEnvironmentVariables(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToReadEnvironmentVariables(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(42, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
+        public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(42, errorMessage);
+
+        [Event(43, Message = "Error while adding activity tags as custom property: {0}", Level = EventLevel.Warning)]
+        public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(43, errorMessage);
     }
 }

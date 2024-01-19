@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
     internal partial class ManagedRuleSetList
     {
-        /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetList"/>. </summary>
         public ManagedRuleSetList()
         {
             ManagedRuleSets = new ChangeTrackingList<WafPolicyManagedRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetList"/>. </summary>
         /// <param name="managedRuleSets"> List of rule sets. </param>
         internal ManagedRuleSetList(IList<WafPolicyManagedRuleSet> managedRuleSets)
         {

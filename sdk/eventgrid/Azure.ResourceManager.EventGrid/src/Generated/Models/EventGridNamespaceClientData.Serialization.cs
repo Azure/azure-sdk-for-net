@@ -31,11 +31,6 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("authenticationName"u8);
                 writer.WriteStringValue(AuthenticationName);
             }
-            if (Optional.IsDefined(Authentication))
-            {
-                writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
-            }
             if (Optional.IsDefined(ClientCertificateAuthentication))
             {
                 writer.WritePropertyName("clientCertificateAuthentication"u8);
@@ -61,7 +56,10 @@ namespace Azure.ResourceManager.EventGrid
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();
@@ -82,7 +80,6 @@ namespace Azure.ResourceManager.EventGrid
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> authenticationName = default;
-            Optional<EventGridNamespaceClientAuthentication> authentication = default;
             Optional<ClientCertificateAuthentication> clientCertificateAuthentication = default;
             Optional<EventGridNamespaceClientState> state = default;
             Optional<IDictionary<string, BinaryData>> attributes = default;
@@ -130,15 +127,6 @@ namespace Azure.ResourceManager.EventGrid
                         if (property0.NameEquals("authenticationName"u8))
                         {
                             authenticationName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("authentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authentication = EventGridNamespaceClientAuthentication.DeserializeEventGridNamespaceClientAuthentication(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientCertificateAuthentication"u8))
@@ -193,7 +181,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, authentication.Value, clientCertificateAuthentication.Value, Optional.ToNullable(state), Optional.ToDictionary(attributes), Optional.ToNullable(provisioningState));
+            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, clientCertificateAuthentication.Value, Optional.ToNullable(state), Optional.ToDictionary(attributes), Optional.ToNullable(provisioningState));
         }
     }
 }

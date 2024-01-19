@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
-            Optional<DataProducDataTypeState> state = default;
+            Optional<DataProductDataTypeState> state = default;
             Optional<string> stateReason = default;
             Optional<int> storageOutputRetention = default;
             Optional<int> databaseCacheRetention = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                             {
                                 continue;
                             }
-                            state = new DataProducDataTypeState(property0.Value.GetString());
+                            state = new DataProductDataTypeState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("stateReason"u8))

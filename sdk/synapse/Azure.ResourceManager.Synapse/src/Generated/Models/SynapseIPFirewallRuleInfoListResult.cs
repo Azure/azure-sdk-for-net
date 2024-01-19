@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of IP firewall rules. </summary>
     internal partial class SynapseIPFirewallRuleInfoListResult
     {
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleInfoListResult"/>. </summary>
         internal SynapseIPFirewallRuleInfoListResult()
         {
             Value = new ChangeTrackingList<SynapseIPFirewallRuleInfoData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleInfoListResult"/>. </summary>
         /// <param name="nextLink"> Link to next page of results. </param>
         /// <param name="value"> List of IP firewall rules. </param>
         internal SynapseIPFirewallRuleInfoListResult(string nextLink, IReadOnlyList<SynapseIPFirewallRuleInfoData> value)

@@ -226,7 +226,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var client = CreateMockRouterAdministrationClient(200);
             try
             {
-                var response = client.CreateExceptionPolicy(new CreateExceptionPolicyOptions(input, new Dictionary<string, ExceptionRule>()));
+                var response = client.CreateExceptionPolicy(new CreateExceptionPolicyOptions(input, new List<ExceptionRule>()));
             }
             catch (Exception e)
             {
@@ -243,7 +243,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var client = CreateMockRouterAdministrationClient(200);
             try
             {
-                var response = await client.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(input, new Dictionary<string, ExceptionRule>()));
+                var response = await client.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(input, new List<ExceptionRule>()));
             }
             catch (Exception e)
             {

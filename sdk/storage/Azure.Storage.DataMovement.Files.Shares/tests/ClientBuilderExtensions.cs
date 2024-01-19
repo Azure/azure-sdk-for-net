@@ -10,6 +10,8 @@ using Azure.Storage.Files.Shares.Tests;
 using SharesClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     Azure.Storage.Files.Shares.ShareServiceClient,
     Azure.Storage.Files.Shares.ShareClientOptions>;
+using System.Threading;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -47,8 +49,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareServiceClient service = default,
             string shareName = default,
             IDictionary<string, string> metadata = default,
-            ShareClientOptions options = default)
+            ShareClientOptions options = default,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             service ??= clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             shareName ??= clientBuilder.GetNewShareName();

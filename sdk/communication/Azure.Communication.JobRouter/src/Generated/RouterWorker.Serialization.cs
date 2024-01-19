@@ -21,19 +21,25 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
+            ETag etag = default;
             string id = default;
             Optional<RouterWorkerState> state = default;
-            Optional<IReadOnlyDictionary<string, RouterQueueAssignment>> queueAssignments = default;
-            Optional<int> totalCapacity = default;
+            Optional<IList<string>> queues = default;
+            Optional<int> capacity = default;
             Optional<IDictionary<string, BinaryData>> labels = default;
             Optional<IDictionary<string, BinaryData>> tags = default;
-            Optional<IDictionary<string, ChannelConfiguration>> channelConfigurations = default;
+            Optional<IList<RouterChannel>> channels = default;
             Optional<IReadOnlyList<RouterJobOffer>> offers = default;
             Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
             Optional<double> loadRatio = default;
             Optional<bool> availableForOffers = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -48,27 +54,27 @@ namespace Azure.Communication.JobRouter
                     state = new RouterWorkerState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queueAssignments"u8))
+                if (property.NameEquals("queues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, RouterQueueAssignment> dictionary = new Dictionary<string, RouterQueueAssignment>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        dictionary.Add(property0.Name, RouterQueueAssignment.DeserializeRouterQueueAssignment(property0.Value));
+                        array.Add(item.GetString());
                     }
-                    queueAssignments = dictionary;
+                    queues = array;
                     continue;
                 }
-                if (property.NameEquals("totalCapacity"u8))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalCapacity = property.Value.GetInt32();
+                    capacity = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("labels"u8))
@@ -113,18 +119,18 @@ namespace Azure.Communication.JobRouter
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("channelConfigurations"u8))
+                if (property.NameEquals("channels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, ChannelConfiguration> dictionary = new Dictionary<string, ChannelConfiguration>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<RouterChannel> array = new List<RouterChannel>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        dictionary.Add(property0.Name, ChannelConfiguration.DeserializeChannelConfiguration(property0.Value));
+                        array.Add(RouterChannel.DeserializeRouterChannel(item));
                     }
-                    channelConfigurations = dictionary;
+                    channels = array;
                     continue;
                 }
                 if (property.NameEquals("offers"u8))
@@ -174,7 +180,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RouterWorker(id, Optional.ToNullable(state), Optional.ToDictionary(queueAssignments), Optional.ToNullable(totalCapacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToDictionary(channelConfigurations), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers));
+            return new RouterWorker(etag, id, Optional.ToNullable(state), Optional.ToList(queues), Optional.ToNullable(capacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToList(channels), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

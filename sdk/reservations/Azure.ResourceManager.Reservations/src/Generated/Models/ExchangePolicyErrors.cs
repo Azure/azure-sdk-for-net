@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Exchange policy errors. </summary>
     internal partial class ExchangePolicyErrors
     {
-        /// <summary> Initializes a new instance of ExchangePolicyErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePolicyErrors"/>. </summary>
         internal ExchangePolicyErrors()
         {
             PolicyErrors = new ChangeTrackingList<ExchangePolicyError>();
         }
 
-        /// <summary> Initializes a new instance of ExchangePolicyErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePolicyErrors"/>. </summary>
         /// <param name="policyErrors"> Exchange Policy errors. </param>
         internal ExchangePolicyErrors(IReadOnlyList<ExchangePolicyError> policyErrors)
         {

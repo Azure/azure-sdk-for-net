@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An ImportExport operation result resource. </summary>
     public partial class ImportExportOperationResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportExportOperationResult"/>. </summary>
         public ImportExportOperationResult()
         {
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>();
         }
 
-        /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportExportOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

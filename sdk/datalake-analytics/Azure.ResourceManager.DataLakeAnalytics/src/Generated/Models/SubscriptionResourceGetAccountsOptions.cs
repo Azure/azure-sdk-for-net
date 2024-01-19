@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// <summary> The SubscriptionResourceGetAccountsOptions. </summary>
     public partial class SubscriptionResourceGetAccountsOptions
     {
-        /// <summary> Initializes a new instance of SubscriptionResourceGetAccountsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetAccountsOptions"/>. </summary>
         public SubscriptionResourceGetAccountsOptions()
         {
         }

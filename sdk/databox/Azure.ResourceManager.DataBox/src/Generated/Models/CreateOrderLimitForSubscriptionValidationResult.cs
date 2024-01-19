@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Properties of create order limit for subscription validation response. </summary>
     public partial class CreateOrderLimitForSubscriptionValidationResult : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateOrderLimitForSubscriptionValidationResult"/>. </summary>
         internal CreateOrderLimitForSubscriptionValidationResult()
         {
             ValidationType = DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
         }
 
-        /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateOrderLimitForSubscriptionValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Create order limit validation status. </param>

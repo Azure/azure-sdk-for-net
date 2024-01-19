@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
     public partial class NetworkAnalyticsIPRules
     {
-        /// <summary> Initializes a new instance of NetworkAnalyticsIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsIPRules"/>. </summary>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         public NetworkAnalyticsIPRules(string action)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of NetworkAnalyticsIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsIPRules"/>. </summary>
         /// <param name="value"> IP Rules Value. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         internal NetworkAnalyticsIPRules(string value, string action)

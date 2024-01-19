@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Log Settings for Firewall. </summary>
     public partial class FirewallLogSettings
     {
-        /// <summary> Initializes a new instance of FirewallLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallLogSettings"/>. </summary>
         public FirewallLogSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallLogSettings"/>. </summary>
         /// <param name="logType"> One of possible log type. </param>
         /// <param name="logOption"> Log option SAME/INDIVIDUAL. </param>
         /// <param name="applicationInsights"> Application Insight details. </param>

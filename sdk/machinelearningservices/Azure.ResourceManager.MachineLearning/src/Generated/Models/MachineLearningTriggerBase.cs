@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningTriggerBase
     {
-        /// <summary> Initializes a new instance of MachineLearningTriggerBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerBase"/>. </summary>
         protected MachineLearningTriggerBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTriggerBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerBase"/>. </summary>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"

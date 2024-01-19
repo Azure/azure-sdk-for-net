@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScopeAssignmentResource" /> and their operations.
-    /// Each <see cref="ScopeAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ScopeAssignmentCollection" /> instance call the GetScopeAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ScopeAssignmentResource"/> and their operations.
+    /// Each <see cref="ScopeAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ScopeAssignmentCollection"/> instance call the GetScopeAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ScopeAssignmentCollection : ArmCollection, IEnumerable<ScopeAssignmentResource>, IAsyncEnumerable<ScopeAssignmentResource>
     {
@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,6 +103,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -136,6 +152,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
@@ -172,6 +196,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,10 +242,18 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScopeAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScopeAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopeAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
@@ -232,10 +272,18 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScopeAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScopeAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopeAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
@@ -253,6 +301,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +345,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
@@ -323,6 +387,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +432,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

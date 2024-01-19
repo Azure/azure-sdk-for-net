@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Monthly Schedule properties. </summary>
     public partial class SnapshotPolicyMonthlySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyMonthlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyMonthlySchedule"/>. </summary>
         public SnapshotPolicyMonthlySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyMonthlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyMonthlySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Monthly snapshot count to keep. </param>
         /// <param name="daysOfMonth"> Indicates which days of the month snapshot should be taken. A comma delimited string. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>

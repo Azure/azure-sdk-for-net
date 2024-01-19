@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Logical Network Properties. </summary>
     public partial class SiteRecoveryLogicalNetworkProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkProperties"/>. </summary>
         internal SiteRecoveryLogicalNetworkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkProperties"/>. </summary>
         /// <param name="friendlyName"> The Friendly Name. </param>
         /// <param name="networkVirtualizationStatus"> A value indicating whether Network Virtualization is enabled for the logical network. </param>
         /// <param name="logicalNetworkUsage"> A value indicating whether logical network is used as private test network by test failover. </param>

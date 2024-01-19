@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-11-24)
+
+### Features Added
+
+- Added support for Non-RFC 1918 prefixes as TrustedRanges
+- Support for new regions Japan East and Brazil South
+
+### Bugs Fixed
+
+- Accessibility bug fixes
+
+### Other Changes
+
+- Improved validations and better error messages
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.0.0 (2023-07-14)
 

@@ -133,7 +133,7 @@ namespace Azure.Search.Documents
         /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
-        /// <param name="keysOrIds"> The DocumentKeysOrIds to use. </param>
+        /// <param name="keysOrIds"> The <see cref="ResetDocumentOptions"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public async Task<Response> ResetDocsAsync(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)
@@ -157,7 +157,7 @@ namespace Azure.Search.Documents
         /// <summary> Resets specific documents in the datasource to be selectively re-ingested by the indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
         /// <param name="overwrite"> If false, keys or ids will be appended to existing ones. If true, only the keys or ids in this payload will be queued to be re-ingested. </param>
-        /// <param name="keysOrIds"> The DocumentKeysOrIds to use. </param>
+        /// <param name="keysOrIds"> The <see cref="ResetDocumentOptions"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public Response ResetDocs(string indexerName, bool? overwrite = null, ResetDocumentOptions keysOrIds = null, CancellationToken cancellationToken = default)

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The properties of the Spark job. </summary>
     public partial class SparkJobProperties
     {
-        /// <summary> Initializes a new instance of SparkJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobProperties"/>. </summary>
         /// <param name="file"> File containing the application to execute. </param>
         /// <param name="driverMemory"> Amount of memory to use for the driver process. </param>
         /// <param name="driverCores"> Number of cores to use for the driver. </param>
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of SparkJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobProperties"/>. </summary>
         /// <param name="name"> The name of the job. </param>
         /// <param name="file"> File containing the application to execute. </param>
         /// <param name="className"> Main class for Java/Scala application. </param>

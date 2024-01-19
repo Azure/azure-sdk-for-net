@@ -15,15 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="StoreWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/> and <see cref="SftpWriteSettings"/>.
     /// </summary>
-    public partial class StoreWriteSettings
+    public abstract partial class StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
-        public StoreWriteSettings()
+        /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
+        protected StoreWriteSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>

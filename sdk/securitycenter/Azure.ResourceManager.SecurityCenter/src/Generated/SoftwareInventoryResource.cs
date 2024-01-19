@@ -20,13 +20,19 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SoftwareInventory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SoftwareInventoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSoftwareInventoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSoftwareInventory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SoftwareInventoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSoftwareInventoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSoftwareInventory method.
     /// </summary>
     public partial class SoftwareInventoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SoftwareInventoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceNamespace"> The resourceNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="softwareName"> The softwareName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string softwareName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}";
@@ -37,12 +43,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SoftwareInventoriesRestOperations _softwareInventoryRestClient;
         private readonly SoftwareInventoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/softwareInventories";
+
         /// <summary> Initializes a new instance of the <see cref="SoftwareInventoryResource"/> class for mocking. </summary>
         protected SoftwareInventoryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SoftwareInventoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SoftwareInventoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SoftwareInventoryResource(ArmClient client, SoftwareInventoryData data) : this(client, data.Id)
@@ -63,9 +72,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/softwareInventories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +105,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SoftwareInventories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareInventoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +144,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareInventoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

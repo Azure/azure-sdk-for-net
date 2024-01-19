@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
-            Optional<ContentFilterResults> contentFilterResults = default;
+            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
             CompletionsLogProbabilityModel logprobs = default;
             CompletionsFinishReason? finishReason = default;
             foreach (var property in element.EnumerateObject())
@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logprobs"u8))

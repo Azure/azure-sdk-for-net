@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App Stack. </summary>
     public partial class FunctionAppStack : ResourceData
     {
-        /// <summary> Initializes a new instance of FunctionAppStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppStack"/>. </summary>
         public FunctionAppStack()
         {
             MajorVersions = new ChangeTrackingList<FunctionAppMajorVersion>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppStack"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

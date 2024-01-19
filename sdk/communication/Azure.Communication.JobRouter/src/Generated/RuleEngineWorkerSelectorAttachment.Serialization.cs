@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             RouterRule rule = default;
-            string kind = default;
+            WorkerSelectorAttachmentKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rule"u8))
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new WorkerSelectorAttachmentKind(property.Value.GetString());
                     continue;
                 }
             }

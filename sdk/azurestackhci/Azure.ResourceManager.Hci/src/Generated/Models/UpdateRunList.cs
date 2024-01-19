@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of Update runs. </summary>
     internal partial class UpdateRunList
     {
-        /// <summary> Initializes a new instance of UpdateRunList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateRunList"/>. </summary>
         internal UpdateRunList()
         {
             Value = new ChangeTrackingList<UpdateRunData>();
         }
 
-        /// <summary> Initializes a new instance of UpdateRunList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateRunList"/>. </summary>
         /// <param name="value"> List of Update runs. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal UpdateRunList(IReadOnlyList<UpdateRunData> value, string nextLink)

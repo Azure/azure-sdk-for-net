@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a certificate. </summary>
     public partial class AppCertificatePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppCertificatePatch"/>. </summary>
         public AppCertificatePatch()
         {
             HostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppCertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

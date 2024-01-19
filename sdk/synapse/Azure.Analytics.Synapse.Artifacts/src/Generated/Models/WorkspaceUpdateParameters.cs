@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Parameters for updating a workspace resource. </summary>
     public partial class WorkspaceUpdateParameters
     {
-        /// <summary> Initializes a new instance of WorkspaceUpdateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceUpdateParameters"/>. </summary>
         public WorkspaceUpdateParameters()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceUpdateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceUpdateParameters"/>. </summary>
         /// <param name="tags"> The resource tags. </param>
         /// <param name="identity"> Managed service identity of the workspace. </param>
         internal WorkspaceUpdateParameters(IDictionary<string, string> tags, WorkspaceIdentity identity)

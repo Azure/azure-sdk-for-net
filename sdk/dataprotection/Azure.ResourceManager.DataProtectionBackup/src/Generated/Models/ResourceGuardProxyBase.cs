@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> ResourceGuardProxyBase object, used in ResourceGuardProxyBaseResource. </summary>
     public partial class ResourceGuardProxyBase
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBase"/>. </summary>
         public ResourceGuardProxyBase()
         {
             ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBase"/>. </summary>
         /// <param name="resourceGuardResourceId"></param>
         /// <param name="resourceGuardOperationDetails"></param>
         /// <param name="lastUpdatedTime"></param>

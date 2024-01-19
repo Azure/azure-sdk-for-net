@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The api properties for special APIs. </summary>
     public partial class ServiceAccountApiProperties
     {
-        /// <summary> Initializes a new instance of ServiceAccountApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiProperties"/>. </summary>
         public ServiceAccountApiProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiProperties"/>. </summary>
         /// <param name="qnaRuntimeEndpoint"> (QnAMaker Only) The runtime endpoint of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointKey"> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointId"> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

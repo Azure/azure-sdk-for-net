@@ -35,7 +35,10 @@ namespace Azure.ResourceManager.Monitor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ExtensionSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExtensionSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ExtensionSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(InputDataSources))

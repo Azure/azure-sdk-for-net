@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Status from the extension. </summary>
     public partial class KubernetesClusterExtensionStatus
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionStatus"/>. </summary>
         public KubernetesClusterExtensionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionStatus"/>. </summary>
         /// <param name="code"> Status code provided by the Extension. </param>
         /// <param name="displayStatus"> Short description of status of the extension. </param>
         /// <param name="level"> Level of the status. </param>

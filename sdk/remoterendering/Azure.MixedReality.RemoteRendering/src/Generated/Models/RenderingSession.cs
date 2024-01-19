@@ -13,7 +13,7 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The properties of a rendering session. </summary>
     public partial class RenderingSession
     {
-        /// <summary> Initializes a new instance of RenderingSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenderingSession"/>. </summary>
         /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="size"> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </param>
         /// <param name="status"> The status of the rendering session. Terminal states are 'Error', 'Expired', and 'Stopped'. </param>
@@ -27,7 +27,7 @@ namespace Azure.MixedReality.RemoteRendering
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of RenderingSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenderingSession"/>. </summary>
         /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="arrInspectorPort"> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </param>
         /// <param name="handshakePort"> The TCP port used for the handshake when establishing a connection. </param>

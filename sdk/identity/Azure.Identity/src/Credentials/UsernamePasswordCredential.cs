@@ -30,6 +30,7 @@ namespace Azure.Identity
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal MsalPublicClient Client { get; }
         internal string DefaultScope { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking
@@ -43,7 +44,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="username">The user account's username, also known as UPN.</param>
         /// <param name="password">The user account's password.</param>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
             : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
@@ -55,7 +56,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="username">The user account's user name, UPN.</param>
         /// <param name="password">The user account's password.</param>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
@@ -68,7 +69,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="username">The user account's user name, UPN.</param>
         /// <param name="password">The user account's password.</param>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, UsernamePasswordCredentialOptions options)
@@ -96,6 +97,7 @@ namespace Azure.Identity
             DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 

@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{27203A77-39F0-4E0B-BA27-58D9E879ECA7}") = "Azure.ResourceManager.MixedReality", "src\Azure.ResourceManager.MixedReality.csproj", "{0F146ABF-D6F4-4645-975E-A5D272AC8C68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MixedReality", "src\Azure.ResourceManager.MixedReality.csproj", "{0F146ABF-D6F4-4645-975E-A5D272AC8C68}"
 EndProject
-Project("{27203A77-39F0-4E0B-BA27-58D9E879ECA7}") = "Azure.ResourceManager.MixedReality.Tests", "tests\Azure.ResourceManager.MixedReality.Tests.csproj", "{B2EC6130-E353-40CC-8783-5E0B44ABD4E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MixedReality.Tests", "tests\Azure.ResourceManager.MixedReality.Tests.csproj", "{B2EC6130-E353-40CC-8783-5E0B44ABD4E6}"
 EndProject
-Project("{27203A77-39F0-4E0B-BA27-58D9E879ECA7}") = "Azure.ResourceManager.MixedReality.Samples", "samples\Azure.ResourceManager.MixedReality.Samples.csproj", "{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MixedReality.Samples", "samples\Azure.ResourceManager.MixedReality.Samples.csproj", "{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B72C202C-01D1-4C78-B6E7-927AD0127A68}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{B2EC6130-E353-40CC-8783-5E0B44ABD4E6}.Release|x64.Build.0 = Release|Any CPU
 		{B2EC6130-E353-40CC-8783-5E0B44ABD4E6}.Release|x86.ActiveCfg = Release|Any CPU
 		{B2EC6130-E353-40CC-8783-5E0B44ABD4E6}.Release|x86.Build.0 = Release|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Debug|x64.Build.0 = Debug|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Debug|x86.Build.0 = Debug|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Release|x64.ActiveCfg = Release|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Release|x64.Build.0 = Release|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Release|x86.ActiveCfg = Release|Any CPU
+		{EB4F9A1C-13A6-416C-BF1C-1242DDE1F968}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B72C202C-01D1-4C78-B6E7-927AD0127A68}
 	EndGlobalSection
 EndGlobal

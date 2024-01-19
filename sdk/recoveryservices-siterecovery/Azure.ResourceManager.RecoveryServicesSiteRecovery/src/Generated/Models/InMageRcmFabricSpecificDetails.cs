@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm fabric specific details. </summary>
     public partial class InMageRcmFabricSpecificDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSpecificDetails"/>. </summary>
         internal InMageRcmFabricSpecificDetails()
         {
             ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServerDetails>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>

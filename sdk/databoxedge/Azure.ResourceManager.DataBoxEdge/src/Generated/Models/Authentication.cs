@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Authentication mechanism for IoT devices. </summary>
     internal partial class Authentication
     {
-        /// <summary> Initializes a new instance of Authentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authentication"/>. </summary>
         public Authentication()
         {
         }
 
-        /// <summary> Initializes a new instance of Authentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authentication"/>. </summary>
         /// <param name="symmetricKey"> Symmetric key for authentication. </param>
         internal Authentication(DataBoxEdgeSymmetricKey symmetricKey)
         {

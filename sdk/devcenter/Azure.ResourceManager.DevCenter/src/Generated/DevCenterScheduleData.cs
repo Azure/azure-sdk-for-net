@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/>. </summary>
         public DevCenterScheduleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationReplicationExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionData"/>. </summary>
         /// <param name="properties"> Replication extension model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataReplicationReplicationExtensionData(DataReplicationReplicationExtensionProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The BillingBenefitsExtendedStatusInfo. </summary>
     public partial class BillingBenefitsExtendedStatusInfo
     {
-        /// <summary> Initializes a new instance of BillingBenefitsExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsExtendedStatusInfo"/>. </summary>
         internal BillingBenefitsExtendedStatusInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsExtendedStatusInfo"/>. </summary>
         /// <param name="statusCode"> Status code providing additional information. </param>
         /// <param name="message"> The message giving detailed information about the status code. </param>
         internal BillingBenefitsExtendedStatusInfo(string statusCode, string message)

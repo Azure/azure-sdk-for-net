@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </summary>
     public partial class RenewPropertiesBillingCurrencyTotal
     {
-        /// <summary> Initializes a new instance of RenewPropertiesBillingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesBillingCurrencyTotal"/>. </summary>
         internal RenewPropertiesBillingCurrencyTotal()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewPropertiesBillingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesBillingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         internal RenewPropertiesBillingCurrencyTotal(string currencyCode, float? amount)

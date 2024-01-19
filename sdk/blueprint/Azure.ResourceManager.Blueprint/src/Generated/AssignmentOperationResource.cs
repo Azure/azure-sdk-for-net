@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
     /// A Class representing an AssignmentOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AssignmentOperationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAssignmentOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AssignmentResource" /> using the GetAssignmentOperation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AssignmentOperationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAssignmentOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AssignmentResource"/> using the GetAssignmentOperation method.
     /// </summary>
     public partial class AssignmentOperationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AssignmentOperationResource"/> instance. </summary>
+        /// <param name="resourceScope"> The resourceScope. </param>
+        /// <param name="assignmentName"> The assignmentName. </param>
+        /// <param name="assignmentOperationName"> The assignmentOperationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceScope, string assignmentName, string assignmentOperationName)
         {
             var resourceId = $"{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.Blueprint
         private readonly AssignmentRestOperations _assignmentOperationRestClient;
         private readonly AssignmentOperationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Blueprint/blueprintAssignments/assignmentOperations";
+
         /// <summary> Initializes a new instance of the <see cref="AssignmentOperationResource"/> class for mocking. </summary>
         protected AssignmentOperationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AssignmentOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AssignmentOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AssignmentOperationResource(ArmClient client, AssignmentOperationData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.Blueprint
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Blueprint/blueprintAssignments/assignmentOperations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +139,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

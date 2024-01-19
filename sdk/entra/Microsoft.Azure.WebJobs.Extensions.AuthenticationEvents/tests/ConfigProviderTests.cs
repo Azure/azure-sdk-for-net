@@ -1,6 +1,6 @@
-using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     AuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
 
-                    eventsResponseHandler.Response = GetContentForHttpStatus(httpStatusCode);
+                    eventsResponseHandler.SetValueAsync(GetContentForHttpStatus(httpStatusCode), CancellationToken.None);
                 }
             });
 

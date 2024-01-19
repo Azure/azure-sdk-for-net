@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The Private Endpoint resource. </summary>
     public partial class PrivateEndpointBase
     {
-        /// <summary> Initializes a new instance of PrivateEndpointBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointBase"/>. </summary>
         public PrivateEndpointBase()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointBase"/>. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
         internal PrivateEndpointBase(ResourceIdentifier id)
         {

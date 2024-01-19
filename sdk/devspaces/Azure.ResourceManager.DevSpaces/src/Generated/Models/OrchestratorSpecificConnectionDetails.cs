@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// </summary>
     public abstract partial class OrchestratorSpecificConnectionDetails
     {
-        /// <summary> Initializes a new instance of OrchestratorSpecificConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorSpecificConnectionDetails"/>. </summary>
         protected OrchestratorSpecificConnectionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of OrchestratorSpecificConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorSpecificConnectionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         internal OrchestratorSpecificConnectionDetails(string instanceType)
         {

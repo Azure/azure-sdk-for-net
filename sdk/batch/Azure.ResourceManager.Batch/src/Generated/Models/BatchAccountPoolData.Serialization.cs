@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,15 +16,48 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchAccountPoolData : IUtf8JsonSerializable
+    public partial class BatchAccountPoolData : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchAccountPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -31,6 +65,36 @@ namespace Azure.ResourceManager.Batch
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModified"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
+            {
+                writer.WritePropertyName("provisioningStateTransitionTime"u8);
+                writer.WriteStringValue(ProvisioningStateTransitOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(AllocationState))
+            {
+                writer.WritePropertyName("allocationState"u8);
+                writer.WriteStringValue(AllocationState.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AllocationStateTransitionOn))
+            {
+                writer.WritePropertyName("allocationStateTransitionTime"u8);
+                writer.WriteStringValue(AllocationStateTransitionOn.Value, "O");
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -42,10 +106,25 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("deploymentConfiguration"u8);
                 writer.WriteObjectValue(DeploymentConfiguration);
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
+            {
+                writer.WritePropertyName("currentDedicatedNodes"u8);
+                writer.WriteNumberValue(CurrentDedicatedNodes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentLowPriorityNodes))
+            {
+                writer.WritePropertyName("currentLowPriorityNodes"u8);
+                writer.WriteNumberValue(CurrentLowPriorityNodes.Value);
+            }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AutoScaleRun))
+            {
+                writer.WritePropertyName("autoScaleRun"u8);
+                writer.WriteObjectValue(AutoScaleRun);
             }
             if (Optional.IsDefined(InterNodeCommunication))
             {
@@ -122,6 +201,11 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ResizeOperationStatus))
+            {
+                writer.WritePropertyName("resizeOperationStatus"u8);
+                writer.WriteObjectValue(ResizeOperationStatus);
+            }
             if (Optional.IsCollectionDefined(MountConfiguration))
             {
                 writer.WritePropertyName("mountConfiguration"u8);
@@ -137,12 +221,64 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("targetNodeCommunicationMode"u8);
                 writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToSerialString());
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCommunicationMode))
+            {
+                if (CurrentNodeCommunicationMode != null)
+                {
+                    writer.WritePropertyName("currentNodeCommunicationMode"u8);
+                    writer.WriteStringValue(CurrentNodeCommunicationMode.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("currentNodeCommunicationMode");
+                }
+            }
+            if (Optional.IsCollectionDefined(ResourceTags))
+            {
+                writer.WritePropertyName("resourceTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in ResourceTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchAccountPoolData DeserializeBatchAccountPoolData(JsonElement element)
+        BatchAccountPoolData IJsonModel<BatchAccountPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountPoolData(document.RootElement, options);
+        }
+
+        internal static BatchAccountPoolData DeserializeBatchAccountPoolData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -180,6 +316,9 @@ namespace Azure.ResourceManager.Batch
             Optional<IList<BatchMountConfiguration>> mountConfiguration = default;
             Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
             Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
+            Optional<IDictionary<string, string>> resourceTags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -499,11 +638,61 @@ namespace Azure.ResourceManager.Batch
                             currentNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();
                             continue;
                         }
+                        if (property0.NameEquals("resourceTags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            resourceTags = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToDictionary(resourceTags), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchAccountPoolData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BatchAccountPoolData IPersistableModel<BatchAccountPoolData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchAccountPoolData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchAccountPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

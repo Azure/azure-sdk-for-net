@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> An on-premises file system dataset. </summary>
     public partial class FileShareDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of FileShareDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public FileShareDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "FileShare";
         }
 
-        /// <summary> Initializes a new instance of FileShareDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
