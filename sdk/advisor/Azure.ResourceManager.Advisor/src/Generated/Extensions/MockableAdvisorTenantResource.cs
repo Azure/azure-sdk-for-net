@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetadataEntityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetadataEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

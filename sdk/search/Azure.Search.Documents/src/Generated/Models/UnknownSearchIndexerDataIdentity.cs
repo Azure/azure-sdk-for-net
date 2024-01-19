@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Models
     internal partial class UnknownSearchIndexerDataIdentity : SearchIndexerDataIdentity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerDataIdentity"/>. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of identity. </param>
         internal UnknownSearchIndexerDataIdentity(string oDataType) : base(oDataType)
         {
             ODataType = oDataType ?? "Unknown";

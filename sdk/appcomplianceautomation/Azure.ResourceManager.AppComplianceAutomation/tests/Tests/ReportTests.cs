@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
                 "microsoft.storage/storageaccounts",
                 "StorageV2",
                 "sdkteststorageaccount",
-                tags));
+                tags ,null));
             DateTime univDateTime = new DateTime(2022, 01, 01, 0, 0, 0, DateTimeKind.Utc);
             ReportProperties properties = new ReportProperties("GMT Standard Time", new DateTimeOffset(univDateTime), resources);
             ArmOperation<ReportResource> response = await reports.CreateOrUpdateAsync(WaitUntil.Completed, reportName, new ReportResourceData(properties));

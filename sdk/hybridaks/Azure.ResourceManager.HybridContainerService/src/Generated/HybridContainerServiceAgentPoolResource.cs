@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.HybridContainerService.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Gets the specified agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -100,6 +99,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +130,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Gets the specified agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,6 +139,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +170,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Deletes the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Deletes the specified agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -164,6 +179,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +212,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Deletes the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Deletes the specified agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,6 +221,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,7 +254,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Updates the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Creates or updates the agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -231,24 +262,32 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>agentPool_Update</description>
+        /// <description>agentPool_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
+        /// <param name="data"> Agent Pool resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridContainerServiceAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, HybridContainerServiceAgentPoolPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<HybridContainerServiceAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.UpdateAsync(Id.Parent.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateUpdateRequest(Id.Parent.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.CreateOrUpdateAsync(Id.Parent.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,7 +300,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Updates the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Creates or updates the agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -269,24 +308,32 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>agentPool_Update</description>
+        /// <description>agentPool_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
+        /// <param name="data"> Agent Pool resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<HybridContainerServiceAgentPoolResource> Update(WaitUntil waitUntil, HybridContainerServiceAgentPoolPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<HybridContainerServiceAgentPoolResource> Update(WaitUntil waitUntil, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolResource.Update");
             scope.Start();
             try
             {
-                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Update(Id.Parent.Parent, Id.Name, patch, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateUpdateRequest(Id.Parent.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.CreateOrUpdate(Id.Parent.Parent, Id.Name, data, cancellationToken);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -308,6 +355,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,13 +390,8 @@ namespace Azure.ResourceManager.HybridContainerService
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridContainerServiceAgentPoolPatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    current.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -362,6 +412,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,13 +447,8 @@ namespace Azure.ResourceManager.HybridContainerService
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridContainerServiceAgentPoolPatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    current.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -416,6 +469,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,9 +503,8 @@ namespace Azure.ResourceManager.HybridContainerService
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridContainerServiceAgentPoolPatch();
-                    patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    current.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -465,6 +525,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -491,9 +559,8 @@ namespace Azure.ResourceManager.HybridContainerService
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridContainerServiceAgentPoolPatch();
-                    patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    current.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -514,6 +581,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,13 +614,8 @@ namespace Azure.ResourceManager.HybridContainerService
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridContainerServiceAgentPoolPatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    current.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -566,6 +636,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>agentPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -591,13 +669,8 @@ namespace Azure.ResourceManager.HybridContainerService
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridContainerServiceAgentPoolPatch();
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    current.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

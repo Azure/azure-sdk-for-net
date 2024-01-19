@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Describes an error condition for the Azure Cognitive Search API. </summary>
+    /// <summary> Describes an error condition for the API. </summary>
     internal partial class SearchServiceError
     {
         /// <summary> Initializes a new instance of <see cref="SearchServiceError"/>. </summary>

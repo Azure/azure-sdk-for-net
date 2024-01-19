@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterPricingData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecurityCenterPricingData"/>. </summary>
         public SecurityCenterPricingData()
         {
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
-        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterPricingTier? pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enabledOn, bool? isDeprecated, IReadOnlyList<string> replacedBy, IList<PlanExtension> extensions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterPricingTier? pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enabledOn, bool? isDeprecated, IReadOnlyList<string> replacedBy, IList<PlanExtension> extensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
@@ -47,6 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
             IsDeprecated = isDeprecated;
             ReplacedBy = replacedBy;
             Extensions = extensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
