@@ -94,7 +94,7 @@
   },
   {
    "$id": "13",
-   "Name": "MessageTemplateValueKind",
+   "Name": "MessageTemplateValueType",
    "EnumValueType": "String",
    "AllowedValues": [
     {
@@ -770,7 +770,7 @@
    "Properties": [
     {
      "$id": "93",
-     "Name": "url",
+     "Name": "uri",
      "SerializedName": "url",
      "Description": "The (public) URL of the media.",
      "Type": {
@@ -826,7 +826,7 @@
    "Properties": [
     {
      "$id": "100",
-     "Name": "url",
+     "Name": "uri",
      "SerializedName": "url",
      "Description": "The (public) URL of the media.",
      "Type": {
@@ -882,7 +882,7 @@
    "Properties": [
     {
      "$id": "107",
-     "Name": "url",
+     "Name": "uri",
      "SerializedName": "url",
      "Description": "The (public) URL of the media.",
      "Type": {
@@ -938,7 +938,7 @@
    "Properties": [
     {
      "$id": "114",
-     "Name": "url",
+     "Name": "uri",
      "SerializedName": "url",
      "Description": "The (public) URL of the media.",
      "Type": {
@@ -1535,10 +1535,10 @@
     },
     {
      "$id": "183",
-     "Name": "downloadMedia",
+     "Name": "downloadMediaInternal",
      "ResourceName": "MessageDataStream",
      "Description": "Download the Media payload from a User to Business message.",
-     "Accessibility": "public",
+     "Accessibility": "internal",
      "Parameters": [
       {
        "$ref": "155"

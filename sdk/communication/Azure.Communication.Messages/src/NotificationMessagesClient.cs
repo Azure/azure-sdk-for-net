@@ -95,7 +95,7 @@ namespace Azure.Communication.Messages
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await DownloadMediaAsync(mediaContentId, context).ConfigureAwait(false);
+                Response response = await DownloadMediaInternalAsync(mediaContentId, context).ConfigureAwait(false);
                 return Response.FromValue(response.Content.ToStream(), response);
             }
             catch (Exception ex)
@@ -121,7 +121,7 @@ namespace Azure.Communication.Messages
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = DownloadMedia(mediaContentId, context);
+                Response response = DownloadMediaInternal(mediaContentId, context);
                 return Response.FromValue(response.Content.ToStream(), response);
             }
             catch (Exception ex)

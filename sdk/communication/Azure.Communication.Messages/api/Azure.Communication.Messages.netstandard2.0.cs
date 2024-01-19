@@ -11,7 +11,7 @@ namespace Azure.Communication.Messages
     public static partial class CommunicationMessagesModelFactory
     {
         public static Azure.Communication.Messages.MessageReceipt MessageReceipt(string messageId = null, string to = null) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateItem MessageTemplateItem(string kind = null, string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus)) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateItem MessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), string kind = "Unknown") { throw null; }
         public static Azure.Communication.Messages.SendMessageResult SendMessageResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageReceipt> receipts = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), System.BinaryData content = null) { throw null; }
     }
@@ -63,6 +63,7 @@ namespace Azure.Communication.Messages
         protected MessageTemplateClient() { }
         public MessageTemplateClient(string connectionString) { }
         public MessageTemplateClient(string connectionString, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
+        public MessageTemplateClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public MessageTemplateClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
@@ -74,17 +75,17 @@ namespace Azure.Communication.Messages
     }
     public partial class MessageTemplateDocument : Azure.Communication.Messages.MessageTemplateValue
     {
-        public MessageTemplateDocument(string name, System.Uri url) : base (default(string)) { }
+        public MessageTemplateDocument(string name, System.Uri uri) : base (default(string)) { }
         public string Caption { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     public partial class MessageTemplateImage : Azure.Communication.Messages.MessageTemplateValue
     {
-        public MessageTemplateImage(string name, System.Uri url) : base (default(string)) { }
+        public MessageTemplateImage(string name, System.Uri uri) : base (default(string)) { }
         public string Caption { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     public abstract partial class MessageTemplateItem
     {
@@ -138,10 +139,10 @@ namespace Azure.Communication.Messages
     }
     public partial class MessageTemplateVideo : Azure.Communication.Messages.MessageTemplateValue
     {
-        public MessageTemplateVideo(string name, System.Uri url) : base (default(string)) { }
+        public MessageTemplateVideo(string name, System.Uri uri) : base (default(string)) { }
         public string Caption { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     public abstract partial class NotificationContent
     {
@@ -154,6 +155,7 @@ namespace Azure.Communication.Messages
         protected NotificationMessagesClient() { }
         public NotificationMessagesClient(string connectionString) { }
         public NotificationMessagesClient(string connectionString, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
+        public NotificationMessagesClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public NotificationMessagesClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
         public NotificationMessagesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public NotificationMessagesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
@@ -235,8 +237,10 @@ namespace Microsoft.Extensions.Azure
     public static partial class CommunicationMessagesClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.MessageTemplateClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.MessageTemplateClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.MessageTemplateClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.NotificationMessagesClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.NotificationMessagesClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.NotificationMessagesClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

@@ -174,6 +174,34 @@ namespace Azure.Communication.Messages
             }
         }
 
+        /// <summary> Download the Media payload from a User to Business message. </summary>
+        /// <param name="id"> The stream ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<BinaryData>> DownloadMediaInternalAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DownloadMediaInternalAsync(id, context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Download the Media payload from a User to Business message. </summary>
+        /// <param name="id"> The stream ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<BinaryData> DownloadMediaInternal(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DownloadMediaInternal(id, context);
+            return Response.FromValue(response.Content, response);
+        }
+
         /// <summary>
         /// [Protocol Method] Download the Media payload from a User to Business message.
         /// <list type="bullet">
@@ -184,7 +212,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DownloadMediaAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DownloadMediaInternalAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -195,16 +223,15 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='DownloadMediaAsync(string,RequestContext)']/*" />
-        internal virtual async Task<Response> DownloadMediaAsync(string id, RequestContext context)
+        internal virtual async Task<Response> DownloadMediaInternalAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMedia");
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDownloadMediaRequest(id, context);
+                using HttpMessage message = CreateDownloadMediaInternalRequest(id, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -224,7 +251,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DownloadMedia(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DownloadMediaInternal(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -235,16 +262,15 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='DownloadMedia(string,RequestContext)']/*" />
-        internal virtual Response DownloadMedia(string id, RequestContext context)
+        internal virtual Response DownloadMediaInternal(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMedia");
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDownloadMediaRequest(id, context);
+                using HttpMessage message = CreateDownloadMediaInternalRequest(id, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -272,7 +298,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateDownloadMediaRequest(string id, RequestContext context)
+        internal HttpMessage CreateDownloadMediaInternalRequest(string id, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

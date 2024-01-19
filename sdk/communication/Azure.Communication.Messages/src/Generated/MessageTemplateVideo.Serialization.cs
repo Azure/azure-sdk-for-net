@@ -16,7 +16,7 @@ namespace Azure.Communication.Messages
         {
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url.AbsoluteUri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);

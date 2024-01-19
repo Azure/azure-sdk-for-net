@@ -15,32 +15,32 @@ namespace Azure.Communication.Messages
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateVideo"/>. </summary>
         /// <param name="name"> Name of the Template value. </param>
-        /// <param name="url"> The (public) URL of the media. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="url"/> is null. </exception>
-        public MessageTemplateVideo(string name, Uri url) : base(name)
+        /// <param name="uri"> The (public) URL of the media. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
+        public MessageTemplateVideo(string name, Uri uri) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Kind = "video";
-            Url = url;
+            Uri = uri;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateVideo"/>. </summary>
         /// <param name="name"> Name of the Template value. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
-        /// <param name="url"> The (public) URL of the media. </param>
+        /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateVideo(string name, string kind, Uri url, string caption, string fileName) : base(name, kind)
+        internal MessageTemplateVideo(string name, string kind, Uri uri, string caption, string fileName) : base(name, kind)
         {
-            Url = url;
+            Uri = uri;
             Caption = caption;
             FileName = fileName;
         }
 
         /// <summary> The (public) URL of the media. </summary>
-        public Uri Url { get; }
+        public Uri Uri { get; }
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }
         /// <summary> The [optional] filename of the media file. </summary>
