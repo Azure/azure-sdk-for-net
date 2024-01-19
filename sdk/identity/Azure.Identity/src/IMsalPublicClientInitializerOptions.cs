@@ -10,5 +10,6 @@ namespace Azure.Identity
     internal interface IMsalPublicClientInitializerOptions
     {
         Action<PublicClientApplicationBuilder> BeforeBuildClient { get; }
+        bool IsProofOfPossessionRequired { get; set; }
     }
 }

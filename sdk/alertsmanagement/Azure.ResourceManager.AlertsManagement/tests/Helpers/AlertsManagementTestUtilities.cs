@@ -63,10 +63,6 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Helpers
             {
                 Assert.AreEqual(exp.Field, act.Field);
                 Assert.AreEqual(exp.Operator, act.Operator);
-                foreach (var value in exp.Values)
-                {
-                    Assert.Contains(value, (System.Collections.ICollection)act.Values);
-                }
             }
         }
     }

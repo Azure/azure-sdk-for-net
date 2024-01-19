@@ -57,6 +57,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>DataProducts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +86,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,6 +117,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductsCatalogResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,6 +146,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductsCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

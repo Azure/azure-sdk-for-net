@@ -28,6 +28,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print dense caption results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Dense Captions:");
             foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
             {
@@ -44,42 +45,17 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisDenseCaptionFromUrl
             // Get dense captions for the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.DenseCaptions,
                 new ImageAnalysisOptions { GenderNeutralCaption = true });
 
             // Print dense caption results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Dense Captions:");
             foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
             {
                 Console.WriteLine($"   Region: '{denseCaption.Text}', Confidence {denseCaption.Confidence:F4}, Bounding box {denseCaption.BoundingBox}");
-            }
-            #endregion
-        }
-
-        [TestCase]
-        public void ImageAnalysisDenseCaptionException()
-        {
-            var client = ImageAnalysisAuth();
-            #region Snippet:ImageAnalysisDenseCaptionException
-            var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
-
-            try
-            {
-                var result = client.Analyze(imageUrl, VisualFeatures.DenseCaptions);
-            }
-            catch (RequestFailedException e)
-            {
-                if (e.Status == 400)
-                {
-                    Console.WriteLine("Error analyzing image.");
-                    Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
-                }
-                else
-                {
-                    throw;
-                }
             }
             #endregion
         }

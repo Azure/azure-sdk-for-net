@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherUri))
+            if (Optional.IsDefined(PublisherUriString))
             {
                 writer.WritePropertyName("publisherUri"u8);
-                writer.WriteStringValue(PublisherUri.AbsoluteUri);
+                writer.WriteStringValue(PublisherUriString);
             }
             if (Optional.IsDefined(PublisherContact))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<Uri> publisherUri = default;
+            Optional<string> publisherUri = default;
             Optional<string> publisherContact = default;
             Optional<string> eula = default;
             Optional<string> publicNamePrefix = default;
@@ -111,11 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("publisherUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publisherUri = new Uri(property.Value.GetString());
+                    publisherUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publisherContact"u8))

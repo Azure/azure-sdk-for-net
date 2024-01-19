@@ -27,6 +27,6 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         public string CogServicesVisionKey => GetOptionalVariable(Constants.CogServicesVisionKeyVariable);
 
         public string TestImageInputPath => GetOptionalVariable(Constants.ImageInputPathVariable) ?? "image-analysis-sample.jpg";
-        public Uri TestImageInputUrl => new Uri(GetOptionalVariable(Constants.ImageInputUrlVariable) ?? "https://aka.ms/azai/vision/image-analysis-sample.jpg");
+        public Uri TestImageInputUrl => new Uri(GetOptionalVariable(Constants.ImageInputUrlVariable) ?? "https://aka.ms/azsdk/image-analysis/sample.jpg");
     }
 }

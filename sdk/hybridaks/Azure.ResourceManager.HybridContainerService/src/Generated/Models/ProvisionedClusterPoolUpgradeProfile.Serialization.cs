@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<string> kubernetesVersion = default;
-            Optional<string> name = default;
             Optional<HybridContainerServiceOSType> osType = default;
             Optional<IList<ProvisionedClusterPoolUpgradeProfileProperties>> upgrades = default;
             foreach (var property in element.EnumerateObject())
@@ -44,11 +43,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 if (property.NameEquals("kubernetesVersion"u8))
                 {
                     kubernetesVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -75,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, name.Value, Optional.ToNullable(osType), Optional.ToList(upgrades));
+            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, Optional.ToNullable(osType), Optional.ToList(upgrades));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
     [TestFixture]
     public class AlertProcessingRuleTests : AlertsManagementManagementTestBase
     {
-        public AlertProcessingRuleTests() : base(true)
+        public AlertProcessingRuleTests() : base(true)//, RecordedTestMode.Record)
         {
         }
 
@@ -38,27 +38,33 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
 
             List<string> scopes = new List<string>
             {
-                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c"
             };
 
             ResourceIdentifier resourceIdentifier = new ResourceIdentifier("alertProcessingRule");
 
             // Create Alert processing Rule
-            AlertProcessingRuleData alertProcessingRule = new AlertProcessingRuleData(
-                resourceIdentifier,
-                "AlertProcessingRuleTest",
-                "Microsoft.AlertsManagement/actionRules",
-                new SystemData(),
-                tags: new Dictionary<string, string>(),
-                "Global",
-                new AlertProcessingRuleProperties(
+            AlertProcessingRuleData alertProcessingRule = new AlertProcessingRuleData("Global")
+            {
+                Properties = new AlertProcessingRuleProperties(
                         scopes,
-                        new List<AlertProcessingRuleCondition> { new AlertProcessingRuleCondition("Severity","Equals",new List<string> { "Sev2" }) },
-                        null,
-                        new List<AlertProcessingRuleAction> { new AlertProcessingRuleRemoveAllGroupsAction()},
-                        null,
-                        true)
-                );
+                        new List<AlertProcessingRuleAction> { new AlertProcessingRuleRemoveAllGroupsAction() })
+                {
+                    Conditions =
+                    {
+                        new AlertProcessingRuleCondition()
+                        {
+                            Field = "Severity",
+                            Operator = "Equals",
+                            Values =
+                            {
+                                "Sev2"
+                            }
+                        },
+                    },
+                    IsEnabled = true,
+                }
+            };
 
             var createAlertProcessingRuleOperation = await rg.GetAlertProcessingRules().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, alertProcessingRule);
             await createAlertProcessingRuleOperation.WaitForCompletionAsync();

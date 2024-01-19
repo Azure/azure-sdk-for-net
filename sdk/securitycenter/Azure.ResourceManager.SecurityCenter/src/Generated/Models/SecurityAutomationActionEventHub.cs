@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -20,10 +22,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionEventHub"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
         /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>
         /// <param name="connectionString"> The target Event Hub connection string (it will not be included in any response). </param>
-        internal SecurityAutomationActionEventHub(ActionType actionType, ResourceIdentifier eventHubResourceId, string sasPolicyName, string connectionString) : base(actionType)
+        internal SecurityAutomationActionEventHub(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier eventHubResourceId, string sasPolicyName, string connectionString) : base(actionType, serializedAdditionalRawData)
         {
             EventHubResourceId = eventHubResourceId;
             SasPolicyName = sasPolicyName;

@@ -35,19 +35,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly SharedQueueWatcher _sharedWatcher;
         private readonly QueueServiceClientProvider _queueServiceClientProvider;
+        private readonly IDrainModeManager _drainModeManager;
 
         public StorageLoadBalancerQueue(
                QueueServiceClientProvider queueServiceClientProvider,
                IOptions<QueuesOptions> queueOptions,
                IWebJobsExceptionHandler exceptionHandler,
                SharedQueueWatcher sharedWatcher,
-               ILoggerFactory loggerFactory)
+               ILoggerFactory loggerFactory,
+               IDrainModeManager drainModeManager)
         {
             _queueServiceClientProvider = queueServiceClientProvider;
             _queueOptions = queueOptions.Value;
             _exceptionHandler = exceptionHandler;
             _sharedWatcher = sharedWatcher;
             _loggerFactory = loggerFactory;
+            _drainModeManager = drainModeManager;
         }
 
         public IAsyncCollector<T> GetQueueWriter<T>(string queue)
@@ -119,7 +122,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 queueOptions: _queueOptions,
                 queueProcessor: queueProcessor,
                 functionDescriptor: new FunctionDescriptor { Id = SharedLoadBalancerQueueListenerFunctionId },
-                maxPollingInterval: maxPollingInterval);
+                maxPollingInterval: maxPollingInterval,
+                drainModeManager: _drainModeManager);
 
             return listener;
         }
