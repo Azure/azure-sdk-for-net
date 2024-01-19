@@ -96,6 +96,7 @@ trigger:
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iotoperations/Azure.ResourceManager.IoTOperations
     - sdk/keyvault/Azure.ResourceManager.KeyVault
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
@@ -281,6 +282,7 @@ pr:
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iotoperations/Azure.ResourceManager.IoTOperations
     - sdk/keyvault/Azure.ResourceManager.KeyVault
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
