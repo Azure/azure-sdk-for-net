@@ -241,39 +241,6 @@ namespace Azure.Communication.PhoneNumbers
         public System.DateTimeOffset SearchExpiresOn { get { throw null; } }
         public string SearchId { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PhoneNumberSearchResultError : System.IEquatable<Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PhoneNumberSearchResultError(string value) { throw null; }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError AllNumbersNotAcquired { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError AuthorizationDenied { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError BillingUnavailable { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError InvalidAddress { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError InvalidOfferModel { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError MissingAddress { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError NoError { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError NotEnoughCredit { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError NotEnoughLicenses { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError NoWallet { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError NumbersPartiallyAcquired { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError OutOfStock { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError ProvisioningFailed { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError PurchaseFailed { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError ReservationExpired { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError UnknownErrorCode { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError UnknownSearchError { get { throw null; } }
-        public bool Equals(Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError left, Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError right) { throw null; }
-        public static implicit operator Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError left, Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class PhoneNumbersModelFactory
     {
         public static Azure.Communication.PhoneNumbers.AvailablePhoneNumberCost AvailablePhoneNumberCost(double amount = 0, string isoCurrencySymbol = null, Azure.Communication.PhoneNumbers.BillingFrequency billingFrequency = default(Azure.Communication.PhoneNumbers.BillingFrequency)) { throw null; }
