@@ -17,7 +17,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
     {
         internal long? _length;
         internal readonly ShareFileStorageResourceOptions _options;
-        internal ETag? _etagDownloadLock = default;
 
         internal ShareFileClient ShareFileClient { get; }
 
@@ -56,7 +55,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             : this(fileClient, options)
         {
             _length = length;
-            _etagDownloadLock = etagLock;
         }
 
         internal async Task CreateAsync(

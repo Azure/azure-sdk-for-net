@@ -43,10 +43,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, fileProperties.Metadata);
             }
-            if (fileProperties.LastModified != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.LastModified, fileProperties.LastModified);
-            }
             if (fileProperties.SmbProperties.FileCreatedOn != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.CreationTime, fileProperties.SmbProperties.FileCreatedOn);
@@ -78,6 +74,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return new StorageResourceItemProperties(
                 resourceLength: fileProperties.ContentLength,
                 eTag: fileProperties.ETag,
+                lastModifiedTime: fileProperties.LastModified,
                 properties: properties);
         }
 
@@ -98,10 +95,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (info.Details.Metadata != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, info.Details.Metadata);
-            }
-            if (info.Details.LastModified != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.LastModified, info.Details.LastModified);
             }
             if (info.Details.SmbProperties.FileCreatedOn != default)
             {
@@ -139,6 +132,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 properties: new StorageResourceItemProperties(
                     resourceLength: size.HasValue ? size : info.ContentLength,
                     eTag: info.Details.ETag,
+                    lastModifiedTime: info.Details.LastModified,
                     properties: properties));
         }
     }

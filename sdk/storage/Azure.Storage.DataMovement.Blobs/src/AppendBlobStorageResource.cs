@@ -43,12 +43,6 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>
-        /// ETag Download lock. Used when reading from the storage resource to confirm the storage resource has not changed
-        /// since the start of the transfer.
-        /// </summary>
-        protected ETag? ETagDownloadLock;
-
-        /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
         /// </summary>
@@ -74,7 +68,6 @@ namespace Azure.Storage.DataMovement.Blobs
             : this(blobClient, options)
         {
             ResourceProperties = resourceProperties;
-            ETagDownloadLock = resourceProperties?.ETag;
         }
 
         /// <summary>
@@ -97,8 +90,14 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
-                _options.ToBlobDownloadOptions(new HttpRange(position, length), ETagDownloadLock),
+                _options.ToBlobDownloadOptions(new HttpRange(position, length), ResourceProperties?.ETag),
                 cancellationToken).ConfigureAwait(false);
+
+            // Set the resource properties if we currently do not have any stored on the resource.
+            if (ResourceProperties != null)
+            {
+                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
             return response.Value.ToReadStreamStorageResourceInfo();
         }
 
@@ -241,8 +240,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 return ResourceProperties;
             }
-            // Else we need to fetch the properties
-            // TODO this should be behind a separate toggle
             else
             {
                 BlobProperties blobProperties = (await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;

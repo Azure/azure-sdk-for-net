@@ -70,7 +70,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         {
-            return Task.FromResult(new StorageResourceItemProperties(Buffer.Length, new ETag("etag"), default));
+            return Task.FromResult(new StorageResourceItemProperties(Buffer.Length, new ETag("etag"), DateTimeOffset.UtcNow, default));
         }
 
         protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()

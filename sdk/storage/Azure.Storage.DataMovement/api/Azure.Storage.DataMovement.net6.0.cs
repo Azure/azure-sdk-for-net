@@ -168,8 +168,9 @@ namespace Azure.Storage.DataMovement
     public partial class StorageResourceItemProperties
     {
         protected StorageResourceItemProperties() { }
-        public StorageResourceItemProperties(long? resourceLength, Azure.ETag? eTag, System.Collections.Generic.Dictionary<string, object> properties) { }
+        public StorageResourceItemProperties(long? resourceLength, Azure.ETag? eTag, System.DateTimeOffset? lastModifiedTime, System.Collections.Generic.Dictionary<string, object> properties) { }
         public Azure.ETag? ETag { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
         public System.Collections.Generic.Dictionary<string, object> RawProperties { get { throw null; } }
         public long? ResourceLength { get { throw null; } }
     }
@@ -184,6 +185,7 @@ namespace Azure.Storage.DataMovement
     {
         public readonly System.IO.Stream Content;
         public readonly long? ContentLength;
+        public readonly Azure.ETag? ETag;
         public readonly long? ResourceLength;
         public StorageResourceReadStreamResult(System.IO.Stream content, Azure.HttpRange range, Azure.Storage.DataMovement.StorageResourceItemProperties properties) { }
     }

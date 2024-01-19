@@ -14,14 +14,10 @@ namespace Azure.Storage.DataMovement
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
-            if (fileInfo.LastWriteTime != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.LastModified, fileInfo.LastWriteTime);
-            }
-
             return new StorageResourceItemProperties(
                 resourceLength: fileInfo.Length,
                 eTag: default,
+                lastModifiedTime: fileInfo.LastWriteTimeUtc,
                 properties: properties);
         }
 

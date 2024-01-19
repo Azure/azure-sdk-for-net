@@ -30,6 +30,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.FromResult(new StorageResourceItemProperties(
                     resourceLength: length,
                     eTag: default,
+                    lastModifiedTime: DateTimeOffset.UtcNow,
                     properties: default)));
             mock.Setup(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult<HttpAuthorization>(default));

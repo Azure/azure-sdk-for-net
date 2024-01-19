@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, default);
+            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
 
             BlockBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
@@ -59,7 +59,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, default);
+            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
 
             PageBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, default);
+            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
 
             AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.GetPropertiesInternalAsync();
@@ -111,6 +111,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceItemProperties resourceProperties = new(
                 resourceLength: default,
                 eTag: etag,
+                lastModifiedTime: DateTimeOffset.UtcNow,
                 properties: default);
 
             BlockBlobStorageResource storageResource = new(mock.Object, resourceProperties);
@@ -138,6 +139,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceItemProperties resourceProperties = new(
                 resourceLength: default,
                 eTag: etag,
+                lastModifiedTime: DateTimeOffset.UtcNow,
                 properties: default);
 
             PageBlobStorageResource storageResource = new(mock.Object, resourceProperties);
@@ -162,7 +164,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceItemProperties properties = new(0, etag, default);
+            StorageResourceItemProperties properties = new(0, etag, DateTimeOffset.UtcNow ,default);
 
             AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();

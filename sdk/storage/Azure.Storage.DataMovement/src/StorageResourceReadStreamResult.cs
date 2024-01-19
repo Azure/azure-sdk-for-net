@@ -25,10 +25,15 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public readonly long? ResourceLength;
 
+        /// <summary>
+        /// The ETag of the result.
+        /// </summary>
+        public readonly ETag? ETag;
+
         internal StorageResourceReadStreamResult() { }
 
         /// <summary>
-        /// Constructor for ReadStreamStorageResourceInfo
+        /// Constructor for StorageResourceReadStreamResult
         /// </summary>
         /// <param name="content"></param>
         /// <param name="range"></param>
@@ -41,6 +46,7 @@ namespace Azure.Storage.DataMovement
             Content = content;
             ContentLength = range.Length;
             ResourceLength = properties.ResourceLength;
+            ETag = properties.ETag;
         }
 
         /// <summary>
