@@ -244,7 +244,7 @@ namespace Azure
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected override System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore() { throw null; }
+        protected override System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected sealed override void SetIsErrorCore(bool isError) { }
         public override string ToString() { throw null; }
@@ -522,7 +522,7 @@ namespace Azure.Core
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         protected override System.ClientModel.BinaryContent? GetContentCore() { throw null; }
-        protected override System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore() { throw null; }
+        protected override System.ClientModel.Primitives.PipelineRequestHeaders GetHeadersCore() { throw null; }
         protected override string GetMethodCore() { throw null; }
         protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);

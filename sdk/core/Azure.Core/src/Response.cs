@@ -43,7 +43,7 @@ namespace Azure
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineResponseHeaders GetHeadersCore()
         {
             // TODO: we'll need to add an adapter in case someone were to override this.
             throw new NotImplementedException();
@@ -152,7 +152,7 @@ namespace Azure
                 set => throw new NotSupportedException(DefaultMessage);
             }
 
-            protected override PipelineMessageHeaders GetHeadersCore()
+            protected override PipelineResponseHeaders GetHeadersCore()
             {
                 throw new NotSupportedException(DefaultMessage);
             }
