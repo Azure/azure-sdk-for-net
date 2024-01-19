@@ -3,6 +3,7 @@
 ## 5.11.0-beta.1 (Unreleased)
 
 ### Features Added
+
 - Added a `CheckpointPosition` struct to `Azure.Messaging.EventHubs.Processor` to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `CheckpointStore`, `PluggableCheckpointStoreEventProcessor<TPartition` and `EventProcessor<TPartition>` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
 
 ### Breaking Changes
@@ -15,7 +16,7 @@
   - To
   - ReplyTo
 
-- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no behavioral change for those using the official checkpoint store implementations.
 
 ### Bugs Fixed
 
