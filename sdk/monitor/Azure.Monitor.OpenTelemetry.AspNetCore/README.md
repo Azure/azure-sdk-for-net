@@ -220,7 +220,7 @@ builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
 
 ##### Customizing SqlClientInstrumentationOptions
 
-While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta it is privately copied within our package.
+While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package. Once it reaches a stable release, it will be included as a standard package reference. Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API.
 Once it has a stable release, it will be included as a package reference.
 Until then, to customize the SQLClient instrumentation, manually add the package to your project and use its public API.
 
