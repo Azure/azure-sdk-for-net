@@ -65,7 +65,7 @@ namespace Azure.Communication.CallAutomation
             DialogTransfer dialogTransferSuccessEvent,
             DialogSensitivityUpdate dialogSensitivityUpdateEvent,
             DialogLanguageChange dialogLanguageChangeEvent,
-            DialogUpdated dialogUpdated)
+            DialogUpdated dialogUpdatedEvent)
         {
             IsSuccess = isSuccess;
             DialogCompletedSuccessResult = successResult;
@@ -76,7 +76,7 @@ namespace Azure.Communication.CallAutomation
             DialogTransferSuccessEvent = dialogTransferSuccessEvent;
             DialogSensitivityUpdateEvent = dialogSensitivityUpdateEvent;
             DialogLanguageChangeEvent = dialogLanguageChangeEvent;
-            DialogUpdatedEvent = dialogUpdated;
+            DialogUpdatedEvent = dialogUpdatedEvent;
         }
     }
 }
