@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    [PersistableModelProxy(typeof(UnknownBackupStoreDetails))]
-    public partial class MySqlFlexibleServerBackupStoreDetails : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupStoreDetails>
+    internal partial class UnknownBackupStoreDetails : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupStoreDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerBackupStoreDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMySqlFlexibleServerBackupStoreDetails(document.RootElement, options);
+            return DeserializeUnknownBackupStoreDetails(document.RootElement, options);
         }
 
-        internal static MySqlFlexibleServerBackupStoreDetails DeserializeMySqlFlexibleServerBackupStoreDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownBackupStoreDetails DeserializeUnknownBackupStoreDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -66,14 +66,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            string objectType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("objectType"u8))
                 {
-                    case "FullBackupStoreDetails": return MySqlFlexibleServerFullBackupStoreDetails.DeserializeMySqlFlexibleServerFullBackupStoreDetails(element);
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownBackupStoreDetails.DeserializeUnknownBackupStoreDetails(element);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownBackupStoreDetails(objectType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupStoreDetails>.Write(ModelReaderWriterOptions options)
@@ -98,7 +107,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMySqlFlexibleServerBackupStoreDetails(document.RootElement, options);
+                        return DeserializeUnknownBackupStoreDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupStoreDetails)} does not support '{options.Format}' format.");
