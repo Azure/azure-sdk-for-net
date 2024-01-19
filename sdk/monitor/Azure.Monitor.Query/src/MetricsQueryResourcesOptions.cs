@@ -9,9 +9,9 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Provides the client configuration options for connecting to Azure Monitor Metrics service.
+    /// Provides the options for the MetricsClient QueryResource method.
     /// </summary>
-    public class MetricsBatchQueryOptions
+    public class MetricsQueryResourcesOptions
     {
         /// <summary>
         /// Gets or sets the timespan over which the metric will be queried.
@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query
         /// See <see href="https://learn.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
         /// </para>
         /// </summary>
-        public IList<MetricAggregationType> Aggregations { get; } = new List<MetricAggregationType>();
+        public IEnumerable<MetricAggregationType> Aggregations { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of records to retrieve. Valid only when <see cref="Filter"/> is specified. Defaults to <c>null</c>.
@@ -59,23 +59,13 @@ namespace Azure.Monitor.Query
         /// Only one order can be specified.
         /// Examples: sum asc.
         /// </summary>
-        public IList<string> OrderBy { get; internal set; } = new List<string>();
-
-        /// <summary>
-        /// Join OrderBy so it can be sent as a comma separated string.
-        /// </summary>
-        [CodeGenMember("OrderBy")]
-        internal string OrderByRaw
-        {
-            get => MetricsBatchExtensions.CommaJoin(OrderBy);
-            set => OrderBy = MetricsBatchExtensions.CommaSplit(value);
-        }
+        public string OrderBy { get; set; }
 
         /// <summary>
         /// Dimension name(s) to rollup results by.
         /// Examples: If you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries.
         /// </summary>
-        public IList<string> RollUpBy { get; internal set; } = new List<string>();
+        public IEnumerable<string> RollUpBy { get; internal set; }
 
         /// <summary>
         /// Join RollUpBy so it can be sent as a comma separated string.

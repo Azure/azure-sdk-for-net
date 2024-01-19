@@ -23,14 +23,14 @@ namespace Azure.Monitor.Query.Models
             return new MetricAvailability(granularity, retention);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MetricsBatchQueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsQueryResourcesResult"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
-        /// <returns> A new <see cref="Models.MetricsBatchQueryResult"/> instance for mocking. </returns>
-        public static MetricsBatchQueryResult MetricsBatchQueryResult(IEnumerable<MetricsQueryResult> values = null)
+        /// <returns> A new <see cref="Models.MetricsQueryResourcesResult"/> instance for mocking. </returns>
+        public static MetricsQueryResourcesResult MetricsQueryResourcesResult(IEnumerable<MetricsQueryResult> values = null)
         {
             values ??= new List<MetricsQueryResult>();
 
-            return new MetricsBatchQueryResult(values?.ToList());
+            return new MetricsQueryResourcesResult(values?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogsTableColumn"/>. </summary>

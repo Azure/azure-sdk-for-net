@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The metrics result for a resource. </summary>
-    public partial class MetricsBatchQueryResult
+    public partial class MetricsQueryResourcesResult
     {
-        /// <summary> Initializes a new instance of <see cref="MetricsBatchQueryResult"/>. </summary>
-        internal MetricsBatchQueryResult()
+        /// <summary> Initializes a new instance of <see cref="MetricsQueryResourcesResult"/>. </summary>
+        internal MetricsQueryResourcesResult()
         {
             Values = new ChangeTrackingList<MetricsQueryResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsBatchQueryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsQueryResourcesResult"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
-        internal MetricsBatchQueryResult(IReadOnlyList<MetricsQueryResult> values)
+        internal MetricsQueryResourcesResult(IReadOnlyList<MetricsQueryResult> values)
         {
             Values = values;
         }

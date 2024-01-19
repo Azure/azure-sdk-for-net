@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Monitor.Query.Models;
@@ -163,16 +164,37 @@ namespace Azure.Monitor.Query.Tests
 #else
             string resourceId = TestEnvironment.StorageAccountId;
 #endif
-            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-            Response<MetricsBatchQueryResult> metricsResultsResponse = await client.QueryBatchAsync(
-                resourceIds: new List<string> { resourceId },
-                metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+            MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
 
-            MetricsBatchQueryResult metricsQueryResults = metricsResultsResponse.Value;
-            foreach (var value in metricsQueryResults.Values)
+            MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions
             {
-                Console.WriteLine(value.Interval);
+                // Set Granularity to 5 minutes.
+                Granularity = new TimeSpan(0, 5, 0),
+                // Set Aggregations to be Average and Count.
+                Aggregations = new List<MetricAggregationType> { MetricAggregationType.Average, MetricAggregationType.Count },
+                // Set Size to 10 for 10 data points.
+                Size = 10
+            };
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier(resourceId);
+            IEnumerable<ResourceIdentifier> resourceIdentifiers = new List<ResourceIdentifier> { resourceIdentifier };
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: resourceIdentifiers,
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options).ConfigureAwait(false);
+
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            foreach (MetricsQueryResult value in metricsQueryResults.Values)
+            {
+                foreach (MetricResult metric in value.Metrics)
+                {
+                    Console.WriteLine(metric.Id);
+                    Console.WriteLine(metric.Name);
+                    Console.WriteLine(metric.TimeSeries);
+                }
+                Console.WriteLine(value.Namespace);
+                Console.WriteLine(value.Granularity);
+                Console.WriteLine(value.ResourceRegion);
             }
             #endregion
         }

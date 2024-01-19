@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -28,9 +29,9 @@ namespace Azure.Monitor.Query.Tests
             ));
         }
 
-        private MetricsBatchQueryClient CreateBatchClient()
+        private MetricsClient CreateBatchClient()
         {
-            return InstrumentClient(new MetricsBatchQueryClient(
+            return InstrumentClient(new MetricsClient(
                 new Uri(TestEnvironment.DataplaneEndpoint),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MetricsBatchQueryClientOptions())
@@ -339,16 +340,16 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task MetricsBatchQueryAsync()
         {
-            MetricsBatchQueryClient client = CreateBatchClient();
+            MetricsClient client = CreateBatchClient();
 
             var resourceId = TestEnvironment.StorageAccountId;
-
-            Response<MetricsBatchQueryResult> metricsResultsResponse = await client.QueryBatchAsync(
-                resourceIds: new List<string> { resourceId },
+            IEnumerable<ResourceIdentifier> resourceIdentifiers = new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) };
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: resourceIdentifiers,
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-            MetricsBatchQueryResult metricsQueryResults = metricsResultsResponse.Value;
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
             Assert.AreEqual(1, metricsQueryResults.Values.Count);
             Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].Metrics[0].Id);
             Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
@@ -368,12 +369,12 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public void MetricsBatchInvalid()
         {
-            MetricsBatchQueryClient client = CreateBatchClient();
+            MetricsClient client = CreateBatchClient();
 
             Assert.Throws<ArgumentException>(()=>
             {
-                client.QueryBatch(
-                resourceIds: new List<string>(),
+                client.QueryResources(
+                resourceIds: null,
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts");
             });

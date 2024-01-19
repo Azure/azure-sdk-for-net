@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,20 +13,20 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// The <see cref="MetricsBatchQueryClient"/> allows you to query multiple Azure Monitor Metric services.
+    /// The <see cref="MetricsClient"/> allows you to query multiple Azure Monitor Metric services.
     /// </summary>
-    public class MetricsBatchQueryClient
+    public class MetricsClient
     {
         private readonly MetricsBatchRestClient _metricBatchClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsBatchQueryClient"/>.
+        /// Initializes a new instance of <see cref="MetricsClient"/>.
         /// </summary>
         /// <param name="endpoint">The data plane service endpoint to use. For example <c>https://metrics.monitor.azure.com/.default</c> for public cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
-        public MetricsBatchQueryClient(Uri endpoint, TokenCredential credential, MetricsBatchQueryClientOptions options = null)
+        public MetricsClient(Uri endpoint, TokenCredential credential, MetricsBatchQueryClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -43,9 +44,9 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsBatchQueryClient"/> for mocking.
+        /// Initializes a new instance of <see cref="MetricsClient"/> for mocking.
         /// </summary>
-        protected MetricsBatchQueryClient()
+        protected MetricsClient()
         {
         }
 
@@ -63,9 +64,9 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual Response<MetricsBatchQueryResult> QueryBatch(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (resourceIds.Count == 0 || metricNames.Count == 0)
+            if (resourceIds.Count() == 0 || metricNames.Count == 0)
             {
                 throw new ArgumentException("Resource IDs or metricNames can not be empty");
             }
@@ -74,7 +75,7 @@ namespace Azure.Monitor.Query
                 throw new ArgumentNullException(nameof(metricNamespace));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(QueryBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(QueryResources)}");
             scope.Start();
 
             try
@@ -97,9 +98,9 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsBatchQueryClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time-series metrics result for the requested metric names.</returns>
-        public virtual async Task<Response<MetricsBatchQueryResult>> QueryBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (resourceIds.Count == 0 || metricNames.Count == 0)
+            if (resourceIds.Count() == 0 || metricNames.Count == 0)
             {
                 throw new ArgumentException("Resource IDs or metricNames can not be empty");
             }
@@ -108,7 +109,7 @@ namespace Azure.Monitor.Query
                 throw new ArgumentNullException(nameof(metricNamespace));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsBatchQueryClient)}.{nameof(QueryBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(QueryResources)}");
             scope.Start();
 
             try
@@ -122,20 +123,20 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private async Task<Response<MetricsBatchQueryResult>> ExecuteBatchAsync(List<string> resourceIds, List<string> metricNames, string metricNamespace, MetricsBatchQueryOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
+        private async Task<Response<MetricsQueryResourcesResult>> ExecuteBatchAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
         {
-            var subscriptionId = GetSubscriptionId(resourceIds[0]);
+            var subscriptionId = GetSubscriptionId(resourceIds.FirstOrDefault());
 
             string filter = null;
             TimeSpan? granularity = null;
             string aggregations = null;
             string startTime = null;
             int? top = null;
-            IList<string> orderBy = null;
+            string orderBy = null;
             string endTime = null;
-            IList<string> rollUpBy = null;
+            IEnumerable<string> rollUpBy = null;
 
-            ResourceIdList resourceIdList = new ResourceIdList(resourceIds);
+            ResourceIdList resourceIdList = new ResourceIdList(resourceIds.ToList());
 
             if (options != null)
             {
@@ -161,7 +162,7 @@ namespace Azure.Monitor.Query
                     granularity,
                     aggregations,
                     top,
-                    MetricsBatchExtensions.CommaJoin(orderBy),
+                    orderBy,
                     filter,
                     MetricsBatchExtensions.CommaJoin(rollUpBy),
                     cancellationToken);
@@ -179,7 +180,7 @@ namespace Azure.Monitor.Query
                     granularity,
                     aggregations,
                     top,
-                    MetricsBatchExtensions.CommaJoin(orderBy),
+                    orderBy,
                     filter,
                     MetricsBatchExtensions.CommaJoin(rollUpBy),
                     cancellationToken).ConfigureAwait(false);
