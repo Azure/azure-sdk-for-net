@@ -20,13 +20,13 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of identity. </param>
         internal SearchIndexerDataIdentity(string oDataType)
         {
             ODataType = oDataType;
         }
 
-        /// <summary> Identifies the concrete type of the identity. </summary>
+        /// <summary> A URI fragment specifying the type of identity. </summary>
         internal string ODataType { get; set; }
     }
 }

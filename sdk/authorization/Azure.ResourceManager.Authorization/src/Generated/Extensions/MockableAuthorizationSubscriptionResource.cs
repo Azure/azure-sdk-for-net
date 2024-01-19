@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>ClassicAdministrators_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClassicAdministratorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClassicAdministratorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(e), ClassicAdministratorsClientDiagnostics, Pipeline, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>ClassicAdministrators_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,7 +92,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClassicAdministratorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClassicAdministratorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(e), ClassicAdministratorsClientDiagnostics, Pipeline, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators", "value", "nextLink", cancellationToken);
         }
     }
 }

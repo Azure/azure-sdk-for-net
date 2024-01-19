@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LinuxSshPublicKey"/>. </summary>
-        /// <param name="keyData"> KeyData - Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
+        /// <param name="keyData"> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
         internal LinuxSshPublicKey(string keyData)
         {
             KeyData = keyData;
         }
 
-        /// <summary> KeyData - Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </summary>
+        /// <summary> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </summary>
         public string KeyData { get; set; }
     }
 }

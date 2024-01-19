@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +90,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

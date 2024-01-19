@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
@@ -19,7 +20,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesAutoApproval"/>. </summary>
         /// <param name="subscriptions"> The list of subscriptions. </param>
-        internal PrivateLinkServicePropertiesAutoApproval(IList<string> subscriptions) : base(subscriptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkServicePropertiesAutoApproval(IList<string> subscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(subscriptions, serializedAdditionalRawData)
         {
         }
     }

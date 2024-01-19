@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureTrafficCollectorName"> Azure Traffic Collector name. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

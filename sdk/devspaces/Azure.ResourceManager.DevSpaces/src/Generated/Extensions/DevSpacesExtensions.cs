@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +119,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +158,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -170,6 +190,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerHostMappings_GetContainerHostMapping</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -200,6 +224,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -227,6 +259,14 @@ namespace Azure.ResourceManager.DevSpaces
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
