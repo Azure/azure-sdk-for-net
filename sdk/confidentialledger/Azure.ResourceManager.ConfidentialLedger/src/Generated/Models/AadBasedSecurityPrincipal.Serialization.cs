@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class AadBasedSecurityPrincipal : IUtf8JsonSerializable
+    public partial class AadBasedSecurityPrincipal : IUtf8JsonSerializable, IJsonModel<AadBasedSecurityPrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadBasedSecurityPrincipal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AadBasedSecurityPrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AadBasedSecurityPrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AadBasedSecurityPrincipal)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrincipalId))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AadBasedSecurityPrincipal DeserializeAadBasedSecurityPrincipal(JsonElement element)
+        AadBasedSecurityPrincipal IJsonModel<AadBasedSecurityPrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AadBasedSecurityPrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AadBasedSecurityPrincipal)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAadBasedSecurityPrincipal(document.RootElement, options);
+        }
+
+        internal static AadBasedSecurityPrincipal DeserializeAadBasedSecurityPrincipal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -72,8 +113,44 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     ledgerRoleName = new ConfidentialLedgerRoleName(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AadBasedSecurityPrincipal(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AadBasedSecurityPrincipal(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AadBasedSecurityPrincipal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AadBasedSecurityPrincipal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AadBasedSecurityPrincipal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AadBasedSecurityPrincipal IPersistableModel<AadBasedSecurityPrincipal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AadBasedSecurityPrincipal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAadBasedSecurityPrincipal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AadBasedSecurityPrincipal)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AadBasedSecurityPrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
