@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             SecretType = secretType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSecretProperties"/> for deserialization. </summary>
+        internal UnknownSecretProperties()
+        {
+        }
     }
 }
