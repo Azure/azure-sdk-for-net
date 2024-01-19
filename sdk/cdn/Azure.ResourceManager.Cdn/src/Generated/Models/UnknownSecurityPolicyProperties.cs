@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The UnknownSecurityPolicyProperties. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/>. </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
-        internal UnknownSecurityPolicyProperties(SecurityPolicyType policyType) : base(policyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSecurityPolicyProperties(SecurityPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, serializedAdditionalRawData)
         {
             PolicyType = policyType;
         }
