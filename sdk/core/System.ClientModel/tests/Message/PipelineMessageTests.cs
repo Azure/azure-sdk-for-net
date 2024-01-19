@@ -10,7 +10,7 @@ namespace System.ClientModel.Tests.Message;
 public class PipelineMessageTests
 {
     [Test]
-    public void ApplyAddsRequestHeaders()
+    public void ApplySetsRequestHeaders()
     {
         ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();

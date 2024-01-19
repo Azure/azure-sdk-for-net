@@ -251,7 +251,6 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-        public void SetHeader(string name, string value) { }
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
