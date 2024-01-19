@@ -182,12 +182,18 @@ public class ClientRetryPolicy : PipelinePolicy
         return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
     }
 
-    protected virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+    public async ValueTask WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+        => await WaitCoreAsync(time, cancellationToken).ConfigureAwait(false);
+
+    protected virtual async ValueTask WaitCoreAsync(TimeSpan time, CancellationToken cancellationToken)
     {
         await Task.Delay(time, cancellationToken).ConfigureAwait(false);
     }
 
-    protected virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
+    public void Wait(TimeSpan time, CancellationToken cancellationToken)
+        => WaitCore(time, cancellationToken);
+
+    protected virtual void WaitCore(TimeSpan time, CancellationToken cancellationToken)
     {
         if (cancellationToken.WaitHandle.WaitOne(time))
         {
