@@ -5,15 +5,106 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    internal partial class SavingsPlanSummaryCount
+    internal partial class SavingsPlanSummaryCount : IUtf8JsonSerializable, IJsonModel<SavingsPlanSummaryCount>
     {
-        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanSummaryCount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SavingsPlanSummaryCount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(SucceededCount))
+            {
+                writer.WritePropertyName("succeededCount"u8);
+                writer.WriteNumberValue(SucceededCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailedCount))
+            {
+                writer.WritePropertyName("failedCount"u8);
+                writer.WriteNumberValue(FailedCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiringCount))
+            {
+                writer.WritePropertyName("expiringCount"u8);
+                writer.WriteNumberValue(ExpiringCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiredCount))
+            {
+                writer.WritePropertyName("expiredCount"u8);
+                writer.WriteNumberValue(ExpiredCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PendingCount))
+            {
+                writer.WritePropertyName("pendingCount"u8);
+                writer.WriteNumberValue(PendingCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CancelledCount))
+            {
+                writer.WritePropertyName("cancelledCount"u8);
+                writer.WriteNumberValue(CancelledCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProcessingCount))
+            {
+                writer.WritePropertyName("processingCount"u8);
+                writer.WriteNumberValue(ProcessingCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NoBenefitCount))
+            {
+                writer.WritePropertyName("noBenefitCount"u8);
+                writer.WriteNumberValue(NoBenefitCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(WarningCount))
+            {
+                writer.WritePropertyName("warningCount"u8);
+                writer.WriteNumberValue(WarningCount.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SavingsPlanSummaryCount IJsonModel<SavingsPlanSummaryCount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanSummaryCount(document.RootElement, options);
+        }
+
+        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +118,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<float> processingCount = default;
             Optional<float> noBenefitCount = default;
             Optional<float> warningCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeededCount"u8))
@@ -110,8 +203,44 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     warningCount = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SavingsPlanSummaryCount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SavingsPlanSummaryCount IPersistableModel<SavingsPlanSummaryCount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSavingsPlanSummaryCount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SavingsPlanSummaryCount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
