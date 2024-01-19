@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The profile for supported VM skus. </summary>
+    /// <summary> The profile for supported VM SKUs. </summary>
     public partial class HybridContainerServiceVmSkuProperties
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVmSkuProperties"/>. </summary>
@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVmSkuProperties"/>. </summary>
-        /// <param name="resourceType"> The resource type of the vm. </param>
-        /// <param name="capabilities"> A name value pair to describe the specific vm's capability. </param>
-        /// <param name="name"> The name of the VM Family. </param>
-        /// <param name="tier"> The tier of the VM Family. </param>
-        /// <param name="size"> The size of the VM Family. </param>
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="capabilities"> The list of name-value pairs to describe VM SKU capabilities like MemoryGB, vCPUs, etc. </param>
+        /// <param name="name"> The name of the VM SKU. </param>
+        /// <param name="tier"> The tier of the VM SKU. </param>
+        /// <param name="size"> The size of the VM SKU. </param>
         internal HybridContainerServiceVmSkuProperties(string resourceType, IReadOnlyList<HybridContainerServiceVmSkuCapabilities> capabilities, string name, string tier, string size)
         {
             ResourceType = resourceType;
@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Size = size;
         }
 
-        /// <summary> The resource type of the vm. </summary>
+        /// <summary> The type of resource the SKU applies to. </summary>
         public string ResourceType { get; }
-        /// <summary> A name value pair to describe the specific vm's capability. </summary>
+        /// <summary> The list of name-value pairs to describe VM SKU capabilities like MemoryGB, vCPUs, etc. </summary>
         public IReadOnlyList<HybridContainerServiceVmSkuCapabilities> Capabilities { get; }
-        /// <summary> The name of the VM Family. </summary>
+        /// <summary> The name of the VM SKU. </summary>
         public string Name { get; }
-        /// <summary> The tier of the VM Family. </summary>
+        /// <summary> The tier of the VM SKU. </summary>
         public string Tier { get; }
-        /// <summary> The size of the VM Family. </summary>
+        /// <summary> The size of the VM SKU. </summary>
         public string Size { get; }
     }
 }

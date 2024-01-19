@@ -26,8 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     /// </summary>
     public static class OpenTelemetryBuilderExtensions
     {
-        private const string AspNetCoreInstrumentationPackageName = "OpenTelemetry.Instrumentation.AspNetCore";
-        private const string HttpClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.Http";
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
 
         /// <summary>
@@ -142,26 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         {
             var vendorInstrumentationActions = new Dictionary<string, Action>
             {
-                { AspNetCoreInstrumentationPackageName, () => tracerProviderBuilder.AddAspNetCoreInstrumentation() },
                 { SqlClientInstrumentationPackageName, () => tracerProviderBuilder.AddSqlClientInstrumentation() },
-                {
-                    HttpClientInstrumentationPackageName,
-                        () => tracerProviderBuilder.AddHttpClientInstrumentation(o => o.FilterHttpRequestMessage = (_) =>
-                            {
-                            // Azure SDKs create their own client span before calling the service using HttpClient
-                            // In this case, we would see two spans corresponding to the same operation
-                            // 1) created by Azure SDK 2) created by HttpClient
-                            // To prevent this duplication we are filtering the span from HttpClient
-                            // as span from Azure SDK contains all relevant information needed.
-                            var parentActivity = Activity.Current?.Parent;
-                            if (parentActivity != null && parentActivity.Source.Name.Equals("Azure.Core.Http"))
-                            {
-                                return false;
-                            }
-
-                            return true;
-                            })
-                },
             };
 
             foreach (var packageActionPair in vendorInstrumentationActions)

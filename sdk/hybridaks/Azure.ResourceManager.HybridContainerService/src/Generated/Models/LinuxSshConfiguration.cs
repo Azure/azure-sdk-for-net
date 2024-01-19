@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> SSH - SSH configuration for Linux-based VMs running on Azure. </summary>
+    /// <summary> SSH configuration for VMs of the provisioned cluster. </summary>
     internal partial class LinuxSshConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="LinuxSshConfiguration"/>. </summary>
@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LinuxSshConfiguration"/>. </summary>
-        /// <param name="publicKeys"> PublicKeys - The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified. </param>
+        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </param>
         internal LinuxSshConfiguration(IList<LinuxSshPublicKey> publicKeys)
         {
             PublicKeys = publicKeys;
         }
 
-        /// <summary> PublicKeys - The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified. </summary>
+        /// <summary> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </summary>
         public IList<LinuxSshPublicKey> PublicKeys { get; }
     }
 }
