@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Pipeline;
@@ -339,5 +340,20 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
 
         StringAssert.StartsWith("Retry failed after 4 tries.", exception!.Message);
         CollectionAssert.AreEqual(exceptions, exception.InnerExceptions);
+    }
+
+    [Test]
+    public void WaitThrowsOnCancellation()
+    {
+        ClientRetryPolicy retryPolicy = new();
+
+        CancellationTokenSource cts = new CancellationTokenSource();
+
+        cts.Cancel();
+
+        TimeSpan delay = TimeSpan.FromMinutes(1);
+
+        Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await retryPolicy.WaitSyncOrAsync(delay, cts.Token, IsAsync));
     }
 }
