@@ -236,14 +236,6 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor().WithTracing(builder =>
         options.SetDbStatementForStoredProcedure = false;
     });
 });
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.AddOpenTelemetry().WithTracing(builder =>
-{
-    builder.AddSqlClientInstrumentation(options =>
-    {
-        options.SetDbStatementForStoredProcedure = false;
-    });
-});
 ```
 
 ## Key concepts
