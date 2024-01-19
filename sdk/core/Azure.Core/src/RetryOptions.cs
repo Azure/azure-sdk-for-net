@@ -12,6 +12,8 @@ namespace Azure.Core
     /// </summary>
     public class RetryOptions
     {
+        // TODO: Make freezable
+
         internal const int DefaultMaxRetries = 3;
         internal static readonly TimeSpan DefaultMaxDelay = TimeSpan.FromMinutes(1);
         internal static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
@@ -67,5 +69,10 @@ namespace Azure.Core
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public TimeSpan NetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
+
+        internal void Freeze()
+        {
+            // TODO: implement
+        }
     }
 }

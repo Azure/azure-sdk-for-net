@@ -81,6 +81,9 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        protected void AssertNotFrozen() { }
+        public void Freeze() { }
+        protected virtual void FreezeCore() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
