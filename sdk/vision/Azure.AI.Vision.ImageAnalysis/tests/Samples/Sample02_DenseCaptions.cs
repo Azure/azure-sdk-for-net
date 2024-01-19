@@ -28,6 +28,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print dense caption results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Dense Captions:");
             foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
             {
@@ -44,12 +45,13 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisDenseCaptionFromUrl
             // Get dense captions for the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.DenseCaptions,
                 new ImageAnalysisOptions { GenderNeutralCaption = true });
 
             // Print dense caption results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Dense Captions:");
             foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
             {

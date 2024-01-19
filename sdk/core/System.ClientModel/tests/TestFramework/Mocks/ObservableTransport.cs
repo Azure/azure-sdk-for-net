@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-// TODO: Can I collapse this with RetriableTransport into a single
-// MockTransport?
 public class ObservableTransport : PipelineTransport
 {
     public string Id { get; }
