@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             Scope = scope;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBenefitRecommendationProperties"/> for deserialization. </summary>
+        internal UnknownBenefitRecommendationProperties()
+        {
+        }
     }
 }

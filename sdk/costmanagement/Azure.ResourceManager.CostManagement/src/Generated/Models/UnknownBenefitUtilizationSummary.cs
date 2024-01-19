@@ -26,5 +26,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBenefitUtilizationSummary"/> for deserialization. </summary>
+        internal UnknownBenefitUtilizationSummary()
+        {
+        }
     }
 }
