@@ -87,10 +87,10 @@ public partial class RetryPolicy
             return _delayStrategy.GetNextDelay(response, tryCount + 1);
         }
 
-        protected override async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+        protected override async ValueTask WaitCoreAsync(TimeSpan time, CancellationToken cancellationToken)
             => await _pipelinePolicy.WaitAsync(time, cancellationToken).ConfigureAwait(false);
 
-        protected override void Wait(TimeSpan time, CancellationToken cancellationToken)
+        protected override void WaitCore(TimeSpan time, CancellationToken cancellationToken)
             => _pipelinePolicy.Wait(time, cancellationToken);
 
         private static HttpMessage AssertHttpMessage(PipelineMessage message)
