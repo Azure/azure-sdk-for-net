@@ -827,6 +827,12 @@
 # PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/                                                 @orenmichaely @tyclintw
 
+# PRLabel: %Playwright
+/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
+
+# ServiceLabel: %Playwright %Service Attention
+#/<NotInRepo>/                                                     @shreyaanand @mjmadhu
+
 # ######## Management Plane ########
 
 /**/*Management*/                                                  @archerzz @ArcturusZhang @ArthurMa1978

@@ -169,17 +169,6 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
         public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public abstract partial class PipelineMessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
-    {
-        protected PipelineMessageHeaders() { }
-        public abstract void Add(string name, string value);
-        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
-        public abstract bool Remove(string name);
-        public abstract void Set(string name, string value);
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public abstract bool TryGetValue(string name, out string? value);
-        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
-    }
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
@@ -198,30 +187,49 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineRequest() { }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
         public string Method { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public abstract void Dispose();
         protected abstract System.ClientModel.BinaryContent? GetContentCore();
-        protected abstract System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore();
+        protected abstract System.ClientModel.Primitives.PipelineRequestHeaders GetHeadersCore();
         protected abstract string GetMethodCore();
         protected abstract System.Uri GetUriCore();
         protected abstract void SetContentCore(System.ClientModel.BinaryContent? content);
         protected abstract void SetMethodCore(string method);
         protected abstract void SetUriCore(System.Uri uri);
     }
+    public abstract partial class PipelineRequestHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
+    {
+        protected PipelineRequestHeaders() { }
+        public abstract void Add(string name, string value);
+        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
+        public abstract bool Remove(string name);
+        public abstract void Set(string name, string value);
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+    }
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
         public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
-        public System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
         public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        protected abstract System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore();
+        protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
         protected virtual void SetIsErrorCore(bool isError) { }
+    }
+    public abstract partial class PipelineResponseHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
+    {
+        protected PipelineResponseHeaders() { }
+        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
     {
