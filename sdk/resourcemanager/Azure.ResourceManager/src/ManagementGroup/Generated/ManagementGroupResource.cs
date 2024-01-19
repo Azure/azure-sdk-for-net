@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
@@ -388,11 +388,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DescendantData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DescendantData> GetDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DescendantData> GetDescendantsAsync(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DescendantData.DeserializeDescendantData(e), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
@@ -425,11 +425,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DescendantData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DescendantData> GetDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DescendantData> GetDescendants(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DescendantData.DeserializeDescendantData(e), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
     }
 }

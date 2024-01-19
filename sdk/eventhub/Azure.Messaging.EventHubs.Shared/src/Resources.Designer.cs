@@ -913,5 +913,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("TroubleshootingGuideLink", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The buffered producer took too long to start.
+        /// </summary>
+        internal static string BufferedProducerStartupTimeout
+        {
+            get
+            {
+                return ResourceManager.GetString("BufferedProducerStartupTimeout", resourceCulture);
+            }
+        }
     }
 }

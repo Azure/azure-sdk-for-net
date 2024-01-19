@@ -72,16 +72,28 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithCliCredential_ExpiresIn()
+        public async Task AuthenticateWithCliCredential_expires_on()
         {
-            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCliExpiresIn(1800);
+            var now = DateTimeOffset.UtcNow;
+            DateTimeOffset expectedExpiresOn = new DateTimeOffset(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, TimeSpan.Zero).AddHours(1);
+            var (expectedToken1, processOutput1) = CredentialTestHelpers.CreateTokenForAzureCliExpiresOn(expectedExpiresOn, true);
+            var (expectedToken2, processOutput2) = CredentialTestHelpers.CreateTokenForAzureCliExpiresOn(expectedExpiresOn, false);
 
-            var testProcess = new TestProcess { Output = processOutput };
+            var testProcess = new TestProcess { Output = processOutput1 };
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken actualToken1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.LessOrEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            Assert.AreEqual(expectedToken1, actualToken1.Token, "The tokens should match.");
+            Assert.AreEqual(expectedExpiresOn, actualToken1.ExpiresOn, "The expires on value should be the same for token1.");
+
+            testProcess = new TestProcess { Output = processOutput2 };
+            credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            AccessToken actualToken2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expectedToken2, actualToken2.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken2.ExpiresOn, "The expires on value should be the same for token2.");
+
+            Assert.AreEqual(actualToken1.ExpiresOn, actualToken2.ExpiresOn);
         }
 
         [Test]

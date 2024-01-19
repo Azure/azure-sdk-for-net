@@ -61,7 +61,7 @@
 
     Prior to making any updates to this section, potential version
     conflicts with PowerShell or Functions need to be investigated.
-    
+
     For any common dependencies with PowerShell, the most straightforward
     way to avoid issues is to ensure the version used is less than or equal to
     the version used by PowerShell. In most cases it is adequate
@@ -107,10 +107,10 @@
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
-    <PackageReference Update="Azure.Core" Version="1.36.0" />
+    <PackageReference Update="Azure.Core" Version="1.37.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.31" />
-    <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0-beta.4" />
+    <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0-beta.6" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.10.0" />
@@ -119,7 +119,7 @@
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.10.3" />
+    <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
@@ -127,7 +127,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.9.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.10.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.4" />
@@ -200,7 +200,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240109.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240118.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20231116.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.4" PrivateAssets="All" />
@@ -233,6 +233,9 @@
     <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.6.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.1" />
+		<PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
+		<PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0-beta.1" />
+		<PackageReference Update="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
