@@ -20,14 +20,12 @@ public class RequestOptions
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
 
-    private readonly List<HeadersUpdate> _headerUpdates;
+    private List<HeadersUpdate>? _headersUpdates;
 
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
         ErrorOptions = ClientErrorBehaviors.Default;
-
-        _headerUpdates = new List<HeadersUpdate>();
     }
 
     public CancellationToken CancellationToken { get; set; }
@@ -41,7 +39,8 @@ public class RequestOptions
 
         AssertNotFrozen();
 
-        _headerUpdates.Add(new HeadersUpdate(HeaderOperation.Add, name, value));
+        _headersUpdates ??= new();
+        _headersUpdates.Add(new HeadersUpdate(HeaderOperation.Add, name, value));
     }
 
     public void SetHeader(string name, string value)
@@ -51,7 +50,8 @@ public class RequestOptions
 
         AssertNotFrozen();
 
-        _headerUpdates.Add(new HeadersUpdate(HeaderOperation.Set, name, value));
+        _headersUpdates ??= new();
+        _headersUpdates.Add(new HeadersUpdate(HeaderOperation.Set, name, value));
     }
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
@@ -98,19 +98,23 @@ public class RequestOptions
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
 
-        foreach (var update in _headerUpdates)
+        // Apply adds and sets to request headers if applicable.
+        if (_headersUpdates is not null)
         {
-            switch (update.Operation)
+            foreach (var update in _headersUpdates)
             {
-                case HeaderOperation.Add:
+                switch (update.Operation)
+                {
+                    case HeaderOperation.Add:
 
-                    message.Request.Headers.Add(update.HeaderName, update.HeaderValue);
-                    break;
-                case HeaderOperation.Set:
-                    message.Request.Headers.Set(update.HeaderName, update.HeaderValue);
-                    break;
-                default:
-                    throw new InvalidOperationException("Unrecognized header update operation value.");
+                        message.Request.Headers.Add(update.HeaderName, update.HeaderValue);
+                        break;
+                    case HeaderOperation.Set:
+                        message.Request.Headers.Set(update.HeaderName, update.HeaderValue);
+                        break;
+                    default:
+                        throw new InvalidOperationException("Unrecognized header update operation value.");
+                }
             }
         }
     }
