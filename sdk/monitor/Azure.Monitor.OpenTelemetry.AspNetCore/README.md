@@ -12,12 +12,12 @@ The Azure Monitor Distro is a client library that sends telemetry data to Azure 
 
 ### What is Included in the Distro
 
-The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with internally vendored instrumentation libraries, including:
+The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with instrumentation libraries, including:
 
 * Traces
   * **ASP.NET Core Instrumentation**: Provides automatic tracing for incoming HTTP requests to ASP.NET Core applications.
   * **HTTP Client Instrumentation**: Provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient).
-  * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages.
+  * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages. (While the SqlClient instrumentation is still in beta it is privately copied within our Distro.)
 
 * Metrics
   * Provides automatic collection of Application Insights Standard metrics.
@@ -220,13 +220,28 @@ builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
 
 ##### Customizing SqlClientInstrumentationOptions
 
-While it's still in beta, the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is privately copied within our package.
+While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta it is privately copied within our package.
 Once it has a stable release, it will be included as a package reference.
 Until then, to customize the SQLClient instrumentation, manually add the package to your project and use its public API.
 
+```
+dotnet add package --prerelease OpenTelemetry.Instrumentation.SqlClient
+```
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.AddOpenTelemetry().WithTracing(builder =>
+{
+    builder.AddSqlClientInstrumentation(options =>
+    {
+        options.SetDbStatementForStoredProcedure = false;
+    });
+});
+```
+
 ## Key concepts
 
-The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and internally vendored instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.
+The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.
 
 ## Examples
 
