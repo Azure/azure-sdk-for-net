@@ -29,8 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
         /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> The content of uploaded certificate. </param>
-        internal AppPlatformContentCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState, string content) : base(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames, provisioningState)
+        internal AppPlatformContentCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string content) : base(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames, provisioningState, serializedAdditionalRawData)
         {
             Content = content;
             CertificatePropertiesType = certificatePropertiesType ?? "ContentCertificate";

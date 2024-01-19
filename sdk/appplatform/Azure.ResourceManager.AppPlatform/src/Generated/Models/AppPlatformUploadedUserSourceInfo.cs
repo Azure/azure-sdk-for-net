@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
@@ -23,8 +26,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of <see cref="AppPlatformUploadedUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
-        internal AppPlatformUploadedUserSourceInfo(string userSourceInfoType, string version, string relativePath) : base(userSourceInfoType, version)
+        internal AppPlatformUploadedUserSourceInfo(string userSourceInfoType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData, string relativePath) : base(userSourceInfoType, version, serializedAdditionalRawData)
         {
             RelativePath = relativePath;
             UserSourceInfoType = userSourceInfoType ?? "UploadedUserSourceInfo";
