@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnEndpointPatch : IUtf8JsonSerializable
+    public partial class CdnEndpointPatch : IUtf8JsonSerializable, IJsonModel<CdnEndpointPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CdnEndpointPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -149,7 +160,261 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CdnEndpointPatch IJsonModel<CdnEndpointPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnEndpointPatch(document.RootElement, options);
+        }
+
+        internal static CdnEndpointPatch DeserializeCdnEndpointPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> originPath = default;
+            Optional<IList<string>> contentTypesToCompress = default;
+            Optional<string> originHostHeader = default;
+            Optional<bool> isCompressionEnabled = default;
+            Optional<bool> isHttpAllowed = default;
+            Optional<bool> isHttpsAllowed = default;
+            Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
+            Optional<OptimizationType?> optimizationType = default;
+            Optional<string> probePath = default;
+            Optional<IList<GeoFilter>> geoFilters = default;
+            Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
+            Optional<IList<UriSigningKey>> uriSigningKeys = default;
+            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
+            Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("originPath"u8))
+                        {
+                            originPath = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("contentTypesToCompress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            contentTypesToCompress = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("originHostHeader"u8))
+                        {
+                            originHostHeader = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isCompressionEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isCompressionEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isHttpAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isHttpAllowed = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isHttpsAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isHttpsAllowed = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("queryStringCachingBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            queryStringCachingBehavior = property0.Value.GetString().ToQueryStringCachingBehavior();
+                            continue;
+                        }
+                        if (property0.NameEquals("optimizationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                optimizationType = null;
+                                continue;
+                            }
+                            optimizationType = new OptimizationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("probePath"u8))
+                        {
+                            probePath = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("geoFilters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<GeoFilter> array = new List<GeoFilter>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                            }
+                            geoFilters = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultOriginGroup"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                defaultOriginGroup = null;
+                                continue;
+                            }
+                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("urlSigningKeys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                uriSigningKeys = null;
+                                continue;
+                            }
+                            List<UriSigningKey> array = new List<UriSigningKey>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                            }
+                            uriSigningKeys = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("deliveryPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                deliveryPolicy = null;
+                                continue;
+                            }
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                webApplicationFirewallPolicyLink = null;
+                                continue;
+                            }
+                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CdnEndpointPatch(Optional.ToDictionary(tags), originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<CdnEndpointPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CdnEndpointPatch IPersistableModel<CdnEndpointPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCdnEndpointPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CdnEndpointPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -49,6 +49,15 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Primitives
 {
+    public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        internal ApiKeyAuthenticationPolicy() { }
+        public static System.ClientModel.Primitives.ApiKeyAuthenticationPolicy CreateBasicAuthorizationPolicy(System.ClientModel.ApiKeyCredential credential) { throw null; }
+        public static System.ClientModel.Primitives.ApiKeyAuthenticationPolicy CreateBearerAuthorizationPolicy(System.ClientModel.ApiKeyCredential credential) { throw null; }
+        public static System.ClientModel.Primitives.ApiKeyAuthenticationPolicy CreateHeaderApiKeyPolicy(System.ClientModel.ApiKeyCredential credential, string headerName, string? keyPrefix = null) { throw null; }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
     [System.FlagsAttribute]
     public enum ClientErrorBehaviors
     {
@@ -72,6 +81,28 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+    }
+    public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public static readonly System.ClientModel.Primitives.ClientRetryPolicy Default;
+        public ClientRetryPolicy(int maxRetries = 3) { }
+        public System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
+        protected virtual System.TimeSpan GetNextDelayCore(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
+        protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        protected virtual void OnTryComplete(System.ClientModel.Primitives.PipelineMessage message) { }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+        public bool ShouldRetry(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        public System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        protected virtual bool ShouldRetryCore(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryCoreAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        public void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
+        public System.Threading.Tasks.ValueTask WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual void WaitCore(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
+        protected virtual System.Threading.Tasks.ValueTask WaitCoreAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
@@ -138,17 +169,6 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
         public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public abstract partial class PipelineMessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
-    {
-        protected PipelineMessageHeaders() { }
-        public abstract void Add(string name, string value);
-        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
-        public abstract bool Remove(string name);
-        public abstract void Set(string name, string value);
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public abstract bool TryGetValue(string name, out string? value);
-        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
-    }
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
@@ -167,30 +187,49 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineRequest() { }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
         public string Method { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public abstract void Dispose();
         protected abstract System.ClientModel.BinaryContent? GetContentCore();
-        protected abstract System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore();
+        protected abstract System.ClientModel.Primitives.PipelineRequestHeaders GetHeadersCore();
         protected abstract string GetMethodCore();
         protected abstract System.Uri GetUriCore();
         protected abstract void SetContentCore(System.ClientModel.BinaryContent? content);
         protected abstract void SetMethodCore(string method);
         protected abstract void SetUriCore(System.Uri uri);
     }
+    public abstract partial class PipelineRequestHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
+    {
+        protected PipelineRequestHeaders() { }
+        public abstract void Add(string name, string value);
+        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
+        public abstract bool Remove(string name);
+        public abstract void Set(string name, string value);
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+    }
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
         public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
-        public System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
         public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        protected abstract System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore();
+        protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
         protected virtual void SetIsErrorCore(bool isError) { }
+    }
+    public abstract partial class PipelineResponseHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
+    {
+        protected PipelineResponseHeaders() { }
+        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
     {

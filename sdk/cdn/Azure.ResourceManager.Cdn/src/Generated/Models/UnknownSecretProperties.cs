@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The UnknownSecretProperties. </summary>
@@ -12,7 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecretProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
-        internal UnknownSecretProperties(SecretType secretType) : base(secretType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSecretProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(secretType, serializedAdditionalRawData)
         {
             SecretType = secretType;
         }
