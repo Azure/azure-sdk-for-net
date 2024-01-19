@@ -3,11 +3,12 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace System.ClientModel.Tests.Client;
+namespace ClientModel.Tests.ClientShared;
 
 internal class TypeFormatters
 {
