@@ -181,6 +181,49 @@ environmental variables:
 | `OTEL_RESOURCE_ATTRIBUTES` | Key-value pairs to be used as resource attributes. See the [Resource SDK specification](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.5.0/specification/resource/sdk.md#specifying-resource-information-via-an-environment-variable) for more details. |
 | `OTEL_SERVICE_NAME`        | Sets the value of the `service.name` resource attribute. If `service.name` is also provided in `OTEL_RESOURCE_ATTRIBUTES`, then `OTEL_SERVICE_NAME` takes precedence. |
 
+#### Customizing Instrumentation Libraries
+
+The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient).
+You can customize these included instrumentations or manually add additional instrumentation on your own using the OpenTelemetry API.
+
+Here are some examples of how to customize the instrumentation:
+
+##### Customizing AspNetCoreInstrumentationOptions
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.Configure<AspNetCoreInstrumentationOptions>(options =>
+{
+    options.RecordException = true;
+    options.Filter = (httpContext) =>
+    {
+        // only collect telemetry about HTTP GET requests
+        return HttpMethods.IsGet(httpContext.Request.Method);
+    };
+});
+```
+
+##### Customizing HttpClientInstrumentationOptions
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
+{
+    options.RecordException = true;
+    options.FilterHttpRequestMessage = (httpRequestMessage) =>
+    {
+        // only collect telemetry about HTTP GET requests
+        return HttpMethods.IsGet(httpRequestMessage.Method.Method);
+    };
+});
+```
+
+##### Customizing SqlClientInstrumentationOptions
+
+While it's still in beta, the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is privately copied within our package.
+Once it has a stable release, it will be included as a package reference.
+Until then, to customize the SQLClient instrumentation, manually add the package to your project and use its public API.
+
 ## Key concepts
 
 The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and internally vendored instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.
