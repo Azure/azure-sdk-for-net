@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForecastResult(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string nextLink, IReadOnlyList<ForecastColumn> columns, IReadOnlyList<IList<BinaryData>> rows, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ForecastResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string nextLink, IReadOnlyList<ForecastColumn> columns, IReadOnlyList<IList<BinaryData>> rows, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             NextLink = nextLink;
             Columns = columns;

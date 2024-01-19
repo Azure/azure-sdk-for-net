@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BenefitUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, BillingAccountBenefitKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BenefitUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
