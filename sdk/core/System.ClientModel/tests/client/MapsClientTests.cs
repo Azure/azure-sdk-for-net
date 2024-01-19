@@ -356,7 +356,7 @@ public class MapsClientTests
                 _stream = BinaryData.FromString("{}").ToStream();
             }
 
-            public override int Status => 0;
+            public override int Status => 200;
 
             public override string ReasonPhrase => "CustomTransportResponse";
 

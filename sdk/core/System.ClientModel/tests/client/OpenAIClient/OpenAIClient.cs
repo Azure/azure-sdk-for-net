@@ -68,7 +68,6 @@ public class OpenAIClient
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, BinaryContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        message.Apply(options);
         message.MessageClassifier = MessageClassifier200;
 
         PipelineRequest request = message.Request;
@@ -85,6 +84,10 @@ public class OpenAIClient
         request.Headers.Set("Content-Type", "application/json");
 
         request.Content = content;
+
+        // Note: due to addition of SetHeader method on RequestOptions, we now
+        // need to apply options at the end of the CreateRequest routine.
+        message.Apply(options);
 
         return message;
     }

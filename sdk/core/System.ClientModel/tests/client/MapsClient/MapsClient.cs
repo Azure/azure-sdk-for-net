@@ -66,7 +66,6 @@ public class MapsClient
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        message.Apply(options);
         message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         PipelineRequest request = message.Request;
@@ -89,6 +88,10 @@ public class MapsClient
         request.Uri = uriBuilder.Uri;
 
         request.Headers.Add("Accept", "application/json");
+
+        // Note: due to addition of SetHeader method on RequestOptions, we now
+        // need to apply options at the end of the CreateRequest routine.
+        message.Apply(options);
 
         return message;
     }

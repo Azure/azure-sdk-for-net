@@ -12,6 +12,7 @@ public class OpenAIClientTests
     // It's here now for quick manual validation of client functionality, but we can revisit
     // this story going forward.
     [Test]
+    [Ignore("OpenAI deprecated this endpoint and it now returns a 404.")]
     public void TestClientSync()
     {
         string key = Environment.GetEnvironmentVariable("OPENAI_KEY");
