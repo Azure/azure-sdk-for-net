@@ -311,7 +311,7 @@ public class MapsClientTests
         {
             private string _method;
             private Uri _uri;
-            private PipelineMessageHeaders _headers;
+            private PipelineRequestHeaders _headers;
 
             public CustomTransportRequest()
             {
@@ -326,7 +326,7 @@ public class MapsClientTests
             protected override Uri GetUriCore()
                 => _uri;
 
-            protected override PipelineMessageHeaders GetHeadersCore()
+            protected override PipelineRequestHeaders GetHeadersCore()
                 => _headers;
 
             protected override BinaryContent GetContentCore()
@@ -371,13 +371,13 @@ public class MapsClientTests
                 _stream?.Dispose();
             }
 
-            protected override PipelineMessageHeaders GetHeadersCore()
+            protected override PipelineResponseHeaders GetHeadersCore()
             {
                 throw new NotImplementedException();
             }
         }
 
-        private class CustomHeaders : PipelineMessageHeaders
+        private class CustomHeaders : PipelineResponseHeaders
         {
             private readonly Dictionary<string, string> _headers;
 

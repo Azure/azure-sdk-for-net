@@ -111,9 +111,16 @@ public class ClientPipelineOptions
 
     #endregion
 
-    internal void Freeze() => _frozen = true;
+    public void Freeze()
+    {
+        _frozen = true;
 
-    private void AssertNotFrozen()
+        FreezeCore();
+    }
+
+    protected virtual void FreezeCore() { }
+
+    protected void AssertNotFrozen()
     {
         if (_frozen)
         {
