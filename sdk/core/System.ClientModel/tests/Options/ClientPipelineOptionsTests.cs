@@ -21,6 +21,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
     {
         ClientPipelineOptions options = new()
         {
+            RetryPolicy = new ObservablePolicy("RetryPolicy"),
             Transport = new ObservableTransport("Transport")
         };
 
@@ -34,12 +35,11 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(3, observations.Count);
+        Assert.AreEqual(5, observations.Count);
         Assert.AreEqual("Request:PerCallPolicy", observations[index++]);
-
-        // TODO: Validate that per call policy comes before retry policy
-
+        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:PerCallPolicy", observations[index++]);
     }
 
@@ -48,6 +48,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
     {
         ClientPipelineOptions options = new()
         {
+            RetryPolicy = new ObservablePolicy("RetryPolicy"),
             Transport = new ObservableTransport("Transport")
         };
 
@@ -61,13 +62,12 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(3, observations.Count);
+        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:PerTryPolicy", observations[index++]);
-
-        // TODO: Validate that per try policy comes after retry policy
-
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Response:PerTryPolicy", observations[index++]);
+        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
     }
 
     [Test]
@@ -75,6 +75,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
     {
         ClientPipelineOptions options = new()
         {
+            RetryPolicy = new ObservablePolicy("RetryPolicy"),
             Transport = new ObservableTransport("Transport")
         };
 
@@ -88,13 +89,12 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(3, observations.Count);
+        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:BeforeTransportPolicy", observations[index++]);
-
-        // TODO: Validate that before transport policy comes after retry policy
-
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Response:BeforeTransportPolicy", observations[index++]);
+        Assert.AreEqual("Response:RetryPolicy", observations[index++]);
     }
 
     [Test]

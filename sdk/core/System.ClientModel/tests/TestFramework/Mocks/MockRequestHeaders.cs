@@ -7,11 +7,25 @@ using System.Collections.Generic;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockMessageHeaders : PipelineMessageHeaders
+public class MockRequestHeaders : PipelineRequestHeaders
 {
+    private readonly Dictionary<string, string> _headers;
+
+    public MockRequestHeaders()
+    {
+        _headers = new Dictionary<string, string>();
+    }
+
     public override void Add(string name, string value)
     {
-        throw new NotImplementedException();
+        if (_headers.ContainsKey(name))
+        {
+            _headers[name] += string.Concat(",", value);
+        }
+        else
+        {
+            _headers[name] = value;
+        }
     }
 
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
@@ -21,17 +35,17 @@ public class MockMessageHeaders : PipelineMessageHeaders
 
     public override bool Remove(string name)
     {
-        throw new NotImplementedException();
+        return _headers.Remove(name);
     }
 
     public override void Set(string name, string value)
     {
-        throw new NotImplementedException();
+        _headers[name] = value;
     }
 
     public override bool TryGetValue(string name, out string? value)
     {
-        throw new NotImplementedException();
+        return _headers.TryGetValue(name, out value);
     }
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
