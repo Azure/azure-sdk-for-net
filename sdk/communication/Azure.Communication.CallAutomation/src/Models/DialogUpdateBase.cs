@@ -8,13 +8,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The BaseDialog. </summary>
-    [CodeGenModel("BaseDialog")]
-    public abstract partial class BaseDialog
+    /// <summary> The base object for DialogUpdate. </summary>
+    [CodeGenModel("DialogUpdateBase")]
+    public abstract partial class DialogUpdateBase
     {
-        /// <summary> Initializes a new instance of BaseDialog. </summary>
+        /// <summary> Initializes a new instance of DialogUpdateBase. </summary>
         /// <param name="kind"> Determines the type of the dialog. </param>
-        internal BaseDialog(DialogInputType kind)
+        internal DialogUpdateBase(DialogInputType kind)
         {
             Kind = kind;
         }

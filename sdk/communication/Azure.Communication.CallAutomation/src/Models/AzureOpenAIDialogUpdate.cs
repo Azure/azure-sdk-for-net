@@ -10,21 +10,21 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The AzureOpenAIDialog. </summary>
-    [CodeGenModel("AzureOpenAIDialog")]
-    [CodeGenSuppress("AzureOpenAIDialog")]
-    public partial class AzureOpenAIDialog : BaseDialog
+    [CodeGenModel("AzureOpenAIDialogUpdate")]
+    [CodeGenSuppress("AzureOpenAIDialogUpdate")]
+    public partial class AzureOpenAIDialogUpdate : DialogUpdateBase
     {
         /// <summary> Initializes a new instance of AzureOpenAIDialogInternal. </summary>
         /// <param name="context"> Dialog context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="context"/> is null. </exception>
-        public AzureOpenAIDialog(IDictionary<string, object> context) : base(DialogInputType.AzureOpenAI)
+        public AzureOpenAIDialogUpdate(IDictionary<string, object> context) : base(DialogInputType.AzureOpenAI)
         {
             Argument.AssertNotNull(context, nameof(context));
 
             Context = context;
         }
 
-        internal AzureOpenAIDialog(DialogInputType kind, IDictionary<string, object> context) : base(DialogInputType.AzureOpenAI, context)
+        internal AzureOpenAIDialogUpdate(DialogInputType kind, IDictionary<string, object> context) : base(DialogInputType.AzureOpenAI, context)
         {
         }
     }
