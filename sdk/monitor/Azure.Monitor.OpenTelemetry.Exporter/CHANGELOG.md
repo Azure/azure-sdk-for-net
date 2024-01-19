@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies
+  ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  - OpenTelemetry 1.7.0
+
 ## 1.1.0 (2023-11-29)
 
 ### Features Added
