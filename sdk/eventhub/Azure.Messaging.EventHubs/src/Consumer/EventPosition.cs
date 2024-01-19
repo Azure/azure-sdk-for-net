@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition Earliest { get; } = FromOffset(StartOfStream, false);
+        public static EventPosition Earliest { get; } = new EventPosition { Offset = StartOfStream, IsInclusive = false };
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   consumer begins reading with this position.
         /// </summary>
         ///
-        public static EventPosition Latest { get; } = FromOffset(EndOfStream, false);
+        public static EventPosition Latest { get; } = new EventPosition { Offset = EndOfStream, IsInclusive = false };
 
         /// <summary>
         ///   The offset of the event identified by this position.
@@ -82,7 +82,14 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromOffset(long offset,
-                                               bool isInclusive = true) => FromOffset(offset.ToString(CultureInfo.InvariantCulture), isInclusive);
+                                               bool isInclusive = true)
+        {
+            return new EventPosition
+            {
+                Offset = offset.ToString(CultureInfo.InvariantCulture),
+                IsInclusive = isInclusive
+            };
+        }
 
         /// <summary>
         ///   Corresponds to an event with the specified sequence number in the partition.  By default, the event
@@ -96,7 +103,14 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromSequenceNumber(long sequenceNumber,
-                                                       bool isInclusive = true) => FromSequenceNumber(sequenceNumber.ToString(CultureInfo.InvariantCulture), isInclusive);
+                                                       bool isInclusive = true)
+        {
+            return new EventPosition
+            {
+                SequenceNumber = sequenceNumber.ToString(CultureInfo.InvariantCulture),
+                IsInclusive = isInclusive
+            };
+        }
 
         /// <summary>
         ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued on or after
@@ -181,47 +195,6 @@ namespace Azure.Messaging.EventHubs.Consumer
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
                 _ => base.ToString()
             };
-
-        /// <summary>
-        ///   Corresponds to the event in the partition at the provided offset.
-        /// </summary>
-        ///
-        /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
-        /// <param name="isInclusive">If true, the event at the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
-        ///
-        /// <returns>The position of the specified event.</returns>
-        ///
-        private static EventPosition FromOffset(string offset,
-                                                bool isInclusive)
-        {
-            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
-
-            return new EventPosition
-            {
-                Offset = offset,
-                IsInclusive = isInclusive
-            };
-        }
-
-        /// <summary>
-        ///   Corresponds to the event in the partition at the provided offset.
-        /// </summary>
-        /// <param name="sequenceNumber">The sequence number assigned to an event when it was enqueued in the partition.</param>
-        /// <param name="isInclusive">If true, the event at the <paramref name="sequenceNumber"/> is included; otherwise the next event in sequence will be received.</param>
-        ///
-        /// <returns>The position of the specified event.</returns>
-        ///
-        private static EventPosition FromSequenceNumber(string sequenceNumber,
-                                                        bool isInclusive)
-        {
-            Argument.AssertNotNullOrWhiteSpace(nameof(sequenceNumber), sequenceNumber);
-
-            return new EventPosition
-            {
-                SequenceNumber = sequenceNumber,
-                IsInclusive = isInclusive
-            };
-        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="EventPosition" /> instances are equal to each other.
