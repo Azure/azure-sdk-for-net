@@ -229,6 +229,13 @@ dotnet add package --prerelease OpenTelemetry.Instrumentation.SqlClient
 ```
 
 ```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor().WithTracing(builder =>
+{
+    builder.AddSqlClientInstrumentation(options =>
+    {
+        options.SetDbStatementForStoredProcedure = false;
+    });
+});
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
 builder.Services.AddOpenTelemetry().WithTracing(builder =>
 {
