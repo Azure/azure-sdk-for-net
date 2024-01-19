@@ -100,6 +100,38 @@ public class RequestOptionsTests
     }
 
     [Test]
+    public void CanInterleaveAddAndSetCalls()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        PipelineMessage message = pipeline.CreateMessage();
+
+        message.Request.Headers.Add("MockHeader1", "Message.Request Value");
+        message.Request.Headers.Add("MockHeader2", "Message.Request Value");
+        message.Request.Headers.Add("MockHeader3", "Message.Request Value");
+
+        RequestOptions options = new RequestOptions();
+
+        options.SetHeader("MockHeader1", "RequestOptions SetHeader Value 1");
+        options.AddHeader("MockHeader1", "RequestOptions AddHeader Value 1");
+        options.SetHeader("MockHeader1", "RequestOptions SetHeader Value 2");
+
+        options.AddHeader("MockHeader2", "RequestOptions AddHeader Value 1");
+        options.SetHeader("MockHeader2", "RequestOptions SetHeader Value 1");
+        options.AddHeader("MockHeader2", "RequestOptions AddHeader Value 2");
+
+        message.Apply(options);
+
+        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader1", out string? value1));
+        Assert.AreEqual("RequestOptions SetHeader Value 2", value1);
+
+        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader2", out string? value2));
+        Assert.AreEqual("RequestOptions SetHeader Value 1,RequestOptions AddHeader Value 2", value2);
+
+        Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader3", out string? value3));
+        Assert.AreEqual("Message.Request Value", value3);
+    }
+
+    [Test]
     public void CannotModifyOptionsAfterFrozen()
     {
         ClientPipeline pipeline = ClientPipeline.Create();
