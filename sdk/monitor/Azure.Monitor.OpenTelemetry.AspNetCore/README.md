@@ -192,7 +192,7 @@ Here are some examples of how to customize the instrumentation:
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<AspNetCoreInstrumentationOptions>(options =>
+builder.Services.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
 {
     options.RecordException = true;
     options.Filter = (httpContext) =>
@@ -207,7 +207,7 @@ builder.Services.Configure<AspNetCoreInstrumentationOptions>(options =>
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
+builder.Services.Configure<HttpClientTraceInstrumentationOptions>(options =>
 {
     options.RecordException = true;
     options.FilterHttpRequestMessage = (httpRequestMessage) =>
