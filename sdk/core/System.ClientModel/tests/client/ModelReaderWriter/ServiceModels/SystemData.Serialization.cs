@@ -5,11 +5,11 @@
 
 #nullable disable
 
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {
