@@ -15,7 +15,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class ShareFileStorageResource : StorageResourceItemInternal
     {
-        internal long? _length;
         internal readonly ShareFileStorageResourceOptions _options;
 
         internal ShareFileClient ShareFileClient { get; }
@@ -30,7 +29,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override long MaxSupportedChunkSize => DataMovementShareConstants.MaxRange;
 
-        protected override long? Length => _length;
+        protected override long? Length => ResourceProperties?.ResourceLength;
 
         public ShareFileStorageResource(
             ShareFileClient fileClient,
@@ -44,17 +43,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Internal Constructor for constructing the resource retrieved by a GetStorageResources.
         /// </summary>
         /// <param name="fileClient">The blob client which will service the storage resource operations.</param>
-        /// <param name="length">The content length of the blob.</param>
-        /// <param name="etagLock">Preset etag to lock on for reads.</param>
+        /// <param name="properties">Properties specific to the resource.</param>
         /// <param name="options">Options for the storage resource. See <see cref="ShareFileStorageResourceOptions"/>.</param>
         internal ShareFileStorageResource(
             ShareFileClient fileClient,
-            long? length,
-            ETag? etagLock,
+            StorageResourceItemProperties properties,
             ShareFileStorageResourceOptions options = default)
             : this(fileClient, options)
         {
-            _length = length;
+            ResourceProperties = properties;
         }
 
         internal async Task CreateAsync(
@@ -185,9 +182,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
                 conditions: _options.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-            // TODO: should we be grabbing the ETag here even though we can't apply it to the download.
-            //GrabEtag(response.GetRawResponse());
-            return response.Value.ToStorageResourceProperties();
+            if (ResourceProperties == default)
+            {
+                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
+            return ResourceProperties;
         }
 
         protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(

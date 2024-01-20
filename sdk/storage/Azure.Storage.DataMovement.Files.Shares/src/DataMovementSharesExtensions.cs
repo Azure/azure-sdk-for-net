@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares
@@ -35,10 +34,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 SourceAuthentication = sourceAuthorization
             };
 
-        internal static StorageResourceItemProperties ToStorageResourceProperties(
+        internal static StorageResourceItemProperties ToStorageResourceItemProperties(
             this ShareFileProperties fileProperties)
         {
-            Dictionary<string, object> properties = new Dictionary<string, object>();
+            Dictionary<string, object> properties = new();
             if (fileProperties.Metadata != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, fileProperties.Metadata);
@@ -71,10 +70,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 properties.Add(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
             }
+
             return new StorageResourceItemProperties(
                 resourceLength: fileProperties.ContentLength,
                 eTag: fileProperties.ETag,
-                lastModifiedTime: fileProperties.LastModified,
+                lastModifiedTime: fileProperties.SmbProperties.FileLastWrittenOn,
                 properties: properties);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal static StorageResourceReadStreamResult ToStorageResourceReadStreamResult(
             this ShareFileDownloadInfo info)
         {
-            Dictionary<string, object> properties = new Dictionary<string, object>();
+            Dictionary<string, object> properties = new();
             if (info.Details.Metadata != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, info.Details.Metadata);
@@ -100,37 +100,27 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 properties.Add(DataMovementConstants.ResourceProperties.CreationTime, info.Details.SmbProperties.FileCreatedOn);
             }
-            if (info.Details.ContentEncoding != default)
+            if (info.ContentType != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentEncoding, info.Details.ContentEncoding);
+                properties.Add(DataMovementConstants.ResourceProperties.ContentType, info.ContentType);
             }
-            if (info.Details.ContentLanguage != default)
+            if (info.ContentHash != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentLanguage, info.Details.ContentLanguage);
-            }
-            if (info.Details.ContentDisposition != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentDisposition, info.Details.ContentDisposition);
-            }
-            if (info.Details.CacheControl != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.CacheControl, info.Details.CacheControl);
+                properties.Add(DataMovementConstants.ResourceProperties.ContentHash, info.ContentHash);
             }
 
-            HttpRange range = default;
             long? size = default;
             ContentRange contentRange = !string.IsNullOrWhiteSpace(info?.Details?.ContentRange) ? ContentRange.Parse(info.Details.ContentRange) : default;
             if (contentRange != default)
             {
-                range = ContentRange.ToHttpRange(contentRange);
                 size = contentRange.Size;
             }
 
             return new StorageResourceReadStreamResult(
-                content: info.Content,
-                range: range,
+                content: info?.Content,
+                range: ContentRange.ToHttpRange(contentRange),
                 properties: new StorageResourceItemProperties(
-                    resourceLength: size.HasValue ? size : info.ContentLength,
+                    resourceLength: contentRange.Size,
                     eTag: info.Details.ETag,
                     lastModifiedTime: info.Details.LastModified,
                     properties: properties));

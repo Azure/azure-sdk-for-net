@@ -94,7 +94,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 cancellationToken).ConfigureAwait(false);
 
             // Set the resource properties if we currently do not have any stored on the resource.
-            if (ResourceProperties != null)
+            if (ResourceProperties == default)
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
