@@ -203,7 +203,7 @@ builder.Services.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
 });
 ```
 
-##### Customizing HttpClientInstrumentationOptions
+##### Customizing HttpClientTraceInstrumentationOptions
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
