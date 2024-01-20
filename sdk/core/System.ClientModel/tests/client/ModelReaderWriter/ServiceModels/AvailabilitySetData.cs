@@ -5,10 +5,10 @@
 
 #nullable disable
 
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Collections.Generic;
 using System.Text.Json;
-using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {

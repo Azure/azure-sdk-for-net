@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
+using System.Collections.Generic;
 using System.Text.Json;
 using ClientModel.Tests.ClientShared;
 
