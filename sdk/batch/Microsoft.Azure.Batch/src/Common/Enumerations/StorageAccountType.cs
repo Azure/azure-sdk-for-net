@@ -13,6 +13,11 @@
         /// <summary>
         /// The data disk should use premium locally redundant storage.
         /// </summary>
-        PremiumLrs
+        PremiumLrs,
+
+        /// <summary>
+        /// The data disk / OS disk should use standard SSD locally redundant
+        /// </summary>
+        StandardSSDLRS
     }
 }
