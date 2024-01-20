@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -21,7 +22,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// </remarks>
     internal partial class Manager
     {
-        private Thread? _thread;
+        private Thread? _backgroundThread;
+        private static AutoResetEvent _autoResetEvent = new AutoResetEvent(false);
 
         private readonly State _state = new();
         private TimeSpan _period;
@@ -39,14 +41,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         private void InitializeState()
         {
-            _thread = new Thread(() => Run())
+            _backgroundThread = new Thread(() => Run())
             {
                 Name = "LiveMetrics State Machine",
                 IsBackground = true,
             };
 
             SetPingState();
-            _thread.Start();
+            _backgroundThread.Start();
         }
 
         private void SetPingState()
@@ -123,7 +125,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
                 }
 
-                _thread!.Join(nextTick);
+                _autoResetEvent.WaitOne(nextTick);
             }
         }
     }
