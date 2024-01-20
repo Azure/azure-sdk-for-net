@@ -188,7 +188,7 @@ You can customize these included instrumentations or manually add additional ins
 
 Here are some examples of how to customize the instrumentation:
 
-##### Customizing AspNetCoreInstrumentationOptions
+##### Customizing AspNetCoreTraceInstrumentationOptions
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
