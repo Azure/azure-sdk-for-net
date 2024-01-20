@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The type of the communication msesages channel. </summary>
+    /// <summary> The type of the communication messages channel. </summary>
     internal readonly partial struct CommunicationMessagesChannel : IEquatable<CommunicationMessagesChannel>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.Communication.Messages
 
         private const string WhatsAppValue = "whatsApp";
 
-        /// <summary> The WhatsApp communication msesages channel type. </summary>
+        /// <summary> The WhatsApp communication messages channel type. </summary>
         public static CommunicationMessagesChannel WhatsApp { get; } = new CommunicationMessagesChannel(WhatsAppValue);
         /// <summary> Determines if two <see cref="CommunicationMessagesChannel"/> values are the same. </summary>
         public static bool operator ==(CommunicationMessagesChannel left, CommunicationMessagesChannel right) => left.Equals(right);

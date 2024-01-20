@@ -83,11 +83,11 @@
      "$id": "12",
      "Name": "whatsApp",
      "Value": "whatsApp",
-     "Description": "The WhatsApp communication msesages channel type."
+     "Description": "The WhatsApp communication messages channel type."
     }
    ],
    "Namespace": "AzureCommunicationMessagesService",
-   "Description": "The type of the communication msesages channel.",
+   "Description": "The type of the communication messages channel.",
    "IsExtensible": true,
    "IsNullable": false,
    "Usage": "Output"
