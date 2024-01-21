@@ -87,7 +87,7 @@ Open the `appsettings.Development.json` file and replace the Storage and EventHu
 2. Observe the event body being processing via the application logs. Example:
 
 ```
-info: Azure.Messaging.EventHubs.Processor.HostedService.Samples.SampleApplicationProcessor[0]
+info: Azure.Messaging.EventHubs.Processor.Samples.HostedService.SampleApplicationProcessor[0]
       Event body has been processed: [
     {
         "key1": "value1",

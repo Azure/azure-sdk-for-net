@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples
+namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
 {
     /// <summary>
     /// Implementation of the <see cref="ISampleApplicationProcessor"/> interface that logs events to show example usage of a downstream process.

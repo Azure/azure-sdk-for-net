@@ -1,6 +1,6 @@
 <Project>
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\..\.., Directory.Build.targets))\Directory.Build.targets"
-          Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\..\.., Directory.Build.targets))' != ''" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\.., Directory.Build.targets))\Directory.Build.targets"
+          Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\.., Directory.Build.targets))' != ''" />
 
   <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
   <ItemGroup Condition="'$(IsSamplesProject)' == '' OR '$(IsTestProject)' == ''">

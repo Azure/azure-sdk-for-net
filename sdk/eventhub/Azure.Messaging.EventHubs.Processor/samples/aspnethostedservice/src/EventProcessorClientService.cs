@@ -3,7 +3,7 @@
 
 using Azure.Messaging.EventHubs.Consumer;
 
-namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples
+namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
 {
     /// <summary>
     /// Implementation of the <see cref="IHostedService"/> interface for processing events.

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.HostedService.Samples", "src\Azure.Messaging.EventHubs.Processor.HostedService.Samples.csproj", "{B7D289C5-858D-4153-B98A-81892F05DE81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.Samples.HostedService", "src\Azure.Messaging.EventHubs.Processor.Samples.HostedService.csproj", "{B7D289C5-858D-4153-B98A-81892F05DE81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.HostedService.Samples.Tests", "tests\Azure.Messaging.EventHubs.Processor.HostedService.Samples.Tests.csproj", "{A0F98245-9009-4E73-A03A-120562449ADE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.Samples.HostedService.Tests", "tests\Azure.Messaging.EventHubs.Processor.Samples.HostedService.Tests.csproj", "{A0F98245-9009-4E73-A03A-120562449ADE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,7 +3,7 @@
 
 using Azure.Storage.Blobs;
 
-namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples
+namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
 {
     /// <summary>
     /// The default entry point of the ASP.NET application.

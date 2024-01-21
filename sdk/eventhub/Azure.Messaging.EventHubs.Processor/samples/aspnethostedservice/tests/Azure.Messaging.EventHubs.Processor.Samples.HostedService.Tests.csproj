@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net462</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   
   <ItemGroup>
@@ -10,7 +10,7 @@
     <PackageReference Include="Moq" />
   </ItemGroup>
   <ItemGroup Condition="$(TargetFramework) != 'net462'">
-    <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.HostedService.Samples.csproj" />
+    <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.Samples.HostedService.csproj" />
   </ItemGroup>
 
 </Project>

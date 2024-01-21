@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples.Tests
+namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService.Tests
 {
     [TestFixture]
     public class HostedServiceTests
