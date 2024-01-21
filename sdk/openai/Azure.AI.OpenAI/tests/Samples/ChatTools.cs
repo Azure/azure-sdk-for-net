@@ -150,7 +150,7 @@ public partial class ChatTools
         #region Snippet:ChatTools:StreamingChatTools
         Dictionary<int, string> toolCallIdsByIndex = new();
         Dictionary<int, string> functionNamesByIndex = new();
-        Dictionary<int, StringBuilder> functionArgmentBuildersByIndex = new();
+        Dictionary<int, StringBuilder> functionArgumentBuildersByIndex = new();
         StringBuilder contentBuilder = new();
 
         await foreach (StreamingChatCompletionsUpdate chatUpdate
@@ -169,10 +169,11 @@ public partial class ChatTools
                 if (functionToolCallUpdate.ArgumentsUpdate != null)
                 {
                     StringBuilder argumentsBuilder
-                        = functionArgmentBuildersByIndex.TryGetValue(
+                        = functionArgumentBuildersByIndex.TryGetValue(
                             functionToolCallUpdate.ToolCallIndex,
                             out StringBuilder existingBuilder) ? existingBuilder : new StringBuilder();
                     argumentsBuilder.Append(functionToolCallUpdate.ArgumentsUpdate);
+                    functionArgumentBuildersByIndex[functionToolCallUpdate.ToolCallIndex] = argumentsBuilder;
                 }
             }
             if (chatUpdate.ContentUpdate != null)
@@ -187,7 +188,7 @@ public partial class ChatTools
             assistantHistoryMessage.ToolCalls.Add(new ChatCompletionsFunctionToolCall(
                 id: indexIdPair.Value,
                 functionNamesByIndex[indexIdPair.Key],
-                functionArgmentBuildersByIndex[indexIdPair.Key].ToString()));
+                functionArgumentBuildersByIndex[indexIdPair.Key].ToString()));
         }
         chatCompletionsOptions.Messages.Add(assistantHistoryMessage);
 

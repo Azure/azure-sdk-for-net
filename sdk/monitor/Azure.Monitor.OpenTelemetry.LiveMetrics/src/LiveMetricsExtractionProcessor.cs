@@ -10,6 +10,8 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using OpenTelemetry;
 
+using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
     internal sealed class LiveMetricsExtractionProcessor : BaseProcessor<Activity>
@@ -27,8 +29,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         public override void OnEnd(Activity activity)
         {
-            // Validate if live metrics is enabled.
-            if (!_manager._state.IsEnabled())
+            // Check if live metrics is enabled.
+            if (!_manager.ShouldCollect())
             {
                 return;
             }
@@ -95,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                     try
                     {
                     }
-                    catch (Exception)
+                    catch (System.Exception)
                     {
                     }
                 }
@@ -108,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         private void AddExceptionDocument(string? exceptionType, string? exceptionMessage)
         {
-            ExceptionDocumentIngress exceptionDocumentIngress = new()
+            ExceptionDocument exceptionDocumentIngress = new()
             {
                 ExceptionType = exceptionType,
                 ExceptionMessage = exceptionMessage,
@@ -122,7 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         private void AddRemoteDependencyDocument(Activity activity, string? statusCodeAttributeValue)
         {
-            RemoteDependencyDocumentIngress remoteDependencyDocumentIngress = new()
+            RemoteDependency remoteDependencyDocumentIngress = new()
             {
                 Name = activity.DisplayName,
                 // TODO: Implementation needs to be copied from Exporter.
@@ -146,7 +148,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         private void AddRequestDocument(Activity activity, string? statusCodeAttributeValue)
         {
-            RequestDocumentIngress requestDocumentIngress = new()
+            Request requestDocumentIngress = new()
             {
                 Name = activity.DisplayName,
                 // TODO: Implementation needs to be copied from Exporter.

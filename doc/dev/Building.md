@@ -49,7 +49,7 @@ Similar to how all projects require minimal authoring, various [Azure Pipelines]
 
 These pipeline definitions typically contain the necessary triggers, paths to watch, and package information. See existing SDKs' files for examples to avoid duplicating information that may change here. _tests.yml_ might also contain additional [matrix generation](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/matrix_generator.md) options to change or add testing environments particular to a service directory.
 
-If your working on engineering system changes for the .NET repo, it's from one of these files you can follow the `template` directives therein. Currently, for example, a _ci.yml_ would include a chain of templates like so:
+If you're working on engineering system changes for the .NET repo within one of the files above, you can follow the `template` directives. Currently, for example, a _ci.yml_ would include a chain of templates like so:
 
 * _sdk/keyvault/ci.yml_
   * _eng/pipelines/templates/stages/archetype-sdk-client.yml_
@@ -62,4 +62,4 @@ If your working on engineering system changes for the .NET repo, it's from one o
 
       Same as above: common pipelines get included and passed various objects here too.
 
-Any changes to the _eng_ directory outside of the _common_ subdirectory are owned by the Azure SDK for .NET team but you should talk with the central Engineering Systems team to coordinate how your changes will work, any problems they might think of, and whether the changes should actually be common. Any changes within the _eng/common_ subdirectory should be discussed with the central EngSys team and should be made in the <https://github.com/Azure/azure-sdk-tools/tree/main/eng/common> directory. See [here](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md) for more information.
+Any changes to the _eng_ directory outside of the _common_ subdirectory are owned by the Azure SDK for .NET team, but you should still coordinate with the central Engineering Systems team to discuss how your changes will work, go over any problems they might think of, and determine whether the changes should actually be common. Any changes within the _eng/common_ subdirectory should be discussed with the central EngSys team and should be made in the <https://github.com/Azure/azure-sdk-tools/tree/main/eng/common> directory. See [here](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md) for more information.

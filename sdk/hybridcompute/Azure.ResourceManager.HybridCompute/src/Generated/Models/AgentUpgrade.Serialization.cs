@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+                writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> desiredVersion = default;
             Optional<Guid> correlationId = default;
             Optional<bool> enableAutomaticUpgrade = default;
+            Optional<string> lastAttemptDesiredVersion = default;
             Optional<DateTimeOffset> lastAttemptTimestamp = default;
             Optional<LastAttemptStatusEnum> lastAttemptStatus = default;
             Optional<string> lastAttemptMessage = default;
@@ -71,6 +72,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     enableAutomaticUpgrade = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("lastAttemptDesiredVersion"u8))
+                {
+                    lastAttemptDesiredVersion = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("lastAttemptTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new AgentUpgrade(desiredVersion.Value, Optional.ToNullable(correlationId), Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(lastAttemptTimestamp), Optional.ToNullable(lastAttemptStatus), lastAttemptMessage.Value);
+            return new AgentUpgrade(desiredVersion.Value, Optional.ToNullable(correlationId), Optional.ToNullable(enableAutomaticUpgrade), lastAttemptDesiredVersion.Value, Optional.ToNullable(lastAttemptTimestamp), Optional.ToNullable(lastAttemptStatus), lastAttemptMessage.Value);
         }
     }
 }

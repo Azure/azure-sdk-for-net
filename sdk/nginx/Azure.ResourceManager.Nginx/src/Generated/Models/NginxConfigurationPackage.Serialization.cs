@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class NginxConfigurationPackage : IUtf8JsonSerializable
+    public partial class NginxConfigurationPackage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +20,16 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
+            }
+            if (Optional.IsCollectionDefined(ProtectedFiles))
+            {
+                writer.WritePropertyName("protectedFiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedFiles)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -30,6 +41,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 return null;
             }
             Optional<string> data = default;
+            Optional<IList<string>> protectedFiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"u8))
@@ -37,8 +49,22 @@ namespace Azure.ResourceManager.Nginx.Models
                     data = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("protectedFiles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    protectedFiles = array;
+                    continue;
+                }
             }
-            return new NginxConfigurationPackage(data.Value);
+            return new NginxConfigurationPackage(data.Value, Optional.ToList(protectedFiles));
         }
     }
 }
