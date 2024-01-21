@@ -13,13 +13,12 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
         /// <summary>
         /// The default entry point method of the <see cref="SampleProgram" /> class.
         /// </summary>
-        /// <param name="args"></param>
-        public static void Main(string[] args)
+        public static void Main()
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder();
 
             // Adds an EventProcessorClient for use for the lifetime of the application.
-            builder.Services.AddSingleton(GetEventProcessorClient(builder.Configuration));
+            builder.Services.AddSingleton(CreateEventProcessorClient(builder.Configuration));
 
             // Adds a class to process the event body. Substitute this for your own application event processing needs.
             builder.Services.AddTransient<ISampleApplicationProcessor, SampleApplicationProcessor>();
@@ -45,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
             app.Run();
         }
 
-        private static EventProcessorClient GetEventProcessorClient(IConfiguration configuration)
+        private static EventProcessorClient CreateEventProcessorClient(IConfiguration configuration)
         {
             // Replace configuration values in appsettings.json
             var storageConnectionString = configuration.GetValue<string>("Storage:ConnectionString");

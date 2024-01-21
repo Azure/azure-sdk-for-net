@@ -19,28 +19,11 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
             _logger = logger;
         }
 
-        /// <summary>
-        /// Processes the string representation of an event. The sample behaviour logs the body using a named <see cref="ILogger"/>.
-        /// </summary>
-        /// <param name="body">The body of an event to process.</param>
         /// <returns></returns>
-        public async Task Process(string body)
+        public Task Process(string body)
         {
             _logger.LogInformation("Event body has been processed: {body}", body);
-            await Task.CompletedTask.ConfigureAwait(false);
+            return Task.CompletedTask;
         }
-    }
-
-    /// <summary>
-    /// An example interface for processing of events.
-    /// </summary>
-    public interface ISampleApplicationProcessor
-    {
-        /// <summary>
-        /// The default method of the <see cref="ISampleApplicationProcessor"/> interface used for processing of event data. Implement this method in a class definition.
-        /// </summary>
-        /// <param name="body">The body of an event to process.</param>
-        /// <returns></returns>
-        Task Process(string body);
     }
 }

@@ -30,35 +30,16 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
             _appProcessor = appProcessor;
         }
 
-        /// <summary>
-        /// Implementation of the <see cref="IHostedService"/> StartAsync interface method.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            try
-            {
-                // Initialize the client event handlers.
-                _processorClient.PartitionInitializingAsync += InitializeEventHandler;
-                _processorClient.ProcessEventAsync += ProcessEventHandler;
-                _processorClient.ProcessErrorAsync += ProcessErrorHandler;
+            // Initialize the client event handlers.
+            _processorClient.PartitionInitializingAsync += InitializeEventHandler;
+            _processorClient.ProcessEventAsync += ProcessEventHandler;
+            _processorClient.ProcessErrorAsync += ProcessErrorHandler;
 
-                //Start processing events.
-                await _processorClient.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch
-            {
-                // It is important that you guard against exceptions in
-                // your handler code; the processor does not have enough
-                // understanding of your code to determine the correct action to take.
-                // Any exceptions from your handlers go uncaught by the processor and
-                // will NOT be redirected to the error handler.
-                //
-                // If unhandled, the partition processing task will fault and be restarted
-                // from the last recorded checkpoint.  On some hosts, an unhandled
-                // exception here may crash the process.
-            }
+            //Start processing events.
+            await _processorClient.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
         }
 
         private Task InitializeEventHandler(PartitionInitializingEventArgs args)
@@ -154,10 +135,6 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Implementation of the <see cref="IHostedService"/> StopAsync interface method.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public async Task StopAsync(CancellationToken cancellationToken)
         {
