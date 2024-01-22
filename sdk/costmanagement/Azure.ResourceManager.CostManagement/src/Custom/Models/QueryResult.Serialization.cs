@@ -9,11 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement.Models;
-using Azure.ResourceManager.Models;
-using SystemData = Azure.ResourceManager.Models.SystemData;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -34,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<Azure.ResourceManager.Models.SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<QueryColumn>> columns = default;
             Optional<IReadOnlyList<IList<BinaryData>>> rows = default;
@@ -81,7 +77,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    // Service may return resource id without '/'.
+                    id = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -100,7 +97,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<Azure.ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
