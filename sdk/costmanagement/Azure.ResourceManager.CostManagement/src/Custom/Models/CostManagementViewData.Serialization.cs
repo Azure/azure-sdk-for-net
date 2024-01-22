@@ -1,22 +1,24 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementViewData : IUtf8JsonSerializable
+    public partial class CostManagementViewData : IUtf8JsonSerializable, IJsonModel<CostManagementViewData>
     {
-        internal static CostManagementViewData DeserializeCostManagementViewData(JsonElement element)
+        internal static CostManagementViewData DeserializeCostManagementViewData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.CostManagement
             Optional<ReportConfigTimePeriod> timePeriod = default;
             Optional<ReportConfigDataset> dataSet = default;
             Optional<bool> includeMonetaryCommitment = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -55,7 +59,8 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    // Service may return resource id without '/'.
+                    id = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
+                            // Service may return scope id without '/'.
                             scope = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
                             continue;
                         }
@@ -243,8 +249,13 @@ namespace Azure.ResourceManager.CostManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CostManagementViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), Optional.ToList(kpis), Optional.ToList(pivots), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CostManagementViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), Optional.ToList(kpis), Optional.ToList(pivots), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
     }
 }
