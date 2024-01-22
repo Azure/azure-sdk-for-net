@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.Tests.ClientShared;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
@@ -31,6 +32,24 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         public IList<string> Fields { get; }
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
+
+        public static implicit operator BinaryContent(ModelX modelX)
+        {
+            if (modelX == null)
+            {
+                return null;
+            }
+
+            return BinaryContent.Create(modelX, ModelReaderWriterHelper.WireOptions);
+        }
+
+        public static explicit operator ModelX(ClientResult result)
+        {
+            if (result is null) throw new ArgumentNullException(nameof(result));
+
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
+        }
 
         void IJsonModel<ModelX>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

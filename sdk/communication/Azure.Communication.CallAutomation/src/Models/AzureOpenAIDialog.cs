@@ -17,14 +17,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of AzureOpenAIDialogInternal. </summary>
         /// <param name="context"> Dialog context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="context"/> is null. </exception>
-        public AzureOpenAIDialog(IDictionary<string, object> context) : base(new DialogInputType("AzureOpenAIDialog"))
+        public AzureOpenAIDialog(IDictionary<string, object> context) : base(DialogInputType.AzureOpenAI)
         {
             Argument.AssertNotNull(context, nameof(context));
 
             Context = context;
         }
 
-        internal AzureOpenAIDialog(DialogInputType kind, IDictionary<string, object> context) : base(new DialogInputType("AzureOpenAIDialog"), context)
+        internal AzureOpenAIDialog(DialogInputType kind, IDictionary<string, object> context) : base(DialogInputType.AzureOpenAI, context)
         {
         }
     }

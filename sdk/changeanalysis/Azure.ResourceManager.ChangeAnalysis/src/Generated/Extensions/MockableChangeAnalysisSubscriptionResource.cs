@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesBySubscriptionRequest(Id.SubscriptionId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesBySubscriptionRequest(Id.SubscriptionId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }

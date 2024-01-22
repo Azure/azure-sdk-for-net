@@ -2,7 +2,7 @@
 
 $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVersion]::SEMVER_REGEX))"
 
-# Posts a github release for each item of the pkgList variable. SilentlyContinue
+# Posts a github release for each item of the pkgList variable. Silently continue
 function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
   foreach ($pkgInfo in $pkgList) {
     Write-Host "Creating release $($pkgInfo.Tag)"
@@ -11,7 +11,7 @@ function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
     if ($pkgInfo.ReleaseNotes -ne $null) {
       $releaseNotes = $pkgInfo.ReleaseNotes
     }
-    # As github api limit the body param length with 125000 characters, we have to truncate the release note if needed.
+    # As github api limits the body param length to 125000 characters, we have to truncate the release note if needed.
     if ($releaseNotes.Length -gt 124996) {
       $releaseNotes = $releaseNotes.SubString(0, 124996) + " ..."
     }
@@ -175,7 +175,7 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
   return $results
 }
 
-# given a set of tags that we want to release, we need to ensure that if they already DO exist.
+# given a set of tags that we want to release, we need to ensure they DO already exist.
 # if they DO exist, quietly exit if the commit sha of the artifact matches that of the tag
 # if the commit sha does not match, exit with error and report both problem shas
 function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $apiUrl, $continueOnError) {
