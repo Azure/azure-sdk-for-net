@@ -52,7 +52,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    @default = BinaryData.FromString(property.Value.GetRawText());
+                    @default = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("type"u8))

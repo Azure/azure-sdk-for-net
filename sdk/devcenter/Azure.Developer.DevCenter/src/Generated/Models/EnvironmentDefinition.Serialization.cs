@@ -70,7 +70,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    parametersSchema = BinaryData.FromString(property.Value.GetRawText());
+                    parametersSchema = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("templatePath"u8))

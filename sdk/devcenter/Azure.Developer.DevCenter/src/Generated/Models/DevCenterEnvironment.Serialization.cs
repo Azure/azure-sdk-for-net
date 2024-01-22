@@ -20,14 +20,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Parameters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Parameters))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteBase64StringValue(Parameters.ToArray(), "D");
             }
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentTypeName);
@@ -61,7 +54,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    parameters = BinaryData.FromString(property.Value.GetRawText());
+                    parameters = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("name"u8))
