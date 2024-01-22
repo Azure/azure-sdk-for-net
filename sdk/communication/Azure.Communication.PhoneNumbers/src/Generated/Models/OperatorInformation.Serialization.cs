@@ -19,8 +19,8 @@ namespace Azure.Communication.PhoneNumbers
                 return null;
             }
             string phoneNumber = default;
-            string nationalFormat = default;
-            string internationalFormat = default;
+            Optional<string> nationalFormat = default;
+            Optional<string> internationalFormat = default;
             Optional<OperatorNumberType> numberType = default;
             Optional<string> isoCountryCode = default;
             Optional<OperatorDetails> operatorDetails = default;
@@ -65,7 +65,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformation(phoneNumber, nationalFormat, internationalFormat, Optional.ToNullable(numberType), isoCountryCode.Value, operatorDetails.Value);
+            return new OperatorInformation(phoneNumber, nationalFormat.Value, internationalFormat.Value, Optional.ToNullable(numberType), isoCountryCode.Value, operatorDetails.Value);
         }
     }
 }

@@ -602,7 +602,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateOperatorInformationSearchRequest(IEnumerable<string> phoneNumbers, OperatorInformationRequestOptions options)
+        internal HttpMessage CreateOperatorInformationSearchRequest(IEnumerable<string> phoneNumbers, OperatorInformationOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -636,7 +636,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
         /// <param name="options"> Represents options to modify a search request for operator information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers = null, OperatorInformationRequestOptions options = null, CancellationToken cancellationToken = default)
+        public async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers = null, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateOperatorInformationSearchRequest(phoneNumbers, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -658,7 +658,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
         /// <param name="options"> Represents options to modify a search request for operator information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers = null, OperatorInformationRequestOptions options = null, CancellationToken cancellationToken = default)
+        public Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers = null, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateOperatorInformationSearchRequest(phoneNumbers, options);
             _pipeline.Send(message, cancellationToken);

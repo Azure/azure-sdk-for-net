@@ -8,16 +8,14 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents options to modify a search request for operator information. </summary>
-    #pragma warning disable AZC0030
-    public partial class OperatorInformationRequestOptions
-    #pragma warning restore AZC0030
+    public partial class OperatorInformationOptions
     {
-        /// <summary> Initializes a new instance of OperatorInformationRequestOptions. </summary>
-        public OperatorInformationRequestOptions()
+        /// <summary> Initializes a new instance of OperatorInformationOptions. </summary>
+        public OperatorInformationOptions()
         {
         }
 
         /// <summary> Includes the fields operatorDetails, numberType, and isoCountryCode in the response.  Please note: use of this option will result in additional costs. </summary>
-        public bool? IncludeAdditionalPhoneAndOperatorDetails { get; set; }
+        public bool? IncludeAdditionalOperatorDetails { get; set; }
     }
 }

@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class OperatorInformationRequestOptions : IUtf8JsonSerializable
+    public partial class OperatorInformationOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IncludeAdditionalPhoneAndOperatorDetails))
+            if (Optional.IsDefined(IncludeAdditionalOperatorDetails))
             {
-                writer.WritePropertyName("includeAdditionalPhoneAndOperatorDetails"u8);
-                writer.WriteBooleanValue(IncludeAdditionalPhoneAndOperatorDetails.Value);
+                writer.WritePropertyName("includeAdditionalOperatorDetails"u8);
+                writer.WriteBooleanValue(IncludeAdditionalOperatorDetails.Value);
             }
             writer.WriteEndObject();
         }

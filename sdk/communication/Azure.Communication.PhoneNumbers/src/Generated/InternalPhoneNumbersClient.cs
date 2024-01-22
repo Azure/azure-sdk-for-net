@@ -117,7 +117,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
         /// <param name="options"> Represents options to modify a search request for operator information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers = null, OperatorInformationRequestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperatorInformationResult>> OperatorInformationSearchAsync(IEnumerable<string> phoneNumbers = null, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.OperatorInformationSearch");
             scope.Start();
@@ -136,7 +136,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
         /// <param name="options"> Represents options to modify a search request for operator information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers = null, OperatorInformationRequestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<OperatorInformationResult> OperatorInformationSearch(IEnumerable<string> phoneNumbers = null, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.OperatorInformationSearch");
             scope.Start();

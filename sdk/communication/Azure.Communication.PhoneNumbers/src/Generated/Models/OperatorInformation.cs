@@ -15,18 +15,12 @@ namespace Azure.Communication.PhoneNumbers
     {
         /// <summary> Initializes a new instance of OperatorInformation. </summary>
         /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
-        /// <param name="nationalFormat"> National format of the phone number. </param>
-        /// <param name="internationalFormat"> International format of the phone number. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/>, <paramref name="nationalFormat"/> or <paramref name="internationalFormat"/> is null. </exception>
-        internal OperatorInformation(string phoneNumber, string nationalFormat, string internationalFormat)
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        internal OperatorInformation(string phoneNumber)
         {
             Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
-            Argument.AssertNotNull(nationalFormat, nameof(nationalFormat));
-            Argument.AssertNotNull(internationalFormat, nameof(internationalFormat));
 
             PhoneNumber = phoneNumber;
-            NationalFormat = nationalFormat;
-            InternationalFormat = internationalFormat;
         }
 
         /// <summary> Initializes a new instance of OperatorInformation. </summary>

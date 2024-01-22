@@ -22,13 +22,13 @@ namespace Azure.Communication.PhoneNumbers
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UnknownValue = "unknown";
+        private const string UnavailableValue = "unavailable";
         private const string OtherValue = "other";
         private const string GeographicValue = "geographic";
         private const string MobileValue = "mobile";
 
-        /// <summary> unknown. </summary>
-        public static OperatorNumberType Unknown { get; } = new OperatorNumberType(UnknownValue);
+        /// <summary> unavailable. </summary>
+        public static OperatorNumberType Unavailable { get; } = new OperatorNumberType(UnavailableValue);
         /// <summary> other. </summary>
         public static OperatorNumberType Other { get; } = new OperatorNumberType(OtherValue);
         /// <summary> geographic. </summary>

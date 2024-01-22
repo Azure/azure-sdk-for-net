@@ -22,6 +22,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Phone number(s) whose operator information is being requested. </summary>
         public IList<string> PhoneNumbers { get; }
         /// <summary> Represents options to modify a search request for operator information. </summary>
-        public OperatorInformationRequestOptions Options { get; set; }
+        public OperatorInformationOptions Options { get; set; }
     }
 }
