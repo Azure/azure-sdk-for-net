@@ -16,6 +16,10 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     /// </summary>
     public static readonly HttpClientPipelineTransport Shared = new();
 
+    private static HttpClient? SharedDefaultClient;
+    private static object _lock = new object();
+    private static int _sharedClientRefCount;
+
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
@@ -39,6 +43,15 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     private static HttpClient CreateDefaultClient()
     {
+        lock (_lock)
+        {
+            if (SharedDefaultClient is not null)
+            {
+                _sharedClientRefCount++;
+                return SharedDefaultClient;
+            }
+        }
+
         // The following settings are added in Azure.Core and are not included
         // in System.ClientModel. If needed, we will migrate them into ClientModel.
         //   - SSL settings
@@ -52,11 +65,19 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
         ServicePointHelpers.SetLimits(handler);
 
-        return new HttpClient(handler)
+        HttpClient defaultClient = new HttpClient(handler)
         {
             // Timeouts are handled by the pipeline
             Timeout = Timeout.InfiniteTimeSpan,
         };
+
+        lock (_lock)
+        {
+            _sharedClientRefCount++;
+            SharedDefaultClient = defaultClient;
+        }
+
+        return SharedDefaultClient;
     }
 
     protected override PipelineMessage CreateMessageCore()
@@ -196,8 +217,26 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         {
             if (this != Shared && _ownsClient)
             {
-                HttpClient httpClient = _httpClient;
-                httpClient?.Dispose();
+                if (_httpClient == SharedDefaultClient)
+                {
+                    lock (_lock)
+                    {
+                        _sharedClientRefCount--;
+
+                        if (_sharedClientRefCount == 0)
+                        {
+                            HttpClient httpClient = _httpClient;
+                            httpClient?.Dispose();
+
+                            SharedDefaultClient = null;
+                        }
+                    }
+                }
+                else
+                {
+                    HttpClient httpClient = _httpClient;
+                    httpClient?.Dispose();
+                }
             }
 
             _disposed = true;
