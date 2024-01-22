@@ -17,12 +17,12 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
         /// <param name="osDisk"> Settings for the operating system disk. </param>
-        internal DevBoxStorageProfile(OsDisk osDisk)
+        internal DevBoxStorageProfile(OSDisk osDisk)
         {
             OSDisk = osDisk;
         }
 
         /// <summary> Settings for the operating system disk. </summary>
-        public OsDisk OSDisk { get; set; }
+        public OSDisk OSDisk { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class OsDisk : IUtf8JsonSerializable
+    public partial class OSDisk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,34 +19,34 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static OsDisk DeserializeOsDisk(JsonElement element)
+        internal static OSDisk DeserializeOSDisk(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> diskSizeGb = default;
+            Optional<int> diskSizeGB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskSizeGb"u8))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskSizeGb = property.Value.GetInt32();
+                    diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new OsDisk(Optional.ToNullable(diskSizeGb));
+            return new OSDisk(Optional.ToNullable(diskSizeGB));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OsDisk FromResponse(Response response)
+        internal static OSDisk FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOsDisk(document.RootElement);
+            return DeserializeOSDisk(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

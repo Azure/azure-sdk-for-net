@@ -8,21 +8,21 @@
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Settings for the operating system disk. </summary>
-    public partial class OsDisk
+    public partial class OSDisk
     {
-        /// <summary> Initializes a new instance of <see cref="OsDisk"/>. </summary>
-        public OsDisk()
+        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
+        public OSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OsDisk"/>. </summary>
-        /// <param name="diskSizeGb"> The size of the OS Disk in gigabytes. </param>
-        internal OsDisk(int? diskSizeGb)
+        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
+        /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
+        internal OSDisk(int? diskSizeGB)
         {
-            DiskSizeGb = diskSizeGb;
+            DiskSizeGB = diskSizeGB;
         }
 
         /// <summary> The size of the OS Disk in gigabytes. </summary>
-        public int? DiskSizeGb { get; }
+        public int? DiskSizeGB { get; }
     }
 }

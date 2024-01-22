@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<OsDisk> osDisk = default;
+            Optional<OSDisk> osDisk = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
@@ -39,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    osDisk = OsDisk.DeserializeOsDisk(property.Value);
+                    osDisk = OSDisk.DeserializeOSDisk(property.Value);
                     continue;
                 }
             }

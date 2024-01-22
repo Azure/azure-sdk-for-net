@@ -54,20 +54,20 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxHardwareProfile"/>. </summary>
         /// <param name="skuName"> The name of the SKU. </param>
-        /// <param name="vCpus"> The number of vCPUs available for the Dev Box. </param>
-        /// <param name="memoryGb"> The amount of memory available for the Dev Box. </param>
+        /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
+        /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
         /// <returns> A new <see cref="Models.DevBoxHardwareProfile"/> instance for mocking. </returns>
-        public static DevBoxHardwareProfile DevBoxHardwareProfile(SkuName? skuName = null, int? vCpus = null, int? memoryGb = null)
+        public static DevBoxHardwareProfile DevBoxHardwareProfile(SkuName? skuName = null, int? vcpUs = null, int? memoryGB = null)
         {
-            return new DevBoxHardwareProfile(skuName, vCpus, memoryGb);
+            return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OsDisk"/>. </summary>
-        /// <param name="diskSizeGb"> The size of the OS Disk in gigabytes. </param>
-        /// <returns> A new <see cref="Models.OsDisk"/> instance for mocking. </returns>
-        public static OsDisk OsDisk(int? diskSizeGb = null)
+        /// <summary> Initializes a new instance of <see cref="Models.OSDisk"/>. </summary>
+        /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
+        /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
+        public static OSDisk OSDisk(int? diskSizeGB = null)
         {
-            return new OsDisk(diskSizeGb);
+            return new OSDisk(diskSizeGB);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxImageReference"/>. </summary>

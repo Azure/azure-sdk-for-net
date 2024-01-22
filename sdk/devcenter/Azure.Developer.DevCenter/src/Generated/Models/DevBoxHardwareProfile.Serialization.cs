@@ -26,8 +26,8 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             Optional<SkuName> skuName = default;
-            Optional<int> vCpus = default;
-            Optional<int> memoryGb = default;
+            Optional<int> vcpUs = default;
+            Optional<int> memoryGB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skuName"u8))
@@ -39,26 +39,26 @@ namespace Azure.Developer.DevCenter.Models
                     skuName = new SkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vCpus"u8))
+                if (property.NameEquals("vCPUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vCpus = property.Value.GetInt32();
+                    vcpUs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryGb"u8))
+                if (property.NameEquals("memoryGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryGb = property.Value.GetInt32();
+                    memoryGB = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DevBoxHardwareProfile(Optional.ToNullable(skuName), Optional.ToNullable(vCpus), Optional.ToNullable(memoryGb));
+            return new DevBoxHardwareProfile(Optional.ToNullable(skuName), Optional.ToNullable(vcpUs), Optional.ToNullable(memoryGB));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
