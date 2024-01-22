@@ -5,37 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxDeploymentProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentProperties>
+    public partial class NginxDeploymentProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<NginxDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support '{format}' format.");
-            }
-
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(NginxVersion))
-            {
-                writer.WritePropertyName("nginxVersion"u8);
-                writer.WriteStringValue(NginxVersion);
-            }
             if (Optional.IsDefined(ManagedResourceGroup))
             {
                 writer.WritePropertyName("managedResourceGroup"u8);
@@ -45,11 +24,6 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
@@ -71,40 +45,11 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        NginxDeploymentProperties IJsonModel<NginxDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static NginxDeploymentProperties DeserializeNginxDeploymentProperties(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNginxDeploymentProperties(document.RootElement, options);
-        }
-
-        internal static NginxDeploymentProperties DeserializeNginxDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -118,8 +63,6 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<NginxLogging> logging = default;
             Optional<NginxDeploymentScalingProperties> scalingProperties = default;
             Optional<NginxDeploymentUserProfile> userProfile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -191,44 +134,8 @@ namespace Azure.ResourceManager.Nginx.Models
                     userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value, serializedAdditionalRawData);
+            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value);
         }
-
-        BinaryData IPersistableModel<NginxDeploymentProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support '{options.Format}' format.");
-            }
-        }
-
-        NginxDeploymentProperties IPersistableModel<NginxDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNginxDeploymentProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NginxDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
