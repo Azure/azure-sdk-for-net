@@ -24,7 +24,7 @@ namespace Azure.Identity.Broker
         public bool IsProofOfPossessionRequired { get; set; }
 
         /// <summary>
-        /// Authenticate with the currently signed in user instead of prompting the user with a login dialog.
+        /// Gets or sets whether to authenticate with the currently signed in user instead of prompting the user with a login dialog.
         /// </summary>
         public bool UseOperatingSystemAccount { get; set; }
 
