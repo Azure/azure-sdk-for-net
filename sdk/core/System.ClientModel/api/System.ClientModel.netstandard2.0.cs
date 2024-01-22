@@ -111,6 +111,7 @@ namespace System.ClientModel.Primitives
         public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
         protected override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
         public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         protected virtual void OnReceivedResponse(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
