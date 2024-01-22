@@ -29,5 +29,10 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownUsageDetail"/> for deserialization. </summary>
+        internal UnknownUsageDetail()
+        {
+        }
     }
 }

@@ -31,5 +31,10 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownReservationRecommendation"/> for deserialization. </summary>
+        internal UnknownReservationRecommendation()
+        {
+        }
     }
 }

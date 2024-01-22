@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             StepType = stepType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTaskStepUpdateParameters"/> for deserialization. </summary>
+        internal UnknownTaskStepUpdateParameters()
+        {
+        }
     }
 }
