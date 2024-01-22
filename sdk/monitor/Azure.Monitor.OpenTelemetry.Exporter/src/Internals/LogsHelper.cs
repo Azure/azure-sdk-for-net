@@ -47,14 +47,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         };
 
-        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey, bool shouldSample = false)
+        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey, bool enableSampling = false)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
-                if (!shouldSample || logRecord.SpanId == default || logRecord.TraceFlags == ActivityTraceFlags.Recorded)
+                if (!enableSampling || logRecord.SpanId == default || logRecord.TraceFlags == ActivityTraceFlags.Recorded)
                 {
                     try
                     {

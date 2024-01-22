@@ -151,13 +151,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         [InlineData(false, true, false)]
         [InlineData(false, false, true)]
         [InlineData(false, true, true)]
-        public void ValidateLogSampling(bool logWithinActivityContext, bool shouldSample, bool sampledIn)
+        public void ValidateLogSampling(bool logWithinActivityContext, bool enableSampling, bool sampledIn)
         {
             List<TelemetryItem>? telemetryLogItems = null;
             List<TelemetryItem>? telemetryActivityItems = null;
             MockPlatform platform = new MockPlatform();
 
-            platform.SetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING, shouldSample ? "true" : "false");
+            platform.SetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING, enableSampling ? "true" : "false");
 
             // SETUP
             var loggerFactory = LoggerFactory.Create(builder =>
@@ -215,7 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // flush logs
             loggerFactory.Dispose();
 
-            if (shouldSample && logWithinActivityContext)
+            if (enableSampling && logWithinActivityContext)
             {
                 if (!sampledIn)
                 {

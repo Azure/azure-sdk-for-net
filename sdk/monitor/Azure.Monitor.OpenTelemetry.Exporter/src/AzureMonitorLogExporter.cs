@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private AzureMonitorResource? _resource;
         private bool _disposed;
-        private bool _shouldSample;
+        private bool _enableSampling;
 
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options), new DefaultPlatform())
         {
@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var enableLogSampling = defaultPlatform?.GetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING);
             if (string.Equals(enableLogSampling, "true", StringComparison.OrdinalIgnoreCase))
             {
-                _shouldSample = true;
+                _enableSampling = true;
             }
         }
 
@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey, _shouldSample);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey, _enableSampling);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
