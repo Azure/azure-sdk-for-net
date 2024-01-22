@@ -22,6 +22,7 @@ Tests:
 - Test: list-blobs
   Class: GetBlobs
   Arguments:
+  - --count 5 --parallel 1
   - --count 5 --parallel 64
   - --count 500 --parallel 32
   - --count 50000 --parallel 32 --warmup 60 --duration 60
