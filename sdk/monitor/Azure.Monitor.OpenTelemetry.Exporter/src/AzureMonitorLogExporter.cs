@@ -24,17 +24,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
         }
 
-        internal AzureMonitorLogExporter(ITransmitter transmitter, IPlatform? defaultPlatform = null)
+        internal AzureMonitorLogExporter(ITransmitter transmitter, IPlatform defaultPlatform)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-            if (defaultPlatform != null)
+
+            var enableLogSampling = defaultPlatform?.GetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING);
+            if (string.Equals(enableLogSampling, "true", StringComparison.OrdinalIgnoreCase))
             {
-                var enableLogSampling = defaultPlatform?.GetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING);
-                if (string.Equals(enableLogSampling, "true", StringComparison.OrdinalIgnoreCase))
-                {
-                    _shouldSample = true;
-                }
+                _shouldSample = true;
             }
         }
 
