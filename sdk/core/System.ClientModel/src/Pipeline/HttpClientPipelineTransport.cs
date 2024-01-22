@@ -18,10 +18,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     /// </summary>
     public static readonly HttpClientPipelineTransport Shared = new();
 
-    private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
-
-    private bool _disposed;
 
     public HttpClientPipelineTransport() : this(SharedDefaultClient)
     {
@@ -183,22 +180,10 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     public void Dispose()
     {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing && !_disposed)
-        {
-            if (this != Shared && _ownsClient)
-            {
-                HttpClient httpClient = _httpClient;
-                httpClient?.Dispose();
-            }
-
-            _disposed = true;
-        }
+        // We don't dispose the Shared static transport instance, and if the
+        // custom HttpClient constructor was called, then it is the caller's
+        // responsibility to dispose the passed-in HttpClient.  As such, Dispose
+        // for this implementation is a no-op.
     }
 
     #endregion
