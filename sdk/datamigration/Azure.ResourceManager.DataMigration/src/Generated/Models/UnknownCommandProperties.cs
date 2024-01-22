@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             CommandType = commandType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCommandProperties"/> for deserialization. </summary>
+        internal UnknownCommandProperties()
+        {
+        }
     }
 }

@@ -28,5 +28,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             TaskType = taskType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProjectTaskProperties"/> for deserialization. </summary>
+        internal UnknownProjectTaskProperties()
+        {
+        }
     }
 }

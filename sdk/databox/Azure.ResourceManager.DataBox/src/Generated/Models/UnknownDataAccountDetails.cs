@@ -21,5 +21,10 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             DataAccountType = dataAccountType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataAccountDetails"/> for deserialization. </summary>
+        internal UnknownDataAccountDetails()
+        {
+        }
     }
 }

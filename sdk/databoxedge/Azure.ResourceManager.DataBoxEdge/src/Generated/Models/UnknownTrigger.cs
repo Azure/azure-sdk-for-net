@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/> for deserialization. </summary>
+        internal UnknownTrigger()
+        {
+        }
     }
 }

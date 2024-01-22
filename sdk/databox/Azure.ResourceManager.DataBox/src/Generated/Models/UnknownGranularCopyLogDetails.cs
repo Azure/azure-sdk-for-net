@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             CopyLogDetailsType = copyLogDetailsType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownGranularCopyLogDetails"/> for deserialization. </summary>
+        internal UnknownGranularCopyLogDetails()
+        {
+        }
     }
 }

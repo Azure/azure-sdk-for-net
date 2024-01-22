@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             ConnectionInfoType = connectionInfoType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectionInfo"/> for deserialization. </summary>
+        internal UnknownConnectionInfo()
+        {
+        }
     }
 }

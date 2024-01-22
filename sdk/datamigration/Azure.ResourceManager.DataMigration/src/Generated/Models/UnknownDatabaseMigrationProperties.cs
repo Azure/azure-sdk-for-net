@@ -33,5 +33,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatabaseMigrationProperties"/> for deserialization. </summary>
+        internal UnknownDatabaseMigrationProperties()
+        {
+        }
     }
 }

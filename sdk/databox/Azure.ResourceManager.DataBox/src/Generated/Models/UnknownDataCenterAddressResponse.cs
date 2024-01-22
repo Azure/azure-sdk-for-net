@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             DataCenterAddressType = dataCenterAddressType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/> for deserialization. </summary>
+        internal UnknownDataCenterAddressResponse()
+        {
+        }
     }
 }

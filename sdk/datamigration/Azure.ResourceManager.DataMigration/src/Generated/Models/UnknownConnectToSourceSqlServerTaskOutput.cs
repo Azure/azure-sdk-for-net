@@ -21,5 +21,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             ResultType = resultType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectToSourceSqlServerTaskOutput"/> for deserialization. </summary>
+        internal UnknownConnectToSourceSqlServerTaskOutput()
+        {
+        }
     }
 }
