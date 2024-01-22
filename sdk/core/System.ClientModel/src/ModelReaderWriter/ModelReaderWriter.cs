@@ -31,7 +31,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> jsonModel)
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
             using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
             {
@@ -170,6 +170,23 @@ public static class ModelReaderWriter
             throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
         }
         return obj;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool ShouldWriteAsJson<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+        => ShouldWriteAsJson(model, options, out _);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool ShouldWriteAsJson<T>(IPersistableModel<T> model, ModelReaderWriterOptions options, [MaybeNullWhen(false)] out IJsonModel<T> jsonModel)
+    {
+        if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> iJsonModel)
+        {
+            jsonModel = iJsonModel;
+            return true;
+        }
+
+        jsonModel = default;
+        return false;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

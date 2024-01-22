@@ -100,9 +100,9 @@ namespace System.ClientModel.Primitives
         protected virtual bool ShouldRetryCore(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryCoreAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
         public void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
-        public System.Threading.Tasks.ValueTask WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual void WaitCore(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.Tasks.ValueTask WaitCoreAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {

@@ -11,6 +11,8 @@ namespace System.ClientModel.Primitives;
 
 public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
+    private static readonly HttpClient SharedDefaultClient = CreateDefaultClient();
+
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
@@ -21,10 +23,8 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     private bool _disposed;
 
-    public HttpClientPipelineTransport() : this(CreateDefaultClient())
+    public HttpClientPipelineTransport() : this(SharedDefaultClient)
     {
-        // We will dispose the httpClient.
-        _ownsClient = true;
     }
 
     public HttpClientPipelineTransport(HttpClient client)
@@ -32,9 +32,6 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         Argument.AssertNotNull(client, nameof(client));
 
         _httpClient = client;
-
-        // The caller will dispose the httpClient.
-        _ownsClient = false;
     }
 
     private static HttpClient CreateDefaultClient()
