@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Metrics profile for the prometheus service addon. </summary>
+    /// <summary> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </summary>
     public partial class ManagedClusterMonitorProfileMetrics
     {
         /// <summary>
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileMetrics"/>. </summary>
-        /// <param name="isEnabled"> Whether to enable the Prometheus collector. </param>
+        /// <param name="isEnabled"> Whether to enable or disable the Azure Managed Prometheus addon for Prometheus monitoring. See aka.ms/AzureManagedPrometheus-aks-enable for details on enabling and disabling. </param>
         public ManagedClusterMonitorProfileMetrics(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileMetrics"/>. </summary>
-        /// <param name="isEnabled"> Whether to enable the Prometheus collector. </param>
-        /// <param name="kubeStateMetrics"> Kube State Metrics for prometheus addon profile for the container service cluster. </param>
+        /// <param name="isEnabled"> Whether to enable or disable the Azure Managed Prometheus addon for Prometheus monitoring. See aka.ms/AzureManagedPrometheus-aks-enable for details on enabling and disabling. </param>
+        /// <param name="kubeStateMetrics"> Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterMonitorProfileMetrics(bool isEnabled, ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Whether to enable the Prometheus collector. </summary>
+        /// <summary> Whether to enable or disable the Azure Managed Prometheus addon for Prometheus monitoring. See aka.ms/AzureManagedPrometheus-aks-enable for details on enabling and disabling. </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> Kube State Metrics for prometheus addon profile for the container service cluster. </summary>
+        /// <summary> Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details. </summary>
         public ManagedClusterMonitorProfileKubeStateMetrics KubeStateMetrics { get; set; }
     }
 }

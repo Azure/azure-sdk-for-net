@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateCertificate()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/CertificateUpdate.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/CertificateUpdate.json
             // this example is just showing the usage of "Certificate_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CertificateDelete()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/CertificateDelete.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/CertificateDelete.json
             // this example is just showing the usage of "Certificate_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCertificate()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/CertificateGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/CertificateGet.json
             // this example is just showing the usage of "Certificate_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCertificateWithDeletionError()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/CertificateGetWithDeletionError.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/CertificateGetWithDeletionError.json
             // this example is just showing the usage of "Certificate_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CancelDeletion_CertificateCancelDeletion()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/CertificateCancelDeletion.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/CertificateCancelDeletion.json
             // this example is just showing the usage of "Certificate_CancelDeletion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

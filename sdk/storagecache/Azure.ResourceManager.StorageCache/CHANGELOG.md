@@ -1,14 +1,14 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2024-02-01)
 
 ### Features Added
 
-### Breaking Changes
+- Enabled Root Squash for Azure Managed Lustre FileSystem using REST API requests
 
-### Bugs Fixed
+### Other changes
 
-### Other Changes
+- Upgraded api-version to `2023-11-01`
 
 ## 1.2.0 (2023-11-30)
 

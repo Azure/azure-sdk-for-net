@@ -233,8 +233,8 @@ namespace Azure.Identity
 
             JsonElement root = document.RootElement;
             string accessToken = root.GetProperty("accessToken").GetString();
-            DateTimeOffset expiresOn = root.TryGetProperty("expiresIn", out JsonElement expiresIn)
-                ? DateTimeOffset.UtcNow + TimeSpan.FromSeconds(expiresIn.GetInt64())
+            DateTimeOffset expiresOn = root.TryGetProperty("expires_on", out JsonElement expires_on)
+                ? DateTimeOffset.FromUnixTimeSeconds(expires_on.GetInt64())
                 : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
 
             return new AccessToken(accessToken, expiresOn);

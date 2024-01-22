@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(ArmSkuConverter))]
-    public partial class ArmSku : IUtf8JsonSerializable
+    public partial class ArmSku : IUtf8JsonSerializable, IJsonModel<ArmSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArmSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmSku)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -43,8 +52,22 @@ namespace Azure.ResourceManager.Models
             writer.WriteEndObject();
         }
 
-        internal static ArmSku DeserializeArmSku(JsonElement element)
+        ArmSku IJsonModel<ArmSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmSku)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmSku(document.RootElement, options);
+        }
+
+        internal static ArmSku DeserializeArmSku(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +115,37 @@ namespace Azure.ResourceManager.Models
             }
             return new ArmSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
         }
+
+        BinaryData IPersistableModel<ArmSku>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ArmSku)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArmSku IPersistableModel<ArmSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArmSku(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmSku)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArmSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ArmSkuConverter : JsonConverter<ArmSku>
         {

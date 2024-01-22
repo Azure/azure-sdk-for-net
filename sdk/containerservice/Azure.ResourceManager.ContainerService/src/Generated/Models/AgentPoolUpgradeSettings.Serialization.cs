@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class AgentPoolUpgradeSettings : IUtf8JsonSerializable, IJsonModel<AgentPoolUpgradeSettings>
+    public partial class AgentPoolUpgradeSettings : IUtf8JsonSerializable, IJsonModel<AgentPoolUpgradeSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolUpgradeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
+            }
+            if (Optional.IsDefined(DrainTimeoutInMinutes))
+            {
+                writer.WritePropertyName("drainTimeoutInMinutes"u8);
+                writer.WriteNumberValue(DrainTimeoutInMinutes.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             Optional<string> maxSurge = default;
+            Optional<int> drainTimeoutInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,13 +85,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                     maxSurge = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("drainTimeoutInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    drainTimeoutInMinutes = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolUpgradeSettings(maxSurge.Value, serializedAdditionalRawData);
+            return new AgentPoolUpgradeSettings(maxSurge.Value, Optional.ToNullable(drainTimeoutInMinutes), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolUpgradeSettings>.Write(ModelReaderWriterOptions options)

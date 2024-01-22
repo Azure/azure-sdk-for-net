@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
         /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="clientAppId"> The client AAD application ID. </param>
-        /// <param name="serverAppId"> The server AAD application ID. </param>
-        /// <param name="serverAppSecret"> The server AAD application secret. </param>
+        /// <param name="clientAppId"> (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </param>
+        /// <param name="serverAppId"> (DEPRECATED) The server AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </param>
+        /// <param name="serverAppSecret"> (DEPRECATED) The server AAD application secret. Learn more at https://aka.ms/aks/aad-legacy. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         public bool? IsAzureRbacEnabled { get; set; }
         /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>
         public IList<Guid> AdminGroupObjectIds { get; }
-        /// <summary> The client AAD application ID. </summary>
+        /// <summary> (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </summary>
         public Guid? ClientAppId { get; set; }
-        /// <summary> The server AAD application ID. </summary>
+        /// <summary> (DEPRECATED) The server AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </summary>
         public Guid? ServerAppId { get; set; }
-        /// <summary> The server AAD application secret. </summary>
+        /// <summary> (DEPRECATED) The server AAD application secret. Learn more at https://aka.ms/aks/aad-legacy. </summary>
         public string ServerAppSecret { get; set; }
         /// <summary> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </summary>
         public Guid? TenantId { get; set; }

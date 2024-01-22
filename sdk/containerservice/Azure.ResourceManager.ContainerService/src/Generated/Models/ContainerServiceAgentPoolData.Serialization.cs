@@ -80,11 +80,6 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("workloadRuntime"u8);
                 writer.WriteStringValue(WorkloadRuntime.Value.ToString());
             }
-            if (Optional.IsDefined(MessageOfTheDay))
-            {
-                writer.WritePropertyName("messageOfTheDay"u8);
-                writer.WriteStringValue(MessageOfTheDay);
-            }
             if (Optional.IsDefined(VnetSubnetId))
             {
                 writer.WritePropertyName("vnetSubnetID"u8);
@@ -184,11 +179,6 @@ namespace Azure.ResourceManager.ContainerService
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(EnableNodePublicIP.Value);
-            }
-            if (Optional.IsDefined(EnableCustomCATrust))
-            {
-                writer.WritePropertyName("enableCustomCATrust"u8);
-                writer.WriteBooleanValue(EnableCustomCATrust.Value);
             }
             if (Optional.IsDefined(NodePublicIPPrefixId))
             {
@@ -292,11 +282,6 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("hostGroupID"u8);
                 writer.WriteStringValue(HostGroupId);
             }
-            if (Optional.IsDefined(WindowsProfile))
-            {
-                writer.WritePropertyName("windowsProfile"u8);
-                writer.WriteObjectValue(WindowsProfile);
-            }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
@@ -351,7 +336,6 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ContainerServiceOSDiskType> osDiskType = default;
             Optional<KubeletDiskType> kubeletDiskType = default;
             Optional<WorkloadRuntime> workloadRuntime = default;
-            Optional<string> messageOfTheDay = default;
             Optional<ResourceIdentifier> vnetSubnetId = default;
             Optional<ResourceIdentifier> podSubnetId = default;
             Optional<int> maxPods = default;
@@ -371,7 +355,6 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ContainerServicePowerState> powerState = default;
             Optional<IList<string>> availabilityZones = default;
             Optional<bool> enableNodePublicIP = default;
-            Optional<bool> enableCustomCATrust = default;
             Optional<ResourceIdentifier> nodePublicIPPrefixId = default;
             Optional<ScaleSetPriority> scaleSetPriority = default;
             Optional<ScaleSetEvictionPolicy> scaleSetEvictionPolicy = default;
@@ -389,7 +372,6 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ContainerServiceCreationData> creationData = default;
             Optional<ResourceIdentifier> capacityReservationGroupId = default;
             Optional<ResourceIdentifier> hostGroupId = default;
-            Optional<AgentPoolWindowsProfile> windowsProfile = default;
             Optional<AgentPoolNetworkProfile> networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -476,11 +458,6 @@ namespace Azure.ResourceManager.ContainerService
                                 continue;
                             }
                             workloadRuntime = new WorkloadRuntime(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("messageOfTheDay"u8))
-                        {
-                            messageOfTheDay = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("vnetSubnetID"u8))
@@ -641,15 +618,6 @@ namespace Azure.ResourceManager.ContainerService
                                 continue;
                             }
                             enableNodePublicIP = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableCustomCATrust"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableCustomCATrust = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("nodePublicIPPrefixID"u8))
@@ -820,15 +788,6 @@ namespace Azure.ResourceManager.ContainerService
                             hostGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("windowsProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            windowsProfile = AgentPoolWindowsProfile.DeserializeAgentPoolWindowsProfile(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("networkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -847,7 +806,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), messageOfTheDay.Value, vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), Optional.ToNullable(enableCustomCATrust), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, capacityReservationGroupId.Value, hostGroupId.Value, windowsProfile.Value, networkProfile.Value, serializedAdditionalRawData);
+            return new ContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, capacityReservationGroupId.Value, hostGroupId.Value, networkProfile.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options)

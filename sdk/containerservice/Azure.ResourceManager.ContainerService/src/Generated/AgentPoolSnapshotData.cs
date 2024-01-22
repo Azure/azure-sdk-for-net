@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="kubernetesVersion"> The version of Kubernetes. </param>
         /// <param name="nodeImageVersion"> The version of node image. </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. If not specified, the default is Ubuntu if OSType=Linux or Windows2019 if OSType=Windows. And the default Windows OSSKU will be changed to Windows2022 after Windows2019 is deprecated. </param>
+        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
         /// <param name="vmSize"> The size of the VM. </param>
         /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerService
         public string NodeImageVersion { get; }
         /// <summary> The operating system type. The default is Linux. </summary>
         public ContainerServiceOSType? OSType { get; }
-        /// <summary> Specifies the OS SKU used by the agent pool. If not specified, the default is Ubuntu if OSType=Linux or Windows2019 if OSType=Windows. And the default Windows OSSKU will be changed to Windows2022 after Windows2019 is deprecated. </summary>
+        /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
         public ContainerServiceOSSku? OSSku { get; }
         /// <summary> The size of the VM. </summary>
         public string VmSize { get; }

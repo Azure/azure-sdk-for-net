@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> ImageCleaner removes unused images from nodes, freeing up disk space and helping to reduce attack surface area. Here are settings for the security profile. </summary>
+    /// <summary> Image Cleaner removes unused images from nodes, freeing up disk space and helping to reduce attack surface area. Here are settings for the security profile. </summary>
     public partial class ManagedClusterSecurityProfileImageCleaner
     {
         /// <summary>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileImageCleaner"/>. </summary>
-        /// <param name="isEnabled"> Whether to enable ImageCleaner on AKS cluster. </param>
-        /// <param name="intervalHours"> ImageCleaner scanning interval. </param>
+        /// <param name="isEnabled"> Whether to enable Image Cleaner on AKS cluster. </param>
+        /// <param name="intervalHours"> Image Cleaner scanning interval in hours. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterSecurityProfileImageCleaner(bool? isEnabled, int? intervalHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether to enable ImageCleaner on AKS cluster. </summary>
+        /// <summary> Whether to enable Image Cleaner on AKS cluster. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> ImageCleaner scanning interval. </summary>
+        /// <summary> Image Cleaner scanning interval in hours. </summary>
         public int? IntervalHours { get; set; }
     }
 }

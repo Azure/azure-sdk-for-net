@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterVerticalPodAutoscaler : IUtf8JsonSerializable, IJsonModel<ManagedClusterVerticalPodAutoscaler>
+    internal partial class ManagedClusterVerticalPodAutoscaler : IUtf8JsonSerializable, IJsonModel<ManagedClusterVerticalPodAutoscaler>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterVerticalPodAutoscaler>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -27,11 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("controlledValues"u8);
-            writer.WriteStringValue(ControlledValues.ToString());
-            writer.WritePropertyName("updateMode"u8);
-            writer.WriteStringValue(UpdateMode.ToString());
+            writer.WriteBooleanValue(IsVpaEnabled);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,8 +67,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            ManagedClusterWorkloadAutoScalerControlledValue controlledValues = default;
-            ManagedClusterVerticalPodAutoscalerUpdateMode updateMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -82,23 +76,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("controlledValues"u8))
-                {
-                    controlledValues = new ManagedClusterWorkloadAutoScalerControlledValue(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("updateMode"u8))
-                {
-                    updateMode = new ManagedClusterVerticalPodAutoscalerUpdateMode(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterVerticalPodAutoscaler(enabled, controlledValues, updateMode, serializedAdditionalRawData);
+            return new ManagedClusterVerticalPodAutoscaler(enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterVerticalPodAutoscaler>.Write(ModelReaderWriterOptions options)

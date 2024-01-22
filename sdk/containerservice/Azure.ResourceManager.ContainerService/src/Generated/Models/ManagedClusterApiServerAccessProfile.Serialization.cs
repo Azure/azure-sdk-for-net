@@ -56,16 +56,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("disableRunCommand"u8);
                 writer.WriteBooleanValue(DisableRunCommand.Value);
             }
-            if (Optional.IsDefined(EnableVnetIntegration))
-            {
-                writer.WritePropertyName("enableVnetIntegration"u8);
-                writer.WriteBooleanValue(EnableVnetIntegration.Value);
-            }
-            if (Optional.IsDefined(SubnetId))
-            {
-                writer.WritePropertyName("subnetId"u8);
-                writer.WriteStringValue(SubnetId);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -109,8 +99,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> privateDnsZone = default;
             Optional<bool> enablePrivateClusterPublicFQDN = default;
             Optional<bool> disableRunCommand = default;
-            Optional<bool> enableVnetIntegration = default;
-            Optional<ResourceIdentifier> subnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,31 +149,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     disableRunCommand = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableVnetIntegration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableVnetIntegration = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("subnetId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand), Optional.ToNullable(enableVnetIntegration), subnetId.Value, serializedAdditionalRawData);
+            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterApiServerAccessProfile>.Write(ModelReaderWriterOptions options)

@@ -46,21 +46,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner);
             }
-            if (Optional.IsDefined(NodeRestriction))
-            {
-                writer.WritePropertyName("nodeRestriction"u8);
-                writer.WriteObjectValue(NodeRestriction);
-            }
-            if (Optional.IsCollectionDefined(CustomCATrustCertificates))
-            {
-                writer.WritePropertyName("customCATrustCertificates"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomCATrustCertificates)
-                {
-                    writer.WriteBase64StringValue(item, "D");
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,8 +88,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
             Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
             Optional<ManagedClusterSecurityProfileImageCleaner> imageCleaner = default;
-            Optional<ManagedClusterSecurityProfileNodeRestriction> nodeRestriction = default;
-            Optional<IList<byte[]>> customCATrustCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,36 +128,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nodeRestriction"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeRestriction = ManagedClusterSecurityProfileNodeRestriction.DeserializeManagedClusterSecurityProfileNodeRestriction(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("customCATrustCertificates"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<byte[]> array = new List<byte[]>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetBytesFromBase64("D"));
-                    }
-                    customCATrustCertificates = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, nodeRestriction.Value, Optional.ToList(customCATrustCertificates), serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSecurityProfile>.Write(ModelReaderWriterOptions options)

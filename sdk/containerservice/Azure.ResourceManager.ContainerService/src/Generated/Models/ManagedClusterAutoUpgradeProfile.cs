@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoUpgradeProfile"/>. </summary>
         /// <param name="upgradeChannel"> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </param>
-        /// <param name="nodeOSUpgradeChannel"> The default is Unmanaged, but may change to either NodeImage or SecurityPatch at GA. </param>
+        /// <param name="nodeOSUpgradeChannel"> Manner in which the OS on your nodes is updated. The default is NodeImage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAutoUpgradeProfile(UpgradeChannel? upgradeChannel, ManagedClusterNodeOSUpgradeChannel? nodeOSUpgradeChannel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </summary>
         public UpgradeChannel? UpgradeChannel { get; set; }
-        /// <summary> The default is Unmanaged, but may change to either NodeImage or SecurityPatch at GA. </summary>
+        /// <summary> Manner in which the OS on your nodes is updated. The default is NodeImage. </summary>
         public ManagedClusterNodeOSUpgradeChannel? NodeOSUpgradeChannel { get; set; }
     }
 }

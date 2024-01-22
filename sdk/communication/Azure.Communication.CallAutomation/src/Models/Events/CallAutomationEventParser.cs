@@ -165,6 +165,8 @@ namespace Azure.Communication.CallAutomation
                     return DialogSensitivityUpdate.Deserialize(eventData);
                 case nameof(DialogLanguageChange):
                     return DialogLanguageChange.Deserialize(eventData);
+                case nameof(DialogUpdated):
+                    return DialogUpdated.Deserialize(eventData);
                 #endregion
                 default:
                     return null;

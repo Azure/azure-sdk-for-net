@@ -66,7 +66,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-        public ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
+        internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
+
         /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileFileCsiDriver FileCsiDriver { get; set; }
 

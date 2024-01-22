@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/>. </summary>
-        /// <param name="enabled"> Whether to enable KEDA. </param>
-        public ManagedClusterWorkloadAutoScalerProfileKeda(bool enabled)
+        /// <param name="isKedaEnabled"> Whether to enable KEDA. </param>
+        public ManagedClusterWorkloadAutoScalerProfileKeda(bool isKedaEnabled)
         {
-            Enabled = enabled;
+            IsKedaEnabled = isKedaEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/>. </summary>
-        /// <param name="enabled"> Whether to enable KEDA. </param>
+        /// <param name="isKedaEnabled"> Whether to enable KEDA. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterWorkloadAutoScalerProfileKeda(bool enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterWorkloadAutoScalerProfileKeda(bool isKedaEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsKedaEnabled = isKedaEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable KEDA. </summary>
-        public bool Enabled { get; set; }
+        public bool IsKedaEnabled { get; set; }
     }
 }
