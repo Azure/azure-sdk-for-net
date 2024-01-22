@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("elasticSanResourceId"u8);
                 writer.WriteStringValue(ElasticSanResourceId);
             }
+            if (Optional.IsDefined(ProvisionedBandwidthCopySpeed))
+            {
+                writer.WritePropertyName("provisionedBandwidthCopySpeed"u8);
+                writer.WriteStringValue(ProvisionedBandwidthCopySpeed.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<Uri> securityDataUri = default;
             Optional<bool> performancePlus = default;
             Optional<ResourceIdentifier> elasticSanResourceId = default;
+            Optional<ProvisionedBandwidthCopyOption> provisionedBandwidthCopySpeed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,13 +243,22 @@ namespace Azure.ResourceManager.Compute.Models
                     elasticSanResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisionedBandwidthCopySpeed"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisionedBandwidthCopySpeed = new ProvisionedBandwidthCopyOption(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value, serializedAdditionalRawData);
+            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value, Optional.ToNullable(provisionedBandwidthCopySpeed), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskCreationData>.Write(ModelReaderWriterOptions options)
