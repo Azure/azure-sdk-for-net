@@ -48,11 +48,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("default"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @default = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    DeserializeDefaultValue(property, ref @default);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
