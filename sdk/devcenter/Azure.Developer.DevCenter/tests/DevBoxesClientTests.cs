@@ -14,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class DevBoxesClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         public const string DevBoxName = "MyDevBox";
@@ -38,7 +37,7 @@ namespace Azure.Developer.DevCenter.Tests
             await SetUpDevBoxAsync();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task StartAndStopDevBoxSucceeds()
         {
             // At this point we should have a running dev box, let's stop it
@@ -60,7 +59,7 @@ namespace Azure.Developer.DevCenter.Tests
             CheckLROSucceeded(devBoxStartOperation);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RestartDevBoxSucceeds()
         {
             Operation devBoxRestartOperation = await _devBoxesClient.RestartDevBoxAsync(
@@ -72,7 +71,7 @@ namespace Azure.Developer.DevCenter.Tests
             CheckLROSucceeded(devBoxRestartOperation);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetRemoteConnectionSucceeds()
         {
             RemoteConnection remoteConnection = await _devBoxesClient.GetRemoteConnectionAsync(
@@ -99,7 +98,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(remoteConnectionUrl.Scheme, "ms-avd");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetDevBoxSucceeds()
         {
             DevBox devBox = await _devBoxesClient.GetDevBoxAsync(
@@ -116,7 +115,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(devBoxName, DevBoxName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetDevBoxesSucceeds()
         {
             List<DevBox> devBoxes = await _devBoxesClient.GetDevBoxesAsync(
@@ -134,7 +133,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(devBoxName, DevBoxName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllDevBoxesSucceeds()
         {
             List<DevBox> devBoxes = await _devBoxesClient.GetAllDevBoxesAsync().ToEnumerableAsync();
@@ -150,7 +149,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(devBoxName, DevBoxName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllDevBoxesByUserSucceeds()
         {
             List<DevBox> devBoxes = await _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.MeUserId).ToEnumerableAsync();
@@ -166,7 +165,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(devBoxName, DevBoxName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetPoolSucceeds()
         {
             DevBoxPool pool = await _devBoxesClient.GetPoolAsync(
@@ -182,7 +181,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(poolName, TestEnvironment.PoolName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetPoolsSucceeds()
         {
             List<DevBoxPool> pools = await _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName).ToEnumerableAsync();
@@ -198,7 +197,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(poolName, TestEnvironment.PoolName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetScheduleSucceeds()
         {
             DevBoxSchedule schedule = await _devBoxesClient.GetScheduleAsync(
@@ -215,7 +214,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual("default", scheduleName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetSchedulesSucceeds()
         {
             List<DevBoxSchedule> schedules = await _devBoxesClient.GetSchedulesAsync(
@@ -233,7 +232,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual("default", scheduleName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAndDelayActionSucceeds()
         {
             DevBoxAction action = await _devBoxesClient.GetDevBoxActionAsync(
@@ -274,7 +273,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(delayUntil, delayedTime);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAndDelayAllActionsSucceeds()
         {
             List<DevBoxAction> devBoxActions = await _devBoxesClient.GetDevBoxActionsAsync(
@@ -310,7 +309,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(DevBoxActionDelayStatus.Succeeded, actionDelayStatus);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task SkipActionAndDeleteDevBoxSucceeds()
         {
             //This test will run for each target framework. Since Skip Action can run only once - if you skip action in a machine that

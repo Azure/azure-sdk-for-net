@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class DeploymentEnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private const string EnvName = "DevTestEnv";
@@ -38,7 +37,7 @@ namespace Azure.Developer.DevCenter.Tests
             _environmentsClient = GetEnvironmentsClient();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetCatalogsSucceeds()
         {
             List<DevCenterCatalog> catalogs = await _environmentsClient.GetCatalogsAsync(
@@ -55,7 +54,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(TestEnvironment.CatalogName, catalogName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetCatalogSucceeds()
         {
             DevCenterCatalog catalog = await _environmentsClient.GetCatalogAsync(
@@ -71,7 +70,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(TestEnvironment.CatalogName, catalogName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetEnvironmentTypesSucceeds()
         {
             List<DevCenterEnvironmentType> envTypes = await _environmentsClient.GetEnvironmentTypesAsync(
@@ -88,7 +87,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(TestEnvironment.EnvironmentTypeName, envTypeName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetEnvironmentDefinitionSucceeds()
         {
             EnvironmentDefinition envDefinition = await _environmentsClient.GetEnvironmentDefinitionAsync(
@@ -105,7 +104,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(EnvDefinitionName, envDefinitionName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetEnvironmentDefinitionsSucceeds()
         {
             List<EnvironmentDefinition> envDefinitions = await _environmentsClient.GetEnvironmentDefinitionsAsync(
@@ -125,7 +124,7 @@ namespace Azure.Developer.DevCenter.Tests
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetEnvironmentDefinitionsByCatalogSucceeds()
         {
             List<EnvironmentDefinition> envDefinitions = await _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(
@@ -146,14 +145,14 @@ namespace Azure.Developer.DevCenter.Tests
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CreateAndDeleteEnvironmentSucceeds()
         {
             await SetUpEnvironmentAsync();
             await DeleteEnvironmentAsync();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetEnvironmentSucceeds()
         {
             DevCenterEnvironment environment = await GetEnvironmentAsync();
@@ -173,7 +172,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetEnvironmentsSucceeds()
         {
             var environments = await GetEnvironmentsAsync();
@@ -195,7 +194,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllEnvironmentsSucceeds()
         {
             var environments = await GetAllEnvironmentsAsync();
