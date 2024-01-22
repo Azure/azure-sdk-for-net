@@ -11,24 +11,17 @@ namespace System.ClientModel.Primitives;
 
 public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
-    private static readonly object _lock = new object();
-    private static HttpClient? SharedDefaultClient;
-    private static int _sharedClientRefCount;
+    private static readonly HttpClient SharedDefaultClient = CreateDefaultClient();
 
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
     public static readonly HttpClientPipelineTransport Shared = new();
 
-    private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
-    private bool _disposed;
-
-    public HttpClientPipelineTransport() : this(CreateDefaultClient())
+    public HttpClientPipelineTransport() : this(SharedDefaultClient)
     {
-        // We will dispose the httpClient.
-        _ownsClient = true;
     }
 
     public HttpClientPipelineTransport(HttpClient client)
@@ -36,22 +29,10 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         Argument.AssertNotNull(client, nameof(client));
 
         _httpClient = client;
-
-        // The caller will dispose the httpClient.
-        _ownsClient = false;
     }
 
     private static HttpClient CreateDefaultClient()
     {
-        lock (_lock)
-        {
-            if (SharedDefaultClient is not null)
-            {
-                _sharedClientRefCount++;
-                return SharedDefaultClient;
-            }
-        }
-
         // The following settings are added in Azure.Core and are not included
         // in System.ClientModel. If needed, we will migrate them into ClientModel.
         //   - SSL settings
@@ -65,19 +46,11 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
         ServicePointHelpers.SetLimits(handler);
 
-        HttpClient defaultClient = new HttpClient(handler)
+        return new HttpClient(handler)
         {
             // Timeouts are handled by the pipeline
             Timeout = Timeout.InfiniteTimeSpan,
         };
-
-        lock (_lock)
-        {
-            _sharedClientRefCount++;
-            SharedDefaultClient = defaultClient;
-        }
-
-        return SharedDefaultClient;
     }
 
     protected override PipelineMessage CreateMessageCore()
@@ -207,40 +180,10 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     public void Dispose()
     {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing && !_disposed)
-        {
-            if (this != Shared && _ownsClient)
-            {
-                if (_httpClient == SharedDefaultClient)
-                {
-                    lock (_lock)
-                    {
-                        _sharedClientRefCount--;
-
-                        if (_sharedClientRefCount == 0)
-                        {
-                            HttpClient httpClient = _httpClient;
-                            httpClient?.Dispose();
-
-                            SharedDefaultClient = null;
-                        }
-                    }
-                }
-                else
-                {
-                    HttpClient httpClient = _httpClient;
-                    httpClient?.Dispose();
-                }
-            }
-
-            _disposed = true;
-        }
+        // We don't dispose the Shared static transport instance, and if the
+        // custom HttpClient constructor was called, then it is the caller's
+        // responsibility to dispose the passed-in HttpClient.  As such, Dispose
+        // for this implementation is a no-op.
     }
 
     #endregion
