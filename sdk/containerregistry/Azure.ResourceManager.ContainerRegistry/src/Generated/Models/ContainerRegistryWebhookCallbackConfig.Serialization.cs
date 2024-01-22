@@ -6,22 +6,81 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryWebhookCallbackConfig
+    public partial class ContainerRegistryWebhookCallbackConfig : IUtf8JsonSerializable, IJsonModel<ContainerRegistryWebhookCallbackConfig>
     {
-        internal static ContainerRegistryWebhookCallbackConfig DeserializeContainerRegistryWebhookCallbackConfig(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryWebhookCallbackConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerRegistryWebhookCallbackConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookCallbackConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookCallbackConfig)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("serviceUri"u8);
+            writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            if (Optional.IsCollectionDefined(CustomHeaders))
+            {
+                writer.WritePropertyName("customHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerRegistryWebhookCallbackConfig IJsonModel<ContainerRegistryWebhookCallbackConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookCallbackConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookCallbackConfig)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryWebhookCallbackConfig(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryWebhookCallbackConfig DeserializeContainerRegistryWebhookCallbackConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri serviceUri = default;
             Optional<IReadOnlyDictionary<string, string>> customHeaders = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceUri"u8))
@@ -43,8 +102,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     customHeaders = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryWebhookCallbackConfig(serviceUri, Optional.ToDictionary(customHeaders));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryWebhookCallbackConfig(serviceUri, Optional.ToDictionary(customHeaders), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRegistryWebhookCallbackConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookCallbackConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookCallbackConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistryWebhookCallbackConfig IPersistableModel<ContainerRegistryWebhookCallbackConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookCallbackConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistryWebhookCallbackConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookCallbackConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistryWebhookCallbackConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
