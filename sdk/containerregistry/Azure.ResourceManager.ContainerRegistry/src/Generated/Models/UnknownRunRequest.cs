@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             RunRequestType = runRequestType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRunRequest"/> for deserialization. </summary>
+        internal UnknownRunRequest()
+        {
+        }
     }
 }
