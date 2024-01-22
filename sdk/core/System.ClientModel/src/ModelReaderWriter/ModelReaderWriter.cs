@@ -31,7 +31,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> jsonModel)
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T> jsonModel))
         {
             using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
             {
@@ -131,6 +131,21 @@ public static class ModelReaderWriter
         options ??= ModelReaderWriterOptions.Json;
 
         return GetInstance(returnType).Create(data, options);
+    }
+
+    internal static bool ShouldWriteAsJson<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+        => ShouldWriteAsJson(model, options, out _);
+
+    internal static bool ShouldWriteAsJson<T>(IPersistableModel<T> model, ModelReaderWriterOptions options, out IJsonModel<T> jsonModel)
+    {
+        if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> iJsonModel)
+        {
+            jsonModel = iJsonModel;
+            return true;
+        }
+
+        jsonModel = default!;
+        return false;
     }
 
     private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
