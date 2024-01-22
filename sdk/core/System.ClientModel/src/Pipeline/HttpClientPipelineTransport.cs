@@ -180,10 +180,17 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     public void Dispose()
     {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
         // We don't dispose the Shared static transport instance, and if the
         // custom HttpClient constructor was called, then it is the caller's
         // responsibility to dispose the passed-in HttpClient.  As such, Dispose
-        // for this implementation is a no-op.
+        // for this implementation is a no-op.  We retain the protected method
+        // to allow subtypes to provide an implementation.
     }
 
     #endregion
