@@ -80,6 +80,22 @@ namespace Azure.Storage
             }
         }
 
+        internal static void AssertBufferMinimumSize(Span<byte> buffer, int minSize, string paramName)
+        {
+            if (buffer.Length < minSize)
+            {
+                throw new ArgumentException($"Expected buffer Length at least {minSize}. Got {buffer.Length}.", paramName);
+            }
+        }
+
+        internal static void AssertBufferExactSize(Span<byte> buffer, int size, string paramName)
+        {
+            if (buffer.Length != size)
+            {
+                throw new ArgumentException($"Expected buffer Length exactly {size}. Got {buffer.Length}.", paramName);
+            }
+        }
+
         public static void ThrowIfParamNull(object obj, string paramName)
         {
             if (obj == null)
