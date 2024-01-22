@@ -6,6 +6,7 @@ using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
@@ -17,15 +18,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private AzureMonitorResource? _resource;
         private bool _disposed;
+        private bool _shouldSample;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options), new DefaultPlatform())
         {
         }
 
-        internal AzureMonitorLogExporter(ITransmitter transmitter)
+        internal AzureMonitorLogExporter(ITransmitter transmitter, IPlatform? defaultPlatform = null)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
+            if (defaultPlatform != null)
+            {
+                var enableLogSampling = defaultPlatform?.GetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING);
+                if (string.Equals(enableLogSampling, "true", StringComparison.OrdinalIgnoreCase))
+                {
+                    _shouldSample = true;
+                }
+            }
         }
 
         internal AzureMonitorResource? LogResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
@@ -40,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey, _shouldSample);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();

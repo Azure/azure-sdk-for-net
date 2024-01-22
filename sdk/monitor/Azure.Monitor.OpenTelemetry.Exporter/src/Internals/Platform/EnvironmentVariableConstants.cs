@@ -65,5 +65,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// When set to true, exporter will emit resources as metric telemetry.
         /// </summary>
         public const string EXPORT_RESOURCE_METRIC = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS";
+
+        /// <summary>
+        /// When set to true, exporter will sample the logs based on configured sampling rate.
+        /// </summary>
+        public const string ENABLE_LOG_SAMPLING = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_LOG_SAMPLING";
     }
 }

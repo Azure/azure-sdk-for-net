@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
@@ -20,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorLogExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static OpenTelemetryLoggerOptions AddAzureMonitorLogExporterForTest(this OpenTelemetryLoggerOptions loggerOptions, out List<TelemetryItem> telemetryItems)
+        internal static OpenTelemetryLoggerOptions AddAzureMonitorLogExporterForTest(this OpenTelemetryLoggerOptions loggerOptions, IPlatform platform, out List<TelemetryItem> telemetryItems)
         {
             if (loggerOptions == null)
             {
@@ -29,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new List<TelemetryItem>();
 
-            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
+            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems), platform)));
         }
 
         /// <summary>

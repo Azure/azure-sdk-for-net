@@ -47,38 +47,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         };
 
-        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey, bool shouldSample = false)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
-                try
+                if (!shouldSample || logRecord.SpanId == default || (shouldSample && logRecord.TraceFlags == ActivityTraceFlags.Recorded))
                 {
-                    telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
-                    if (logRecord.Exception != null)
+                    try
                     {
-                        telemetryItem.Data = new MonitorBase
+                        telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
+                        if (logRecord.Exception != null)
                         {
-                            BaseType = "ExceptionData",
-                            BaseData = new TelemetryExceptionData(Version, logRecord),
-                        };
-                    }
-                    else
-                    {
-                        telemetryItem.Data = new MonitorBase
+                            telemetryItem.Data = new MonitorBase
+                            {
+                                BaseType = "ExceptionData",
+                                BaseData = new TelemetryExceptionData(Version, logRecord),
+                            };
+                        }
+                        else
                         {
-                            BaseType = "MessageData",
-                            BaseData = new MessageData(Version, logRecord),
-                        };
-                    }
+                            telemetryItem.Data = new MonitorBase
+                            {
+                                BaseType = "MessageData",
+                                BaseData = new MessageData(Version, logRecord),
+                            };
+                        }
 
-                    telemetryItems.Add(telemetryItem);
-                }
-                catch (Exception ex)
-                {
-                    AzureMonitorExporterEventSource.Log.FailedToConvertLogRecord(instrumentationKey, ex);
+                        telemetryItems.Add(telemetryItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.FailedToConvertLogRecord(instrumentationKey, ex);
+                    }
                 }
             }
 
