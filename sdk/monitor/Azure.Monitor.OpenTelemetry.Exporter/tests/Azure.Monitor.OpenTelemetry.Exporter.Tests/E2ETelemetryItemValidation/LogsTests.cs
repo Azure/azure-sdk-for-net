@@ -212,6 +212,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                    args: new object[] { "World" });
             }
 
+            // flush logs
+            loggerFactory.Dispose();
+
             if (shouldSample && logWithinActivityContext)
             {
                 if (!sampledIn)
