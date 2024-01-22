@@ -11,14 +11,14 @@ namespace System.ClientModel.Primitives;
 
 public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
+    private static readonly object _lock = new object();
+    private static HttpClient? SharedDefaultClient;
+    private static int _sharedClientRefCount;
+
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
     public static readonly HttpClientPipelineTransport Shared = new();
-
-    private static HttpClient? SharedDefaultClient;
-    private static object _lock = new object();
-    private static int _sharedClientRefCount;
 
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
