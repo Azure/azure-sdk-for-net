@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AlertPropertiesDefinition : IUtf8JsonSerializable
+    public partial class AlertPropertiesDefinition : IUtf8JsonSerializable, IJsonModel<AlertPropertiesDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertPropertiesDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AlertPropertiesDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertType))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStringValue(Criteria.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertPropertiesDefinition DeserializeAlertPropertiesDefinition(JsonElement element)
+        AlertPropertiesDefinition IJsonModel<AlertPropertiesDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertPropertiesDefinition(document.RootElement, options);
+        }
+
+        internal static AlertPropertiesDefinition DeserializeAlertPropertiesDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<CostManagementAlertType> type = default;
             Optional<CostManagementAlertCategory> category = default;
             Optional<AlertCriterion> criteria = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -71,8 +113,44 @@ namespace Azure.ResourceManager.CostManagement.Models
                     criteria = new AlertCriterion(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AlertPropertiesDefinition(Optional.ToNullable(type), Optional.ToNullable(category), Optional.ToNullable(criteria));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AlertPropertiesDefinition(Optional.ToNullable(type), Optional.ToNullable(category), Optional.ToNullable(criteria), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AlertPropertiesDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AlertPropertiesDefinition IPersistableModel<AlertPropertiesDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAlertPropertiesDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AlertPropertiesDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

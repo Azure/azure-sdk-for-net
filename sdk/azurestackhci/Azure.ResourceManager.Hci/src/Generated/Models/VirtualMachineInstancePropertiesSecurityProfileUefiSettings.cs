@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The VirtualMachineInstancePropertiesSecurityProfileUefiSettings. </summary>
     internal partial class VirtualMachineInstancePropertiesSecurityProfileUefiSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesSecurityProfileUefiSettings"/>. </summary>
         public VirtualMachineInstancePropertiesSecurityProfileUefiSettings()
         {
@@ -17,9 +52,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesSecurityProfileUefiSettings"/>. </summary>
         /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
-        internal VirtualMachineInstancePropertiesSecurityProfileUefiSettings(bool? secureBootEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineInstancePropertiesSecurityProfileUefiSettings(bool? secureBootEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecureBootEnabled = secureBootEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether secure boot should be enabled on the virtual machine instance. </summary>
