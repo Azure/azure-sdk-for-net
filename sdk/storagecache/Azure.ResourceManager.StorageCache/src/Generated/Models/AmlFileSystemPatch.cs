@@ -23,11 +23,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="encryptionSettings"> Specifies encryption settings of the AML file system. </param>
         /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
-        internal AmlFileSystemPatch(IDictionary<string, string> tags, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemUpdatePropertiesMaintenanceWindow maintenanceWindow)
+        /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
+        internal AmlFileSystemPatch(IDictionary<string, string> tags, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemUpdatePropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemRootSquashSettings rootSquashSettings)
         {
             Tags = tags;
             EncryptionSettings = encryptionSettings;
             MaintenanceWindow = maintenanceWindow;
+            RootSquashSettings = rootSquashSettings;
         }
 
         /// <summary> Resource tags. </summary>
@@ -48,5 +50,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
         public AmlFileSystemUpdatePropertiesMaintenanceWindow MaintenanceWindow { get; set; }
+        /// <summary> Specifies root squash settings of the AML file system. </summary>
+        public AmlFileSystemRootSquashSettings RootSquashSettings { get; set; }
     }
 }
