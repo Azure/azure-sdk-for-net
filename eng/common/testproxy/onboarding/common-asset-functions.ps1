@@ -57,6 +57,24 @@ class Version {
   }
 }
 
+Function Resolve-Proxy {
+    $testProxyExe = "test-proxy"
+    # this script requires the presence of the test-proxy on the PATH
+    $proxyToolPresent = Test-Exe-In-Path -ExeToLookFor "test-proxy" -ExitOnError $false
+    $proxyStandalonePresent = Test-Exe-In-Path -ExeToLookFor "Azure.Sdk.Tools.TestProxy" -ExitOnError $false
+
+    if (-not $proxyToolPresent -and -not $proxyStandalonePresent) {
+        Write-Error "This script requires the presence of a test-proxy executable to complete its operations. Exiting."
+        exit 1
+    }
+
+    if (-not $proxyToolPresent) {
+        $testProxyExe = "Azure.Sdk.Tools.TestProxy"
+    }
+
+    return $testProxyExe
+}
+
 Function Test-Exe-In-Path {
   Param([string] $ExeToLookFor, [bool]$ExitOnError = $true)
   if ($null -eq (Get-Command $ExeToLookFor -ErrorAction SilentlyContinue)) {

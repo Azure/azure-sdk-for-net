@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -30,13 +33,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
-        internal ThresholdCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, int minThreshold, int maxThreshold) : base(displayName, description, isEnabled, ruleType)
+        internal ThresholdCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, int minThreshold, int maxThreshold) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData)
         {
             MinThreshold = minThreshold;
             MaxThreshold = maxThreshold;
             RuleType = ruleType ?? "ThresholdCustomAlertRule";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/> for deserialization. </summary>
+        internal ThresholdCustomAlertRule()
+        {
         }
 
         /// <summary> The minimum threshold. </summary>
