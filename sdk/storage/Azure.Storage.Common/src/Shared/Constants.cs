@@ -124,7 +124,6 @@ namespace Azure.Storage
         public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
 
         public const string DefaultScope = "/.default";
-        public const string EnUsCulture = "en-US";
 
         /// <summary>
         /// Storage Connection String constant values.

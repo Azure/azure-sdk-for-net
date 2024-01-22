@@ -358,38 +358,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
-        public async Task ListShares_EnableSnapshotVirtualDirectoryAccess()
-        {
-            // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            ShareCreateOptions options = new ShareCreateOptions
-            {
-                Protocols = ShareProtocols.Nfs,
-                EnableSnapshotVirtualDirectoryAccess = true,
-            };
-
-            try
-            {
-                await share.CreateAsync(options);
-
-                // Act
-                IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
-
-                // Assert
-                ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
-                Assert.AreEqual(ShareProtocols.Nfs, shareItem.Properties.Protocols);
-                Assert.IsTrue(shareItem.Properties.EnableSnapshotVirtualDirectoryAccess);
-            }
-            finally
-            {
-                await share.DeleteAsync(false);
-            }
-        }
-
-        [RecordedTest]
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();
