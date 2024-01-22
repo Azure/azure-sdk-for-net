@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var logRecord in batchLogRecord)
             {
-                if (!shouldSample || logRecord.SpanId == default || (shouldSample && logRecord.TraceFlags == ActivityTraceFlags.Recorded))
+                if (!shouldSample || logRecord.SpanId == default || logRecord.TraceFlags == ActivityTraceFlags.Recorded)
                 {
                     try
                     {
