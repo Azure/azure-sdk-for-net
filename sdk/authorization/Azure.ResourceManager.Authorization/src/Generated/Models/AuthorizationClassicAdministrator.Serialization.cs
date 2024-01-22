@@ -5,16 +5,95 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class AuthorizationClassicAdministrator
+    public partial class AuthorizationClassicAdministrator : IUtf8JsonSerializable, IJsonModel<AuthorizationClassicAdministrator>
     {
-        internal static AuthorizationClassicAdministrator DeserializeAuthorizationClassicAdministrator(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationClassicAdministrator>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AuthorizationClassicAdministrator>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EmailAddress))
+            {
+                writer.WritePropertyName("emailAddress"u8);
+                writer.WriteStringValue(EmailAddress);
+            }
+            if (Optional.IsDefined(Role))
+            {
+                writer.WritePropertyName("role"u8);
+                writer.WriteStringValue(Role);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AuthorizationClassicAdministrator IJsonModel<AuthorizationClassicAdministrator>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthorizationClassicAdministrator(document.RootElement, options);
+        }
+
+        internal static AuthorizationClassicAdministrator DeserializeAuthorizationClassicAdministrator(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +104,8 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<SystemData> systemData = default;
             Optional<string> emailAddress = default;
             Optional<string> role = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -73,8 +154,44 @@ namespace Azure.ResourceManager.Authorization.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AuthorizationClassicAdministrator(id, name, type, systemData.Value, emailAddress.Value, role.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AuthorizationClassicAdministrator(id, name, type, systemData.Value, emailAddress.Value, role.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AuthorizationClassicAdministrator>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AuthorizationClassicAdministrator IPersistableModel<AuthorizationClassicAdministrator>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAuthorizationClassicAdministrator(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AuthorizationClassicAdministrator>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

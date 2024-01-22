@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -524,7 +525,21 @@ namespace Azure.Core.Tests
             for (int i = 0; i < 100; i++)
             {
                 DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+                scope.AddAttribute("AttributeBeforeStart", "value");
                 scope.Start();
+                scope.AddAttribute("AttributeAfterStart", "value");
+
+                Type type = scope.GetType();
+                FieldInfo field = type.GetField("_activityAdapter", BindingFlags.NonPublic | BindingFlags.Instance);
+                object activityadaptor = (object)field.GetValue(scope);
+
+                Type type1 = activityadaptor.GetType();
+                FieldInfo field1 = type1.GetField("_sampleOutActivity", BindingFlags.NonPublic | BindingFlags.Instance);
+                Activity activity = (Activity)field1.GetValue(activityadaptor);
+
+                Assert.IsNull(activity.GetTagItem("AttributeAfterStart"));
+                Assert.IsNotNull(activity.GetTagItem("AttributeBeforeStart"));
+
                 if (Activity.Current.IsAllDataRequested)
                 {
                     activeActivityCounts++;

@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.Models
             Error = error;
         }
 
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/> for deserialization. </summary>
+        protected OperationStatusResult()
+        {
+        }
+
         /// <summary> Fully qualified ID for the async operation. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> Name of the async operation. </summary>

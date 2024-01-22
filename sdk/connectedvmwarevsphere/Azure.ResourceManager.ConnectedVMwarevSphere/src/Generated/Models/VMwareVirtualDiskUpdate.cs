@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the virtual disk update. </summary>
     public partial class VMwareVirtualDiskUpdate
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VMwareVirtualDiskUpdate"/>. </summary>
         public VMwareVirtualDiskUpdate()
         {
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="unitNumber"> Gets or sets the unit number of the disk on the controller. </param>
         /// <param name="deviceName"> Gets or sets the device name. </param>
         /// <param name="diskType"> Gets or sets the disk backing type. </param>
-        internal VMwareVirtualDiskUpdate(string name, int? diskSizeGB, int? deviceKey, VMwareDiskMode? diskMode, int? controllerKey, int? unitNumber, string deviceName, VMwareDiskType? diskType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareVirtualDiskUpdate(string name, int? diskSizeGB, int? deviceKey, VMwareDiskMode? diskMode, int? controllerKey, int? unitNumber, string deviceName, VMwareDiskType? diskType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DiskSizeGB = diskSizeGB;
@@ -34,6 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             UnitNumber = unitNumber;
             DeviceName = deviceName;
             DiskType = diskType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the virtual disk. </summary>

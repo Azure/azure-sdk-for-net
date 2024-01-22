@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion Condition="'$(TargetFramework)' == 'netstandard2.0'">1.0.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
@@ -16,7 +16,6 @@
     <!-- Versions are defined in eng/Packages.Data.props -->
     <!-- Whenever updating OpenTelemetry dependencies, confirm that Test dependencies are also updated. -->
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.PersistentStorage.FileSystem" />
   </ItemGroup>

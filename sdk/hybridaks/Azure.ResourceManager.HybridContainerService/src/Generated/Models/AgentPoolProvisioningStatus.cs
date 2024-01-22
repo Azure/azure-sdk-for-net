@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Defines the observed state of the agent pool. </summary>
+    /// <summary> The observed status of the agent pool. </summary>
     public partial class AgentPoolProvisioningStatus
     {
         /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatus"/>. </summary>
@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatus"/>. </summary>
-        /// <param name="errorMessage"> ErrorMessage - Error messages during creation of agent pool. </param>
-        /// <param name="operationStatus"> Contains Provisioning errors. </param>
+        /// <param name="currentState"> The current state of the agent pool. </param>
+        /// <param name="errorMessage"> Error messages during an agent pool operation or steady state. </param>
         /// <param name="readyReplicas"></param>
-        internal AgentPoolProvisioningStatus(string errorMessage, AgentPoolOperationStatus operationStatus, IList<AgentPoolUpdateProfile> readyReplicas)
+        internal AgentPoolProvisioningStatus(HybridContainerServiceResourceProvisioningState? currentState, string errorMessage, IList<AgentPoolUpdateProfile> readyReplicas)
         {
+            CurrentState = currentState;
             ErrorMessage = errorMessage;
-            OperationStatus = operationStatus;
             ReadyReplicas = readyReplicas;
         }
 
-        /// <summary> ErrorMessage - Error messages during creation of agent pool. </summary>
+        /// <summary> The current state of the agent pool. </summary>
+        public HybridContainerServiceResourceProvisioningState? CurrentState { get; }
+        /// <summary> Error messages during an agent pool operation or steady state. </summary>
         public string ErrorMessage { get; set; }
-        /// <summary> Contains Provisioning errors. </summary>
-        public AgentPoolOperationStatus OperationStatus { get; set; }
         /// <summary> Gets the ready replicas. </summary>
         public IList<AgentPoolUpdateProfile> ReadyReplicas { get; }
     }
