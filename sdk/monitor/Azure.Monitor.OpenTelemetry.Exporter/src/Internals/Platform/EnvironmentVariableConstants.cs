@@ -69,6 +69,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// <summary>
         /// When set to true, exporter will sample the logs based on configured sampling rate.
         /// </summary>
-        public const string ENABLE_LOG_SAMPLING = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_LOG_SAMPLING";
+        public const string ENABLE_LOG_SAMPLING = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
     }
 }
