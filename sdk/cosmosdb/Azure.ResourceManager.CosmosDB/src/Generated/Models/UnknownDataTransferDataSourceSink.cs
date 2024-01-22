@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Component = component;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal UnknownDataTransferDataSourceSink()
+        {
+        }
     }
 }

@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Details on progress of ADF copy activity. </summary>
     public partial class CopyProgressDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CopyProgressDetails"/>. </summary>
         internal CopyProgressDetails()
         {
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="copyStart"> Copy Start. </param>
         /// <param name="copyThroughput"> Copy throughput in KBps. </param>
         /// <param name="copyDuration"> Copy Duration in seconds. </param>
-        internal CopyProgressDetails(string tableName, string status, string parallelCopyType, int? usedParallelCopies, long? dataRead, long? dataWritten, long? rowsRead, long? rowsCopied, DateTimeOffset? copyStart, double? copyThroughput, int? copyDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyProgressDetails(string tableName, string status, string parallelCopyType, int? usedParallelCopies, long? dataRead, long? dataWritten, long? rowsRead, long? rowsCopied, DateTimeOffset? copyStart, double? copyThroughput, int? copyDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
             Status = status;
@@ -42,6 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             CopyStart = copyStart;
             CopyThroughput = copyThroughput;
             CopyDuration = copyDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Table Name. </summary>

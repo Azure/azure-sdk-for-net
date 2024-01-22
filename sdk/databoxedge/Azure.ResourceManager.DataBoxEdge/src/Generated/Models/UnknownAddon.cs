@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAddon"/> for deserialization. </summary>
+        internal UnknownAddon()
+        {
+        }
     }
 }

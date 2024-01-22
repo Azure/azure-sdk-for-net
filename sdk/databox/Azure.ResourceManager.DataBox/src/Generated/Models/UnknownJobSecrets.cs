@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             JobSecretsType = jobSecretsType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownJobSecrets"/> for deserialization. </summary>
+        internal UnknownJobSecrets()
+        {
+        }
     }
 }

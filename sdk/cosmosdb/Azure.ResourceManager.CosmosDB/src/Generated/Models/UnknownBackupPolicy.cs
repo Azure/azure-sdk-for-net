@@ -21,5 +21,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             BackupPolicyType = backupPolicyType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupPolicy"/> for deserialization. </summary>
+        internal UnknownBackupPolicy()
+        {
+        }
     }
 }

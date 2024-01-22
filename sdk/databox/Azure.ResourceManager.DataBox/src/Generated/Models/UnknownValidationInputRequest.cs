@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             ValidationType = validationType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationInputRequest"/> for deserialization. </summary>
+        internal UnknownValidationInputRequest()
+        {
+        }
     }
 }
