@@ -222,7 +222,7 @@ function Verify-PackageVersion() {
 
 try {
   # Verify package version is not a prerelease version, only continue the validation if the package is GA version
-  # Verify-PackageVersion
+  Verify-PackageVersion
 
   $ServiceDir = Join-Path $RepoRoot 'sdk' $ServiceDirectory
   $PackageDirectory = Join-Path $ServiceDir $PackageName
