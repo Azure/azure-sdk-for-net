@@ -29,7 +29,7 @@ public partial class HttpClientPipelineTransport
         protected internal HttpPipelineRequest()
         {
             _method = HttpMethod.Get.Method;
-            _headers = new PipelineRequestHeaders();
+            _headers = new ArrayBackedRequestHeaders();
         }
 
         protected override string GetMethodCore()
@@ -65,7 +65,7 @@ public partial class HttpClientPipelineTransport
         protected override void SetContentCore(BinaryContent? content)
             => _content = content;
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineRequestHeaders GetHeadersCore()
             => _headers;
 
         // PATCH value needed for compat with pre-net5.0 TFMs
@@ -98,7 +98,7 @@ public partial class HttpClientPipelineTransport
             httpRequest.Headers.ExpectContinue = false;
 #endif
 
-            if (request.Headers is not PipelineRequestHeaders headers)
+            if (request.Headers is not ArrayBackedRequestHeaders headers)
             {
                 throw new InvalidOperationException($"Invalid type for request.Headers: '{request.Headers?.GetType()}'.");
             }

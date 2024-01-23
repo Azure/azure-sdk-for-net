@@ -16,7 +16,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ResponseBufferingPolicy : PipelinePolicy
 {
-    internal static readonly ResponseBufferingPolicy Shared = new();
+    internal static readonly ResponseBufferingPolicy Default = new();
 
     public ResponseBufferingPolicy()
     {
