@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationModuleData : IUtf8JsonSerializable
+    public partial class AutomationModuleData : IUtf8JsonSerializable, IJsonModel<AutomationModuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationModuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationModuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -38,6 +47,26 @@ namespace Azure.ResourceManager.Automation
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsGlobal))
@@ -96,11 +125,40 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteBooleanValue(IsComposite.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationModuleData DeserializeAutomationModuleData(JsonElement element)
+        AutomationModuleData IJsonModel<AutomationModuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationModuleData(document.RootElement, options);
+        }
+
+        internal static AutomationModuleData DeserializeAutomationModuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +181,8 @@ namespace Azure.ResourceManager.Automation
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> description = default;
             Optional<bool> isComposite = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -280,8 +340,44 @@ namespace Azure.ResourceManager.Automation
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationModuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(isGlobal), version.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(activityCount), Optional.ToNullable(provisioningState), contentLink.Value, error.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, Optional.ToNullable(isComposite));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutomationModuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(isGlobal), version.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(activityCount), Optional.ToNullable(provisioningState), contentLink.Value, error.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, Optional.ToNullable(isComposite), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationModuleData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AutomationModuleData IPersistableModel<AutomationModuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationModuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationModuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

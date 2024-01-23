@@ -15,6 +15,7 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+use-model-reader-writer: true
 skip-csproj: true
 
 rename-mapping:
@@ -64,7 +65,7 @@ rename-mapping:
   ScopeType: RoleManagementScopeType
   UserSet: RoleManagementUserInfo
   UserType: RoleManagementUserType
-  
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'applicationId': 'uuid'
@@ -142,7 +143,7 @@ directive:
     transform: $.operationId = 'AzurePermissionsForResourceGroup_List'
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions'].get
-    transform: $.operationId = 'AzurePermissionsForResource_List' 
+    transform: $.operationId = 'AzurePermissionsForResource_List'
 
   - from: authorization-RoleAssignmentsCalls.json
     where: $.definitions

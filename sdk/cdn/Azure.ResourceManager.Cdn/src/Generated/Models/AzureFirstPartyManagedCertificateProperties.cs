@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Azure FirstParty Managed Certificate provided by other first party resource providers to enable HTTPS. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureFirstPartyManagedCertificateProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
-        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType) : base(secretType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(secretType, serializedAdditionalRawData)
         {
             SecretType = secretType;
         }

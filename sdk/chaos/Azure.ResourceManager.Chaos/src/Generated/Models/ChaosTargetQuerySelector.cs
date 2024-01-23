@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Chaos.Models
             SelectorType = selectorType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetQuerySelector"/> for deserialization. </summary>
+        internal ChaosTargetQuerySelector()
+        {
+        }
+
         /// <summary> Azure Resource Graph (ARG) Query Language query for target resources. </summary>
         public string QueryString { get; set; }
         /// <summary> Subscription id list to scope resource query. </summary>

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -69,6 +70,18 @@ public static class MockSyncAsyncExtensions
         else
         {
             transport.Process(message);
+        }
+    }
+
+    public static async Task WaitSyncOrAsync(this ClientRetryPolicy policy, TimeSpan delay, CancellationToken cancellationToken, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await policy.WaitAsync(delay, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            policy.Wait(delay, cancellationToken);
         }
     }
 }

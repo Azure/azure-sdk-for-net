@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AzureQueryProperties : IUtf8JsonSerializable
+    public partial class AzureQueryProperties : IUtf8JsonSerializable, IJsonModel<AzureQueryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureQueryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureQueryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Scope))
             {
@@ -41,11 +51,40 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("tagSettings"u8);
                 writer.WriteObjectValue(TagSettings);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureQueryProperties DeserializeAzureQueryProperties(JsonElement element)
+        AzureQueryProperties IJsonModel<AzureQueryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureQueryProperties(document.RootElement, options);
+        }
+
+        internal static AzureQueryProperties DeserializeAzureQueryProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +92,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<IList<string>> scope = default;
             Optional<IList<AzureLocation>> locations = default;
             Optional<QueryTagSettingsProperties> tagSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -92,8 +133,44 @@ namespace Azure.ResourceManager.Automation.Models
                     tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureQueryProperties(Optional.ToList(scope), Optional.ToList(locations), tagSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureQueryProperties(Optional.ToList(scope), Optional.ToList(locations), tagSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureQueryProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureQueryProperties IPersistableModel<AzureQueryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureQueryProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureQueryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

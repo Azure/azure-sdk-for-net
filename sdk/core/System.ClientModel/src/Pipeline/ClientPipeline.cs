@@ -30,6 +30,7 @@ public sealed partial class ClientPipeline
         }
 
         Debug.Assert(perCallIndex <= perTryIndex);
+        Debug.Assert(perTryIndex <= beforeTransportIndex);
 
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
@@ -71,8 +72,7 @@ public sealed partial class ClientPipeline
         pipelineLength += options.PerCallPolicies?.Length ?? 0;
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
-        // TODO: Retry policy will come in a later PR.
-        //pipelineLength++; // for retry policy
+        pipelineLength++; // for retry policy
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
@@ -80,6 +80,7 @@ public sealed partial class ClientPipeline
 
         int index = 0;
 
+        // Per call policies come before the retry policy.
         perCallPolicies.CopyTo(policies.AsSpan(index));
         index += perCallPolicies.Length;
 
@@ -91,16 +92,10 @@ public sealed partial class ClientPipeline
 
         int perCallIndex = index;
 
-        // TODO: RetryPolicy will come in a later PR.
-        //if (options.RetryPolicy != null)
-        //{
-        //    policies[index++] = options.RetryPolicy;
-        //}
-        //else
-        //{
-        //    policies[index++] = new RequestRetryPolicy();
-        //}
+        // Add retry policy.
+        policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
 
+        // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
         index += perTryPolicies.Length;
 
@@ -112,8 +107,10 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        policies[index++] = ResponseBufferingPolicy.Shared;
+        // Response buffering comes before the transport.
+        policies[index++] = ResponseBufferingPolicy.Default;
 
+        // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
 
@@ -125,15 +122,8 @@ public sealed partial class ClientPipeline
 
         int beforeTransportIndex = index;
 
-        if (options.Transport != null)
-        {
-            policies[index++] = options.Transport;
-        }
-        else
-        {
-            // Add default transport.
-            policies[index++] = HttpClientPipelineTransport.Shared;
-        }
+        // Add the transport.
+        policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
 
         return new ClientPipeline(policies,
             options.NetworkTimeout ?? DefaultNetworkTimeout,

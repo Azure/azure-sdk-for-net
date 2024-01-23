@@ -40,18 +40,17 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     private static HttpClient CreateDefaultClient()
     {
         // The following settings are added in Azure.Core and are not included
-        // in System.ClientModel.  If needed, we will migrate them to ClientModel
-        // over time.
+        // in System.ClientModel. If needed, we will migrate them into ClientModel.
         //   - SSL settings
         //   - Proxy settings
         //   - Cookies
-        //   - MaxConnectionsPerServer
-        //   - PooledConnectionLifetime
 
         HttpClientHandler handler = new HttpClientHandler()
         {
             AllowAutoRedirect = false
         };
+
+        ServicePointHelpers.SetLimits(handler);
 
         return new HttpClient(handler)
         {

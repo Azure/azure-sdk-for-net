@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         private bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
 
         [NonEvent]
-        public void FailedToParseConnectionString(Exception ex)
+        public void FailedToParseConnectionString(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void FailedToParseConnectionString(string exceptionMessage) => WriteEvent(1, exceptionMessage);
 
         [NonEvent]
-        public void FailedToReadEnvironmentVariables(Exception ex)
+        public void FailedToReadEnvironmentVariables(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(2, errorMessage);
 
         [NonEvent]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, Exception ex)
+        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(3, environmentVariable, exceptionMessage);
 
         [NonEvent]
-        public void SdkVersionCreateFailed(Exception ex)
+        public void SdkVersionCreateFailed(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(5, typeName, value);
 
         [NonEvent]
-        public void ErrorInitializingPartOfSdkVersion(string typeName, Exception ex)
+        public void ErrorInitializingPartOfSdkVersion(string typeName, System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -128,7 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         }
 
         [NonEvent]
-        public void PingFailedWithUnknownException(Exception ex)
+        public void PingFailedWithUnknownException(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
@@ -137,7 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         }
 
         [NonEvent]
-        public void PostFailedWithUnknownException(Exception ex)
+        public void PostFailedWithUnknownException(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
