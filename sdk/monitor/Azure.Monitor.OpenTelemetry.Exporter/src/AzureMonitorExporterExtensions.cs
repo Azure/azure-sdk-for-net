@@ -195,18 +195,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
            BaseProcessor<LogRecord> processor,
            IPlatform platform)
         {
-            bool enableSampling = false;
+            bool enableLogSampling = false;
             if (platform != null)
             {
-                var enableLogSampling = platform.GetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING);
+                var enableLogSamplingEnvVar = platform.GetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING);
 
-                if (string.Equals(enableLogSampling, "true", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(enableLogSamplingEnvVar, "true", StringComparison.OrdinalIgnoreCase))
                 {
-                    enableSampling = true;
+                    enableLogSampling = true;
                 }
             }
 
-            return loggerOptions.AddProcessor(new LogFilteringProcessor(enableSampling, processor));
+            return loggerOptions.AddProcessor(new LogFilteringProcessor(enableLogSampling, processor));
         }
     }
 }
