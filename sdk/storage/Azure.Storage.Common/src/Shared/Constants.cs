@@ -391,6 +391,8 @@ namespace Azure.Storage
             public const string GroupHeaderName = "x-ms-group";
 
             public const string PermissionsHeaderName = "x-ms-permissions";
+
+            public const string AclHeaderName = "x-ms-acl";
         }
 
         /// <summary>
