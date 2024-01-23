@@ -109,9 +109,5 @@ namespace Azure.ResourceManager.IoTOperations.Tests
                 Interval = "1h",
             };
         }
-        protected static String GetTargetName()
-        {
-            return new TargetSelectorProperties()
-        }
     }
 }
