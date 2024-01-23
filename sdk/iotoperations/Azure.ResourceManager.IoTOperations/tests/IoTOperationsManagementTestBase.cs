@@ -30,23 +30,35 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
         }
 
-    protected async Task InitializeClients()
-      {
-          ArmClient = GetArmClient();
-          Subscription = await ArmClient.GetDefaultSubscriptionAsync();
-          ResourceGroupsOperations = Subscription.GetResourceGroups();
-      }
+        protected async Task InitializeClients()
+        {
+            ArmClient = GetArmClient();
+            Subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            ResourceGroupsOperations = Subscription.GetResourceGroups();
+        }
 
         public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
             return await Subscription.GetResourceGroups().GetAsync(name);
         }
 
-       protected async Task<TargetCollection> GetTargetsResourceCollectionAsync(string resourceGroupName)
-       {
-           ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-           return rg.GetTargets();
-       }
+        protected async Task<TargetCollection> GetTargetsResourceCollectionAsync(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetTargets();
+        }
+        protected async Task<InstanceCollection> GetInstancesResourceCollectionAsync(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetInstances();
+        }
+
+        protected async Task<SolutionCollection> GetSolutionsResourceCollectionAsync(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetSolutions();
+        }
+
         protected static ComponentProperties GetComponentProperties()
         {
             return new ComponentProperties("yhnelpxsobdyurwvhkq", "wiabwsfqhhxru")
@@ -96,6 +108,10 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             {
                 Interval = "1h",
             };
+        }
+        protected static String GetTargetName()
+        {
+            return new TargetSelectorProperties()
         }
     }
 }

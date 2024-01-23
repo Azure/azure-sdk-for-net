@@ -6,14 +6,12 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using Azure.ResourceManager.IoTOperations.Models;
-using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
 {
-    public class TargetCollectionTests : IoTOperationsManagementTestBase
+    public class TargetCRUDTests : IoTOperationsManagementTestBase
     {
-        public TargetCollectionTests(bool isAsync)
+        public TargetCRUDTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record
         {
         }
