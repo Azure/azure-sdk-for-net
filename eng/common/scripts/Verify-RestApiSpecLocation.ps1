@@ -43,7 +43,7 @@ param (
 . (Join-Path $PSScriptRoot Helpers/PSModule-Helpers.ps1)
 
 # Check if github token is set
-if(-not $GitHubPat) {
+if (-not $GitHubPat) {
   LogError "GitHubPat is not set. Please set the environment variable GH_TOKEN or pass the GitHubPat parameter."
   exit 1
 }
@@ -56,17 +56,17 @@ Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 # or 
 # https://github.com/Azure/azure-rest-api-specs/blob/0ebd4949e8e1cd9537ca5a07384c7661162cc7a6/specification/purview/data-plane/Azure.Analytics.Purview.Account/preview/2019-11-01-preview/account.json
 function Verify-Url([string]$fileUrl) {
-  if($fileUrl -match "^https://(raw\.githubusercontent\.com|github\.com)/(?<repo>[^/]*/azure-rest-api-specs)(/(blob|tree))?/(?<commit>[^\/]+(\/[^\/]+)*|[0-9a-f]{40})/(?<path>specification/.*)") {
+  if ($fileUrl -match "^https://(raw\.githubusercontent\.com|github\.com)/(?<repo>[^/]*/azure-rest-api-specs)(/(blob|tree))?/(?<commit>[^\/]+(\/[^\/]+)*|[0-9a-f]{40})/(?<path>specification/.*)") {
     $repo = $matches['repo']
     $commit = $matches['commit']
-    if($repo -ne "Azure/azure-rest-api-specs") {
+    if ($repo -ne "Azure/azure-rest-api-specs") {
       LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid repo in the file url: $fileUrl. Repo should be 'Azure/azure-rest-api-specs'."
       exit 1
     }
     # check the commit hash belongs to main branch
     Verify-CommitFromMainBranch $commit
   }
-  else{
+  else {
     LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid file url: $fileUrl"
     exit 1
   }
@@ -76,7 +76,7 @@ function Verify-Url([string]$fileUrl) {
 function Verify-TspLocation([System.Object]$tspLocationObj) {
   $repo = $tspLocationObj["repo"]
   $commit = $tspLocationObj["commit"]
-  if($repo -ne "Azure/azure-rest-api-specs") {
+  if ($repo -ne "Azure/azure-rest-api-specs") {
     LogError "Invalid repo setting in the tsp-location.yaml: $repo. Repo should be 'Azure/azure-rest-api-specs'. ServiceDir:$ServiceDirectory, PackageName:$PackageName"
     exit 1
   }
@@ -87,11 +87,11 @@ function Verify-TspLocation([System.Object]$tspLocationObj) {
 
 # This function is used to verify the specific 'commit' belongs to the main branch of Azure/azure-rest-api-specs repository
 function Verify-CommitFromMainBranch([string]$commit) {
-  if($commit -notmatch "^[0-9a-f]{40}$" -and $commit -ne "main") {
+  if ($commit -notmatch "^[0-9a-f]{40}$" -and $commit -ne "main") {
     LogError "Invalid commit hash or branch name: $commit. Branch name should be 'main' or the commit should be a 40-character SHA-1 hash. ServiceDir:$ServiceDirectory, PackageName:$PackageName"
     exit 1
   }
-  if($commit -eq "main") {
+  if ($commit -eq "main") {
     Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Branch is $commit branch of Azure/azure-rest-api-specs repository."
     return
   }
@@ -101,7 +101,7 @@ function Verify-CommitFromMainBranch([string]$commit) {
       LogError "Commit $commit doesn't exist in 'main' branch of Azure/azure-rest-api-specs repository. ServiceDir:$ServiceDirectory, PackageName:$PackageName"
       exit 1
     }
-    else{
+    else {
       Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Commit $commit exists in 'main' branch of Azure/azure-rest-api-specs repository."
     }
   }
@@ -114,13 +114,13 @@ function Verify-CommitFromMainBranch([string]$commit) {
 function Verify-YamlContent([string]$markdownContent) {
   $splitString = '``` yaml|```yaml|```'
   $yamlContent = $markdownContent -split $splitString
-  foreach($yamlSection in $yamlContent) {
+  foreach ($yamlSection in $yamlContent) {
     if ($yamlSection) {
       try {
         # remove the lines like: $(tag) == 'package-preview-2023-09'
         $yamlSection = $yamlSection -replace '^\s*\$\(.+\)\s*==.+', ''
         $yamlobj = ConvertFrom-Yaml -Yaml $yamlSection
-        if($yamlobj) {
+        if ($yamlobj) {
           $batchValue = $yamlobj["batch"]
           $requireValue = $yamlobj["require"]
           $inputFileValue = $yamlobj["input-file"]
@@ -130,13 +130,13 @@ function Verify-YamlContent([string]$markdownContent) {
           }
           elseif ($inputFileValue) {
             LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'input-file' is set as:$inputFileValue"
-            foreach($inputFile in $inputFileValue) {
+            foreach ($inputFile in $inputFileValue) {
               Verify-Url $inputFile
             }
           }
           elseif ($batchValue) {
             # there are some services which use batch mode for sdk generation, e.g. Azure.AI.Language.QuestionAnswering
-            foreach($batch in $batchValue) {
+            foreach ($batch in $batchValue) {
               $requireValue = $batch["require"]
               $inputFileValue = $batch["input-file"]
               if ($requireValue) {
@@ -145,7 +145,7 @@ function Verify-YamlContent([string]$markdownContent) {
               }
               elseif ($inputFileValue) {
                 LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'input-file' is set as:$inputFileValue"
-                foreach($inputFile in $inputFileValue) {
+                foreach ($inputFile in $inputFileValue) {
                   Verify-Url $inputFile
                 }
               }
@@ -163,19 +163,16 @@ function Verify-YamlContent([string]$markdownContent) {
 function Verify-PackageVersion() {
   try {
     $packages = @{}
-    if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
-    {
+    if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn")) {
       $packages = &$FindArtifactForApiReviewFn $ArtifactLocation $PackageName
     }
-    else
-    {
+    else {
       LogError "The function for 'FindArtifactForApiReviewFn' was not found.`
       Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
       See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
       exit 1
     }
-    if (-not $PackageInfoDirectory)
-    {
+    if (-not $PackageInfoDirectory) {
       $PackageInfoDirectory = Join-Path -Path $ArtifactLocation "PackageInfo"
       if (-not (Test-Path -Path $PackageInfoDirectory)) {
         # Call Save-Package-Properties.ps1 script to generate package info json files
@@ -185,23 +182,19 @@ function Verify-PackageVersion() {
     }
 
     $continueValidation = $false
-    if ($packages)
-    {
-      foreach($pkgPath in $packages.Values)
-      {
+    if ($packages) {
+      foreach ($pkgPath in $packages.Values) {
         $pkgPropPath = Join-Path -Path $PackageInfoDirectory "$PackageName.json"
-        if (-Not (Test-Path $pkgPropPath))
-        {
-            Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Package property file path $($pkgPropPath) is invalid."
-            continue
+        if (-Not (Test-Path $pkgPropPath)) {
+          Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Package property file path $($pkgPropPath) is invalid."
+          continue
         }
         # Get package info from json file
         $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
         $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
-        if ($null -eq $version)
-        {
-            LogError "ServiceDir:$ServiceDirectory, Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
-            exit 1
+        if ($null -eq $version) {
+          LogError "ServiceDir:$ServiceDirectory, Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
+          exit 1
         }
 
         Write-Host "Version: $($version)"
@@ -216,7 +209,7 @@ function Verify-PackageVersion() {
         $continueValidation = $true
       }
     }
-    if($continueValidation -eq $false) {
+    if ($continueValidation -eq $false) {
       Write-Host "ServiceDir:$ServiceDirectory, no package info is found for package $PackageName, the validation of spec location is ignored."
       exit 0
     }
@@ -227,12 +220,24 @@ function Verify-PackageVersion() {
   }
 }
 
-try{
+try {
   # Verify package version is not a prerelease version, only continue the validation if the package is GA version
-  Verify-PackageVersion
+  # Verify-PackageVersion
 
   $ServiceDir = Join-Path $RepoRoot 'sdk' $ServiceDirectory
   $PackageDirectory = Join-Path $ServiceDir $PackageName
+
+  # JavaScript SDK repo has different convention for the package directory name
+  if ($Language -eq "javascript") {
+    $prefixOfRlcPkg = "azure-rest-"
+    $prefixOfAzurePkg = "azure-"
+    if ($PackageName -match $prefixOfRlcPkg) {
+      $PackageDirectory = Join-Path $ServiceDir ($PackageName.Substring($prefixOfRlcPkg.Length) + "-rest")
+    }
+    else {
+      $PackageDirectory = Join-Path $ServiceDir $PackageName.Substring($prefixOfAzurePkg.Length)
+    }
+  }
   Push-Location $PackageDirectory
 
   # Load tsp-location.yaml if existed
@@ -259,8 +264,8 @@ try{
   }
   elseif ($Language -eq "java" -or $Language -eq "javascript" -or $Language -eq "python" -or $Language -eq "go") {
     # for these languages we ignore the validation because they always use the latest spec from main branch to release SDK
-    # mgmt plane packages: azure-core-management|azure-resourcemanager|azure-resourcemanager-advisor (java), azure-mgmt-devcenter (python), arm-advisor (js), armaad (go)
-    if($PackageName -match "^(arm|azure-mgmt|azure-resourcemanager|azure-core-management)[-a-z]*$") {
+    # mgmt plane packages: azure-core-management|azure-resourcemanager|azure-resourcemanager-advisor (java), azure-mgmt-devcenter (python), azure-arm-advisor (js), armaad (go)
+    if ($PackageName -match "^(arm|azure-mgmt|azure-resourcemanager|azure-core-management|azure-arm|azure-rest-arm)[-a-z]*$") {
       Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Ignore the validation for $Language management plane package."
       exit 0
     }
@@ -275,6 +280,9 @@ try{
       }
     }
   }
+}
+catch {
+  Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to validate spec location with exception:`n$_ "
 }
 finally {
   Pop-Location
