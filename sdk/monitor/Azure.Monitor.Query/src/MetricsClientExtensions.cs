@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Metrics Batch Query Extension methods
+    /// Metrics Client Extension methods
     /// </summary>
-    internal static partial class MetricsBatchExtensions
+    internal static partial class MetricsClientExtensions
     {
         /// <summary>
         /// Join a collection of strings into a single comma separated string.
@@ -21,6 +22,24 @@ namespace Azure.Monitor.Query
         /// <returns>The items joined together by commas.</returns>
         internal static string CommaJoin(this IEnumerable<string> items) =>
             items != null && items.Any() ? string.Join(",", items) : null;
+
+        internal static string CommaJoin(IEnumerable<MetricAggregationType> aggregations)
+        {
+            string result = "";
+            if (aggregations == null)
+            {
+                return result;
+            }
+            for (int i = 0; i < aggregations.Count(); i++)
+            {
+                result += aggregations.ElementAt(i).ToString();
+                if (i < aggregations.Count() - 1)
+                {
+                    result += ",";
+                }
+            }
+            return result;
+        }
 
         /// <summary>
         /// Split a collection of strings by commas.

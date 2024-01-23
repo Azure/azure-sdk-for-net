@@ -73,8 +73,8 @@ namespace Azure.Monitor.Query
         [CodeGenMember("RollUpBy")]
         internal string RollUpByRaw
         {
-            get => MetricsBatchExtensions.CommaJoin(RollUpBy);
-            set => RollUpBy = MetricsBatchExtensions.CommaSplit(value);
+            get => MetricsClientExtensions.CommaJoin(RollUpBy);
+            set => RollUpBy = MetricsClientExtensions.CommaSplit(value);
         }
 
         /// <summary>

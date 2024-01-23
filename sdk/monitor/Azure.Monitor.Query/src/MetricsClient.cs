@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class MetricsClient
     {
-        private readonly MetricsBatchRestClient _metricBatchClient;
+        private readonly MetricsBatchRestClient _metricClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.Monitor.Query
             var pipeline = HttpPipelineBuilder.Build(options,
                 new BearerTokenAuthenticationPolicy(credential, scope));
 
-            _metricBatchClient = new MetricsBatchRestClient(_clientDiagnostics, pipeline, endpoint);
+            _metricClient = new MetricsBatchRestClient(_clientDiagnostics, pipeline, endpoint);
         }
 
         /// <summary>
@@ -140,9 +140,12 @@ namespace Azure.Monitor.Query
 
             if (options != null)
             {
-                startTime = options.TimeRange.Value.Start.ToString();
-                endTime = options.TimeRange.Value.End.ToString();
-                aggregations = options.Aggregations.ToString();
+                if (options.TimeRange != null)
+                {
+                    startTime = options.TimeRange.Value.Start.ToString();
+                    endTime = options.TimeRange.Value.End.ToString();
+                }
+                aggregations = MetricsClientExtensions.CommaJoin(options.Aggregations);
                 top = options.Size;
                 orderBy = options.OrderBy;
                 filter = options.Filter;
@@ -152,7 +155,7 @@ namespace Azure.Monitor.Query
 
             if (!isAsync)
             {
-                return _metricBatchClient.Batch(
+                return _metricClient.Batch(
                     subscriptionId,
                     metricNamespace,
                     metricNames,
@@ -164,13 +167,13 @@ namespace Azure.Monitor.Query
                     top,
                     orderBy,
                     filter,
-                    MetricsBatchExtensions.CommaJoin(rollUpBy),
+                    MetricsClientExtensions.CommaJoin(rollUpBy),
                     cancellationToken);
             }
 
             else
             {
-                return await _metricBatchClient.BatchAsync(
+                return await _metricClient.BatchAsync(
                     subscriptionId,
                     metricNamespace,
                     metricNames,
@@ -182,7 +185,7 @@ namespace Azure.Monitor.Query
                     top,
                     orderBy,
                     filter,
-                    MetricsBatchExtensions.CommaJoin(rollUpBy),
+                    MetricsClientExtensions.CommaJoin(rollUpBy),
                     cancellationToken).ConfigureAwait(false);
             }
         }
