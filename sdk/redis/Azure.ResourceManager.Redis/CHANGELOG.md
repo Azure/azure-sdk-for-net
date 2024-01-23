@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0 (2024-01-23)
 
 ### Other Changes
+
+- Mark prerelease Azure.ResourceManager.Redis 1.3.0-beta.1 for release
 
 ## 1.3.0-beta.1 (2023-12-15)
 
