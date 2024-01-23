@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -23,11 +24,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Server edition name. </param>
         /// <param name="defaultSkuName"> Default sku name for the server edition. </param>
         /// <param name="supportedStorageEditions"> The list of editions supported by this server edition. </param>
         /// <param name="supportedServerSkus"> List of supported server SKUs. </param>
-        internal PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, string defaultSkuName, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus) : base(capabilityStatus, reason)
+        internal PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string defaultSkuName, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
             DefaultSkuName = defaultSkuName;

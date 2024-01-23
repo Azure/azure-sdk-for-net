@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    [PersistableModelProxy(typeof(UnknownServerPropertiesForCreate))]
-    public partial class PostgreSqlServerPropertiesForCreate : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerPropertiesForCreate>
+    internal partial class UnknownServerPropertiesForCreate : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerPropertiesForCreate>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerPropertiesForCreate>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
+            return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
         }
 
-        internal static PostgreSqlServerPropertiesForCreate DeserializePostgreSqlServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownServerPropertiesForCreate DeserializeUnknownServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -96,17 +96,83 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("createMode", out JsonElement discriminator))
+            Optional<PostgreSqlServerVersion> version = default;
+            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
+            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
+            Optional<PostgreSqlInfrastructureEncryption> infrastructureEncryption = default;
+            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
+            Optional<PostgreSqlStorageProfile> storageProfile = default;
+            PostgreSqlCreateMode createMode = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("version"u8))
                 {
-                    case "Default": return PostgreSqlServerPropertiesForDefaultCreate.DeserializePostgreSqlServerPropertiesForDefaultCreate(element);
-                    case "GeoRestore": return PostgreSqlServerPropertiesForGeoRestore.DeserializePostgreSqlServerPropertiesForGeoRestore(element);
-                    case "PointInTimeRestore": return PostgreSqlServerPropertiesForRestore.DeserializePostgreSqlServerPropertiesForRestore(element);
-                    case "Replica": return PostgreSqlServerPropertiesForReplica.DeserializePostgreSqlServerPropertiesForReplica(element);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = new PostgreSqlServerVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sslEnforcement = property.Value.GetString().ToPostgreSqlSslEnforcementEnum();
+                    continue;
+                }
+                if (property.NameEquals("minimalTlsVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimalTlsVersion = new PostgreSqlMinimalTlsVersionEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("infrastructureEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    infrastructureEncryption = new PostgreSqlInfrastructureEncryption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new PostgreSqlPublicNetworkAccessEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new PostgreSqlCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownServerPropertiesForCreate.DeserializeUnknownServerPropertiesForCreate(element);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownServerPropertiesForCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)
@@ -131,7 +197,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
+                        return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
