@@ -62,7 +62,7 @@ public partial class ChatCompletionsFunctionToolCall : ChatCompletionsToolCall
     /// <param name="type"> The object type. </param>
     /// <param name="id"> The ID of the tool call. </param>
     /// <param name="function"> The details of the function invocation requested by the tool call. </param>
-    internal ChatCompletionsFunctionToolCall(string type, string id, FunctionCall function) : base(type, id)
+    internal ChatCompletionsFunctionToolCall(string type, string id, FunctionCall function) : base(type, id, null)
     {
         Type = "function";
         Function = function;

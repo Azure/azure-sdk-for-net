@@ -23,7 +23,8 @@ public partial class AudioTranscription
                 internalAudioTaskLabel: null,
                 language: null,
                 duration: default,
-                segments: new ChangeTrackingList<AudioTranscriptionSegment>());
+                segments: new ChangeTrackingList<AudioTranscriptionSegment>(),
+                serializedAdditionalRawData: null);
         }
         else
         {

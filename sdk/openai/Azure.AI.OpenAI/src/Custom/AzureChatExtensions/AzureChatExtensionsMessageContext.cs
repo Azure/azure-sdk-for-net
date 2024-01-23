@@ -22,7 +22,7 @@ public partial class AzureChatExtensionsMessageContext
         IReadOnlyList<ChatResponseMessage> messages,
         ContentFilterResultsForPrompt requestContentFilterResults,
         ContentFilterResultsForChoice responseContentFilterResults)
-        : this(messages)
+        : this(messages, serializedAdditionalRawData: null)
     {
         RequestContentFilterResults = requestContentFilterResults;
         ResponseContentFilterResults = responseContentFilterResults;

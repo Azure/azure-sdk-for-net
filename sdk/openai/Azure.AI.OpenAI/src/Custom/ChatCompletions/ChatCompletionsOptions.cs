@@ -152,7 +152,8 @@ public partial class ChatCompletionsOptions
     ///
     ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
     /// </remarks>
-    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases))]
+    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases),
+                                     DeserializationValueHook = nameof(DeserializeTokenSelectionBiases))]
     public IDictionary<int, int> TokenSelectionBiases { get; }
 
     /// <summary> A list of functions the model may generate JSON inputs for. </summary>
@@ -273,5 +274,21 @@ public partial class ChatCompletionsOptions
             writer.WriteNumberValue(item.Value);
         }
         writer.WriteEndObject();
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void DeserializeTokenSelectionBiases(JsonProperty property, ref Optional<IDictionary<int, int>> propertyValue)
+    {
+        if (property.Value.ValueKind == JsonValueKind.Null)
+        {
+            propertyValue = default;
+            return;
+        }
+        var dictionary = new Dictionary<int, int>();
+        foreach (var item in property.Value.EnumerateObject())
+        {
+            dictionary.Add(int.Parse(item.Name), item.Value.GetInt32());
+        }
+        propertyValue = dictionary;
     }
 }

@@ -18,7 +18,7 @@ public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConf
 
     /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionConfiguration"/>. </summary>
     public PineconeChatExtensionConfiguration()
-        : this(AzureChatExtensionType.Pinecone, new PineconeChatExtensionParameters())
+        : this(AzureChatExtensionType.Pinecone, null, new PineconeChatExtensionParameters())
     { }
 
     internal PineconeChatExtensionParameters Parameters { get; }
@@ -75,6 +75,5 @@ public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConf
     public OnYourDataVectorizationSource VectorizationSource
     {
         get => Parameters.EmbeddingDependency;
-        set => Parameters.EmbeddingDependency = value;
     }
 }

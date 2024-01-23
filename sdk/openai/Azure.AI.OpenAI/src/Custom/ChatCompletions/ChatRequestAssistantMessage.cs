@@ -21,6 +21,7 @@ public partial class ChatRequestAssistantMessage
     public ChatRequestAssistantMessage(ChatResponseMessage responseMessage)
         : this(
               responseMessage.Role,
+              serializedAdditionalRawData: null,
               responseMessage.Content,
               name: null,
               new ChangeTrackingList<ChatCompletionsToolCall>(),

@@ -19,7 +19,7 @@ public partial class AzureCognitiveSearchChatExtensionConfiguration : AzureChatE
 
     /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
     public AzureCognitiveSearchChatExtensionConfiguration()
-        : this(AzureChatExtensionType.AzureCognitiveSearch, new AzureCognitiveSearchChatExtensionParameters())
+        : this(AzureChatExtensionType.AzureCognitiveSearch, serializedAdditionalRawData: null, new AzureCognitiveSearchChatExtensionParameters())
     { }
 
     internal AzureCognitiveSearchChatExtensionParameters Parameters { get; }

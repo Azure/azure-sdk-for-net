@@ -15,7 +15,7 @@ public partial class ChatCompletionsFunctionToolDefinition : ChatCompletionsTool
 
     /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/>. </summary>
     public ChatCompletionsFunctionToolDefinition()
-        : this(type: "function", new FunctionDefinition())
+        : this(type: "function", null, new FunctionDefinition())
     {}
 
     /// <inheritdoc cref="FunctionDefinition.Name"/>
