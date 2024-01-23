@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageReprotectContent : IUtf8JsonSerializable
+    public partial class InMageReprotectContent : IUtf8JsonSerializable, IJsonModel<InMageReprotectContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageReprotectContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageReprotectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("masterTargetId"u8);
             writer.WriteStringValue(MasterTargetId);
@@ -50,7 +61,153 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        InMageReprotectContent IJsonModel<InMageReprotectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageReprotectContent(document.RootElement, options);
+        }
+
+        internal static InMageReprotectContent DeserializeInMageReprotectContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string masterTargetId = default;
+            Guid processServerId = default;
+            string retentionDrive = default;
+            Optional<string> runAsAccountId = default;
+            Optional<string> datastoreName = default;
+            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string profileId = default;
+            Optional<IList<string>> disksToInclude = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("masterTargetId"u8))
+                {
+                    masterTargetId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("processServerId"u8))
+                {
+                    processServerId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("retentionDrive"u8))
+                {
+                    retentionDrive = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("runAsAccountId"u8))
+                {
+                    runAsAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("datastoreName"u8))
+                {
+                    datastoreName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("diskExclusionInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("profileId"u8))
+                {
+                    profileId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("disksToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    disksToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageReprotectContent(instanceType, serializedAdditionalRawData, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, datastoreName.Value, diskExclusionContent.Value, profileId, Optional.ToList(disksToInclude));
+        }
+
+        BinaryData IPersistableModel<InMageReprotectContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InMageReprotectContent IPersistableModel<InMageReprotectContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageReprotectContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageReprotectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

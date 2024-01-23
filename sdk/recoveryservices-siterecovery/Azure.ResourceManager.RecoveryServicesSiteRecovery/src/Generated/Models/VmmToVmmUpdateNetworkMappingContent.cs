@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Update network mappings input properties/behavior specific to vmm to vmm. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="VmmToVmmUpdateNetworkMappingContent"/>. </summary>
         /// <param name="instanceType"> The instance type. </param>
-        internal VmmToVmmUpdateNetworkMappingContent(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmmToVmmUpdateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "VmmToVmm";
         }
