@@ -48,6 +48,8 @@ if (-not $GitHubPat) {
   exit 1
 }
 
+Write-Host "The spec used to release SDK should be from the main branch of Azure/azure-rest-api-specs repository."
+Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName, ArtifactLocation:$ArtifactLocation, PackageInfoDirectory:$PackageInfoDirectory."
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 # This function is used to verify the 'require' and 'input-file' settings in autorest.md point to the main branch of Azure/azure-rest-api-specs repository
@@ -55,50 +57,50 @@ Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 # https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/purview/data-plane/Azure.Analytics.Purview.MetadataPolicies/preview/2021-07-01-preview/purviewMetadataPolicy.json
 # or 
 # https://github.com/Azure/azure-rest-api-specs/blob/0ebd4949e8e1cd9537ca5a07384c7661162cc7a6/specification/purview/data-plane/Azure.Analytics.Purview.Account/preview/2019-11-01-preview/account.json
-function Verify-Url([string]$fileUrl) {
+function Verify-Url([string]$fileUrl, [string]$configFilePath) {
   if ($fileUrl -match "^https://(raw\.githubusercontent\.com|github\.com)/(?<repo>[^/]*/azure-rest-api-specs)(/(blob|tree))?/(?<commit>[^\/]+(\/[^\/]+)*|[0-9a-f]{40})/(?<path>specification/.*)") {
     $repo = $matches['repo']
     $commit = $matches['commit']
     if ($repo -ne "Azure/azure-rest-api-specs") {
-      LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid repo in the file url: $fileUrl. Repo should be 'Azure/azure-rest-api-specs'."
+      LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid repo in the file url: $fileUrl. Repo should be 'Azure/azure-rest-api-specs' in the config file:$configFilePath."
       exit 1
     }
     # check the commit hash belongs to main branch
-    Verify-CommitFromMainBranch $commit
+    Verify-CommitFromMainBranch $commit $configFilePath
   }
   else {
-    LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid file url: $fileUrl"
+    LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid file url: $fileUrl in the config file:$configFilePath. The spec location should point to the main branch of Azure/azure-rest-api-specs repository."
     exit 1
   }
 }
 
 # This function is used to verify the 'repo' and 'commit' settings in tsp-location.yaml point to the main branch of Azure/azure-rest-api-specs repository
-function Verify-TspLocation([System.Object]$tspLocationObj) {
+function Verify-TspLocation([System.Object]$tspLocationObj, [string]$tspLocationYamlPath) {
   $repo = $tspLocationObj["repo"]
   $commit = $tspLocationObj["commit"]
   if ($repo -ne "Azure/azure-rest-api-specs") {
-    LogError "Invalid repo setting in the tsp-location.yaml: $repo. Repo should be 'Azure/azure-rest-api-specs'. ServiceDir:$ServiceDirectory, PackageName:$PackageName"
+    LogError "Invalid repo setting in the tsp-location.yaml: $repo. Repo should be 'Azure/azure-rest-api-specs'. ServiceDir:$ServiceDirectory, PackageName:$PackageName, tsp-location.yaml path:$tspLocationYamlPath."
     exit 1
   }
 
   # check the commit hash belongs to main branch
-  Verify-CommitFromMainBranch $commit
+  Verify-CommitFromMainBranch $commit $tspLocationYamlPath
 }
 
 # This function is used to verify the specific 'commit' belongs to the main branch of Azure/azure-rest-api-specs repository
-function Verify-CommitFromMainBranch([string]$commit) {
+function Verify-CommitFromMainBranch([string]$commit, [string]$configFilePath) {
   if ($commit -notmatch "^[0-9a-f]{40}$" -and $commit -ne "main") {
-    LogError "Invalid commit hash or branch name: $commit. Branch name should be 'main' or the commit should be a 40-character SHA-1 hash. ServiceDir:$ServiceDirectory, PackageName:$PackageName"
+    LogError "Invalid commit hash or branch name: $commit. Branch name should be 'main' or the commit should be a 40-character SHA-1 hash. ServiceDir:$ServiceDirectory, PackageName:$PackageName, please check the config file:$configFilePath."
     exit 1
   }
   if ($commit -eq "main") {
-    Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Branch is $commit branch of Azure/azure-rest-api-specs repository."
+    Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName, Config file:$configFilePath. Branch is $commit branch of Azure/azure-rest-api-specs repository."
     return
   }
   try {
     $searchResult = Search-GitHubCommit -AuthToken $GitHubPat -CommitHash $commit -RepoOwner "Azure" -RepoName "azure-rest-api-specs"
     if ($searchResult.total_count -lt 1) {
-      LogError "Commit $commit doesn't exist in 'main' branch of Azure/azure-rest-api-specs repository. ServiceDir:$ServiceDirectory, PackageName:$PackageName"
+      LogError "Commit $commit doesn't exist in 'main' branch of Azure/azure-rest-api-specs repository. ServiceDir:$ServiceDirectory, PackageName:$PackageName, please check the config file:$configFilePath. The spec used to release SDK should be from the main branch of Azure/azure-rest-api-specs repository."
       exit 1
     }
     else {
@@ -106,12 +108,12 @@ function Verify-CommitFromMainBranch([string]$commit) {
     }
   }
   catch {
-    LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to search commit $commit with exception:`n$_ "
+    LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName, Config file:$configFilePath. The spec used to release SDK should be from the main branch of Azure/azure-rest-api-specs repository. Failed to search commit $commit with exception:`n$_ "
     exit 1
   }
 }
 
-function Verify-YamlContent([string]$markdownContent) {
+function Verify-YamlContent([string]$markdownContent, [string]$configFilePath) {
   $splitString = '``` yaml|```yaml|```'
   $yamlContent = $markdownContent -split $splitString
   foreach ($yamlSection in $yamlContent) {
@@ -125,13 +127,13 @@ function Verify-YamlContent([string]$markdownContent) {
           $requireValue = $yamlobj["require"]
           $inputFileValue = $yamlobj["input-file"]
           if ($requireValue) {
-            LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'require' is set as:$requireValue"
-            Verify-Url $requireValue
+            LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName, Config file:$configFilePath. 'require' is set as:$requireValue"
+            Verify-Url $requireValue $configFilePath
           }
           elseif ($inputFileValue) {
-            LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'input-file' is set as:$inputFileValue"
+            LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName, Config file:$configFilePath. 'input-file' is set as:$inputFileValue"
             foreach ($inputFile in $inputFileValue) {
-              Verify-Url $inputFile
+              Verify-Url $inputFile $configFilePath
             }
           }
           elseif ($batchValue) {
@@ -140,13 +142,13 @@ function Verify-YamlContent([string]$markdownContent) {
               $requireValue = $batch["require"]
               $inputFileValue = $batch["input-file"]
               if ($requireValue) {
-                LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'require' is set as:$requireValue"
-                Verify-Url $requireValue
+                LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName, Config file:$configFilePath. 'require' is set as:$requireValue"
+                Verify-Url $requireValue $configFilePath
               }
               elseif ($inputFileValue) {
-                LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName. 'input-file' is set as:$inputFileValue"
+                LogDebug "ServiceDir:$ServiceDirectory, PackageName:$PackageName, Config file:$configFilePath. 'input-file' is set as:$inputFileValue"
                 foreach ($inputFile in $inputFileValue) {
-                  Verify-Url $inputFile
+                  Verify-Url $inputFile $configFilePath
                 }
               }
             }
@@ -248,17 +250,17 @@ try {
   if (Test-Path -Path $tspLocationYamlPath) {
     # typespec scenario
     $tspLocationYaml = Get-Content -Path $tspLocationYamlPath -Raw | ConvertFrom-Yaml
-    Verify-TspLocation $tspLocationYaml
+    Verify-TspLocation $tspLocationYaml $tspLocationYamlPath
   }
   elseif ($Language -eq "dotnet") {
     # only dotnet language sdk uses 'autorest.md' to configure the sdk generation
     if (Test-Path -Path $autorestMdPath) {
       try {
         $autorestMdContent = Get-Content -Path $autorestMdPath -Raw
-        Verify-YamlContent $autorestMdContent
+        Verify-YamlContent $autorestMdContent $autorestMdPath
       }
       catch {
-        Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse autorest.md file with exception:`n$_ "
+        Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse autorest.md file:$autorestMdPath with exception:`n$_ "
       }
     }
   }
@@ -273,16 +275,16 @@ try {
     if (Test-Path -Path $swaggerReadmePath) {
       try {
         $swaggerReadmeContent = Get-Content -Path $swaggerReadmePath -Raw
-        Verify-YamlContent $swaggerReadmeContent
+        Verify-YamlContent $swaggerReadmeContent $swaggerReadmePath
       }
       catch {
-        Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse swagger/readme.md file with exception:`n$_ "
+        Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse swagger/readme.md file:$swaggerReadmePath with exception:`n$_ "
       }
     }
   }
 }
 catch {
-  Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to validate spec location with exception:`n$_ "
+  Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName, PackageDirectory:$PackageDirectory. Failed to validate spec location with exception:`n$_ "
 }
 finally {
   Pop-Location
