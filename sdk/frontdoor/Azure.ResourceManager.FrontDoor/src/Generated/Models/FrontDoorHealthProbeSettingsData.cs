@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Load balancing settings for a backend pool. </summary>
     public partial class FrontDoorHealthProbeSettingsData : FrontDoorResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorHealthProbeSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorHealthProbeSettingsData"/>. </summary>
         public FrontDoorHealthProbeSettingsData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorHealthProbeSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorHealthProbeSettingsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

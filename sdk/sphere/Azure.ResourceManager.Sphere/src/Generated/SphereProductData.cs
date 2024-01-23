@@ -14,43 +14,30 @@ namespace Azure.ResourceManager.Sphere
     /// <summary>
     /// A class representing the SphereProduct data model.
     /// An product resource belonging to a catalog resource.
-    /// Serialized Name: Product
     /// </summary>
     public partial class SphereProductData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereProductData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductData"/>. </summary>
         public SphereProductData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereProductData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// Description of the product
-        /// Serialized Name: Product.properties.description
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: Product.properties.provisioningState
-        /// </param>
+        /// <param name="description"> Description of the product. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         internal SphereProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// Description of the product
-        /// Serialized Name: Product.properties.description
-        /// </summary>
+        /// <summary> Description of the product. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: Product.properties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public SphereProvisioningState? ProvisioningState { get; }
     }
 }

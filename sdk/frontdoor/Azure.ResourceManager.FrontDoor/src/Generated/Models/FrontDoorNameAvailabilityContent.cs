@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Input of CheckNameAvailability API. </summary>
     public partial class FrontDoorNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of FrontDoorNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
         /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The security profile which contains Ssh public key for the HDInsight cluster. </summary>
     public partial class HDInsightSecurityProfile
     {
-        /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         public HDInsightSecurityProfile()
         {
             LdapUris = new ChangeTrackingList<Uri>();
             ClusterUsersGroupDNs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         /// <param name="directoryType"> The directory type. </param>
         /// <param name="domain"> The organization's active directory domain. </param>
         /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -18,14 +19,46 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class WebTestData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WebTestData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebTestData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WebTestData(AzureLocation location) : base(location)
         {
             Locations = new ChangeTrackingList<WebTestGeolocation>();
         }
 
-        /// <summary> Initializes a new instance of WebTestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +79,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <param name="request"> The collection of request properties. </param>
         /// <param name="validationRules"> The collection of validation rule properties. </param>
-        internal WebTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebTestKind? kind, string syntheticMonitorId, string webTestName, string description, bool? isEnabled, int? frequencyInSeconds, int? timeoutInSeconds, WebTestKind? webTestKind, bool? isRetryEnabled, IList<WebTestGeolocation> locations, WebTestPropertiesConfiguration configuration, string provisioningState, WebTestPropertiesRequest request, WebTestPropertiesValidationRules validationRules) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebTestKind? kind, string syntheticMonitorId, string webTestName, string description, bool? isEnabled, int? frequencyInSeconds, int? timeoutInSeconds, WebTestKind? webTestKind, bool? isRetryEnabled, IList<WebTestGeolocation> locations, WebTestPropertiesConfiguration configuration, string provisioningState, WebTestPropertiesRequest request, WebTestPropertiesValidationRules validationRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             SyntheticMonitorId = syntheticMonitorId;
@@ -62,6 +96,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             ProvisioningState = provisioningState;
             Request = request;
             ValidationRules = validationRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebTestData"/> for deserialization. </summary>
+        internal WebTestData()
+        {
         }
 
         /// <summary> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </summary>

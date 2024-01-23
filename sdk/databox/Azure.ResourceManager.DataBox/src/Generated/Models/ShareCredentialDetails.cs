@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Credential details of the shares in account. </summary>
     public partial class ShareCredentialDetails
     {
-        /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareCredentialDetails"/>. </summary>
         internal ShareCredentialDetails()
         {
             SupportedAccessProtocols = new ChangeTrackingList<DataBoxAccessProtocol>();
         }
 
-        /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareCredentialDetails"/>. </summary>
         /// <param name="shareName"> Name of the share. </param>
         /// <param name="shareType"> Type of the share. </param>
         /// <param name="userName"> User name for the share. </param>
         /// <param name="password"> Password for the share. </param>
         /// <param name="supportedAccessProtocols"> Access protocols supported on the device. </param>
-        internal ShareCredentialDetails(string shareName, ShareDestinationFormatType? shareType, string userName, string password, IReadOnlyList<DataBoxAccessProtocol> supportedAccessProtocols)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareCredentialDetails(string shareName, ShareDestinationFormatType? shareType, string userName, string password, IReadOnlyList<DataBoxAccessProtocol> supportedAccessProtocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShareName = shareName;
             ShareType = shareType;
             UserName = userName;
             Password = password;
             SupportedAccessProtocols = supportedAccessProtocols;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the share. </summary>

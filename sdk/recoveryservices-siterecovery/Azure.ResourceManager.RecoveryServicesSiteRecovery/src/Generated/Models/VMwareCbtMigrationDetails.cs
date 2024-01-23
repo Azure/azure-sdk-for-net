@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt provider specific settings. </summary>
     public partial class VMwareCbtMigrationDetails : MigrationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrationDetails"/>. </summary>
         internal VMwareCbtMigrationDetails()
         {
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the instance type. </param>
         /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>

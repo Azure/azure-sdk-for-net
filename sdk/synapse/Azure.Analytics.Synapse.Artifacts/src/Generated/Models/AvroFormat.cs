@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The data stored in Avro format. </summary>
     public partial class AvroFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of AvroFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroFormat"/>. </summary>
         public AvroFormat()
         {
             Type = "AvroFormat";
         }
 
-        /// <summary> Initializes a new instance of AvroFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroFormat"/>. </summary>
         /// <param name="type"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>

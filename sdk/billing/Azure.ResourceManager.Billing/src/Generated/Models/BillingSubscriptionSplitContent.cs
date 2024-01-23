@@ -6,15 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request to split a billing subscription. </summary>
     public partial class BillingSubscriptionSplitContent
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionSplitContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionSplitContent"/>. </summary>
         public BillingSubscriptionSplitContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionSplitContent"/>. </summary>
+        /// <param name="billingFrequency"> The billing frequency of the target subscription in the ISO8601 format. Example: P1M, P3M, P1Y. </param>
+        /// <param name="quantity"> The quantity of the target product to which the subscription needs to be split into. </param>
+        /// <param name="targetProductTypeId"> The ID of the target product to which the subscription needs to be split into. This value is not same as the value returned in Get API call and can be retrieved from Catalog API to know the product id to split into. </param>
+        /// <param name="targetSkuId"> The ID of the target product to which the subscription needs to be split into. This value is not same as the value returned in Get API call and can be retrieved from Catalog API to know the sku id to split into. </param>
+        /// <param name="termDuration"> The term duration of the target in ISO8601 format product to which the subscription needs to be split into. Example: P1M, P1Y. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionSplitContent(string billingFrequency, int? quantity, string targetProductTypeId, string targetSkuId, TimeSpan? termDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BillingFrequency = billingFrequency;
+            Quantity = quantity;
+            TargetProductTypeId = targetProductTypeId;
+            TargetSkuId = targetSkuId;
+            TermDuration = termDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The billing frequency of the target subscription in the ISO8601 format. Example: P1M, P3M, P1Y. </summary>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> An Azure Machine Learning compute instance. </summary>
     public partial class MachineLearningComputeInstance : MachineLearningComputeProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstance"/>. </summary>
         public MachineLearningComputeInstance()
         {
             ComputeType = ComputeType.ComputeInstance;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstance"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

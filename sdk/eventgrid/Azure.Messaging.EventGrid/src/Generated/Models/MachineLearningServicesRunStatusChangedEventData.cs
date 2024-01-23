@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
     public partial class MachineLearningServicesRunStatusChangedEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesRunStatusChangedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
         internal MachineLearningServicesRunStatusChangedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesRunStatusChangedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
         /// <param name="experimentId"> The ID of the experiment that the Machine Learning Run belongs to. </param>
         /// <param name="experimentName"> The name of the experiment that the Machine Learning Run belongs to. </param>
         /// <param name="runId"> The ID of the Machine Learning Run. </param>

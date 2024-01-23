@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Deleted Backup Instance. </summary>
     public partial class DeletedDataProtectionBackupInstanceProperties : DataProtectionBackupInstanceProperties
     {
-        /// <summary> Initializes a new instance of DeletedDataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
         /// <param name="objectType"></param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(objectType, nameof(objectType));
         }
 
-        /// <summary> Initializes a new instance of DeletedDataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>

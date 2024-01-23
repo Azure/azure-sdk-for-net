@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure template artifact profile properties. </summary>
     public partial class AzureCoreArmTemplateArtifactProfile : ArtifactProfile
     {
-        /// <summary> Initializes a new instance of AzureCoreArmTemplateArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateArtifactProfile"/>. </summary>
         public AzureCoreArmTemplateArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureCoreArmTemplateArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
         /// <param name="templateArtifactProfile"> Template artifact profile. </param>
         internal AzureCoreArmTemplateArtifactProfile(WritableSubResource artifactStore, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore)

@@ -12,9 +12,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for test failover input properties. </summary>
     public partial class TestFailoverProperties
     {
-        /// <summary> Initializes a new instance of TestFailoverProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestFailoverProperties"/>. </summary>
         public TestFailoverProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TestFailoverProperties"/>. </summary>
+        /// <param name="failoverDirection"> Test failover direction. </param>
+        /// <param name="networkType"> Network type to be used for test failover. </param>
+        /// <param name="networkId"> The id of the network to be used for test failover. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific settings.
+        /// Please note <see cref="TestFailoverProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2ATestFailoverContent"/>, <see cref="HyperVReplicaAzureTestFailoverContent"/>, <see cref="InMageTestFailoverContent"/>, <see cref="InMageAzureV2TestFailoverContent"/> and <see cref="InMageRcmTestFailoverContent"/>.
+        /// </param>
+        internal TestFailoverProperties(string failoverDirection, string networkType, ResourceIdentifier networkId, TestFailoverProviderSpecificContent providerSpecificDetails)
+        {
+            FailoverDirection = failoverDirection;
+            NetworkType = networkType;
+            NetworkId = networkId;
+            ProviderSpecificDetails = providerSpecificDetails;
         }
 
         /// <summary> Test failover direction. </summary>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> The set of keys which can be used to access the Maps REST APIs. Two keys are provided for key rotation without interruption. </summary>
     public partial class MapsAccountKeys
     {
-        /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountKeys"/>. </summary>
         internal MapsAccountKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountKeys"/>. </summary>
         /// <param name="primaryKeyLastUpdatedOn"> The last updated date and time of the primary key. </param>
         /// <param name="primaryKey"> The primary key for accessing the Maps REST APIs. </param>
         /// <param name="secondaryKey"> The secondary key for accessing the Maps REST APIs. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevSpaces
     /// <summary> A class representing the Controller data model. </summary>
     public partial class ControllerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControllerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Model representing SKU for Azure Dev Spaces Controller. </param>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevSpaces
             TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
         }
 
-        /// <summary> Initializes a new instance of ControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

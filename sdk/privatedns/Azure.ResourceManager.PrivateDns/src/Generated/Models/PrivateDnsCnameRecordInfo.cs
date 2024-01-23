@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> A CNAME record. </summary>
     internal partial class PrivateDnsCnameRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsCnameRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsCnameRecordInfo"/>. </summary>
         public PrivateDnsCnameRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsCnameRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsCnameRecordInfo"/>. </summary>
         /// <param name="cname"> The canonical name for this CNAME record. </param>
         internal PrivateDnsCnameRecordInfo(string cname)
         {

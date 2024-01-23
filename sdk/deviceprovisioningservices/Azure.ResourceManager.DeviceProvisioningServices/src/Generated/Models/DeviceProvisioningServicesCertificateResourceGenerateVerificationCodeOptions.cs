@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions. </summary>
     public partial class DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions"/>. </summary>
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions(string ifMatch)

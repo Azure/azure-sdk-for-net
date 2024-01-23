@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,19 +16,20 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Legacy charge summary. </summary>
     public partial class ConsumptionLegacyChargeSummary : ConsumptionChargeSummary
     {
-        /// <summary> Initializes a new instance of ConsumptionLegacyChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
         public ConsumptionLegacyChargeSummary()
         {
             Kind = ChargeSummaryKind.Legacy;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLegacyChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
         /// <param name="usageStart"> Usage start date. </param>
         /// <param name="usageEnd"> Usage end date. </param>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
         /// <param name="marketplaceCharges"> Marketplace Charges. </param>
         /// <param name="currency"> Currency Code. </param>
-        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency) : base(id, name, resourceType, systemData, kind, etag)
+        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;

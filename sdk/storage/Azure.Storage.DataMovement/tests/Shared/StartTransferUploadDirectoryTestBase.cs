@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -124,7 +123,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the directory
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         private async Task UploadDirectoryAndVerifyAsync(
@@ -162,8 +161,8 @@ namespace Azure.Storage.DataMovement.Tests
         #endregion
 
         [RecordedTest]
-        [TestCase(Constants.KB, 2)]
-        [TestCase(12345, 2)]
+        [TestCase(Constants.KB, 10)]
+        [TestCase(12345, 10)]
         public async Task Upload(long objectSize, int waitTimeInSec)
         {
             // Arrange
@@ -175,7 +174,6 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewObjectName(),
                 GetNewObjectName(),
             };
-            Console.WriteLine($"files: {string.Join(", ", files)}");
 
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await SetupDirectoryAsync(
@@ -194,7 +192,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(DataTransferErrorMode.StopOnAnyFailure)]
         public async Task UploadFailIfExists(DataTransferErrorMode errorMode)
         {
-            const int waitTimeInSec = 5;
+            const int waitTimeInSec = 15;
             const int preexistingFileCount = 2;
             const int skipCount = 1;
             const int totalFileCount = skipCount + preexistingFileCount + 1;
@@ -232,7 +230,10 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             DataTransfer transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await transfer.WaitForCompletionAsync(cancellationToken);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
             if (errorMode == DataTransferErrorMode.ContinueOnFailure)
@@ -260,7 +261,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task UploadSkipIfExists()
         {
-            const int waitTimeInSec = 5;
+            const int waitTimeInSec = 15;
             const int preexistingFileCount = 2;
             const int skipCount = 1;
             const int totalFileCount = skipCount + preexistingFileCount + 1;
@@ -298,7 +299,10 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             DataTransfer transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await transfer.WaitForCompletionAsync(cancellationToken);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(preexistingFileCount);
@@ -319,7 +323,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task UploadOverwriteIfExists()
         {
-            const int waitTimeInSec = 3;
+            const int waitTimeInSec = 15;
             // Arrange
             using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
@@ -352,9 +356,9 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase(Constants.KB, Constants.KB/4, 2)]
-        [TestCase(10 * Constants.KB, 4 * Constants.KB, 5)]
-        [TestCase(Constants.KB, 97, 2)]
+        [TestCase(Constants.KB, Constants.KB/4, 10)]
+        [TestCase(10 * Constants.KB, 4 * Constants.KB, 15)]
+        [TestCase(Constants.KB, 97, 10)]
         public async Task UploadSmallChunks(long objectSize, long chunkSize, int waitTimeInSec)
         {
             // Arrange
@@ -386,11 +390,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase(1)]
-        [TestCase(5)]
-        public async Task UploadEmpty(int folderDepth)
+        [TestCase(1, 10)]
+        [TestCase(5, 30)]
+        public async Task UploadEmpty(int folderDepth, int waitTimeInSec)
         {
-            const int waitTimeInSec = 10;
             // Arrange
             using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();

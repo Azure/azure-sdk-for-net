@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Defines the KPI Threshold limits. </summary>
     public partial class KpiDefinition
     {
-        /// <summary> Initializes a new instance of KpiDefinition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KpiDefinition"/>. </summary>
         /// <param name="entityType"> The mapping entity type. </param>
         /// <param name="entityTypeName"> The mapping entity name. </param>
         /// <param name="calculationWindow"> The calculation window. </param>
@@ -40,7 +72,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Extracts = new ChangeTrackingList<KpiExtract>();
         }
 
-        /// <summary> Initializes a new instance of KpiDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiDefinition"/>. </summary>
         /// <param name="entityType"> The mapping entity type. </param>
         /// <param name="entityTypeName"> The mapping entity name. </param>
         /// <param name="tenantId"> The hub name. </param>
@@ -60,7 +92,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="thresHolds"> The KPI thresholds. </param>
         /// <param name="aliases"> The aliases. </param>
         /// <param name="extracts"> The KPI extracts. </param>
-        internal KpiDefinition(EntityType entityType, string entityTypeName, Guid? tenantId, string kpiName, IReadOnlyDictionary<string, string> displayName, IReadOnlyDictionary<string, string> description, CalculationWindowType calculationWindow, string calculationWindowFieldName, KpiFunction function, string expression, string unit, string filter, IReadOnlyList<string> groupBy, IReadOnlyList<KpiGroupByMetadata> groupByMetadata, IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata, ProvisioningState? provisioningState, KpiThresholds thresHolds, IReadOnlyList<KpiAlias> aliases, IReadOnlyList<KpiExtract> extracts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KpiDefinition(EntityType entityType, string entityTypeName, Guid? tenantId, string kpiName, IReadOnlyDictionary<string, string> displayName, IReadOnlyDictionary<string, string> description, CalculationWindowType calculationWindow, string calculationWindowFieldName, KpiFunction function, string expression, string unit, string filter, IReadOnlyList<string> groupBy, IReadOnlyList<KpiGroupByMetadata> groupByMetadata, IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata, ProvisioningState? provisioningState, KpiThresholds thresHolds, IReadOnlyList<KpiAlias> aliases, IReadOnlyList<KpiExtract> extracts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityType = entityType;
             EntityTypeName = entityTypeName;
@@ -81,6 +114,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             ThresHolds = thresHolds;
             Aliases = aliases;
             Extracts = extracts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KpiDefinition"/> for deserialization. </summary>
+        internal KpiDefinition()
+        {
         }
 
         /// <summary> The mapping entity type. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Hubspot Service dataset. </summary>
     public partial class HubspotObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of HubspotObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubspotObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public HubspotObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "HubspotObject";
         }
 
-        /// <summary> Initializes a new instance of HubspotObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubspotObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

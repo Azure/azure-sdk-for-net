@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkPacketBrokerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkPacketBrokerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NeighborGroupIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkPacketBrokerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

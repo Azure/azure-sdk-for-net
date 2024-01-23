@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of ApplicationGroup definitions. </summary>
     internal partial class ApplicationGroupList
     {
-        /// <summary> Initializes a new instance of ApplicationGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGroupList"/>. </summary>
         internal ApplicationGroupList()
         {
             Value = new ChangeTrackingList<VirtualApplicationGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGroupList"/>. </summary>
         /// <param name="value"> List of ApplicationGroup definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal ApplicationGroupList(IReadOnlyList<VirtualApplicationGroupData> value, string nextLink)

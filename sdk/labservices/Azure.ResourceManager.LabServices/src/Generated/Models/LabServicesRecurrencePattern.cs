@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Recurrence pattern of a lab schedule. </summary>
     public partial class LabServicesRecurrencePattern
     {
-        /// <summary> Initializes a new instance of LabServicesRecurrencePattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesRecurrencePattern"/>. </summary>
         /// <param name="frequency"> The frequency of the recurrence. </param>
         /// <param name="expireOn"> When the recurrence will expire. This date is inclusive. </param>
         public LabServicesRecurrencePattern(LabServicesRecurrenceFrequency frequency, DateTimeOffset expireOn)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.LabServices.Models
             ExpireOn = expireOn;
         }
 
-        /// <summary> Initializes a new instance of LabServicesRecurrencePattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesRecurrencePattern"/>. </summary>
         /// <param name="frequency"> The frequency of the recurrence. </param>
         /// <param name="weekDays"> The week days the schedule runs. Used for when the Frequency is set to Weekly. </param>
         /// <param name="interval"> The interval to invoke the schedule on. For example, interval = 2 and RecurrenceFrequency.Daily will run every 2 days. When no interval is supplied, an interval of 1 is used. </param>

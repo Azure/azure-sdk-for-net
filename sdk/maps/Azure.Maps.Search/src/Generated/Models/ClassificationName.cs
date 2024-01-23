@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> Name for the classification. </summary>
     public partial class ClassificationName
     {
-        /// <summary> Initializes a new instance of ClassificationName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationName"/>. </summary>
         internal ClassificationName()
         {
         }
 
-        /// <summary> Initializes a new instance of ClassificationName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationName"/>. </summary>
         /// <param name="nameLocale"> Name Locale property. </param>
         /// <param name="name"> Name property. </param>
         internal ClassificationName(string nameLocale, string name)

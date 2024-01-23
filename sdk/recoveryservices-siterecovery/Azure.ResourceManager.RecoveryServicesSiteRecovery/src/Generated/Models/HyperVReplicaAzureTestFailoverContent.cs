@@ -12,10 +12,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HvrA provider specific input for test failover. </summary>
     public partial class HyperVReplicaAzureTestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureTestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureTestFailoverContent"/>. </summary>
         public HyperVReplicaAzureTestFailoverContent()
         {
             InstanceType = "HyperVReplicaAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureTestFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="primaryKekCertificatePfx"> Primary kek certificate pfx. </param>
+        /// <param name="secondaryKekCertificatePfx"> Secondary kek certificate pfx. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal HyperVReplicaAzureTestFailoverContent(string instanceType, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType)
+        {
+            PrimaryKekCertificatePfx = primaryKekCertificatePfx;
+            SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
+            RecoveryPointId = recoveryPointId;
+            OSUpgradeVersion = osUpgradeVersion;
+            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> Primary kek certificate pfx. </summary>

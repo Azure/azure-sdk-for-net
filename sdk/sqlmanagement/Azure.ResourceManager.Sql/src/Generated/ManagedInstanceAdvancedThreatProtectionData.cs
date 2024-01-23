@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceAdvancedThreatProtectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceAdvancedThreatProtectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceAdvancedThreatProtectionData"/>. </summary>
         public ManagedInstanceAdvancedThreatProtectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceAdvancedThreatProtectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceAdvancedThreatProtectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

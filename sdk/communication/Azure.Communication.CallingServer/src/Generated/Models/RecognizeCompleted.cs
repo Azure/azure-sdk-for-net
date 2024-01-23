@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RecognizeCompleted. </summary>
     public partial class RecognizeCompleted
     {
-        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeCompleted"/>. </summary>
         internal RecognizeCompleted()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeCompleted"/>. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
         /// <param name="recognitionType">

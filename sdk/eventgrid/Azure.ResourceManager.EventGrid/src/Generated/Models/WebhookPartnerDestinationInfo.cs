@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the WebHook of the partner destination. </summary>
     public partial class WebhookPartnerDestinationInfo : PartnerDestinationInfo
     {
-        /// <summary> Initializes a new instance of WebhookPartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookPartnerDestinationInfo"/>. </summary>
         public WebhookPartnerDestinationInfo()
         {
             EndpointType = PartnerEndpointType.WebHook;
         }
 
-        /// <summary> Initializes a new instance of WebhookPartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookPartnerDestinationInfo"/>. </summary>
         /// <param name="azureSubscriptionId">
         /// Azure subscription ID of the subscriber. The partner destination associated with the channel will be
         /// created under this Azure subscription.

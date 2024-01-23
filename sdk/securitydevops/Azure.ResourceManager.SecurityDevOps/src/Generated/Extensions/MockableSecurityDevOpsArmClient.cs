@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureDevOpsConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureDevOpsConnectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AzureDevOpsConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureDevOpsConnectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureDevOpsConnectorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsConnectorResource"/> object. </returns>
         public virtual AzureDevOpsConnectorResource GetAzureDevOpsConnectorResource(ResourceIdentifier id)
         {
             AzureDevOpsConnectorResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureDevOpsRepoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureDevOpsRepoResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsRepoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AzureDevOpsRepoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureDevOpsRepoResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsRepoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureDevOpsRepoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsRepoResource"/> object. </returns>
         public virtual AzureDevOpsRepoResource GetAzureDevOpsRepoResource(ResourceIdentifier id)
         {
             AzureDevOpsRepoResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureDevOpsOrgResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureDevOpsOrgResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsOrgResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AzureDevOpsOrgResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureDevOpsOrgResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsOrgResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureDevOpsOrgResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsOrgResource"/> object. </returns>
         public virtual AzureDevOpsOrgResource GetAzureDevOpsOrgResource(ResourceIdentifier id)
         {
             AzureDevOpsOrgResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureDevOpsProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureDevOpsProjectResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AzureDevOpsProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureDevOpsProjectResource.CreateResourceIdentifier" /> to create an <see cref="AzureDevOpsProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureDevOpsProjectResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureDevOpsProjectResource"/> object. </returns>
         public virtual AzureDevOpsProjectResource GetAzureDevOpsProjectResource(ResourceIdentifier id)
         {
             AzureDevOpsProjectResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GitHubConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GitHubConnectorResource.CreateResourceIdentifier" /> to create a <see cref="GitHubConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GitHubConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GitHubConnectorResource.CreateResourceIdentifier" /> to create a <see cref="GitHubConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GitHubConnectorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GitHubConnectorResource"/> object. </returns>
         public virtual GitHubConnectorResource GetGitHubConnectorResource(ResourceIdentifier id)
         {
             GitHubConnectorResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GitHubRepoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GitHubRepoResource.CreateResourceIdentifier" /> to create a <see cref="GitHubRepoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GitHubRepoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GitHubRepoResource.CreateResourceIdentifier" /> to create a <see cref="GitHubRepoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GitHubRepoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GitHubRepoResource"/> object. </returns>
         public virtual GitHubRepoResource GetGitHubRepoResource(ResourceIdentifier id)
         {
             GitHubRepoResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GitHubOwnerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GitHubOwnerResource.CreateResourceIdentifier" /> to create a <see cref="GitHubOwnerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GitHubOwnerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GitHubOwnerResource.CreateResourceIdentifier" /> to create a <see cref="GitHubOwnerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GitHubOwnerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GitHubOwnerResource"/> object. </returns>
         public virtual GitHubOwnerResource GetGitHubOwnerResource(ResourceIdentifier id)
         {
             GitHubOwnerResource.ValidateResourceId(id);

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuCapacity. </summary>
     public partial class ResourceTypeSkuCapacity
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCapacity"/>. </summary>
         /// <param name="minimum"></param>
         public ResourceTypeSkuCapacity(int minimum)
         {
             Minimum = minimum;
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCapacity"/>. </summary>
         /// <param name="minimum"></param>
         /// <param name="maximum"></param>
         /// <param name="default"></param>

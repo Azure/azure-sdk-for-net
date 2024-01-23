@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Functions host level keys. </summary>
     public partial class FunctionAppHostKeys
     {
-        /// <summary> Initializes a new instance of FunctionAppHostKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppHostKeys"/>. </summary>
         internal FunctionAppHostKeys()
         {
             FunctionKeys = new ChangeTrackingDictionary<string, string>();
             SystemKeys = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppHostKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppHostKeys"/>. </summary>
         /// <param name="masterKey"> Secret key. </param>
         /// <param name="functionKeys"> Host level function keys. </param>
         /// <param name="systemKeys"> System keys. </param>

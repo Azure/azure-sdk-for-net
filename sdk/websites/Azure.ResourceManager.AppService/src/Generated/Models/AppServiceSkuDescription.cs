@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a SKU for a scalable resource. </summary>
     public partial class AppServiceSkuDescription
     {
-        /// <summary> Initializes a new instance of AppServiceSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuDescription"/>. </summary>
         public AppServiceSkuDescription()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Capabilities = new ChangeTrackingList<AppServiceSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuDescription"/>. </summary>
         /// <param name="name"> Name of the resource SKU. </param>
         /// <param name="tier"> Service tier of the resource SKU. </param>
         /// <param name="size"> Size specifier of the resource SKU. </param>

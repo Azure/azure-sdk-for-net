@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Request body structure for deleting data flow debug session. </summary>
     public partial class DeleteDataFlowDebugSessionContent
     {
-        /// <summary> Initializes a new instance of DeleteDataFlowDebugSessionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionContent"/>. </summary>
         public DeleteDataFlowDebugSessionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionContent"/>. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        internal DeleteDataFlowDebugSessionContent(Guid? sessionId)
+        {
+            SessionId = sessionId;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

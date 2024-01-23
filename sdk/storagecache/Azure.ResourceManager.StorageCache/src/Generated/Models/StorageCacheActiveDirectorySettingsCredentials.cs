@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Active Directory admin credentials used to join the HPC Cache to a domain. </summary>
     public partial class StorageCacheActiveDirectorySettingsCredentials
     {
-        /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettingsCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheActiveDirectorySettingsCredentials"/>. </summary>
         /// <param name="username"> Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public StorageCacheActiveDirectorySettingsCredentials(string username)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Common error representation. </summary>
     public partial class StreamAnalyticsError
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsError"/>. </summary>
         internal StreamAnalyticsError()
         {
             Details = new ChangeTrackingList<StreamAnalyticsErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>

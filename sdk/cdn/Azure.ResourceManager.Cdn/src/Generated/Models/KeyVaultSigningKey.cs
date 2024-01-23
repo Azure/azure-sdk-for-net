@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes the parameters for using a user's KeyVault for URL Signing Key. </summary>
     public partial class KeyVaultSigningKey
     {
-        /// <summary> Initializes a new instance of KeyVaultSigningKey. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/>. </summary>
         /// <param name="keyType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the secret. </param>
         /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the secret. </param>
@@ -35,6 +68,30 @@ namespace Azure.ResourceManager.Cdn.Models
             VaultName = vaultName;
             SecretName = secretName;
             SecretVersion = secretVersion;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/>. </summary>
+        /// <param name="keyType"></param>
+        /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the secret. </param>
+        /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the secret. </param>
+        /// <param name="vaultName"> The name of the user's Key Vault containing the secret. </param>
+        /// <param name="secretName"> The name of secret in Key Vault. </param>
+        /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyType = keyType;
+            SubscriptionId = subscriptionId;
+            ResourceGroupName = resourceGroupName;
+            VaultName = vaultName;
+            SecretName = secretName;
+            SecretVersion = secretVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/> for deserialization. </summary>
+        internal KeyVaultSigningKey()
+        {
         }
 
         /// <summary> Gets or sets the key type. </summary>

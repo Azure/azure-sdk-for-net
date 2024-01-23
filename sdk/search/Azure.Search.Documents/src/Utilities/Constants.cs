@@ -97,6 +97,11 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchCaptionsKeyJson = JsonEncodedText.Encode("@search.captions");
 
         /// <summary>
+        /// The @search.captions key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchDocumentDebugInfoKeyJson = JsonEncodedText.Encode("@search.documentDebugInfo");
+
+        /// <summary>
         /// The @search.action key.
         /// </summary>
         public static readonly JsonEncodedText SearchActionKeyJson = JsonEncodedText.Encode("@search.action");

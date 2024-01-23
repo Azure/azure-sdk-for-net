@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> An AAAA record. </summary>
     public partial class DnsAaaaRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsAaaaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsAaaaRecordInfo"/>. </summary>
         public DnsAaaaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsAaaaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsAaaaRecordInfo"/>. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         internal DnsAaaaRecordInfo(IPAddress ipv6Address)
         {

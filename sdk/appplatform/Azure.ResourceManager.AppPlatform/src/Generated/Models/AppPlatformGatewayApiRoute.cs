@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> API route config of the Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayApiRoute
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiRoute"/>. </summary>
         public AppPlatformGatewayApiRoute()
         {
             Predicates = new ChangeTrackingList<string>();
@@ -22,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiRoute"/>. </summary>
         /// <param name="title"> A title, will be applied to methods in the generated OpenAPI documentation. </param>
         /// <param name="description"> A description, will be applied to methods in the generated OpenAPI documentation. </param>
         /// <param name="uri"> Full uri, will override `appName`. </param>
@@ -32,7 +64,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="filters"> To modify the request before sending it to the target endpoint, or the received response. </param>
         /// <param name="order"> Route processing order. </param>
         /// <param name="tags"> Classification tags, will be applied to methods in the generated OpenAPI documentation. </param>
-        internal AppPlatformGatewayApiRoute(string title, string description, Uri uri, bool? isSsoEnabled, bool? isTokenRelayed, IList<string> predicates, IList<string> filters, int? order, IList<string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayApiRoute(string title, string description, Uri uri, bool? isSsoEnabled, bool? isTokenRelayed, IList<string> predicates, IList<string> filters, int? order, IList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Filters = filters;
             Order = order;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A title, will be applied to methods in the generated OpenAPI documentation. </summary>

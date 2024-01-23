@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Channel settings definition. </summary>
     public partial class BotChannelSettings
     {
-        /// <summary> Initializes a new instance of BotChannelSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelSettings"/>. </summary>
         public BotChannelSettings()
         {
             Sites = new ChangeTrackingList<BotChannelSite>();
         }
 
-        /// <summary> Initializes a new instance of BotChannelSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelSettings"/>. </summary>
         /// <param name="extensionKey1"> The extensionKey1. </param>
         /// <param name="extensionKey2"> The extensionKey2. </param>
         /// <param name="sites"> The list of sites. </param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="requireTermsAgreement"> Whether customer needs to agree to new terms. </param>
-        internal BotChannelSettings(string extensionKey1, string extensionKey2, IList<BotChannelSite> sites, string channelId, string channelDisplayName, string botId, Uri botIconUri, bool? isEnabled, bool? disableLocalAuth, bool? requireTermsAgreement)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotChannelSettings(string extensionKey1, string extensionKey2, IList<BotChannelSite> sites, string channelId, string channelDisplayName, string botId, Uri botIconUri, bool? isEnabled, bool? disableLocalAuth, bool? requireTermsAgreement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtensionKey1 = extensionKey1;
             ExtensionKey2 = extensionKey2;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsEnabled = isEnabled;
             DisableLocalAuth = disableLocalAuth;
             RequireTermsAgreement = requireTermsAgreement;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The extensionKey1. </summary>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.TrafficManager
     /// </summary>
     public partial class TrafficManagerUserMetricData : TrafficManagerProxyResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerUserMetricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerUserMetricData"/>. </summary>
         public TrafficManagerUserMetricData()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerUserMetricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerUserMetricData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>

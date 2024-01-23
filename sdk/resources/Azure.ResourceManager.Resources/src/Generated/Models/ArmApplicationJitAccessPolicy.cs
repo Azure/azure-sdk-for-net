@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application Jit access policy. </summary>
     public partial class ArmApplicationJitAccessPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationJitAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationJitAccessPolicy"/>. </summary>
         /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
         public ArmApplicationJitAccessPolicy(bool jitAccessEnabled)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             JitApprovers = new ChangeTrackingList<JitApprover>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationJitAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationJitAccessPolicy"/>. </summary>
         /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
         /// <param name="jitApprovalMode"> JIT approval mode. </param>
         /// <param name="jitApprovers"> The JIT approvers. </param>

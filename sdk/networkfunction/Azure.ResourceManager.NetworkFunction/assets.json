@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/networkfunction/Azure.ResourceManager.NetworkFunction",
-  "Tag": ""
+  "Tag": "net/networkfunction/Azure.ResourceManager.NetworkFunction_ca4be22c4a"
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -13,19 +15,20 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Direct Line channel definition. </summary>
     public partial class DirectLineChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of DirectLineChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannel"/>. </summary>
         public DirectLineChannel()
         {
             ChannelName = "DirectLineChannel";
         }
 
-        /// <summary> Initializes a new instance of DirectLineChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The set of properties specific to Direct Line channel resource. </param>
-        internal DirectLineChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, DirectLineChannelProperties properties) : base(channelName, etag, provisioningState, location)
+        internal DirectLineChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, DirectLineChannelProperties properties) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
         {
             Properties = properties;
             ChannelName = channelName ?? "DirectLineChannel";

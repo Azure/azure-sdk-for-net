@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </summary>
     public partial class IotHubRoutingProperties
     {
-        /// <summary> Initializes a new instance of IotHubRoutingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubRoutingProperties"/>. </summary>
         public IotHubRoutingProperties()
         {
             Routes = new ChangeTrackingList<RoutingRuleProperties>();
             Enrichments = new ChangeTrackingList<IotHubEnrichmentProperties>();
         }
 
-        /// <summary> Initializes a new instance of IotHubRoutingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubRoutingProperties"/>. </summary>
         /// <param name="endpoints"> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </param>
         /// <param name="routes"> The list of user-provided routing rules that the IoT hub uses to route messages to built-in and custom endpoints. A maximum of 100 routing rules are allowed for paid hubs and a maximum of 5 routing rules are allowed for free hubs. </param>
         /// <param name="fallbackRoute"> The properties of the route that is used as a fall-back route when none of the conditions specified in the 'routes' section are met. This is an optional parameter. When this property is not present in the template, the fallback route is disabled by default. </param>

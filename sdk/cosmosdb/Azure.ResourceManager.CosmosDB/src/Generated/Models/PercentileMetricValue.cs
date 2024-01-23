@@ -6,24 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Represents percentile metrics values. </summary>
     public partial class PercentileMetricValue : CosmosDBMetricValue
     {
-        /// <summary> Initializes a new instance of PercentileMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentileMetricValue"/>. </summary>
         internal PercentileMetricValue()
         {
         }
 
-        /// <summary> Initializes a new instance of PercentileMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentileMetricValue"/>. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>
         /// <param name="minimum"> The min value of the metric. </param>
         /// <param name="timestamp"> The metric timestamp (ISO-8601 format). </param>
         /// <param name="total"> The total value of the metric. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="p10"> The 10th percentile value for the metric. </param>
         /// <param name="p25"> The 25th percentile value for the metric. </param>
         /// <param name="p50"> The 50th percentile value for the metric. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="p90"> The 90th percentile value for the metric. </param>
         /// <param name="p95"> The 95th percentile value for the metric. </param>
         /// <param name="p99"> The 99th percentile value for the metric. </param>
-        internal PercentileMetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total, double? p10, double? p25, double? p50, double? p75, double? p90, double? p95, double? p99) : base(count, average, maximum, minimum, timestamp, total)
+        internal PercentileMetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total, IDictionary<string, BinaryData> serializedAdditionalRawData, double? p10, double? p25, double? p50, double? p75, double? p90, double? p95, double? p99) : base(count, average, maximum, minimum, timestamp, total, serializedAdditionalRawData)
         {
             P10 = p10;
             P25 = p25;

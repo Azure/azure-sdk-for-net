@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SiteRecoveryTaskTypeDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryTaskTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryTaskTypeDetails"/>. </summary>
         protected SiteRecoveryTaskTypeDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryTaskTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryTaskTypeDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         internal SiteRecoveryTaskTypeDetails(string instanceType)
         {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DefenderEasm
     /// </summary>
     public partial class EasmLabelData : ResourceData
     {
-        /// <summary> Initializes a new instance of EasmLabelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmLabelData"/>. </summary>
         public EasmLabelData()
         {
         }
 
-        /// <summary> Initializes a new instance of EasmLabelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmLabelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

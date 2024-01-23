@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The policies for a container registry. </summary>
     public partial class ContainerRegistryPolicies
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPolicies. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPolicies"/>. </summary>
         public ContainerRegistryPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPolicies"/>. </summary>
         /// <param name="quarantinePolicy"> The quarantine policy for a container registry. </param>
         /// <param name="trustPolicy"> The content trust policy for a container registry. </param>
         /// <param name="retentionPolicy"> The retention policy for a container registry. </param>
         /// <param name="exportPolicy"> The export policy for a container registry. </param>
-        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
             RetentionPolicy = retentionPolicy;
             ExportPolicy = exportPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The quarantine policy for a container registry. </summary>

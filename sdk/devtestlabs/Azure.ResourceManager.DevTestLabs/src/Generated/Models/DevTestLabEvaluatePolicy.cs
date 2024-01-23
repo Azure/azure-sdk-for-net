@@ -10,9 +10,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for evaluating a policy set. </summary>
     public partial class DevTestLabEvaluatePolicy
     {
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePolicy"/>. </summary>
         public DevTestLabEvaluatePolicy()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePolicy"/>. </summary>
+        /// <param name="factName"> The fact name. </param>
+        /// <param name="factData"> The fact data. </param>
+        /// <param name="valueOffset"> The value offset. </param>
+        /// <param name="userObjectId"> The user for which policies will be evaluated. </param>
+        internal DevTestLabEvaluatePolicy(string factName, string factData, string valueOffset, string userObjectId)
+        {
+            FactName = factName;
+            FactData = factData;
+            ValueOffset = valueOffset;
+            UserObjectId = userObjectId;
         }
 
         /// <summary> The fact name. </summary>

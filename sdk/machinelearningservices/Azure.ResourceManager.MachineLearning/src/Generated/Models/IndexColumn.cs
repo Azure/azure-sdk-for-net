@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Dto object representing index column. </summary>
     public partial class IndexColumn
     {
-        /// <summary> Initializes a new instance of IndexColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexColumn"/>. </summary>
         public IndexColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of IndexColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexColumn"/>. </summary>
         /// <param name="columnName"> Specifies the column name. </param>
         /// <param name="dataType"> Specifies the data type. </param>
         internal IndexColumn(string columnName, FeatureDataType? dataType)

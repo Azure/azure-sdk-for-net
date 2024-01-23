@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Response body with a run identifier. </summary>
     public partial class PipelineCreateRunResult
     {
-        /// <summary> Initializes a new instance of PipelineCreateRunResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineCreateRunResult"/>. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         internal PipelineCreateRunResult(Guid runId)
         {

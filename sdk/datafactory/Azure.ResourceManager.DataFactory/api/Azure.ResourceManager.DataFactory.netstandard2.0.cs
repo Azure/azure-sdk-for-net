@@ -1774,9 +1774,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string ComponentName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition LicenseKey { get { throw null; } set { } }
     }
-    public partial class CompressionReadSettings
+    public abstract partial class CompressionReadSettings
     {
-        public CompressionReadSettings() { }
+        protected CompressionReadSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
     public partial class ConcurLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties
@@ -1839,9 +1839,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableReliableLogging { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> LogLevel { get { throw null; } set { } }
     }
-    public partial class CopyActivitySource
+    public abstract partial class CopyActivitySource
     {
-        public CopyActivitySource() { }
+        protected CopyActivitySource() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> DisableMetricsCollection { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> MaxConcurrentConnections { get { throw null; } set { } }
@@ -1855,9 +1855,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public int? DataIntegrationUnit { get { throw null; } set { } }
         public int? TimeToLive { get { throw null; } set { } }
     }
-    public partial class CopySink
+    public abstract partial class CopySink
     {
-        public CopySink() { }
+        protected CopySink() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> DisableMetricsCollection { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> MaxConcurrentConnections { get { throw null; } set { } }
@@ -2080,9 +2080,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
         public int MaxConcurrency { get { throw null; } set { } }
     }
-    public partial class DataFactoryCredential
+    public abstract partial class DataFactoryCredential
     {
-        public DataFactoryCredential() { }
+        protected DataFactoryCredential() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -2181,9 +2181,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryDatasetDebugInfo(Azure.ResourceManager.DataFactory.Models.DataFactoryDatasetProperties properties) { }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryDatasetProperties Properties { get { throw null; } }
     }
-    public partial class DataFactoryDatasetProperties
+    public abstract partial class DataFactoryDatasetProperties
     {
-        public DataFactoryDatasetProperties(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) { }
+        protected DataFactoryDatasetProperties(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -2302,9 +2302,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAutoUpdateState? AutoUpdate { get { throw null; } set { } }
         public System.TimeSpan? UpdateDelayOffset { get { throw null; } set { } }
     }
-    public partial class DataFactoryIntegrationRuntimeProperties
+    public abstract partial class DataFactoryIntegrationRuntimeProperties
     {
-        public DataFactoryIntegrationRuntimeProperties() { }
+        protected DataFactoryIntegrationRuntimeProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
     }
@@ -2319,9 +2319,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryLinkedServiceDebugInfo(Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties properties) { }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties Properties { get { throw null; } }
     }
-    public partial class DataFactoryLinkedServiceProperties
+    public abstract partial class DataFactoryLinkedServiceProperties
     {
-        public DataFactoryLinkedServiceProperties() { }
+        protected DataFactoryLinkedServiceProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReference ConnectVia { get { throw null; } set { } }
@@ -2578,9 +2578,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType left, Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataFactoryTriggerProperties
+    public abstract partial class DataFactoryTriggerProperties
     {
-        public DataFactoryTriggerProperties() { }
+        protected DataFactoryTriggerProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -2854,9 +2854,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData JsonPathDefinition { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> NestingSeparator { get { throw null; } set { } }
     }
-    public partial class DatasetLocation
+    public abstract partial class DatasetLocation
     {
-        public DatasetLocation() { }
+        protected DatasetLocation() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> FileName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> FolderPath { get { throw null; } set { } }
@@ -2900,9 +2900,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SchemaColumnName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SchemaColumnType { get { throw null; } set { } }
     }
-    public partial class DatasetStorageFormat
+    public abstract partial class DatasetStorageFormat
     {
-        public DatasetStorageFormat() { }
+        protected DatasetStorageFormat() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Deserializer { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Serializer { get { throw null; } set { } }
@@ -3381,9 +3381,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.PipelineActivityPolicy Policy { get { throw null; } set { } }
     }
-    public partial class ExportSettings
+    public abstract partial class ExportSettings
     {
-        public ExportSettings() { }
+        protected ExportSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
     public partial class ExposureControlBatchContent
@@ -3515,14 +3515,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public bool? IsSequential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryExpression Items { get { throw null; } set { } }
     }
-    public partial class FormatReadSettings
+    public abstract partial class FormatReadSettings
     {
-        public FormatReadSettings() { }
+        protected FormatReadSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
-    public partial class FormatWriteSettings
+    public abstract partial class FormatWriteSettings
     {
-        public FormatWriteSettings() { }
+        protected FormatWriteSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4166,9 +4166,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ImpalaSource() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Query { get { throw null; } set { } }
     }
-    public partial class ImportSettings
+    public abstract partial class ImportSettings
     {
-        public ImportSettings() { }
+        protected ImportSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
     public partial class InformixLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties
@@ -4503,9 +4503,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IntegrationRuntimeStatus
+    public abstract partial class IntegrationRuntimeStatus
     {
-        internal IntegrationRuntimeStatus() { }
+        protected IntegrationRuntimeStatus() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string DataFactoryName { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState? State { get { throw null; } }
@@ -5524,9 +5524,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public PhoenixSource() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Query { get { throw null; } set { } }
     }
-    public partial class PipelineActivity
+    public abstract partial class PipelineActivity
     {
-        public PipelineActivity(string name) { }
+        protected PipelineActivity(string name) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PipelineActivityDependency> DependsOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -7238,16 +7238,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Path { get { throw null; } set { } }
     }
-    public partial class StoreReadSettings
+    public abstract partial class StoreReadSettings
     {
-        public StoreReadSettings() { }
+        protected StoreReadSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> DisableMetricsCollection { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> MaxConcurrentConnections { get { throw null; } set { } }
     }
-    public partial class StoreWriteSettings
+    public abstract partial class StoreWriteSettings
     {
-        public StoreWriteSettings() { }
+        protected StoreWriteSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> CopyBehavior { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> DisableMetricsCollection { get { throw null; } set { } }

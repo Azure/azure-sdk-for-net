@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceSkuCapability. </summary>
     public partial class ResourceSkuCapability
     {
-        /// <summary> Initializes a new instance of ResourceSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCapability"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

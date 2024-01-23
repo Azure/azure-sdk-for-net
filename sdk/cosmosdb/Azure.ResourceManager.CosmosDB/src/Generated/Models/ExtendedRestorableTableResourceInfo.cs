@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB Table event. </summary>
     public partial class ExtendedRestorableTableResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableTableResourceInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableTableResourceInfo"/>. </summary>
         internal ExtendedRestorableTableResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableTableResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this table event. </param>
         /// <param name="eventTimestamp"> The time when this table event happened. </param>
         /// <param name="tableName"> The name of this Table. </param>
         /// <param name="tableId"> The resource ID of this Table. </param>
-        internal ExtendedRestorableTableResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string tableName, string tableId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableTableResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string tableName, string tableId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
             EventTimestamp = eventTimestamp;
             TableName = tableName;
             TableId = tableId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

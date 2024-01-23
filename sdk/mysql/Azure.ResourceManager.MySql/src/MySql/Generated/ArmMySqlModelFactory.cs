@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMySqlModelFactory
     {
-        /// <summary> Initializes a new instance of MySqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlServerData(id, name, resourceType, systemData, tags, location, identity, sku, administratorLogin, version, sslEnforcement, minimalTlsVersion, byokEnforcement, infrastructureEncryption, userVisibleState, fullyQualifiedDomainName, earliestRestoreOn, storageProfile, replicationRole, masterServerId, replicaCapacity, publicNetworkAccess, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> Resource Id of the private endpoint connection. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.MySqlServerPrivateEndpointConnection"/> instance for mocking. </returns>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlServerPrivateEndpointConnection(id, properties);
         }
 
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of MySqlServerPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlServerPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of MySqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of MySqlVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlVirtualNetworkRuleData(id, name, resourceType, systemData, virtualNetworkSubnetId, ignoreMissingVnetServiceEndpoint, state);
         }
 
-        /// <summary> Initializes a new instance of MySqlDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlDatabaseData(id, name, resourceType, systemData, charset, collation);
         }
 
-        /// <summary> Initializes a new instance of MySqlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source);
         }
 
-        /// <summary> Initializes a new instance of MySqlLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlLogFile(id, name, resourceType, systemData, sizeInKB, createdOn, lastModifiedOn, logFileType, uri);
         }
 
-        /// <summary> Initializes a new instance of MySqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlServerAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlServerAdministratorData(id, name, resourceType, systemData, administratorType, loginAccountName, secureId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of MySqlRecoverableServerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlRecoverableServerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlRecoverableServerResourceData(id, name, resourceType, systemData, lastAvailableBackupOn, serviceLevelObjective, edition, vCores, hardwareGeneration, version);
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlPerformanceTier"/>. </summary>
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlPerformanceTier(id, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minLargeStorageInMB, maxLargeStorageInMB, minStorageInMB, serviceLevelObjectives?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTierServiceLevelObjectives. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlPerformanceTierServiceLevelObjectives"/>. </summary>
         /// <param name="id"> ID for the service level objective. </param>
         /// <param name="edition"> Edition of the performance tier. </param>
         /// <param name="vCores"> vCore associated with the service level objective. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlPerformanceTierServiceLevelObjectives(id, edition, vCores, hardwareGeneration, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minStorageInMB);
         }
 
-        /// <summary> Initializes a new instance of MySqlNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Reason for name being unavailable. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlNameAvailabilityResult(message, isNameAvailable, reason);
         }
 
-        /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays);
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryTextData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlQueryTextData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlQueryTextData(id, name, resourceType, systemData, queryId, queryText);
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryStatisticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlQueryStatisticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlQueryStatisticData(id, name, resourceType, systemData, queryId, startOn, endOn, aggregationFunction, databaseNames?.ToList(), queryExecutionCount, metricName, metricDisplayName, metricValue, metricValueUnit);
         }
 
-        /// <summary> Initializes a new instance of MySqlWaitStatisticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlWaitStatisticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlWaitStatisticData(id, name, resourceType, systemData, startOn, endOn, eventName, eventTypeName, queryId, databaseName, userId, count, totalTimeInMinutes);
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryPerformanceInsightResetDataResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
         /// <param name="status"> Indicates result of the operation. </param>
         /// <param name="message"> operation message. </param>
         /// <returns> A new <see cref="Models.MySqlQueryPerformanceInsightResetDataResult"/> instance for mocking. </returns>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlQueryPerformanceInsightResetDataResult(status, message);
         }
 
-        /// <summary> Initializes a new instance of MySqlAdvisorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlAdvisorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlAdvisorData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MySqlRecommendationActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlRecommendationActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlRecommendationActionData(id, name, resourceType, systemData, advisorName, sessionId, actionId, createdOn, expireOn, reason, recommendationType, details);
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlPrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <returns> A new <see cref="Models.MySqlPrivateLinkResourceProperties"/> instance for mocking. </returns>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlPrivateLinkResourceProperties(groupId, requiredMembers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MySqlServerKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySql.MySqlServerKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

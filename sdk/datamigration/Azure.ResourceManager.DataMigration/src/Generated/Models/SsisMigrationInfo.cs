@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> SSIS migration info with SSIS store type, overwrite policy. </summary>
     public partial class SsisMigrationInfo
     {
-        /// <summary> Initializes a new instance of SsisMigrationInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisMigrationInfo"/>. </summary>
         public SsisMigrationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisMigrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisMigrationInfo"/>. </summary>
         /// <param name="ssisStoreType"> The SSIS store type of source, only SSIS catalog is supported now in DMS. </param>
         /// <param name="projectOverwriteOption"> The overwrite option for the SSIS project migration. </param>
         /// <param name="environmentOverwriteOption"> The overwrite option for the SSIS environment migration. </param>
-        internal SsisMigrationInfo(SsisStoreType? ssisStoreType, SsisMigrationOverwriteOption? projectOverwriteOption, SsisMigrationOverwriteOption? environmentOverwriteOption)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisMigrationInfo(SsisStoreType? ssisStoreType, SsisMigrationOverwriteOption? projectOverwriteOption, SsisMigrationOverwriteOption? environmentOverwriteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SsisStoreType = ssisStoreType;
             ProjectOverwriteOption = projectOverwriteOption;
             EnvironmentOverwriteOption = environmentOverwriteOption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SSIS store type of source, only SSIS catalog is supported now in DMS. </summary>

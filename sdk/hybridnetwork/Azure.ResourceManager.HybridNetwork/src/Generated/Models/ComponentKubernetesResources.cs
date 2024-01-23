@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The resources of the network function component. </summary>
     public partial class ComponentKubernetesResources
     {
-        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentKubernetesResources"/>. </summary>
         internal ComponentKubernetesResources()
         {
             Deployments = new ChangeTrackingList<KubernetesDeployment>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             DaemonSets = new ChangeTrackingList<KubernetesDaemonSet>();
         }
 
-        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentKubernetesResources"/>. </summary>
         /// <param name="deployments"> Deployments that are related to component resource. </param>
         /// <param name="pods"> Pods related to component resource. </param>
         /// <param name="replicaSets"> Replica sets related to component resource. </param>

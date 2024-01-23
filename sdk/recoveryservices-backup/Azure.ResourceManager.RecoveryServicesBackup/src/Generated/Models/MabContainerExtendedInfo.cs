@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information of the container. </summary>
     public partial class MabContainerExtendedInfo
     {
-        /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainerExtendedInfo"/>. </summary>
         public MabContainerExtendedInfo()
         {
             BackupItems = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainerExtendedInfo"/>. </summary>
         /// <param name="lastRefreshedOn"> Time stamp when this container was refreshed. </param>
         /// <param name="backupItemType"> Type of backup items associated with this container. </param>
         /// <param name="backupItems"> List of backup items associated with this container. </param>

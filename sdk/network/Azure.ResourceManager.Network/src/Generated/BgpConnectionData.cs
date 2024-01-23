@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -18,22 +20,23 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class BgpConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BgpConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         public BgpConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of BgpConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="hubVirtualNetworkConnection"> The reference to the HubVirtualNetworkConnection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType)
+        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             PeerAsn = peerAsn;

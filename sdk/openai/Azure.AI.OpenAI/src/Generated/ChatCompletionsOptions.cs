@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsOptions
     {
-        /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
         /// Typical usage begins with a chat message for the System role that provides instructions for
@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
         /// </param>
-        /// <param name="internalStringKeyedTokenSelectionBiases">
+        /// <param name="tokenSelectionBiases">
         /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
         /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
         /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
@@ -89,7 +89,16 @@ namespace Azure.AI.OpenAI
         ///   The configuration entries for Azure OpenAI chat extensions that use them.
         ///   This additional specification is only compatible with Azure OpenAI.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources)
+        /// <param name="enhancements"> If provided, the configuration options for available Azure OpenAI chat enhancements. </param>
+        /// <param name="seed">
+        /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
+        /// same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the
+        /// system_fingerprint response parameter to monitor changes in the backend."
+        /// </param>
+        /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
+        /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
+        /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice)
         {
             Messages = messages;
             Functions = functions;
@@ -97,7 +106,7 @@ namespace Azure.AI.OpenAI
             MaxTokens = maxTokens;
             Temperature = temperature;
             NucleusSamplingFactor = nucleusSamplingFactor;
-            InternalStringKeyedTokenSelectionBiases = internalStringKeyedTokenSelectionBiases;
+            TokenSelectionBiases = tokenSelectionBiases;
             User = user;
             ChoiceCount = choiceCount;
             StopSequences = stopSequences;
@@ -106,6 +115,11 @@ namespace Azure.AI.OpenAI
             InternalShouldStreamResponse = internalShouldStreamResponse;
             DeploymentName = deploymentName;
             InternalAzureExtensionsDataSources = internalAzureExtensionsDataSources;
+            Enhancements = enhancements;
+            Seed = seed;
+            ResponseFormat = responseFormat;
+            Tools = tools;
+            InternalSuppressedToolChoice = internalSuppressedToolChoice;
         }
 
         /// <summary>
@@ -113,7 +127,31 @@ namespace Azure.AI.OpenAI
         /// Typical usage begins with a chat message for the System role that provides instructions for
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
+        /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestUserMessage"/>, <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestFunctionMessage"/>.
         /// </summary>
-        public IList<ChatMessage> Messages { get; }
+        public IList<ChatRequestMessage> Messages { get; }
+        /// <summary>
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </summary>
+        public string User { get; set; }
+        /// <summary>
+        /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
+        /// same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the
+        /// system_fingerprint response parameter to monitor changes in the backend."
+        /// </summary>
+        public long? Seed { get; set; }
+        /// <summary>
+        /// An object specifying the format that the model must output. Used to enable JSON mode.
+        /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
+        /// </summary>
+        public ChatCompletionsResponseFormat ResponseFormat { get; set; }
+        /// <summary>
+        /// The available tool definitions that the chat completions request can use, including caller-defined functions.
+        /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsFunctionToolDefinition"/>.
+        /// </summary>
+        public IList<ChatCompletionsToolDefinition> Tools { get; }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Get GitHub access token response definition. </summary>
     public partial class GitHubAccessTokenResult
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenResult"/>. </summary>
         internal GitHubAccessTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenResult"/>. </summary>
         /// <param name="gitHubAccessToken"> GitHub access token. </param>
         internal GitHubAccessTokenResult(string gitHubAccessToken)
         {

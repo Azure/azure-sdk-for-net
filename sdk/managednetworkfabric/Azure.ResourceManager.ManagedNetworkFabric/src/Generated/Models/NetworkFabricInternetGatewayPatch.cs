@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,9 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Internet Gateway patch resource definition. </summary>
     public partial class NetworkFabricInternetGatewayPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricInternetGatewayPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayPatch"/>. </summary>
         public NetworkFabricInternetGatewayPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
+        internal NetworkFabricInternetGatewayPatch(IDictionary<string, string> tags, ResourceIdentifier internetGatewayRuleId) : base(tags)
+        {
+            InternetGatewayRuleId = internetGatewayRuleId;
         }
 
         /// <summary> ARM Resource ID of the Internet Gateway Rule. </summary>

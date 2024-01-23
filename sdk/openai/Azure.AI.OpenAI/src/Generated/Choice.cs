@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Choice
     {
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of <see cref="Choice"/>. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
             FinishReason = finishReason;
         }
 
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of <see cref="Choice"/>. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="contentFilterResults">
@@ -43,7 +43,7 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
-        internal Choice(string text, int index, ContentFilterResults contentFilterResults, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
+        internal Choice(string text, int index, ContentFilterResultsForChoice contentFilterResults, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
         {
             Text = text;
             Index = index;
@@ -61,7 +61,7 @@ namespace Azure.AI.OpenAI
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </summary>
-        public ContentFilterResults ContentFilterResults { get; }
+        public ContentFilterResultsForChoice ContentFilterResults { get; }
         /// <summary> The log probabilities model for tokens associated with this completions choice. </summary>
         public CompletionsLogProbabilityModel LogProbabilityModel { get; }
         /// <summary> Reason for finishing. </summary>

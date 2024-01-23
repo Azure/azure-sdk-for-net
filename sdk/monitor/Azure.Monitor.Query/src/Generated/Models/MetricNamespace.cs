@@ -10,12 +10,12 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
     public partial class MetricNamespace
     {
-        /// <summary> Initializes a new instance of MetricNamespace. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespace"/>. </summary>
         internal MetricNamespace()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricNamespace. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespace"/>. </summary>
         /// <param name="id"> The ID of the metric namespace. </param>
         /// <param name="type"> The type of the namespace. </param>
         /// <param name="name"> The escaped name of the namespace. </param>

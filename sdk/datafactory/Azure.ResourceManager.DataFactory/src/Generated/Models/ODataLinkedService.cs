@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Open Data Protocol (OData) linked service. </summary>
     public partial class ODataLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of ODataLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ODataLinkedService"/>. </summary>
         /// <param name="uri"> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ODataLinkedService(DataFactoryElement<string> uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "OData";
         }
 
-        /// <summary> Initializes a new instance of ODataLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ODataLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

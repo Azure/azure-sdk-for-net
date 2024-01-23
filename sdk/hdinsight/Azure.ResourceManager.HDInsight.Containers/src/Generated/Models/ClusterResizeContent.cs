@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The parameters for resizing a cluster. </summary>
     public partial class ClusterResizeContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ClusterResizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterResizeContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public ClusterResizeContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterResizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterResizeContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Power query sink. </summary>
     public partial class PowerQuerySink : DataFlowSink
     {
-        /// <summary> Initializes a new instance of PowerQuerySink. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySink"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PowerQuerySink(string name) : base(name)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
         }
 
-        /// <summary> Initializes a new instance of PowerQuerySink. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySink"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,46 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An azure resource object. </summary>
     public partial class MyWorkbookResourceContent
     {
-        /// <summary> Initializes a new instance of MyWorkbookResourceContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookResourceContent"/>. </summary>
         public MyWorkbookResourceContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ETag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookResourceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookResourceContent"/>. </summary>
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="name"> Azure resource name. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> Resource etag. </param>
-        internal MyWorkbookResourceContent(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MyWorkbookResourceContent(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Id = id;
@@ -37,6 +71,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Location = location;
             Tags = tags;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identity used for BYOS. </summary>

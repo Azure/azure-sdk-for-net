@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A sensitivity label update operation. </summary>
     public partial class SensitivityLabelUpdate : ResourceData
     {
-        /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivityLabelUpdate"/>. </summary>
         public SensitivityLabelUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

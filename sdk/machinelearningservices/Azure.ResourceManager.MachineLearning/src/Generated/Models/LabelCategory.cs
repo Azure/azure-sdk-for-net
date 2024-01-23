@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Label category definition. </summary>
     public partial class LabelCategory
     {
-        /// <summary> Initializes a new instance of LabelCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelCategory"/>. </summary>
         public LabelCategory()
         {
             Classes = new ChangeTrackingDictionary<string, LabelClass>();
         }
 
-        /// <summary> Initializes a new instance of LabelCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelCategory"/>. </summary>
         /// <param name="classes"> Dictionary of label classes in this category. </param>
         /// <param name="displayName"> Display name of the label category. </param>
         /// <param name="multiSelect"> Indicates whether it is allowed to select multiple classes in this category. </param>

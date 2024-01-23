@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a Hosts get Operation. </summary>
     public partial class NewRelicHostsGetContent
     {
-        /// <summary> Initializes a new instance of NewRelicHostsGetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicHostsGetContent(string userEmail)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             VmIds = new ChangeTrackingList<ResourceIdentifier>();
+            UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
+        /// <param name="vmIds"> VM resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        internal NewRelicHostsGetContent(IList<ResourceIdentifier> vmIds, string userEmail)
+        {
+            VmIds = vmIds;
             UserEmail = userEmail;
         }
 

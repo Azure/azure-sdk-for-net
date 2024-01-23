@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevCenterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

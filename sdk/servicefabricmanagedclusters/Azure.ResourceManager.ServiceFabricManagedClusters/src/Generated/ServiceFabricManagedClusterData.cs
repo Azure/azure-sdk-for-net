@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// </summary>
     public partial class ServiceFabricManagedClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The sku of the managed cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ServiceEndpoints = new ChangeTrackingList<ManagedClusterServiceEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

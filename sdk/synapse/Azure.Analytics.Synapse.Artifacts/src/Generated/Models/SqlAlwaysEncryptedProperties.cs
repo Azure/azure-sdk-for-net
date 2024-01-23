@@ -10,14 +10,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Sql always encrypted properties. </summary>
     public partial class SqlAlwaysEncryptedProperties
     {
-        /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/>. </summary>
         /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string. </param>
         public SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType)
         {
             AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
         }
 
-        /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/>. </summary>
         /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string. </param>
         /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">

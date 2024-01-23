@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The details of a PlanData resource. </summary>
     public partial class NewRelicPlanData : ResourceData
     {
-        /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicPlanData"/>. </summary>
         public NewRelicPlanData()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

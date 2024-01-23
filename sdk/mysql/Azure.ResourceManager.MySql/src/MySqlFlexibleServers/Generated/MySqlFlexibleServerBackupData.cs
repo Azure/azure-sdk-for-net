@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerBackupData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupData"/>. </summary>
         public MySqlFlexibleServerBackupData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

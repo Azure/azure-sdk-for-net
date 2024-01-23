@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services account commitment tier. </summary>
     public partial class CommitmentTier
     {
-        /// <summary> Initializes a new instance of CommitmentTier. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommitmentTier"/>. </summary>
         internal CommitmentTier()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentTier"/>. </summary>
         /// <param name="kind"> The Kind of the resource. </param>
         /// <param name="skuName"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="hostingModel"> Account hosting model. </param>
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="maxCount"> Commitment period commitment max count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
         /// <param name="cost"> Cognitive Services account commitment cost. </param>
-        internal CommitmentTier(string kind, string skuName, ServiceAccountHostingModel? hostingModel, string planType, string tier, int? maxCount, CommitmentQuota quota, CommitmentCost cost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentTier(string kind, string skuName, ServiceAccountHostingModel? hostingModel, string planType, string tier, int? maxCount, CommitmentQuota quota, CommitmentCost cost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             SkuName = skuName;
@@ -34,6 +70,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             MaxCount = maxCount;
             Quota = quota;
             Cost = cost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Kind of the resource. </summary>

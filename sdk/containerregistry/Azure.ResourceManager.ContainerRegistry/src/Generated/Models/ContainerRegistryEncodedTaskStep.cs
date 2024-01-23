@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a encoded task step. </summary>
     public partial class ContainerRegistryEncodedTaskStep : ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStep"/>. </summary>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> is null. </exception>
         public ContainerRegistryEncodedTaskStep(string encodedTaskContent)
@@ -26,20 +26,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTaskStepType = ContainerRegistryTaskStepType.EncodedTask;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStep"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="encodedValuesContent"> Base64 encoded value of the parameters/values file content. </param>
         /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        internal ContainerRegistryEncodedTaskStep(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values) : base(containerRegistryTaskStepType, baseImageDependencies, contextPath, contextAccessToken)
+        internal ContainerRegistryEncodedTaskStep(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values) : base(containerRegistryTaskStepType, baseImageDependencies, contextPath, contextAccessToken, serializedAdditionalRawData)
         {
             EncodedTaskContent = encodedTaskContent;
             EncodedValuesContent = encodedValuesContent;
             Values = values;
             ContainerRegistryTaskStepType = containerRegistryTaskStepType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStep"/> for deserialization. </summary>
+        internal ContainerRegistryEncodedTaskStep()
+        {
         }
 
         /// <summary> Base64 encoded value of the template/definition file content. </summary>

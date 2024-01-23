@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The RunNotebookSparkSessionOptions. </summary>
     public partial class RunNotebookSparkSessionOptions
     {
-        /// <summary> Initializes a new instance of RunNotebookSparkSessionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSparkSessionOptions"/>. </summary>
         public RunNotebookSparkSessionOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RunNotebookSparkSessionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSparkSessionOptions"/>. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="kind"> The session kind. </param>
         /// <param name="proxyUser"> User to impersonate when starting the session. </param>

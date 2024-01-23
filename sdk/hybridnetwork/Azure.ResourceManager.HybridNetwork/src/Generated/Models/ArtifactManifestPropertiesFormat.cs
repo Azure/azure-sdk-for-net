@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact manifest properties. </summary>
     public partial class ArtifactManifestPropertiesFormat
     {
-        /// <summary> Initializes a new instance of ArtifactManifestPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPropertiesFormat"/>. </summary>
         public ArtifactManifestPropertiesFormat()
         {
             Artifacts = new ChangeTrackingList<ManifestArtifactFormat>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
         /// <param name="artifactManifestState"> The artifact manifest state. </param>
         /// <param name="artifacts"> The artifacts list. </param>

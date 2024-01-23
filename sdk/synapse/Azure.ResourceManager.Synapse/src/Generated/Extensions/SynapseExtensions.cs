@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource"/> object. </returns>
         public static SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource"/> object. </returns>
         public static SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseKeyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseKeyResource"/> object. </returns>
         public static SynapseKeyResource GetSynapseKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionResource"/> object. </returns>
         public static SynapsePrivateEndpointConnectionResource GetSynapsePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource"/> object. </returns>
         public static SynapseWorkspacePrivateLinkResource GetSynapseWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapsePrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateLinkResource"/> object. </returns>
         public static SynapsePrivateLinkResource GetSynapsePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource"/> object. </returns>
         public static SynapsePrivateLinkHubResource GetSynapsePrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/> object. </returns>
         public static SynapsePrivateEndpointConnectionForPrivateLinkHubResource GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolResource"/> object. </returns>
         public static SynapseSqlPoolResource GetSynapseSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource"/> object. </returns>
         public static SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource"/> object. </returns>
         public static SynapseGeoBackupPolicyResource GetSynapseGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource"/> object. </returns>
         public static SynapseDataWarehouseUserActivityResource GetSynapseDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseRestorePointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseRestorePointResource"/> object. </returns>
         public static SynapseRestorePointResource GetSynapseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseReplicationLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseReplicationLinkResource"/> object. </returns>
         public static SynapseReplicationLinkResource GetSynapseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource"/> object. </returns>
         public static SynapseMaintenanceWindowResource GetSynapseMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource"/> object. </returns>
         public static SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource"/> object. </returns>
         public static SynapseTransparentDataEncryptionResource GetSynapseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSensitivityLabelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSensitivityLabelResource"/> object. </returns>
         public static SynapseSensitivityLabelResource GetSynapseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource"/> object. </returns>
         public static SynapseSqlPoolSchemaResource GetSynapseSqlPoolSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolTableResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolTableResource"/> object. </returns>
         public static SynapseSqlPoolTableResource GetSynapseSqlPoolTableResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource"/> object. </returns>
         public static SynapseSqlPoolConnectionPolicyResource GetSynapseSqlPoolConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource"/> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentResource GetSynapseSqlPoolVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource"/> object. </returns>
         public static SynapseVulnerabilityAssessmentScanRecordResource GetSynapseVulnerabilityAssessmentScanRecordResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> object. </returns>
         public static SynapseSqlPoolSecurityAlertPolicyResource GetSynapseSqlPoolSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource"/> object. </returns>
         public static SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource"/> object. </returns>
         public static SynapseDataMaskingRuleResource GetSynapseDataMaskingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource"/> object. </returns>
         public static SynapseSqlPoolColumnResource GetSynapseSqlPoolColumnResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseWorkloadGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkloadGroupResource"/> object. </returns>
         public static SynapseWorkloadGroupResource GetSynapseWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource"/> object. </returns>
         public static SynapseWorkloadClassifierResource GetSynapseWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseServerBlobAuditingPolicyResource GetSynapseServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseExtendedServerBlobAuditingPolicyResource GetSynapseExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource"/> object. </returns>
         public static SynapseServerSecurityAlertPolicyResource GetSynapseServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource"/> object. </returns>
         public static SynapseServerVulnerabilityAssessmentResource GetSynapseServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource"/> object. </returns>
         public static SynapseEncryptionProtectorResource GetSynapseEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource"/> object. </returns>
         public static SynapseRecoverableSqlPoolResource GetSynapseRecoverableSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> object. </returns>
         public static SynapseDedicatedSqlMinimalTlsSettingResource GetSynapseDedicatedSqlMinimalTlsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceResource"/> object. </returns>
         public static SynapseWorkspaceResource GetSynapseWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource"/> object. </returns>
         public static SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource"/> object. </returns>
         public static SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource"/> object. </returns>
         public static SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource"/> object. </returns>
         public static SynapseRestorableDroppedSqlPoolResource GetSynapseRestorableDroppedSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource"/> object. </returns>
         public static SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseLibraryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseLibraryResource"/> object. </returns>
         public static SynapseLibraryResource GetSynapseLibraryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource"/> object. </returns>
         public static SynapseIntegrationRuntimeResource GetSynapseIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseSparkConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSparkConfigurationResource"/> object. </returns>
         public static SynapseSparkConfigurationResource GetSynapseSparkConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseKustoPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseKustoPoolResource"/> object. </returns>
         public static SynapseKustoPoolResource GetSynapseKustoPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource"/> object. </returns>
         public static SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseDatabaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDatabaseResource"/> object. </returns>
         public static SynapseDatabaseResource GetSynapseDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseDataConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataConnectionResource"/> object. </returns>
         public static SynapseDataConnectionResource GetSynapseDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource"/> object. </returns>
         public static SynapseClusterPrincipalAssignmentResource GetSynapseClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource"/> object. </returns>
         public static SynapseDatabasePrincipalAssignmentResource GetSynapseDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -1089,6 +1089,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1118,6 +1126,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1166,6 +1182,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1195,6 +1219,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1226,6 +1258,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1235,7 +1275,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1254,6 +1294,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1263,7 +1311,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1282,6 +1330,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1291,7 +1347,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1310,6 +1366,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1319,7 +1383,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1338,6 +1402,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1347,7 +1419,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoPoolSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1366,6 +1438,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1375,7 +1455,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoPoolSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -1393,6 +1473,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1422,6 +1510,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>

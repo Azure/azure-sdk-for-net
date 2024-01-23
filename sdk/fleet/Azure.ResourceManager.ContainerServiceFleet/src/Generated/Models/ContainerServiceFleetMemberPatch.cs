@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The type used for update operations of the FleetMember. </summary>
     public partial class ContainerServiceFleetMemberPatch
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
         public ContainerServiceFleetMemberPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
+        /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
+        internal ContainerServiceFleetMemberPatch(string group)
+        {
+            Group = group;
         }
 
         /// <summary> The group this member belongs to for multi-cluster update management. </summary>

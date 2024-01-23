@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of Job resources. </summary>
     internal partial class BackupJobListResult
     {
-        /// <summary> Initializes a new instance of BackupJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobListResult"/>. </summary>
         internal BackupJobListResult()
         {
             Value = new ChangeTrackingList<BackupJobData>();
         }
 
-        /// <summary> Initializes a new instance of BackupJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobListResult"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal BackupJobListResult(IReadOnlyList<BackupJobData> value, string nextLink)

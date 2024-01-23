@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status for an operation or group of operations. </summary>
     public partial class ContainerServiceFleetUpdateStatus
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStatus"/>. </summary>
         internal ContainerServiceFleetUpdateStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStatus"/>. </summary>
         /// <param name="startOn"> The time the operation or group was started. </param>
         /// <param name="completedOn"> The time the operation or group was completed. </param>
         /// <param name="state"> The State of the operation or group. </param>

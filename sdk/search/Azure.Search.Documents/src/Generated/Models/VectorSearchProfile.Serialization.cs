@@ -19,6 +19,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(AlgorithmConfigurationName);
+            if (Optional.IsDefined(Vectorizer))
+            {
+                writer.WritePropertyName("vectorizer"u8);
+                writer.WriteStringValue(Vectorizer);
+            }
             writer.WriteEndObject();
         }
 
@@ -30,6 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             string algorithm = default;
+            Optional<string> vectorizer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +48,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     algorithm = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vectorizer"u8))
+                {
+                    vectorizer = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VectorSearchProfile(name, algorithm);
+            return new VectorSearchProfile(name, algorithm, vectorizer.Value);
         }
     }
 }

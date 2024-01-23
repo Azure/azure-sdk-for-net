@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmApiManagementModelFactory
     {
-        /// <summary> Initializes a new instance of ApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
-            return new ApiData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet);
+            return new ApiData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiEntityBaseContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiEntityBaseContract"/>. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
         /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
@@ -72,10 +72,78 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ApiEntityBaseContract"/> instance for mocking. </returns>
         public static ApiEntityBaseContract ApiEntityBaseContract(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null)
         {
-            return new ApiEntityBaseContract(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license);
+            return new ApiEntityBaseContract(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiRevisionContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiCreateOrUpdateContent"/>. </summary>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="value"> Content value when Importing an API. </param>
+        /// <param name="format"> Format of the Content in which the API is getting imported. </param>
+        /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
+        /// <param name="soapApiType">
+        /// Type of API to create.
+        ///  * `http` creates a REST API
+        ///  * `soap` creates a SOAP pass-through API
+        ///  * `websocket` creates websocket API
+        ///  * `graphql` creates GraphQL API.
+        /// </param>
+        /// <returns> A new <see cref="Models.ApiCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string value = null, ContentFormat? format = null, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, SoapApiType? soapApiType = null)
+        {
+            protocols ??= new List<ApiOperationInvokableProtocol>();
+
+            return new ApiCreateOrUpdateContent(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet, value, format, wsdlSelector, soapApiType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiPatch"/>. </summary>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="displayName"> API name. </param>
+        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <returns> A new <see cref="Models.ApiPatch"/> instance for mocking. </returns>
+        public static ApiPatch ApiPatch(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null)
+        {
+            protocols ??= new List<ApiOperationInvokableProtocol>();
+
+            return new ApiPatch(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, displayName, serviceUri, path, protocols?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiRevisionContract"/>. </summary>
         /// <param name="apiId"> Identifier of the API Revision. </param>
         /// <param name="apiRevision"> Revision number of API. </param>
         /// <param name="createdOn"> The time the API Revision was created. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
@@ -87,10 +155,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ApiRevisionContract"/> instance for mocking. </returns>
         public static ApiRevisionContract ApiRevisionContract(string apiId = null, string apiRevision = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string description = null, string privateUriString = null, bool? isOnline = null, bool? isCurrent = null)
         {
-            return new ApiRevisionContract(apiId, apiRevision, createdOn, updatedOn, description, privateUriString, isOnline, isCurrent);
+            return new ApiRevisionContract(apiId, apiRevision, createdOn, updatedOn, description, privateUriString, isOnline, isCurrent, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiReleaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiReleaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -102,10 +170,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiReleaseData"/> instance for mocking. </returns>
         public static ApiReleaseData ApiReleaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier apiId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string notes = null)
         {
-            return new ApiReleaseData(id, name, resourceType, systemData, apiId, createdOn, updatedOn, notes);
+            return new ApiReleaseData(id, name, resourceType, systemData, apiId, createdOn, updatedOn, notes, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -124,10 +192,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             templateParameters ??= new List<ParameterContract>();
             responses ??= new List<ResponseContract>();
 
-            return new ApiOperationData(id, name, resourceType, systemData, templateParameters?.ToList(), description, request, responses?.ToList(), policies, displayName, method, uriTemplate);
+            return new ApiOperationData(id, name, resourceType, systemData, templateParameters?.ToList(), description, request, responses?.ToList(), policies, displayName, method, uriTemplate, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.PolicyContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -137,10 +205,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.PolicyContractData"/> instance for mocking. </returns>
         public static PolicyContractData PolicyContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, PolicyContentFormat? format = null)
         {
-            return new PolicyContractData(id, name, resourceType, systemData, value, format);
+            return new PolicyContractData(id, name, resourceType, systemData, value, format, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TagContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.TagContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -149,10 +217,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.TagContractData"/> instance for mocking. </returns>
         public static TagContractData TagContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null)
         {
-            return new TagContractData(id, name, resourceType, systemData, displayName);
+            return new TagContractData(id, name, resourceType, systemData, displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementProductData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementProductData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -167,10 +235,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementProductData"/> instance for mocking. </returns>
         public static ApiManagementProductData ApiManagementProductData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string terms = null, bool? isSubscriptionRequired = null, bool? isApprovalRequired = null, int? subscriptionsLimit = null, ApiManagementProductState? state = null, string displayName = null)
         {
-            return new ApiManagementProductData(id, name, resourceType, systemData, description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state, displayName);
+            return new ApiManagementProductData(id, name, resourceType, systemData, description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state, displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ProductEntityBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductEntityBaseProperties"/>. </summary>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
         /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
@@ -180,10 +248,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ProductEntityBaseProperties"/> instance for mocking. </returns>
         public static ProductEntityBaseProperties ProductEntityBaseProperties(string description = null, string terms = null, bool? isSubscriptionRequired = null, bool? isApprovalRequired = null, int? subscriptionsLimit = null, ApiManagementProductState? state = null)
         {
-            return new ProductEntityBaseProperties(description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state);
+            return new ProductEntityBaseProperties(description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -195,10 +263,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiSchemaData"/> instance for mocking. </returns>
         public static ApiSchemaData ApiSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentType = null, string value = null, BinaryData definitions = null, BinaryData components = null)
         {
-            return new ApiSchemaData(id, name, resourceType, systemData, contentType, value, definitions, components);
+            return new ApiSchemaData(id, name, resourceType, systemData, contentType, value, definitions, components, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.DiagnosticContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -216,10 +284,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.DiagnosticContractData"/> instance for mocking. </returns>
         public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlwaysLog? alwaysLog = null, string loggerId = null, SamplingSettings sampling = null, PipelineDiagnosticSettings frontend = null, PipelineDiagnosticSettings backend = null, bool? isLogClientIPEnabled = null, HttpCorrelationProtocol? httpCorrelationProtocol = null, TraceVerbosityLevel? verbosity = null, OperationNameFormat? operationNameFormat = null, bool? metrics = null)
         {
-            return new DiagnosticContractData(id, name, resourceType, systemData, alwaysLog, loggerId, sampling, frontend, backend, isLogClientIPEnabled, httpCorrelationProtocol, verbosity, operationNameFormat, metrics);
+            return new DiagnosticContractData(id, name, resourceType, systemData, alwaysLog, loggerId, sampling, frontend, backend, isLogClientIPEnabled, httpCorrelationProtocol, verbosity, operationNameFormat, metrics, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of IssueContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.IssueContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -233,10 +301,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.IssueContractData"/> instance for mocking. </returns>
         public static IssueContractData IssueContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, IssueState? state = null, ResourceIdentifier apiId = null, string title = null, string description = null, ResourceIdentifier userId = null)
         {
-            return new IssueContractData(id, name, resourceType, systemData, createdOn, state, apiId, title, description, userId);
+            return new IssueContractData(id, name, resourceType, systemData, createdOn, state, apiId, title, description, userId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiIssueCommentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiIssueCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -247,10 +315,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiIssueCommentData"/> instance for mocking. </returns>
         public static ApiIssueCommentData ApiIssueCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string text = null, DateTimeOffset? createdOn = null, ResourceIdentifier userId = null)
         {
-            return new ApiIssueCommentData(id, name, resourceType, systemData, text, createdOn, userId);
+            return new ApiIssueCommentData(id, name, resourceType, systemData, text, createdOn, userId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiIssueAttachmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiIssueAttachmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -261,10 +329,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiIssueAttachmentData"/> instance for mocking. </returns>
         public static ApiIssueAttachmentData ApiIssueAttachmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string contentFormat = null, string content = null)
         {
-            return new ApiIssueAttachmentData(id, name, resourceType, systemData, title, contentFormat, content);
+            return new ApiIssueAttachmentData(id, name, resourceType, systemData, title, contentFormat, content, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiTagDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiTagDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -277,10 +345,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiTagDescriptionData"/> instance for mocking. </returns>
         public static ApiTagDescriptionData ApiTagDescriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, Uri externalDocsUri = null, string externalDocsDescription = null, string tagId = null, string displayName = null)
         {
-            return new ApiTagDescriptionData(id, name, resourceType, systemData, description, externalDocsUri, externalDocsDescription, tagId, displayName);
+            return new ApiTagDescriptionData(id, name, resourceType, systemData, description, externalDocsUri, externalDocsDescription, tagId, displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TagResourceContractDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TagResourceContractDetails"/>. </summary>
         /// <param name="tag"> Tag associated with the resource. </param>
         /// <param name="api"> API associated with the tag. </param>
         /// <param name="operation"> Operation associated with the tag. </param>
@@ -288,19 +356,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.TagResourceContractDetails"/> instance for mocking. </returns>
         public static TagResourceContractDetails TagResourceContractDetails(AssociatedTagProperties tag = null, AssociatedApiProperties api = null, AssociatedOperationProperties operation = null, AssociatedProductProperties product = null)
         {
-            return new TagResourceContractDetails(tag, api, operation, product);
+            return new TagResourceContractDetails(tag, api, operation, product, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AssociatedTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssociatedTagProperties"/>. </summary>
         /// <param name="id"> Tag identifier. </param>
         /// <param name="name"> Tag Name. </param>
         /// <returns> A new <see cref="Models.AssociatedTagProperties"/> instance for mocking. </returns>
         public static AssociatedTagProperties AssociatedTagProperties(string id = null, string name = null)
         {
-            return new AssociatedTagProperties(id, name);
+            return new AssociatedTagProperties(id, name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AssociatedApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssociatedApiProperties"/>. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
         /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
@@ -326,10 +394,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
-            return new AssociatedApiProperties(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, id, name, serviceUri, path, protocols?.ToList());
+            return new AssociatedApiProperties(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, serializedAdditionalRawData: null, id, name, serviceUri, path, protocols?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AssociatedOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssociatedOperationProperties"/>. </summary>
         /// <param name="id"> Identifier of the operation in form /operations/{operationId}. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="apiName"> API Name. </param>
@@ -341,10 +409,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.AssociatedOperationProperties"/> instance for mocking. </returns>
         public static AssociatedOperationProperties AssociatedOperationProperties(string id = null, string name = null, string apiName = null, string apiRevision = null, string apiVersion = null, string description = null, string method = null, string uriTemplate = null)
         {
-            return new AssociatedOperationProperties(id, name, apiName, apiRevision, apiVersion, description, method, uriTemplate);
+            return new AssociatedOperationProperties(id, name, apiName, apiRevision, apiVersion, description, method, uriTemplate, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AssociatedProductProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssociatedProductProperties"/>. </summary>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
         /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
@@ -356,10 +424,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.AssociatedProductProperties"/> instance for mocking. </returns>
         public static AssociatedProductProperties AssociatedProductProperties(string description = null, string terms = null, bool? isSubscriptionRequired = null, bool? isApprovalRequired = null, int? subscriptionsLimit = null, ApiManagementProductState? state = null, string id = null, string name = null)
         {
-            return new AssociatedProductProperties(description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state, id, name);
+            return new AssociatedProductProperties(description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state, serializedAdditionalRawData: null, id, name);
         }
 
-        /// <summary> Initializes a new instance of ApiVersionSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiVersionSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -372,10 +440,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiVersionSetData"/> instance for mocking. </returns>
         public static ApiVersionSetData ApiVersionSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string versionQueryName = null, string versionHeaderName = null, string displayName = null, VersioningScheme? versioningScheme = null)
         {
-            return new ApiVersionSetData(id, name, resourceType, systemData, description, versionQueryName, versionHeaderName, displayName, versioningScheme);
+            return new ApiVersionSetData(id, name, resourceType, systemData, description, versionQueryName, versionHeaderName, displayName, versioningScheme, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementAuthorizationServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -405,10 +473,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bearerTokenSendingMethods ??= new List<BearerTokenSendingMethod>();
             grantTypes ??= new List<GrantType>();
 
-            return new ApiManagementAuthorizationServerData(id, name, resourceType, systemData, description, authorizationMethods?.ToList(), clientAuthenticationMethods?.ToList(), tokenBodyParameters?.ToList(), tokenEndpoint, doesSupportState, defaultScope, bearerTokenSendingMethods?.ToList(), resourceOwnerUsername, resourceOwnerPassword, displayName, clientRegistrationEndpoint, authorizationEndpoint, grantTypes?.ToList(), clientId, clientSecret);
+            return new ApiManagementAuthorizationServerData(id, name, resourceType, systemData, description, authorizationMethods?.ToList(), clientAuthenticationMethods?.ToList(), tokenBodyParameters?.ToList(), tokenEndpoint, doesSupportState, defaultScope, bearerTokenSendingMethods?.ToList(), resourceOwnerUsername, resourceOwnerPassword, displayName, clientRegistrationEndpoint, authorizationEndpoint, grantTypes?.ToList(), clientId, clientSecret, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementAuthorizationServerPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -438,20 +506,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bearerTokenSendingMethods ??= new List<BearerTokenSendingMethod>();
             grantTypes ??= new List<GrantType>();
 
-            return new ApiManagementAuthorizationServerPatch(id, name, resourceType, systemData, description, authorizationMethods?.ToList(), clientAuthenticationMethods?.ToList(), tokenBodyParameters?.ToList(), tokenEndpoint, doesSupportState, defaultScope, bearerTokenSendingMethods?.ToList(), resourceOwnerUsername, resourceOwnerPassword, displayName, clientRegistrationEndpoint, authorizationEndpoint, grantTypes?.ToList(), clientId, clientSecret);
+            return new ApiManagementAuthorizationServerPatch(id, name, resourceType, systemData, description, authorizationMethods?.ToList(), clientAuthenticationMethods?.ToList(), tokenBodyParameters?.ToList(), tokenEndpoint, doesSupportState, defaultScope, bearerTokenSendingMethods?.ToList(), resourceOwnerUsername, resourceOwnerPassword, displayName, clientRegistrationEndpoint, authorizationEndpoint, grantTypes?.ToList(), clientId, clientSecret, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationServerSecretsContract"/>. </summary>
         /// <param name="clientSecret"> oAuth Authorization Server Secrets. </param>
         /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
         /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
         /// <returns> A new <see cref="Models.AuthorizationServerSecretsContract"/> instance for mocking. </returns>
         public static AuthorizationServerSecretsContract AuthorizationServerSecretsContract(string clientSecret = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null)
         {
-            return new AuthorizationServerSecretsContract(clientSecret, resourceOwnerUsername, resourceOwnerPassword);
+            return new AuthorizationServerSecretsContract(clientSecret, resourceOwnerUsername, resourceOwnerPassword, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementBackendData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementBackendData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -468,10 +536,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementBackendData"/> instance for mocking. </returns>
         public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, Uri resourceUri = null, BackendServiceFabricClusterProperties backendServiceFabricCluster = null, BackendCredentialsContract credentials = null, BackendProxyContract proxy = null, BackendTlsProperties tls = null, Uri uri = null, BackendProtocol? protocol = null)
         {
-            return new ApiManagementBackendData(id, name, resourceType, systemData, title, description, resourceUri, backendServiceFabricCluster != null ? new BackendProperties(backendServiceFabricCluster) : null, credentials, proxy, tls, uri, protocol);
+            return new ApiManagementBackendData(id, name, resourceType, systemData, title, description, resourceUri, backendServiceFabricCluster != null ? new BackendProperties(backendServiceFabricCluster, serializedAdditionalRawData: null) : null, credentials, proxy, tls, uri, protocol, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BackendReconnectContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackendReconnectContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -480,10 +548,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.BackendReconnectContract"/> instance for mocking. </returns>
         public static BackendReconnectContract BackendReconnectContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TimeSpan? after = null)
         {
-            return new BackendReconnectContract(id, name, resourceType, systemData, after);
+            return new BackendReconnectContract(id, name, resourceType, systemData, after, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -495,10 +563,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementCacheData"/> instance for mocking. </returns>
         public static ApiManagementCacheData ApiManagementCacheData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string connectionString = null, string useFromLocation = null, Uri resourceUri = null)
         {
-            return new ApiManagementCacheData(id, name, resourceType, systemData, description, connectionString, useFromLocation, resourceUri);
+            return new ApiManagementCacheData(id, name, resourceType, systemData, description, connectionString, useFromLocation, resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -513,10 +581,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementCertificateData"/> instance for mocking. </returns>
         public static ApiManagementCertificateData ApiManagementCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string subject = null, string thumbprint = null, DateTimeOffset? expireOn = null, KeyVaultContractProperties keyVaultDetails = null)
         {
-            return new ApiManagementCertificateData(id, name, resourceType, systemData, subject, thumbprint, expireOn, keyVaultDetails);
+            return new ApiManagementCertificateData(id, name, resourceType, systemData, subject, thumbprint, expireOn, keyVaultDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectivityCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectivityCheckContent"/>. </summary>
+        /// <param name="source"> Definitions about the connectivity check origin. </param>
+        /// <param name="destination"> The connectivity check operation destination. </param>
+        /// <param name="preferredIPVersion"> The IP version to be used. Only IPv4 is supported for now. </param>
+        /// <param name="protocol"> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </param>
+        /// <param name="protocolHttpConfiguration"> Protocol-specific configuration. </param>
+        /// <returns> A new <see cref="Models.ConnectivityCheckContent"/> instance for mocking. </returns>
+        public static ConnectivityCheckContent ConnectivityCheckContent(ConnectivityCheckRequestSource source = null, ConnectivityCheckRequestDestination destination = null, PreferredIPVersion? preferredIPVersion = null, ConnectivityCheckProtocol? protocol = null, ConnectivityCheckRequestHttpConfiguration protocolHttpConfiguration = null)
+        {
+            return new ConnectivityCheckContent(source, destination, preferredIPVersion, protocol, protocolHttpConfiguration != null ? new ConnectivityCheckRequestProtocolConfiguration(protocolHttpConfiguration, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectivityCheckRequestSource"/>. </summary>
+        /// <param name="region"> The API Management service region from where to start the connectivity check operation. </param>
+        /// <param name="instance"> The particular VMSS instance from which to fire the request. </param>
+        /// <returns> A new <see cref="Models.ConnectivityCheckRequestSource"/> instance for mocking. </returns>
+        public static ConnectivityCheckRequestSource ConnectivityCheckRequestSource(string region = null, long? instance = null)
+        {
+            return new ConnectivityCheckRequestSource(region, instance, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectivityCheckResult"/>. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
         /// <param name="connectionStatus"> The connection status. </param>
         /// <param name="avgLatencyInMs"> Average latency in milliseconds. </param>
@@ -529,10 +618,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             hops ??= new List<ConnectivityHop>();
 
-            return new ConnectivityCheckResult(hops?.ToList(), connectionStatus, avgLatencyInMs, minLatencyInMs, maxLatencyInMs, probesSent, probesFailed);
+            return new ConnectivityCheckResult(hops?.ToList(), connectionStatus, avgLatencyInMs, minLatencyInMs, maxLatencyInMs, probesSent, probesFailed, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectivityHop. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectivityHop"/>. </summary>
         /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
@@ -545,10 +634,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             nextHopIds ??= new List<string>();
             issues ??= new List<ConnectivityIssue>();
 
-            return new ConnectivityHop(connectivityHopType, id, address, resourceId, nextHopIds?.ToList(), issues?.ToList());
+            return new ConnectivityHop(connectivityHopType, id, address, resourceId, nextHopIds?.ToList(), issues?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectivityIssue"/>. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="issueType"> The type of issue. </param>
@@ -558,10 +647,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             context ??= new List<IDictionary<string, string>>();
 
-            return new ConnectivityIssue(origin, severity, issueType, context?.ToList());
+            return new ConnectivityIssue(origin, severity, issueType, context?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementDeletedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementDeletedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -573,20 +662,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementDeletedServiceData"/> instance for mocking. </returns>
         public static ApiManagementDeletedServiceData ApiManagementDeletedServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier serviceId = null, DateTimeOffset? scheduledPurgeOn = null, DateTimeOffset? deletedOn = null)
         {
-            return new ApiManagementDeletedServiceData(id, name, resourceType, systemData, location, serviceId, scheduledPurgeOn, deletedOn);
+            return new ApiManagementDeletedServiceData(id, name, resourceType, systemData, location, serviceId, scheduledPurgeOn, deletedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AvailableApiManagementServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableApiManagementServiceSkuResult"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="skuName"> Specifies API Management SKU. </param>
         /// <param name="capacity"> Specifies the number of API Management units. </param>
         /// <returns> A new <see cref="Models.AvailableApiManagementServiceSkuResult"/> instance for mocking. </returns>
         public static AvailableApiManagementServiceSkuResult AvailableApiManagementServiceSkuResult(ResourceType? resourceType = null, ApiManagementServiceSkuType? skuName = null, ApiManagementResourceSkuCapacity capacity = null)
         {
-            return new AvailableApiManagementServiceSkuResult(resourceType, skuName != null ? new ResourceSku(skuName) : null, capacity);
+            return new AvailableApiManagementServiceSkuResult(resourceType, skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null, capacity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementResourceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementResourceSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity that can be set. </param>
         /// <param name="default"> The default capacity. </param>
@@ -594,10 +683,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ApiManagementResourceSkuCapacity"/> instance for mocking. </returns>
         public static ApiManagementResourceSkuCapacity ApiManagementResourceSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, ApiManagementResourceSkuCapacityScaleType? scaleType = null)
         {
-            return new ApiManagementResourceSkuCapacity(minimum, maximum, @default, scaleType);
+            return new ApiManagementResourceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementServiceBackupRestoreContent"/>. </summary>
+        /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
+        /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
+        /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
+        /// <param name="accessType"> The type of access to be used for the storage account. </param>
+        /// <param name="accessKey"> Storage account access key. Required only if `accessType` is set to `AccessKey`. </param>
+        /// <param name="clientId"> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </param>
+        /// <returns> A new <see cref="Models.ApiManagementServiceBackupRestoreContent"/> instance for mocking. </returns>
+        public static ApiManagementServiceBackupRestoreContent ApiManagementServiceBackupRestoreContent(string storageAccount = null, string containerName = null, string backupName = null, StorageAccountAccessType? accessType = null, string accessKey = null, string clientId = null)
+        {
+            return new ApiManagementServiceBackupRestoreContent(storageAccount, containerName, backupName, accessType, accessKey, clientId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -649,20 +751,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             certificates ??= new List<CertificateConfiguration>();
             privateEndpointConnections ??= new List<RemotePrivateEndpointConnectionWrapper>();
 
-            return new ApiManagementServiceData(id, name, resourceType, systemData, tags, location, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, minApiVersion != null ? new ApiVersionConstraint(minApiVersion) : null, restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName);
+            return new ApiManagementServiceData(id, name, resourceType, systemData, tags, location, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, minApiVersion != null ? new ApiVersionConstraint(minApiVersion, serializedAdditionalRawData: null) : null, restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkConfiguration"/>. </summary>
         /// <param name="vnetId"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
         /// <param name="subnetname"> The name of the subnet. </param>
         /// <param name="subnetResourceId"> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </param>
         /// <returns> A new <see cref="Models.VirtualNetworkConfiguration"/> instance for mocking. </returns>
         public static VirtualNetworkConfiguration VirtualNetworkConfiguration(Guid? vnetId = null, string subnetname = null, ResourceIdentifier subnetResourceId = null)
         {
-            return new VirtualNetworkConfiguration(vnetId, subnetname, subnetResourceId);
+            return new VirtualNetworkConfiguration(vnetId, subnetname, subnetResourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AdditionalLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdditionalLocation"/>. </summary>
         /// <param name="location"> The location name of the additional region among Azure Data center regions. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
@@ -680,10 +782,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             publicIPAddresses ??= new List<IPAddress>();
             privateIPAddresses ??= new List<IPAddress>();
 
-            return new AdditionalLocation(location, sku, zones?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, virtualNetworkConfiguration, gatewayRegionalUri, disableGateway, platformVersion);
+            return new AdditionalLocation(location, sku, zones?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, virtualNetworkConfiguration, gatewayRegionalUri, disableGateway, platformVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RemotePrivateEndpointConnectionWrapper"/>. </summary>
         /// <param name="id"> Private Endpoint connection resource id. </param>
         /// <param name="name"> Private Endpoint Connection Name. </param>
         /// <param name="resourceType"> Private Endpoint Connection Resource Type. </param>
@@ -696,10 +798,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             groupIds ??= new List<string>();
 
-            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, groupIds?.ToList());
+            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, groupIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementServicePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -750,36 +852,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
             privateEndpointConnections ??= new List<RemotePrivateEndpointConnectionWrapper>();
             tags ??= new Dictionary<string, string>();
 
-            return new ApiManagementServicePatch(id, name, resourceType, systemData, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, minApiVersion != null ? new ApiVersionConstraint(minApiVersion) : null, restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName, tags);
+            return new ApiManagementServicePatch(id, name, resourceType, systemData, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, minApiVersion != null ? new ApiVersionConstraint(minApiVersion, serializedAdditionalRawData: null) : null, restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName, tags, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceGetSsoTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementServiceGetSsoTokenResult"/>. </summary>
         /// <param name="redirectUri"> Redirect URL to the Publisher Portal containing the SSO token. </param>
         /// <returns> A new <see cref="Models.ApiManagementServiceGetSsoTokenResult"/> instance for mocking. </returns>
         public static ApiManagementServiceGetSsoTokenResult ApiManagementServiceGetSsoTokenResult(Uri redirectUri = null)
         {
-            return new ApiManagementServiceGetSsoTokenResult(redirectUri);
+            return new ApiManagementServiceGetSsoTokenResult(redirectUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementServiceNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> True if the name is available and can be used to create a new API Management service; otherwise false. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </param>
         /// <param name="reason"> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
         /// <returns> A new <see cref="Models.ApiManagementServiceNameAvailabilityResult"/> instance for mocking. </returns>
         public static ApiManagementServiceNameAvailabilityResult ApiManagementServiceNameAvailabilityResult(bool? isNameAvailable = null, string message = null, ApiManagementServiceNameUnavailableReason? reason = null)
         {
-            return new ApiManagementServiceNameAvailabilityResult(isNameAvailable, message, reason);
+            return new ApiManagementServiceNameAvailabilityResult(isNameAvailable, message, reason, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceGetDomainOwnershipIdentifierResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementServiceGetDomainOwnershipIdentifierResult"/>. </summary>
         /// <param name="domainOwnershipIdentifier"> The domain ownership identifier value. </param>
         /// <returns> A new <see cref="Models.ApiManagementServiceGetDomainOwnershipIdentifierResult"/> instance for mocking. </returns>
         public static ApiManagementServiceGetDomainOwnershipIdentifierResult ApiManagementServiceGetDomainOwnershipIdentifierResult(string domainOwnershipIdentifier = null)
         {
-            return new ApiManagementServiceGetDomainOwnershipIdentifierResult(domainOwnershipIdentifier);
+            return new ApiManagementServiceGetDomainOwnershipIdentifierResult(domainOwnershipIdentifier, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementEmailTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -795,10 +897,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             parameters ??= new List<EmailTemplateParametersContractProperties>();
 
-            return new ApiManagementEmailTemplateData(id, name, resourceType, systemData, subject, body, title, description, isDefault, parameters?.ToList());
+            return new ApiManagementEmailTemplateData(id, name, resourceType, systemData, subject, body, title, description, isDefault, parameters?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -808,27 +910,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementGatewayData"/> instance for mocking. </returns>
         public static ApiManagementGatewayData ApiManagementGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceLocationDataContract locationData = null, string description = null)
         {
-            return new ApiManagementGatewayData(id, name, resourceType, systemData, locationData, description);
+            return new ApiManagementGatewayData(id, name, resourceType, systemData, locationData, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GatewayKeysContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayKeysContract"/>. </summary>
         /// <param name="primary"> Primary gateway key. </param>
         /// <param name="secondary"> Secondary gateway key. </param>
         /// <returns> A new <see cref="Models.GatewayKeysContract"/> instance for mocking. </returns>
         public static GatewayKeysContract GatewayKeysContract(string primary = null, string secondary = null)
         {
-            return new GatewayKeysContract(primary, secondary);
+            return new GatewayKeysContract(primary, secondary, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GatewayTokenContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayTokenContract"/>. </summary>
         /// <param name="value"> Shared Access Authentication token value for the Gateway. </param>
         /// <returns> A new <see cref="Models.GatewayTokenContract"/> instance for mocking. </returns>
         public static GatewayTokenContract GatewayTokenContract(string value = null)
         {
-            return new GatewayTokenContract(value);
+            return new GatewayTokenContract(value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGatewayHostnameConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -842,10 +944,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementGatewayHostnameConfigurationData"/> instance for mocking. </returns>
         public static ApiManagementGatewayHostnameConfigurationData ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostname = null, string certificateId = null, bool? isClientCertificateRequired = null, bool? isTls10Enabled = null, bool? isTls11Enabled = null, bool? isHttp20Enabled = null)
         {
-            return new ApiManagementGatewayHostnameConfigurationData(id, name, resourceType, systemData, hostname, certificateId, isClientCertificateRequired, isTls10Enabled, isTls11Enabled, isHttp20Enabled);
+            return new ApiManagementGatewayHostnameConfigurationData(id, name, resourceType, systemData, hostname, certificateId, isClientCertificateRequired, isTls10Enabled, isTls11Enabled, isHttp20Enabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GatewayApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -876,10 +978,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
-            return new GatewayApiData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet);
+            return new GatewayApiData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AssociationContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AssociationContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -888,10 +990,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.AssociationContract"/> instance for mocking. </returns>
         public static AssociationContract AssociationContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AssociationEntityProvisioningState? provisioningState = null)
         {
-            return new AssociationContract(id, name, resourceType, systemData, provisioningState);
+            return new AssociationContract(id, name, resourceType, systemData, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayCertificateAuthorityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGatewayCertificateAuthorityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -900,10 +1002,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementGatewayCertificateAuthorityData"/> instance for mocking. </returns>
         public static ApiManagementGatewayCertificateAuthorityData ApiManagementGatewayCertificateAuthorityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isTrusted = null)
         {
-            return new ApiManagementGatewayCertificateAuthorityData(id, name, resourceType, systemData, isTrusted);
+            return new ApiManagementGatewayCertificateAuthorityData(id, name, resourceType, systemData, isTrusted, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -916,10 +1018,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementGroupData"/> instance for mocking. </returns>
         public static ApiManagementGroupData ApiManagementGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, bool? isBuiltIn = null, ApiManagementGroupType? groupType = null, string externalId = null)
         {
-            return new ApiManagementGroupData(id, name, resourceType, systemData, displayName, description, isBuiltIn, groupType, externalId);
+            return new ApiManagementGroupData(id, name, resourceType, systemData, displayName, description, isBuiltIn, groupType, externalId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GroupContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupContractProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <param name="description"> Group description. Can contain HTML formatting tags. </param>
         /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
@@ -928,10 +1030,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.GroupContractProperties"/> instance for mocking. </returns>
         public static GroupContractProperties GroupContractProperties(string displayName = null, string description = null, bool? isBuiltIn = null, ApiManagementGroupType? apiManagementGroupType = null, string externalId = null)
         {
-            return new GroupContractProperties(displayName, description, isBuiltIn, apiManagementGroupType, externalId);
+            return new GroupContractProperties(displayName, description, isBuiltIn, apiManagementGroupType, externalId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGroupUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementGroupUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -953,10 +1055,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             identities ??= new List<UserIdentityContract>();
             groups ??= new List<GroupContractProperties>();
 
-            return new ApiManagementGroupUserData(id, name, resourceType, systemData, state, note, identities?.ToList(), firstName, lastName, email, registriesOn, groups?.ToList());
+            return new ApiManagementGroupUserData(id, name, resourceType, systemData, state, note, identities?.ToList(), firstName, lastName, email, registriesOn, groups?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of UserContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.UserContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -978,10 +1080,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             identities ??= new List<UserIdentityContract>();
             groups ??= new List<GroupContractProperties>();
 
-            return new UserContractData(id, name, resourceType, systemData, state, note, identities?.ToList(), firstName, lastName, email, registriesOn, groups?.ToList());
+            return new UserContractData(id, name, resourceType, systemData, state, note, identities?.ToList(), firstName, lastName, email, registriesOn, groups?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementIdentityProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1001,10 +1103,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             allowedTenants ??= new List<string>();
 
-            return new ApiManagementIdentityProviderData(id, name, resourceType, systemData, identityProviderType, signInTenant, allowedTenants?.ToList(), authority, signUpPolicyName, signInPolicyName, profileEditingPolicyName, passwordResetPolicyName, clientId, clientSecret);
+            return new ApiManagementIdentityProviderData(id, name, resourceType, systemData, identityProviderType, signInTenant, allowedTenants?.ToList(), authority, signUpPolicyName, signInPolicyName, profileEditingPolicyName, passwordResetPolicyName, clientId, clientSecret, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementIdentityProviderCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1024,18 +1126,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             allowedTenants ??= new List<string>();
 
-            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, resourceType, systemData, identityProviderType, signInTenant, allowedTenants?.ToList(), authority, signUpPolicyName, signInPolicyName, profileEditingPolicyName, passwordResetPolicyName, clientId, clientSecret);
+            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, resourceType, systemData, identityProviderType, signInTenant, allowedTenants?.ToList(), authority, signUpPolicyName, signInPolicyName, profileEditingPolicyName, passwordResetPolicyName, clientId, clientSecret, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ClientSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ClientSecretContract"/>. </summary>
         /// <param name="clientSecret"> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </param>
         /// <returns> A new <see cref="Models.ClientSecretContract"/> instance for mocking. </returns>
         public static ClientSecretContract ClientSecretContract(string clientSecret = null)
         {
-            return new ClientSecretContract(clientSecret);
+            return new ClientSecretContract(clientSecret, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementLoggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1053,10 +1155,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             credentials ??= new Dictionary<string, string>();
 
-            return new ApiManagementLoggerData(id, name, resourceType, systemData, loggerType, description, credentials, isBuffered, resourceId);
+            return new ApiManagementLoggerData(id, name, resourceType, systemData, loggerType, description, credentials, isBuffered, resourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementNamedValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1071,10 +1173,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             tags ??= new List<string>();
 
-            return new ApiManagementNamedValueData(id, name, resourceType, systemData, tags?.ToList(), isSecret, displayName, value, keyVaultDetails);
+            return new ApiManagementNamedValueData(id, name, resourceType, systemData, tags?.ToList(), isSecret, displayName, value, keyVaultDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementNamedValueCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementNamedValueCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1089,27 +1191,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             tags ??= new List<string>();
 
-            return new ApiManagementNamedValueCreateOrUpdateContent(id, name, resourceType, systemData, tags?.ToList(), isSecret, displayName, value, keyVault);
+            return new ApiManagementNamedValueCreateOrUpdateContent(id, name, resourceType, systemData, tags?.ToList(), isSecret, displayName, value, keyVault, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NamedValueSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NamedValueSecretContract"/>. </summary>
         /// <param name="value"> This is secret value of the NamedValue entity. </param>
         /// <returns> A new <see cref="Models.NamedValueSecretContract"/> instance for mocking. </returns>
         public static NamedValueSecretContract NamedValueSecretContract(string value = null)
         {
-            return new NamedValueSecretContract(value);
+            return new NamedValueSecretContract(value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NetworkStatusContractWithLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkStatusContractWithLocation"/>. </summary>
         /// <param name="location"> Location of service. </param>
         /// <param name="networkStatus"> Network status in Location. </param>
         /// <returns> A new <see cref="Models.NetworkStatusContractWithLocation"/> instance for mocking. </returns>
         public static NetworkStatusContractWithLocation NetworkStatusContractWithLocation(AzureLocation? location = null, NetworkStatusContract networkStatus = null)
         {
-            return new NetworkStatusContractWithLocation(location, networkStatus);
+            return new NetworkStatusContractWithLocation(location, networkStatus, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NetworkStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkStatusContract"/>. </summary>
         /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
         /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
         /// <returns> A new <see cref="Models.NetworkStatusContract"/> instance for mocking. </returns>
@@ -1118,10 +1220,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             dnsServers ??= new List<string>();
             connectivityStatus ??= new List<ConnectivityStatusContract>();
 
-            return new NetworkStatusContract(dnsServers?.ToList(), connectivityStatus?.ToList());
+            return new NetworkStatusContract(dnsServers?.ToList(), connectivityStatus?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectivityStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectivityStatusContract"/>. </summary>
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
         /// <param name="error"> Error details of the connectivity to the resource. </param>
@@ -1138,10 +1240,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ConnectivityStatusContract"/> instance for mocking. </returns>
         public static ConnectivityStatusContract ConnectivityStatusContract(string name = null, ConnectivityStatusType status = default, string error = null, DateTimeOffset lastUpdatedOn = default, DateTimeOffset lastStatusChangedOn = default, string resourceType = null, bool isOptional = default)
         {
-            return new ConnectivityStatusContract(name, status, error, lastUpdatedOn, lastStatusChangedOn, resourceType, isOptional);
+            return new ConnectivityStatusContract(name, status, error, lastUpdatedOn, lastStatusChangedOn, resourceType, isOptional, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementNotificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementNotificationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1152,10 +1254,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementNotificationData"/> instance for mocking. </returns>
         public static ApiManagementNotificationData ApiManagementNotificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, RecipientsContractProperties recipients = null)
         {
-            return new ApiManagementNotificationData(id, name, resourceType, systemData, title, description, recipients);
+            return new ApiManagementNotificationData(id, name, resourceType, systemData, title, description, recipients, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RecipientUserContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecipientUserContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1164,10 +1266,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.RecipientUserContract"/> instance for mocking. </returns>
         public static RecipientUserContract RecipientUserContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string userId = null)
         {
-            return new RecipientUserContract(id, name, resourceType, systemData, userId);
+            return new RecipientUserContract(id, name, resourceType, systemData, userId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RecipientEmailContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecipientEmailContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1176,10 +1278,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.RecipientEmailContract"/> instance for mocking. </returns>
         public static RecipientEmailContract RecipientEmailContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string email = null)
         {
-            return new RecipientEmailContract(id, name, resourceType, systemData, email);
+            return new RecipientEmailContract(id, name, resourceType, systemData, email, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementOpenIdConnectProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1192,10 +1294,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementOpenIdConnectProviderData"/> instance for mocking. </returns>
         public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, string metadataEndpoint = null, string clientId = null, string clientSecret = null)
         {
-            return new ApiManagementOpenIdConnectProviderData(id, name, resourceType, systemData, displayName, description, metadataEndpoint, clientId, clientSecret);
+            return new ApiManagementOpenIdConnectProviderData(id, name, resourceType, systemData, displayName, description, metadataEndpoint, clientId, clientSecret, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service accessed by the Api Management Service, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the Api Management Service reaches the service at. </param>
         /// <returns> A new <see cref="Models.OutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -1203,10 +1305,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             endpoints ??= new List<EndpointDependency>();
 
-            return new OutboundEnvironmentEndpoint(category, endpoints?.ToList());
+            return new OutboundEnvironmentEndpoint(category, endpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The Ports used when connecting to DomainName. </param>
         /// <returns> A new <see cref="Models.EndpointDependency"/> instance for mocking. </returns>
@@ -1214,19 +1316,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             endpointDetails ??= new List<EndpointDetail>();
 
-            return new EndpointDependency(domainName, endpointDetails?.ToList());
+            return new EndpointDependency(domainName, endpointDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="region"> The region of the dependency. </param>
         /// <returns> A new <see cref="Models.EndpointDetail"/> instance for mocking. </returns>
         public static EndpointDetail EndpointDetail(int? port = null, string region = null)
         {
-            return new EndpointDetail(port, region);
+            return new EndpointDetail(port, region, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyDescriptionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyDescriptionContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1236,10 +1338,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.PolicyDescriptionContractData"/> instance for mocking. </returns>
         public static PolicyDescriptionContractData PolicyDescriptionContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, long? scope = null)
         {
-            return new PolicyDescriptionContractData(id, name, resourceType, systemData, description, scope);
+            return new PolicyDescriptionContractData(id, name, resourceType, systemData, description, scope, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalRevisionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalRevisionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1253,10 +1355,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalRevisionData"/> instance for mocking. </returns>
         public static ApiManagementPortalRevisionData ApiManagementPortalRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string statusDetails = null, PortalRevisionStatus? status = null, bool? isCurrent = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new ApiManagementPortalRevisionData(id, name, resourceType, systemData, description, statusDetails, status, isCurrent, createdOn, updatedOn);
+            return new ApiManagementPortalRevisionData(id, name, resourceType, systemData, description, statusDetails, status, isCurrent, createdOn, updatedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PortalSettingsContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PortalSettingsContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1270,10 +1372,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.PortalSettingsContractData"/> instance for mocking. </returns>
         public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = null, bool? isUserRegistrationDelegationEnabled = null, bool? isRedirectEnabled = null, TermsOfServiceProperties termsOfService = null)
         {
-            return new PortalSettingsContractData(id, name, resourceType, systemData, uri, validationKey, isSubscriptionDelegationEnabled != null ? new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled) : null, isUserRegistrationDelegationEnabled != null ? new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled) : null, isRedirectEnabled, termsOfService);
+            return new PortalSettingsContractData(id, name, resourceType, systemData, uri, validationKey, isSubscriptionDelegationEnabled != null ? new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, serializedAdditionalRawData: null) : null, isUserRegistrationDelegationEnabled != null ? new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, serializedAdditionalRawData: null) : null, isRedirectEnabled, termsOfService, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalSignInSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalSignInSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1282,10 +1384,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalSignInSettingData"/> instance for mocking. </returns>
         public static ApiManagementPortalSignInSettingData ApiManagementPortalSignInSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isRedirectEnabled = null)
         {
-            return new ApiManagementPortalSignInSettingData(id, name, resourceType, systemData, isRedirectEnabled);
+            return new ApiManagementPortalSignInSettingData(id, name, resourceType, systemData, isRedirectEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalSignUpSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalSignUpSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1295,10 +1397,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalSignUpSettingData"/> instance for mocking. </returns>
         public static ApiManagementPortalSignUpSettingData ApiManagementPortalSignUpSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isSignUpDeveloperPortalEnabled = null, TermsOfServiceProperties termsOfService = null)
         {
-            return new ApiManagementPortalSignUpSettingData(id, name, resourceType, systemData, isSignUpDeveloperPortalEnabled, termsOfService);
+            return new ApiManagementPortalSignUpSettingData(id, name, resourceType, systemData, isSignUpDeveloperPortalEnabled, termsOfService, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1310,18 +1412,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
         public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = null, bool? isUserRegistrationDelegationEnabled = null)
         {
-            return new ApiManagementPortalDelegationSettingData(id, name, resourceType, systemData, uri, validationKey, isSubscriptionDelegationEnabled != null ? new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled) : null, isUserRegistrationDelegationEnabled != null ? new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled) : null);
+            return new ApiManagementPortalDelegationSettingData(id, name, resourceType, systemData, uri, validationKey, isSubscriptionDelegationEnabled != null ? new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, serializedAdditionalRawData: null) : null, isUserRegistrationDelegationEnabled != null ? new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PortalSettingValidationKeyContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PortalSettingValidationKeyContract"/>. </summary>
         /// <param name="validationKey"> This is secret value of the validation key in portal settings. </param>
         /// <returns> A new <see cref="Models.PortalSettingValidationKeyContract"/> instance for mocking. </returns>
         public static PortalSettingValidationKeyContract PortalSettingValidationKeyContract(string validationKey = null)
         {
-            return new PortalSettingValidationKeyContract(validationKey);
+            return new PortalSettingValidationKeyContract(validationKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1332,10 +1434,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ApiManagementPrivateEndpointConnectionData ApiManagementPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ApiManagementPrivateLinkServiceConnectionState connectionState = null, ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new ApiManagementPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new ApiManagementPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1349,10 +1451,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new ApiManagementPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new ApiManagementPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ProductApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1383,10 +1485,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
-            return new ProductApiData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet);
+            return new ProductApiData(id, name, resourceType, systemData, description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ProductGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1399,10 +1501,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ProductGroupData"/> instance for mocking. </returns>
         public static ProductGroupData ProductGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, bool? isBuiltIn = null, ApiManagementGroupType? groupType = null, string externalId = null)
         {
-            return new ProductGroupData(id, name, resourceType, systemData, displayName, description, isBuiltIn, groupType, externalId);
+            return new ProductGroupData(id, name, resourceType, systemData, displayName, description, isBuiltIn, groupType, externalId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.SubscriptionContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1438,10 +1540,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.SubscriptionContractData"/> instance for mocking. </returns>
         public static SubscriptionContractData SubscriptionContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string ownerId = null, string scope = null, string displayName = null, SubscriptionState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? endOn = null, DateTimeOffset? notifiesOn = null, string primaryKey = null, string secondaryKey = null, string stateComment = null, bool? allowTracing = null)
         {
-            return new SubscriptionContractData(id, name, resourceType, systemData, ownerId, scope, displayName, state, createdOn, startOn, expireOn, endOn, notifiesOn, primaryKey, secondaryKey, stateComment, allowTracing);
+            return new SubscriptionContractData(id, name, resourceType, systemData, ownerId, scope, displayName, state, createdOn, startOn, expireOn, endOn, notifiesOn, primaryKey, secondaryKey, stateComment, allowTracing, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of QuotaCounterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaCounterContract"/>. </summary>
         /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
         /// <param name="periodStartOn">
@@ -1456,29 +1558,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.QuotaCounterContract"/> instance for mocking. </returns>
         public static QuotaCounterContract QuotaCounterContract(string counterKey = null, string periodKey = null, DateTimeOffset periodStartOn = default, DateTimeOffset periodEndOn = default, QuotaCounterValueContractProperties value = null)
         {
-            return new QuotaCounterContract(counterKey, periodKey, periodStartOn, periodEndOn, value);
+            return new QuotaCounterContract(counterKey, periodKey, periodStartOn, periodEndOn, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of QuotaCounterValueContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaCounterValueContractProperties"/>. </summary>
         /// <param name="callsCount"> Number of times Counter was called. </param>
         /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
         /// <returns> A new <see cref="Models.QuotaCounterValueContractProperties"/> instance for mocking. </returns>
         public static QuotaCounterValueContractProperties QuotaCounterValueContractProperties(int? callsCount = null, double? kbTransferred = null)
         {
-            return new QuotaCounterValueContractProperties(callsCount, kbTransferred);
+            return new QuotaCounterValueContractProperties(callsCount, kbTransferred, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RegionContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RegionContract"/>. </summary>
         /// <param name="name"> Region name. </param>
         /// <param name="isMasterRegion"> whether Region is the master region. </param>
         /// <param name="isDeleted"> whether Region is deleted. </param>
         /// <returns> A new <see cref="Models.RegionContract"/> instance for mocking. </returns>
         public static RegionContract RegionContract(string name = null, bool? isMasterRegion = null, bool? isDeleted = null)
         {
-            return new RegionContract(name, isMasterRegion, isDeleted);
+            return new RegionContract(name, isMasterRegion, isDeleted, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReportRecordContract"/>. </summary>
         /// <param name="name"> Name depending on report endpoint specifies product, API, operation or developer name. </param>
         /// <param name="timestamp">
         /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
@@ -1511,10 +1613,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ReportRecordContract"/> instance for mocking. </returns>
         public static ReportRecordContract ReportRecordContract(string name = null, DateTimeOffset? timestamp = null, string interval = null, string country = null, string region = null, string zip = null, string userId = null, string productId = null, string apiId = null, string operationId = null, string apiRegion = null, ResourceIdentifier subscriptionResourceId = null, int? callCountSuccess = null, int? callCountBlocked = null, int? callCountFailed = null, int? callCountOther = null, int? callCountTotal = null, long? bandwidth = null, int? cacheHitCount = null, int? cacheMissCount = null, double? apiTimeAvg = null, double? apiTimeMin = null, double? apiTimeMax = null, double? serviceTimeAvg = null, double? serviceTimeMin = null, double? serviceTimeMax = null)
         {
-            return new ReportRecordContract(name, timestamp, interval, country, region, zip, userId, productId, apiId, operationId, apiRegion, subscriptionResourceId, callCountSuccess, callCountBlocked, callCountFailed, callCountOther, callCountTotal, bandwidth, cacheHitCount, cacheMissCount, apiTimeAvg, apiTimeMin, apiTimeMax, serviceTimeAvg, serviceTimeMin, serviceTimeMax);
+            return new ReportRecordContract(name, timestamp, interval, country, region, zip, userId, productId, apiId, operationId, apiRegion, subscriptionResourceId, callCountSuccess, callCountBlocked, callCountFailed, callCountOther, callCountTotal, bandwidth, cacheHitCount, cacheMissCount, apiTimeAvg, apiTimeMin, apiTimeMax, serviceTimeAvg, serviceTimeMin, serviceTimeMax, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RequestReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RequestReportRecordContract"/>. </summary>
         /// <param name="apiId"> API identifier path. /apis/{apiId}. </param>
         /// <param name="operationId"> Operation identifier path. /apis/{apiId}/operations/{operationId}. </param>
         /// <param name="productId"> Product identifier path. /products/{productId}. </param>
@@ -1536,10 +1638,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.RequestReportRecordContract"/> instance for mocking. </returns>
         public static RequestReportRecordContract RequestReportRecordContract(string apiId = null, string operationId = null, string productId = null, string userId = null, RequestMethod? method = null, Uri uri = null, IPAddress ipAddress = null, string backendResponseCode = null, int? responseCode = null, int? responseSize = null, DateTimeOffset? timestamp = null, string cache = null, double? apiTime = null, double? serviceTime = null, string apiRegion = null, ResourceIdentifier subscriptionResourceId = null, string requestId = null, int? requestSize = null)
         {
-            return new RequestReportRecordContract(apiId, operationId, productId, userId, method, uri, ipAddress, backendResponseCode, responseCode, responseSize, timestamp, cache, apiTime, serviceTime, apiRegion, subscriptionResourceId, requestId, requestSize);
+            return new RequestReportRecordContract(apiId, operationId, productId, userId, method, uri, ipAddress, backendResponseCode, responseCode, responseSize, timestamp, cache, apiTime, serviceTime, apiRegion, subscriptionResourceId, requestId, requestSize, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGlobalSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGlobalSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1551,10 +1653,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementGlobalSchemaData"/> instance for mocking. </returns>
         public static ApiManagementGlobalSchemaData ApiManagementGlobalSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiSchemaType? schemaType = null, string description = null, BinaryData value = null, BinaryData document = null)
         {
-            return new ApiManagementGlobalSchemaData(id, name, resourceType, systemData, schemaType, description, value, document);
+            return new ApiManagementGlobalSchemaData(id, name, resourceType, systemData, schemaType, description, value, document, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementTenantSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1565,10 +1667,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             settings ??= new Dictionary<string, string>();
 
-            return new ApiManagementTenantSettingData(id, name, resourceType, systemData, settings);
+            return new ApiManagementTenantSettingData(id, name, resourceType, systemData, settings, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>
@@ -1592,10 +1694,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             capabilities ??= new List<ApiManagementSkuCapabilities>();
             restrictions ??= new List<ApiManagementSkuRestrictions>();
 
-            return new ApiManagementSku(resourceType, name, tier, size, family, kind, capacity, locations?.ToList(), locationInfo?.ToList(), apiVersions?.ToList(), costs?.ToList(), capabilities?.ToList(), restrictions?.ToList());
+            return new ApiManagementSku(resourceType, name, tier, size, family, kind, capacity, locations?.ToList(), locationInfo?.ToList(), apiVersions?.ToList(), costs?.ToList(), capabilities?.ToList(), restrictions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity that can be set. </param>
         /// <param name="default"> The default capacity. </param>
@@ -1603,10 +1705,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.ApiManagementSkuCapacity"/> instance for mocking. </returns>
         public static ApiManagementSkuCapacity ApiManagementSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, ApiManagementSkuCapacityScaleType? scaleType = null)
         {
-            return new ApiManagementSkuCapacity(minimum, maximum, @default, scaleType);
+            return new ApiManagementSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
@@ -1616,10 +1718,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             zones ??= new List<string>();
             zoneDetails ??= new List<ApiManagementSkuZoneDetails>();
 
-            return new ApiManagementSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList());
+            return new ApiManagementSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSkuZoneDetails"/>. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         /// <returns> A new <see cref="Models.ApiManagementSkuZoneDetails"/> instance for mocking. </returns>
@@ -1628,29 +1730,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
             name ??= new List<string>();
             capabilities ??= new List<ApiManagementSkuCapabilities>();
 
-            return new ApiManagementSkuZoneDetails(name?.ToList(), capabilities?.ToList());
+            return new ApiManagementSkuZoneDetails(name?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSkuCapabilities"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.ApiManagementSkuCapabilities"/> instance for mocking. </returns>
         public static ApiManagementSkuCapabilities ApiManagementSkuCapabilities(string name = null, string value = null)
         {
-            return new ApiManagementSkuCapabilities(name, value);
+            return new ApiManagementSkuCapabilities(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuCosts. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSkuCosts"/>. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
         /// <returns> A new <see cref="Models.ApiManagementSkuCosts"/> instance for mocking. </returns>
         public static ApiManagementSkuCosts ApiManagementSkuCosts(string meterId = null, long? quantity = null, string extendedUnit = null)
         {
-            return new ApiManagementSkuCosts(meterId, quantity, extendedUnit);
+            return new ApiManagementSkuCosts(meterId, quantity, extendedUnit, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
@@ -1660,10 +1762,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             values ??= new List<string>();
 
-            return new ApiManagementSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode);
+            return new ApiManagementSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <returns> A new <see cref="Models.ApiManagementSkuRestrictionInfo"/> instance for mocking. </returns>
@@ -1672,19 +1774,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             locations ??= new List<AzureLocation>();
             zones ??= new List<string>();
 
-            return new ApiManagementSkuRestrictionInfo(locations?.ToList(), zones?.ToList());
+            return new ApiManagementSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionKeysContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionKeysContract"/>. </summary>
         /// <param name="primaryKey"> Subscription primary key. </param>
         /// <param name="secondaryKey"> Subscription secondary key. </param>
         /// <returns> A new <see cref="Models.SubscriptionKeysContract"/> instance for mocking. </returns>
         public static SubscriptionKeysContract SubscriptionKeysContract(string primaryKey = null, string secondaryKey = null)
         {
-            return new SubscriptionKeysContract(primaryKey, secondaryKey);
+            return new SubscriptionKeysContract(primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TenantAccessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.TenantAccessInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1695,10 +1797,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.TenantAccessInfoData"/> instance for mocking. </returns>
         public static TenantAccessInfoData TenantAccessInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accessInfoType = null, string principalId = null, bool? isDirectAccessEnabled = null)
         {
-            return new TenantAccessInfoData(id, name, resourceType, systemData, accessInfoType, principalId, isDirectAccessEnabled);
+            return new TenantAccessInfoData(id, name, resourceType, systemData, accessInfoType, principalId, isDirectAccessEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TenantAccessInfoSecretsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TenantAccessInfoSecretsDetails"/>. </summary>
         /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
@@ -1707,10 +1809,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.TenantAccessInfoSecretsDetails"/> instance for mocking. </returns>
         public static TenantAccessInfoSecretsDetails TenantAccessInfoSecretsDetails(string accessInfoType = null, string principalId = null, string primaryKey = null, string secondaryKey = null, bool? isDirectAccessEnabled = null)
         {
-            return new TenantAccessInfoSecretsDetails(accessInfoType, principalId, primaryKey, secondaryKey, isDirectAccessEnabled);
+            return new TenantAccessInfoSecretsDetails(accessInfoType, principalId, primaryKey, secondaryKey, isDirectAccessEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GitOperationResultContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitOperationResultContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1733,20 +1835,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             actionLog ??= new List<OperationResultLogItemContract>();
 
-            return new GitOperationResultContractData(id, name, resourceType, systemData, operationResultIdentifier, status, startedOn, updatedOn, resultInfo, error, actionLog?.ToList());
+            return new GitOperationResultContractData(id, name, resourceType, systemData, operationResultIdentifier, status, startedOn, updatedOn, resultInfo, error, actionLog?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of OperationResultLogItemContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationResultLogItemContract"/>. </summary>
         /// <param name="objectType"> The type of entity contract. </param>
         /// <param name="action"> Action like create/update/delete. </param>
         /// <param name="objectKey"> Identifier of the entity being created/updated/deleted. </param>
         /// <returns> A new <see cref="Models.OperationResultLogItemContract"/> instance for mocking. </returns>
         public static OperationResultLogItemContract OperationResultLogItemContract(string objectType = null, string action = null, string objectKey = null)
         {
-            return new OperationResultLogItemContract(objectType, action, objectKey);
+            return new OperationResultLogItemContract(objectType, action, objectKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TenantConfigurationSyncStateContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TenantConfigurationSyncStateContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1768,23 +1870,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.TenantConfigurationSyncStateContract"/> instance for mocking. </returns>
         public static TenantConfigurationSyncStateContract TenantConfigurationSyncStateContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string branch = null, string commitId = null, bool? isExported = null, bool? isSynced = null, bool? isGitEnabled = null, DateTimeOffset? syncOn = null, DateTimeOffset? configurationChangeOn = null, string lastOperationId = null)
         {
-            return new TenantConfigurationSyncStateContract(id, name, resourceType, systemData, branch, commitId, isExported, isSynced, isGitEnabled, syncOn, configurationChangeOn, lastOperationId);
+            return new TenantConfigurationSyncStateContract(id, name, resourceType, systemData, branch, commitId, isExported, isSynced, isGitEnabled, syncOn, configurationChangeOn, lastOperationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GenerateSsoUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GenerateSsoUriResult"/>. </summary>
         /// <param name="value"> Redirect Url containing the SSO URL value. </param>
         /// <returns> A new <see cref="Models.GenerateSsoUriResult"/> instance for mocking. </returns>
         public static GenerateSsoUriResult GenerateSsoUriResult(string value = null)
         {
-            return new GenerateSsoUriResult(value);
+            return new GenerateSsoUriResult(value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of UserTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UserTokenResult"/>. </summary>
         /// <param name="value"> Shared Access Authorization token for the User. </param>
         /// <returns> A new <see cref="Models.UserTokenResult"/> instance for mocking. </returns>
         public static UserTokenResult UserTokenResult(string value = null)
         {
-            return new UserTokenResult(value);
+            return new UserTokenResult(value, serializedAdditionalRawData: null);
         }
     }
 }

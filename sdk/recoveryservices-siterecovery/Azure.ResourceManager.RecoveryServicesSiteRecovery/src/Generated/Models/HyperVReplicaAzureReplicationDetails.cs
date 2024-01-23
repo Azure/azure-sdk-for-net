@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper V Replica Azure provider specific settings. </summary>
     public partial class HyperVReplicaAzureReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureReplicationDetails"/>. </summary>
         internal HyperVReplicaAzureReplicationDetails()
         {
             AzureVmDiskDetails = new ChangeTrackingList<SiteRecoveryVmDiskDetails>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
         /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>

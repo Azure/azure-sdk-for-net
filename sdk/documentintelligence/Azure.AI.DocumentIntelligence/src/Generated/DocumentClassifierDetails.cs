@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document classifier info. </summary>
     public partial class DocumentClassifierDetails
     {
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
             DocTypes = docTypes;
         }
 
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>

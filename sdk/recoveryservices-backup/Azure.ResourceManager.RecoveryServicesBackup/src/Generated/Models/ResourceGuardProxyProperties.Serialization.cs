@@ -17,11 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceGuardResourceId))
-            {
-                writer.WritePropertyName("resourceGuardResourceId"u8);
-                writer.WriteStringValue(ResourceGuardResourceId);
-            }
+            writer.WritePropertyName("resourceGuardResourceId"u8);
+            writer.WriteStringValue(ResourceGuardResourceId);
             if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
             {
                 writer.WritePropertyName("resourceGuardOperationDetails"u8);
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceGuardResourceId = default;
+            ResourceIdentifier resourceGuardResourceId = default;
             Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<string> description = default;
@@ -59,10 +56,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("resourceGuardResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceGuardResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -95,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ResourceGuardProxyProperties(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value);
+            return new ResourceGuardProxyProperties(resourceGuardResourceId, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value);
         }
     }
 }

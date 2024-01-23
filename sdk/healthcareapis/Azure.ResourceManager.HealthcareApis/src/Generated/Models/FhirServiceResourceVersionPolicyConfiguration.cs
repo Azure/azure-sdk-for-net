@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The settings for history tracking for FHIR resources. </summary>
     public partial class FhirServiceResourceVersionPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceResourceVersionPolicyConfiguration"/>. </summary>
         public FhirServiceResourceVersionPolicyConfiguration()
         {
             ResourceTypeOverrides = new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>();
         }
 
-        /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceResourceVersionPolicyConfiguration"/>. </summary>
         /// <param name="default"> The default value for tracking history across all resources. </param>
         /// <param name="resourceTypeOverrides"> A list of FHIR Resources and their version policy overrides. </param>
         internal FhirServiceResourceVersionPolicyConfiguration(FhirResourceVersionPolicy? @default, IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides)

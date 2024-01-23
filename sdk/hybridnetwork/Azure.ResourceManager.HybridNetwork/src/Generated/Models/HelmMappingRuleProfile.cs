@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Helm mapping rule profile. </summary>
     public partial class HelmMappingRuleProfile
     {
-        /// <summary> Initializes a new instance of HelmMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfile"/>. </summary>
         public HelmMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfile"/>. </summary>
         /// <param name="releaseNamespace"> Helm release namespace. </param>
         /// <param name="releaseName"> Helm release name. </param>
         /// <param name="helmPackageVersion"> Helm package version. </param>

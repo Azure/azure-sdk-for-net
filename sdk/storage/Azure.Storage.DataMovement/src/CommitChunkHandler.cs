@@ -45,7 +45,6 @@ namespace Azure.Storage.DataMovement
         private readonly Channel<StageChunkEventArgs> _stageChunkChannel;
         private CancellationToken _cancellationToken;
 
-        private readonly SemaphoreSlim _currentBytesSemaphore;
         private long _bytesTransferred;
         private readonly long _expectedLength;
         private readonly long _blockSize;
@@ -93,7 +92,6 @@ namespace Azure.Storage.DataMovement
             _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
 
             // Set bytes transferred to block size because we transferred the initial block
-            _currentBytesSemaphore = new SemaphoreSlim(1, 1);
             _bytesTransferred = blockSize;
 
             _blockSize = blockSize;
@@ -110,11 +108,6 @@ namespace Azure.Storage.DataMovement
         {
             // We no longer have to read from the channel. We are not expecting any more requests.
             _stageChunkChannel.Writer.TryComplete();
-
-            if (_currentBytesSemaphore != default)
-            {
-                _currentBytesSemaphore.Dispose();
-            }
             DisposeHandlers();
         }
 
@@ -134,7 +127,7 @@ namespace Azure.Storage.DataMovement
                 if (args.Success)
                 {
                     // Let's add to the channel, and our notifier will handle the chunks.
-                    await _stageChunkChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                    _stageChunkChannel.Writer.TryWrite(args);
                 }
                 else
                 {
@@ -157,15 +150,6 @@ namespace Azure.Storage.DataMovement
                 {
                     // Read one event argument at a time.
                     StageChunkEventArgs args = await _stageChunkChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    try
-                    {
-                        await _currentBytesSemaphore.WaitAsync(_cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // We should not continue if waiting on the semaphore has cancelled out.
-                        return;
-                    }
 
                     Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
                     // Report the incremental bytes transferred
@@ -179,20 +163,13 @@ namespace Azure.Storage.DataMovement
                     else if (_bytesTransferred > _expectedLength)
                     {
                         throw Errors.MismatchLengthTransferred(
-                                expectedLength: _expectedLength,
-                                actualLength: _bytesTransferred);
+                            expectedLength: _expectedLength,
+                            actualLength: _bytesTransferred);
                     }
-                    _currentBytesSemaphore.Release();
                 }
             }
             catch (Exception ex)
             {
-                if (_currentBytesSemaphore.CurrentCount == 0)
-                {
-                    _currentBytesSemaphore.Release();
-                }
-                // Invoke the failed event argument here after we've released the semaphore
-                // or else we risk disposing the semaphore and releasing it after.
                 await _invokeFailedEventHandler(ex).ConfigureAwait(false);
             }
         }

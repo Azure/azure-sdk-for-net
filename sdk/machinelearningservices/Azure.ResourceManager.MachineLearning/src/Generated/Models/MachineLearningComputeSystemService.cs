@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A system service running on a compute. </summary>
     public partial class MachineLearningComputeSystemService
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeSystemService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSystemService"/>. </summary>
         internal MachineLearningComputeSystemService()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeSystemService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSystemService"/>. </summary>
         /// <param name="systemServiceType"> The type of this system service. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="version"> The version for this type. </param>

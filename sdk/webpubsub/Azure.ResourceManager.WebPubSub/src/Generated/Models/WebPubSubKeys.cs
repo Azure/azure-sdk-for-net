@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> A class represents the access keys of the resource. </summary>
     public partial class WebPubSubKeys
     {
-        /// <summary> Initializes a new instance of WebPubSubKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubKeys"/>. </summary>
         internal WebPubSubKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>

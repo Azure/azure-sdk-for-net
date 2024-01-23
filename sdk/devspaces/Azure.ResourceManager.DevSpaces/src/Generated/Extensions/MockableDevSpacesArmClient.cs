@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ControllerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ControllerResource.CreateResourceIdentifier" /> to create a <see cref="ControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ControllerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ControllerResource.CreateResourceIdentifier" /> to create a <see cref="ControllerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ControllerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ControllerResource"/> object. </returns>
         public virtual ControllerResource GetControllerResource(ResourceIdentifier id)
         {
             ControllerResource.ValidateResourceId(id);

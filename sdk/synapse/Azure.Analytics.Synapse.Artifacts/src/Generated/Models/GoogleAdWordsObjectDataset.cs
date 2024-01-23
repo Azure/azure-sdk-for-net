@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Google AdWords service dataset. </summary>
     public partial class GoogleAdWordsObjectDataset : Dataset
     {
-        /// <summary> Initializes a new instance of GoogleAdWordsObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleAdWordsObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public GoogleAdWordsObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "GoogleAdWordsObject";
         }
 
-        /// <summary> Initializes a new instance of GoogleAdWordsObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleAdWordsObjectDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

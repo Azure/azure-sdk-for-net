@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFailback NIC details. </summary>
     public partial class InMageRcmFailbackNicDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackNicDetails"/>. </summary>
         internal InMageRcmFailbackNicDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackNicDetails"/>. </summary>
         /// <param name="macAddress"> The mac address. </param>
         /// <param name="networkName"> The network name. </param>
         /// <param name="adapterType"> The adapter type. </param>

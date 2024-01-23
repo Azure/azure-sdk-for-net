@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Represents the response to a list server metrics request. </summary>
     internal partial class SynapseServerUsageListResult
     {
-        /// <summary> Initializes a new instance of SynapseServerUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerUsageListResult"/>. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynapseServerUsageListResult(IEnumerable<SynapseServerUsage> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SynapseServerUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerUsageListResult"/>. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseServerUsageListResult(IReadOnlyList<SynapseServerUsage> value, string nextLink)

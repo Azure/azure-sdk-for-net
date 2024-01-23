@@ -14,10 +14,25 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxDeploymentPatch. </summary>
     public partial class NginxDeploymentPatch
     {
-        /// <summary> Initializes a new instance of NginxDeploymentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
         public NginxDeploymentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
+        /// <param name="identity"> Gets or sets the identity. </param>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="sku"></param>
+        /// <param name="location"></param>
+        /// <param name="properties"></param>
+        internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NginxResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties)
+        {
+            Identity = identity;
+            Tags = tags;
+            Sku = sku;
+            Location = location;
+            Properties = properties;
         }
 
         /// <summary> Gets or sets the identity. </summary>
@@ -25,12 +40,12 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the sku. </summary>
-        internal ResourceSku Sku { get; set; }
+        internal NginxResourceSku Sku { get; set; }
         /// <summary> Name of the SKU. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
-            set => Sku = new ResourceSku(value);
+            set => Sku = new NginxResourceSku(value);
         }
 
         /// <summary> Gets or sets the location. </summary>

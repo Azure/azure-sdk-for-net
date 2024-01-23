@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Custom hostname configuration. </summary>
     public partial class HostnameConfiguration
     {
-        /// <summary> Initializes a new instance of HostnameConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostnameConfiguration"/>. </summary>
         /// <param name="hostnameType"> Hostname type. </param>
         /// <param name="hostName"> Hostname to configure on the Api Management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
@@ -25,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             HostName = hostName;
         }
 
-        /// <summary> Initializes a new instance of HostnameConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostnameConfiguration"/>. </summary>
         /// <param name="hostnameType"> Hostname type. </param>
         /// <param name="hostName"> Hostname to configure on the Api Management service. </param>
         /// <param name="keyVaultSecretUri"> Url to the KeyVault Secret containing the Ssl Certificate. If absolute Url containing version is provided, auto-update of ssl certificate will not work. This requires Api Management service to be configured with aka.ms/apimmsi. The secret should be of type *application/x-pkcs12*. </param>
@@ -37,7 +70,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="certificate"> Certificate information. </param>
         /// <param name="certificateSource"> Certificate Source. </param>
         /// <param name="certificateStatus"> Certificate Status. </param>
-        internal HostnameConfiguration(HostnameType hostnameType, string hostName, Uri keyVaultSecretUri, string identityClientId, string encodedCertificate, string certificatePassword, bool? isDefaultSslBindingEnabled, bool? isClientCertificateNegotiationEnabled, CertificateInformation certificate, CertificateSource? certificateSource, CertificateStatus? certificateStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostnameConfiguration(HostnameType hostnameType, string hostName, Uri keyVaultSecretUri, string identityClientId, string encodedCertificate, string certificatePassword, bool? isDefaultSslBindingEnabled, bool? isClientCertificateNegotiationEnabled, CertificateInformation certificate, CertificateSource? certificateSource, CertificateStatus? certificateStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HostnameType = hostnameType;
             HostName = hostName;
@@ -50,6 +84,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Certificate = certificate;
             CertificateSource = certificateSource;
             CertificateStatus = certificateStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HostnameConfiguration"/> for deserialization. </summary>
+        internal HostnameConfiguration()
+        {
         }
 
         /// <summary> Hostname type. </summary>

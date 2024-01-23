@@ -13,7 +13,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a purchased phone number. </summary>
     public partial class PurchasedPhoneNumber
     {
-        /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
         /// <param name="countryCode"> The ISO 3166-2 code of the phone number's country, e.g. US. </param>

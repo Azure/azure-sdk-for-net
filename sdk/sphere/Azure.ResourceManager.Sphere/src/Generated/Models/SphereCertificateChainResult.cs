@@ -7,31 +7,22 @@
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The certificate chain response.
-    /// Serialized Name: CertificateChainResponse
-    /// </summary>
+    /// <summary> The certificate chain response. </summary>
     public partial class SphereCertificateChainResult
     {
-        /// <summary> Initializes a new instance of SphereCertificateChainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateChainResult"/>. </summary>
         internal SphereCertificateChainResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateChainResult. </summary>
-        /// <param name="certificateChain">
-        /// The certificate chain.
-        /// Serialized Name: CertificateChainResponse.certificateChain
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateChainResult"/>. </summary>
+        /// <param name="certificateChain"> The certificate chain. </param>
         internal SphereCertificateChainResult(string certificateChain)
         {
             CertificateChain = certificateChain;
         }
 
-        /// <summary>
-        /// The certificate chain.
-        /// Serialized Name: CertificateChainResponse.certificateChain
-        /// </summary>
+        /// <summary> The certificate chain. </summary>
         public string CertificateChain { get; }
     }
 }

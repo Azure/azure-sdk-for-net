@@ -10,19 +10,32 @@
 
 ### Other Changes
 
+## 1.4.2 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
 ## 1.4.1 (2023-11-07)
 
 ### Bugs Fixed
+
 - Fixed serialization issue when VolumeSnapshotProperties.SnapshotPolicyId is empty string 
 
 ## 1.4.0 (2023-10-19)
+
 - Updated to support ANF api-version 2023-05-01
+
 ### Features Added
+
 - Added `QueryNetworkSiblingSetNetAppResource` and `UpdateNetworkSiblingSetNetAppResource` to allow clients to query and update the Networking features for a Networking siblingset related to a ANF Volume
 - Added `CoolAccessRetrievalPolicy` to `NetAppVolumePatch` and `NetAppVolumeData`, coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes.
 - Added `SmbNonBrowsable` to `NetAppVolumePatch`, enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume
 - Added `SmbAccessBasedEnumeration` to `NetAppVolumePatch`, Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume
-
 
 ## 1.3.0 (2023-08-15)
 

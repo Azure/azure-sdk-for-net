@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class InstanceFailoverGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupData"/>. </summary>
         public InstanceFailoverGroupData()
         {
             PartnerRegions = new ChangeTrackingList<PartnerRegionInfo>();
             ManagedInstancePairs = new ChangeTrackingList<ManagedInstancePairInfo>();
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabServicesScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesScheduleData"/>. </summary>
         public LabServicesScheduleData()
         {
         }
 
-        /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

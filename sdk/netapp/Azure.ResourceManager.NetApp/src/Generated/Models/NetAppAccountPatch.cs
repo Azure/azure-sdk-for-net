@@ -14,11 +14,32 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> NetApp account patch resource. </summary>
     public partial class NetAppAccountPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppAccountPatch(AzureLocation location) : base(location)
         {
             ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The identity used for the resource. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="activeDirectories"> Active Directories. </param>
+        /// <param name="encryption"> Encryption settings. </param>
+        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
+        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount) : base(id, name, resourceType, systemData, tags, location)
+        {
+            Identity = identity;
+            ProvisioningState = provisioningState;
+            ActiveDirectories = activeDirectories;
+            Encryption = encryption;
+            DisableShowmount = disableShowmount;
         }
 
         /// <summary> The identity used for the resource. </summary>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Static delivery attribute mapping details. </summary>
     public partial class StaticDeliveryAttributeMapping : DeliveryAttributeMapping
     {
-        /// <summary> Initializes a new instance of StaticDeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticDeliveryAttributeMapping"/>. </summary>
         public StaticDeliveryAttributeMapping()
         {
             MappingType = DeliveryAttributeMappingType.Static;
         }
 
-        /// <summary> Initializes a new instance of StaticDeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
         /// <param name="value"> Value of the delivery attribute. </param>

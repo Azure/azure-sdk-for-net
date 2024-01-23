@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents capability of a fast provisioning edition. </summary>
     public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFastProvisioningEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerFastProvisioningEditionCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFastProvisioningEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="supportedTier"> Fast provisioning supported tier name. </param>

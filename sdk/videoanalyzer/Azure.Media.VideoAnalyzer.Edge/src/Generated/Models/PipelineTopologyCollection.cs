@@ -13,13 +13,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A collection of pipeline topologies. </summary>
     public partial class PipelineTopologyCollection
     {
-        /// <summary> Initializes a new instance of PipelineTopologyCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyCollection"/>. </summary>
         public PipelineTopologyCollection()
         {
             Value = new ChangeTrackingList<PipelineTopology>();
         }
 
-        /// <summary> Initializes a new instance of PipelineTopologyCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyCollection"/>. </summary>
         /// <param name="value"> List of pipeline topologies. </param>
         /// <param name="continuationToken"> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won't fit in a single response. </param>
         internal PipelineTopologyCollection(IList<PipelineTopology> value, string continuationToken)

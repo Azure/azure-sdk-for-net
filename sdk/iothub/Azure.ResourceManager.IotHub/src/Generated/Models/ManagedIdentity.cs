@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the Managed identity. </summary>
     internal partial class ManagedIdentity
     {
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         public ManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         /// <param name="userAssignedIdentity"> The user assigned identity. </param>
         internal ManagedIdentity(ResourceIdentifier userAssignedIdentity)
         {

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RedisEnterpriseClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisEnterpriseClusterResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RedisEnterpriseClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisEnterpriseClusterResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterpriseClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RedisEnterpriseClusterResource"/> object. </returns>
         public virtual RedisEnterpriseClusterResource GetRedisEnterpriseClusterResource(ResourceIdentifier id)
         {
             RedisEnterpriseClusterResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RedisEnterpriseDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisEnterpriseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RedisEnterpriseDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisEnterpriseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource"/> object. </returns>
         public virtual RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(ResourceIdentifier id)
         {
             RedisEnterpriseDatabaseResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
         public virtual RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             RedisEnterprisePrivateEndpointConnectionResource.ValidateResourceId(id);

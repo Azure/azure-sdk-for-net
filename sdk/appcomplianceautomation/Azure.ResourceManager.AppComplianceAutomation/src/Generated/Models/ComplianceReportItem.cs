@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> Object that includes all the content for single compliance result. </summary>
     public partial class ComplianceReportItem
     {
-        /// <summary> Initializes a new instance of ComplianceReportItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComplianceReportItem"/>. </summary>
         internal ComplianceReportItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ComplianceReportItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceReportItem"/>. </summary>
         /// <param name="categoryName"> The category name. </param>
         /// <param name="controlId"> The control Id - e.g. "1". </param>
         /// <param name="controlName"> The control name. </param>
@@ -29,7 +64,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="resourceType"> The compliance result mapped resource type. </param>
         /// <param name="resourceId"> The compliance result mapped resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <param name="statusChangeDate"> The compliance result last changed date - e.g. "2022-10-24T02:55:16.3274379Z". For unavailable date, set it as "N/A". </param>
-        internal ComplianceReportItem(string categoryName, string controlId, string controlName, ControlType? controlType, ComplianceState? complianceState, string policyId, string policyDisplayName, string policyDescription, string subscriptionId, string resourceGroup, string resourceType, string resourceId, string statusChangeDate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComplianceReportItem(string categoryName, string controlId, string controlName, ControlType? controlType, ComplianceState? complianceState, string policyId, string policyDisplayName, string policyDescription, string subscriptionId, string resourceGroup, string resourceType, string resourceId, string statusChangeDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CategoryName = categoryName;
             ControlId = controlId;
@@ -44,6 +80,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ResourceType = resourceType;
             ResourceId = resourceId;
             StatusChangeDate = statusChangeDate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The category name. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ComputeRuntimeDto. </summary>
     internal partial class ComputeRuntimeDto
     {
-        /// <summary> Initializes a new instance of ComputeRuntimeDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeRuntimeDto"/>. </summary>
         public ComputeRuntimeDto()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeRuntimeDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeRuntimeDto"/>. </summary>
         /// <param name="sparkRuntimeVersion"></param>
         internal ComputeRuntimeDto(string sparkRuntimeVersion)
         {

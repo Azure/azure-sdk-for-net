@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> User of a lab that can register for and use virtual machines within the lab. Used for updates. </summary>
     public partial class LabUserPatch
     {
-        /// <summary> Initializes a new instance of LabUserPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabUserPatch"/>. </summary>
         public LabUserPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabUserPatch"/>. </summary>
+        /// <param name="additionalUsageQuota"> The amount of usage quota time the user gets in addition to the lab usage quota. </param>
+        internal LabUserPatch(TimeSpan? additionalUsageQuota)
+        {
+            AdditionalUsageQuota = additionalUsageQuota;
         }
 
         /// <summary> The amount of usage quota time the user gets in addition to the lab usage quota. </summary>

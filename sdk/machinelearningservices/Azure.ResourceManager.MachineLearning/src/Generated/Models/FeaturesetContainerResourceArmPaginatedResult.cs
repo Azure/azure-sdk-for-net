@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of FeaturesetContainer entities. </summary>
     internal partial class FeaturesetContainerResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeaturesetContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetContainerResourceArmPaginatedResult"/>. </summary>
         internal FeaturesetContainerResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeatureSetContainerData>();
         }
 
-        /// <summary> Initializes a new instance of FeaturesetContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetContainerResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturesetContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturesetContainer. </param>
         internal FeaturesetContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetContainerData> value)

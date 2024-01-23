@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the partner. </summary>
     public partial class EventGridPartnerContent
     {
-        /// <summary> Initializes a new instance of EventGridPartnerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPartnerContent"/>. </summary>
         public EventGridPartnerContent()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridPartnerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPartnerContent"/>. </summary>
         /// <param name="partnerRegistrationImmutableId"> The immutableId of the corresponding partner registration. </param>
         /// <param name="partnerName"> The partner name. </param>
         /// <param name="authorizationExpireOn">

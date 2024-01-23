@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The arm resource definition resource element template details. </summary>
     public partial class ArmResourceDefinitionResourceElementTemplateDetails : ResourceElementTemplate
     {
-        /// <summary> Initializes a new instance of ArmResourceDefinitionResourceElementTemplateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/>. </summary>
         public ArmResourceDefinitionResourceElementTemplateDetails()
         {
             ResourceElementType = Type.ArmResourceDefinition;
         }
 
-        /// <summary> Initializes a new instance of ArmResourceDefinitionResourceElementTemplateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/>. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>

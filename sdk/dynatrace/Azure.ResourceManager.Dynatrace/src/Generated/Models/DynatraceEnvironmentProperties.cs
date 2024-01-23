@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Properties of the Dynatrace environment. </summary>
     public partial class DynatraceEnvironmentProperties
     {
-        /// <summary> Initializes a new instance of DynatraceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceEnvironmentProperties"/>. </summary>
         public DynatraceEnvironmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceEnvironmentProperties"/>. </summary>
         /// <param name="userId"> User id. </param>
         /// <param name="accountInfo"> Dynatrace Account Information. </param>
         /// <param name="environmentInfo"> Dynatrace Environment Information. </param>

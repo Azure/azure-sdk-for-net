@@ -10,7 +10,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Measurement of the amount of tokens used in this request and response. </summary>
     public partial class EmbeddingsUsage
     {
-        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsUsage"/>. </summary>
         /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
         /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
         internal EmbeddingsUsage(int promptTokens, int totalTokens)

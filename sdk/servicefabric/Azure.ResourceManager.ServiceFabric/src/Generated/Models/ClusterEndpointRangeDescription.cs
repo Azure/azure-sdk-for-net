@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Port range details. </summary>
     public partial class ClusterEndpointRangeDescription
     {
-        /// <summary> Initializes a new instance of ClusterEndpointRangeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterEndpointRangeDescription"/>. </summary>
         /// <param name="startPort"> Starting port of a range of ports. </param>
         /// <param name="endPort"> End port of a range of ports. </param>
         public ClusterEndpointRangeDescription(int startPort, int endPort)

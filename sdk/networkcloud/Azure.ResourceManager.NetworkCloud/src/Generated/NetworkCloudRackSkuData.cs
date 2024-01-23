@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudRackSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudRackSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuData"/>. </summary>
         public NetworkCloudRackSkuData()
         {
             ComputeMachines = new ChangeTrackingList<MachineSkuSlot>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud
             SupportedRackSkuIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudRackSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

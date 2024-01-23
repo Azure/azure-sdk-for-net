@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class represents the script action task details. </summary>
     public partial class ScriptActionTaskDetails : SiteRecoveryTaskTypeDetails
     {
-        /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionTaskDetails"/>. </summary>
         internal ScriptActionTaskDetails()
         {
             InstanceType = "ScriptActionTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="name"> The name. </param>
         /// <param name="path"> The path. </param>

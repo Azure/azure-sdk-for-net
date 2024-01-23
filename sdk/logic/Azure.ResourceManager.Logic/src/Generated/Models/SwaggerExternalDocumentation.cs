@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger external documentation. </summary>
     public partial class SwaggerExternalDocumentation
     {
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         public SwaggerExternalDocumentation()
         {
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         /// <param name="description"> The document description. </param>
         /// <param name="uri"> The documentation Uri. </param>
         /// <param name="extensions"> The vendor extensions. </param>

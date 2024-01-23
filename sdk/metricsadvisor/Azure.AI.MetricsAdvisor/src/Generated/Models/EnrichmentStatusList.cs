@@ -13,13 +13,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EnrichmentStatusList. </summary>
     internal partial class EnrichmentStatusList
     {
-        /// <summary> Initializes a new instance of EnrichmentStatusList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatusList"/>. </summary>
         internal EnrichmentStatusList()
         {
             Value = new ChangeTrackingList<EnrichmentStatus>();
         }
 
-        /// <summary> Initializes a new instance of EnrichmentStatusList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatusList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal EnrichmentStatusList(string nextLink, IReadOnlyList<EnrichmentStatus> value)

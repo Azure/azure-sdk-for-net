@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Failover details for a replication protected item. </summary>
     public partial class FailoverReplicationProtectedItemDetails
     {
-        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
         internal FailoverReplicationProtectedItemDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="testVmName"> The test Vm name. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Network related properties of a server. </summary>
     public partial class MySqlFlexibleServerHighAvailability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerHighAvailability"/>. </summary>
         public MySqlFlexibleServerHighAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerHighAvailability"/>. </summary>
         /// <param name="mode"> High availability mode for a server. </param>
         /// <param name="state"> The state of server high availability. </param>
         /// <param name="standbyAvailabilityZone"> Availability zone of the standby server. </param>

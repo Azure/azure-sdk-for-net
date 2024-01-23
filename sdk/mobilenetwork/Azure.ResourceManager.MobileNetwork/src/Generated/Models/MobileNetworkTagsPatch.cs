@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class MobileNetworkTagsPatch
     {
-        /// <summary> Initializes a new instance of MobileNetworkTagsPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkTagsPatch"/>. </summary>
         public MobileNetworkTagsPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkTagsPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal MobileNetworkTagsPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownFormatReadSettings. </summary>
     internal partial class UnknownFormatReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of UnknownFormatReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFormatReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownFormatReadSettings(string type, IDictionary<string, object> additionalProperties) : base(type, additionalProperties)

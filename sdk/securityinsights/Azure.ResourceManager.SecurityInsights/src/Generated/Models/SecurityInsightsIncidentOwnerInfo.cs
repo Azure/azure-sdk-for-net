@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Information on the user an incident is assigned to. </summary>
     public partial class SecurityInsightsIncidentOwnerInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentOwnerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentOwnerInfo"/>. </summary>
         public SecurityInsightsIncidentOwnerInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentOwnerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentOwnerInfo"/>. </summary>
         /// <param name="email"> The email of the user the incident is assigned to. </param>
         /// <param name="assignedTo"> The name of the user the incident is assigned to. </param>
         /// <param name="objectId"> The object id of the user the incident is assigned to. </param>

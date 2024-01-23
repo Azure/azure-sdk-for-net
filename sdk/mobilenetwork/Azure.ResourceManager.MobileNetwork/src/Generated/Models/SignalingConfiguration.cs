@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Signaling configuration for the packet core. </summary>
     internal partial class SignalingConfiguration
     {
-        /// <summary> Initializes a new instance of SignalingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalingConfiguration"/>. </summary>
         public SignalingConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalingConfiguration"/>. </summary>
         /// <param name="nasReroute"> Configuration enabling 4G NAS reroute. </param>
         internal SignalingConfiguration(NASRerouteConfiguration nasReroute)
         {

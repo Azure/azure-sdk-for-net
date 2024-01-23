@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Status of the Provisioning for the managed network of a machine learning workspace. </summary>
     public partial class ManagedNetworkProvisionStatus
     {
-        /// <summary> Initializes a new instance of ManagedNetworkProvisionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionStatus"/>. </summary>
         public ManagedNetworkProvisionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkProvisionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionStatus"/>. </summary>
         /// <param name="sparkReady"></param>
         /// <param name="status"> Status for the managed network of a machine learning workspace. </param>
         internal ManagedNetworkProvisionStatus(bool? sparkReady, ManagedNetworkStatus? status)

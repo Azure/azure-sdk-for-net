@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> The properties of deployment in Elastic cloud corresponding to the Elastic monitor resource. </summary>
     public partial class DeploymentInfoResponse
     {
-        /// <summary> Initializes a new instance of DeploymentInfoResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentInfoResponse"/>. </summary>
         internal DeploymentInfoResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentInfoResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentInfoResponse"/>. </summary>
         /// <param name="status"> The Elastic deployment status. </param>
         /// <param name="version"> Version of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="memoryCapacity"> RAM capacity of the elasticsearch in Elastic cloud deployment. </param>

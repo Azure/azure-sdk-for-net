@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Available cluster version. </summary>
     public partial class HDInsightClusterVersion : ResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightClusterVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersion"/>. </summary>
         public HDInsightClusterVersion()
         {
             Components = new ChangeTrackingList<ClusterComponentItem>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -130,16 +130,18 @@ namespace Azure.Communication.CallAutomation
                     return ContinuousDtmfRecognitionToneFailed.Deserialize(eventData);
                 case nameof(ContinuousDtmfRecognitionStopped):
                     return ContinuousDtmfRecognitionStopped.Deserialize(eventData);
-                case nameof(SendDtmfCompleted):
-                    return SendDtmfCompleted.Deserialize(eventData);
-                case nameof(SendDtmfFailed):
-                    return SendDtmfFailed.Deserialize(eventData);
+                case nameof(SendDtmfTonesCompleted):
+                    return SendDtmfTonesCompleted.Deserialize(eventData);
+                case nameof(SendDtmfTonesFailed):
+                    return SendDtmfTonesFailed.Deserialize(eventData);
                 case nameof(CancelAddParticipantFailed):
                     return CancelAddParticipantFailed.Deserialize(eventData);
-                case nameof(AddParticipantCancelled):
-                    return AddParticipantCancelled.Deserialize(eventData);
+                case nameof(CancelAddParticipantSucceeded):
+                    return CancelAddParticipantSucceeded.Deserialize(eventData);
                 case nameof(TranscriptionStarted):
                     return TranscriptionStarted.Deserialize(eventData);
+                case nameof(TranscriptionUpdated):
+                    return TranscriptionUpdated.Deserialize(eventData);
                 case nameof(TranscriptionStopped):
                     return TranscriptionStopped.Deserialize(eventData);
                 case nameof(TranscriptionResumed):
@@ -163,6 +165,8 @@ namespace Azure.Communication.CallAutomation
                     return DialogSensitivityUpdate.Deserialize(eventData);
                 case nameof(DialogLanguageChange):
                     return DialogLanguageChange.Deserialize(eventData);
+                case nameof(DialogUpdated):
+                    return DialogUpdated.Deserialize(eventData);
                 #endregion
                 default:
                     return null;

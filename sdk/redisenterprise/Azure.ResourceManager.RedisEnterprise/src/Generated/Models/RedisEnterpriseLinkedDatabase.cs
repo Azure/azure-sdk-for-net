@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Specifies details of a linked database resource. </summary>
     public partial class RedisEnterpriseLinkedDatabase
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseLinkedDatabase"/>. </summary>
         public RedisEnterpriseLinkedDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseLinkedDatabase"/>. </summary>
         /// <param name="id"> Resource ID of a database resource to link with this database. </param>
         /// <param name="state"> State of the link between the database resources. </param>
         internal RedisEnterpriseLinkedDatabase(ResourceIdentifier id, RedisEnterpriseDatabaseLinkState? state)

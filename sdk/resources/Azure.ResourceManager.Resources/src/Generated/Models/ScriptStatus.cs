@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Generic object modeling results of script execution. </summary>
     public partial class ScriptStatus
     {
-        /// <summary> Initializes a new instance of ScriptStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStatus"/>. </summary>
         internal ScriptStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStatus"/>. </summary>
         /// <param name="containerInstanceId"> ACI resource Id. </param>
         /// <param name="storageAccountId"> Storage account resource Id. </param>
         /// <param name="startOn"> Start time of the script execution. </param>

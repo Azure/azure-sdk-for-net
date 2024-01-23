@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that migrates on-prem SQL Server databases to Azure SQL Database for online migrations. </summary>
     public partial class MigrateSqlServerSqlDBSyncTaskInput : SqlMigrationTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -29,19 +29,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedDatabases = selectedDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="validationOptions"> Validation options. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        internal MigrateSqlServerSqlDBSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions) : base(sourceConnectionInfo, targetConnectionInfo)
+        internal MigrateSqlServerSqlDBSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-
             SelectedDatabases = selectedDatabases;
             ValidationOptions = validationOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskInput"/> for deserialization. </summary>
+        internal MigrateSqlServerSqlDBSyncTaskInput()
+        {
         }
 
         /// <summary> Databases to migrate. </summary>

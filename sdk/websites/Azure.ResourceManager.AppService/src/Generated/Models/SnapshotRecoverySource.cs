@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Specifies the web app that snapshot contents will be retrieved from. </summary>
     public partial class SnapshotRecoverySource
     {
-        /// <summary> Initializes a new instance of SnapshotRecoverySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotRecoverySource"/>. </summary>
         public SnapshotRecoverySource()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotRecoverySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotRecoverySource"/>. </summary>
         /// <param name="location"> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </param>
         /// <param name="id">
         /// ARM resource ID of the source app.

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure Operator Distributed Services template deploy mapping rule profile. </summary>
     public partial class AzureOperatorNexusArmTemplateDeployMappingRuleProfile : MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusArmTemplateDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateDeployMappingRuleProfile"/>. </summary>
         public AzureOperatorNexusArmTemplateDeployMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusArmTemplateDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
         /// <param name="templateMappingRuleProfile"> The template mapping rule profile. </param>
         internal AzureOperatorNexusArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, ArmTemplateMappingRuleProfile templateMappingRuleProfile) : base(applicationEnablement)

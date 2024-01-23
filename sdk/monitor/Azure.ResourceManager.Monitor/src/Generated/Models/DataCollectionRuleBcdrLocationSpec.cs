@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleBcdrLocationSpec. </summary>
     public partial class DataCollectionRuleBcdrLocationSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrLocationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrLocationSpec"/>. </summary>
         internal DataCollectionRuleBcdrLocationSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrLocationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrLocationSpec"/>. </summary>
         /// <param name="location"> Name of location. </param>
         /// <param name="provisioningStatus"> The resource provisioning state in this location. </param>
         internal DataCollectionRuleBcdrLocationSpec(AzureLocation? location, DataCollectionRuleBcdrLocationSpecProvisioningStatus? provisioningStatus)

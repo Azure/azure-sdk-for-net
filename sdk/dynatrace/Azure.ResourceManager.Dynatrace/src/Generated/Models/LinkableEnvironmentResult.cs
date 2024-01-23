@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Response for getting all the linkable environments. </summary>
     public partial class LinkableEnvironmentResult
     {
-        /// <summary> Initializes a new instance of LinkableEnvironmentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentResult"/>. </summary>
         internal LinkableEnvironmentResult()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkableEnvironmentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentResult"/>. </summary>
         /// <param name="environmentId"> environment id for which user is an admin. </param>
         /// <param name="environmentName"> Name of the environment. </param>
         /// <param name="planData"> Billing plan information. </param>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information for connecting to SQL database server. </summary>
     public partial class SqlConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of SqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInfo"/>. </summary>
         /// <param name="dataSource"> Data source in the format Protocol:MachineName\SQLServerInstanceName,PortNumber. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public SqlConnectionInfo(string dataSource)
@@ -24,10 +25,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "SqlConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of SqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSource"> Data source in the format Protocol:MachineName\SQLServerInstanceName,PortNumber. </param>
         /// <param name="serverName"> name of the server. </param>
         /// <param name="port"> Port for Server. </param>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="additionalSettings"> Additional connection settings. </param>
         /// <param name="trustServerCertificate"> Whether to trust the server certificate. </param>
         /// <param name="platform"> Server platform type for connection. </param>
-        internal SqlConnectionInfo(string connectionInfoType, string userName, string password, string dataSource, string serverName, int? port, string serverVersion, string serverBrandVersion, string resourceId, AuthenticationType? authentication, bool? encryptConnection, string additionalSettings, bool? trustServerCertificate, SqlSourcePlatform? platform) : base(connectionInfoType, userName, password)
+        internal SqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string dataSource, string serverName, int? port, string serverVersion, string serverBrandVersion, string resourceId, AuthenticationType? authentication, bool? encryptConnection, string additionalSettings, bool? trustServerCertificate, SqlSourcePlatform? platform) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             DataSource = dataSource;
             ServerName = serverName;
@@ -53,6 +55,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             TrustServerCertificate = trustServerCertificate;
             Platform = platform;
             ConnectionInfoType = connectionInfoType ?? "SqlConnectionInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInfo"/> for deserialization. </summary>
+        internal SqlConnectionInfo()
+        {
         }
 
         /// <summary> Data source in the format Protocol:MachineName\SQLServerInstanceName,PortNumber. </summary>

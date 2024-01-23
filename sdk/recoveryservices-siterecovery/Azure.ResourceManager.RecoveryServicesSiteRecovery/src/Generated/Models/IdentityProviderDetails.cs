@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Identity provider details. </summary>
     public partial class IdentityProviderDetails
     {
-        /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderDetails"/>. </summary>
         internal IdentityProviderDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderDetails"/>. </summary>
         /// <param name="tenantId"> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="applicationId"> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="objectId"> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateEndpointConnectionProxyData>> value = default;
+            Optional<IReadOnlyList<DeviceUpdatePrivateEndpointConnectionProxyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    List<PrivateEndpointConnectionProxyData> array = new List<PrivateEndpointConnectionProxyData>();
+                    List<DeviceUpdatePrivateEndpointConnectionProxyData> array = new List<DeviceUpdatePrivateEndpointConnectionProxyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(item));
+                        array.Add(DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(item));
                     }
                     value = array;
                     continue;

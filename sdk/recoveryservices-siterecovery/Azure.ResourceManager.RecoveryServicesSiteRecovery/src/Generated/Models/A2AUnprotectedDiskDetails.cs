@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A unprotected disk details. </summary>
     public partial class A2AUnprotectedDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AUnprotectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AUnprotectedDiskDetails"/>. </summary>
         internal A2AUnprotectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of A2AUnprotectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AUnprotectedDiskDetails"/>. </summary>
         /// <param name="diskLunId"> The source lun Id for the data disk. </param>
         /// <param name="diskAutoProtectionStatus"> A value indicating whether the disk auto protection is enabled. </param>
         internal A2AUnprotectedDiskDetails(int? diskLunId, AutoProtectionOfDataDisk? diskAutoProtectionStatus)

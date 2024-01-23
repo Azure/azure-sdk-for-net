@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for Windows Azure Search Service. </summary>
     public partial class AzureSearchLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureSearchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedService"/>. </summary>
         /// <param name="url"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public AzureSearchLinkedService(object url)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureSearch";
         }
 
-        /// <summary> Initializes a new instance of AzureSearchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

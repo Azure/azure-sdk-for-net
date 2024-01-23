@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataShare.Models
     /// </summary>
     public abstract partial class SourceShareSynchronizationSetting
     {
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSetting"/>. </summary>
         protected SourceShareSynchronizationSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSetting"/>. </summary>
         /// <param name="kind"> Kind of synchronization setting on share. </param>
         internal SourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind)
         {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Build result resource properties payload. </summary>
     public partial class AppPlatformBuildResultProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultProperties"/>. </summary>
         public AppPlatformBuildResultProperties()
         {
             BuildStages = new ChangeTrackingList<AppPlatformBuildStageProperties>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultProperties"/>. </summary>
         /// <param name="name"> The name of this build result. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="buildPodName"> The build pod name which can be used to get the build log streaming. </param>
         /// <param name="buildStages"> All of the build stage (init-container and container) resources in build pod. </param>
-        internal AppPlatformBuildResultProperties(string name, AppPlatformBuildResultProvisioningState? provisioningState, string buildPodName, IReadOnlyList<AppPlatformBuildStageProperties> buildStages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildResultProperties(string name, AppPlatformBuildResultProvisioningState? provisioningState, string buildPodName, IReadOnlyList<AppPlatformBuildStageProperties> buildStages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ProvisioningState = provisioningState;
             BuildPodName = buildPodName;
             BuildStages = buildStages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of this build result. </summary>

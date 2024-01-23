@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a list of Profiles. It contains a list of Profile objects and a URL link to get the next set of results. </summary>
     internal partial class ProfileList
     {
-        /// <summary> Initializes a new instance of ProfileList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileList"/>. </summary>
         internal ProfileList()
         {
             Value = new ChangeTrackingList<FrontDoorNetworkExperimentProfileData>();
         }
 
-        /// <summary> Initializes a new instance of ProfileList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileList"/>. </summary>
         /// <param name="value"> List of Profiles within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of Profile objects if there are any. </param>
         internal ProfileList(IReadOnlyList<FrontDoorNetworkExperimentProfileData> value, string nextLink)

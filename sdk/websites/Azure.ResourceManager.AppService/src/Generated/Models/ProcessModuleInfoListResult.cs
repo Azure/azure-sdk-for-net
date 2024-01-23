@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Kudu thread information elements. </summary>
     internal partial class ProcessModuleInfoListResult
     {
-        /// <summary> Initializes a new instance of ProcessModuleInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ProcessModuleInfoListResult(IEnumerable<ProcessModuleInfoData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ProcessModuleInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal ProcessModuleInfoListResult(IReadOnlyList<ProcessModuleInfoData> value, string nextLink)

@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> A valid `GeoJSON Polygon` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.6) for details. </summary>
     internal partial class GeoJsonPolygon : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of GeoJsonPolygon. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonPolygon(IEnumerable<IList<IList<double>>> coordinates)
@@ -24,6 +24,15 @@ namespace Azure.Maps.Routing.Models
 
             Coordinates = coordinates.ToList();
             Type = GeoJsonObjectType.GeoJsonPolygon;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
+        /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
+        internal GeoJsonPolygon(GeoJsonObjectType type, IList<IList<IList<double>>> coordinates) : base(type)
+        {
+            Coordinates = coordinates;
+            Type = type;
         }
 
         /// <summary> Coordinates for the `GeoJson Polygon` geometry type. </summary>

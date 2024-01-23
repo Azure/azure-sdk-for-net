@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties to send health probes to origin. </summary>
     public partial class HealthProbeSettings
     {
-        /// <summary> Initializes a new instance of HealthProbeSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthProbeSettings"/>. </summary>
         public HealthProbeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthProbeSettings"/>. </summary>
         /// <param name="probePath"> The path relative to the origin that is used to determine the health of the origin. </param>
         /// <param name="probeRequestType"> The type of health probe request that is made. </param>
         /// <param name="probeProtocol"> Protocol to use for health probe. </param>
         /// <param name="probeIntervalInSeconds"> The number of seconds between health probes.Default is 240sec. </param>
-        internal HealthProbeSettings(string probePath, HealthProbeRequestType? probeRequestType, HealthProbeProtocol? probeProtocol, int? probeIntervalInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthProbeSettings(string probePath, HealthProbeRequestType? probeRequestType, HealthProbeProtocol? probeProtocol, int? probeIntervalInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProbePath = probePath;
             ProbeRequestType = probeRequestType;
             ProbeProtocol = probeProtocol;
             ProbeIntervalInSeconds = probeIntervalInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The path relative to the origin that is used to determine the health of the origin. </summary>
