@@ -190,39 +190,39 @@ namespace Azure.ResourceManager.IoTOperations.Samples
             TargetData data = new TargetData(new AzureLocation("pjjkifnrwvzcyohz"), new ExtendedLocation("bjjhfqsplgzdlbdlddleetyg", "sosibrbmmrfbbyp"))
             {
                 Components =
-{
-new ComponentProperties("yhnelpxsobdyurwvhkq","wiabwsfqhhxru")
-{
-Dependencies =
-{
-"x"
-},
-Properties =
-{
-},
-}
-},
+                {
+                    new ComponentProperties("yhnelpxsobdyurwvhkq","wiabwsfqhhxru")
+                    {
+                        Dependencies =
+                            {
+                                "x"
+                            },
+                        Properties =
+                            {
+                            },
+                    }
+                },
                 Scope = "lm",
                 Topologies =
-{
-new TopologiesProperties()
-{
-Bindings =
-{
-new BindingProperties(new Dictionary<string, BinaryData>()
-{
-},"qpwesjlyyggcbehwigbobqum","role")
-},
-}
-},
+                {
+                    new TopologiesProperties()
+                    {
+                        Bindings =
+                            {
+                                new BindingProperties(new Dictionary<string, BinaryData>()
+                                    {
+                                    },"qpwesjlyyggcbehwigbobqum","role")
+                            },
+                    }
+                },
                 ReconciliationPolicy = new ReconciliationPolicyModel(ReconciliationPolicy.Periodic)
                 {
                     Interval = "wyrrzydmfgzymvzbppscxyfobku",
                 },
                 Version = "prbigsnjltnzqliu",
                 Tags =
-{
-},
+                    {
+                    },
             };
             ArmOperation<TargetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             TargetResource result = lro.Value;

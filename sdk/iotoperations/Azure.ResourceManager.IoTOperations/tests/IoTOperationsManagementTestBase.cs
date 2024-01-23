@@ -3,41 +3,99 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.IoTOperations.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
 {
     public class IoTOperationsManagementTestBase : ManagementRecordedTestBase<IoTOperationsManagementTestEnvironment>
     {
-        protected ArmClient Client { get; private set; }
-        protected SubscriptionResource DefaultSubscription { get; private set; }
-
-        protected IoTOperationsManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
-        {
-        }
+        public string SubscriptionId { get; set; }
+        public ArmClient ArmClient { get; private set; }
+        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
+        public SubscriptionResource Subscription { get; set; }
 
         protected IoTOperationsManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }
 
-        [SetUp]
-        public async Task CreateCommonClient()
+        protected IoTOperationsManagementTestBase(bool isAsync, RecordedTestMode mode)
+        : base(isAsync, mode)
         {
-            Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+    protected async Task InitializeClients()
+      {
+          ArmClient = GetArmClient();
+          Subscription = await ArmClient.GetDefaultSubscriptionAsync();
+          ResourceGroupsOperations = Subscription.GetResourceGroups();
+      }
+
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            return await Subscription.GetResourceGroups().GetAsync(name);
+        }
+
+       protected async Task<TargetCollection> GetTargetsResourceCollectionAsync(string resourceGroupName)
+       {
+           ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+           return rg.GetTargets();
+       }
+        protected static ComponentProperties GetComponentProperties()
+        {
+            return new ComponentProperties("yhnelpxsobdyurwvhkq", "wiabwsfqhhxru")
+            {
+                Name = "sdk-test-component",
+                Dependencies = { "dependency1" },
+                Properties = {
+                    { "key1", BinaryData.FromString("value1") },
+                    { "chart", BinaryData.FromObjectAsJson(new {repo = "some-container-registry", version = "0.1.0"}) },
+                 },
+            };
+        }
+
+        protected static TopologiesProperties GetTopologiesProperties()
+        {
+            return new TopologiesProperties()
+            {
+                Bindings =
+                    {
+                        new BindingProperties(new Dictionary<string, BinaryData>()
+                            {
+                                { "inCluster", BinaryData.FromString("true") },
+                            },
+                            "providers.target.k8s",
+                            "instance"
+                        ),
+                        new BindingProperties(new Dictionary<string, BinaryData>()
+                            {
+                                { "inCluster", BinaryData.FromString("true") },
+                            },
+                            "providers.target.helm",
+                            "helm.v3"
+                        ),
+                        new BindingProperties(new Dictionary<string, BinaryData>()
+                            {
+                                { "inCluster", BinaryData.FromString("true") },
+                            },
+                            "providers.target.kubectl",
+                            "yaml.k8s"
+                        ),
+                    },
+            };
+        }
+        protected static ReconciliationPolicyModel GetReconciliationPolicy()
+        {
+            return new ReconciliationPolicyModel(ReconciliationPolicy.Periodic)
+            {
+                Interval = "1h",
+            };
         }
     }
 }
