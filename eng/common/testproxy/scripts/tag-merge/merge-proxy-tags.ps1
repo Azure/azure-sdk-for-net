@@ -14,7 +14,7 @@ In the case one of the targeted tags exists in the targeted assets.json, that ta
 
 1. test-proxy restore -a <assets-file> -> populate .assets
 2. test-proxy config locate -a <assets-file> -> get location of cloned git repo
-3. walk the incoming tags, cherry-picking their changes directly into the changeset _in context_
+3. walk the incoming tags, merging their changes directly into the changeset _in context_
 4. In the case of a discovered git conflict, the process ends. A list of which tags merged and which didn't will be presented to the user.
   4a. Users should resolve the git conflicts themselves.
   4b. If the conflict was on the final tag, resolve the conflict (leaving it uncommitted tyvm), and test-proxy push, you're done.
@@ -243,10 +243,10 @@ function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory, $Rel
     foreach($Tag in $RemainingTags) {
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
         $existingTags = Save-Incomplete-Progress $Tag $MountDirectory
-        $cherryPickResult = Git-Command-With-Result "cherry-pick $tagSha" - $AssetsRepoLocation -HardExit $false
+        $cherryPickResult = Git-Command-With-Result "merge $tagSha" - $AssetsRepoLocation -HardExit $false
 
         if ($cherryPickResult.ExitCode -ne 0) {
-            $error = "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-invoke " +
+            $error = "Conflicts while merging $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-invoke " +
             "by `"./eng/common/testproxy/scripts/tag-merge/merge-proxy-tags.ps1 $RelativeAssetsJson $remainingTagString`""
             Write-Host $error -ForegroundColor Red
             exit 1
@@ -286,11 +286,11 @@ $AssetsJson = Resolve-Path $AssetsJson
 # directory so that the test-proxy restore operations work IN PLACE with existing tooling
 $mountDirectory = Get-Repo-Root -StartDir $AssetsJson
 
-# ensure we actually have the .assets folder that we can cherry-pick on top of
+# ensure we actually have the .assets folder that we can merge commits onto
 Prepare-Assets $proxyExe $mountDirectory $AssetsJson
 
 # using the mountingDirectory and the assets.json location, we can figure out where the assets slice actually lives within the .assets folder.
-# we will use this to invoke individual cherry-picks before pushing up the result
+# we will use this to invoke individual SHA merges before pushing up the result
 $assetsRepoLocation = Locate-Assets-Slice $proxyExe $AssetsJson $mountDirectory
 
 # resolve the tags that we will go after. If the target assets.json contains one of these tags, that tag is _already present_

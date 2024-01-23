@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -13,15 +16,48 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class ScheduledActionData : IUtf8JsonSerializable
+    public partial class ScheduledActionData : IUtf8JsonSerializable, IJsonModel<ScheduledActionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScheduledActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -66,11 +102,40 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStringValue(ViewId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScheduledActionData DeserializeScheduledActionData(JsonElement element)
+        ScheduledActionData IJsonModel<ScheduledActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduledActionData(document.RootElement, options);
+        }
+
+        internal static ScheduledActionData DeserializeScheduledActionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +154,8 @@ namespace Azure.ResourceManager.CostManagement
             Optional<ResourceIdentifier> scope = default;
             Optional<ScheduledActionStatus> status = default;
             Optional<ResourceIdentifier> viewId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -209,8 +276,44 @@ namespace Azure.ResourceManager.CostManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScheduledActionData(id, name, type, systemData.Value, displayName.Value, fileDestination.Value, notification.Value, notificationEmail.Value, schedule.Value, scope.Value, Optional.ToNullable(status), viewId.Value, Optional.ToNullable(eTag), Optional.ToNullable(kind));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScheduledActionData(id, name, type, systemData.Value, displayName.Value, fileDestination.Value, notification.Value, notificationEmail.Value, schedule.Value, scope.Value, Optional.ToNullable(status), viewId.Value, Optional.ToNullable(eTag), Optional.ToNullable(kind), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScheduledActionData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScheduledActionData IPersistableModel<ScheduledActionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScheduledActionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScheduledActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

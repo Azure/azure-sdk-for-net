@@ -5,17 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class VirtualMachineInventoryItem : IUtf8JsonSerializable
+    public partial class VirtualMachineInventoryItem : IUtf8JsonSerializable, IJsonModel<VirtualMachineInventoryItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInventoryItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineInventoryItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSName))
+            {
+                writer.WritePropertyName("osName"u8);
+                writer.WriteStringValue(OSName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            {
+                writer.WritePropertyName("powerState"u8);
+                writer.WriteStringValue(PowerState);
+            }
             if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
@@ -33,11 +58,60 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
+            {
+                writer.WritePropertyName("managedResourceId"u8);
+                writer.WriteStringValue(ManagedResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            {
+                writer.WritePropertyName("uuid"u8);
+                writer.WriteStringValue(Uuid);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
+            {
+                writer.WritePropertyName("inventoryItemName"u8);
+                writer.WriteStringValue(InventoryItemName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineInventoryItem DeserializeVirtualMachineInventoryItem(JsonElement element)
+        VirtualMachineInventoryItem IJsonModel<VirtualMachineInventoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInventoryItem(document.RootElement, options);
+        }
+
+        internal static VirtualMachineInventoryItem DeserializeVirtualMachineInventoryItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +126,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<string> uuid = default;
             Optional<string> inventoryItemName = default;
             Optional<string> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
@@ -121,8 +197,44 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     provisioningState = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, Optional.ToNullable(osType), osName.Value, powerState.Value, Optional.ToList(ipAddresses), cloud.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData, Optional.ToNullable(osType), osName.Value, powerState.Value, Optional.ToList(ipAddresses), cloud.Value);
         }
+
+        BinaryData IPersistableModel<VirtualMachineInventoryItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineInventoryItem IPersistableModel<VirtualMachineInventoryItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineInventoryItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineInventoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

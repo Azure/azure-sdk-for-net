@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-02-preview</description>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-02-preview</description>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Groupby = groupby;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetServiceAlertSummaryOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetServiceAlertSummaryOptions()
+        {
+        }
+
         /// <summary> This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate. </summary>
         public AlertsSummaryGroupByField Groupby { get; }
         /// <summary> Include count of the SmartGroups as part of the summary. Default value is 'false'. </summary>

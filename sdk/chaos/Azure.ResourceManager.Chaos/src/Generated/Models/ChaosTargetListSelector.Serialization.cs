@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class ChaosTargetListSelector : IUtf8JsonSerializable
+    public partial class ChaosTargetListSelector : IUtf8JsonSerializable, IJsonModel<ChaosTargetListSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetListSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ChaosTargetListSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetListSelector>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
@@ -48,13 +57,27 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteEndObject();
         }
 
-        internal static ChaosTargetListSelector DeserializeChaosTargetListSelector(JsonElement element)
+        ChaosTargetListSelector IJsonModel<ChaosTargetListSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetListSelector>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChaosTargetListSelector(document.RootElement, options);
+        }
+
+        internal static ChaosTargetListSelector DeserializeChaosTargetListSelector(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<TargetReference> targets = default;
+            IList<ChaosTargetReference> targets = default;
             SelectorType type = default;
             string id = default;
             Optional<ChaosTargetFilter> filter = default;
@@ -64,10 +87,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (property.NameEquals("targets"u8))
                 {
-                    List<TargetReference> array = new List<TargetReference>();
+                    List<ChaosTargetReference> array = new List<ChaosTargetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetReference.DeserializeTargetReference(item));
+                        array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item));
                     }
                     targets = array;
                     continue;
@@ -96,5 +119,36 @@ namespace Azure.ResourceManager.Chaos.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ChaosTargetListSelector(type, id, filter.Value, additionalProperties, targets);
         }
+
+        BinaryData IPersistableModel<ChaosTargetListSelector>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetListSelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ChaosTargetListSelector IPersistableModel<ChaosTargetListSelector>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetListSelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeChaosTargetListSelector(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChaosTargetListSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,6 +14,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:

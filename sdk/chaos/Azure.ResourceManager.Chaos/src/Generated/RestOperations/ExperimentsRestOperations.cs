@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentData>> GetAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ChaosExperimentData>> GetAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -308,13 +308,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ExperimentData value = default;
+                        ChaosExperimentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
+                        value = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentData> Get(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public Response<ChaosExperimentData> Get(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -339,19 +339,19 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ExperimentData value = default;
+                        ChaosExperimentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
+                        value = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ExperimentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ExperimentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string experimentName, ExperimentData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ExperimentPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ExperimentPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string experimentName, ExperimentPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentExecutionData>> GetExecutionAsync(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChaosExperimentExecutionData>> GetExecutionAsync(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -765,13 +765,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ExperimentExecutionData value = default;
+                        ChaosExperimentExecutionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentExecutionData.DeserializeExperimentExecutionData(document.RootElement);
+                        value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentExecutionData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentExecutionData> GetExecution(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
+        public Response<ChaosExperimentExecutionData> GetExecution(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -798,13 +798,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ExperimentExecutionData value = default;
+                        ChaosExperimentExecutionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentExecutionData.DeserializeExperimentExecutionData(document.RootElement);
+                        value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentExecutionData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
