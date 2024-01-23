@@ -263,6 +263,11 @@ Not all credentials require this configuration. Credentials which authenticate t
 |`AZURE_USERNAME`|a username (usually an email address)
 |`AZURE_PASSWORD`|that user's password
 
+#### Managed identity
+|Variable name|Value
+|-|-
+|`AZURE_CLIENT_ID`|Used as the default value for `ManagedIdentityClientId` in `DefaultAzureCredentialOptions`
+
 Configuration is attempted in the above order. For example, if values for a
 client secret and certificate are both present, the client secret will be used.
 
