@@ -220,7 +220,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
-                        options.AddAzureMonitorLogExporterForTest(out logTelemetryItems);
+                        options.AddAzureMonitorLogExporterForTest(new MockPlatform(), out logTelemetryItems);
                     });
             });
 

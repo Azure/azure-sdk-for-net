@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
@@ -178,7 +179,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 options.Credential ??= credential;
             }
 
-            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
+            return loggerOptions.AddAzureMonitorLogExporterInternal(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)), new DefaultPlatform());
+        }
+
+        /// <summary>
+        /// Adds Azure Monitor Log Exporter with OpenTelemetryLoggerOptions.
+        /// </summary>
+        /// <param name="loggerOptions"><see cref="OpenTelemetryLoggerOptions"/> options to use.</param>
+        /// <param name="processor">Export processor to be added.</param>
+        /// <param name="platform">IPlatform instance to read environment variables</param>
+        /// <remarks>Used for tests.</remarks>
+        /// <returns>The instance of <see cref="OpenTelemetryLoggerOptions"/> to chain the calls.</returns>
+        internal static OpenTelemetryLoggerOptions AddAzureMonitorLogExporterInternal(
+           this OpenTelemetryLoggerOptions loggerOptions,
+           BaseProcessor<LogRecord> processor,
+           IPlatform platform)
+        {
+            bool enableSampling = false;
+            if (platform != null)
+            {
+                var enableLogSampling = platform.GetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING);
+
+                if (string.Equals(enableLogSampling, "true", StringComparison.OrdinalIgnoreCase))
+                {
+                    enableSampling = true;
+                }
+            }
+
+            return loggerOptions.AddProcessor(new LogFilteringProcessor(enableSampling, processor));
         }
     }
 }

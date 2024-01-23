@@ -3,11 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -48,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
-                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                        options.AddAzureMonitorLogExporterForTest(new MockPlatform(), out telemetryItems);
                     });
             });
 
@@ -73,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -100,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
-                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                        options.AddAzureMonitorLogExporterForTest(new MockPlatform(), out telemetryItems);
                     });
             });
 
@@ -134,6 +138,98 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Test Exception",
                 expectedTypeName: "System.Exception");
+        }
+
+        [Theory]
+        [InlineData(true, true, true)]
+        [InlineData(true, true, false)]
+        [InlineData(true, false, true)]
+        [InlineData(true, false, false)]
+        [InlineData(false, false, false)]
+        [InlineData(false, true, false)]
+        [InlineData(false, false, true)]
+        [InlineData(false, true, true)]
+        public void ValidateLogSampling(bool logWithinActivityContext, bool enableSampling, bool sampledIn)
+        {
+            List<TelemetryItem>? telemetryLogItems = null;
+            List<TelemetryItem>? telemetryActivityItems = null;
+            MockPlatform platform = new MockPlatform();
+
+            platform.SetEnvironmentVariable(EnvironmentVariableConstants.ENABLE_LOG_SAMPLING, enableSampling ? "true" : "false");
+
+            // SETUP
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.AddAzureMonitorLogExporterForTest(platform, out telemetryLogItems);
+                    });
+            });
+
+            var uniqueTestId = Guid.NewGuid();
+
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
+            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(activitySourceName)
+                .AddAzureMonitorTraceExporterForTest(out telemetryActivityItems)
+                .Build();
+
+            // ACT
+            if (logWithinActivityContext)
+            {
+                using var activity = activitySource.StartActivity(name: "SayHello");
+
+                if (!sampledIn && activity != null)
+                {
+                    activity.ActivityTraceFlags &= ~ActivityTraceFlags.Recorded;
+                }
+
+                logger.Log(
+                    LogLevel.Information,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+
+                activity?.Stop();
+            }
+            else
+            {
+                logger.Log(
+                   LogLevel.Information,
+                   eventId: 0,
+                   exception: null,
+                   message: "Hello {name}.",
+                   args: new object[] { "World" });
+            }
+
+            // flush logs
+            loggerFactory.Dispose();
+
+            Assert.NotNull(telemetryLogItems);
+
+            if (enableSampling && logWithinActivityContext)
+            {
+                if (!sampledIn)
+                {
+                    Assert.Empty(telemetryLogItems);
+                }
+                else
+                {
+                    Assert.Single(telemetryLogItems);
+                }
+            }
+            else
+            {
+                Assert.Single(telemetryLogItems);
+            }
         }
     }
 }
