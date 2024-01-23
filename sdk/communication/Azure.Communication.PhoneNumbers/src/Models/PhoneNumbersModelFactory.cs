@@ -20,9 +20,7 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("PurchasedPhoneNumbers", typeof(IEnumerable<PurchasedPhoneNumber>), typeof(string))]
     public static partial class PhoneNumbersModelFactory
     {
-#pragma warning disable CS0419 // Ambiguous reference in cref attribute
-
-        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
+        /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
         /// <param name="id"> The id of the phone number, e.g. 14255550123. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +14255550123. </param>
         /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
@@ -33,7 +31,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cost"> The incurred cost for a single phone number. </param>
 #pragma warning disable CA1054 // URI-like parameters should not be strings
         public static PurchasedPhoneNumber PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
-#pragma warning restore CS0419 // Ambiguous reference in cref attribute
 
 #pragma warning restore CA1054 // URI-like parameters should not be strings
             => new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
