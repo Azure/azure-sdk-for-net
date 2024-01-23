@@ -5,6 +5,7 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Disk RP to `2023-10-02` (ManagedDisks, Snapshots, etc)
 
 ### Breaking Changes
 
