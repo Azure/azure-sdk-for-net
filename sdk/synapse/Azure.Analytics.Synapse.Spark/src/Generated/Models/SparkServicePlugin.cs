@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkServicePlugin. </summary>
     public partial class SparkServicePlugin
     {
-        /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkServicePlugin"/>. </summary>
         internal SparkServicePlugin()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkServicePlugin"/>. </summary>
         /// <param name="preparationStartedAt"></param>
         /// <param name="resourceAcquisitionStartedAt"></param>
         /// <param name="submissionStartedAt"></param>

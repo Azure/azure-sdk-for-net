@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Response of /command api. </summary>
     public partial class CassandraCommandOutput
     {
-        /// <summary> Initializes a new instance of CassandraCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandOutput"/>. </summary>
         internal CassandraCommandOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandOutput"/>. </summary>
         /// <param name="commandOutput"> Output of the command. </param>
         internal CassandraCommandOutput(string commandOutput)
         {

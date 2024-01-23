@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupCopySetting
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupCopySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCopySetting"/>. </summary>
         protected DataProtectionBackupCopySetting()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupCopySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCopySetting"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal DataProtectionBackupCopySetting(string objectType)
         {

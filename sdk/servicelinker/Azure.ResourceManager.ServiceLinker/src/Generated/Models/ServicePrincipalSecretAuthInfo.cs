@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is servicePrincipal secret. </summary>
     public partial class ServicePrincipalSecretAuthInfo : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/>. </summary>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="secret"> Secret for servicePrincipal auth. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AuthType = LinkerAuthType.ServicePrincipalSecret;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>

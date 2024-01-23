@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The SSH public key for the cluster nodes. </summary>
     public partial class HDInsightSshPublicKey
     {
-        /// <summary> Initializes a new instance of HDInsightSshPublicKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSshPublicKey"/>. </summary>
         public HDInsightSshPublicKey()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightSshPublicKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSshPublicKey"/>. </summary>
         /// <param name="certificateData"> The certificate for SSH. </param>
         internal HDInsightSshPublicKey(string certificateData)
         {

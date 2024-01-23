@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Error information. </summary>
     internal partial class AcrErrorInfo
     {
-        /// <summary> Initializes a new instance of AcrErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrErrorInfo"/>. </summary>
         internal AcrErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AcrErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrErrorInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="detail"> Error details. </param>

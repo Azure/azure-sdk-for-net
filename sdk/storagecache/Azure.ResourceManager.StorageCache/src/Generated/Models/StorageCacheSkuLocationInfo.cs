@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Resource SKU location information. </summary>
     public partial class StorageCacheSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of StorageCacheSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuLocationInfo"/>. </summary>
         internal StorageCacheSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location where this SKU is available. </param>
         /// <param name="zones"> Zones if any. </param>
         internal StorageCacheSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones)

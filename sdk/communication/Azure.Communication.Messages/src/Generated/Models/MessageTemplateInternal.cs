@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     /// <summary> The template object used to create templates. </summary>
     internal partial class MessageTemplateInternal
     {
-        /// <summary> Initializes a new instance of MessageTemplateInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateInternal"/>. </summary>
         /// <param name="name"> Name of the template. </param>
         /// <param name="language"> The codes for the supported languages for templates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
@@ -26,6 +26,19 @@ namespace Azure.Communication.Messages
             Name = name;
             Language = language;
             Values = new ChangeTrackingDictionary<string, MessageTemplateValueInternal>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateInternal"/>. </summary>
+        /// <param name="name"> Name of the template. </param>
+        /// <param name="language"> The codes for the supported languages for templates. </param>
+        /// <param name="values"> The template values. </param>
+        /// <param name="bindings"> The binding object to link values to the template specific locations. </param>
+        internal MessageTemplateInternal(string name, string language, IDictionary<string, MessageTemplateValueInternal> values, MessageTemplateBindingsInternal bindings)
+        {
+            Name = name;
+            Language = language;
+            Values = values;
+            Bindings = bindings;
         }
 
         /// <summary> Name of the template. </summary>

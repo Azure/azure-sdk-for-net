@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> An MX record. </summary>
     public partial class PrivateDnsMXRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsMXRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsMXRecordInfo"/>. </summary>
         public PrivateDnsMXRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsMXRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsMXRecordInfo"/>. </summary>
         /// <param name="preference"> The preference value for this MX record. </param>
         /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
         internal PrivateDnsMXRecordInfo(int? preference, string exchange)

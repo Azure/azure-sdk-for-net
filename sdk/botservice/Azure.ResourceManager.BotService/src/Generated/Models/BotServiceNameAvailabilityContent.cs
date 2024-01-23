@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The request body for a request to Bot Service Management to check availability of a bot name. </summary>
     public partial class BotServiceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of BotServiceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceNameAvailabilityContent"/>. </summary>
         public BotServiceNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> the name of the bot for which availability needs to be checked. </param>
+        /// <param name="resourceType"> the type of the bot for which availability needs to be checked. </param>
+        internal BotServiceNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> the name of the bot for which availability needs to be checked. </summary>

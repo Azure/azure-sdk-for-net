@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> DatabricksNotebook activity. </summary>
     public partial class DatabricksNotebookActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebookPath"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "DatabricksNotebook";
         }
 
-        /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

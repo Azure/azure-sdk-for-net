@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Revision resource specific properties. </summary>
     public partial class ContainerAppAvailableWorkloadProfileProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfileProperties"/>. </summary>
         public ContainerAppAvailableWorkloadProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfileProperties"/>. </summary>
         /// <param name="category"> Used to categorize workload profiles. </param>
         /// <param name="applicability"> indicates whether the profile is default for the location. </param>
         /// <param name="cores"> Number of cores in CPU. </param>

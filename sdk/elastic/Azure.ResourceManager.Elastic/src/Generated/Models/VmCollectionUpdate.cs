@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Update VM resource collection. </summary>
     public partial class VmCollectionUpdate
     {
-        /// <summary> Initializes a new instance of VmCollectionUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmCollectionUpdate"/>. </summary>
         public VmCollectionUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmCollectionUpdate"/>. </summary>
+        /// <param name="vmResourceId"> ARM id of the VM resource. </param>
+        /// <param name="operationName"> Operation to be performed for given VM. </param>
+        internal VmCollectionUpdate(string vmResourceId, OperationName? operationName)
+        {
+            VmResourceId = vmResourceId;
+            OperationName = operationName;
         }
 
         /// <summary> ARM id of the VM resource. </summary>

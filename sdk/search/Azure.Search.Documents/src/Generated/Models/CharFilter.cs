@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class CharFilter
     {
-        /// <summary> Initializes a new instance of CharFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="CharFilter"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of char filter. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal CharFilter(string oDataType, string name)

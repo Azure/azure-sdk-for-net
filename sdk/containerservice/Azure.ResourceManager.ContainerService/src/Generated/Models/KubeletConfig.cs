@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details. </summary>
     public partial class KubeletConfig
     {
-        /// <summary> Initializes a new instance of KubeletConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeletConfig"/>. </summary>
         public KubeletConfig()
         {
             AllowedUnsafeSysctls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KubeletConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeletConfig"/>. </summary>
         /// <param name="cpuManagerPolicy"> The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </param>
         /// <param name="isCpuCfsQuotaEnabled"> The default is true. </param>
         /// <param name="cpuCfsQuotaPeriod"> The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. </param>

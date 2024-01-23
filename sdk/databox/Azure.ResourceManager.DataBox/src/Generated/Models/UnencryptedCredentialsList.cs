@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> List of unencrypted credentials for accessing device. </summary>
     internal partial class UnencryptedCredentialsList
     {
-        /// <summary> Initializes a new instance of UnencryptedCredentialsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnencryptedCredentialsList"/>. </summary>
         internal UnencryptedCredentialsList()
         {
             Value = new ChangeTrackingList<UnencryptedCredentials>();
         }
 
-        /// <summary> Initializes a new instance of UnencryptedCredentialsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnencryptedCredentialsList"/>. </summary>
         /// <param name="value"> List of unencrypted credentials. </param>
         /// <param name="nextLink"> Link for the next set of unencrypted credentials. </param>
         internal UnencryptedCredentialsList(IReadOnlyList<UnencryptedCredentials> value, string nextLink)

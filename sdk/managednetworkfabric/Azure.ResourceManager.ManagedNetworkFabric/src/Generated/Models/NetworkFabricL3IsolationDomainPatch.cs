@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
     public partial class NetworkFabricL3IsolationDomainPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricL3IsolationDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
         public NetworkFabricL3IsolationDomainPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
+        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
+        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
+        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
+        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy) : base(tags)
+        {
+            Annotation = annotation;
+            RedistributeConnectedSubnets = redistributeConnectedSubnets;
+            RedistributeStaticRoutes = redistributeStaticRoutes;
+            AggregateRouteConfiguration = aggregateRouteConfiguration;
+            ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
         }
 
         /// <summary> Switch configuration description. </summary>

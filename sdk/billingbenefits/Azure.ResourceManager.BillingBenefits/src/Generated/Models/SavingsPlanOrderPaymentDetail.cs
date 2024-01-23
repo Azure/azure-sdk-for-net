@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Information about payment related to a savings plan order. </summary>
     public partial class SavingsPlanOrderPaymentDetail
     {
-        /// <summary> Initializes a new instance of SavingsPlanOrderPaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderPaymentDetail"/>. </summary>
         public SavingsPlanOrderPaymentDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanOrderPaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderPaymentDetail"/>. </summary>
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
         /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
         /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>

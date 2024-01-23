@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route Properties. </summary>
     public partial class StaticRouteProperties
     {
-        /// <summary> Initializes a new instance of StaticRouteProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRouteProperties"/>. </summary>
         /// <param name="prefix"> Prefix of the route. </param>
         /// <param name="nextHop"> List of next hop addresses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="nextHop"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextHop = nextHop.ToList();
         }
 
-        /// <summary> Initializes a new instance of StaticRouteProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRouteProperties"/>. </summary>
         /// <param name="prefix"> Prefix of the route. </param>
         /// <param name="nextHop"> List of next hop addresses. </param>
         internal StaticRouteProperties(string prefix, IList<string> nextHop)

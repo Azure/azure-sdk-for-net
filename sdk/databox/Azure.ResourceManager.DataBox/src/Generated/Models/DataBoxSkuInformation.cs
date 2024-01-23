@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Information of the sku. </summary>
     public partial class DataBoxSkuInformation
     {
-        /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuInformation"/>. </summary>
         internal DataBoxSkuInformation()
         {
             DataLocationToServiceLocationMap = new ChangeTrackingList<DataLocationToServiceLocationMap>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             CountriesWithinCommerceBoundary = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuInformation"/>. </summary>
         /// <param name="sku"> The Sku. </param>
         /// <param name="isEnabled"> The sku is enabled or not. </param>
         /// <param name="dataLocationToServiceLocationMap"> The map of data location to service location. </param>

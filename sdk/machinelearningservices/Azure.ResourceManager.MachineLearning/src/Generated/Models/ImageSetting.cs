@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ImageSetting. </summary>
     public partial class ImageSetting
     {
-        /// <summary> Initializes a new instance of ImageSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
         public ImageSetting()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ImageSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
         /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </param>
         /// <param name="reference"> Image reference URL. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

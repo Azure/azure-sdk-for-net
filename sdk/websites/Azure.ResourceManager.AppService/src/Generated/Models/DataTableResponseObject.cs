@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Data Table which defines columns and raw row values. </summary>
     public partial class DataTableResponseObject
     {
-        /// <summary> Initializes a new instance of DataTableResponseObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseObject"/>. </summary>
         public DataTableResponseObject()
         {
             Columns = new ChangeTrackingList<DataTableResponseColumn>();
             Rows = new ChangeTrackingList<IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of DataTableResponseObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseObject"/>. </summary>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="columns"> List of columns with data types. </param>
         /// <param name="rows"> Raw row values. </param>

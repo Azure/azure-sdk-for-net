@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Definitions about the connectivity check origin. </summary>
     public partial class ConnectivityCheckRequestSource
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckRequestSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestSource"/>. </summary>
         /// <param name="region"> The API Management service region from where to start the connectivity check operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         public ConnectivityCheckRequestSource(string region)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Argument.AssertNotNull(region, nameof(region));
 
             Region = region;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestSource"/>. </summary>
+        /// <param name="region"> The API Management service region from where to start the connectivity check operation. </param>
+        /// <param name="instance"> The particular VMSS instance from which to fire the request. </param>
+        internal ConnectivityCheckRequestSource(string region, long? instance)
+        {
+            Region = region;
+            Instance = instance;
         }
 
         /// <summary> The API Management service region from where to start the connectivity check operation. </summary>

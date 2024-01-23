@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,57 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Constraints that determine the list of available Internet service providers. </summary>
     public partial class AvailableProvidersListContent
     {
-        /// <summary> Initializes a new instance of AvailableProvidersListContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersListContent"/>. </summary>
         public AvailableProvidersListContent()
         {
             AzureLocations = new ChangeTrackingList<AzureLocation>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersListContent"/>. </summary>
+        /// <param name="azureLocations"> A list of Azure regions. </param>
+        /// <param name="country"> The country for available providers list. </param>
+        /// <param name="state"> The state for available providers list. </param>
+        /// <param name="city"> The city or town for available providers list. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableProvidersListContent(IList<AzureLocation> azureLocations, string country, string state, string city, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AzureLocations = azureLocations;
+            Country = country;
+            State = state;
+            City = city;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of Azure regions. </summary>

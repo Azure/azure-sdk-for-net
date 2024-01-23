@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.KeyValueDeleted event. </summary>
     public partial class AppConfigurationKeyValueDeletedEventData
     {
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueDeletedEventData"/>. </summary>
         internal AppConfigurationKeyValueDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueDeletedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was deleted. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was deleted. </param>
         /// <param name="etag"> The etag representing the key-value that was deleted. </param>

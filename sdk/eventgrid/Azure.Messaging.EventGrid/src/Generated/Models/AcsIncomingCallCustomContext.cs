@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Custom Context of Incoming Call. </summary>
     public partial class AcsIncomingCallCustomContext
     {
-        /// <summary> Initializes a new instance of AcsIncomingCallCustomContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
         internal AcsIncomingCallCustomContext()
         {
             SipHeaders = new ChangeTrackingDictionary<string, string>();
             VoipHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsIncomingCallCustomContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
         internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders)

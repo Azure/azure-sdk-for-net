@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Savings plan utilization summary resource. </summary>
     public partial class SavingsPlanUtilizationSummary : BenefitUtilizationSummary
     {
-        /// <summary> Initializes a new instance of SavingsPlanUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilizationSummary"/>. </summary>
         public SavingsPlanUtilizationSummary()
         {
             Kind = BillingAccountBenefitKind.SavingsPlan;
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

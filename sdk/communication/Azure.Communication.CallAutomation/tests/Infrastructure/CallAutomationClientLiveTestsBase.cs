@@ -80,7 +80,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestStaticConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
         protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync() {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();

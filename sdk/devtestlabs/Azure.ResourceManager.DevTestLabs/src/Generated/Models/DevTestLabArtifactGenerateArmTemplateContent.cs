@@ -13,10 +13,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Parameters for generating an ARM template for deploying artifacts. </summary>
     public partial class DevTestLabArtifactGenerateArmTemplateContent
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactGenerateArmTemplateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactGenerateArmTemplateContent"/>. </summary>
         public DevTestLabArtifactGenerateArmTemplateContent()
         {
             Parameters = new ChangeTrackingList<DevTestLabParameter>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactGenerateArmTemplateContent"/>. </summary>
+        /// <param name="vmName"> The resource name of the virtual machine. </param>
+        /// <param name="parameters"> The parameters of the ARM template. </param>
+        /// <param name="location"> The location of the virtual machine. </param>
+        /// <param name="fileUploadOptions"> Options for uploading the files for the artifact. UploadFilesAndGenerateSasTokens is the default value. </param>
+        internal DevTestLabArtifactGenerateArmTemplateContent(string vmName, IList<DevTestLabParameter> parameters, AzureLocation? location, DevTestLabFileUploadOption? fileUploadOptions)
+        {
+            VmName = vmName;
+            Parameters = parameters;
+            Location = location;
+            FileUploadOptions = fileUploadOptions;
         }
 
         /// <summary> The resource name of the virtual machine. </summary>

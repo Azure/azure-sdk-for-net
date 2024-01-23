@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Collection of connectedEnvironments. </summary>
     internal partial class ConnectedEnvironmentCollection
     {
-        /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentCollection"/>. </summary>
         internal ConnectedEnvironmentCollection()
         {
             Value = new ChangeTrackingList<ContainerAppConnectedEnvironmentData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal ConnectedEnvironmentCollection(IReadOnlyList<ContainerAppConnectedEnvironmentData> value, string nextLink)

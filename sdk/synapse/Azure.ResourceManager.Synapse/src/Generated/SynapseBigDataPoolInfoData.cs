@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseBigDataPoolInfoData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SynapseBigDataPoolInfoData(AzureLocation location) : base(location)
         {
             CustomLibraries = new ChangeTrackingList<BigDataPoolLibraryInfo>();
         }
 
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

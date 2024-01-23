@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Fixed input data definition. </summary>
     public partial class FixedInputData : MonitoringInputDataBase
     {
-        /// <summary> Initializes a new instance of FixedInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FixedInputData"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             InputDataType = MonitoringInputDataType.Fixed;
         }
 
-        /// <summary> Initializes a new instance of FixedInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FixedInputData"/>. </summary>
         /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>

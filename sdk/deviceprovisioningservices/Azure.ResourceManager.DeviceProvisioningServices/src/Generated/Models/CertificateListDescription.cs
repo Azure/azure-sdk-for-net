@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The JSON-serialized array of Certificate objects. </summary>
     internal partial class CertificateListDescription
     {
-        /// <summary> Initializes a new instance of CertificateListDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateListDescription"/>. </summary>
         internal CertificateListDescription()
         {
             Value = new ChangeTrackingList<DeviceProvisioningServicesCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of CertificateListDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateListDescription"/>. </summary>
         /// <param name="value"> The array of Certificate objects. </param>
         internal CertificateListDescription(IReadOnlyList<DeviceProvisioningServicesCertificateData> value)
         {

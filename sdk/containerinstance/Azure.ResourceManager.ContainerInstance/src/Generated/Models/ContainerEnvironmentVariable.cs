@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The environment variable to set within the container instance. </summary>
     public partial class ContainerEnvironmentVariable
     {
-        /// <summary> Initializes a new instance of ContainerEnvironmentVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEnvironmentVariable"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerEnvironmentVariable(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerEnvironmentVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEnvironmentVariable"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         /// <param name="secureValue"> The value of the secure environment variable. </param>

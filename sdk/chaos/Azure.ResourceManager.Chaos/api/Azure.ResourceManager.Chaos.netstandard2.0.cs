@@ -86,12 +86,13 @@ namespace Azure.ResourceManager.Chaos
         public static Azure.ResourceManager.Chaos.CapabilityTypeResource GetCapabilityTypeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource> GetExperiment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource>> GetExperimentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource GetExperimentExecutionDetailResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Chaos.ExperimentExecutionResource GetExperimentExecutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Chaos.ExperimentResource GetExperimentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Chaos.ExperimentCollection GetExperiments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperiments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperimentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Chaos.ExperimentStatusResource GetExperimentStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Chaos.Models.OperationStatus> GetOperationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.Models.OperationStatus>> GetOperationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Chaos.TargetResource> GetTarget(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.TargetResource>> GetTargetAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Chaos.TargetResource GetTargetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -120,48 +121,45 @@ namespace Azure.ResourceManager.Chaos
     }
     public partial class ExperimentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ExperimentData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Step> steps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Selector> selectors) { }
+        public ExperimentData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentStep> steps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosTargetSelector> selectors) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Selector> Selectors { get { throw null; } }
-        public bool? StartOnCreation { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Step> Steps { get { throw null; } }
+        public Azure.ResourceManager.Chaos.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosTargetSelector> Selectors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosExperimentStep> Steps { get { throw null; } }
     }
-    public partial class ExperimentExecutionDetailCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>, System.Collections.IEnumerable
+    public partial class ExperimentExecutionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionResource>, System.Collections.IEnumerable
     {
-        protected ExperimentExecutionDetailCollection() { }
-        public virtual Azure.Response<bool> Exists(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> Get(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>> GetAsync(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> GetIfExists(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>> GetIfExistsAsync(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>.GetEnumerator() { throw null; }
+        protected ExperimentExecutionCollection() { }
+        public virtual Azure.Response<bool> Exists(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionResource> Get(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ExperimentExecutionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ExperimentExecutionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionResource>> GetAsync(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Chaos.ExperimentExecutionResource> GetIfExists(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Chaos.ExperimentExecutionResource>> GetIfExistsAsync(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Chaos.ExperimentExecutionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ExperimentExecutionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExperimentExecutionDetailData : Azure.ResourceManager.Models.ResourceData
+    public partial class ExperimentExecutionData : Azure.ResourceManager.Models.ResourceData
     {
-        internal ExperimentExecutionDetailData() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string ExperimentId { get { throw null; } }
-        public string FailureReason { get { throw null; } }
-        public System.DateTimeOffset? LastActionOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.StepStatus> RunInformationSteps { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        internal ExperimentExecutionData() { }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset? StopOn { get { throw null; } }
+        public System.DateTimeOffset? StoppedOn { get { throw null; } }
     }
-    public partial class ExperimentExecutionDetailResource : Azure.ResourceManager.ArmResource
+    public partial class ExperimentExecutionResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected ExperimentExecutionDetailResource() { }
-        public virtual Azure.ResourceManager.Chaos.ExperimentExecutionDetailData Data { get { throw null; } }
+        protected ExperimentExecutionResource() { }
+        public virtual Azure.ResourceManager.Chaos.ExperimentExecutionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string experimentName, string executionDetailsId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string experimentName, string executionId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails> ExecutionDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails>> ExecutionDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ExperimentResource : Azure.ResourceManager.ArmResource
     {
@@ -169,55 +167,20 @@ namespace Azure.ResourceManager.Chaos
         protected ExperimentResource() { }
         public virtual Azure.ResourceManager.Chaos.ExperimentData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult> Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Cancel(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string experimentName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> GetExperimentExecutionDetail(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>> GetExperimentExecutionDetailAsync(string executionDetailsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.ExperimentExecutionDetailCollection GetExperimentExecutionDetails() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentStatusResource> GetExperimentStatus(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentStatusResource>> GetExperimentStatusAsync(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.ExperimentStatusCollection GetExperimentStatuses() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult> Start(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>> StartAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource> Update(Azure.ResourceManager.Chaos.Models.ExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource>> UpdateAsync(Azure.ResourceManager.Chaos.Models.ExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ExperimentStatusCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ExperimentStatusResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentStatusResource>, System.Collections.IEnumerable
-    {
-        protected ExperimentStatusCollection() { }
-        public virtual Azure.Response<bool> Exists(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentStatusResource> Get(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ExperimentStatusResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ExperimentStatusResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentStatusResource>> GetAsync(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Chaos.ExperimentStatusResource> GetIfExists(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Chaos.ExperimentStatusResource>> GetIfExistsAsync(string statusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Chaos.ExperimentStatusResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ExperimentStatusResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ExperimentStatusResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentStatusResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ExperimentStatusData : Azure.ResourceManager.Models.ResourceData
-    {
-        internal ExperimentStatusData() { }
-        public System.DateTimeOffset? CreatedDateUtc { get { throw null; } }
-        public System.DateTimeOffset? EndDateUtc { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
-    public partial class ExperimentStatusResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ExperimentStatusResource() { }
-        public virtual Azure.ResourceManager.Chaos.ExperimentStatusData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string experimentName, string statusId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentStatusResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentStatusResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionResource> GetExperimentExecution(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentExecutionResource>> GetExperimentExecutionAsync(string executionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ExperimentExecutionCollection GetExperimentExecutions() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ExperimentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ExperimentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TargetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.TargetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.TargetResource>, System.Collections.IEnumerable
     {
@@ -304,9 +267,8 @@ namespace Azure.ResourceManager.Chaos.Mocking
         protected MockableChaosArmClient() { }
         public virtual Azure.ResourceManager.Chaos.CapabilityResource GetCapabilityResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.CapabilityTypeResource GetCapabilityTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource GetExperimentExecutionDetailResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ExperimentExecutionResource GetExperimentExecutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ExperimentResource GetExperimentResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.ExperimentStatusResource GetExperimentStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.TargetResource GetTargetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.TargetTypeResource GetTargetTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -325,6 +287,8 @@ namespace Azure.ResourceManager.Chaos.Mocking
         protected MockableChaosSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperiments(bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperimentsAsync(bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.Models.OperationStatus> GetOperationStatus(Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.Models.OperationStatus>> GetOperationStatusAsync(Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.TargetTypeResource> GetTargetType(string locationName, string targetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.TargetTypeResource>> GetTargetTypeAsync(string locationName, string targetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Chaos.TargetTypeCollection GetTargetTypes(string locationName) { throw null; }
@@ -332,11 +296,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
 }
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public abstract partial class Action
-    {
-        protected Action(string name) { }
-        public string Name { get { throw null; } set { } }
-    }
     public partial class ActionStatus
     {
         internal ActionStatus() { }
@@ -353,22 +312,16 @@ namespace Azure.ResourceManager.Chaos.Models
         public static Azure.ResourceManager.Chaos.Models.BranchStatus BranchStatus(string branchName = null, string branchId = null, string status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ActionStatus> actions = null) { throw null; }
         public static Azure.ResourceManager.Chaos.CapabilityData CapabilityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null) { throw null; }
         public static Azure.ResourceManager.Chaos.CapabilityTypeData CapabilityTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, System.Collections.Generic.IEnumerable<string> azureRbacActions = null, System.Collections.Generic.IEnumerable<string> azureRbacDataActions = null, string runtimeKind = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult ExperimentCancelOperationResult(string name = null, string statusUri = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.ExperimentData ExperimentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Step> steps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Selector> selectors = null, bool? startOnCreation = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ErrorResponse ErrorResponse(Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.ExperimentData ExperimentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Chaos.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentStep> steps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosTargetSelector> selectors = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError ExperimentExecutionActionTargetDetailsError(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties ExperimentExecutionActionTargetDetailsProperties(string status = null, string target = null, System.DateTimeOffset? targetFailedOn = default(System.DateTimeOffset?), System.DateTimeOffset? targetCompletedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError error = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.ExperimentExecutionDetailData ExperimentExecutionDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string experimentId = null, string status = null, string failureReason = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastActionOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? stopOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.StepStatus> runInformationSteps = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult ExperimentStartOperationResult(string name = null, string statusUri = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.ExperimentStatusData ExperimentStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, System.DateTimeOffset? createdDateUtc = default(System.DateTimeOffset?), System.DateTimeOffset? endDateUtc = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Chaos.ExperimentExecutionData ExperimentExecutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? stoppedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails ExperimentExecutionDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? stoppedOn = default(System.DateTimeOffset?), string failureReason = null, System.DateTimeOffset? lastActionOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.StepStatus> runInformationSteps = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.OperationStatus OperationStatus(Azure.ResponseError error = null, string id = null, string name = null, string startTime = null, string endTime = null, string status = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.StepStatus StepStatus(string stepName = null, string stepId = null, string status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.BranchStatus> branches = null) { throw null; }
         public static Azure.ResourceManager.Chaos.TargetData TargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.TargetTypeData TargetTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string displayName = null, string description = null, string propertiesSchema = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
-    }
-    public partial class Branch
-    {
-        public Branch(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Action> actions) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Action> Actions { get { throw null; } }
-        public string Name { get { throw null; } set { } }
     }
     public partial class BranchStatus
     {
@@ -378,29 +331,72 @@ namespace Azure.ResourceManager.Chaos.Models
         public string BranchName { get { throw null; } }
         public string Status { get { throw null; } }
     }
-    public partial class ContinuousAction : Azure.ResourceManager.Chaos.Models.Action
+    public abstract partial class ChaosExperimentAction
+    {
+        protected ChaosExperimentAction(string name) { }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class ChaosExperimentBranch
+    {
+        public ChaosExperimentBranch(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentAction> actions) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosExperimentAction> Actions { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class ChaosExperimentStep
+    {
+        public ChaosExperimentStep(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentBranch> branches) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosExperimentBranch> Branches { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+    }
+    public abstract partial class ChaosTargetFilter
+    {
+        protected ChaosTargetFilter() { }
+    }
+    public partial class ChaosTargetListSelector : Azure.ResourceManager.Chaos.Models.ChaosTargetSelector
+    {
+        public ChaosTargetListSelector(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.TargetReference> targets) : base (default(string)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.TargetReference> Targets { get { throw null; } }
+    }
+    public partial class ChaosTargetQuerySelector : Azure.ResourceManager.Chaos.Models.ChaosTargetSelector
+    {
+        public ChaosTargetQuerySelector(string id, string queryString, System.Collections.Generic.IEnumerable<string> subscriptionIds) : base (default(string)) { }
+        public string QueryString { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+    }
+    public abstract partial class ChaosTargetSelector
+    {
+        protected ChaosTargetSelector(string id) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public Azure.ResourceManager.Chaos.Models.ChaosTargetFilter Filter { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+    }
+    public partial class ChaosTargetSimpleFilter : Azure.ResourceManager.Chaos.Models.ChaosTargetFilter
+    {
+        public ChaosTargetSimpleFilter() { }
+        public System.Collections.Generic.IList<string> ParametersZones { get { throw null; } }
+    }
+    public partial class ContinuousAction : Azure.ResourceManager.Chaos.Models.ChaosExperimentAction
     {
         public ContinuousAction(string name, System.TimeSpan duration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.KeyValuePair> parameters, string selectorId) : base (default(string)) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.KeyValuePair> Parameters { get { throw null; } }
         public string SelectorId { get { throw null; } set { } }
     }
-    public partial class DelayAction : Azure.ResourceManager.Chaos.Models.Action
+    public partial class DelayAction : Azure.ResourceManager.Chaos.Models.ChaosExperimentAction
     {
         public DelayAction(string name, System.TimeSpan duration) : base (default(string)) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
     }
-    public partial class DiscreteAction : Azure.ResourceManager.Chaos.Models.Action
+    public partial class DiscreteAction : Azure.ResourceManager.Chaos.Models.ChaosExperimentAction
     {
         public DiscreteAction(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.KeyValuePair> parameters, string selectorId) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.KeyValuePair> Parameters { get { throw null; } }
         public string SelectorId { get { throw null; } set { } }
     }
-    public partial class ExperimentCancelOperationResult
+    public partial class ErrorResponse
     {
-        internal ExperimentCancelOperationResult() { }
-        public string Name { get { throw null; } }
-        public string StatusUri { get { throw null; } }
+        internal ErrorResponse() { }
+        public Azure.ResponseError Error { get { throw null; } }
     }
     public partial class ExperimentExecutionActionTargetDetailsError
     {
@@ -417,20 +413,20 @@ namespace Azure.ResourceManager.Chaos.Models
         public System.DateTimeOffset? TargetCompletedOn { get { throw null; } }
         public System.DateTimeOffset? TargetFailedOn { get { throw null; } }
     }
+    public partial class ExperimentExecutionDetails : Azure.ResourceManager.Models.ResourceData
+    {
+        internal ExperimentExecutionDetails() { }
+        public string FailureReason { get { throw null; } }
+        public System.DateTimeOffset? LastActionOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.StepStatus> RunInformationSteps { get { throw null; } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
+        public string Status { get { throw null; } }
+        public System.DateTimeOffset? StoppedOn { get { throw null; } }
+    }
     public partial class ExperimentPatch
     {
         public ExperimentPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-    }
-    public partial class ExperimentStartOperationResult
-    {
-        internal ExperimentStartOperationResult() { }
-        public string Name { get { throw null; } }
-        public string StatusUri { get { throw null; } }
-    }
-    public abstract partial class Filter
-    {
-        protected Filter() { }
     }
     public partial class KeyValuePair
     {
@@ -438,34 +434,36 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class ListSelector : Azure.ResourceManager.Chaos.Models.Selector
+    public partial class OperationStatus : Azure.ResourceManager.Chaos.Models.ErrorResponse
     {
-        public ListSelector(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.TargetReference> targets) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.TargetReference> Targets { get { throw null; } }
+        internal OperationStatus() { }
+        public string EndTime { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string StartTime { get { throw null; } }
+        public string Status { get { throw null; } }
     }
-    public partial class QuerySelector : Azure.ResourceManager.Chaos.Models.Selector
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Chaos.Models.ProvisioningState>
     {
-        public QuerySelector(string id, string queryString, System.Collections.Generic.IEnumerable<string> subscriptionIds) : base (default(string)) { }
-        public string QueryString { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
-    }
-    public partial class Selector
-    {
-        public Selector(string id) { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public Azure.ResourceManager.Chaos.Models.Filter Filter { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-    }
-    public partial class SimpleFilter : Azure.ResourceManager.Chaos.Models.Filter
-    {
-        public SimpleFilter() { }
-        public System.Collections.Generic.IList<string> ParametersZones { get { throw null; } }
-    }
-    public partial class Step
-    {
-        public Step(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Branch> branches) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Branch> Branches { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Chaos.Models.ProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Chaos.Models.ProvisioningState left, Azure.ResourceManager.Chaos.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Chaos.Models.ProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Chaos.Models.ProvisioningState left, Azure.ResourceManager.Chaos.Models.ProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StepStatus
     {

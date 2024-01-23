@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a SubscriptionPacketCoreControlPlaneVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionPacketCoreControlPlaneVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionPacketCoreControlPlaneVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionPacketCoreControlPlaneVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionPacketCoreControlPlaneVersion method.
     /// </summary>
     public partial class SubscriptionPacketCoreControlPlaneVersionResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly PacketCoreControlPlaneVersionsRestOperations _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient;
         private readonly PacketCoreControlPlaneVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlaneVersions";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> class for mocking. </summary>
         protected SubscriptionPacketCoreControlPlaneVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionPacketCoreControlPlaneVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionPacketCoreControlPlaneVersionResource(ArmClient client, PacketCoreControlPlaneVersionData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlaneVersions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

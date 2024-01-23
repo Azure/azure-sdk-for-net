@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Custom domain analysis. </summary>
     public partial class CustomHostnameAnalysisResult : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResult"/>. </summary>
         public CustomHostnameAnalysisResult()
         {
             CNameRecords = new ChangeTrackingList<string>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             AlternateTxtRecords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Metadata of IoT device/IoT Edge device to be configured. </summary>
     public partial class EdgeIotDeviceInfo
     {
-        /// <summary> Initializes a new instance of EdgeIotDeviceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeIotDeviceInfo"/>. </summary>
         /// <param name="deviceId"> ID of the IoT device/edge device. </param>
         /// <param name="iotHostHub"> Host name for the IoT hub associated to the device. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="iotHostHub"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             IotHostHub = iotHostHub;
         }
 
-        /// <summary> Initializes a new instance of EdgeIotDeviceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeIotDeviceInfo"/>. </summary>
         /// <param name="deviceId"> ID of the IoT device/edge device. </param>
         /// <param name="iotHostHub"> Host name for the IoT hub associated to the device. </param>
         /// <param name="iotHostHubId"> Id for the IoT hub associated to the device. </param>

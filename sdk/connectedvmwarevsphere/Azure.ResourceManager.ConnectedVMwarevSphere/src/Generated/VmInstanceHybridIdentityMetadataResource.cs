@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VmInstanceHybridIdentityMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VmInstanceHybridIdentityMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVmInstanceHybridIdentityMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VMwareVmInstanceResource" /> using the GetVmInstanceHybridIdentityMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VmInstanceHybridIdentityMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVmInstanceHybridIdentityMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VMwareVmInstanceResource"/> using the GetVmInstanceHybridIdentityMetadata method.
     /// </summary>
     public partial class VmInstanceHybridIdentityMetadataResource : ArmResource
     {
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly VmInstanceHybridIdentityMetadataRestOperations _vmInstanceHybridIdentityMetadataVmInstanceHybridIdentityMetadataRestClient;
         private readonly VmInstanceHybridIdentityMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/hybridIdentityMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="VmInstanceHybridIdentityMetadataResource"/> class for mocking. </summary>
         protected VmInstanceHybridIdentityMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VmInstanceHybridIdentityMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VmInstanceHybridIdentityMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VmInstanceHybridIdentityMetadataResource(ArmClient client, VmInstanceHybridIdentityMetadataData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/hybridIdentityMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VmInstanceHybridIdentityMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VmInstanceHybridIdentityMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VmInstanceHybridIdentityMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VmInstanceHybridIdentityMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The status of an Azure resource at the time the operation was called. </summary>
     public partial class ContainerRegistryResourceStatus
     {
-        /// <summary> Initializes a new instance of ContainerRegistryResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryResourceStatus"/>. </summary>
         internal ContainerRegistryResourceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryResourceStatus"/>. </summary>
         /// <param name="displayStatus"> The short label for the status. </param>
         /// <param name="message"> The detailed message for the status, including alerts and error messages. </param>
         /// <param name="timestamp"> The timestamp when the status was changed to the current value. </param>

@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
     /// </summary>
-    public partial class DatasetStorageFormat
+    public abstract partial class DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
-        public DatasetStorageFormat()
+        /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
+        protected DatasetStorageFormat()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
         /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>

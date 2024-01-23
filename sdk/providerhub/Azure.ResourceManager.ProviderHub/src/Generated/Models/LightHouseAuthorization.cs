@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LightHouseAuthorization. </summary>
     public partial class LightHouseAuthorization
     {
-        /// <summary> Initializes a new instance of LightHouseAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LightHouseAuthorization"/>. </summary>
         /// <param name="principalId"></param>
         /// <param name="roleDefinitionId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>

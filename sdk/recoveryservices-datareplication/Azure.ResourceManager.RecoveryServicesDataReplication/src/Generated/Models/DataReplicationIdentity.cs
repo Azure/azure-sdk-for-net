@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Identity model. </summary>
     public partial class DataReplicationIdentity
     {
-        /// <summary> Initializes a new instance of DataReplicationIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationIdentity"/>. </summary>
         /// <param name="tenantId"> Gets or sets the tenant Id of the SPN with which Dra communicates to service. </param>
         /// <param name="applicationId">
         /// Gets or sets the client/application Id of the SPN with which Dra communicates to

@@ -54,6 +54,24 @@ namespace Azure.AI.DocumentIntelligence.Samples
         }
 
         [RecordedTest]
+        public void CreateBothDocumentIntelligenceClients()
+        {
+            #region Snippet:Migration_CreateBothDocumentIntelligenceClients
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+#endif
+            var credential = new AzureKeyCredential(apiKey);
+
+            var documentIntelligenceClient = new DocumentIntelligenceClient(new Uri(endpoint), credential);
+            var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [RecordedTest]
         public async Task BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;

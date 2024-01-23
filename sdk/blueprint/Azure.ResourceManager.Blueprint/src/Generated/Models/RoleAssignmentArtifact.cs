@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Blueprint artifact that applies a Role assignment. </summary>
     public partial class RoleAssignmentArtifact : ArtifactData
     {
-        /// <summary> Initializes a new instance of RoleAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentArtifact"/>. </summary>
         /// <param name="roleDefinitionId"> Azure resource ID of the RoleDefinition. </param>
         /// <param name="principalIds"> Array of user or group identities in Azure Active Directory. The roleDefinition will apply to each identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="principalIds"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Kind = ArtifactKind.RoleAssignment;
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

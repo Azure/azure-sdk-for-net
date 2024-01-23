@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Trigger based on status code. </summary>
     public partial class StatusCodesBasedTrigger
     {
-        /// <summary> Initializes a new instance of StatusCodesBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodesBasedTrigger"/>. </summary>
         public StatusCodesBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of StatusCodesBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodesBasedTrigger"/>. </summary>
         /// <param name="status"> HTTP status code. </param>
         /// <param name="subStatus"> Request Sub Status. </param>
         /// <param name="win32Status"> Win32 error code. </param>

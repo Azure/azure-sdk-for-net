@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list CDN edgenodes. It contains a list of ip address group and a URL link to get the next set of results. </summary>
     internal partial class EdgenodeResult
     {
-        /// <summary> Initializes a new instance of EdgenodeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgenodeResult"/>. </summary>
         internal EdgenodeResult()
         {
             Value = new ChangeTrackingList<EdgeNode>();
         }
 
-        /// <summary> Initializes a new instance of EdgenodeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgenodeResult"/>. </summary>
         /// <param name="value"> Edge node of CDN service. </param>
         /// <param name="nextLink"> URL to get the next set of edgenode list results if there are any. </param>
         internal EdgenodeResult(IReadOnlyList<EdgeNode> value, string nextLink)

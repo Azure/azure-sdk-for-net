@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Specifies which access keys to reset to a new random value. </summary>
     public partial class RedisEnterpriseRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRegenerateKeyContent"/>. </summary>
         /// <param name="keyType"> Which access key to regenerate. </param>
         public RedisEnterpriseRegenerateKeyContent(RedisEnterpriseAccessKeyType keyType)
         {

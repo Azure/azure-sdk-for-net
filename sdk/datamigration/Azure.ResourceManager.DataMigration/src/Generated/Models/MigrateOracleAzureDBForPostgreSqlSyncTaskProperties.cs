@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that migrates Oracle to Azure Database for PostgreSQL for online migrations. </summary>
     public partial class MigrateOracleAzureDBForPostgreSqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         public MigrateOracleAzureDBForPostgreSqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
             TaskType = TaskType.MigrateOracleAzureDBForPostgreSqlSync;
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

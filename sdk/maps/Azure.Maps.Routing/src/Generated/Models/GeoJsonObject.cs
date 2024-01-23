@@ -14,9 +14,16 @@ namespace Azure.Maps.Routing.Models
     /// </summary>
     internal abstract partial class GeoJsonObject
     {
-        /// <summary> Initializes a new instance of GeoJsonObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonObject"/>. </summary>
         protected GeoJsonObject()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonObject"/>. </summary>
+        /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        internal GeoJsonObject(GeoJsonObjectType type)
+        {
+            Type = type;
         }
 
         /// <summary> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </summary>

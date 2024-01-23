@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,24 +20,25 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnServerConfigurationPolicyGroupData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupData"/>. </summary>
         public VpnServerConfigurationPolicyGroupData()
         {
             PolicyMembers = new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>();
             P2SConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="isDefault"> Shows if this is a Default VpnServerConfigurationPolicyGroup or not. </param>
         /// <param name="priority"> Priority for VpnServerConfigurationPolicyGroup. </param>
         /// <param name="policyMembers"> Multiple PolicyMembers for VpnServerConfigurationPolicyGroup. </param>
         /// <param name="p2sConnectionConfigurations"> List of references to P2SConnectionConfigurations. </param>
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfigurationPolicyGroup resource. </param>
-        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? isDefault, int? priority, IList<VpnServerConfigurationPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? isDefault, int? priority, IList<VpnServerConfigurationPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             IsDefault = isDefault;

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Slack channel definition. </summary>
     public partial class SlackChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of SlackChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlackChannel"/>. </summary>
         public SlackChannel()
         {
             ChannelName = "SlackChannel";
         }
 
-        /// <summary> Initializes a new instance of SlackChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlackChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

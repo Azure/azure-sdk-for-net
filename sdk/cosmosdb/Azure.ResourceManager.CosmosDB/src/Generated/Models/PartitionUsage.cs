@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The partition level usage data for a usage request. </summary>
     public partial class PartitionUsage : CosmosDBBaseUsage
     {
-        /// <summary> Initializes a new instance of PartitionUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionUsage"/>. </summary>
         internal PartitionUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of PartitionUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>

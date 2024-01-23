@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App stack. </summary>
     public partial class WebAppStack : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppStack"/>. </summary>
         public WebAppStack()
         {
             MajorVersions = new ChangeTrackingList<WebAppMajorVersion>();
         }
 
-        /// <summary> Initializes a new instance of WebAppStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppStack"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

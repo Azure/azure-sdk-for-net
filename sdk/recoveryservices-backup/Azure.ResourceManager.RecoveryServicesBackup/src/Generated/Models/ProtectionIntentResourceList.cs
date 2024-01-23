@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of ProtectionIntent resources. </summary>
     internal partial class ProtectionIntentResourceList
     {
-        /// <summary> Initializes a new instance of ProtectionIntentResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionIntentResourceList"/>. </summary>
         internal ProtectionIntentResourceList()
         {
             Value = new ChangeTrackingList<BackupProtectionIntentData>();
         }
 
-        /// <summary> Initializes a new instance of ProtectionIntentResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionIntentResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal ProtectionIntentResourceList(IReadOnlyList<BackupProtectionIntentData> value, string nextLink)

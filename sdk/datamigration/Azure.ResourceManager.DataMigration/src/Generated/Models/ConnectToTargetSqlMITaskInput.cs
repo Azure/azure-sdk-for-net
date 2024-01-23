@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to Azure SQL Database Managed Instance. </summary>
     public partial class ConnectToTargetSqlMITaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMITaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
         public ConnectToTargetSqlMITaskInput(SqlConnectionInfo targetConnectionInfo)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetConnectionInfo = targetConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMITaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL Server. </param>
         /// <param name="collectLogins"> Flag for whether to collect logins from target SQL MI server. </param>
         /// <param name="collectAgentJobs"> Flag for whether to collect agent jobs from target SQL MI server. </param>

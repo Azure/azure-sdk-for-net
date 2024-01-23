@@ -12,12 +12,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The AcsCallParticipant. </summary>
     internal partial class AcsCallParticipantInternal
     {
-        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantInternal"/>. </summary>
         internal AcsCallParticipantInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantInternal"/>. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
         internal AcsCallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted)

@@ -14,12 +14,29 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a webhook. </summary>
     public partial class ContainerRegistryWebhookPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookPatch"/>. </summary>
         public ContainerRegistryWebhookPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             CustomHeaders = new ChangeTrackingDictionary<string, string>();
             Actions = new ChangeTrackingList<ContainerRegistryWebhookAction>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookPatch"/>. </summary>
+        /// <param name="tags"> The tags for the webhook. </param>
+        /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
+        /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
+        /// <param name="status"> The status of the webhook at the time the operation was called. </param>
+        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
+        /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
+        internal ContainerRegistryWebhookPatch(IDictionary<string, string> tags, Uri serviceUri, IDictionary<string, string> customHeaders, ContainerRegistryWebhookStatus? status, string scope, IList<ContainerRegistryWebhookAction> actions)
+        {
+            Tags = tags;
+            ServiceUri = serviceUri;
+            CustomHeaders = customHeaders;
+            Status = status;
+            Scope = scope;
+            Actions = actions;
         }
 
         /// <summary> The tags for the webhook. </summary>

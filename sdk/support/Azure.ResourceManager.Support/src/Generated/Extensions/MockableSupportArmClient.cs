@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupportAzureServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportAzureServiceResource.CreateResourceIdentifier" /> to create a <see cref="SupportAzureServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportAzureServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportAzureServiceResource.CreateResourceIdentifier" /> to create a <see cref="SupportAzureServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportAzureServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SupportAzureServiceResource"/> object. </returns>
         public virtual SupportAzureServiceResource GetSupportAzureServiceResource(ResourceIdentifier id)
         {
             SupportAzureServiceResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProblemClassificationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProblemClassificationResource.CreateResourceIdentifier" /> to create a <see cref="ProblemClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProblemClassificationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProblemClassificationResource.CreateResourceIdentifier" /> to create a <see cref="ProblemClassificationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProblemClassificationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProblemClassificationResource"/> object. </returns>
         public virtual ProblemClassificationResource GetProblemClassificationResource(ResourceIdentifier id)
         {
             ProblemClassificationResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionSupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionSupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionSupportTicketResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionSupportTicketResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionSupportTicketResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SubscriptionSupportTicketResource"/> object. </returns>
         public virtual SubscriptionSupportTicketResource GetSubscriptionSupportTicketResource(ResourceIdentifier id)
         {
             SubscriptionSupportTicketResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantSupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="TenantSupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantSupportTicketResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="TenantSupportTicketResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantSupportTicketResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantSupportTicketResource"/> object. </returns>
         public virtual TenantSupportTicketResource GetTenantSupportTicketResource(ResourceIdentifier id)
         {
             TenantSupportTicketResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketCommunicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketCommunicationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketCommunicationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SupportTicketCommunicationResource"/> object. </returns>
         public virtual SupportTicketCommunicationResource GetSupportTicketCommunicationResource(ResourceIdentifier id)
         {
             SupportTicketCommunicationResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketNoSubCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketNoSubCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketNoSubCommunicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubCommunicationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketNoSubCommunicationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SupportTicketNoSubCommunicationResource"/> object. </returns>
         public virtual SupportTicketNoSubCommunicationResource GetSupportTicketNoSubCommunicationResource(ResourceIdentifier id)
         {
             SupportTicketNoSubCommunicationResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketChatTranscriptResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketChatTranscriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketChatTranscriptResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketChatTranscriptResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketChatTranscriptResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SupportTicketChatTranscriptResource"/> object. </returns>
         public virtual SupportTicketChatTranscriptResource GetSupportTicketChatTranscriptResource(ResourceIdentifier id)
         {
             SupportTicketChatTranscriptResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketNoSubChatTranscriptResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketNoSubChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubChatTranscriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketNoSubChatTranscriptResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubChatTranscriptResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketNoSubChatTranscriptResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SupportTicketNoSubChatTranscriptResource"/> object. </returns>
         public virtual SupportTicketNoSubChatTranscriptResource GetSupportTicketNoSubChatTranscriptResource(ResourceIdentifier id)
         {
             SupportTicketNoSubChatTranscriptResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionFileWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionFileWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionFileWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionFileWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionFileWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SubscriptionFileWorkspaceResource"/> object. </returns>
         public virtual SubscriptionFileWorkspaceResource GetSubscriptionFileWorkspaceResource(ResourceIdentifier id)
         {
             SubscriptionFileWorkspaceResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantFileWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="TenantFileWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantFileWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="TenantFileWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantFileWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TenantFileWorkspaceResource"/> object. </returns>
         public virtual TenantFileWorkspaceResource GetTenantFileWorkspaceResource(ResourceIdentifier id)
         {
             TenantFileWorkspaceResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketFileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketFileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketFileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketFileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SupportTicketFileResource"/> object. </returns>
         public virtual SupportTicketFileResource GetSupportTicketFileResource(ResourceIdentifier id)
         {
             SupportTicketFileResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketNoSubFileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketNoSubFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketNoSubFileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubFileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketNoSubFileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SupportTicketNoSubFileResource"/> object. </returns>
         public virtual SupportTicketNoSubFileResource GetSupportTicketNoSubFileResource(ResourceIdentifier id)
         {
             SupportTicketNoSubFileResource.ValidateResourceId(id);

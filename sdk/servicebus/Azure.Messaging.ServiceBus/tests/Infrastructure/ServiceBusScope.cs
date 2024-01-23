@@ -61,7 +61,9 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <param name="enableSession">When <c>true</c>, a session will be enabled on the queue that is created.</param>
         /// <param name="forceQueueCreation">When <c>true</c>, forces creation of a new queue even if an environmental override was specified to use an existing one.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
-        ///
+        /// <param name="lockDuration">The lock duration for the queue.</param>
+        /// <param name="overrideNamespace">The namespace to use for the queue.</param>
+        /// <param name="defaultMessageTimeToLive">The default message time to live for the queue.</param>
         /// <returns>The requested Service Bus <see cref="QueueScope" />.</returns>
         ///
         /// <remarks>
@@ -75,6 +77,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              bool forceQueueCreation = false,
                                                              TimeSpan? lockDuration = default,
                                                              string overrideNamespace = default,
+                                                             TimeSpan? defaultMessageTimeToLive = default,
                                                              [CallerMemberName] string caller = "")
         {
             // Create a new queue specific to the scope being created.
@@ -90,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
-                var queueParameters = new SBQueue(enablePartitioning: enablePartitioning, requiresSession: enableSession, maxSizeInMegabytes: 1024, lockDuration: lockDuration);
+                var queueParameters = new SBQueue(enablePartitioning: enablePartitioning, requiresSession: enableSession, maxSizeInMegabytes: 1024, lockDuration: lockDuration, defaultMessageTimeToLive: defaultMessageTimeToLive);
                 var queue = await CreateRetryPolicy<SBQueue>().ExecuteAsync(() => client.Queues.CreateOrUpdateAsync(resourceGroup, serviceBusNamespace, CreateName(), queueParameters)).ConfigureAwait(false);
 
                 return new QueueScope(serviceBusNamespace, queue.Name, true);

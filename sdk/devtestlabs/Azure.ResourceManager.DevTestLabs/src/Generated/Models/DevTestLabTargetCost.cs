@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a cost target. </summary>
     public partial class DevTestLabTargetCost
     {
-        /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabTargetCost"/>. </summary>
         public DevTestLabTargetCost()
         {
             CostThresholds = new ChangeTrackingList<DevTestLabCostThreshold>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabTargetCost"/>. </summary>
         /// <param name="status"> Target cost status. </param>
         /// <param name="target"> Lab target cost. </param>
         /// <param name="costThresholds"> Cost thresholds. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> smartGroup modification item. </summary>
     public partial class SmartGroupModificationItemInfo
     {
-        /// <summary> Initializes a new instance of SmartGroupModificationItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationItemInfo"/>. </summary>
         public SmartGroupModificationItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModificationItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationItemInfo"/>. </summary>
         /// <param name="modificationEvent"> Reason for the modification. </param>
         /// <param name="oldValue"> Old value. </param>
         /// <param name="newValue"> New value. </param>

@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A listed Azure Storage handle item. </summary>
     internal partial class HandleItem
     {
-        /// <summary> Initializes a new instance of HandleItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="HandleItem"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"></param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
@@ -42,7 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
             AccessRightList = new ChangeTrackingList<AccessRight>();
         }
 
-        /// <summary> Initializes a new instance of HandleItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="HandleItem"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"></param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>

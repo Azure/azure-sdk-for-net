@@ -13,14 +13,14 @@ namespace Azure.Communication.JobRouter
     /// <summary> Position and estimated wait time for a job. </summary>
     public partial class RouterJobPositionDetails
     {
-        /// <summary> Initializes a new instance of RouterJobPositionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
         /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
-        /// <param name="estimatedWaitTimeMinutes"> Estimated wait time of the job rounded up to the nearest minute. </param>
+        /// <param name="estimatedWaitTime"> Estimated wait time of the job rounded up to the nearest minute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="queueId"/> is null. </exception>
-        internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, double estimatedWaitTimeMinutes)
+        internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, TimeSpan estimatedWaitTime)
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
             Argument.AssertNotNull(queueId, nameof(queueId));
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
             Position = position;
             QueueId = queueId;
             QueueLength = queueLength;
-            _estimatedWaitTimeMinutes = estimatedWaitTimeMinutes;
+            EstimatedWaitTime = estimatedWaitTime;
         }
 
         /// <summary> Id of the job these details are about. </summary>

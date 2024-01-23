@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The InstantRPAdditionalDetails. </summary>
     public partial class InstantRPAdditionalDetails
     {
-        /// <summary> Initializes a new instance of InstantRPAdditionalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstantRPAdditionalDetails"/>. </summary>
         public InstantRPAdditionalDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InstantRPAdditionalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstantRPAdditionalDetails"/>. </summary>
         /// <param name="azureBackupRGNamePrefix"></param>
         /// <param name="azureBackupRGNameSuffix"></param>
         internal InstantRPAdditionalDetails(string azureBackupRGNamePrefix, string azureBackupRGNameSuffix)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the GitHub provider. </summary>
     public partial class AppServiceGitHubProvider
     {
-        /// <summary> Initializes a new instance of AppServiceGitHubProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceGitHubProvider"/>. </summary>
         public AppServiceGitHubProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceGitHubProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceGitHubProvider"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the GitHub provider. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>

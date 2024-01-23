@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Git repository property payload for Application Configuration Service. </summary>
     public partial class AppPlatformConfigurationServiceGitRepository
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="patterns"> Collection of patterns of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SearchPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="patterns"> Collection of patterns of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>

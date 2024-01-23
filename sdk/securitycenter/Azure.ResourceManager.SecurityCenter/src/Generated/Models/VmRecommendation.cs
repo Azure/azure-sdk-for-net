@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,22 +14,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a machine that is part of a machine group. </summary>
     public partial class VmRecommendation
     {
-        /// <summary> Initializes a new instance of VmRecommendation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmRecommendation"/>. </summary>
         public VmRecommendation()
         {
         }
 
-        /// <summary> Initializes a new instance of VmRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmRecommendation"/>. </summary>
         /// <param name="configurationStatus"> The configuration status of the machines group or machine or rule. </param>
         /// <param name="recommendationAction"> The recommendation action of the machine or rule. </param>
         /// <param name="resourceId"> The full resource id of the machine. </param>
         /// <param name="enforcementSupport"> The machine supportability of Enforce feature. </param>
-        internal VmRecommendation(SecurityCenterConfigurationStatus? configurationStatus, RecommendationAction? recommendationAction, ResourceIdentifier resourceId, SecurityCenterVmEnforcementSupportState? enforcementSupport)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmRecommendation(SecurityCenterConfigurationStatus? configurationStatus, RecommendationAction? recommendationAction, ResourceIdentifier resourceId, SecurityCenterVmEnforcementSupportState? enforcementSupport, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationStatus = configurationStatus;
             RecommendationAction = recommendationAction;
             ResourceId = resourceId;
             EnforcementSupport = enforcementSupport;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The configuration status of the machines group or machine or rule. </summary>

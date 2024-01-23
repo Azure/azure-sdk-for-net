@@ -13,7 +13,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> A component of a composed document model. </summary>
     public partial class ComponentDocumentModelDetails
     {
-        /// <summary> Initializes a new instance of ComponentDocumentModelDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentDocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public ComponentDocumentModelDetails(string modelId)

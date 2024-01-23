@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkStatementCollection. </summary>
     public partial class SparkStatementCollection
     {
-        /// <summary> Initializes a new instance of SparkStatementCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCollection"/>. </summary>
         /// <param name="total"></param>
         internal SparkStatementCollection(int total)
         {
@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Statements = new ChangeTrackingList<SparkStatement>();
         }
 
-        /// <summary> Initializes a new instance of SparkStatementCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCollection"/>. </summary>
         /// <param name="total"></param>
         /// <param name="statements"></param>
         internal SparkStatementCollection(int total, IReadOnlyList<SparkStatement> statements)

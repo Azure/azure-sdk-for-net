@@ -52,6 +52,14 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-06-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -81,6 +89,14 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-06-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -112,7 +128,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
         public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));

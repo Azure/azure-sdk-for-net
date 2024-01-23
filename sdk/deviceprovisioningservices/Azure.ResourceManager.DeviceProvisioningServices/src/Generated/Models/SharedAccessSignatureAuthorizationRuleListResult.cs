@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> List of shared access keys. </summary>
     internal partial class SharedAccessSignatureAuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureAuthorizationRuleListResult"/>. </summary>
         internal SharedAccessSignatureAuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureAuthorizationRuleListResult"/>. </summary>
         /// <param name="value"> The list of shared access policies. </param>
         /// <param name="nextLink"> The next link. </param>
         internal SharedAccessSignatureAuthorizationRuleListResult(IReadOnlyList<DeviceProvisioningServicesSharedAccessKey> value, string nextLink)

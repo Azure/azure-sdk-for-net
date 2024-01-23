@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> A table object consisting table cells arranged in a rectangular layout. </summary>
     public partial class DocumentTable
     {
-        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
             Footnotes = new ChangeTrackingList<DocumentFootnote>();
         }
 
-        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>

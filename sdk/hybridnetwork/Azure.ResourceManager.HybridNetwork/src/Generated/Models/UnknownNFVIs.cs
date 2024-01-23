@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The UnknownNFVIs. </summary>
     internal partial class UnknownNFVIs : NFVIs
     {
-        /// <summary> Initializes a new instance of UnknownNFVIs. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownNFVIs"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         internal UnknownNFVIs(string name, NfviType nfviType) : base(name, nfviType)

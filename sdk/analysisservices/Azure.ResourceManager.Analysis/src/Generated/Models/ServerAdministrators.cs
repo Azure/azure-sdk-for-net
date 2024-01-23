@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An array of administrator user identities. </summary>
     internal partial class ServerAdministrators
     {
-        /// <summary> Initializes a new instance of ServerAdministrators. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerAdministrators"/>. </summary>
         public ServerAdministrators()
         {
             AsAdministratorIdentities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServerAdministrators. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerAdministrators"/>. </summary>
         /// <param name="asAdministratorIdentities"> An array of administrator user identities. </param>
         internal ServerAdministrators(IList<string> asAdministratorIdentities)
         {

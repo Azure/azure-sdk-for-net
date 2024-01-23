@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class ComputePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ComputePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateEndpointConnectionData"/>. </summary>
         public ComputePrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

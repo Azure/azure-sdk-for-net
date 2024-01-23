@@ -1,14 +1,22 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (2024-01-22)
+
+### Features Added
+- Added ExtendedNetworkBlocks to AvsPrivateCloudData class
+
+### Other Changes
+- Upgraded API version to 2023-03-01
+
+## 1.2.0 (2023-11-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.2.0-beta.1 (2023-05-25)
 

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
     public partial class GuestConfigurationNavigation
     {
-        /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         public GuestConfigurationNavigation()
         {
             ConfigurationParameters = new ChangeTrackingList<GuestConfigurationParameter>();
             ConfigurationProtectedParameters = new ChangeTrackingList<GuestConfigurationParameter>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
         /// <param name="name"> Name of the guest configuration. </param>
         /// <param name="version"> Version of the guest configuration. </param>

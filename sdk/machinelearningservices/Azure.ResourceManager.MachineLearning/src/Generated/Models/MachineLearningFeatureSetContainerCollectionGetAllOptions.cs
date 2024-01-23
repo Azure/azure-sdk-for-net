@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningFeatureSetContainerCollectionGetAllOptions. </summary>
     public partial class MachineLearningFeatureSetContainerCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of MachineLearningFeatureSetContainerCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetContainerCollectionGetAllOptions"/>. </summary>
         public MachineLearningFeatureSetContainerCollectionGetAllOptions()
         {
         }

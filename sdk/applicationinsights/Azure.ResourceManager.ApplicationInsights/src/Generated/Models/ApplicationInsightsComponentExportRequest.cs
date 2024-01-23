@@ -12,9 +12,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component Continuous Export configuration request definition. </summary>
     public partial class ApplicationInsightsComponentExportRequest
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentExportRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportRequest"/>. </summary>
         public ApplicationInsightsComponentExportRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportRequest"/>. </summary>
+        /// <param name="recordTypes"> The document types to be exported, as comma separated values. Allowed values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
+        /// <param name="destinationType"> The Continuous Export destination type. This has to be 'Blob'. </param>
+        /// <param name="destinationAddress"> The SAS URL for the destination storage container. It must grant write permission. </param>
+        /// <param name="isEnabled"> Set to 'true' to create a Continuous Export configuration as enabled, otherwise set it to 'false'. </param>
+        /// <param name="notificationQueueEnabled"> Deprecated. </param>
+        /// <param name="notificationQueueUri"> Deprecated. </param>
+        /// <param name="destinationStorageSubscriptionId"> The subscription ID of the destination storage container. </param>
+        /// <param name="destinationStorageLocationId"> The location ID of the destination storage container. </param>
+        /// <param name="destinationAccountId"> The name of destination storage account. </param>
+        internal ApplicationInsightsComponentExportRequest(string recordTypes, string destinationType, string destinationAddress, string isEnabled, string notificationQueueEnabled, Uri notificationQueueUri, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId)
+        {
+            RecordTypes = recordTypes;
+            DestinationType = destinationType;
+            DestinationAddress = destinationAddress;
+            IsEnabled = isEnabled;
+            NotificationQueueEnabled = notificationQueueEnabled;
+            NotificationQueueUri = notificationQueueUri;
+            DestinationStorageSubscriptionId = destinationStorageSubscriptionId;
+            DestinationStorageLocationId = destinationStorageLocationId;
+            DestinationAccountId = destinationAccountId;
         }
 
         /// <summary> The document types to be exported, as comma separated values. Allowed values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </summary>

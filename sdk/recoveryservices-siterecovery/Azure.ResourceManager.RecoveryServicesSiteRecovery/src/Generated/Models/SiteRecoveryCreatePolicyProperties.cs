@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Policy creation properties. </summary>
     internal partial class SiteRecoveryCreatePolicyProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreatePolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreatePolicyProperties"/>. </summary>
         public SiteRecoveryCreatePolicyProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreatePolicyProperties"/>. </summary>
+        /// <param name="providerSpecificContent">
+        /// The ReplicationProviderSettings.
+        /// Please note <see cref="PolicyProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2APolicyCreationContent"/>, <see cref="A2ACrossClusterMigrationPolicyCreationContent"/>, <see cref="HyperVReplicaPolicyContent"/>, <see cref="HyperVReplicaBluePolicyContent"/>, <see cref="HyperVReplicaAzurePolicyContent"/>, <see cref="InMagePolicyContent"/>, <see cref="InMageAzureV2PolicyContent"/>, <see cref="InMageRcmPolicyCreationContent"/>, <see cref="InMageRcmFailbackPolicyCreationContent"/> and <see cref="VMwareCbtPolicyCreationContent"/>.
+        /// </param>
+        internal SiteRecoveryCreatePolicyProperties(PolicyProviderSpecificContent providerSpecificContent)
+        {
+            ProviderSpecificContent = providerSpecificContent;
         }
 
         /// <summary>

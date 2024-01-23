@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownTrackDescriptor. </summary>
     internal partial class UnknownTrackDescriptor : TrackDescriptor
     {
-        /// <summary> Initializes a new instance of UnknownTrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTrackDescriptor"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal UnknownTrackDescriptor(string odataType) : base(odataType)
         {

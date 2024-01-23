@@ -12,12 +12,12 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Full backup operation. </summary>
     internal partial class FullBackupDetailsInternal
     {
-        /// <summary> Initializes a new instance of FullBackupDetailsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FullBackupDetailsInternal"/>. </summary>
         internal FullBackupDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of FullBackupDetailsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FullBackupDetailsInternal"/>. </summary>
         /// <param name="status"> Status of the backup operation. </param>
         /// <param name="statusDetails"> The status details of backup operation. </param>
         /// <param name="error"> Error encountered, if any, during the full backup operation. </param>

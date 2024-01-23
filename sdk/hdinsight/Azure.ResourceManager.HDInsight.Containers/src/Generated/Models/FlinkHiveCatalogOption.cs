@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Hive Catalog Option for Flink cluster. </summary>
     public partial class FlinkHiveCatalogOption
     {
-        /// <summary> Initializes a new instance of FlinkHiveCatalogOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkHiveCatalogOption"/>. </summary>
         /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
         /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
         /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>

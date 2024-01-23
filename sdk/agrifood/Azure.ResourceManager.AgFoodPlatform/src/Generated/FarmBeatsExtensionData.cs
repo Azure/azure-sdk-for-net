@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// </summary>
     public partial class FarmBeatsExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of FarmBeatsExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsExtensionData"/>. </summary>
         public FarmBeatsExtensionData()
         {
             DetailedInformation = new ChangeTrackingList<DetailedInformation>();
         }
 
-        /// <summary> Initializes a new instance of FarmBeatsExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

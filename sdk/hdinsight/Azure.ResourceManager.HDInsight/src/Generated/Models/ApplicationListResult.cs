@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Result of the request to list cluster Applications. It contains a list of operations and a URL link to get the next set of results. </summary>
     internal partial class ApplicationListResult
     {
-        /// <summary> Initializes a new instance of ApplicationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationListResult"/>. </summary>
         internal ApplicationListResult()
         {
             Value = new ChangeTrackingList<HDInsightApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationListResult"/>. </summary>
         /// <param name="value"> The list of HDInsight applications installed on HDInsight cluster. </param>
         /// <param name="nextLink"> The URL to get the next set of operation list results if there are any. </param>
         internal ApplicationListResult(IReadOnlyList<HDInsightApplicationData> value, string nextLink)

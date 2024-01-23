@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The source for the disk image. </summary>
     public partial class GalleryDiskImageSource : GalleryArtifactVersionSource
     {
-        /// <summary> Initializes a new instance of GalleryDiskImageSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryDiskImageSource"/>. </summary>
         public GalleryDiskImageSource()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryDiskImageSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryDiskImageSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
         /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>

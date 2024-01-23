@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricInternetGatewayRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricInternetGatewayRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleProperties"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             InternetGatewayIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricInternetGatewayRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

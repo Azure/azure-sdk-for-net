@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Collection of policy metadata resources. </summary>
     internal partial class PolicyMetadataCollection
     {
-        /// <summary> Initializes a new instance of PolicyMetadataCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyMetadataCollection"/>. </summary>
         internal PolicyMetadataCollection()
         {
             Value = new ChangeTrackingList<SlimPolicyMetadata>();
         }
 
-        /// <summary> Initializes a new instance of PolicyMetadataCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyMetadataCollection"/>. </summary>
         /// <param name="value"> Array of policy metadata definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PolicyMetadataCollection(IReadOnlyList<SlimPolicyMetadata> value, string nextLink)

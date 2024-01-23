@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OfferResource" /> and their operations.
-    /// Each <see cref="OfferResource" /> in the collection will belong to the same instance of <see cref="PublisherResource" />.
-    /// To get an <see cref="OfferCollection" /> instance call the GetOffers method from an instance of <see cref="PublisherResource" />.
+    /// A class representing a collection of <see cref="OfferResource"/> and their operations.
+    /// Each <see cref="OfferResource"/> in the collection will belong to the same instance of <see cref="PublisherResource"/>.
+    /// To get an <see cref="OfferCollection"/> instance call the GetOffers method from an instance of <see cref="PublisherResource"/>.
     /// </summary>
     public partial class OfferCollection : ArmCollection, IEnumerable<OfferResource>, IAsyncEnumerable<OfferResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,11 +156,19 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_ListByPublisher</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OfferResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
@@ -163,11 +187,19 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_ListByPublisher</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OfferResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
@@ -185,6 +217,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +262,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
@@ -257,6 +305,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +351,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

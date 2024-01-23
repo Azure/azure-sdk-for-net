@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeregistered event. </summary>
     public partial class AcsRouterWorkerDeregisteredEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterWorkerDeregisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerDeregisteredEventData"/>. </summary>
         internal AcsRouterWorkerDeregisteredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterWorkerDeregisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerDeregisteredEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Deregistered Worker Id. </param>
         internal AcsRouterWorkerDeregisteredEventData(string workerId)
         {

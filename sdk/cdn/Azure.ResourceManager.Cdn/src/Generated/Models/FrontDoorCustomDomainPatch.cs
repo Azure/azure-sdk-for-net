@@ -13,9 +13,22 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The domain JSON object required for domain creation or update. </summary>
     public partial class FrontDoorCustomDomainPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
         public FrontDoorCustomDomainPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
+        /// <param name="profileName"> The name of the profile which holds the domain. </param>
+        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
+        /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
+        /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
+        internal FrontDoorCustomDomainPatch(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource)
+        {
+            ProfileName = profileName;
+            TlsSettings = tlsSettings;
+            DnsZone = dnsZone;
+            PreValidatedCustomDomainResource = preValidatedCustomDomainResource;
         }
 
         /// <summary> The name of the profile which holds the domain. </summary>

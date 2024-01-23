@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
     public partial class MsTeamsChannelProperties
     {
-        /// <summary> Initializes a new instance of MsTeamsChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public MsTeamsChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of MsTeamsChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/>. </summary>
         /// <param name="isCallingEnabled"> Enable calling for Microsoft Teams channel. </param>
         /// <param name="callingWebhook"> Webhook for Microsoft Teams channel calls. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details for Publisher Information. </summary>
     public partial class PublisherInformation
     {
-        /// <summary> Initializes a new instance of PublisherInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherInformation"/>. </summary>
         /// <param name="publisherName"> Name of the publisher. </param>
         /// <param name="dataProducts"> Data product information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="dataProducts"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             DataProducts = dataProducts.ToList();
         }
 
-        /// <summary> Initializes a new instance of PublisherInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherInformation"/>. </summary>
         /// <param name="publisherName"> Name of the publisher. </param>
         /// <param name="dataProducts"> Data product information. </param>
         internal PublisherInformation(string publisherName, IList<DataProductInformation> dataProducts)

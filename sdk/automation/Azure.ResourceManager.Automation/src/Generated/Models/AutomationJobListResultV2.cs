@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list job operation. </summary>
     internal partial class AutomationJobListResultV2
     {
-        /// <summary> Initializes a new instance of AutomationJobListResultV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobListResultV2"/>. </summary>
         internal AutomationJobListResultV2()
         {
             Value = new ChangeTrackingList<AutomationJobCollectionItemData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationJobListResultV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobListResultV2"/>. </summary>
         /// <param name="value"> List of jobs. </param>
         /// <param name="nextLink"> The  link to the next page. </param>
         internal AutomationJobListResultV2(IReadOnlyList<AutomationJobCollectionItemData> value, string nextLink)

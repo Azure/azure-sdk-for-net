@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing Response from Diagnostic Detectors. </summary>
     public partial class DiagnosticDetectorResponse : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
         public DiagnosticDetectorResponse()
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

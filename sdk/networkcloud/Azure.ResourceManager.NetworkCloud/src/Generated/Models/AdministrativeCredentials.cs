@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AdministrativeCredentials represents the admin credentials for the device requiring password-based authentication. </summary>
     public partial class AdministrativeCredentials
     {
-        /// <summary> Initializes a new instance of AdministrativeCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/>. </summary>
         /// <param name="username"> The username of the administrator of the device used during initialization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public AdministrativeCredentials(string username)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Username = username;
         }
 
-        /// <summary> Initializes a new instance of AdministrativeCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/>. </summary>
         /// <param name="password"> The password of the administrator of the device used during initialization. </param>
         /// <param name="username"> The username of the administrator of the device used during initialization. </param>
         internal AdministrativeCredentials(string password, string username)

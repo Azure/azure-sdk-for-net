@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// </summary>
     public partial class KubernetesClusterExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionData"/>. </summary>
         public KubernetesClusterExtensionData()
         {
             ConfigurationSettings = new ChangeTrackingDictionary<string, string>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             CustomLocationSettings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

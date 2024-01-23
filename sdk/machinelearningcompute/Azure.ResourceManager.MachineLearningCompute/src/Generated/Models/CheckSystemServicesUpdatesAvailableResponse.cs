@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Information about updates available for system services in a cluster. </summary>
     public partial class CheckSystemServicesUpdatesAvailableResponse
     {
-        /// <summary> Initializes a new instance of CheckSystemServicesUpdatesAvailableResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckSystemServicesUpdatesAvailableResponse"/>. </summary>
         internal CheckSystemServicesUpdatesAvailableResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckSystemServicesUpdatesAvailableResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckSystemServicesUpdatesAvailableResponse"/>. </summary>
         /// <param name="updatesAvailable"> Yes if updates are available for the system services, No if not. </param>
         internal CheckSystemServicesUpdatesAvailableResponse(UpdatesAvailable? updatesAvailable)
         {

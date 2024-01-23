@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> vCenter Single Sign On Identity Source. </summary>
     public partial class SingleSignOnIdentitySource
     {
-        /// <summary> Initializes a new instance of SingleSignOnIdentitySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleSignOnIdentitySource"/>. </summary>
         public SingleSignOnIdentitySource()
         {
         }
 
-        /// <summary> Initializes a new instance of SingleSignOnIdentitySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleSignOnIdentitySource"/>. </summary>
         /// <param name="name"> The name of the identity source. </param>
         /// <param name="alias"> The domain's NetBIOS name. </param>
         /// <param name="domain"> The domain's dns name. </param>

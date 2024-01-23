@@ -13,17 +13,11 @@ using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The response of a Certificate list operation.
-    /// Serialized Name: CertificateListResult
-    /// </summary>
+    /// <summary> The response of a Certificate list operation. </summary>
     internal partial class CertificateListResult
     {
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
-        /// <param name="value">
-        /// The Certificate items on this page
-        /// Serialized Name: CertificateListResult.value
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
+        /// <param name="value"> The Certificate items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CertificateListResult(IEnumerable<SphereCertificateData> value)
         {
@@ -32,30 +26,18 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CertificateListResult. </summary>
-        /// <param name="value">
-        /// The Certificate items on this page
-        /// Serialized Name: CertificateListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: CertificateListResult.nextLink
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
+        /// <param name="value"> The Certificate items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal CertificateListResult(IReadOnlyList<SphereCertificateData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The Certificate items on this page
-        /// Serialized Name: CertificateListResult.value
-        /// </summary>
+        /// <summary> The Certificate items on this page. </summary>
         public IReadOnlyList<SphereCertificateData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: CertificateListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

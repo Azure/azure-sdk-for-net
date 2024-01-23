@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact envelope override settings. </summary>
     public partial class EdifactEnvelopeOverride
     {
-        /// <summary> Initializes a new instance of EdifactEnvelopeOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactEnvelopeOverride"/>. </summary>
         public EdifactEnvelopeOverride()
         {
         }
 
-        /// <summary> Initializes a new instance of EdifactEnvelopeOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactEnvelopeOverride"/>. </summary>
         /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
         /// <param name="messageVersion"> The message version on which this envelope settings has to be applied. </param>
         /// <param name="messageRelease"> The message release version on which this envelope settings has to be applied. </param>

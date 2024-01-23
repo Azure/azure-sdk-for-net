@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceCertificateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceCertificateData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

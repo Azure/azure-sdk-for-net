@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of FeaturestoreEntityVersion entities. </summary>
     internal partial class FeaturestoreEntityVersionResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeaturestoreEntityVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturestoreEntityVersionResourceArmPaginatedResult"/>. </summary>
         internal FeaturestoreEntityVersionResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeaturestoreEntityVersionData>();
         }
 
-        /// <summary> Initializes a new instance of FeaturestoreEntityVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturestoreEntityVersionResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturestoreEntityVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturestoreEntityVersion. </param>
         internal FeaturestoreEntityVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeaturestoreEntityVersionData> value)

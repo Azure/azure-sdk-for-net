@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Triton inferencing server configurations. </summary>
     public partial class TritonInferencingServer : InferencingServer
     {
-        /// <summary> Initializes a new instance of TritonInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TritonInferencingServer"/>. </summary>
         public TritonInferencingServer()
         {
             ServerType = InferencingServerType.Triton;
         }
 
-        /// <summary> Initializes a new instance of TritonInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TritonInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
         /// <param name="inferenceConfiguration"> Inference configuration for Triton. </param>
         internal TritonInferencingServer(InferencingServerType serverType, OnlineInferenceConfiguration inferenceConfiguration) : base(serverType)

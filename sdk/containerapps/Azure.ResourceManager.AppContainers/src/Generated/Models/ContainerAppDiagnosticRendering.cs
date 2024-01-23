@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Rendering details of a diagnostics table. </summary>
     public partial class ContainerAppDiagnosticRendering
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticRendering. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticRendering"/>. </summary>
         public ContainerAppDiagnosticRendering()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticRendering. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticRendering"/>. </summary>
         /// <param name="diagnosticRenderingType"> Rendering type. </param>
         /// <param name="title"> Title of the table. </param>
         /// <param name="description"> Description of the table. </param>

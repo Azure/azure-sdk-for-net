@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureLogAnalyticsParameter. </summary>
     internal partial class AzureLogAnalyticsParameter
     {
-        /// <summary> Initializes a new instance of AzureLogAnalyticsParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureLogAnalyticsParameter"/>. </summary>
         /// <param name="workspaceId"> The workspace id of this Log Analytics. </param>
         /// <param name="query"> The KQL (Kusto Query Language) query to fetch data from this Log Analytics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="query"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Query = query;
         }
 
-        /// <summary> Initializes a new instance of AzureLogAnalyticsParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureLogAnalyticsParameter"/>. </summary>
         /// <param name="tenantId"> The tenant id of service principal that have access to this Log Analytics. </param>
         /// <param name="clientId"> The client id of service principal that have access to this Log Analytics. </param>
         /// <param name="clientSecret"> The client secret of service principal that have access to this Log Analytics. </param>

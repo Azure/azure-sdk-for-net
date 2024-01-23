@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Adhoc backup tagging criteria. </summary>
     internal partial class AdhocBasedBackupTaggingCriteria
     {
-        /// <summary> Initializes a new instance of AdhocBasedBackupTaggingCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTaggingCriteria"/>. </summary>
         public AdhocBasedBackupTaggingCriteria()
         {
         }
 
-        /// <summary> Initializes a new instance of AdhocBasedBackupTaggingCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTaggingCriteria"/>. </summary>
         /// <param name="tagInfo"> Retention tag information. </param>
         internal AdhocBasedBackupTaggingCriteria(DataProtectionBackupRetentionTag tagInfo)
         {

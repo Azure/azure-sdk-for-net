@@ -12,24 +12,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The info w.r.t Agent Upgrade. </summary>
     public partial class AgentUpgrade
     {
-        /// <summary> Initializes a new instance of AgentUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         public AgentUpgrade()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
-        /// <param name="enableAutomaticUpgrade"> Specifies if RSM should try to upgrade this machine. </param>
-        /// <param name="lastAttemptTimestamp"> Timestamp of last upgrade attempt. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Specifies if RSM should try to upgrade this machine. </param>
+        /// <param name="lastAttemptDesiredVersion"> Specifies the version of the last attempt. </param>
+        /// <param name="lastAttemptedOn"> Timestamp of last upgrade attempt. </param>
         /// <param name="lastAttemptStatus"> Specifies the status of Agent Upgrade. </param>
         /// <param name="lastAttemptMessage"> Failure message of last upgrade attempt if any. </param>
-        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? enableAutomaticUpgrade, DateTimeOffset? lastAttemptTimestamp, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage)
+        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? isAutomaticUpgradeEnabled, string lastAttemptDesiredVersion, DateTimeOffset? lastAttemptedOn, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage)
         {
             DesiredVersion = desiredVersion;
             CorrelationId = correlationId;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
-            LastAttemptTimestamp = lastAttemptTimestamp;
+            IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
+            LastAttemptDesiredVersion = lastAttemptDesiredVersion;
+            LastAttemptedOn = lastAttemptedOn;
             LastAttemptStatus = lastAttemptStatus;
             LastAttemptMessage = lastAttemptMessage;
         }
@@ -39,9 +41,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The correlation ID passed in from RSM per upgrade. </summary>
         public Guid? CorrelationId { get; set; }
         /// <summary> Specifies if RSM should try to upgrade this machine. </summary>
-        public bool? EnableAutomaticUpgrade { get; set; }
+        public bool? IsAutomaticUpgradeEnabled { get; set; }
+        /// <summary> Specifies the version of the last attempt. </summary>
+        public string LastAttemptDesiredVersion { get; }
         /// <summary> Timestamp of last upgrade attempt. </summary>
-        public DateTimeOffset? LastAttemptTimestamp { get; }
+        public DateTimeOffset? LastAttemptedOn { get; }
         /// <summary> Specifies the status of Agent Upgrade. </summary>
         public LastAttemptStatusEnum? LastAttemptStatus { get; }
         /// <summary> Failure message of last upgrade attempt if any. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 
@@ -18,13 +19,13 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            double thresholdSeconds = default;
+            TimeSpan thresholdSeconds = default;
             ExceptionTriggerKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thresholdSeconds"u8))
                 {
-                    thresholdSeconds = property.Value.GetDouble();
+                    ReadThresholdSeconds(property, ref thresholdSeconds);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

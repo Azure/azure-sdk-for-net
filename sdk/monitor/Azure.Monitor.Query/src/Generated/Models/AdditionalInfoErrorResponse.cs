@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The response to a metrics query that results in a bad request, with optional additional information. </summary>
     internal partial class AdditionalInfoErrorResponse
     {
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponse"/>. </summary>
         /// <param name="error"> Top level error object that contains all relevant information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal AdditionalInfoErrorResponse(AdditionalInfoErrorResponseError error)

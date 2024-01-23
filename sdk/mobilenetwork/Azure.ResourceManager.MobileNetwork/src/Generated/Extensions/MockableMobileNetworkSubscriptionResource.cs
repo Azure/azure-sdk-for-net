@@ -70,6 +70,14 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
@@ -92,6 +100,14 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,10 +132,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -138,10 +162,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkResource> GetMobileNetworks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -160,10 +192,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCoreControlPlaneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -182,10 +222,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCoreControlPlaneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PacketCoreControlPlaneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -204,10 +252,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkSimGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -226,10 +282,18 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkSimGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

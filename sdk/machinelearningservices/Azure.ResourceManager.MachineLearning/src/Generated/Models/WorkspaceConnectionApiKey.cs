@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Api key object for workspace connection credential. </summary>
     internal partial class WorkspaceConnectionApiKey
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionApiKey"/>. </summary>
         public WorkspaceConnectionApiKey()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionApiKey"/>. </summary>
         /// <param name="key"></param>
         internal WorkspaceConnectionApiKey(string key)
         {

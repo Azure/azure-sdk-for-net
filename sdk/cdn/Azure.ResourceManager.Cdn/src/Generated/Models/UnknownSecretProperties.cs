@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The UnknownSecretProperties. </summary>
     internal partial class UnknownSecretProperties : FrontDoorSecretProperties
     {
-        /// <summary> Initializes a new instance of UnknownSecretProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSecretProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         internal UnknownSecretProperties(SecretType secretType) : base(secretType)
         {

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class IaasVmContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of IaasVmContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmContainer"/>. </summary>
         public IaasVmContainer()
         {
             ContainerType = ProtectableContainerType.IaasVmContainer;
         }
 
-        /// <summary> Initializes a new instance of IaasVmContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

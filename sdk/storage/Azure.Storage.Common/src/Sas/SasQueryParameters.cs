@@ -335,7 +335,7 @@ namespace Azure.Storage.Sas
                         _correlationId = kv.Value;
                         break;
                     case Constants.Sas.Parameters.DirectoryDepthUpper:
-                        _directoryDepth = Convert.ToInt32(kv.Value, Constants.Base16);
+                        _directoryDepth = int.Parse(kv.Value, NumberStyles.Integer, CultureInfo.InvariantCulture);
                         break;
                     case Constants.Sas.Parameters.EncryptionScopeUpper:
                         _encryptionScope = kv.Value;

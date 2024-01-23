@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for SQL to Azure SQL DB sync migration task inputs. </summary>
     public partial class MigrateSqlServerSqlDBSyncDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncDatabaseInput"/>. </summary>
         public MigrateSqlServerSqlDBSyncDatabaseInput()
         {
             TableMap = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetSetting = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncDatabaseInput"/>. </summary>
         /// <param name="id"> Unique identifier for database. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="targetDatabaseName"> Target database name. </param>

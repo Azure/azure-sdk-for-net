@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmOperationalInsightsModelFactory
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.LogAnalyticsQueryPackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new LogAnalyticsQueryPackData(id, name, resourceType, systemData, tags, location, queryPackId, createdOn, modifiedOn, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.LogAnalyticsQueryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new LogAnalyticsQueryData(id, name, resourceType, systemData, applicationId, displayName, createdOn, modifiedOn, author, description, body, related, tags, properties);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsDataExportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsDataExportData(id, name, resourceType, systemData, dataExportId, tableNames?.ToList(), isEnabled, createdOn, lastModifiedOn, resourceId, destinationType, eventHubName);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsDataSourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsDataSourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsDataSourceData(id, name, resourceType, systemData, properties, etag, kind, tags);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsIntelligencePack. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsIntelligencePack"/>. </summary>
         /// <param name="name"> The name of the intelligence pack. </param>
         /// <param name="isEnabled"> The enabled boolean for the intelligence pack. </param>
         /// <param name="displayName"> The display name of the intelligence pack. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsIntelligencePack(name, isEnabled, displayName);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsLinkedServiceData(id, name, resourceType, systemData, tags, resourceId, writeAccessResourceId, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedStorageAccountsData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsLinkedStorageAccountsData(id, name, resourceType, systemData, dataSourceType, storageAccountIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsManagementGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsManagementGroup"/>. </summary>
         /// <param name="serverCount"> The number of servers connected to the management group. </param>
         /// <param name="isGateway"> Gets or sets a value indicating whether the management group is a gateway. </param>
         /// <param name="name"> The name of the management group. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsManagementGroup(serverCount, isGateway, name, id, createdOn, dataReceivedOn, version, sku);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSharedKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/>. </summary>
         /// <param name="primarySharedKey"> The primary shared key of a workspace. </param>
         /// <param name="secondarySharedKey"> The secondary shared key of a workspace. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/> instance for mocking. </returns>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsUsageMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsUsageMetric"/>. </summary>
         /// <param name="name"> The name of the metric. </param>
         /// <param name="unit"> The units used for the metric. </param>
         /// <param name="currentValue"> The current value of the metric. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsUsageMetric(name, unit, currentValue, limit, nextResetOn, quotaPeriod);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsMetricName"/>. </summary>
         /// <param name="value"> The system name of the metric. </param>
         /// <param name="localizedValue"> The localized name of the metric. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsMetricName"/> instance for mocking. </returns>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsMetricName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of StorageInsightData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.StorageInsightData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new StorageInsightData(id, name, resourceType, systemData, etag, tags, containers?.ToList(), tables?.ToList(), storageAccount, status);
         }
 
-        /// <summary> Initializes a new instance of StorageInsightStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageInsightStatus"/>. </summary>
         /// <param name="state"> The state of the storage insight connection to the workspace. </param>
         /// <param name="description"> Description of the state of the storage insight. </param>
         /// <returns> A new <see cref="Models.StorageInsightStatus"/> instance for mocking. </returns>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new StorageInsightStatus(state, description);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSavedSearchData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsSavedSearchData(id, name, resourceType, systemData, etag, category, displayName, query, functionAlias, functionParameters, version, tags?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsAvailableServiceTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsAvailableServiceTier"/>. </summary>
         /// <param name="serviceTier"> The name of the Service Tier. </param>
         /// <param name="isEnabled"> True if the Service Tier is enabled for the workspace. </param>
         /// <param name="minimumRetention"> The minimum retention for the Service Tier, in days. </param>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsAvailableServiceTier(serviceTier, isEnabled, minimumRetention, maximumRetention, defaultRetention, capacityReservationLevel, lastSkuUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSearchSchemaValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="name"> The name of the schema. </param>
         /// <param name="displayName"> The display name of the schema. </param>
         /// <param name="searchSchemaValueType"> The type. </param>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsSearchSchemaValue(name, displayName, searchSchemaValueType, indexed, stored, facet, ownerType?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePurgeResult"/>. </summary>
         /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationStringId"/> is null. </exception>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeResult"/> instance for mocking. </returns>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspacePurgeResult(operationStringId);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/>. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspacePurgeStatusResult OperationalInsightsWorkspacePurgeStatusResult(OperationalInsightsWorkspacePurgeState status = default)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspacePurgeStatusResult(status);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsClusterData(id, name, resourceType, systemData, tags, location, identity, sku, clusterId, provisioningState, isDoubleEncryptionEnabled, isAvailabilityZonesEnabled, billingType, keyVaultProperties, lastModifiedOn, createdOn, associatedWorkspaces?.ToList(), capacityReservationProperties);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsClusterAssociatedWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
         /// <param name="workspaceId"> The id of the assigned workspace. </param>
         /// <param name="workspaceName"> The name id the assigned workspace. </param>
         /// <param name="resourceId"> The ResourceId id the assigned workspace. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associatedOn);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsCapacityReservationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsCapacityReservationProperties"/>. </summary>
         /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
         /// <param name="minCapacity"> Minimum CapacityReservation value in GB. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsCapacityReservationProperties"/> instance for mocking. </returns>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsCapacityReservationProperties(lastSkuUpdatedOn, minCapacity);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceData(id, name, resourceType, systemData, tags, location, identity, etag, provisioningState, customerId, sku, retentionInDays, workspaceCapping, createdOn, modifiedOn, publicNetworkAccessForIngestion, publicNetworkAccessForQuery, forceCmkForQuery, privateLinkScopedResources?.ToList(), features, defaultDataCollectionRuleResourceId);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacityReservationLevel"> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </param>
         /// <param name="lastSkuUpdatedOn"> The last time when the sku was updated. </param>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceSku(name, capacityReservationLevel, lastSkuUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceCapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceCapping"/>. </summary>
         /// <param name="dailyQuotaInGB"> The workspace daily quota for ingestion. </param>
         /// <param name="quotaNextResetTime"> The time when the quota will be rest. </param>
         /// <param name="dataIngestionStatus"> The status of data ingestion for this workspace. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceCapping(dailyQuotaInGB, quotaNextResetTime, dataIngestionStatus);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsPrivateLinkScopedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/>. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/> instance for mocking. </returns>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId, scopeId);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -427,13 +427,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspacePatch(id, name, resourceType, systemData, identity, tags, provisioningState, customerId, sku, retentionInDays, workspaceCapping, createdOn, modifiedOn, publicNetworkAccessForIngestion, publicNetworkAccessForQuery, forceCmkForQuery, privateLinkScopedResources?.ToList(), features, defaultDataCollectionRuleResourceId, etag);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsTableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
-        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2555. Setting this property to -1 will default to table retention. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2556. Setting this property to -1 will default to table retention. </param>
         /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
         /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
         /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
@@ -442,15 +442,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
         /// <param name="schema"> Table schema. </param>
         /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
-        /// <param name="retentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
-        /// <param name="totalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
+        /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
+        /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
-        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionInDays = null, int? totalRetentionInDays = null, int? archiveRetentionInDays = null, OperationalInsightsTableSearchResults searchResults = null, OperationalInsightsTableRestoredLogs restoredLogs = null, OperationalInsightsTableResultStatistics resultStatistics = null, OperationalInsightsTablePlan? plan = null, string lastPlanModifiedDate = null, OperationalInsightsSchema schema = null, OperationalInsightsTableProvisioningState? provisioningState = null, RetentionInDaysAsDefaultState? retentionInDaysAsDefault = null, TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault = null)
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionInDays = null, int? totalRetentionInDays = null, int? archiveRetentionInDays = null, OperationalInsightsTableSearchResults searchResults = null, OperationalInsightsTableRestoredLogs restoredLogs = null, OperationalInsightsTableResultStatistics resultStatistics = null, OperationalInsightsTablePlan? plan = null, string lastPlanModifiedDate = null, OperationalInsightsSchema schema = null, OperationalInsightsTableProvisioningState? provisioningState = null, bool? isRetentionInDaysAsDefault = null, bool? isTotalRetentionInDaysAsDefault = null)
         {
-            return new OperationalInsightsTableData(id, name, resourceType, systemData, retentionInDays, totalRetentionInDays, archiveRetentionInDays, searchResults, restoredLogs, resultStatistics, plan, lastPlanModifiedDate, schema, provisioningState, retentionInDaysAsDefault, totalRetentionInDaysAsDefault);
+            return new OperationalInsightsTableData(id, name, resourceType, systemData, retentionInDays, totalRetentionInDays, archiveRetentionInDays, searchResults, restoredLogs, resultStatistics, plan, lastPlanModifiedDate, schema, provisioningState, isRetentionInDaysAsDefault, isTotalRetentionInDaysAsDefault);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableSearchResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableSearchResults"/>. </summary>
         /// <param name="query"> Search job query. </param>
         /// <param name="description"> Search job Description. </param>
         /// <param name="limit"> Limit the search job to return up to specified number of rows. </param>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsTableSearchResults(query, description, limit, startSearchOn, endSearchOn, sourceTable, azureAsyncOperationId);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableRestoredLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableRestoredLogs"/>. </summary>
         /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
         /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
         /// <param name="sourceTable"> The table to restore data from. </param>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableResultStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableResultStatistics"/>. </summary>
         /// <param name="progress"> Search job completion percentage. </param>
         /// <param name="ingestedRecords"> The number of rows that were returned by the search job. </param>
         /// <param name="scannedGB"> Search job: Amount of scanned data. </param>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGB);
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsSchema"/>. </summary>
         /// <param name="name"> Table name. </param>
         /// <param name="displayName"> Table display name. </param>
         /// <param name="description"> Table description. </param>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsSchema(name, displayName, description, columns?.ToList(), standardColumns?.ToList(), categories?.ToList(), labels?.ToList(), source, tableType, tableSubType, solutions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsColumn"/>. </summary>
         /// <param name="name"> Column name. </param>
         /// <param name="columnType"> Column data type. </param>
         /// <param name="dataTypeHint"> Column data type logical hint. </param>

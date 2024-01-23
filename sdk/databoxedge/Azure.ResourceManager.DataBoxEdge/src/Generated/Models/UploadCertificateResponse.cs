@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The upload registration certificate response. </summary>
     public partial class UploadCertificateResponse
     {
-        /// <summary> Initializes a new instance of UploadCertificateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateResponse"/>. </summary>
         internal UploadCertificateResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of UploadCertificateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateResponse"/>. </summary>
         /// <param name="authType"> Specifies authentication type. </param>
         /// <param name="resourceId"> The resource ID of the Data Box Edge/Gateway device. </param>
         /// <param name="aadAuthority"> Azure Active Directory tenant authority. </param>

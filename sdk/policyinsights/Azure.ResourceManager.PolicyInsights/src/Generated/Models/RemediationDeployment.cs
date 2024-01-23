@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Details of a single deployment created by the remediation. </summary>
     public partial class RemediationDeployment
     {
-        /// <summary> Initializes a new instance of RemediationDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationDeployment"/>. </summary>
         internal RemediationDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of RemediationDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationDeployment"/>. </summary>
         /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
         /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
         /// <param name="status"> Status of the remediation deployment. </param>

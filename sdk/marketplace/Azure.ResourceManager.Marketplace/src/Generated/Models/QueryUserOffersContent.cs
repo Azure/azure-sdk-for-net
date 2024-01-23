@@ -13,11 +13,20 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Query user's offers properties. </summary>
     public partial class QueryUserOffersContent
     {
-        /// <summary> Initializes a new instance of QueryUserOffersContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryUserOffersContent"/>. </summary>
         public QueryUserOffersContent()
         {
             OfferIds = new ChangeTrackingList<string>();
             SubscriptionIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryUserOffersContent"/>. </summary>
+        /// <param name="offerIds"> List of offer IDs. </param>
+        /// <param name="subscriptionIds"> List of subscription IDs. </param>
+        internal QueryUserOffersContent(IList<string> offerIds, IList<string> subscriptionIds)
+        {
+            OfferIds = offerIds;
+            SubscriptionIds = subscriptionIds;
         }
 
         /// <summary> List of offer IDs. </summary>

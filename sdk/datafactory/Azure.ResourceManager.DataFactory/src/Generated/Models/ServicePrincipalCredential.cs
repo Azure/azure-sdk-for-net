@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Service principal credential. </summary>
     public partial class ServicePrincipalCredential : DataFactoryCredential
     {
-        /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredential"/>. </summary>
         public ServicePrincipalCredential()
         {
             CredentialType = "ServicePrincipal";
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredential"/>. </summary>
         /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>

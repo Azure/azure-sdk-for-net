@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of subscription usage metrics in a location. </summary>
     internal partial class SubscriptionUsageListResult
     {
-        /// <summary> Initializes a new instance of SubscriptionUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionUsageListResult"/>. </summary>
         internal SubscriptionUsageListResult()
         {
             Value = new ChangeTrackingList<SubscriptionUsageData>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionUsageListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SubscriptionUsageListResult(IReadOnlyList<SubscriptionUsageData> value, string nextLink)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Response of pre job creation validations. </summary>
     public partial class DataBoxValidationResult
     {
-        /// <summary> Initializes a new instance of DataBoxValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationResult"/>. </summary>
         internal DataBoxValidationResult()
         {
             IndividualResponseDetails = new ChangeTrackingList<DataBoxValidationInputResult>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationResult"/>. </summary>
         /// <param name="status"> Overall validation status. </param>
         /// <param name="individualResponseDetails">
         /// List of response details contain validationType and its response as key and value respectively.

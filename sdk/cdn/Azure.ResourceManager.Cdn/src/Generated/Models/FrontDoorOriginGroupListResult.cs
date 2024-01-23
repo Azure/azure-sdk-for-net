@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results. </summary>
     internal partial class FrontDoorOriginGroupListResult
     {
-        /// <summary> Initializes a new instance of FrontDoorOriginGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupListResult"/>. </summary>
         internal FrontDoorOriginGroupListResult()
         {
             Value = new ChangeTrackingList<FrontDoorOriginGroupData>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorOriginGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupListResult"/>. </summary>
         /// <param name="value"> List of CDN origin groups within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
         internal FrontDoorOriginGroupListResult(IReadOnlyList<FrontDoorOriginGroupData> value, string nextLink)

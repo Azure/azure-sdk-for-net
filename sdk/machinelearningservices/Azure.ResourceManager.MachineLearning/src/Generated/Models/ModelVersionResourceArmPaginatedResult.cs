@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of ModelVersion entities. </summary>
     internal partial class ModelVersionResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelVersionResourceArmPaginatedResult"/>. </summary>
         internal ModelVersionResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningModelVersionData>();
         }
 
-        /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelVersionResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of ModelVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type ModelVersion. </param>
         internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningModelVersionData> value)

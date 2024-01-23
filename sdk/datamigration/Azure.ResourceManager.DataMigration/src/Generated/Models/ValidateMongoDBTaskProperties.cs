@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates a migration between MongoDB data sources. </summary>
     public partial class ValidateMongoDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ValidateMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMongoDBTaskProperties"/>. </summary>
         public ValidateMongoDBTaskProperties()
         {
             Output = new ChangeTrackingList<MongoDBMigrationProgress>();
             TaskType = TaskType.ValidateMongoDB;
         }
 
-        /// <summary> Initializes a new instance of ValidateMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMongoDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

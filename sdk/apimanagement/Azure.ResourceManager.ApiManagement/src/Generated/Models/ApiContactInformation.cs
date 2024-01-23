@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API contact information. </summary>
     public partial class ApiContactInformation
     {
-        /// <summary> Initializes a new instance of ApiContactInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiContactInformation"/>. </summary>
         public ApiContactInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiContactInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiContactInformation"/>. </summary>
         /// <param name="name"> The identifying name of the contact person/organization. </param>
         /// <param name="uri"> The URL pointing to the contact information. MUST be in the format of a URL. </param>
         /// <param name="email"> The email address of the contact person/organization. MUST be in the format of an email address. </param>

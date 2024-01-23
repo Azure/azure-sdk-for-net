@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Performance tier properties. </summary>
     public partial class MySqlPerformanceTier
     {
-        /// <summary> Initializes a new instance of MySqlPerformanceTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTier"/>. </summary>
         internal MySqlPerformanceTier()
         {
             ServiceLevelObjectives = new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>();
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTier"/>. </summary>
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A credit summary resource. </summary>
     public partial class ConsumptionCreditSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionCreditSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
         public ConsumptionCreditSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionCreditSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

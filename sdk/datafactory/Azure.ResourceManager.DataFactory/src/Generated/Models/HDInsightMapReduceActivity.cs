@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> HDInsight MapReduce activity type. </summary>
     public partial class HDInsightMapReduceActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of HDInsightMapReduceActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
         /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "HDInsightMapReduce";
         }
 
-        /// <summary> Initializes a new instance of HDInsightMapReduceActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

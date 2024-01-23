@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx.Models;
@@ -13,28 +12,29 @@ using Azure.ResourceManager.Nginx.Models;
 namespace Azure.ResourceManager.Nginx
 {
     /// <summary> A class representing the NginxConfiguration data model. </summary>
-    public partial class NginxConfigurationData : TrackedResourceData
+    public partial class NginxConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of NginxConfigurationData. </summary>
-        /// <param name="location"> The location. </param>
-        public NginxConfigurationData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationData"/>. </summary>
+        public NginxConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="properties"></param>
-        internal NginxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NginxConfigurationProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="location"></param>
+        internal NginxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxConfigurationProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Location = location;
         }
 
         /// <summary> Gets or sets the properties. </summary>
         public NginxConfigurationProperties Properties { get; set; }
+        /// <summary> Gets or sets the location. </summary>
+        public AzureLocation? Location { get; set; }
     }
 }

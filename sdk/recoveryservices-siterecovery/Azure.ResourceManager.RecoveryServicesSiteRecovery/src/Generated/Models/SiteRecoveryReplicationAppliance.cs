@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication appliance definition. </summary>
     public partial class SiteRecoveryReplicationAppliance
     {
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationAppliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationAppliance"/>. </summary>
         internal SiteRecoveryReplicationAppliance()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationAppliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationAppliance"/>. </summary>
         /// <param name="properties"> Appliance related data. </param>
         internal SiteRecoveryReplicationAppliance(SiteRecoveryReplicationApplianceProperties properties)
         {

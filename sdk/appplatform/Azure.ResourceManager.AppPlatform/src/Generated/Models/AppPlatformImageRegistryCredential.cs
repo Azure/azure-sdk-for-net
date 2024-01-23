@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Credential of the image registry. </summary>
     public partial class AppPlatformImageRegistryCredential
     {
-        /// <summary> Initializes a new instance of AppPlatformImageRegistryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformImageRegistryCredential"/>. </summary>
         public AppPlatformImageRegistryCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformImageRegistryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformImageRegistryCredential"/>. </summary>
         /// <param name="username"> The username of the image registry credential. </param>
         /// <param name="password"> The password of the image registry credential. </param>
         internal AppPlatformImageRegistryCredential(string username, string password)

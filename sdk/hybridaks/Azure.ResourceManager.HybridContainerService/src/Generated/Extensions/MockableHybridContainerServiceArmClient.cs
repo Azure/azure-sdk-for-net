@@ -5,24 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridContainerService;
-using Azure.ResourceManager.HybridContainerService.Models;
 
 namespace Azure.ResourceManager.HybridContainerService.Mocking
 {
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public partial class MockableHybridContainerServiceArmClient : ArmResource
     {
-        private ClientDiagnostics _hybridContainerServiceClientDiagnostics;
-        private HybridContainerServiceRestOperations _hybridContainerServiceRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="MockableHybridContainerServiceArmClient"/> class for mocking. </summary>
         protected MockableHybridContainerServiceArmClient()
         {
@@ -39,156 +30,42 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         {
         }
 
-        private ClientDiagnostics HybridContainerServiceClientDiagnostics => _hybridContainerServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private HybridContainerServiceRestOperations HybridContainerServiceRestClient => _hybridContainerServiceRestClient ??= new HybridContainerServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary>
-        /// Lists the available orchestrators in a custom location for HybridAKS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/orchestrators</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListOrchestrators</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets an object representing a ProvisionedClusterResource along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
+        public virtual ProvisionedClusterResource GetProvisionedCluster(ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            return new ProvisionedClusterResource(Client, scope.AppendProviderResource("Microsoft.HybridContainerService", "provisionedClusterInstances", "default"));
+        }
 
-            using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetOrchestratorsHybridContainerService");
-            scope0.Start();
-            try
-            {
-                var response = await HybridContainerServiceRestClient.ListOrchestratorsAsync(scope, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+        /// <summary> Gets an object representing a KubernetesVersionProfileResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="KubernetesVersionProfileResource"/> object. </returns>
+        public virtual KubernetesVersionProfileResource GetKubernetesVersionProfile(ResourceIdentifier scope)
+        {
+            return new KubernetesVersionProfileResource(Client, scope.AppendProviderResource("Microsoft.HybridContainerService", "kubernetesVersions", "default"));
+        }
+
+        /// <summary> Gets an object representing a HybridContainerServiceVmSkuResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
+        public virtual HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSku(ResourceIdentifier scope)
+        {
+            return new HybridContainerServiceVmSkuResource(Client, scope.AppendProviderResource("Microsoft.HybridContainerService", "skus", "default"));
         }
 
         /// <summary>
-        /// Lists the available orchestrators in a custom location for HybridAKS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/orchestrators</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListOrchestrators</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetOrchestratorsHybridContainerService");
-            scope0.Start();
-            try
-            {
-                var response = HybridContainerServiceRestClient.ListOrchestrators(scope, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists the available VM SKUs in a custom location for HybridAKS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/vmSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListVMSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetVmSkusHybridContainerService");
-            scope0.Start();
-            try
-            {
-                var response = await HybridContainerServiceRestClient.ListVmSkusAsync(scope, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists the available VM SKUs in a custom location for HybridAKS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/vmSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListVMSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<VmSkuListResult> GetVmSkusHybridContainerService(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var scope0 = HybridContainerServiceClientDiagnostics.CreateScope("MockableHybridContainerServiceArmClient.GetVmSkusHybridContainerService");
-            scope0.Start();
-            try
-            {
-                var response = HybridContainerServiceRestClient.ListVmSkus(scope, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-        /// <summary>
-        /// Gets an object representing a <see cref="ProvisionedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProvisionedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProvisionedClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProvisionedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisionedClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
         public virtual ProvisionedClusterResource GetProvisionedClusterResource(ResourceIdentifier id)
         {
             ProvisionedClusterResource.ValidateResourceId(id);
@@ -196,11 +73,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProvisionedClusterUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProvisionedClusterUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(ResourceIdentifier id)
         {
             ProvisionedClusterUpgradeProfileResource.ValidateResourceId(id);
@@ -208,11 +85,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
         public virtual HybridIdentityMetadataResource GetHybridIdentityMetadataResource(ResourceIdentifier id)
         {
             HybridIdentityMetadataResource.ValidateResourceId(id);
@@ -220,11 +97,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridContainerServiceAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridContainerServiceAgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceAgentPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource"/> object. </returns>
         public virtual HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(ResourceIdentifier id)
         {
             HybridContainerServiceAgentPoolResource.ValidateResourceId(id);
@@ -232,23 +109,35 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSpaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSpaceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSpaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesVersionProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesVersionProfileResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesVersionProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSpaceResource" /> object. </returns>
-        public virtual StorageSpaceResource GetStorageSpaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubernetesVersionProfileResource"/> object. </returns>
+        public virtual KubernetesVersionProfileResource GetKubernetesVersionProfileResource(ResourceIdentifier id)
         {
-            StorageSpaceResource.ValidateResourceId(id);
-            return new StorageSpaceResource(Client, id);
+            KubernetesVersionProfileResource.ValidateResourceId(id);
+            return new KubernetesVersionProfileResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridContainerServiceVmSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceVmSkuResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVmSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
+        public virtual HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSkuResource(ResourceIdentifier id)
+        {
+            HybridContainerServiceVmSkuResource.ValidateResourceId(id);
+            return new HybridContainerServiceVmSkuResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource"/> object. </returns>
         public virtual HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(ResourceIdentifier id)
         {
             HybridContainerServiceVirtualNetworkResource.ValidateResourceId(id);

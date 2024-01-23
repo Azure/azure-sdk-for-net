@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Error definition for managed integration runtime. </summary>
     public partial class SynapseManagedIntegrationRuntimeError
     {
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntimeError"/>. </summary>
         internal SynapseManagedIntegrationRuntimeError()
         {
             Parameters = new ChangeTrackingList<string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedIntegrationRuntimeError"/>. </summary>
         /// <param name="time"> The time when the error occurred. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="parameters"> Managed integration runtime error parameters. </param>

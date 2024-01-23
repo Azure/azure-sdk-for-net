@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A balance resource. </summary>
     public partial class ConsumptionBalanceResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionBalanceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceResult"/>. </summary>
         internal ConsumptionBalanceResult()
         {
             NewPurchasesDetails = new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update Cosmos DB Gremlin graph. </summary>
     public partial class GremlinGraphCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GremlinGraphCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Gremlin graph. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of GremlinGraphCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

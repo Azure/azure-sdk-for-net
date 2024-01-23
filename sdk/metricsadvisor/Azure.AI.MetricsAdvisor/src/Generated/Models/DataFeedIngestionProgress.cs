@@ -12,12 +12,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataFeedIngestionProgress. </summary>
     public partial class DataFeedIngestionProgress
     {
-        /// <summary> Initializes a new instance of DataFeedIngestionProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionProgress"/>. </summary>
         internal DataFeedIngestionProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFeedIngestionProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionProgress"/>. </summary>
         /// <param name="latestSuccessTimestamp">
         /// the timestamp of latest success ingestion job.
         /// null indicates not available

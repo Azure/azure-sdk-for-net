@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Filter for the Event Subscription. </summary>
     public partial class EventSubscriptionFilter
     {
-        /// <summary> Initializes a new instance of EventSubscriptionFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionFilter"/>. </summary>
         public EventSubscriptionFilter()
         {
             IncludedEventTypes = new ChangeTrackingList<string>();
             AdvancedFilters = new ChangeTrackingList<AdvancedFilter>();
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionFilter"/>. </summary>
         /// <param name="subjectBeginsWith">
         /// An optional string to filter events for an event subscription based on a resource path prefix.
         /// The format of this depends on the publisher of the events.

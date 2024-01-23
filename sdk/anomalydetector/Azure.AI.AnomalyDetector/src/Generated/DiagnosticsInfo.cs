@@ -13,13 +13,13 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Diagnostics information to help inspect the states of a model or variable. </summary>
     public partial class DiagnosticsInfo
     {
-        /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
         public DiagnosticsInfo()
         {
             VariableStates = new ChangeTrackingList<VariableState>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
         /// <param name="modelState"> Model status. </param>
         /// <param name="variableStates"> Variable status. </param>
         internal DiagnosticsInfo(ModelState modelState, IList<VariableState> variableStates)

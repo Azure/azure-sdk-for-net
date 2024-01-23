@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Result of the list of all private endpoint connections operation. </summary>
     internal partial class ServiceBusPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateEndpointConnectionListResult"/>. </summary>
         internal ServiceBusPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> A collection of private endpoint connection resources. </param>
         /// <param name="nextLink"> A link for the next page of private endpoint connection resources. </param>
         internal ServiceBusPrivateEndpointConnectionListResult(IReadOnlyList<ServiceBusPrivateEndpointConnectionData> value, string nextLink)

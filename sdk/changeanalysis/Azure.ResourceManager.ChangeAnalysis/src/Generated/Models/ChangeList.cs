@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> The list of detected changes. </summary>
     internal partial class ChangeList
     {
-        /// <summary> Initializes a new instance of ChangeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeList"/>. </summary>
         internal ChangeList()
         {
             Value = new ChangeTrackingList<DetectedChangeData>();
         }
 
-        /// <summary> Initializes a new instance of ChangeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeList"/>. </summary>
         /// <param name="value"> The list of changes. </param>
         /// <param name="nextLink"> The URI that can be used to request the next page of changes. </param>
         internal ChangeList(IReadOnlyList<DetectedChangeData> value, string nextLink)

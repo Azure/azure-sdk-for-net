@@ -15,11 +15,52 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update request for an Azure SQL Database server. </summary>
     public partial class SqlServerPatch
     {
-        /// <summary> Initializes a new instance of SqlServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerPatch"/>. </summary>
         public SqlServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             PrivateEndpointConnections = new ChangeTrackingList<SqlServerPrivateEndpointConnection>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerPatch"/>. </summary>
+        /// <param name="identity"> Server identity. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="administratorLogin"> Administrator username for the server. Once created it cannot be changed. </param>
+        /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
+        /// <param name="version"> The version of the server. </param>
+        /// <param name="state"> The state of the server. </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
+        /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
+        /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
+        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
+        internal SqlServerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus)
+        {
+            Identity = identity;
+            Tags = tags;
+            AdministratorLogin = administratorLogin;
+            AdministratorLoginPassword = administratorLoginPassword;
+            Version = version;
+            State = state;
+            FullyQualifiedDomainName = fullyQualifiedDomainName;
+            PrivateEndpointConnections = privateEndpointConnections;
+            MinimalTlsVersion = minimalTlsVersion;
+            PublicNetworkAccess = publicNetworkAccess;
+            WorkspaceFeature = workspaceFeature;
+            PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
+            FederatedClientId = federatedClientId;
+            KeyId = keyId;
+            Administrators = administrators;
+            RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
+            IsIPv6Enabled = isIPv6Enabled;
+            ExternalGovernanceStatus = externalGovernanceStatus;
         }
 
         /// <summary> Server identity. </summary>

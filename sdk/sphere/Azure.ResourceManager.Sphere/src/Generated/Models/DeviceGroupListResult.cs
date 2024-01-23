@@ -13,17 +13,11 @@ using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The response of a DeviceGroup list operation.
-    /// Serialized Name: DeviceGroupListResult
-    /// </summary>
+    /// <summary> The response of a DeviceGroup list operation. </summary>
     internal partial class DeviceGroupListResult
     {
-        /// <summary> Initializes a new instance of DeviceGroupListResult. </summary>
-        /// <param name="value">
-        /// The DeviceGroup items on this page
-        /// Serialized Name: DeviceGroupListResult.value
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="DeviceGroupListResult"/>. </summary>
+        /// <param name="value"> The DeviceGroup items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DeviceGroupListResult(IEnumerable<SphereDeviceGroupData> value)
         {
@@ -32,30 +26,18 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DeviceGroupListResult. </summary>
-        /// <param name="value">
-        /// The DeviceGroup items on this page
-        /// Serialized Name: DeviceGroupListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: DeviceGroupListResult.nextLink
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="DeviceGroupListResult"/>. </summary>
+        /// <param name="value"> The DeviceGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal DeviceGroupListResult(IReadOnlyList<SphereDeviceGroupData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The DeviceGroup items on this page
-        /// Serialized Name: DeviceGroupListResult.value
-        /// </summary>
+        /// <summary> The DeviceGroup items on this page. </summary>
         public IReadOnlyList<SphereDeviceGroupData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: DeviceGroupListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

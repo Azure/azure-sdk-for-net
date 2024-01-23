@@ -12,12 +12,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> The time range to the left and right of the search span to be used for Interpolation. This is helpful in scenarios where the data points are missing close to the start or end of the input search span. Can be null. </summary>
     public partial class InterpolationBoundary
     {
-        /// <summary> Initializes a new instance of InterpolationBoundary. </summary>
+        /// <summary> Initializes a new instance of <see cref="InterpolationBoundary"/>. </summary>
         public InterpolationBoundary()
         {
         }
 
-        /// <summary> Initializes a new instance of InterpolationBoundary. </summary>
+        /// <summary> Initializes a new instance of <see cref="InterpolationBoundary"/>. </summary>
         /// <param name="span"> &lt;Need description here&gt;. </param>
         internal InterpolationBoundary(TimeSpan? span)
         {

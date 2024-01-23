@@ -12,9 +12,18 @@ namespace Azure.Maps.Routing
     /// <summary> An object with a matrix of coordinates. </summary>
     public partial class RouteMatrixQuery
     {
-        /// <summary> Initializes a new instance of RouteMatrixQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixQuery"/>. </summary>
         public RouteMatrixQuery()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixQuery"/>. </summary>
+        /// <param name="geoJsonMultiPointOrigins"> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </param>
+        /// <param name="geoJsonMultiPointDestinations"> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </param>
+        internal RouteMatrixQuery(GeoJsonMultiPoint geoJsonMultiPointOrigins, GeoJsonMultiPoint geoJsonMultiPointDestinations)
+        {
+            GeoJsonMultiPointOrigins = geoJsonMultiPointOrigins;
+            GeoJsonMultiPointDestinations = geoJsonMultiPointDestinations;
         }
     }
 }

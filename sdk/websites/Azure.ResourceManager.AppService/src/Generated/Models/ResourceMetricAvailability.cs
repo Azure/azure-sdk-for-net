@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Metrics availability and retention. </summary>
     public partial class ResourceMetricAvailability
     {
-        /// <summary> Initializes a new instance of ResourceMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricAvailability"/>. </summary>
         internal ResourceMetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricAvailability"/>. </summary>
         /// <param name="timeGrain"> Time grain . </param>
         /// <param name="retention"> Retention period for the current time grain. </param>
         internal ResourceMetricAvailability(string timeGrain, string retention)

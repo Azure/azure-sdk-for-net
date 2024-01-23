@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </summary>
     public partial class BatchResizeOperationStatus
     {
-        /// <summary> Initializes a new instance of BatchResizeOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResizeOperationStatus"/>. </summary>
         internal BatchResizeOperationStatus()
         {
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of BatchResizeOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResizeOperationStatus"/>. </summary>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated compute nodes in the pool. </param>
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/low-priority compute nodes in the pool. </param>
         /// <param name="resizeTimeout"> The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>

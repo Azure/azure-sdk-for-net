@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Container liveness and readiness probe settings. </summary>
     internal partial class ContainerProbeSettings
     {
-        /// <summary> Initializes a new instance of ContainerProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerProbeSettings"/>. </summary>
         public ContainerProbeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerProbeSettings"/>. </summary>
         /// <param name="isProbeDisabled"> Indicates whether disable the liveness and readiness probe. </param>
         internal ContainerProbeSettings(bool? isProbeDisabled)
         {

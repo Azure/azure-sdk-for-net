@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that gets the list of tables contained within a provided list of Oracle schemas. </summary>
     public partial class GetUserTablesOracleTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskOutput"/>. </summary>
         internal GetUserTablesOracleTaskOutput()
         {
             Tables = new ChangeTrackingList<DatabaseTable>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskOutput"/>. </summary>
         /// <param name="schemaName"> The schema this result is for. </param>
         /// <param name="tables"> List of valid tables found for this schema. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>

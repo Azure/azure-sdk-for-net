@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information of the DPMContainer. </summary>
     internal partial class DpmContainerExtendedInfo
     {
-        /// <summary> Initializes a new instance of DpmContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmContainerExtendedInfo"/>. </summary>
         public DpmContainerExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DpmContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmContainerExtendedInfo"/>. </summary>
         /// <param name="lastRefreshedOn"> Last refresh time of the DPMContainer. </param>
         internal DpmContainerExtendedInfo(DateTimeOffset? lastRefreshedOn)
         {

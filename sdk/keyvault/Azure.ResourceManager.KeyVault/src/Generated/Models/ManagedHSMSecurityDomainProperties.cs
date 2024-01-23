@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> The security domain properties of the managed hsm. </summary>
     public partial class ManagedHSMSecurityDomainProperties
     {
-        /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         internal ManagedHSMSecurityDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         /// <param name="activationStatus"> Activation Status. </param>
         /// <param name="activationStatusMessage"> Activation Status Message. </param>
         internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage)

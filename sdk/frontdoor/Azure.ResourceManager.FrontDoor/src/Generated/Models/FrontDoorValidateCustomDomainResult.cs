@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Output of custom domain validation. </summary>
     public partial class FrontDoorValidateCustomDomainResult
     {
-        /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainResult"/>. </summary>
         internal FrontDoorValidateCustomDomainResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainResult"/>. </summary>
         /// <param name="isCustomDomainValidated"> Indicates whether the custom domain is valid or not. </param>
         /// <param name="reason"> The reason why the custom domain is not valid. </param>
         /// <param name="message"> Error message describing why the custom domain is not valid. </param>

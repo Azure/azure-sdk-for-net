@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RecommendedActionResource" /> and their operations.
-    /// Each <see cref="RecommendedActionResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseAdvisorResource" />.
-    /// To get a <see cref="RecommendedActionCollection" /> instance call the GetRecommendedActions method from an instance of <see cref="SqlDatabaseAdvisorResource" />.
+    /// A class representing a collection of <see cref="RecommendedActionResource"/> and their operations.
+    /// Each <see cref="RecommendedActionResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseAdvisorResource"/>.
+    /// To get a <see cref="RecommendedActionCollection"/> instance call the GetRecommendedActions method from an instance of <see cref="SqlDatabaseAdvisorResource"/>.
     /// </summary>
     public partial class RecommendedActionCollection : ArmCollection, IEnumerable<RecommendedActionResource>, IAsyncEnumerable<RecommendedActionResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_ListByDatabaseAdvisor</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecommendedActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RecommendedActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecommendedActionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendedActionDatabaseRecommendedActionsRestClient.CreateListByDatabaseAdvisorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_ListByDatabaseAdvisor</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecommendedActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RecommendedActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecommendedActionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendedActionDatabaseRecommendedActionsRestClient.CreateListByDatabaseAdvisorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseRecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecommendedActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

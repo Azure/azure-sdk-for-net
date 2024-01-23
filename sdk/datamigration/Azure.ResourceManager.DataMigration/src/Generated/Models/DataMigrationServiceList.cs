@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of service objects. </summary>
     internal partial class DataMigrationServiceList
     {
-        /// <summary> Initializes a new instance of DataMigrationServiceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceList"/>. </summary>
         internal DataMigrationServiceList()
         {
             Value = new ChangeTrackingList<DataMigrationServiceData>();
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceList"/>. </summary>
         /// <param name="value"> List of services. </param>
         /// <param name="nextLink"> URL to load the next page of services. </param>
         internal DataMigrationServiceList(IReadOnlyList<DataMigrationServiceData> value, string nextLink)

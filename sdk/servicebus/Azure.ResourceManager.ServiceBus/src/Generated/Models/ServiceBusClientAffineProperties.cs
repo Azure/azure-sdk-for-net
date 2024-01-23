@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Properties specific to client affine subscriptions. </summary>
     public partial class ServiceBusClientAffineProperties
     {
-        /// <summary> Initializes a new instance of ServiceBusClientAffineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusClientAffineProperties"/>. </summary>
         public ServiceBusClientAffineProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusClientAffineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusClientAffineProperties"/>. </summary>
         /// <param name="clientId"> Indicates the Client ID of the application that created the client-affine subscription. </param>
         /// <param name="isDurable"> For client-affine subscriptions, this value indicates whether the subscription is durable or not. </param>
         /// <param name="isShared"> For client-affine subscriptions, this value indicates whether the subscription is shared or not. </param>

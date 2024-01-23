@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Item containing break sentence result. </summary>
     public partial class BreakSentenceItem
     {
-        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/>. </summary>
         /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text
             SentLen = sentLen.ToList();
         }
 
-        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> A private link resource. </summary>
     public partial class RedisEnterprisePrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResource"/>. </summary>
         public RedisEnterprisePrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

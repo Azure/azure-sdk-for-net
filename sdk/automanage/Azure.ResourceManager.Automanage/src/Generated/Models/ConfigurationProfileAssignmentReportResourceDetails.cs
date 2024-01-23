@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> Details about the resource processed by the configuration profile assignment. </summary>
     public partial class ConfigurationProfileAssignmentReportResourceDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentReportResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileAssignmentReportResourceDetails"/>. </summary>
         internal ConfigurationProfileAssignmentReportResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentReportResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileAssignmentReportResourceDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

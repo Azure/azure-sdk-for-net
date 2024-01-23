@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Email configuration model collection. </summary>
     internal partial class DataReplicationEmailConfigurationListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationListResult"/>. </summary>
         internal DataReplicationEmailConfigurationListResult()
         {
             Value = new ChangeTrackingList<DataReplicationEmailConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of email configurations. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationEmailConfigurationListResult(IReadOnlyList<DataReplicationEmailConfigurationData> value, string nextLink)

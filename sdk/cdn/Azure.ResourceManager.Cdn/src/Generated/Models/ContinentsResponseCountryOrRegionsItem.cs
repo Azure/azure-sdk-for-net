@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ContinentsResponseCountryOrRegionsItem. </summary>
     public partial class ContinentsResponseCountryOrRegionsItem
     {
-        /// <summary> Initializes a new instance of ContinentsResponseCountryOrRegionsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinentsResponseCountryOrRegionsItem"/>. </summary>
         internal ContinentsResponseCountryOrRegionsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinentsResponseCountryOrRegionsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinentsResponseCountryOrRegionsItem"/>. </summary>
         /// <param name="id"></param>
         /// <param name="continentId"></param>
         internal ContinentsResponseCountryOrRegionsItem(string id, string continentId)

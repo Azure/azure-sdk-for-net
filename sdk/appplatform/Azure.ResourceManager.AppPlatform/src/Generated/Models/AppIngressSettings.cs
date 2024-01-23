@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> App ingress settings payload. </summary>
     public partial class AppIngressSettings
     {
-        /// <summary> Initializes a new instance of AppIngressSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppIngressSettings"/>. </summary>
         public AppIngressSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AppIngressSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppIngressSettings"/>. </summary>
         /// <param name="readTimeoutInSeconds"> Ingress read time out in seconds. </param>
         /// <param name="sendTimeoutInSeconds"> Ingress send time out in seconds. </param>
         /// <param name="sessionAffinity"> Type of the affinity, set this to Cookie to enable session affinity. </param>

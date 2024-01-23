@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of SQL pools. </summary>
     internal partial class SqlPoolInfoListResult
     {
-        /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolInfoListResult"/>. </summary>
         internal SqlPoolInfoListResult()
         {
             Value = new ChangeTrackingList<SynapseSqlPoolData>();
         }
 
-        /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolInfoListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of SQL pools. </param>
         internal SqlPoolInfoListResult(string nextLink, IReadOnlyList<SynapseSqlPoolData> value)

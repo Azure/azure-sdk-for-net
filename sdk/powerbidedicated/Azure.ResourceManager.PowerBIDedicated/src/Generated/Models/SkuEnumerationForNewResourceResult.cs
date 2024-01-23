@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An object that represents enumerating SKUs for new resources. </summary>
     internal partial class SkuEnumerationForNewResourceResult
     {
-        /// <summary> Initializes a new instance of SkuEnumerationForNewResourceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuEnumerationForNewResourceResult"/>. </summary>
         internal SkuEnumerationForNewResourceResult()
         {
             Value = new ChangeTrackingList<CapacitySku>();
         }
 
-        /// <summary> Initializes a new instance of SkuEnumerationForNewResourceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuEnumerationForNewResourceResult"/>. </summary>
         /// <param name="value"> The collection of available SKUs for new resources. </param>
         internal SkuEnumerationForNewResourceResult(IReadOnlyList<CapacitySku> value)
         {

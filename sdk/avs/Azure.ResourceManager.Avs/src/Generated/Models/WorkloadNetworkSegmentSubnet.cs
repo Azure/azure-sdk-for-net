@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Subnet configuration for segment. </summary>
     public partial class WorkloadNetworkSegmentSubnet
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentSubnet"/>. </summary>
         public WorkloadNetworkSegmentSubnet()
         {
             DhcpRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentSubnet"/>. </summary>
         /// <param name="dhcpRanges"> DHCP Range assigned for subnet. </param>
         /// <param name="gatewayAddress"> Gateway address. </param>
         internal WorkloadNetworkSegmentSubnet(IList<string> dhcpRanges, string gatewayAddress)

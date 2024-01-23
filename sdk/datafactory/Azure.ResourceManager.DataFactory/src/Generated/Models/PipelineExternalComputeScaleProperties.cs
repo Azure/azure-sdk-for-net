@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> PipelineExternalComputeScale properties for managed integration runtime. </summary>
     public partial class PipelineExternalComputeScaleProperties
     {
-        /// <summary> Initializes a new instance of PipelineExternalComputeScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineExternalComputeScaleProperties"/>. </summary>
         public PipelineExternalComputeScaleProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineExternalComputeScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineExternalComputeScaleProperties"/>. </summary>
         /// <param name="timeToLive"> Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity. </param>
         /// <param name="numberOfPipelineNodes"> Number of the pipeline nodes, which should be greater than 0 and less than 11. </param>
         /// <param name="numberOfExternalNodes"> Number of the the external nodes, which should be greater than 0 and less than 11. </param>

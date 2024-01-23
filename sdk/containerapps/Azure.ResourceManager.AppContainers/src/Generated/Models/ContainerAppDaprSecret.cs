@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Dapr component Secret for ListSecrets Action. </summary>
     public partial class ContainerAppDaprSecret
     {
-        /// <summary> Initializes a new instance of ContainerAppDaprSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprSecret"/>. </summary>
         internal ContainerAppDaprSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprSecret"/>. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         internal ContainerAppDaprSecret(string name, string value)

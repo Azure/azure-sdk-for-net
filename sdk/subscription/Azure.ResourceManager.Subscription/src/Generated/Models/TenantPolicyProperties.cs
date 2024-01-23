@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Tenant policy. </summary>
     public partial class TenantPolicyProperties
     {
-        /// <summary> Initializes a new instance of TenantPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyProperties"/>. </summary>
         internal TenantPolicyProperties()
         {
             ExemptedPrincipals = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Initializes a new instance of TenantPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyProperties"/>. </summary>
         /// <param name="policyId"> Policy Id. </param>
         /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
         /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>

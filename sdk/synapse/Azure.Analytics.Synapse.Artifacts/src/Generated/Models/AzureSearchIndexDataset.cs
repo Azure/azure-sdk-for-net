@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Azure Search Index. </summary>
     public partial class AzureSearchIndexDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AzureSearchIndexDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="indexName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureSearchIndex";
         }
 
-        /// <summary> Initializes a new instance of AzureSearchIndexDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

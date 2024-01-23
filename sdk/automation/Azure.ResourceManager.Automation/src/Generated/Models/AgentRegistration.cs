@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the agent registration information type. </summary>
     public partial class AgentRegistration
     {
-        /// <summary> Initializes a new instance of AgentRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentRegistration"/>. </summary>
         internal AgentRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentRegistration"/>. </summary>
         /// <param name="dscMetaConfiguration"> Gets or sets the dsc meta configuration. </param>
         /// <param name="endpoint"> Gets or sets the dsc server endpoint. </param>
         /// <param name="keys"> Gets or sets the agent registration keys. </param>

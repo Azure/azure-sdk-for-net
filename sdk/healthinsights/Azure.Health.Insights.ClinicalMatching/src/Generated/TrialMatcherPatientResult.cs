@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The results of the model's work for a single patient. </summary>
     public partial class TrialMatcherPatientResult
     {
-        /// <summary> Initializes a new instance of TrialMatcherPatientResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherPatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="inferences"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             NeededClinicalInfo = new ChangeTrackingList<ExtendedClinicalCodedElement>();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherPatientResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherPatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <param name="neededClinicalInfo"> Clinical information which is needed to provide better trial matching results for the patient. </param>

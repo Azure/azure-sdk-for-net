@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a connection to a MongoDB data source. </summary>
     public partial class MongoDBConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of MongoDBConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBConnectionInfo"/>. </summary>
         /// <param name="connectionString"> A MongoDB connection string or blob container URL. The user name and password can be specified here or in the userName and password properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public MongoDBConnectionInfo(string connectionString)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "MongoDbConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of MongoDBConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

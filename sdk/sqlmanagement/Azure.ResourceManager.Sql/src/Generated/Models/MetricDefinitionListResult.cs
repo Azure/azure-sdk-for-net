@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list database metric definitions request. </summary>
     internal partial class MetricDefinitionListResult
     {
-        /// <summary> Initializes a new instance of MetricDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinitionListResult"/>. </summary>
         /// <param name="value"> The list of metric definitions for the database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MetricDefinitionListResult(IEnumerable<SqlMetricDefinition> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinitionListResult"/>. </summary>
         /// <param name="value"> The list of metric definitions for the database. </param>
         internal MetricDefinitionListResult(IReadOnlyList<SqlMetricDefinition> value)
         {

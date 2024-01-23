@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Result information for an operation that translated spoken audio into written text. </summary>
     public partial class AudioTranslation
     {
-        /// <summary> Initializes a new instance of AudioTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranslation"/>. </summary>
         /// <param name="text"> The translated text for the provided audio data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal AudioTranslation(string text)
@@ -25,7 +25,7 @@ namespace Azure.AI.OpenAI
             Segments = new ChangeTrackingList<AudioTranslationSegment>();
         }
 
-        /// <summary> Initializes a new instance of AudioTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranslation"/>. </summary>
         /// <param name="text"> The translated text for the provided audio data. </param>
         /// <param name="internalAudioTaskLabel"> The label that describes which operation type generated the accompanying response data. </param>
         /// <param name="language">

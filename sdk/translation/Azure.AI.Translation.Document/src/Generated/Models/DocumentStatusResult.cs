@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> Document Status Response. </summary>
     public partial class DocumentStatusResult
     {
-        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Document
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
         /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>

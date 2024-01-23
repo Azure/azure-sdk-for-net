@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FluidRelayServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FluidRelayServerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FluidRelayServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FluidRelayServerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FluidRelayServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FluidRelayServerResource"/> object. </returns>
         public virtual FluidRelayServerResource GetFluidRelayServerResource(ResourceIdentifier id)
         {
             FluidRelayServerResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FluidRelayContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FluidRelayContainerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FluidRelayContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FluidRelayContainerResource.CreateResourceIdentifier" /> to create a <see cref="FluidRelayContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FluidRelayContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FluidRelayContainerResource"/> object. </returns>
         public virtual FluidRelayContainerResource GetFluidRelayContainerResource(ResourceIdentifier id)
         {
             FluidRelayContainerResource.ValidateResourceId(id);

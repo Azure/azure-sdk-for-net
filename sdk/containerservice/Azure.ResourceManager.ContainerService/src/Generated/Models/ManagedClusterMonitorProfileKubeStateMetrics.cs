@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Kube State Metrics for prometheus addon profile for the container service cluster. </summary>
     public partial class ManagedClusterMonitorProfileKubeStateMetrics
     {
-        /// <summary> Initializes a new instance of ManagedClusterMonitorProfileKubeStateMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileKubeStateMetrics"/>. </summary>
         public ManagedClusterMonitorProfileKubeStateMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterMonitorProfileKubeStateMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileKubeStateMetrics"/>. </summary>
         /// <param name="metricLabelsAllowlist"> Comma-separated list of Kubernetes annotations keys that will be used in the resource's labels metric. </param>
         /// <param name="metricAnnotationsAllowList"> Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric. </param>
         internal ManagedClusterMonitorProfileKubeStateMetrics(string metricLabelsAllowlist, string metricAnnotationsAllowList)

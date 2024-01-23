@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Terms properties. </summary>
     public partial class DatadogAgreementProperties
     {
-        /// <summary> Initializes a new instance of DatadogAgreementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementProperties"/>. </summary>
         public DatadogAgreementProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogAgreementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementProperties"/>. </summary>
         /// <param name="publisher"> Publisher identifier string. </param>
         /// <param name="product"> Product identifier string. </param>
         /// <param name="plan"> Plan identifier string. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class JobNodes
     {
-        /// <summary> Initializes a new instance of JobNodes. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobNodes"/>. </summary>
         protected JobNodes()
         {
         }
 
-        /// <summary> Initializes a new instance of JobNodes. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobNodes"/>. </summary>
         /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>
         internal JobNodes(NodesValueType nodesValueType)
         {

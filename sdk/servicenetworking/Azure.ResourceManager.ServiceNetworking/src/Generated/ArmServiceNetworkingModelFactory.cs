@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceNetworkingModelFactory
     {
-        /// <summary> Initializes a new instance of TrafficControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.TrafficControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             return new TrafficControllerData(id, name, resourceType, systemData, tags, location, configurationEndpoints?.ToList(), frontends?.ToList(), associations?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             return new AssociationData(id, name, resourceType, systemData, tags, location, associationType, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FrontendData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.FrontendData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

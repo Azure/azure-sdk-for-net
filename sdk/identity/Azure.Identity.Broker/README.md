@@ -1,7 +1,8 @@
 # Azure Identity Brokered Authentication client library for .NET
- The library extends the Azure.Identity library to provide authentication broker support. It includes the necessary dependencies, and provides the `InteractiveBrowserCredentialBrokerOptions` class. This options class can be used to create an `InteractiveBrowserCredential` capable of using the system authentication broker in lieu of the system browser when available.
 
-  [Source code][source] | [Package (nuget)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][aad_doc]
+The library extends the Azure.Identity library to provide authentication broker support. It includes the necessary dependencies and provides the `InteractiveBrowserCredentialBrokerOptions` class. This options class can be used to create an `InteractiveBrowserCredential` capable of using the system authentication broker in lieu of an embedded web view or the system browser.
+
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][entraid_doc]
 
 ## Getting started
 
@@ -78,7 +79,7 @@ catch (AuthenticationFailedException e)
 }
 ```
 
-For more details on dealing with errors arising from failed requests to Microsoft Entra ID, or managed identity endpoints please refer to the Microsoft Entra ID [documentation on authorization error codes][aad_err_doc].
+For more details on dealing with errors arising from failed requests to Microsoft Entra ID, or managed identity endpoints please refer to the Microsoft Entra ID [documentation on authorization error codes][entraid_err_doc].
 
 ### Logging
 
@@ -144,9 +145,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity.Broker/src
-[package]: https://www.nuget.org/packages?q=Azure.Identity.Broker
-[aad_doc]: https://docs.microsoft.com/azure/active-directory/
-[aad_err_doc]: https://docs.microsoft.com/azure/active-directory/develop/reference-aadsts-error-codes
+[package]: https://www.nuget.org/packages/Azure.Identity.Broker
+[entraid_doc]: https://learn.microsoft.com/entra/identity/
+[entraid_err_doc]: https://learn.microsoft.com/entra/identity-platform/reference-error-codes
 [certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

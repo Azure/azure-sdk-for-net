@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Support contact information and instructions. </summary>
     public partial class LabPlanSupportInfo
     {
-        /// <summary> Initializes a new instance of LabPlanSupportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPlanSupportInfo"/>. </summary>
         public LabPlanSupportInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LabPlanSupportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPlanSupportInfo"/>. </summary>
         /// <param name="uri"> Support web address. </param>
         /// <param name="email"> Support contact email address. </param>
         /// <param name="phone"> Support contact phone number. </param>

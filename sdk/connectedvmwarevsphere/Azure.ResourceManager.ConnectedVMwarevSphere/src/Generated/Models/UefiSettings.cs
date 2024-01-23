@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the security settings like secure boot used while creating the virtual machine. </summary>
     internal partial class UefiSettings
     {
-        /// <summary> Initializes a new instance of UefiSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
         public UefiSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of UefiSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
         /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. </param>
         internal UefiSettings(bool? secureBootEnabled)
         {

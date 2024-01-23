@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of the source code repository. </summary>
     public partial class SourceCodeRepoProperties
     {
-        /// <summary> Initializes a new instance of SourceCodeRepoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoProperties"/>. </summary>
         /// <param name="sourceControlType"> The type of source control service. </param>
         /// <param name="repositoryUri"> The full URL to the source code repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repositoryUri"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RepositoryUri = repositoryUri;
         }
 
-        /// <summary> Initializes a new instance of SourceCodeRepoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoProperties"/>. </summary>
         /// <param name="sourceControlType"> The type of source control service. </param>
         /// <param name="repositoryUri"> The full URL to the source code repository. </param>
         /// <param name="branch"> The branch name of the source code. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Response of a list app services Operation. </summary>
     internal partial class NewRelicAppServicesListResult
     {
-        /// <summary> Initializes a new instance of NewRelicAppServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesListResult"/>. </summary>
         /// <param name="value"> The AppServiceInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicAppServicesListResult(IEnumerable<NewRelicObservabilityAppServiceInfo> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicAppServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesListResult"/>. </summary>
         /// <param name="value"> The AppServiceInfo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal NewRelicAppServicesListResult(IReadOnlyList<NewRelicObservabilityAppServiceInfo> value, Uri nextLink)

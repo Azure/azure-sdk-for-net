@@ -10,9 +10,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureEventHubsParameterPatch. </summary>
     internal partial class AzureEventHubsParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureEventHubsParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsParameterPatch"/>. </summary>
         public AzureEventHubsParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Event Hubs. </param>
+        /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
+        internal AzureEventHubsParameterPatch(string connectionString, string consumerGroup)
+        {
+            ConnectionString = connectionString;
+            ConsumerGroup = consumerGroup;
         }
 
         /// <summary> The connection string of this Azure Event Hubs. </summary>

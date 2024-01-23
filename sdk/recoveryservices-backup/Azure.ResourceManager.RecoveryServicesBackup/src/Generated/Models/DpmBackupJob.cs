@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> DPM workload-specific job object. </summary>
     public partial class DpmBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of DpmBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJob"/>. </summary>
         public DpmBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "DpmJob";
         }
 
-        /// <summary> Initializes a new instance of DpmBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>

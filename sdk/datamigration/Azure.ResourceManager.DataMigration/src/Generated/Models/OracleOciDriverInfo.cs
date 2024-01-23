@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information about an Oracle OCI driver. </summary>
     public partial class OracleOciDriverInfo
     {
-        /// <summary> Initializes a new instance of OracleOciDriverInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleOciDriverInfo"/>. </summary>
         internal OracleOciDriverInfo()
         {
             SupportedOracleVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OracleOciDriverInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleOciDriverInfo"/>. </summary>
         /// <param name="driverName"> The name of the driver package. </param>
         /// <param name="driverSize"> The size in bytes of the driver package. </param>
         /// <param name="archiveChecksum"> The MD5 Base64 encoded checksum for the driver package. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Application specific parameters for the placement of volumes in the volume group. </summary>
     public partial class NetAppVolumePlacementRule
     {
-        /// <summary> Initializes a new instance of NetAppVolumePlacementRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePlacementRule"/>. </summary>
         /// <param name="key"> Key for an application specific parameter for the placement of volumes in the volume group. </param>
         /// <param name="value"> Value for an application specific parameter for the placement of volumes in the volume group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>

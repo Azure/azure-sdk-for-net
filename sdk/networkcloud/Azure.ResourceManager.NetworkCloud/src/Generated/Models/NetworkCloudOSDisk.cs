@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> OsDisk represents configuration of the boot disk. </summary>
     public partial class NetworkCloudOSDisk
     {
-        /// <summary> Initializes a new instance of NetworkCloudOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
         /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>
         public NetworkCloudOSDisk(long diskSizeInGB)
         {
             DiskSizeInGB = diskSizeInGB;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
         /// <param name="createOption"> The strategy for creating the OS disk. </param>
         /// <param name="deleteOption"> The strategy for deleting the OS disk. </param>
         /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>

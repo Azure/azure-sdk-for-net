@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The UnknownPartnerDestinationInfo. </summary>
     internal partial class UnknownPartnerDestinationInfo : PartnerDestinationInfo
     {
-        /// <summary> Initializes a new instance of UnknownPartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPartnerDestinationInfo"/>. </summary>
         /// <param name="azureSubscriptionId">
         /// Azure subscription ID of the subscriber. The partner destination associated with the channel will be
         /// created under this Azure subscription.

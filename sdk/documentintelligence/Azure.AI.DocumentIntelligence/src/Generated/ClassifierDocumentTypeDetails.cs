@@ -10,12 +10,12 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Classifier document type info. </summary>
     public partial class ClassifierDocumentTypeDetails
     {
-        /// <summary> Initializes a new instance of ClassifierDocumentTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassifierDocumentTypeDetails"/>. </summary>
         public ClassifierDocumentTypeDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ClassifierDocumentTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassifierDocumentTypeDetails"/>. </summary>
         /// <param name="sourceKind"> Type of training data source. </param>
         /// <param name="azureBlobSource">
         /// Azure Blob Storage location containing the training data for a classifier

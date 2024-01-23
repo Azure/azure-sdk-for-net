@@ -13,14 +13,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksEntityLinkingTasksItem. </summary>
     internal partial class TasksStateTasksEntityLinkingTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksEntityLinkingTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksEntityLinkingTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksEntityLinkingTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksEntityLinkingTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksEntityLinkingTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

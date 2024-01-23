@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a member update operation. </summary>
     public partial class MemberUpdateStatus
     {
-        /// <summary> Initializes a new instance of MemberUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemberUpdateStatus"/>. </summary>
         internal MemberUpdateStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MemberUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemberUpdateStatus"/>. </summary>
         /// <param name="status"> The status of the MemberUpdate operation. </param>
         /// <param name="name"> The name of the FleetMember. </param>
         /// <param name="clusterResourceId"> The Azure resource id of the target Kubernetes cluster. </param>

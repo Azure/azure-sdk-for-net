@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The ManagedInstanceResourceGetTopQueriesOptions. </summary>
     public partial class ManagedInstanceResourceGetTopQueriesOptions
     {
-        /// <summary> Initializes a new instance of ManagedInstanceResourceGetTopQueriesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceResourceGetTopQueriesOptions"/>. </summary>
         public ManagedInstanceResourceGetTopQueriesOptions()
         {
         }

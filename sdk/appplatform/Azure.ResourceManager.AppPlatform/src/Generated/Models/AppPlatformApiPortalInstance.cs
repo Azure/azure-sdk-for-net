@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Collection of instances belong to the API portal. </summary>
     public partial class AppPlatformApiPortalInstance
     {
-        /// <summary> Initializes a new instance of AppPlatformApiPortalInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalInstance"/>. </summary>
         internal AppPlatformApiPortalInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalInstance"/>. </summary>
         /// <param name="name"> Name of the API portal instance. </param>
         /// <param name="status"> Status of the API portal instance. </param>
         internal AppPlatformApiPortalInstance(string name, string status)

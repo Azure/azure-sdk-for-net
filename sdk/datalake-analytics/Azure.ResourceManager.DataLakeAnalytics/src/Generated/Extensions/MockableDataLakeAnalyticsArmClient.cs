@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeAnalyticsAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeAnalyticsAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource"/> object. </returns>
         public virtual DataLakeAnalyticsAccountResource GetDataLakeAnalyticsAccountResource(ResourceIdentifier id)
         {
             DataLakeAnalyticsAccountResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeStoreAccountInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeStoreAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreAccountInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeStoreAccountInformationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeStoreAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreAccountInformationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource"/> object. </returns>
         public virtual DataLakeStoreAccountInformationResource GetDataLakeStoreAccountInformationResource(ResourceIdentifier id)
         {
             DataLakeStoreAccountInformationResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeAnalyticsStorageAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsStorageAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> object. </returns>
         public virtual DataLakeAnalyticsStorageAccountInformationResource GetDataLakeAnalyticsStorageAccountInformationResource(ResourceIdentifier id)
         {
             DataLakeAnalyticsStorageAccountInformationResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeAnalyticsStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeAnalyticsStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsStorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource"/> object. </returns>
         public virtual DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(ResourceIdentifier id)
         {
             DataLakeAnalyticsStorageContainerResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeAnalyticsComputePolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeAnalyticsComputePolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsComputePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsComputePolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsComputePolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsComputePolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource"/> object. </returns>
         public virtual DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(ResourceIdentifier id)
         {
             DataLakeAnalyticsComputePolicyResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeAnalyticsFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeAnalyticsFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource"/> object. </returns>
         public virtual DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(ResourceIdentifier id)
         {
             DataLakeAnalyticsFirewallRuleResource.ValidateResourceId(id);

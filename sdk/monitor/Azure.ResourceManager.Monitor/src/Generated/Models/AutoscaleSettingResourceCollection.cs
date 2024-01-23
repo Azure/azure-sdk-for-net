@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of autoscale setting resources. </summary>
     internal partial class AutoscaleSettingResourceCollection
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingResourceCollection"/>. </summary>
         /// <param name="value"> the values for the autoscale setting resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AutoscaleSettingResourceCollection(IEnumerable<AutoscaleSettingData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettingResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingResourceCollection"/>. </summary>
         /// <param name="value"> the values for the autoscale setting resources. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal AutoscaleSettingResourceCollection(IReadOnlyList<AutoscaleSettingData> value, string nextLink)

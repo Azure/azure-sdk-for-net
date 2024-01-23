@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningDeploymentResourceConfiguration. </summary>
     public partial class MachineLearningDeploymentResourceConfiguration : MachineLearningResourceConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningDeploymentResourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentResourceConfiguration"/>. </summary>
         public MachineLearningDeploymentResourceConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDeploymentResourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentResourceConfiguration"/>. </summary>
         /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
         /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
         /// <param name="locations"> Locations where the job can run. </param>

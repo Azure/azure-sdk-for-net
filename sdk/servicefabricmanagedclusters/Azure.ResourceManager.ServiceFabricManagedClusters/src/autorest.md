@@ -167,6 +167,9 @@ rename-mapping:
   SecurityType: ServiceFabricManagedClusterSecurityType
   UpdateType: ServiceFabricManagedClusterUpdateType
 
+suppress-abstract-base-class:
+- ManagedServiceProperties
+
 directive:
   - remove-operation: OperationStatus_Get
   - remove-operation: OperationResults_Get
@@ -186,5 +189,28 @@ directive:
     where: $.definitions
     transform: >
       $.ManagedClusterVersionDetails.properties.supportExpiryUtc['format'] = 'date-time';
-
+  - from: nodetype.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}'].patch
+    transform: >
+      $['responses'] = {
+          "200": {
+            "description": "The operation completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/NodeType"
+            }
+          },
+          "202": {
+            "description": "The operation completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/NodeType"
+            }
+          },
+          "default": {
+            "description": "The detailed error response.",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+    reason: response status 202 missing
 ```

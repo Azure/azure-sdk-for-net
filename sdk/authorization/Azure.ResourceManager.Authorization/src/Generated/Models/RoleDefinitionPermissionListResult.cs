@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Permissions information. </summary>
     internal partial class RoleDefinitionPermissionListResult
     {
-        /// <summary> Initializes a new instance of RoleDefinitionPermissionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermissionListResult"/>. </summary>
         internal RoleDefinitionPermissionListResult()
         {
             Value = new ChangeTrackingList<RoleDefinitionPermission>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionPermissionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermissionListResult"/>. </summary>
         /// <param name="value"> An array of permissions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleDefinitionPermissionListResult(IReadOnlyList<RoleDefinitionPermission> value, string nextLink)

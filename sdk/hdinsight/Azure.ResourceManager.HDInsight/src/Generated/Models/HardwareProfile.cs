@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The hardware profile. </summary>
     internal partial class HardwareProfile
     {
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         public HardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         /// <param name="vmSize"> The size of the VM. </param>
         internal HardwareProfile(string vmSize)
         {

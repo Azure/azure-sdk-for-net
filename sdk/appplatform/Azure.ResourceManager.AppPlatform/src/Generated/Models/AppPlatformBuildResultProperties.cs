@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Build result resource properties payload. </summary>
     public partial class AppPlatformBuildResultProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultProperties"/>. </summary>
         public AppPlatformBuildResultProperties()
         {
             BuildStages = new ChangeTrackingList<AppPlatformBuildStageProperties>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultProperties"/>. </summary>
         /// <param name="name"> The name of this build result. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="buildPodName"> The build pod name which can be used to get the build log streaming. </param>

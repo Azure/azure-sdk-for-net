@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,60 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes remote addresses that is recommended to communicate with the Azure resource on some (Protocol, Port, Direction). All other remote addresses are recommended to be blocked. </summary>
     public partial class RecommendedSecurityRule
     {
-        /// <summary> Initializes a new instance of RecommendedSecurityRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedSecurityRule"/>. </summary>
         public RecommendedSecurityRule()
         {
             Protocols = new ChangeTrackingList<SecurityTransportProtocol>();
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecommendedSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedSecurityRule"/>. </summary>
         /// <param name="name"> The name of the rule. </param>
         /// <param name="direction"> The rule's direction. </param>
         /// <param name="destinationPort"> The rule's destination port. </param>
         /// <param name="protocols"> The rule's transport protocols. </param>
         /// <param name="ipAddresses"> The remote IP addresses that should be able to communicate with the Azure resource on the rule's destination port and protocol. </param>
-        internal RecommendedSecurityRule(string name, SecurityTrafficDirection? direction, int? destinationPort, IList<SecurityTransportProtocol> protocols, IList<string> ipAddresses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedSecurityRule(string name, SecurityTrafficDirection? direction, int? destinationPort, IList<SecurityTransportProtocol> protocols, IList<string> ipAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Direction = direction;
             DestinationPort = destinationPort;
             Protocols = protocols;
             IPAddresses = ipAddresses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the rule. </summary>

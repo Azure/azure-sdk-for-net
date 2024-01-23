@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Result of the request to check name availability. It contains a flag and possible reason of failure. </summary>
     public partial class WebPubSubNameAvailability
     {
-        /// <summary> Initializes a new instance of WebPubSubNameAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailability"/>. </summary>
         internal WebPubSubNameAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubNameAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailability"/>. </summary>
         /// <param name="nameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing a CosmosDb data connection. </summary>
     public partial class KustoCosmosDBDataConnection : KustoDataConnectionData
     {
-        /// <summary> Initializes a new instance of KustoCosmosDBDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
         public KustoCosmosDBDataConnection()
         {
             Kind = DataConnectionKind.CosmosDB;
         }
 
-        /// <summary> Initializes a new instance of KustoCosmosDBDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

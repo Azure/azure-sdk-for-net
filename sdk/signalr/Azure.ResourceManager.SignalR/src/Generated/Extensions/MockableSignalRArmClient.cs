@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.SignalR.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalRResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalRResource.CreateResourceIdentifier" /> to create a <see cref="SignalRResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SignalRResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SignalRResource.CreateResourceIdentifier" /> to create a <see cref="SignalRResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SignalRResource"/> object. </returns>
         public virtual SignalRResource GetSignalRResource(ResourceIdentifier id)
         {
             SignalRResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SignalR.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalRCustomCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalRCustomCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SignalRCustomCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SignalRCustomCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRCustomCertificateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SignalRCustomCertificateResource"/> object. </returns>
         public virtual SignalRCustomCertificateResource GetSignalRCustomCertificateResource(ResourceIdentifier id)
         {
             SignalRCustomCertificateResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.SignalR.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalRCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalRCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SignalRCustomDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SignalRCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRCustomDomainResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SignalRCustomDomainResource"/> object. </returns>
         public virtual SignalRCustomDomainResource GetSignalRCustomDomainResource(ResourceIdentifier id)
         {
             SignalRCustomDomainResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.SignalR.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalRPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalRPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SignalRPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SignalRPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SignalRPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SignalRPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource"/> object. </returns>
         public virtual SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             SignalRPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.SignalR.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalRSharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalRSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SignalRSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SignalRSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRSharedPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource"/> object. </returns>
         public virtual SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(ResourceIdentifier id)
         {
             SignalRSharedPrivateLinkResource.ValidateResourceId(id);

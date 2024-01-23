@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaServicesAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MediaServicesAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MediaServicesAccountData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media
             PrivateEndpointConnections = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of MediaServicesAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

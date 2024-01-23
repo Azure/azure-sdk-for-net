@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Models;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmChaosModelFactory
     {
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chaos.CapabilityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +34,15 @@ namespace Azure.ResourceManager.Chaos.Models
             return new CapabilityData(id, name, resourceType, systemData, publisher, targetType, description, parametersSchema, urn);
         }
 
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorResponse"/>. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
+        public static ErrorResponse ErrorResponse(ResponseError error = null)
+        {
+            return new ErrorResponse(error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.CapabilityTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +67,7 @@ namespace Azure.ResourceManager.Chaos.Models
             return new CapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, azureRbacActions?.ToList(), azureRbacDataActions?.ToList(), runtimeKind != null ? new CapabilityTypePropertiesRuntimeProperties(runtimeKind) : null);
         }
 
-        /// <summary> Initializes a new instance of ExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chaos.ExperimentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,77 +75,57 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
         /// List of selectors.
-        /// Please note <see cref="Selector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ListSelector"/> and <see cref="QuerySelector"/>.
+        /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </param>
-        /// <param name="startOnCreation"> A boolean value that indicates if experiment should be started on creation or not. </param>
         /// <returns> A new <see cref="Chaos.ExperimentData"/> instance for mocking. </returns>
-        public static ExperimentData ExperimentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IEnumerable<Step> steps = null, IEnumerable<Selector> selectors = null, bool? startOnCreation = null)
+        public static ExperimentData ExperimentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, IEnumerable<ChaosExperimentStep> steps = null, IEnumerable<ChaosTargetSelector> selectors = null)
         {
             tags ??= new Dictionary<string, string>();
-            steps ??= new List<Step>();
-            selectors ??= new List<Selector>();
+            steps ??= new List<ChaosExperimentStep>();
+            selectors ??= new List<ChaosTargetSelector>();
 
-            return new ExperimentData(id, name, resourceType, systemData, tags, location, identity, steps?.ToList(), selectors?.ToList(), startOnCreation);
+            return new ExperimentData(id, name, resourceType, systemData, tags, location, identity, provisioningState, steps?.ToList(), selectors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ExperimentCancelOperationResult. </summary>
-        /// <param name="name"> String of the Experiment name. </param>
-        /// <param name="statusUri"> URL to retrieve the Experiment status. </param>
-        /// <returns> A new <see cref="Models.ExperimentCancelOperationResult"/> instance for mocking. </returns>
-        public static ExperimentCancelOperationResult ExperimentCancelOperationResult(string name = null, string statusUri = null)
-        {
-            return new ExperimentCancelOperationResult(name, statusUri);
-        }
-
-        /// <summary> Initializes a new instance of ExperimentStartOperationResult. </summary>
-        /// <param name="name"> String of the Experiment name. </param>
-        /// <param name="statusUri"> URL to retrieve the Experiment status. </param>
-        /// <returns> A new <see cref="Models.ExperimentStartOperationResult"/> instance for mocking. </returns>
-        public static ExperimentStartOperationResult ExperimentStartOperationResult(string name = null, string statusUri = null)
-        {
-            return new ExperimentStartOperationResult(name, statusUri);
-        }
-
-        /// <summary> Initializes a new instance of ExperimentStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chaos.ExperimentExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> String that represents the status of a Experiment. </param>
-        /// <param name="createdDateUtc"> String that represents the created date time of a Experiment. </param>
-        /// <param name="endDateUtc"> String that represents the end date time of a Experiment. </param>
-        /// <returns> A new <see cref="Chaos.ExperimentStatusData"/> instance for mocking. </returns>
-        public static ExperimentStatusData ExperimentStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? createdDateUtc = null, DateTimeOffset? endDateUtc = null)
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <returns> A new <see cref="Chaos.ExperimentExecutionData"/> instance for mocking. </returns>
+        public static ExperimentExecutionData ExperimentExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null)
         {
-            return new ExperimentStatusData(id, name, resourceType, systemData, status, createdDateUtc, endDateUtc);
+            return new ExperimentExecutionData(id, name, resourceType, systemData, status, startedOn, stoppedOn);
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="experimentId"> The id of the experiment. </param>
-        /// <param name="status"> The value of the status of the experiment execution. </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
         /// <param name="failureReason"> The reason why the execution failed. </param>
-        /// <param name="createdOn"> String that represents the created date time. </param>
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
-        /// <param name="startOn"> String that represents the start date time. </param>
-        /// <param name="stopOn"> String that represents the stop date time. </param>
         /// <param name="runInformationSteps"> The information of the experiment run. </param>
-        /// <returns> A new <see cref="Chaos.ExperimentExecutionDetailData"/> instance for mocking. </returns>
-        public static ExperimentExecutionDetailData ExperimentExecutionDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string experimentId = null, string status = null, string failureReason = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastActionOn = null, DateTimeOffset? startOn = null, DateTimeOffset? stopOn = null, IEnumerable<StepStatus> runInformationSteps = null)
+        /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, string failureReason = null, DateTimeOffset? lastActionOn = null, IEnumerable<StepStatus> runInformationSteps = null)
         {
             runInformationSteps ??= new List<StepStatus>();
 
-            return new ExperimentExecutionDetailData(id, name, resourceType, systemData, experimentId, status, failureReason, createdOn, lastActionOn, startOn, stopOn, runInformationSteps != null ? new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList()) : null);
+            return new ExperimentExecutionDetails(id, name, resourceType, systemData, status, startedOn, stoppedOn, failureReason, lastActionOn, runInformationSteps != null ? new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of StepStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StepStatus"/>. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="stepId"> The id of the step. </param>
         /// <param name="status"> The value of the status of the step. </param>
@@ -149,7 +138,7 @@ namespace Azure.ResourceManager.Chaos.Models
             return new StepStatus(stepName, stepId, status, branches?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BranchStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BranchStatus"/>. </summary>
         /// <param name="branchName"> The name of the branch status. </param>
         /// <param name="branchId"> The id of the branch status. </param>
         /// <param name="status"> The status of the branch. </param>
@@ -162,7 +151,7 @@ namespace Azure.ResourceManager.Chaos.Models
             return new BranchStatus(branchName, branchId, status, actions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ActionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ActionStatus"/>. </summary>
         /// <param name="actionName"> The name of the action status. </param>
         /// <param name="actionId"> The id of the action status. </param>
         /// <param name="status"> The status of the action. </param>
@@ -177,7 +166,7 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ActionStatus(actionName, actionId, status, startOn, endOn, targets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
         /// <param name="status"> The status of the execution. </param>
         /// <param name="target"> The target for the action. </param>
         /// <param name="targetFailedOn"> String that represents the failed date time. </param>
@@ -189,7 +178,7 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ExperimentExecutionActionTargetDetailsProperties(status, target, targetFailedOn, targetCompletedOn, error);
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionActionTargetDetailsError"/> instance for mocking. </returns>
@@ -198,7 +187,20 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ExperimentExecutionActionTargetDetailsError(code, message);
         }
 
-        /// <summary> Initializes a new instance of TargetTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="id"> The operation Id. </param>
+        /// <param name="name"> The operation name. </param>
+        /// <param name="startTime"> The start time of the operation. </param>
+        /// <param name="endTime"> The end time of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
+        public static OperationStatus OperationStatus(ResponseError error = null, string id = null, string name = null, string startTime = null, string endTime = null, string status = null)
+        {
+            return new OperationStatus(error, id, name, startTime, endTime, status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Chaos.TargetTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -216,7 +218,7 @@ namespace Azure.ResourceManager.Chaos.Models
             return new TargetTypeData(id, name, resourceType, systemData, location, displayName, description, propertiesSchema, resourceTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chaos.TargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

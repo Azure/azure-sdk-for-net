@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmKeyVaultModelFactory
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultProperties"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="accessPolicies"> An array of 0 to 1024 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. When `createMode` is set to `recover`, access policies are not required. Otherwise, access policies are required. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultProperties(tenantId, sku, accessPolicies?.ToList(), vaultUri, hsmPoolResourceId, enabledForDeployment, enabledForDiskEncryption, enabledForTemplateDeployment, enableSoftDelete, softDeleteRetentionInDays, enableRbacAuthorization, createMode, enablePurgeProtection, networkRuleSet, provisioningState, privateEndpointConnections?.ToList(), publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/>. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpointId"> Properties of the private endpoint object. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultAccessPolicyParameters"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultAccessPolicyParameters(id, name, resourceType, systemData, location, accessPolicies != null ? new KeyVaultAccessPolicyProperties(accessPolicies?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of DeletedKeyVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.DeletedKeyVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new DeletedKeyVaultData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DeletedKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeletedKeyVaultProperties"/>. </summary>
         /// <param name="vaultId"> The resource id of the original vault. </param>
         /// <param name="location"> The location of the original vault. </param>
         /// <param name="deletedOn"> The deleted date. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new DeletedKeyVaultProperties(vaultId, location, deletedOn, scheduledPurgeOn, tags, purgeProtectionEnabled);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultNameAvailabilityResult(nameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, location, tags);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KeyVaultPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), location, tags);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmData(id, name, resourceType, systemData, tags, location, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmProperties"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmProperties(tenantId, initialAdminObjectIds?.ToList(), hsmUri, enableSoftDelete, softDeleteRetentionInDays, enablePurgeProtection, createMode, statusMessage, provisioningState, networkRuleSet, regions?.ToList(), privateEndpointConnections?.ToList(), publicNetworkAccess, scheduledPurgeOn, securityDomainProperties);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmGeoReplicatedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmGeoReplicatedRegion"/>. </summary>
         /// <param name="name"> Name of the geo replicated region. </param>
         /// <param name="provisioningState"> Provisioning state of the geo replicated region. </param>
         /// <param name="isPrimary"> A boolean value that indicates whether the region is the primary region or a secondary region. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpointId"> Properties of the private endpoint object. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHSMSecurityDomainProperties"/>. </summary>
         /// <param name="activationStatus"> Activation Status. </param>
         /// <param name="activationStatusMessage"> Activation Status Message. </param>
         /// <returns> A new <see cref="Models.ManagedHSMSecurityDomainProperties"/> instance for mocking. </returns>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, sku);
         }
 
-        /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.DeletedManagedHsmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new DeletedManagedHsmData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DeletedManagedHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeletedManagedHsmProperties"/>. </summary>
         /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
         /// <param name="deletedOn"> The deleted date. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new DeletedManagedHsmProperties(managedHsmId, location, deletedOn, scheduledPurgeOn, purgeProtectionEnabled, tags);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmPrivateLinkResourceData(id, name, resourceType, systemData, tags, location, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), sku);
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SecretProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecretProperties"/>. </summary>
         /// <param name="value"> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
         /// <param name="contentType"> The content type of the secret. </param>
         /// <param name="attributes"> The attributes of the secret. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new SecretProperties(value, contentType, attributes, secretUri, secretUriWithVersion);
         }
 
-        /// <summary> Initializes a new instance of SecretAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecretAttributes"/>. </summary>
         /// <param name="enabled"> Determines whether the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new SecretAttributes(enabled, notBefore, expires, created, updated);
         }
 
-        /// <summary> Initializes a new instance of SecretBaseAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecretBaseAttributes"/>. </summary>
         /// <param name="enabled"> Determines whether the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new SecretBaseAttributes(enabled, notBefore, expires, created, updated);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultSecretData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultSecretData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

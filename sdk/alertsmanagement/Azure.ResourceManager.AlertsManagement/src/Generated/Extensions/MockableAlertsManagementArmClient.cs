@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AlertProcessingRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertProcessingRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertProcessingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AlertProcessingRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AlertProcessingRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertProcessingRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertProcessingRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AlertProcessingRuleResource"/> object. </returns>
         public virtual AlertProcessingRuleResource GetAlertProcessingRuleResource(ResourceIdentifier id)
         {
             AlertProcessingRuleResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceAlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ServiceAlertResource"/> object. </returns>
         public virtual ServiceAlertResource GetServiceAlertResource(ResourceIdentifier id)
         {
             ServiceAlertResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SmartGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SmartGroupResource.CreateResourceIdentifier" /> to create a <see cref="SmartGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SmartGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SmartGroupResource.CreateResourceIdentifier" /> to create a <see cref="SmartGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SmartGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SmartGroupResource"/> object. </returns>
         public virtual SmartGroupResource GetSmartGroupResource(ResourceIdentifier id)
         {
             SmartGroupResource.ValidateResourceId(id);

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Get Data Plane read only token request definition. </summary>
     public partial class DataFactoryDataPlaneUserAccessPolicy
     {
-        /// <summary> Initializes a new instance of DataFactoryDataPlaneUserAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataPlaneUserAccessPolicy"/>. </summary>
         public DataFactoryDataPlaneUserAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataPlaneUserAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataPlaneUserAccessPolicy"/>. </summary>
         /// <param name="permissions"> The string with permissions for Data Plane access. Currently only 'r' is supported which grants read only access. </param>
         /// <param name="accessResourcePath"> The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource. </param>
         /// <param name="profileName"> The name of the profile. Currently only the default is supported. The default value is DefaultProfile. </param>
