@@ -67,8 +67,7 @@ namespace System.ClientModel.Primitives
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
-        public static System.ClientModel.Primitives.ClientPipeline Create() { throw null; }
-        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.ClientPipelineOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.ClientPipelineOptions? options = null) { throw null; }
         public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.ClientPipelineOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> beforeTransportPolicies) { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
@@ -100,9 +99,9 @@ namespace System.ClientModel.Primitives
         protected virtual bool ShouldRetryCore(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryCoreAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
         public void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
-        public System.Threading.Tasks.ValueTask WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual void WaitCore(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.Tasks.ValueTask WaitCoreAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
