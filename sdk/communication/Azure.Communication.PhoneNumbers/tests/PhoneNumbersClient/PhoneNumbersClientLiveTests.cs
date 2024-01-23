@@ -321,6 +321,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var client = CreateClient();
+            // ToDo replace US with DNR countries "IT","AT","FR","NO","PT" .
             var searchOperation = client.StartSearchAvailablePhoneNumbers("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
 
@@ -371,6 +372,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var client = CreateClient();
+            // ToDo replace US with DNR countries "IT","AT","FR","NO","PT" .
             var searchOperation = client.StartSearchAvailablePhoneNumbers("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
 
