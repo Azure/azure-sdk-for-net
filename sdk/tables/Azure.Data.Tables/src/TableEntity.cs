@@ -294,6 +294,7 @@ namespace Azure.Data.Tables
                         int newIntValue => (long)newIntValue,
                         _ => newValue
                     },
+                    string _ => newValue.ToString(),
                     _ => newValue
                 };
             }
