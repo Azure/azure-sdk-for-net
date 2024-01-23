@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Client Name that opened the handle.
         /// </summary>
-        private string ClientName { get; }
+        public string ClientName { get; }
 
         /// <summary>
         /// Access rights of the handle.
