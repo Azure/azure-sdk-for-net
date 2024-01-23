@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -37,13 +38,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="keyEncryptionKey"> Specifies encryption settings of the AML file system. </param>
         /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
         /// <param name="hsm"> Hydration and archive settings and status. </param>
+        /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
-        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, IEnumerable<string> zones = null, float? storageCapacityTiB = null, AmlFileSystemHealth health = null, AmlFileSystemProvisioningStateType? provisioningState = null, string filesystemSubnet = null, AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = null, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, AmlFileSystemPropertiesHsm hsm = null)
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, IEnumerable<string> zones = null, float? storageCapacityTiB = null, AmlFileSystemHealth health = null, AmlFileSystemProvisioningStateType? provisioningState = null, string filesystemSubnet = null, AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = null, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, AmlFileSystemPropertiesHsm hsm = null, AmlFileSystemRootSquashSettings rootSquashSettings = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey) : null, maintenanceWindow, hsm);
+            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey) : null, maintenanceWindow, hsm, rootSquashSettings);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemHealth"/>. </summary>
@@ -108,6 +110,18 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(ArchiveStatusType? state = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
             return new AmlFileSystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemRootSquashSettings"/>. </summary>
+        /// <param name="mode"> Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems. </param>
+        /// <param name="noSquashNidLists"> Semicolon separated NID IP Address list(s) to be added to the TrustedSystems. </param>
+        /// <param name="squashUID"> User ID to squash to. </param>
+        /// <param name="squashGID"> Group ID to squash to. </param>
+        /// <param name="status"> AML file system squash status. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemRootSquashSettings"/> instance for mocking. </returns>
+        public static AmlFileSystemRootSquashSettings AmlFileSystemRootSquashSettings(AmlFileSystemSquashMode? mode = null, string noSquashNidLists = null, long? squashUID = null, long? squashGID = null, string status = null)
+        {
+            return new AmlFileSystemRootSquashSettings(mode, noSquashNidLists, squashUID, squashGID, status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RequiredAmlFileSystemSubnetsSize"/>. </summary>

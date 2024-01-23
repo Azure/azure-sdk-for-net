@@ -6,15 +6,80 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeTrackingInfo
+    public partial class DataBoxEdgeTrackingInfo : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeTrackingInfo>
     {
-        internal static DataBoxEdgeTrackingInfo DeserializeDataBoxEdgeTrackingInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeTrackingInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataBoxEdgeTrackingInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeTrackingInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeTrackingInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (Optional.IsDefined(CarrierName))
+            {
+                writer.WritePropertyName("carrierName"u8);
+                writer.WriteStringValue(CarrierName);
+            }
+            if (Optional.IsDefined(TrackingId))
+            {
+                writer.WritePropertyName("trackingId"u8);
+                writer.WriteStringValue(TrackingId);
+            }
+            if (Optional.IsDefined(TrackingUri))
+            {
+                writer.WritePropertyName("trackingUrl"u8);
+                writer.WriteStringValue(TrackingUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxEdgeTrackingInfo IJsonModel<DataBoxEdgeTrackingInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeTrackingInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeTrackingInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeTrackingInfo(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeTrackingInfo DeserializeDataBoxEdgeTrackingInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +88,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> carrierName = default;
             Optional<string> trackingId = default;
             Optional<Uri> trackingUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -49,8 +116,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     trackingUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeTrackingInfo(serialNumber.Value, carrierName.Value, trackingId.Value, trackingUrl.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeTrackingInfo(serialNumber.Value, carrierName.Value, trackingId.Value, trackingUrl.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeTrackingInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeTrackingInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeTrackingInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeTrackingInfo IPersistableModel<DataBoxEdgeTrackingInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeTrackingInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeTrackingInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeTrackingInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeTrackingInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

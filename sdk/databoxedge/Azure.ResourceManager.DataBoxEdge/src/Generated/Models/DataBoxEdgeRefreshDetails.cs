@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Fields for tracking refresh job on the share or container. </summary>
     public partial class DataBoxEdgeRefreshDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRefreshDetails"/>. </summary>
         public DataBoxEdgeRefreshDetails()
         {
@@ -23,12 +56,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="lastCompletedRefreshJobTimeInUtc"> Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed job or a successful job. </param>
         /// <param name="errorManifestFile"> Indicates the relative path of the error xml for the last refresh job on this particular share or container, if any. This could be a failed job or a successful job. </param>
         /// <param name="lastJob"> Indicates the id of the last refresh job on this particular share or container,if any. This could be a failed job or a successful job. </param>
-        internal DataBoxEdgeRefreshDetails(ResourceIdentifier inProgressRefreshJobId, DateTimeOffset? lastCompletedRefreshJobTimeInUtc, string errorManifestFile, string lastJob)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeRefreshDetails(ResourceIdentifier inProgressRefreshJobId, DateTimeOffset? lastCompletedRefreshJobTimeInUtc, string errorManifestFile, string lastJob, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InProgressRefreshJobId = inProgressRefreshJobId;
             LastCompletedRefreshJobTimeInUtc = lastCompletedRefreshJobTimeInUtc;
             ErrorManifestFile = errorManifestFile;
             LastJob = lastJob;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If a refresh job is currently in progress on this share or container, this field indicates the ARM resource ID of that job. The field is empty if no job is in progress. </summary>
