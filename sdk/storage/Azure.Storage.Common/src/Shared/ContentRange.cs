@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
+using Azure.Core;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage
 {
     internal struct ContentRange
     {
@@ -147,5 +146,45 @@ namespace Azure.Storage.Blobs.Models
                 throw Errors.ParsingHttpRangeFailed();
             }
         }
+
+        public static HttpRange ToHttpRange(ContentRange contentRange)
+        {
+            if (contentRange.Start.HasValue)
+            {
+                // Because constructing HttpRange is the start value, and the length of the range
+                // increment 1 on the end value, since the end value is the end index (not the length).
+                return new HttpRange(contentRange.Start.Value, contentRange.End.Value + 1);
+            }
+            return default;
+        }
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RangeUnit other && Equals(other);
+
+        /// <summary>
+        /// Indicates whether this instance and a specified <see cref="RangeUnit"/> are equal
+        /// </summary>
+        public bool Equals(ContentRange other) => (other.Start == Start) && (other.End == End) && (other.Unit == Unit) && (other.Size == Size);
+
+        /// <summary>
+        /// Determines if two <see cref="Unit"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="Unit"/> to compare.</param>
+        /// <param name="right">The second <see cref="Unit"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(ContentRange left, ContentRange right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="ContentRange"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="ContentRange"/> to compare.</param>
+        /// <param name="right">The second <see cref="ContentRange"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(ContentRange left, ContentRange right) => !left.Equals(right);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => HashCodeBuilder.Combine(Start, End, Size, Unit.GetHashCode());
     }
 }
