@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.Core;
 

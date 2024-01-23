@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ClientModel.Primitives;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
