@@ -94,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     apikey: null,
                     xMsQpsConfigurationEtag: _etag,
                     xMsQpsTransmissionTime: null,
-                    monitoringDataPoints: new MonitoringDataPoint[] { dataPoint }, // TODO: CHECK WITH SERVICE TEAM. WHY DOES THIS NEED TO BE A COLLECITON?
+                    monitoringDataPoints: new MonitoringDataPoint[] { dataPoint }, // This collection is used to send multiple samples. For example, if a Post fails and we want to retry at the next Post.
                     cancellationToken: default);
 
                 if (response.Success)

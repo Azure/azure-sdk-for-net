@@ -46,6 +46,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 Console.WriteLine("Request");
                 using (var activity = s_activitySource.StartActivity("Request", kind: ActivityKind.Server))
                 {
+                    activity?.SetTag("url.scheme", "http");
+                    activity?.SetTag("server.address", "example.com");
+
                     // Exception
                     if (GetRandomBool(percent: 40))
                     {
@@ -69,6 +72,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 Console.WriteLine("Dependency");
                 using (var activity = s_activitySource.StartActivity("Dependency", kind: ActivityKind.Client))
                 {
+                    activity?.SetTag("url.full", "http://example.com");
+
                     // Exception
                     if (GetRandomBool(percent: 40))
                     {
