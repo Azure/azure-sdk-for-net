@@ -3,6 +3,7 @@
 ## 5.11.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added a `CheckpointPosition` struct to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `EventProcessorClient` and `BlobCheckpointStore` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
 
 ### Breaking Changes
 
@@ -13,6 +14,8 @@
   - CorelationId
   - To
   - ReplyTo
+
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no difference in behavior for normal usage scenarios.
 
 ### Bugs Fixed
 

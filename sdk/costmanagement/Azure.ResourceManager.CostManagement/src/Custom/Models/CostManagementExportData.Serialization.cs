@@ -1,21 +1,24 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementAlertData : IUtf8JsonSerializable
+    public partial class CostManagementExportData : IUtf8JsonSerializable, IJsonModel<CostManagementExportData>
     {
-        internal static CostManagementAlertData DeserializeCostManagementAlertData(JsonElement element)
+        internal static CostManagementExportData DeserializeCostManagementExportData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,17 +28,15 @@ namespace Azure.ResourceManager.CostManagement
             string name = default;
             ResourceType type = default;
             Optional<ResourceManager.Models.SystemData> systemData = default;
-            Optional<AlertPropertiesDefinition> definition = default;
-            Optional<string> description = default;
-            Optional<CostManagementAlertSource> source = default;
-            Optional<AlertPropertiesDetails> details = default;
-            Optional<string> costEntityId = default;
-            Optional<CostManagementAlertStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> closeTime = default;
-            Optional<DateTimeOffset> modificationTime = default;
-            Optional<string> statusModificationUserName = default;
-            Optional<DateTimeOffset> statusModificationTime = default;
+            Optional<ExportFormatType> format = default;
+            Optional<ExportDeliveryInfo> deliveryInfo = default;
+            Optional<ExportDefinition> definition = default;
+            Optional<ExportExecutionListResult> runHistory = default;
+            Optional<bool> partitionData = default;
+            Optional<DateTimeOffset> nextRunTimeEstimate = default;
+            Optional<ExportSchedule> schedule = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 if (property.NameEquals("id"u8))
                 {
+                    // Service may return resource id without '/'.
                     id = property.Value.GetString().StartsWith("/") ? new ResourceIdentifier(property.Value.GetString()) : new ResourceIdentifier($"/{property.Value.GetString()}");
                     continue;
                 }
@@ -80,98 +82,79 @@ namespace Azure.ResourceManager.CostManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("format"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            format = new ExportFormatType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("deliveryInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("definition"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value);
+                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
+                        if (property0.NameEquals("runHistory"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            source = new CostManagementAlertSource(property0.Value.GetString());
+                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("details"u8))
+                        if (property0.NameEquals("partitionData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value);
+                            partitionData = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("costEntityId"u8))
-                        {
-                            costEntityId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
+                        if (property0.NameEquals("nextRunTimeEstimate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            status = new CostManagementAlertStatus(property0.Value.GetString());
+                            nextRunTimeEstimate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"u8))
+                        if (property0.NameEquals("schedule"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            creationTime = property0.Value.GetDateTimeOffset();
-                            continue;
-                        }
-                        if (property0.NameEquals("closeTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            closeTime = property0.Value.GetDateTimeOffset();
-                            continue;
-                        }
-                        if (property0.NameEquals("modificationTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            modificationTime = property0.Value.GetDateTimeOffset();
-                            continue;
-                        }
-                        if (property0.NameEquals("statusModificationUserName"u8))
-                        {
-                            statusModificationUserName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("statusModificationTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            statusModificationTime = property0.Value.GetDateTimeOffset();
+                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CostManagementExportData(id, name, type, systemData.Value, Optional.ToNullable(format), deliveryInfo.Value, definition.Value, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), schedule.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
     }
 }

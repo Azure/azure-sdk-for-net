@@ -44,15 +44,9 @@ public sealed partial class ClientPipeline
 
     #region Factory methods for creating a pipeline instance
 
-    public static ClientPipeline Create()
-        => Create(ClientPipelineOptions.Default,
+    public static ClientPipeline Create(ClientPipelineOptions? options = default)
+        => Create(options ?? ClientPipelineOptions.Default,
             ReadOnlySpan<PipelinePolicy>.Empty,
-            ReadOnlySpan<PipelinePolicy>.Empty,
-            ReadOnlySpan<PipelinePolicy>.Empty);
-
-    public static ClientPipeline Create(ClientPipelineOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options,
-            perCallPolicies,
             ReadOnlySpan<PipelinePolicy>.Empty,
             ReadOnlySpan<PipelinePolicy>.Empty);
 

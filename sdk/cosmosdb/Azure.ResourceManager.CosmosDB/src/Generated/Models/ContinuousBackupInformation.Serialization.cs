@@ -6,20 +6,72 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class ContinuousBackupInformation
+    internal partial class ContinuousBackupInformation : IUtf8JsonSerializable, IJsonModel<ContinuousBackupInformation>
     {
-        internal static ContinuousBackupInformation DeserializeContinuousBackupInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContinuousBackupInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContinuousBackupInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousBackupInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContinuousBackupInformation)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LatestRestorableTimestamp))
+            {
+                writer.WritePropertyName("latestRestorableTimestamp"u8);
+                writer.WriteStringValue(LatestRestorableTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContinuousBackupInformation IJsonModel<ContinuousBackupInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousBackupInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContinuousBackupInformation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinuousBackupInformation(document.RootElement, options);
+        }
+
+        internal static ContinuousBackupInformation DeserializeContinuousBackupInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> latestRestorableTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestRestorableTimestamp"u8))
@@ -31,8 +83,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     latestRestorableTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContinuousBackupInformation(Optional.ToNullable(latestRestorableTimestamp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContinuousBackupInformation(Optional.ToNullable(latestRestorableTimestamp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContinuousBackupInformation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousBackupInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContinuousBackupInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContinuousBackupInformation IPersistableModel<ContinuousBackupInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousBackupInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContinuousBackupInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContinuousBackupInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContinuousBackupInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

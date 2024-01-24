@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeUsage.DeserializeComputeUsage(e), UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeUsage.DeserializeComputeUsage(e), UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1345,7 +1345,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1471,7 +1471,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1502,7 +1502,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1537,7 +1537,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1572,7 +1572,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2199,7 +2199,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RunCommandDocumentBase.DeserializeRunCommandDocumentBase(e), VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2230,7 +2230,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RunCommandDocumentBase.DeserializeRunCommandDocumentBase(e), VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2586,7 +2586,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2614,7 +2614,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

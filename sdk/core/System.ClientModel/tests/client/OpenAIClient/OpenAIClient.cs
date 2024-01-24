@@ -25,7 +25,10 @@ public class OpenAIClient
         _credential = credential;
 
         var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(_credential);
-        _pipeline = ClientPipeline.Create(options, authenticationPolicy);
+        _pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
     }
 
     public virtual ClientResult<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
