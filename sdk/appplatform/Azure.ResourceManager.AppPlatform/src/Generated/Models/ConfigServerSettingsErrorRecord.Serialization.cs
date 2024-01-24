@@ -6,16 +6,80 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ConfigServerSettingsErrorRecord
+    public partial class ConfigServerSettingsErrorRecord : IUtf8JsonSerializable, IJsonModel<ConfigServerSettingsErrorRecord>
     {
-        internal static ConfigServerSettingsErrorRecord DeserializeConfigServerSettingsErrorRecord(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigServerSettingsErrorRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConfigServerSettingsErrorRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettingsErrorRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfigServerSettingsErrorRecord)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(Messages))
+            {
+                writer.WritePropertyName("messages"u8);
+                writer.WriteStartArray();
+                foreach (var item in Messages)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConfigServerSettingsErrorRecord IJsonModel<ConfigServerSettingsErrorRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettingsErrorRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfigServerSettingsErrorRecord)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigServerSettingsErrorRecord(document.RootElement, options);
+        }
+
+        internal static ConfigServerSettingsErrorRecord DeserializeConfigServerSettingsErrorRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +87,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> name = default;
             Optional<Uri> uri = default;
             Optional<IReadOnlyList<string>> messages = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,8 +119,44 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     messages = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Optional.ToList(messages));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Optional.ToList(messages), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfigServerSettingsErrorRecord>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettingsErrorRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConfigServerSettingsErrorRecord)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConfigServerSettingsErrorRecord IPersistableModel<ConfigServerSettingsErrorRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettingsErrorRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConfigServerSettingsErrorRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfigServerSettingsErrorRecord)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfigServerSettingsErrorRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

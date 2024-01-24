@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Compute.Models
             Version = version;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions()
+        {
+        }
+
         /// <summary> The name of a supported Azure region. </summary>
         public AzureLocation Location { get; }
         /// <summary> The name of the edge zone. </summary>

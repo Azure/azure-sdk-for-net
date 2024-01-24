@@ -5,21 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMITaskProperties : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlMITaskProperties : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMITaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MigrateSqlServerSqlMITaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStartArray();
+                foreach (var item in Output)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(TaskId))
             {
@@ -43,6 +63,31 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Commands))
+            {
+                writer.WritePropertyName("commands"u8);
+                writer.WriteStartArray();
+                foreach (var item in Commands)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
@@ -54,11 +99,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateSqlServerSqlMITaskProperties DeserializeMigrateSqlServerSqlMITaskProperties(JsonElement element)
+        MigrateSqlServerSqlMITaskProperties IJsonModel<MigrateSqlServerSqlMITaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMITaskProperties(document.RootElement, options);
+        }
+
+        internal static MigrateSqlServerSqlMITaskProperties DeserializeMigrateSqlServerSqlMITaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +148,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<TaskState> state = default;
             Optional<IReadOnlyList<CommandProperties>> commands = default;
             Optional<IDictionary<string, string>> clientData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -179,8 +255,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     clientData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSqlServerSqlMITaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), taskId.Value, createdOn.Value, parentTaskId.Value, Optional.ToNullable(isCloneable));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateSqlServerSqlMITaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, Optional.ToList(output), taskId.Value, createdOn.Value, parentTaskId.Value, Optional.ToNullable(isCloneable));
         }
+
+        BinaryData IPersistableModel<MigrateSqlServerSqlMITaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MigrateSqlServerSqlMITaskProperties IPersistableModel<MigrateSqlServerSqlMITaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSqlServerSqlMITaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSqlServerSqlMITaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

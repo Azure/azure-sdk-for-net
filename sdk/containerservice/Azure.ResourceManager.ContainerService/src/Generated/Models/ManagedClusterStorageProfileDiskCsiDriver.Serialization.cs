@@ -5,37 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterStorageProfileDiskCsiDriver : IUtf8JsonSerializable
+    internal partial class ManagedClusterStorageProfileDiskCsiDriver : IUtf8JsonSerializable, IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriver)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Version))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterStorageProfileDiskCsiDriver DeserializeManagedClusterStorageProfileDiskCsiDriver(JsonElement element)
+        ManagedClusterStorageProfileDiskCsiDriver IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriver)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterStorageProfileDiskCsiDriver(document.RootElement, options);
+        }
+
+        internal static ManagedClusterStorageProfileDiskCsiDriver DeserializeManagedClusterStorageProfileDiskCsiDriver(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
-            Optional<string> version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -47,13 +83,44 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (options.Format != "W")
                 {
-                    version = property.Value.GetString();
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterStorageProfileDiskCsiDriver(Optional.ToNullable(enabled), version.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterStorageProfileDiskCsiDriver(Optional.ToNullable(enabled), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterStorageProfileDiskCsiDriver>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriver)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterStorageProfileDiskCsiDriver IPersistableModel<ManagedClusterStorageProfileDiskCsiDriver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterStorageProfileDiskCsiDriver(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriver)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterStorageProfileDiskCsiDriver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

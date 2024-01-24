@@ -131,7 +131,7 @@
 /sdk/automation/Microsoft.Azure.Management.Automation/             @jaspkaur28 @omairabdullah
 
 # ServiceLabel: %AVS %Service Attention
-/sdk/avs/Microsoft.Azure.Management.Avs/                           @divka78 @amitchat @aishu
+/sdk/avs/Microsoft.Azure.Management.Avs/                           @cataggar @nivasn-msft @amitchat @aishu
 
 # ServiceLabel: %Azure Data Explorer
 #/<NotInRepo>/          @ilayrn @orhasban @zoharHenMicrosoft @sagivf @Aviv-Yaniv
@@ -197,13 +197,13 @@
 /sdk/anomalydetector/Azure.AI.AnomalyDetector/                     @conhua @mengaims @juaduan @moreOver0
 
 # PRLabel: %Cognitive - Health Insights
-/sdk/healthinsights/                                              @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/                                              @asaflevi-ms
 
 # ServiceLabel: %Cognitive - Health Insights Cancer Profiling %Service Attention
-/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms
 
 # ServiceLabel: %Cognitive - Health Insights Clinical Matching %Service Attention
-/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms @aviram-microsoft @gils-ms
+/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms
 
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
@@ -459,7 +459,7 @@
 /sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @JoshLove-msft @jsquire
 
 # ServiceLabel: %Event Hubs %Service Attention
-/sdk/eventhub/Microsoft.Azure.EventHubs/                           @serkantkaraca @sjkwak @kasun04 @saglodha
+/sdk/eventhub/Microsoft.Azure.EventHubs/                           @serkantkaraca @sjkwak @kasun04
 
 # ServiceLabel: %Event Hubs %Service Attention
 /sdk/eventhub/Microsoft.Azure.EventHubs.Processor/                 @serkantkaraca @sjkwak @kasun04
@@ -684,7 +684,7 @@
 /sdk/quantum/Azure.Quantum.Jobs/                                   @xfield
 
 # ServiceLabel: %Recovery Services Backup %Service Attention
-/sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/ @pvrk @Daya-Patil
+/sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup/ @Daya-Patil
 
 # ServiceLabel: %Recovery Services Site-Recovery %Service Attention
 /sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery/ @Sharmistha-Rai
@@ -730,7 +730,7 @@
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @JoshLove-msft @jsquire
 
 # ServiceLabel: %Service Bus %Service Attention
-/sdk/servicebus/Microsoft.Azure.ServiceBus/                        @shankarsama @DorothySun216 @EldertGrootenboer @saglodha
+/sdk/servicebus/Microsoft.Azure.ServiceBus/                        @shankarsama @DorothySun216 @EldertGrootenboer
 
 # ServiceLabel: %Service Fabric %Service Attention
 /sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric/       @QingChenmsft @vaishnavk @juhacket
@@ -827,6 +827,12 @@
 # PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/                                                 @orenmichaely @tyclintw
 
+# PRLabel: %Playwright
+/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
+
+# ServiceLabel: %Playwright %Service Attention
+#/<NotInRepo>/                                                     @shreyaanand @mjmadhu
+
 # ######## Management Plane ########
 
 /**/*Management*/                                                  @archerzz @ArcturusZhang @ArthurMa1978
@@ -845,7 +851,7 @@
 /sdk/servicebus/tests.data.yml                                     @shankarsama @DorothySun216
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978 
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978
 
 # ######## DPG ########
 

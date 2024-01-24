@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -26,12 +27,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the web application firewall rule set. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
         /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
-        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IList<ApplicationGatewayTierType> tiers) : base(id, name, resourceType, location, tags)
+        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IList<ApplicationGatewayTierType> tiers) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             RuleSetType = ruleSetType;

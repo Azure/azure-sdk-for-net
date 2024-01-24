@@ -77,7 +77,7 @@ class PackageProps
 }
 
 # Takes package name and service Name
-# Returns important properties of the package as related to the language repo
+# Returns important properties of the package relative to the language repo
 # Returns a PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
 # Note: python is required for parsing python package properties.
 function Get-PkgProperties
@@ -107,7 +107,7 @@ function Get-PkgProperties
 
 # Takes ServiceName and Repo Root Directory
 # Returns important properties for each package in the specified service, or entire repo if the serviceName is not specified
-# Returns an Table of service key to array values of PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
+# Returns a Table of service key to array values of PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
 function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
 {
     $pkgPropsResult = @()
@@ -135,7 +135,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
 }
 
 # Given the metadata url under https://github.com/Azure/azure-sdk/tree/main/_data/releases/latest,
-# the function will return the csv metadata back as part of response.
+# the function will return the csv metadata back as part of the response.
 function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
 {
     $metadataResponse = Invoke-RestMethod -Uri $MetadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
@@ -144,7 +144,7 @@ function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
 
 function Get-PkgPropsForEntireService ($serviceDirectoryPath)
 {
-    $projectProps = @() # Properties from very project inthe service
+    $projectProps = @() # Properties from every project in the service
     $serviceDirectory = $serviceDirectoryPath -replace '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'
 
     if (!$GetPackageInfoFromRepoFn -or !(Test-Path "Function:$GetPackageInfoFromRepoFn"))

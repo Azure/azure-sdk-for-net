@@ -5,17 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementOpenIdConnectProviderData : IUtf8JsonSerializable
+    public partial class ApiManagementOpenIdConnectProviderData : IUtf8JsonSerializable, IJsonModel<ApiManagementOpenIdConnectProviderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementOpenIdConnectProviderData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiManagementOpenIdConnectProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -44,11 +75,40 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStringValue(ClientSecret);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementOpenIdConnectProviderData DeserializeApiManagementOpenIdConnectProviderData(JsonElement element)
+        ApiManagementOpenIdConnectProviderData IJsonModel<ApiManagementOpenIdConnectProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementOpenIdConnectProviderData(document.RootElement, options);
+        }
+
+        internal static ApiManagementOpenIdConnectProviderData DeserializeApiManagementOpenIdConnectProviderData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +122,8 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> metadataEndpoint = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -125,8 +187,44 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiManagementOpenIdConnectProviderData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiManagementOpenIdConnectProviderData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApiManagementOpenIdConnectProviderData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiManagementOpenIdConnectProviderData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiManagementOpenIdConnectProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
