@@ -6,15 +6,132 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>
     {
-        internal static MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TableName))
+            {
+                writer.WritePropertyName("tableName"u8);
+                writer.WriteStringValue(TableName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CdcInsertCounter))
+            {
+                writer.WritePropertyName("cdcInsertCounter"u8);
+                writer.WriteStringValue(CdcInsertCounter);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CdcUpdateCounter))
+            {
+                writer.WritePropertyName("cdcUpdateCounter"u8);
+                writer.WriteStringValue(CdcUpdateCounter);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CdcDeleteCounter))
+            {
+                writer.WritePropertyName("cdcDeleteCounter"u8);
+                writer.WriteStringValue(CdcDeleteCounter);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FullLoadEstFinishOn))
+            {
+                writer.WritePropertyName("fullLoadEstFinishTime"u8);
+                writer.WriteStringValue(FullLoadEstFinishOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(FullLoadStartedOn))
+            {
+                writer.WritePropertyName("fullLoadStartedOn"u8);
+                writer.WriteStringValue(FullLoadStartedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(FullLoadEndedOn))
+            {
+                writer.WritePropertyName("fullLoadEndedOn"u8);
+                writer.WriteStringValue(FullLoadEndedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(FullLoadTotalRows))
+            {
+                writer.WritePropertyName("fullLoadTotalRows"u8);
+                writer.WriteNumberValue(FullLoadTotalRows.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalChangesApplied))
+            {
+                writer.WritePropertyName("totalChangesApplied"u8);
+                writer.WriteNumberValue(TotalChangesApplied.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataErrorsCounter))
+            {
+                writer.WritePropertyName("dataErrorsCounter"u8);
+                writer.WriteNumberValue(DataErrorsCounter.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(document.RootElement, options);
+        }
+
+        internal static MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +151,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -143,8 +262,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(id.Value, resultType, tableName.Value, databaseName.Value, cdcInsertCounter.Value, cdcUpdateCounter.Value, cdcDeleteCounter.Value, Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, tableName.Value, databaseName.Value, cdcInsertCounter.Value, cdcUpdateCounter.Value, cdcDeleteCounter.Value, Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
         }
+
+        BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
