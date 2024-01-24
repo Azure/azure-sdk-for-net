@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
-require: https://github.com/Azure/azure-rest-api-specs/blob/d7b7399fb1e1a328b49cd6a998714c6efb877bf2/specification/appconfiguration/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/e8c4e082948a49ef5dc8acf6c5b9d581b603370e/specification/appconfiguration/resource-manager/readme.md
+tag: package-2023-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -95,4 +96,7 @@ directive:
   - rename-operation:
       from: Operations_CheckNameAvailability
       to: CheckAppConfigurationNameAvailability
+
+list-exception:
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
 ````

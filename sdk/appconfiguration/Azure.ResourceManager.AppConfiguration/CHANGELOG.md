@@ -1,16 +1,14 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2024-01-30)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Updated AppConfiguration RP API version to `2023-03-01` (ReplicaCollection, ReplicaData and ReplicaResource)
 
 ### Other Changes
+
+- Removed AppConfigurationKeyValueCollection.GetAll() and AppConfigurationKeyValueCollection.GetAllAsync() (They never work. You may use data plane sdk: Azure.Data.AppConfiguration.ConfigurationClient.GetConfigurationSettings() or Azure.Data.AppConfiguration.ConfigurationClient.GetConfigurationSettingsAsync() )
 
 ## 1.1.0 (2023-11-27)
 
