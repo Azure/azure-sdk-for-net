@@ -22,9 +22,6 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
-	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared/Core" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared/Core" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
 </Project>

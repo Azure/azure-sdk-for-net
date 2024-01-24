@@ -33,9 +33,6 @@
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
-	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared\Core" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared\Core" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
   <ItemGroup>

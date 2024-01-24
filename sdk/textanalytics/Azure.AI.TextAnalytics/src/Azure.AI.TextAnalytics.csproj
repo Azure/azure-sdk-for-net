@@ -28,11 +28,8 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
-	  <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+	<Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared/core" />
-	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared/core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared/Core" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared/core" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared/core" />
   </ItemGroup>
 </Project>

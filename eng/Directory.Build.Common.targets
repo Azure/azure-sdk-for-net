@@ -212,6 +212,7 @@
     <Compile Include="$(AzureCoreSharedSources)EmptyResponse.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)FormUrlEncodedContent.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)HttpPipelineExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
@@ -230,6 +231,8 @@
     <Compile Include="$(AzureCoreSharedSources)PageableHelpers.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ProtocolOperation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ProtocolOperationHelpers.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RequestContentHelper.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RequestHeaderExtensions.cs" LinkBase="Shared/Core" />

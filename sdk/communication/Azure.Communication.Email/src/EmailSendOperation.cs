@@ -196,6 +196,6 @@ namespace Azure.Communication.Email
             return additionalInformationToReturn;
         }
 
-        string IOperation<EmailSendResult>.GetOperationId() => null;
+        string IOperation<EmailSendResult>.GetRehydrationToken() => null;
     }
 }

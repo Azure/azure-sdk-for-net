@@ -19,10 +19,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
-	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" />
-	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" />
   </ItemGroup>
 
 </Project>

@@ -9,9 +9,4 @@
     <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
-  <ItemGroup>
-	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared\Core" />
-  </ItemGroup>
 </Project>

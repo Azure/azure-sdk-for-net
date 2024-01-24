@@ -78,7 +78,7 @@ namespace Azure.Security.ConfidentialLedger
             return OperationState.Pending(statusResponse);
         }
 
-        string IOperation.GetOperationId() => null;
+        string IOperation.GetRehydrationToken() => null;
 
         /// <summary>
         /// The transactionId of the posted ledger entry.
