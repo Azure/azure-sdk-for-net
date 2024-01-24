@@ -215,6 +215,8 @@ function Verify-PackageVersion() {
       Write-Host "ServiceDir:$ServiceDirectory, no package info is found for package $PackageName, the validation of spec location is ignored."
       exit 0
     }
+    # Return the package info
+    return $pkgInfo
   }
   catch {
     LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to retrieve package and validate package version with exception:`n$_ "
@@ -224,21 +226,20 @@ function Verify-PackageVersion() {
 
 try {
   # Verify package version is not a prerelease version, only continue the validation if the package is GA version
-  Verify-PackageVersion
+  $packageInfo = Verify-PackageVersion
+  if (-not $packageInfo) {
+    Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. The package info is not available."
+    exit 0
+  }
+  # Get the package directory path
+  $PackageDirectory = $null
+  if ($packageInfo.DirectoryPath) {
+    $PackageDirectory = Join-Path $RepoRoot $packageInfo.DirectoryPath
+  }
 
-  $ServiceDir = Join-Path $RepoRoot 'sdk' $ServiceDirectory
-  $PackageDirectory = Join-Path $ServiceDir $PackageName
-
-  # JavaScript SDK repo has different convention for the package directory name
-  if ($Language -eq "javascript") {
-    $prefixOfRlcPkg = "azure-rest-"
-    $prefixOfAzurePkg = "azure-"
-    if ($PackageName -match $prefixOfRlcPkg) {
-      $PackageDirectory = Join-Path $ServiceDir ($PackageName.Substring($prefixOfRlcPkg.Length) + "-rest")
-    }
-    else {
-      $PackageDirectory = Join-Path $ServiceDir $PackageName.Substring($prefixOfAzurePkg.Length)
-    }
+  if ((-not $PackageDirectory) -or (-not (Test-Path $PackageDirectory))) {
+    Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName, PackageDirectory:$PackageDirectory. The package directory path is invalid."
+    exit 0
   }
   Push-Location $PackageDirectory
 
@@ -265,10 +266,9 @@ try {
     }
   }
   elseif ($Language -eq "java" -or $Language -eq "javascript" -or $Language -eq "python" -or $Language -eq "go") {
-    # for these languages we ignore the validation because they always use the latest spec from main branch to release SDK
-    # mgmt plane packages: azure-core-management|azure-resourcemanager|azure-resourcemanager-advisor (java), azure-mgmt-devcenter (python), azure-arm-advisor (js), armaad (go)
-    if ($PackageName -match "^(arm|azure-mgmt|azure-resourcemanager|azure-core-management|azure-arm|azure-rest-arm)[-a-z]*$") {
-      Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Ignore the validation for $Language management plane package."
+    # for these languages we ignore the validation for mgmt plane SDK because they always use the latest spec from main branch to release SDK
+    if ($packageInfo.SdkType -eq "mgmt") {
+      Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Ignore the validation for $Language management plane SDK release."
       exit 0
     }
     # for these languages they use 'swagger/readme.md' to configure the sdk generation for data plane scenarios
