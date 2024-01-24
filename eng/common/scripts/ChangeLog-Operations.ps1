@@ -8,7 +8,7 @@ $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 $RecommendedSectionHeaders = @("Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes")
 
-# Returns a Collection of changeLogEntry object containing changelog info for all version present in the gived CHANGELOG
+# Returns a Collection of changeLogEntry object containing changelog info for all versions present in the gived CHANGELOG
 function Get-ChangeLogEntries {
   param (
     [Parameter(Mandatory = $true)]
@@ -109,7 +109,7 @@ function Get-ChangeLogEntry {
   return $null
 }
 
-#Returns the changelog for a particular version as string
+#Returns the changelog for a particular version as a string
 function Get-ChangeLogEntryAsString {
   param (
     [Parameter(Mandatory = $true)]
@@ -175,7 +175,7 @@ function Confirm-ChangeLogEntry {
   $status = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
   if ($status -as [DateTime])
   {
-    LogDebug "Verifying like it's a release build because the changelog entry has a valid date."
+    LogDebug "Verifying as a release build because the changelog entry has a valid date."
     return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries
   }
 

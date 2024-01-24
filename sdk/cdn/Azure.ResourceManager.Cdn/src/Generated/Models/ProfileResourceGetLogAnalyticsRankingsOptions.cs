@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Cdn.Models
             CustomDomains = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsRankingsOptions()
+        {
+        }
+
         /// <summary> The rankings. </summary>
         public IList<LogRanking> Rankings { get; }
         /// <summary> The metrics. </summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
+    /// <summary> Indicates whether Azure Hybrid Benefit is opted in. Default value is false. </summary>
     public readonly partial struct ProvisionedClusterAzureHybridBenefit : IEquatable<ProvisionedClusterAzureHybridBenefit>
     {
         private readonly string _value;

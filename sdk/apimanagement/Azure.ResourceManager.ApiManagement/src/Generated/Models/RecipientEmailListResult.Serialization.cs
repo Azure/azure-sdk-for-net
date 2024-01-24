@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class RecipientEmailListResult
+    internal partial class RecipientEmailListResult : IUtf8JsonSerializable, IJsonModel<RecipientEmailListResult>
     {
-        internal static RecipientEmailListResult DeserializeRecipientEmailListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecipientEmailListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecipientEmailListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientEmailListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecipientEmailListResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RecipientEmailListResult IJsonModel<RecipientEmailListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientEmailListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecipientEmailListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecipientEmailListResult(document.RootElement, options);
+        }
+
+        internal static RecipientEmailListResult DeserializeRecipientEmailListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +87,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IReadOnlyList<RecipientEmailContract>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -52,8 +119,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecipientEmailListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecipientEmailListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecipientEmailListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientEmailListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecipientEmailListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RecipientEmailListResult IPersistableModel<RecipientEmailListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecipientEmailListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecipientEmailListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecipientEmailListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecipientEmailListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
