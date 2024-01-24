@@ -11,7 +11,6 @@ namespace Azure.Storage.Shared;
 
 internal static class StructuredMessage
 {
-    public const int MD5Length = 16;
     public const int Crc64Length = 8;
 
     [Flags]
@@ -19,8 +18,6 @@ internal static class StructuredMessage
     {
         None = 0,
         CrcSegment = 1,
-        MD5Stream = 2,
-        ServerStats = 4,
     }
 
     public static class V1_0
@@ -29,8 +26,6 @@ internal static class StructuredMessage
 
         public const int StreamHeaderLength = 13;
         public const int SegmentHeaderLength = 10;
-
-        public const int ServerStatsLength = 64;
 
         #region Stream Header
         public static int WriteStreamHeader(Span<byte> buffer, long messageLength, Flags flags, int totalSegments)
@@ -70,55 +65,7 @@ internal static class StructuredMessage
         }
         #endregion
 
-        #region Stream Footer
-        public static int WriteStreamFooter(Span<byte> buffer, Span<byte> md5 = default, Span<byte> serverStats = default)
-        {
-            int requiredSpace = 0;
-            if (!md5.IsEmpty)
-            {
-                Errors.AssertBufferExactSize(md5, MD5Length, nameof(md5));
-                requiredSpace += MD5Length;
-            }
-            if (!serverStats.IsEmpty)
-            {
-                Errors.AssertBufferExactSize(serverStats, ServerStatsLength, nameof(serverStats));
-                requiredSpace += ServerStatsLength;
-            }
-
-            Errors.AssertBufferMinimumSize(buffer, requiredSpace, nameof(buffer));
-            int offset = 0;
-            if (!md5.IsEmpty)
-            {
-                md5.CopyTo(buffer.Slice(offset, MD5Length));
-                offset += MD5Length;
-            }
-            if (!serverStats.IsEmpty)
-            {
-                serverStats.CopyTo(buffer.Slice(offset, ServerStatsLength));
-                offset += ServerStatsLength;
-            }
-
-            return offset;
-        }
-
-        /// <summary>
-        /// Gets stream header in a buffer rented from the provided ArrayPool.
-        /// </summary>
-        /// <returns>
-        /// Disposable to return the buffer to the pool.
-        /// </returns>
-        public static IDisposable GetStreamFooterBytes(
-            ArrayPool<byte> pool,
-            out Memory<byte> bytes,
-            Span<byte> md5 = default,
-            Span<byte> serverStats = default)
-        {
-            Argument.AssertNotNull(pool, nameof(pool));
-            IDisposable disposable = pool.RentAsMemoryDisposable(80, out bytes);
-            WriteStreamFooter(bytes.Span, md5, serverStats);
-            return disposable;
-        }
-        #endregion
+        // no stream footer content in 1.0
 
         #region SegmentHeader
         public static int WriteSegmentHeader(Span<byte> buffer, int segmentNum, long segmentLength)

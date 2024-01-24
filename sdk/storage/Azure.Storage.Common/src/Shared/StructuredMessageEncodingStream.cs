@@ -14,7 +14,6 @@ namespace Azure.Storage.Shared;
 internal class StructuredMessageEncodingStream : Stream
 {
     private readonly Stream _innerStream;
-    private long _maxInnerSeekPosition = 0;
 
     private readonly int _streamHeaderLength;
     private readonly int _streamFooterLength;
@@ -167,11 +166,7 @@ internal class StructuredMessageEncodingStream : Stream
         _flags = flags;
 
         _streamHeaderLength = StructuredMessage.V1_0.StreamHeaderLength;
-        _streamFooterLength =
-            (flags.HasFlag(StructuredMessage.Flags.MD5Stream)
-                ? StructuredMessage.MD5Length : 0) +
-            (flags.HasFlag(StructuredMessage.Flags.ServerStats)
-                ? StructuredMessage.V1_0.ServerStatsLength : 0);
+        _streamFooterLength = 0;
         _segmentHeaderLength = StructuredMessage.V1_0.SegmentHeaderLength;
         _segmentFooterLength = (flags & StructuredMessage.Flags.CrcSegment) == StructuredMessage.Flags.CrcSegment
             ? StructuredMessage.Crc64Length : 0;
@@ -306,22 +301,9 @@ internal class StructuredMessageEncodingStream : Stream
 
     private int ReadFromStreamFooter(Span<byte> buffer)
     {
-        int read = Math.Min(buffer.Length, _streamFooterLength - _currentRegionPosition);
-        using IDisposable _ = StructuredMessage.V1_0.GetStreamFooterBytes(
-            ArrayPool<byte>.Shared,
-            out Memory<byte> headerBytes,
-            md5: _flags.HasFlag(StructuredMessage.Flags.MD5Stream) ? new byte[StructuredMessage.MD5Length] : default, // TODO
-            serverStats: _flags.HasFlag(StructuredMessage.Flags.ServerStats) ? new byte[StructuredMessage.V1_0.ServerStatsLength] : default); // TODO);
-        headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
-        _currentRegionPosition += read;
-
-        if (_currentRegionPosition == _streamFooterLength)
-        {
-            // end of stream, no need to change _currentRegion
-            _currentRegionPosition = 0;
-        }
-
-        return read;
+        // method left intact for future stream footer content
+        // end of stream, no need to change _currentRegion
+        return 0;
     }
 
     private int ReadFromSegmentHeader(Span<byte> buffer)
