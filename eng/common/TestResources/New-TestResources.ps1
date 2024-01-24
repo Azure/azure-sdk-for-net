@@ -615,7 +615,7 @@ try {
     }
 
     if ($UseUserCredentials) {
-        if ($TestApplicationId){
+        if ($TestApplicationId) {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UseUserCredentials is set."
         }
 
