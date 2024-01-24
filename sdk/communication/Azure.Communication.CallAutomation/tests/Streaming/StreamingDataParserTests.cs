@@ -165,12 +165,12 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                     "[" +
                         "{" +
                             "\"text\":\"Hello\"," +
-                            "\"offset\":1" +
+                            "\"offset\":1," +
                             "\"duration\":1" +
                         "}," +
                         "{" +
                             "\"text\":\"World\"," +
-                            "\"offset\":6" +
+                            "\"offset\":6," +
                             "\"duration\":1" +
                         "}" +
                     "]," +
