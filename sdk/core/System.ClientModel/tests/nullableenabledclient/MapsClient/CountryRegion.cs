@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Maps;
+namespace Maps.NullableEnabled;
 
 public class CountryRegion : IJsonModel<CountryRegion>
 {
@@ -19,12 +18,14 @@ public class CountryRegion : IJsonModel<CountryRegion>
 
     internal static CountryRegion FromJson(JsonElement element)
     {
-        if (element.ValueKind == JsonValueKind.Null)
-        {
-            return null;
-        }
+        // TODO: is this valid?  If so we would need to represent it
+        // TODO: Would we ever have IJsonModel<T?>?
+        //if (element.ValueKind == JsonValueKind.Null)
+        //{
+        //    return null;
+        //}
 
-        string isoCode = default;
+        string? isoCode = default;
 
         foreach (var property in element.EnumerateObject())
         {
@@ -33,6 +34,12 @@ public class CountryRegion : IJsonModel<CountryRegion>
                 isoCode = property.Value.GetString();
                 continue;
             }
+        }
+
+        // Note needed to satisfy contract, or alternate solution
+        if (isoCode is null)
+        {
+            throw new InvalidOperationException("Serialization failed.");
         }
 
         return new CountryRegion(isoCode);

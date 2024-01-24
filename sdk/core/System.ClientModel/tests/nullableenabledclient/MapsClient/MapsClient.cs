@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Net;
 using System.Text;
 
-namespace Maps;
+namespace Maps.NullableEnabled;
 
 public class MapsClient
 {
@@ -34,6 +34,18 @@ public class MapsClient
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
     }
 
+    public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
+    {
+        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
+
+        ClientResult output = GetCountryCode(ipAddress.ToString());
+
+        PipelineResponse response = output.GetRawResponse();
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+
+        return ClientResult.FromValue(value, response);
+    }
+
     public virtual ClientResult<IPAddressCountryPair?> GetCountryCodeIfExists(IPAddress ipAddress)
     {
         if (ipAddress is null)
@@ -45,18 +57,6 @@ public class MapsClient
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
         return ClientResult.FromOptionalValue(value, response);
-    }
-
-    public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
-    {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
-
-        ClientResult output = GetCountryCode(ipAddress.ToString());
-
-        PipelineResponse response = output.GetRawResponse();
-        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
-
-        return ClientResult.FromValue(value, response);
     }
 
     public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions? options = null)

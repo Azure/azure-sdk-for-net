@@ -4,7 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace Maps;
+namespace Maps.NullableEnabled;
 
 public class MapsClientOptions : ClientPipelineOptions
 {

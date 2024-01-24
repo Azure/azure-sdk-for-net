@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Net;
 using System.Text.Json;
 
-namespace Maps;
+namespace Maps.NullableEnabled;
 
 public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
 {
@@ -23,13 +22,13 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
 
     internal static IPAddressCountryPair FromJson(JsonElement element)
     {
-        if (element.ValueKind == JsonValueKind.Null)
-        {
-            return null;
-        }
+        //if (element.ValueKind == JsonValueKind.Null)
+        //{
+        //    return null;
+        //}
 
-        CountryRegion countryRegion = default;
-        IPAddress ipAddress = default;
+        CountryRegion? countryRegion = default;
+        IPAddress? ipAddress = default;
 
         foreach (var property in element.EnumerateObject())
         {
@@ -51,9 +50,14 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
                     continue;
                 }
 
-                ipAddress = IPAddress.Parse(property.Value.GetString());
+                ipAddress = IPAddress.Parse(property.Value.GetString()!);
                 continue;
             }
+        }
+        // Note needed to satisfy contract, or alternate solution
+        if (countryRegion is null || ipAddress is null)
+        {
+            throw new InvalidOperationException("Serialization failed.");
         }
 
         return new IPAddressCountryPair(countryRegion, ipAddress);
