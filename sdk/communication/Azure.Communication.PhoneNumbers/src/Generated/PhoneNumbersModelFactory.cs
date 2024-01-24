@@ -165,21 +165,5 @@ namespace Azure.Communication.PhoneNumbers
         {
             return new OperatorDetails(name, mobileNetworkCode, mobileCountryCode);
         }
-
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumberCost"/>. </summary>
-        /// <param name="amount"> The cost amount. </param>
-        /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
-        /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
-        /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumberCost"/> instance for mocking. </returns>
-        public static AvailablePhoneNumberCost AvailablePhoneNumberCost(double amount = default, string isoCurrencySymbol = null, BillingFrequency billingFrequency = default)
-        {
-            if (isoCurrencySymbol == null)
-            {
-                throw new ArgumentNullException(nameof(isoCurrencySymbol));
-            }
-
-            return new AvailablePhoneNumberCost(amount, isoCurrencySymbol, billingFrequency);
-        }
     }
 }
