@@ -166,8 +166,8 @@ public class ClientRetryPolicy : PipelinePolicy
         }
 
         return exception is null ?
-            IsRetriable(message) :
-            IsRetriable(message, exception);
+            message.RetryClassifier!.IsRetriable(message) :
+            message.RetryClassifier!.IsRetriable(message, exception);
     }
 
     protected virtual ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
@@ -200,48 +200,4 @@ public class ClientRetryPolicy : PipelinePolicy
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         }
     }
-
-    #region Retry Classifier
-
-    // Overriding response-retriable classification will be added in a later ClientModel release.
-    private static bool IsRetriable(PipelineMessage message)
-    {
-        message.AssertResponse();
-
-        return message.Response!.Status switch
-        {
-            // Request Timeout
-            408 => true,
-
-            // Too Many Requests
-            429 => true,
-
-            // Internal Server Error
-            500 => true,
-
-            // Bad Gateway
-            502 => true,
-
-            // Service Unavailable
-            503 => true,
-
-            // Gateway Timeout
-            504 => true,
-
-            // Default case
-            _ => false
-        };
-    }
-
-    private static bool IsRetriable(PipelineMessage message, Exception exception)
-        => IsRetriable(exception) ||
-            // Retry non-user initiated cancellations
-            (exception is OperationCanceledException &&
-            !message.CancellationToken.IsCancellationRequested);
-
-    private static bool IsRetriable(Exception exception)
-        => (exception is IOException) ||
-            (exception is ClientResultException ex && ex.Status == 0);
-
-    #endregion
 }

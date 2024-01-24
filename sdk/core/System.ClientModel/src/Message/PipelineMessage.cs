@@ -64,7 +64,9 @@ public class PipelineMessage : IDisposable
     // the client-provided classifier or compose a chain of classification
     // handlers that preserve the functionality of the client-provided classifier
     // at the end of the chain.
-    public PipelineMessageClassifier? MessageClassifier { get; set; }
+    public ErrorResponseClassifier? ErrorClassifier { get; set; }
+
+    public RetriableResponseClassifier? RetryClassifier { get; set; }
 
     public void Apply(RequestOptions options)
     {

@@ -91,7 +91,8 @@ public class RequestOptions
         // This preserves any values set by the client author, and is also
         // needed for Azure.Core-based clients so we don't overwrite a default
         // Azure.Core ResponseClassifier.
-        message.MessageClassifier ??= PipelineMessageClassifier.Default;
+        message.ErrorClassifier ??= ErrorResponseClassifier.Default;
+        message.RetryClassifier ??= RetriableResponseClassifier.Default;
 
         // Copy custom pipeline policies to the message.
         message.PerCallPolicies = _perCallPolicies;

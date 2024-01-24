@@ -67,15 +67,15 @@ namespace Azure.Core
         {
             get
             {
-                if (MessageClassifier is not ResponseClassifier classifier)
+                if (ErrorClassifier is not ResponseClassifier classifier)
                 {
-                    throw new InvalidOperationException($"Invalid ResponseClassifier set on message: '{base.MessageClassifier}'.");
+                    throw new InvalidOperationException($"Invalid ResponseClassifier set on message: '{base.ErrorClassifier}'.");
                 }
 
                 return classifier;
             }
 
-            set => MessageClassifier = value;
+            set => ErrorClassifier = value;
         }
 
         internal int RetryNumber { get; set; }

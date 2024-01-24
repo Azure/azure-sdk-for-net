@@ -676,7 +676,7 @@ namespace Azure.Core
         public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, out bool isRetriable) { throw null; }
         public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, System.Exception exception, out bool isRetriable) { throw null; }
     }
-    public partial class ResponseClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
+    public partial class ResponseClassifier : System.ClientModel.Primitives.ErrorResponseClassifier
     {
         public ResponseClassifier() { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }

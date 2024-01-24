@@ -3,14 +3,14 @@
 
 namespace System.ClientModel.Primitives;
 
-public class PipelineMessageClassifier
+public class ErrorResponseClassifier
 {
-    internal static PipelineMessageClassifier Default { get; } = new PipelineMessageClassifier();
+    internal static ErrorResponseClassifier Default { get; } = new ErrorResponseClassifier();
 
-    public static PipelineMessageClassifier Create(ReadOnlySpan<ushort> successStatusCodes)
+    public static ErrorResponseClassifier Create(ReadOnlySpan<ushort> successStatusCodes)
         => new ResponseStatusClassifier(successStatusCodes);
 
-    protected internal PipelineMessageClassifier() { }
+    protected internal ErrorResponseClassifier() { }
 
     /// <summary>
     /// Specifies if the response contained in the <paramref name="message"/> is not successful.

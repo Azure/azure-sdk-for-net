@@ -5,7 +5,7 @@ using System.ClientModel.Internal;
 
 namespace System.ClientModel.Primitives
 {
-    internal class ResponseStatusClassifier : PipelineMessageClassifier
+    internal class ResponseStatusClassifier : ErrorResponseClassifier
     {
         private BitVector640 _successCodes;
 

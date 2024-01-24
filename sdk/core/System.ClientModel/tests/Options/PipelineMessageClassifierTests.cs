@@ -15,7 +15,7 @@ public class PipelineMessageClassifierTests
         // test classifiers for each of the status codes
         for (ushort nonError = 100; nonError <= 599; nonError++)
         {
-            PipelineMessageClassifier classifier = PipelineMessageClassifier.Create(new ushort[] { nonError });
+            ErrorResponseClassifier classifier = ErrorResponseClassifier.Create(new ushort[] { nonError });
 
             // test all the status codes against the classifier
             for (int code = 100; code <= 599; code++)
@@ -45,7 +45,7 @@ public class PipelineMessageClassifierTests
     [TestCase(502, true)]
     public void ClassifiesMultipleCodesAsNonErrors(int code, bool isError)
     {
-        PipelineMessageClassifier classifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 404 });
+        ErrorResponseClassifier classifier = ErrorResponseClassifier.Create(stackalloc ushort[] { 200, 404 });
 
         MockPipelineMessage message = new MockPipelineMessage();
         message.SetResponse(new MockPipelineResponse(code));

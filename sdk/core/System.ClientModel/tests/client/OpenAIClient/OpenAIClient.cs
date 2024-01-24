@@ -71,7 +71,7 @@ public class OpenAIClient
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, BinaryContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        message.MessageClassifier = MessageClassifier200;
+        message.ErrorClassifier = MessageClassifier200;
 
         PipelineRequest request = message.Request;
         request.Method = "POST";
@@ -95,6 +95,6 @@ public class OpenAIClient
         return message;
     }
 
-    private static PipelineMessageClassifier _messageClassifier200;
-    private static PipelineMessageClassifier MessageClassifier200 => _messageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+    private static ErrorResponseClassifier _messageClassifier200;
+    private static ErrorResponseClassifier MessageClassifier200 => _messageClassifier200 ??= ErrorResponseClassifier.Create(stackalloc ushort[] { 200 });
 }

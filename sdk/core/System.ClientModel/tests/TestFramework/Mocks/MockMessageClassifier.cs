@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockMessageClassifier : PipelineMessageClassifier
+public class MockMessageClassifier : ErrorResponseClassifier
 {
     private readonly int[]? _successCodes;
 
