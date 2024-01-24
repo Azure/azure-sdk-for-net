@@ -10,6 +10,8 @@ public class MockClientResult<T> : ClientResult<T>
 {
     private T _value;
 
+    public override T Value => _value;
+
     public void SetValue(T value) => _value = value;
 
     public MockClientResult(T value, PipelineResponse response) : base(value, response)

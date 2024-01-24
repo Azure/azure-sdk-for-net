@@ -67,8 +67,6 @@ public class PipelineResponseTests
     [Test]
     public void OptionalClientResultDerivedTypeCanShadowValue()
     {
-        // This tests simulates creation of the result returned from a HEAD request.
-
         PipelineResponse response = new MockPipelineResponse(200);
         MockPersistableModel model = new MockPersistableModel(1, "a");
         MockClientResult<MockPersistableModel?> result = new MockClientResult<MockPersistableModel?>(model, response);
@@ -109,7 +107,6 @@ public class PipelineResponseTests
     {
         MockPipelineResponse response = new MockPipelineResponse();
 
-        Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(null!, response));
         Assert.Throws<ArgumentNullException>(() =>
         {
             ClientResult<object> result = ClientResult.FromValue<object>(null!, response);
