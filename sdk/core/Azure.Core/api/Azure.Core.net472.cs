@@ -114,11 +114,13 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
-    public abstract partial class NullableResponse<T> : System.ClientModel.OptionalClientResult<T>
+    public abstract partial class NullableResponse<T> : System.ClientModel.ClientResult
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected NullableResponse() : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
-        protected NullableResponse(T? value, Azure.Response response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected NullableResponse() : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected NullableResponse(T? value, Azure.Response response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public virtual bool HasValue { get { throw null; } }
+        public virtual T? Value { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

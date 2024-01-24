@@ -38,72 +38,72 @@ public class PipelineResponseTests
 
     #endregion
 
-    #region OptionalClientResult<T>
+    //#region OptionalClientResult<T>
 
-    [Test]
-    public void CannotCreateOptionalClientResultFromNullResponse()
-    {
-        Assert.Throws<ArgumentNullException>(() => new MockOptionalClientResult<object>(null, null!));
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            OptionalClientResult<object> result = ClientResult.FromOptionalValue<object>(null, null!);
-        });
-    }
+    //[Test]
+    //public void CannotCreateOptionalClientResultFromNullResponse()
+    //{
+    //    Assert.Throws<ArgumentNullException>(() => new MockOptionalClientResult<object>(null, null!));
+    //    Assert.Throws<ArgumentNullException>(() =>
+    //    {
+    //        OptionalClientResult<object> result = ClientResult.FromOptionalValue<object>(null, null!);
+    //    });
+    //}
 
-    [Test]
-    public void CanCreateOptionalClientResultFromBool()
-    {
-        // This tests simulates creation of the result returned from a HEAD request.
+    //[Test]
+    //public void CanCreateOptionalClientResultFromBool()
+    //{
+    //    // This tests simulates creation of the result returned from a HEAD request.
 
-        PipelineResponse response = new MockPipelineResponse(200);
-        OptionalClientResult<bool> result = ClientResult.FromOptionalValue(true, response);
+    //    PipelineResponse response = new MockPipelineResponse(200);
+    //    OptionalClientResult<bool> result = ClientResult.FromOptionalValue(true, response);
 
-        Assert.IsTrue(result.Value);
-        Assert.IsTrue(result.HasValue);
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+    //    Assert.IsTrue(result.Value);
+    //    Assert.IsTrue(result.HasValue);
+    //    Assert.AreEqual(response.Status, result.GetRawResponse().Status);
 
-        response = new MockPipelineResponse(400);
-        result = ClientResult.FromOptionalValue(false, response);
+    //    response = new MockPipelineResponse(400);
+    //    result = ClientResult.FromOptionalValue(false, response);
 
-        Assert.IsFalse(result.Value);
-        Assert.IsTrue(result.HasValue);
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
-    }
+    //    Assert.IsFalse(result.Value);
+    //    Assert.IsTrue(result.HasValue);
+    //    Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+    //}
 
-    [Test]
-    public void OptionalClientResultDerivedTypeCanShadowValue()
-    {
-        // This tests simulates creation of the result returned from a HEAD request.
+    //[Test]
+    //public void OptionalClientResultDerivedTypeCanShadowValue()
+    //{
+    //    // This tests simulates creation of the result returned from a HEAD request.
 
-        PipelineResponse response = new MockPipelineResponse(200);
-        MockPersistableModel model = new MockPersistableModel(1, "a");
-        MockOptionalClientResult<MockPersistableModel> result = new MockOptionalClientResult<MockPersistableModel>(model, response);
+    //    PipelineResponse response = new MockPipelineResponse(200);
+    //    MockPersistableModel model = new MockPersistableModel(1, "a");
+    //    MockOptionalClientResult<MockPersistableModel> result = new MockOptionalClientResult<MockPersistableModel>(model, response);
 
-        Assert.AreEqual(model.IntValue, result.Value!.IntValue);
-        Assert.AreEqual(model.StringValue, result.Value!.StringValue);
+    //    Assert.AreEqual(model.IntValue, result.Value!.IntValue);
+    //    Assert.AreEqual(model.StringValue, result.Value!.StringValue);
 
-        model = new MockPersistableModel(2, "b");
+    //    model = new MockPersistableModel(2, "b");
 
-        result.SetValue(model);
+    //    result.SetValue(model);
 
-        Assert.AreEqual(model.IntValue, result.Value!.IntValue);
-        Assert.AreEqual(model.StringValue, result.Value!.StringValue);
-    }
+    //    Assert.AreEqual(model.IntValue, result.Value!.IntValue);
+    //    Assert.AreEqual(model.StringValue, result.Value!.StringValue);
+    //}
 
-    [Test]
-    public void CanCreateDerivedOptionalClientResult()
-    {
-        // This tests simulates creation of the result returned from a HEAD request.
+    //[Test]
+    //public void CanCreateDerivedOptionalClientResult()
+    //{
+    //    // This tests simulates creation of the result returned from a HEAD request.
 
-        PipelineResponse response = new MockPipelineResponse(500);
-        OptionalClientResult<bool> result = new MockErrorResult<bool>(response, new ClientResultException(response));
+    //    PipelineResponse response = new MockPipelineResponse(500);
+    //    OptionalClientResult<bool> result = new MockErrorResult<bool>(response, new ClientResultException(response));
 
-        Assert.Throws<ClientResultException>(() => { bool b = result.Value; });
-        Assert.IsFalse(result.HasValue);
-        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
-    }
+    //    Assert.Throws<ClientResultException>(() => { bool b = result.Value; });
+    //    Assert.IsFalse(result.HasValue);
+    //    Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+    //}
 
-    #endregion
+    //#endregion
 
     #region ClientResult<T>
 
@@ -139,7 +139,7 @@ public class PipelineResponseTests
         PipelineResponse response = new MockPipelineResponse(200);
         DerivedClientResult<string> result = new(value, response);
 
-        Assert.IsTrue(result.HasValue);
+        //Assert.IsTrue(result.HasValue);
         Assert.AreEqual(value, result.Value);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }

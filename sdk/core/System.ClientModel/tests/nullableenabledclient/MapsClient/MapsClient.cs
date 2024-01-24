@@ -38,9 +38,9 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        ClientResult output = GetCountryCode(ipAddress.ToString());
+        ClientResult result = GetCountryCode(ipAddress.ToString());
 
-        PipelineResponse response = output.GetRawResponse();
+        PipelineResponse response = result.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
         return ClientResult.FromValue(value, response);
@@ -51,11 +51,17 @@ public class MapsClient
         if (ipAddress is null)
             throw new ArgumentNullException(nameof(ipAddress));
 
-        ClientResult output = GetCountryCode(ipAddress.ToString());
+        ClientResult result = GetCountryCode(ipAddress.ToString());
 
-        PipelineResponse response = output.GetRawResponse();
+        PipelineResponse response = result.GetRawResponse();
+
+        // Note: We must add the status code check
+        if (response.Status == 404)
+        {
+            return ClientResult.FromOptionalValue<IPAddressCountryPair?>(default, response);
+        }
+
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
-
         return ClientResult.FromOptionalValue(value, response);
     }
 

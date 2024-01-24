@@ -23,7 +23,7 @@ public class ClientResult<T> : ClientResult
         Value = value;
     }
 
-    public T Value { get; }
+    public virtual T Value { get; }
 
     // Notice: HasValue goes away.
 }
