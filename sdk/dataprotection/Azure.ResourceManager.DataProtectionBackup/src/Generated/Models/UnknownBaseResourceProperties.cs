@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             ObjectType = objectType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseResourceProperties"/> for deserialization. </summary>
+        internal UnknownBaseResourceProperties()
+        {
+        }
     }
 }
