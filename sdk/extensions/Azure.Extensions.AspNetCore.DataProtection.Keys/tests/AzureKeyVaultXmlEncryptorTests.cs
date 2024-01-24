@@ -19,15 +19,15 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         public void UsesKeyVaultToEncryptKey()
         {
             var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
-            keyMock.Setup(client => client.WrapKeyAsync("RSA-OAEP", It.IsAny<ReadOnlyMemory<byte>>(), default))
-                .ReturnsAsync((string _, ReadOnlyMemory<byte> data, CancellationToken __) => data.ToArray().Reverse().ToArray())
+            keyMock.Setup(client => client.WrapKey("RSA-OAEP", It.IsAny<ReadOnlyMemory<byte>>(), default))
+                .Returns((string _, ReadOnlyMemory<byte> data, CancellationToken __) => data.ToArray().Reverse().ToArray())
                 .Verifiable();
 
             keyMock.SetupGet(client => client.KeyId).Returns("KeyId");
 
             var mock = new Mock<IKeyEncryptionKeyResolver>();
-            mock.Setup(client => client.ResolveAsync("key", default))
-                .ReturnsAsync((string _, CancellationToken __) => keyMock.Object)
+            mock.Setup(client => client.Resolve("key", default))
+                .Returns((string _, CancellationToken __) => keyMock.Object)
                 .Verifiable();
 
             var encryptor = new AzureKeyVaultXmlEncryptor(mock.Object, "key", new MockNumberGenerator());
@@ -50,13 +50,13 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         public void UsesKeyVaultToDecryptKey()
         {
             var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
-            keyMock.Setup(client => client.UnwrapKeyAsync("RSA-OAEP", It.IsAny<ReadOnlyMemory<byte>>(), default))
-                .ReturnsAsync((string _, ReadOnlyMemory<byte> data, CancellationToken __) => data.ToArray().Reverse().ToArray())
+            keyMock.Setup(client => client.UnwrapKey("RSA-OAEP", It.IsAny<ReadOnlyMemory<byte>>(), default))
+                .Returns((string _, ReadOnlyMemory<byte> data, CancellationToken __) => data.ToArray().Reverse().ToArray())
                 .Verifiable();
 
             var mock = new Mock<IKeyEncryptionKeyResolver>();
-            mock.Setup(client => client.ResolveAsync("KeyId", default))
-                .ReturnsAsync((string _, CancellationToken __) => keyMock.Object)
+            mock.Setup(client => client.Resolve("KeyId", default))
+                .Returns((string _, CancellationToken __) => keyMock.Object)
                 .Verifiable();
 
             var serviceCollection = new ServiceCollection();
