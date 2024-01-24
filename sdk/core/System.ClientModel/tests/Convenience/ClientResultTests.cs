@@ -139,7 +139,6 @@ public class PipelineResponseTests
         PipelineResponse response = new MockPipelineResponse(200);
         DerivedClientResult<string> result = new(value, response);
 
-        //Assert.IsTrue(result.HasValue);
         Assert.AreEqual(value, result.Value);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
