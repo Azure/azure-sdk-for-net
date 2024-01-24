@@ -264,6 +264,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 |`AZURE_PASSWORD`|that user's password
 
 #### Managed identity
+
 |Variable name|Value
 |-|-
 |`AZURE_CLIENT_ID`|Used as the default value for `ManagedIdentityClientId` in `DefaultAzureCredentialOptions`
