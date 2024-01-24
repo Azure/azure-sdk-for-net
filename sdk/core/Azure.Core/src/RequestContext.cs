@@ -94,7 +94,7 @@ namespace Azure
         /// <exception cref="ArgumentOutOfRangeException">statusCode is not between 100 and 599 (inclusive).</exception>
         /// <exception cref="InvalidOperationException">If this method is called after the <see cref="RequestContext"/> has been
         /// used in a method call.</exception>
-        public void AddClassifier(int statusCode, bool isError)
+        public override void AddClassifier(int statusCode, bool isError)
         {
             Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
 

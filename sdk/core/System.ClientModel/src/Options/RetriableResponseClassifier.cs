@@ -9,8 +9,6 @@ public class RetriableResponseClassifier
 {
     internal static RetriableResponseClassifier Default { get; } = new RetriableResponseClassifier();
 
-    protected internal RetriableResponseClassifier() { }
-
     /// <summary>
     /// Specifies if the request contained in the <paramref name="message"/> should be retried.
     /// </summary>
@@ -55,8 +53,8 @@ public class RetriableResponseClassifier
     /// taking the <see cref="PipelineMessage"/> into consideration.
     /// </summary>
     public virtual bool IsRetriable(PipelineMessage message, Exception exception)
-    => IsRetriable(exception) ||
-        // Retry non-user initiated cancellations
-        (exception is OperationCanceledException &&
-        !message.CancellationToken.IsCancellationRequested);
+        => IsRetriable(exception) ||
+            // Retry non-user initiated cancellations
+            (exception is OperationCanceledException &&
+             !message.CancellationToken.IsCancellationRequested);
 }

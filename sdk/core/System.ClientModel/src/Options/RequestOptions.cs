@@ -76,6 +76,21 @@ public class RequestOptions
         }
     }
 
+    public virtual void AddClassifier(int statusCode, bool isError)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddClassifier(ErrorClassificationHander handler)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddClassifier(RetryClassificationHandler handler)
+    {
+        throw new NotImplementedException();
+    }
+
     // Set options on the message before sending it through the pipeline.
     internal void Apply(PipelineMessage message)
     {

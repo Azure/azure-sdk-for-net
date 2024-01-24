@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.IO;
 
 namespace Azure.Core
 {
@@ -15,43 +14,25 @@ namespace Azure.Core
     {
         internal static ResponseClassifier Shared { get; } = new();
 
+        private readonly RetriableResponseClassifier _retryClassifier = new();
+
         /// <summary>
         /// Specifies if the request contained in the <paramref name="message"/> should be retried.
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
-        {
-            switch (message.Response.Status)
-            {
-                case 408: // Request Timeout
-                case 429: // Too Many Requests
-                case 500: // Internal Server Error
-                case 502: // Bad Gateway
-                case 503: // Service Unavailable
-                case 504: // Gateway Timeout
-                    return true;
-                default:
-                    return false;
-            }
-        }
+            => _retryClassifier.IsRetriable(message);
 
         /// <summary>
         /// Specifies if the operation that caused the exception should be retried.
         /// </summary>
         public virtual bool IsRetriableException(Exception exception)
-        {
-            return (exception is IOException) ||
-                   (exception is RequestFailedException requestFailed && requestFailed.Status == 0);
-        }
+            => _retryClassifier.IsRetriable(exception);
 
         /// <summary>
         /// Specifies if the operation that caused the exception should be retried taking the <see cref="HttpMessage"/> into consideration.
         /// </summary>
         public virtual bool IsRetriable(HttpMessage message, Exception exception)
-        {
-            return IsRetriableException(exception) ||
-                   // Retry non-user initiated cancellations
-                   (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
-        }
+            => _retryClassifier.IsRetriable(message, exception);
 
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
