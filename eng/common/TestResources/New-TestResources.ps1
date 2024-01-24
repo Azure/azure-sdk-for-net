@@ -614,8 +614,11 @@ try {
         }
     }
 
-
     if ($UseUserCredentials) {
+        if ($TestApplicationId){
+            Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UseUserCredentials is set."
+        }
+
         $TestApplicationOid = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account).Id
         $TestApplicationId = $testApplicationOid
         Log "User-based app id '$TestApplicationId' will be used."
