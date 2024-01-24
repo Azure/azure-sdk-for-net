@@ -426,6 +426,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new Mock<EventHubConnection>();
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
+            mockLogger
+                .Setup(logger => logger.EventProcessorClaimOwnershipError(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Callback(() => completionSource.TrySetResult(true));
+
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
@@ -471,11 +480,9 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                .Protected()
                .Setup<Task>("OnProcessingErrorAsync", ItExpr.IsAny<Exception>(), ItExpr.IsAny<EventProcessorPartition>(), ItExpr.IsAny<string>(), ItExpr.IsAny<CancellationToken>())
-               .Callback(() => completionSource.TrySetResult(true))
-               .Returns(Task.Delay(TimeSpan.FromSeconds(20)));
+               .Returns(Task.Delay(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit, cancellationSource.Token));
 
             expectedException.SetFailureOperation(Resources.OperationClaimOwnership);
-
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
