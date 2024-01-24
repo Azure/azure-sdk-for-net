@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger schema. </summary>
     public partial class SwaggerSchema
     {
-        /// <summary> Initializes a new instance of SwaggerSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSchema"/>. </summary>
         public SwaggerSchema()
         {
             Properties = new ChangeTrackingDictionary<string, SwaggerSchema>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             AllOf = new ChangeTrackingList<SwaggerSchema>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSchema"/>. </summary>
         /// <param name="reference"> The reference. </param>
         /// <param name="schemaType"> The type. </param>
         /// <param name="title"> The title. </param>

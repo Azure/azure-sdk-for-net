@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The gateway details. </summary>
     public partial class AnalysisGatewayDetails
     {
-        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayDetails"/>. </summary>
         public AnalysisGatewayDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayDetails"/>. </summary>
         /// <param name="gatewayResourceId"> Gateway resource to be associated with the server. </param>
         /// <param name="gatewayObjectId"> Gateway object id from in the DMTS cluster for the gateway resource. </param>
         /// <param name="dmtsClusterUri"> Uri of the DMTS cluster. </param>
-        internal AnalysisGatewayDetails(string gatewayResourceId, string gatewayObjectId, Uri dmtsClusterUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisGatewayDetails(string gatewayResourceId, string gatewayObjectId, Uri dmtsClusterUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GatewayResourceId = gatewayResourceId;
             GatewayObjectId = gatewayObjectId;
             DmtsClusterUri = dmtsClusterUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gateway resource to be associated with the server. </summary>

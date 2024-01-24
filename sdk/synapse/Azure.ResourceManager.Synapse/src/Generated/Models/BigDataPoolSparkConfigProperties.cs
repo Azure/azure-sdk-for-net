@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> SparkConfig Properties for a Big Data pool powered by Apache Spark. </summary>
     public partial class BigDataPoolSparkConfigProperties
     {
-        /// <summary> Initializes a new instance of BigDataPoolSparkConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolSparkConfigProperties"/>. </summary>
         public BigDataPoolSparkConfigProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolSparkConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolSparkConfigProperties"/>. </summary>
         /// <param name="updatedOn"> The last update time of the spark config properties file. </param>
         /// <param name="content"> The spark config properties. </param>
         /// <param name="filename"> The filename of the spark config properties file. </param>

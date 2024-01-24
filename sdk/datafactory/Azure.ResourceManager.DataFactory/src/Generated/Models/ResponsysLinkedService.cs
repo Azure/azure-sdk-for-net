@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Responsys linked service. </summary>
     public partial class ResponsysLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of ResponsysLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsysLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Responsys server. </param>
         /// <param name="clientId"> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Responsys";
         }
 
-        /// <summary> Initializes a new instance of ResponsysLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsysLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

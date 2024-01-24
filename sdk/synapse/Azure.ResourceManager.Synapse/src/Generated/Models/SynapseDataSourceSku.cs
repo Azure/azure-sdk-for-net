@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Azure SKU definition. </summary>
     public partial class SynapseDataSourceSku
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="size"> SKU size. </param>
         public SynapseDataSourceSku(SynapseSkuName name, KustoPoolSkuSize size)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Size = size;
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>
         /// <param name="size"> SKU size. </param>

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Generation safety quality metric threshold definition. </summary>
     public partial class GenerationSafetyQualityMetricThreshold
     {
-        /// <summary> Initializes a new instance of GenerationSafetyQualityMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationSafetyQualityMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] Gets or sets the feature attribution metric to calculate. </param>
         public GenerationSafetyQualityMetricThreshold(GenerationSafetyQualityMetric metric)
         {
             Metric = metric;
         }
 
-        /// <summary> Initializes a new instance of GenerationSafetyQualityMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationSafetyQualityMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] Gets or sets the feature attribution metric to calculate. </param>
         /// <param name="threshold">
         /// Gets or sets the threshold value.

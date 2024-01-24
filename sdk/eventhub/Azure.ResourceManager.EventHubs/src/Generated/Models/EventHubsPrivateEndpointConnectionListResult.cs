@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Result of the list of all private endpoint connections operation. </summary>
     internal partial class EventHubsPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionListResult"/>. </summary>
         internal EventHubsPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> A collection of private endpoint connection resources. </param>
         /// <param name="nextLink"> A link for the next page of private endpoint connection resources. </param>
         internal EventHubsPrivateEndpointConnectionListResult(IReadOnlyList<EventHubsPrivateEndpointConnectionData> value, string nextLink)

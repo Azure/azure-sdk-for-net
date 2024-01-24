@@ -21,6 +21,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -98,7 +102,20 @@ directive:
     debug: true
     transform: >
       delete $["x-ms-pageable"]
-
+  - from: workbookTemplates_API.json
+    where: $.definitions
+    transform: >
+      $["WorkbookTemplatesListResult"] = {
+        "description": "WorkbookTemplate list result.",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/WorkbookTemplate"
+        }
+      }
+    reason: workaround incorrect definition in swagger
+  - where-operation: WorkbookTemplates_ListByResourceGroup
+    transform: >
+      delete $["x-ms-pageable"]
 override-operation-name:
   ComponentQuotaStatus_Get: GetComponentQuotaStatus
 ```

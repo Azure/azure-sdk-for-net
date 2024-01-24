@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -12,12 +13,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownBaseBackupPolicy. </summary>
     internal partial class UnknownBaseBackupPolicy : DataProtectionBackupPolicyPropertiesBase
     {
-        /// <summary> Initializes a new instance of UnknownBaseBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseBackupPolicy"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
-        internal UnknownBaseBackupPolicy(IList<string> dataSourceTypes, string objectType) : base(dataSourceTypes, objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBaseBackupPolicy(IList<string> dataSourceTypes, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataSourceTypes, objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseBackupPolicy"/> for deserialization. </summary>
+        internal UnknownBaseBackupPolicy()
+        {
         }
     }
 }

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CloudHsmClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudHsmClusterResource.CreateResourceIdentifier" /> to create a <see cref="CloudHsmClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudHsmClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudHsmClusterResource.CreateResourceIdentifier" /> to create a <see cref="CloudHsmClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudHsmClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CloudHsmClusterResource"/> object. </returns>
         public virtual CloudHsmClusterResource GetCloudHsmClusterResource(ResourceIdentifier id)
         {
             CloudHsmClusterResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> object. </returns>
         public virtual HardwareSecurityModulesPrivateEndpointConnectionResource GetHardwareSecurityModulesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             HardwareSecurityModulesPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DedicatedHsmResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DedicatedHsmResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHsmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DedicatedHsmResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DedicatedHsmResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHsmResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DedicatedHsmResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DedicatedHsmResource"/> object. </returns>
         public virtual DedicatedHsmResource GetDedicatedHsmResource(ResourceIdentifier id)
         {
             DedicatedHsmResource.ValidateResourceId(id);

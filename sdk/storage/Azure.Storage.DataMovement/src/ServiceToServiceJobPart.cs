@@ -179,22 +179,17 @@ namespace Azure.Storage.DataMovement
         {
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
-            // Attempt to get the length, it's possible the file could
-            // not be accessible (or does not exist).
             long? fileLength = _sourceResource.Length;
-            if (!fileLength.HasValue)
+            try
             {
-                try
-                {
-                    StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                    fileLength = properties.ContentLength;
-                }
-                catch (Exception ex)
-                {
-                    // TODO: logging when given the event handler
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
-                    return;
-                }
+                StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                fileLength = properties.ResourceLength;
+            }
+            catch (Exception ex)
+            {
+                // TODO: logging when given the event handler
+                await InvokeFailedArg(ex).ConfigureAwait(false);
+                return;
             }
             if (!fileLength.HasValue)
             {
@@ -247,6 +242,7 @@ namespace Azure.Storage.DataMovement
             {
                 StorageResourceCopyFromUriOptions options =
                     await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
+
                 await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
@@ -371,10 +367,17 @@ namespace Azure.Storage.DataMovement
             // Partition the stream into individual blocks
             foreach ((long Offset, long Length) block in commitBlockList)
             {
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 // Queue partitioned block task
                 await QueueStageBlockRequest(block.Offset, block.Length, expectedLength).ConfigureAwait(false);
             }
+
             _queueingTasks = false;
+            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
         }
 
         private Task QueueStageBlockRequest(long offset, long blockSize, long expectedLength)
@@ -403,16 +406,21 @@ namespace Azure.Storage.DataMovement
                     completeLength: expectedLength,
                     options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
-                // Invoke event handler to keep track of all the stage blocks
-                await _commitBlockHandler.InvokeEvent(
-                    new StageChunkEventArgs(
-                        transferId: _dataTransfer.Id,
-                        success: true,
-                        offset: offset,
-                        bytesTransferred: blockLength,
-                        exception: default,
-                        isRunningSynchronously: true,
-                        cancellationToken: _cancellationToken)).ConfigureAwait(false);
+
+                // The chunk handler may have been disposed in failure case
+                if (_commitBlockHandler != null)
+                {
+                    // Invoke event handler to keep track of all the stage blocks
+                    await _commitBlockHandler.InvokeEvent(
+                        new StageChunkEventArgs(
+                            transferId: _dataTransfer.Id,
+                            success: true,
+                            offset: offset,
+                            bytesTransferred: blockLength,
+                            exception: default,
+                            isRunningSynchronously: true,
+                            cancellationToken: _cancellationToken)).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException ex)
             when (_createMode == StorageResourceCreationPreference.OverwriteIfExists
@@ -469,6 +477,7 @@ namespace Azure.Storage.DataMovement
             if (_commitBlockHandler != default)
             {
                 _commitBlockHandler.Dispose();
+                _commitBlockHandler = null;
             }
         }
 

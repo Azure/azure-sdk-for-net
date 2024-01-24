@@ -254,6 +254,7 @@
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ClientModel" />
 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
@@ -365,10 +366,11 @@
   <Target Name="GetPackageInfo">
     <PropertyGroup>
       <PackageIsNewSdk>false</PackageIsNewSdk>
-      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true'">true</PackageIsNewSdk>
+      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true' or '$(IsFunctionsLibrary)' == 'true'">true</PackageIsNewSdk>
 
       <PackageSdkType>data</PackageSdkType>
       <PackageSdkType Condition="'$(IsClientLibrary)' == 'true'">client</PackageSdkType>
+      <PackageSdkType Condition="'$(IsFunctionsLibrary)' == 'true'">functions</PackageSdkType>
       <PackageSdkType Condition="'$(IsMgmtLibrary)' == 'true'">mgmt</PackageSdkType>
 
       <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>

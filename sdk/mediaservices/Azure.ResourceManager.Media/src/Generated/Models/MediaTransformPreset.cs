@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaTransformPreset
     {
-        /// <summary> Initializes a new instance of MediaTransformPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformPreset"/>. </summary>
         protected MediaTransformPreset()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaTransformPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformPreset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal MediaTransformPreset(string odataType)
         {

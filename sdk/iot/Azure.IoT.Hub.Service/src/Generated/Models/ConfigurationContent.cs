@@ -13,7 +13,7 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The configuration content for devices or modules on edge devices. </summary>
     public partial class ConfigurationContent
     {
-        /// <summary> Initializes a new instance of ConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationContent"/>. </summary>
         public ConfigurationContent()
         {
             DeviceContent = new ChangeTrackingDictionary<string, object>();
@@ -21,7 +21,7 @@ namespace Azure.IoT.Hub.Service.Models
             ModuleContent = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationContent"/>. </summary>
         /// <param name="deviceContent"> The device configuration content. </param>
         /// <param name="modulesContent"> The modules configuration content. </param>
         /// <param name="moduleContent"> The module configuration content. </param>

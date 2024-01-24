@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route policy statement condition properties. </summary>
     public partial class StatementConditionProperties : IPCommunityIdList
     {
-        /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         public StatementConditionProperties()
         {
             IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="routePolicyConditionType"> Type of the condition used. </param>
         /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryApplicationVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryApplicationVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +68,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="safetyProfile"> The safety profile of the Gallery Application Version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PublishingProfile = publishingProfile;
             SafetyProfile = safetyProfile;
             ProvisioningState = provisioningState;
             ReplicationStatus = replicationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/> for deserialization. </summary>
+        internal GalleryApplicationVersionData()
+        {
         }
 
         /// <summary> The publishing profile of a gallery image version. </summary>

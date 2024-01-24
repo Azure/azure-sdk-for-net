@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list tables operation response. </summary>
     internal partial class TablesListResult
     {
-        /// <summary> Initializes a new instance of TablesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TablesListResult"/>. </summary>
         internal TablesListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsTableData>();
         }
 
-        /// <summary> Initializes a new instance of TablesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TablesListResult"/>. </summary>
         /// <param name="value"> A list of data tables. </param>
         internal TablesListResult(IReadOnlyList<OperationalInsightsTableData> value)
         {

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class BatchDeploymentConfiguration
     {
-        /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchDeploymentConfiguration"/>. </summary>
         protected BatchDeploymentConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchDeploymentConfiguration"/>. </summary>
         /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
         internal BatchDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType)
         {

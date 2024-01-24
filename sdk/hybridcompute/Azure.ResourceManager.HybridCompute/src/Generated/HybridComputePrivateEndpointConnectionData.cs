@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridComputePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateEndpointConnectionData"/>. </summary>
         public HybridComputePrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
-        internal HybridComputePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal HybridComputePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridComputePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Resource properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        public HybridComputePrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Non secret deployment resource id reference. </summary>
     public partial class OpenDeploymentResourceReference : DeploymentResourceIdReference
     {
-        /// <summary> Initializes a new instance of OpenDeploymentResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenDeploymentResourceReference"/>. </summary>
         public OpenDeploymentResourceReference()
         {
             IdType = IdType.Open;
         }
 
-        /// <summary> Initializes a new instance of OpenDeploymentResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenDeploymentResourceReference"/>. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
         /// <param name="id"> Resource ID. </param>
         internal OpenDeploymentResourceReference(IdType idType, ResourceIdentifier id) : base(idType)

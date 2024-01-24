@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a Synapse link workspaces. </summary>
     public partial class SqlSynapseLinkWorkspaceInfo
     {
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspaceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSynapseLinkWorkspaceInfo"/>. </summary>
         public SqlSynapseLinkWorkspaceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspaceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSynapseLinkWorkspaceInfo"/>. </summary>
         /// <param name="workspaceId"> Synapse link workspace id. </param>
         /// <param name="linkConnectionName"> Link connection name. </param>
         internal SqlSynapseLinkWorkspaceInfo(ResourceIdentifier workspaceId, string linkConnectionName)

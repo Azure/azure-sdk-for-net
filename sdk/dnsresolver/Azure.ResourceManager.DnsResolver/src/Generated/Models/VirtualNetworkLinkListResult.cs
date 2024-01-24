@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on virtual network links. </summary>
     internal partial class VirtualNetworkLinkListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkListResult"/>. </summary>
         internal VirtualNetworkLinkListResult()
         {
             Value = new ChangeTrackingList<DnsForwardingRulesetVirtualNetworkLinkData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkListResult"/>. </summary>
         /// <param name="value"> Enumeration of the virtual network links. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal VirtualNetworkLinkListResult(IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData> value, string nextLink)

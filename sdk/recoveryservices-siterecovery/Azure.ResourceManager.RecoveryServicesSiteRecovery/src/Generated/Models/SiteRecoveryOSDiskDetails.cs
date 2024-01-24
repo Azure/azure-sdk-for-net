@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of the OS Disk. </summary>
     public partial class SiteRecoveryOSDiskDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryOSDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSDiskDetails"/>. </summary>
         internal SiteRecoveryOSDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSDiskDetails"/>. </summary>
         /// <param name="osVhdId"> The id of the disk containing the OS. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
         /// <param name="vhdName"> The OS disk VHD name. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster pool profile. </summary>
     internal partial class ClusterPoolProfile
     {
-        /// <summary> Initializes a new instance of ClusterPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolProfile"/>. </summary>
         /// <param name="clusterPoolVersion"> Cluster pool version is a 2-part version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolVersion"/> is null. </exception>
         public ClusterPoolProfile(string clusterPoolVersion)

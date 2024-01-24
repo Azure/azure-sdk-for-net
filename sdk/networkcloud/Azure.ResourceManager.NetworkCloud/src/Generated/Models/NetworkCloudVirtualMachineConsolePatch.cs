@@ -14,10 +14,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ConsolePatchParameters represents the body of the request to patch the virtual machine console. </summary>
     public partial class NetworkCloudVirtualMachineConsolePatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudVirtualMachineConsolePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsolePatch"/>. </summary>
         public NetworkCloudVirtualMachineConsolePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsolePatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="enabled"> The credentials used to login to the image repository that has access to the specified image. </param>
+        /// <param name="expireOn"> The date and time after which the key will be disallowed access. </param>
+        /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
+        internal NetworkCloudVirtualMachineConsolePatch(IDictionary<string, string> tags, ConsoleEnabled? enabled, DateTimeOffset? expireOn, NetworkCloudSshPublicKey sshPublicKey)
+        {
+            Tags = tags;
+            Enabled = enabled;
+            ExpireOn = expireOn;
+            SshPublicKey = sshPublicKey;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

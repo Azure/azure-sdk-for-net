@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of log files. </summary>
     internal partial class MySqlLogFileListResult
     {
-        /// <summary> Initializes a new instance of MySqlLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlLogFileListResult"/>. </summary>
         internal MySqlLogFileListResult()
         {
             Value = new ChangeTrackingList<MySqlLogFile>();
         }
 
-        /// <summary> Initializes a new instance of MySqlLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlLogFileListResult"/>. </summary>
         /// <param name="value"> The list of log files. </param>
         internal MySqlLogFileListResult(IReadOnlyList<MySqlLogFile> value)
         {

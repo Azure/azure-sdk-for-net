@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ApplicationHealthPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         public ApplicationHealthPolicy()
         {
             ServiceTypeHealthPolicies = new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
         /// <param name="serviceTypeHealthPolicies"> The map with service type health policy per service type name. The map is empty by default. </param>
         internal ApplicationHealthPolicy(ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies)

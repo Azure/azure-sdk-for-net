@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenancePublicConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenancePublicConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenancePublicConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenancePublicConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenancePublicConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource"/> object. </returns>
         public virtual MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(ResourceIdentifier id)
         {
             MaintenancePublicConfigurationResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
         public virtual MaintenanceConfigurationResource GetMaintenanceConfigurationResource(ResourceIdentifier id)
         {
             MaintenanceConfigurationResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceApplyUpdateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceApplyUpdateResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceApplyUpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MaintenanceApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceApplyUpdateResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceApplyUpdateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource"/> object. </returns>
         public virtual MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(ResourceIdentifier id)
         {
             MaintenanceApplyUpdateResource.ValidateResourceId(id);

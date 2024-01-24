@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Ingestion Policy properties. </summary>
     public partial class IngestionPolicyPropertiesFormat
     {
-        /// <summary> Initializes a new instance of IngestionPolicyPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionPolicyPropertiesFormat"/>. </summary>
         public IngestionPolicyPropertiesFormat()
         {
             IngestionSources = new ChangeTrackingList<IngestionSourcesPropertiesFormat>();
         }
 
-        /// <summary> Initializes a new instance of IngestionPolicyPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionPolicyPropertiesFormat"/>. </summary>
         /// <param name="ingestionType"> The ingestion type. </param>
         /// <param name="ingestionSources"> Ingestion Sources. </param>
         internal IngestionPolicyPropertiesFormat(IngestionType? ingestionType, IList<IngestionSourcesPropertiesFormat> ingestionSources)

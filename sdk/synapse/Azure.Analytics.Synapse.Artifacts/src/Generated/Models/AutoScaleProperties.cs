@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Auto-scaling properties of a Big Data pool powered by Apache Spark. </summary>
     public partial class AutoScaleProperties
     {
-        /// <summary> Initializes a new instance of AutoScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleProperties"/>. </summary>
         public AutoScaleProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleProperties"/>. </summary>
         /// <param name="minNodeCount"> The minimum number of nodes the Big Data pool can support. </param>
         /// <param name="enabled"> Whether automatic scaling is enabled for the Big Data pool. </param>
         /// <param name="maxNodeCount"> The maximum number of nodes the Big Data pool can support. </param>

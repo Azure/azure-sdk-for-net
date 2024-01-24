@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure IaaS VM workload-specific job task details. </summary>
     public partial class IaasVmBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of IaasVmBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobTaskDetails"/>. </summary>
         public IaasVmBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="startOn"> The start time. </param>
         /// <param name="endOn"> The end time. </param>

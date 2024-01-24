@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Base class for the policies of providers using InMage replication. </summary>
     public partial class InMageBasePolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageBasePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageBasePolicyDetails"/>. </summary>
         internal InMageBasePolicyDetails()
         {
             InstanceType = "InMageBasePolicyDetails";
         }
 
-        /// <summary> Initializes a new instance of InMageBasePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageBasePolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>

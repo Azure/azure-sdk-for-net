@@ -13,10 +13,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The NetworkFabric resource definition. </summary>
     public partial class NetworkTapPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkTapPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
         public NetworkTapPatch()
         {
             Destinations = new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="pollingType"> Polling type. </param>
+        /// <param name="destinations"> List of destination properties to send the filter traffic. </param>
+        internal NetworkTapPatch(IDictionary<string, string> tags, string annotation, NetworkTapPollingType? pollingType, IList<NetworkTapPatchableParametersDestinationsItem> destinations) : base(tags)
+        {
+            Annotation = annotation;
+            PollingType = pollingType;
+            Destinations = destinations;
         }
 
         /// <summary> Switch configuration description. </summary>

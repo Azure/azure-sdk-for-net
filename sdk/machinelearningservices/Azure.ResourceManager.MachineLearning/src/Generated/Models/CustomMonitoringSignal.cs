@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CustomMonitoringSignal. </summary>
     public partial class CustomMonitoringSignal : MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of CustomMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMonitoringSignal"/>. </summary>
         /// <param name="componentId"> [Required] ARM resource ID of the component resource used to calculate the custom metrics. </param>
         /// <param name="metricThresholds"> [Required] A list of metrics to calculate and their associated thresholds. </param>
         /// <param name="workspaceConnection"> [Required] A list of metrics to calculate and their associated thresholds. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SignalType = MonitoringSignalType.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMonitoringSignal"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The requirements to validate customer address where the device needs to be shipped. </summary>
     public partial class DataBoxValidateAddressContent : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of DataBoxValidateAddressContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/>. </summary>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shippingAddress"/> is null. </exception>
@@ -24,6 +25,25 @@ namespace Azure.ResourceManager.DataBox.Models
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
             ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences) : base(validationType, serializedAdditionalRawData)
+        {
+            ShippingAddress = shippingAddress;
+            DeviceType = deviceType;
+            TransportPreferences = transportPreferences;
+            ValidationType = validationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/> for deserialization. </summary>
+        internal DataBoxValidateAddressContent()
+        {
         }
 
         /// <summary> Shipping address of the customer. </summary>

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class HealthcareApisPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of HealthcareApisPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisPrivateLinkResourceData"/>. </summary>
         public HealthcareApisPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

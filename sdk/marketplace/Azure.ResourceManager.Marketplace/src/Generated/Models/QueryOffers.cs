@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of offers. </summary>
     internal partial class QueryOffers
     {
-        /// <summary> Initializes a new instance of QueryOffers. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryOffers"/>. </summary>
         internal QueryOffers()
         {
             Value = new ChangeTrackingList<PrivateStoreOfferResult>();
         }
 
-        /// <summary> Initializes a new instance of QueryOffers. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryOffers"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of PrivateStore list results if there are any. </param>
         internal QueryOffers(IReadOnlyList<PrivateStoreOfferResult> value, string nextLink)

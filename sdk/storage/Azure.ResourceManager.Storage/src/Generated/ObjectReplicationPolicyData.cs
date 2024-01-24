@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class ObjectReplicationPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyData"/>. </summary>
         public ObjectReplicationPolicyData()
         {
             Rules = new ChangeTrackingList<ObjectReplicationPolicyRule>();
         }
 
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

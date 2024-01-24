@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Server version capabilities. </summary>
     public partial class ServerVersionCapabilityV2
     {
-        /// <summary> Initializes a new instance of ServerVersionCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerVersionCapabilityV2"/>. </summary>
         internal ServerVersionCapabilityV2()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerVersionCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerVersionCapabilityV2"/>. </summary>
         /// <param name="name"> server version. </param>
         internal ServerVersionCapabilityV2(string name)
         {

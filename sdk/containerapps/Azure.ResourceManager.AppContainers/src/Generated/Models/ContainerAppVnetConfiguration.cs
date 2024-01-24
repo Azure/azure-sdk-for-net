@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -12,24 +14,58 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Configuration properties for apps environment to join a Virtual Network. </summary>
     public partial class ContainerAppVnetConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppVnetConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVnetConfiguration"/>. </summary>
         public ContainerAppVnetConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppVnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVnetConfiguration"/>. </summary>
         /// <param name="isInternal"> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide infrastructureSubnetId if enabling this property. </param>
         /// <param name="infrastructureSubnetId"> Resource ID of a subnet for infrastructure components. Must not overlap with any other provided IP ranges. </param>
         /// <param name="dockerBridgeCidr"> CIDR notation IP range assigned to the Docker bridge, network. Must not overlap with any other provided IP ranges. </param>
         /// <param name="platformReservedCidr"> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. Must not overlap with any other provided IP ranges. </param>
         /// <param name="platformReservedDnsIP"> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </param>
-        internal ContainerAppVnetConfiguration(bool? isInternal, ResourceIdentifier infrastructureSubnetId, string dockerBridgeCidr, string platformReservedCidr, string platformReservedDnsIP)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppVnetConfiguration(bool? isInternal, ResourceIdentifier infrastructureSubnetId, string dockerBridgeCidr, string platformReservedCidr, string platformReservedDnsIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsInternal = isInternal;
             InfrastructureSubnetId = infrastructureSubnetId;
             DockerBridgeCidr = dockerBridgeCidr;
             PlatformReservedCidr = platformReservedCidr;
             PlatformReservedDnsIP = platformReservedDnsIP;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide infrastructureSubnetId if enabling this property. </summary>

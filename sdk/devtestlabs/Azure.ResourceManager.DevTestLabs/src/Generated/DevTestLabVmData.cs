@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabVmData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabVmData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabVmData(AzureLocation location) : base(location)
         {
@@ -28,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs
             ScheduleParameters = new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabVmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,7 +102,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="lastKnownPowerState"> Last known compute power state captured in DTL. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notes, string ownerObjectId, string ownerUserPrincipalName, string createdByUserId, string createdByUser, DateTimeOffset? createdOn, ResourceIdentifier computeId, string customImageId, string osType, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string fqdn, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabArtifactDeploymentStatus artifactDeploymentStatus, DevTestLabGalleryImageReference galleryImageReference, string planId, ComputeVmProperties computeVm, DevTestLabNetworkInterface networkInterface, DevTestLabApplicableSchedule applicableSchedule, DateTimeOffset? expireOn, bool? allowClaim, string storageType, DevTestLabVmCreationSource? vmCreationSource, ResourceIdentifier environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string lastKnownPowerState, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Notes = notes;
             OwnerObjectId = ownerObjectId;
@@ -107,6 +140,12 @@ namespace Azure.ResourceManager.DevTestLabs
             LastKnownPowerState = lastKnownPowerState;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmData"/> for deserialization. </summary>
+        internal DevTestLabVmData()
+        {
         }
 
         /// <summary> The notes of the virtual machine. </summary>

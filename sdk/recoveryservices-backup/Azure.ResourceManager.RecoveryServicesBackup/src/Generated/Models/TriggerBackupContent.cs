@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for backup request. Workload-specific backup requests are derived from this class. </summary>
     public partial class TriggerBackupContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of TriggerBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerBackupContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public TriggerBackupContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerBackupContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

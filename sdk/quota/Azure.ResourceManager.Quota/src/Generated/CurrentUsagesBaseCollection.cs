@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CurrentUsagesBaseResource" /> and their operations.
-    /// Each <see cref="CurrentUsagesBaseResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="CurrentUsagesBaseCollection" /> instance call the GetCurrentUsagesBases method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CurrentUsagesBaseResource"/> and their operations.
+    /// Each <see cref="CurrentUsagesBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CurrentUsagesBaseCollection"/> instance call the GetCurrentUsagesBases method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CurrentUsagesBaseCollection : ArmCollection, IEnumerable<CurrentUsagesBaseResource>, IAsyncEnumerable<CurrentUsagesBaseResource>
     {
@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -96,6 +104,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName">
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CurrentUsagesBaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CurrentUsagesBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CurrentUsagesBaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CurrentUsagesBaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +262,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName">
@@ -261,6 +309,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +359,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

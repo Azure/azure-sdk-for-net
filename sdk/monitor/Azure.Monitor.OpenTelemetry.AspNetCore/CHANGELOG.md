@@ -1,14 +1,27 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.1.0 (2024-01-22)
 
 ### Other Changes
+
+- Removed the code of internal vendored instrumentation libraries `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http`.
+  Previously users needed to manually add package references to these instrumentation libraries to apply any customizations. This will no longer be necessary.
+  Now that these packages have released stable versions, we will directly reference those and users will be able to apply any customizations using the publicly available APIs.
+  ([#41395](https://github.com/Azure/azure-sdk-for-net/pull/41395))
+- Update OpenTelemetry dependencies
+  ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  - OpenTelemetry 1.7.0
+  - OpenTelemetry.Extensions.Hosting 1.7.0
+  - NEW: OpenTelemetry.Instrumentation.AspNetCore 1.7.0
+  - NEW: OpenTelemetry.Instrumentation.Http 1.7.0
+
+## 1.0.0 (2023-11-29)
+
+### Other Changes
+
+- Updated the code of vendored instrumentation libraries `OpenTelemetry.Instrumentation.AspNetCore`, `OpenTelemetry.Instrumentation.Http`, and `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET repository.
+  Code has been updated to [1.6.0-beta3](https://github.com/open-telemetry/opentelemetry-dotnet/tree/1.6.0-beta.3).
+  ([#40315](https://github.com/Azure/azure-sdk-for-net/pull/40315))
 
 ## 1.0.0-beta.8 (2023-10-05)
 

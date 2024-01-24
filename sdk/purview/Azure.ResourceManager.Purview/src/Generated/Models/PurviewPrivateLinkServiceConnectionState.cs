@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The private link service connection state. </summary>
     public partial class PurviewPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of PurviewPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkServiceConnectionState"/>. </summary>
         public PurviewPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="actionsRequired"> The required actions. </param>
         /// <param name="description"> The description. </param>
         /// <param name="status"> The status. </param>

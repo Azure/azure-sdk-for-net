@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The PartnerEventSubscriptionDestination. </summary>
     public partial class PartnerEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of PartnerEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerEventSubscriptionDestination"/>. </summary>
         public PartnerEventSubscriptionDestination()
         {
             EndpointType = EndpointType.PartnerDestination;
         }
 
-        /// <summary> Initializes a new instance of PartnerEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </param>
         internal PartnerEventSubscriptionDestination(EndpointType endpointType, string resourceId) : base(endpointType)

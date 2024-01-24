@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The action to be executed by a job step. </summary>
     public partial class JobStepAction
     {
-        /// <summary> Initializes a new instance of JobStepAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/>. </summary>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobStepAction(string value)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of JobStepAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/>. </summary>
         /// <param name="actionType"> Type of action being executed by the job step. </param>
         /// <param name="source"> The source of the action to execute. </param>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Execute SQL pool stored procedure activity. </summary>
     public partial class SqlPoolStoredProcedureActivity : Activity
     {
-        /// <summary> Initializes a new instance of SqlPoolStoredProcedureActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolStoredProcedureActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="sqlPool"> SQL pool stored procedure reference. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SqlPoolStoredProcedure";
         }
 
-        /// <summary> Initializes a new instance of SqlPoolStoredProcedureActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolStoredProcedureActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

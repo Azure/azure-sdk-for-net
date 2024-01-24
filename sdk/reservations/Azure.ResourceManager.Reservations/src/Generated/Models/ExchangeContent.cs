@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Exchange request. </summary>
     public partial class ExchangeContent
     {
-        /// <summary> Initializes a new instance of ExchangeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangeContent"/>. </summary>
         public ExchangeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExchangeContent"/>. </summary>
+        /// <param name="properties"> Exchange request properties. </param>
+        internal ExchangeContent(ExchangeRequestProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Exchange request properties. </summary>

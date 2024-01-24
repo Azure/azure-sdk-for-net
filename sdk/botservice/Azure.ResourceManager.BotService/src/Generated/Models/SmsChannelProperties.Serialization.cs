@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class SmsChannelProperties : IUtf8JsonSerializable
+    public partial class SmsChannelProperties : IUtf8JsonSerializable, IJsonModel<SmsChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmsChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SmsChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SmsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
@@ -31,11 +42,40 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SmsChannelProperties DeserializeSmsChannelProperties(JsonElement element)
+        SmsChannelProperties IJsonModel<SmsChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SmsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmsChannelProperties(document.RootElement, options);
+        }
+
+        internal static SmsChannelProperties DeserializeSmsChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +85,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> authToken = default;
             Optional<bool> isValidated = default;
             bool isEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phone"u8))
@@ -76,8 +118,44 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SmsChannelProperties(phone, accountSID, authToken.Value, Optional.ToNullable(isValidated), isEnabled);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SmsChannelProperties(phone, accountSID, authToken.Value, Optional.ToNullable(isValidated), isEnabled, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SmsChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SmsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SmsChannelProperties IPersistableModel<SmsChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SmsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSmsChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SmsChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

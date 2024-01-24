@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Specifies Windows operating system settings on the virtual machine. </summary>
     public partial class SapWindowsConfiguration : SapOSConfiguration
     {
-        /// <summary> Initializes a new instance of SapWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapWindowsConfiguration"/>. </summary>
         public SapWindowsConfiguration()
         {
             OSType = SapOSType.Windows;
         }
 
-        /// <summary> Initializes a new instance of SapWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapWindowsConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
         internal SapWindowsConfiguration(SapOSType osType) : base(osType)
         {

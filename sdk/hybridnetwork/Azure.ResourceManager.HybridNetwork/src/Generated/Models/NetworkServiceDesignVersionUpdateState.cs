@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Publisher network service design version update request definition. </summary>
     public partial class NetworkServiceDesignVersionUpdateState
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionUpdateState"/>. </summary>
         public NetworkServiceDesignVersionUpdateState()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionUpdateState"/>. </summary>
         /// <param name="versionState"> The network service design version state. </param>
         internal NetworkServiceDesignVersionUpdateState(VersionState? versionState)
         {

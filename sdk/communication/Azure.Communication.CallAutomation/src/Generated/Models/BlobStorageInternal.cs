@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Used to specify Blob container url to recording storage. </summary>
     internal partial class BlobStorageInternal
     {
-        /// <summary> Initializes a new instance of BlobStorageInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobStorageInternal"/>. </summary>
         /// <param name="containerUri"> Url of a container or a location within a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
         public BlobStorageInternal(string containerUri)

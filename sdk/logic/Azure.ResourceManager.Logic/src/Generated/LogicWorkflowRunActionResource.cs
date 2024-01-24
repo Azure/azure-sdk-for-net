@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflowRunAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowRunActionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowRunActionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunResource" /> using the GetLogicWorkflowRunAction method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowRunActionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowRunActionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunResource"/> using the GetLogicWorkflowRunAction method.
     /// </summary>
     public partial class LogicWorkflowRunActionResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowRunActionsRestOperations _logicWorkflowRunActionWorkflowRunActionsRestClient;
         private readonly LogicWorkflowRunActionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionResource"/> class for mocking. </summary>
         protected LogicWorkflowRunActionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowRunActionResource(ArmClient client, LogicWorkflowRunActionData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -111,6 +111,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRepetitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +249,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestHistoryName"> The request history name. </param>
@@ -240,6 +280,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestHistoryName"> The request history name. </param>
@@ -262,6 +310,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +351,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -327,10 +391,18 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActions_ListExpressionTraces</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicExpressionRoot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicExpressionRoot> GetExpressionTracesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionWorkflowRunActionsRestClient.CreateListExpressionTracesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -348,10 +420,18 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActions_ListExpressionTraces</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicExpressionRoot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicExpressionRoot> GetExpressionTraces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionWorkflowRunActionsRestClient.CreateListExpressionTracesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

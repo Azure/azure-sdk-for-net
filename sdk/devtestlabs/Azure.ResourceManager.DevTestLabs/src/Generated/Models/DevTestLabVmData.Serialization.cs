@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabVmData : IUtf8JsonSerializable
+    public partial class DevTestLabVmData : IUtf8JsonSerializable, IJsonModel<DevTestLabVmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevTestLabVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,6 +41,26 @@ namespace Azure.ResourceManager.DevTestLabs
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Notes))
@@ -49,15 +78,35 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("ownerUserPrincipalName"u8);
                 writer.WriteStringValue(OwnerUserPrincipalName);
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedByUserId))
+            {
+                writer.WritePropertyName("createdByUserId"u8);
+                writer.WriteStringValue(CreatedByUserId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedByUser))
+            {
+                writer.WritePropertyName("createdByUser"u8);
+                writer.WriteStringValue(CreatedByUser);
+            }
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ComputeId))
+            {
+                writer.WritePropertyName("computeId"u8);
+                writer.WriteStringValue(ComputeId);
+            }
             if (Optional.IsDefined(CustomImageId))
             {
                 writer.WritePropertyName("customImageId"u8);
                 writer.WriteStringValue(CustomImageId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(Size))
             {
@@ -84,6 +133,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("isAuthenticationWithSshKey"u8);
                 writer.WriteBooleanValue(IsAuthenticationWithSshKey.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
             if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
@@ -109,6 +163,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ArtifactDeploymentStatus))
+            {
+                writer.WritePropertyName("artifactDeploymentStatus"u8);
+                writer.WriteObjectValue(ArtifactDeploymentStatus);
+            }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
@@ -119,10 +178,20 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
+            if (options.Format != "W" && Optional.IsDefined(ComputeVm))
+            {
+                writer.WritePropertyName("computeVm"u8);
+                writer.WriteObjectValue(ComputeVm);
+            }
             if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
                 writer.WriteObjectValue(NetworkInterface);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApplicableSchedule))
+            {
+                writer.WritePropertyName("applicableSchedule"u8);
+                writer.WriteObjectValue(ApplicableSchedule);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -138,6 +207,11 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VmCreationSource))
+            {
+                writer.WritePropertyName("virtualMachineCreationSource"u8);
+                writer.WriteStringValue(VmCreationSource.Value.ToString());
             }
             if (Optional.IsDefined(EnvironmentId))
             {
@@ -164,12 +238,56 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(LastKnownPowerState))
+            {
+                writer.WritePropertyName("lastKnownPowerState"u8);
+                writer.WriteStringValue(LastKnownPowerState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            {
+                writer.WritePropertyName("uniqueIdentifier"u8);
+                writer.WriteStringValue(UniqueIdentifier.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabVmData DeserializeDevTestLabVmData(JsonElement element)
+        DevTestLabVmData IJsonModel<DevTestLabVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabVmData(document.RootElement, options);
+        }
+
+        internal static DevTestLabVmData DeserializeDevTestLabVmData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -215,6 +333,8 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> lastKnownPowerState = default;
             Optional<string> provisioningState = default;
             Optional<Guid> uniqueIdentifier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -534,8 +654,44 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(vmCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(vmCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabVmData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabVmData IPersistableModel<DevTestLabVmData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabVmData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A ShareSynchronization data transfer object. </summary>
     public partial class ShareSynchronization
     {
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronization"/>. </summary>
         public ShareSynchronization()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronization"/>. </summary>
         /// <param name="consumerEmail"> Email of the user who created the synchronization. </param>
         /// <param name="consumerName"> Name of the user who created the synchronization. </param>
         /// <param name="consumerTenantName"> Tenant name of the consumer who created the synchronization. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="status"> Raw Status. </param>
         /// <param name="synchronizationId"> Synchronization id. </param>
         /// <param name="synchronizationMode"> Synchronization mode. </param>
-        internal ShareSynchronization(string consumerEmail, string consumerName, string consumerTenantName, int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid? synchronizationId, SynchronizationMode? synchronizationMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareSynchronization(string consumerEmail, string consumerName, string consumerTenantName, int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid? synchronizationId, SynchronizationMode? synchronizationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConsumerEmail = consumerEmail;
             ConsumerName = consumerName;
@@ -40,6 +74,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Status = status;
             SynchronizationId = synchronizationId;
             SynchronizationMode = synchronizationMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Email of the user who created the synchronization. </summary>

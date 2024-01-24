@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
     public partial class TerminalServerConfiguration : TerminalServerPatchableProperties
     {
-        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
         public TerminalServerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>

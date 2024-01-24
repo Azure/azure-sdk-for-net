@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> vCenter properties. </summary>
     public partial class SiteRecoveryVCenterProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterProperties"/>. </summary>
         internal SiteRecoveryVCenterProperties()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterProperties"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the vCenter. </param>
         /// <param name="internalId"> VCenter internal ID. </param>
         /// <param name="lastHeartbeatReceivedOn"> The time when the last heartbeat was received by vCenter. </param>

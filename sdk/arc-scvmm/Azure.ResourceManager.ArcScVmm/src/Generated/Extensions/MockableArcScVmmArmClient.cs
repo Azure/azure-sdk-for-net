@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScVmmServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScVmmServerResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScVmmServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScVmmServerResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScVmmServerResource"/> object. </returns>
         public virtual ScVmmServerResource GetScVmmServerResource(ResourceIdentifier id)
         {
             ScVmmServerResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScVmmCloudResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScVmmCloudResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScVmmCloudResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScVmmCloudResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmCloudResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmCloudResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScVmmCloudResource"/> object. </returns>
         public virtual ScVmmCloudResource GetScVmmCloudResource(ResourceIdentifier id)
         {
             ScVmmCloudResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScVmmVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScVmmVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScVmmVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScVmmVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmVirtualNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScVmmVirtualNetworkResource"/> object. </returns>
         public virtual ScVmmVirtualNetworkResource GetScVmmVirtualNetworkResource(ResourceIdentifier id)
         {
             ScVmmVirtualNetworkResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScVmmVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScVmmVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScVmmVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScVmmVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmVirtualMachineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScVmmVirtualMachineResource"/> object. </returns>
         public virtual ScVmmVirtualMachineResource GetScVmmVirtualMachineResource(ResourceIdentifier id)
         {
             ScVmmVirtualMachineResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScVmmVirtualMachineTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScVmmVirtualMachineTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualMachineTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScVmmVirtualMachineTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScVmmVirtualMachineTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualMachineTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmVirtualMachineTemplateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScVmmVirtualMachineTemplateResource"/> object. </returns>
         public virtual ScVmmVirtualMachineTemplateResource GetScVmmVirtualMachineTemplateResource(ResourceIdentifier id)
         {
             ScVmmVirtualMachineTemplateResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScVmmAvailabilitySetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScVmmAvailabilitySetResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmAvailabilitySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScVmmAvailabilitySetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScVmmAvailabilitySetResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmAvailabilitySetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScVmmAvailabilitySetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScVmmAvailabilitySetResource"/> object. </returns>
         public virtual ScVmmAvailabilitySetResource GetScVmmAvailabilitySetResource(ResourceIdentifier id)
         {
             ScVmmAvailabilitySetResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InventoryItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InventoryItemResource.CreateResourceIdentifier" /> to create an <see cref="InventoryItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="InventoryItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InventoryItemResource.CreateResourceIdentifier" /> to create an <see cref="InventoryItemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InventoryItemResource" /> object. </returns>
+        /// <returns> Returns a <see cref="InventoryItemResource"/> object. </returns>
         public virtual InventoryItemResource GetInventoryItemResource(ResourceIdentifier id)
         {
             InventoryItemResource.ValidateResourceId(id);

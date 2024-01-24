@@ -6,20 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The prediction model status. </summary>
     public partial class PredictionModelStatus
     {
-        /// <summary> Initializes a new instance of PredictionModelStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionModelStatus"/>. </summary>
         /// <param name="status"> Prediction model life cycle.  When prediction is in PendingModelConfirmation status, it is allowed to update the status to PendingFeaturing or Active through API. </param>
         public PredictionModelStatus(PredictionModelLifeCycle status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of PredictionModelStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionModelStatus"/>. </summary>
         /// <param name="tenantId"> The hub name. </param>
         /// <param name="predictionName"> The prediction name. </param>
         /// <param name="predictionGuidId"> The prediction GUID ID. </param>
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="trainingAccuracy"> The training accuracy. </param>
         /// <param name="signalsUsed"> The signals used. </param>
         /// <param name="modelVersion"> Version of the model. </param>
-        internal PredictionModelStatus(Guid? tenantId, string predictionName, string predictionGuidId, PredictionModelLifeCycle status, string message, int? trainingSetCount, int? testSetCount, int? validationSetCount, decimal? trainingAccuracy, int? signalsUsed, string modelVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionModelStatus(Guid? tenantId, string predictionName, string predictionGuidId, PredictionModelLifeCycle status, string message, int? trainingSetCount, int? testSetCount, int? validationSetCount, decimal? trainingAccuracy, int? signalsUsed, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             PredictionName = predictionName;
@@ -44,6 +78,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             TrainingAccuracy = trainingAccuracy;
             SignalsUsed = signalsUsed;
             ModelVersion = modelVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredictionModelStatus"/> for deserialization. </summary>
+        internal PredictionModelStatus()
+        {
         }
 
         /// <summary> The hub name. </summary>

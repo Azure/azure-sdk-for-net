@@ -13,13 +13,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A list of remote device adapters. </summary>
     public partial class RemoteDeviceAdapterCollection
     {
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterCollection"/>. </summary>
         public RemoteDeviceAdapterCollection()
         {
             Value = new ChangeTrackingList<RemoteDeviceAdapter>();
         }
 
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterCollection"/>. </summary>
         /// <param name="value"> An array of remote device adapters. </param>
         /// <param name="continuationToken"> A continuation token to use in subsequent calls to enumerate through the remote device adapter collection. This is used when the collection contains too many results to return in one response. </param>
         internal RemoteDeviceAdapterCollection(IList<RemoteDeviceAdapter> value, string continuationToken)

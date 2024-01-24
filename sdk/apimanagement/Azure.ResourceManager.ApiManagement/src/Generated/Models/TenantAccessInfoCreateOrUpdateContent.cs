@@ -5,14 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Tenant access information update parameters. </summary>
     public partial class TenantAccessInfoCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoCreateOrUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoCreateOrUpdateContent"/>. </summary>
         public TenantAccessInfoCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoCreateOrUpdateContent"/>. </summary>
+        /// <param name="principalId"> Principal (User) Identifier. </param>
+        /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TenantAccessInfoCreateOrUpdateContent(string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PrincipalId = principalId;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
+            IsDirectAccessEnabled = isDirectAccessEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Principal (User) Identifier. </summary>

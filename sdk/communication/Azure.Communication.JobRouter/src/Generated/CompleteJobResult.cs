@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Response payload from completing a job. </summary>
     internal partial class CompleteJobResult
     {
-        /// <summary> Initializes a new instance of CompleteJobResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompleteJobResult"/>. </summary>
         internal CompleteJobResult()
         {
         }

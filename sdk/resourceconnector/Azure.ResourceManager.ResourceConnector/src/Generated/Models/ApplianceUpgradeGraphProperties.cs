@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The Upgrade Graph Properties for appliance. </summary>
     public partial class ApplianceUpgradeGraphProperties
     {
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraphProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraphProperties"/>. </summary>
         internal ApplianceUpgradeGraphProperties()
         {
             SupportedVersions = new ChangeTrackingList<ApplianceSupportedVersion>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraphProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraphProperties"/>. </summary>
         /// <param name="applianceVersion"> The current appliance version. </param>
         /// <param name="supportedVersions"> This contains the current version and supported upgrade versions. </param>
         internal ApplianceUpgradeGraphProperties(string applianceVersion, IReadOnlyList<ApplianceSupportedVersion> supportedVersions)

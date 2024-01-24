@@ -55,7 +55,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             OperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
 
-            var resourceLocation = $"{TestEnvironment.Endpoint}documentintelligence/documentModels/{disposableModel.ModelId}?api-version={ServiceVersionString}";
+            // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
+            // to ensure the behavior is consistent.
+
+            var trimmedEndpoint = TestEnvironment.Endpoint.Trim('/');
+            var resourceLocation = $"{trimmedEndpoint}/documentintelligence/documentModels/{disposableModel.ModelId}?api-version={ServiceVersionString}";
 
             ValidateOperationDetails(operationDetails, disposableModel.Operation.Id, resourceLocation, startTime, tags);
 
@@ -78,7 +82,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             OperationDetails operationDetails = await client.GetOperationAsync(disposableClassifier.Operation.Id);
 
-            var resourceLocation = $"{TestEnvironment.Endpoint}documentintelligence/documentClassifiers/{disposableClassifier.ClassifierId}?api-version={ServiceVersionString}";
+            // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
+            // to ensure the behavior is consistent.
+
+            var trimmedEndpoint = TestEnvironment.Endpoint.Trim('/');
+            var resourceLocation = $"{trimmedEndpoint}/documentintelligence/documentClassifiers/{disposableClassifier.ClassifierId}?api-version={ServiceVersionString}";
 
             ValidateOperationDetails(operationDetails, disposableClassifier.Operation.Id, resourceLocation, startTime, tags);
 

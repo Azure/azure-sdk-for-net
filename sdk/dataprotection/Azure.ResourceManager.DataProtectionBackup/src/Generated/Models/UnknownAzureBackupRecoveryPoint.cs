@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownAzureBackupRecoveryPoint. </summary>
     internal partial class UnknownAzureBackupRecoveryPoint : DataProtectionBackupRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of UnknownAzureBackupRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAzureBackupRecoveryPoint"/>. </summary>
         /// <param name="objectType"></param>
-        internal UnknownAzureBackupRecoveryPoint(string objectType) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAzureBackupRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAzureBackupRecoveryPoint"/> for deserialization. </summary>
+        internal UnknownAzureBackupRecoveryPoint()
+        {
         }
     }
 }

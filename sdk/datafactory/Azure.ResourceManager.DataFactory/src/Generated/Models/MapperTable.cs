@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> CDC table details. </summary>
     public partial class MapperTable
     {
-        /// <summary> Initializes a new instance of MapperTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperTable"/>. </summary>
         public MapperTable()
         {
             Schema = new ChangeTrackingList<MapperTableSchema>();
             DslConnectorProperties = new ChangeTrackingList<MapperDslConnectorProperties>();
         }
 
-        /// <summary> Initializes a new instance of MapperTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperTable"/>. </summary>
         /// <param name="name"> Name of the table. </param>
         /// <param name="schema"> List of columns for the source table. </param>
         /// <param name="dslConnectorProperties"> List of name/value pairs for connection properties. </param>

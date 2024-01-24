@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The TableParameterSubspace. </summary>
     public partial class TableParameterSubspace
     {
-        /// <summary> Initializes a new instance of TableParameterSubspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableParameterSubspace"/>. </summary>
         public TableParameterSubspace()
         {
         }
 
-        /// <summary> Initializes a new instance of TableParameterSubspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableParameterSubspace"/>. </summary>
         /// <param name="booster"> Specify the boosting type, e.g gbdt for XGBoost. </param>
         /// <param name="boostingType"> Specify the boosting type, e.g gbdt for LightGBM. </param>
         /// <param name="growPolicy"> Specify the grow policy, which controls the way new nodes are added to the tree. </param>

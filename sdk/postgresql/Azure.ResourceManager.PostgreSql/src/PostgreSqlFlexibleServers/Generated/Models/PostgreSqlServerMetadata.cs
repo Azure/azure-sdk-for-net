@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Database server metadata. </summary>
     public partial class PostgreSqlServerMetadata
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerMetadata"/>. </summary>
         internal PostgreSqlServerMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerMetadata"/>. </summary>
         /// <param name="location"> Location of database server. </param>
         /// <param name="version"> Version for database engine. </param>
         /// <param name="storageMb"> Storage size in MB for database server. </param>

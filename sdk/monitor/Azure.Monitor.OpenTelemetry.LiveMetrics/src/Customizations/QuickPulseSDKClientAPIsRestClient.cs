@@ -5,9 +5,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
@@ -27,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         /// <param name="monitoringDataPoint"> Data contract between SDK and QuickPulse. /QuickPulseService.svc/ping uses this as a backup source of machine name, instance name and invariant version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ikey"/> is null. </exception>
-        public ResponseWithHeaders<object, QuickPulseSDKClientAPIsPingHeaders> PingCustom(string ikey, string apikey = null, int? xMsQpsTransmissionTime = null, string xMsQpsMachineName = null, string xMsQpsInstanceName = null, string xMsQpsStreamId = null, string xMsQpsRoleName = null, string xMsQpsInvariantVersion = null, string xMsQpsConfigurationEtag = null, MonitoringDataPoint monitoringDataPoint = null, CancellationToken cancellationToken = default)
+        public QuickPulseResponse CustomPing(string ikey, string apikey = null, int? xMsQpsTransmissionTime = null, string xMsQpsMachineName = null, string xMsQpsInstanceName = null, string xMsQpsStreamId = null, string xMsQpsRoleName = null, string xMsQpsInvariantVersion = null, string xMsQpsConfigurationEtag = null, MonitoringDataPoint monitoringDataPoint = null, CancellationToken cancellationToken = default)
         {
             if (ikey == null)
             {
@@ -44,10 +46,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         if (message.Response.Headers.ContentLength != 0)
                         {
+                            // TODO: This deserialization was auto generated. I assume this is used for filtering.
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         }
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPingHeaders>(value, headers, message.Response);
+                        return new QuickPulseResponse(success: true, message.Response.Headers);
                     }
                 case 400:
                 case 401:
@@ -57,9 +60,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 503:
                     {
                         ServiceError value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceError.DeserializeServiceError(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPingHeaders>(value, headers, message.Response);
+                        if (message.Response.Headers.ContentLength != 0)
+                        {
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            value = ServiceError.DeserializeServiceError(document.RootElement);
+                            LiveMetricsExporterEventSource.Log.PingFailedWithServiceError(message.Response.Status, value);
+                        }
+
+                        Debug.WriteLine($"{DateTime.Now}: Ping FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
+                        LiveMetricsExporterEventSource.Log.PingFailed(message.Response);
+                        return new QuickPulseResponse(success: false);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -74,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         /// <param name="monitoringDataPoints"> Data contract between SDK and QuickPulse. /QuickPulseService.svc/post uses this to publish metrics and documents to the backend QuickPulse server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ikey"/> is null. </exception>
-        public ResponseWithHeaders<object, QuickPulseSDKClientAPIsPostHeaders> PostCustom(string ikey, string apikey = null, string xMsQpsConfigurationEtag = null, int? xMsQpsTransmissionTime = null, IEnumerable<MonitoringDataPoint> monitoringDataPoints = null, CancellationToken cancellationToken = default)
+        public QuickPulseResponse CustomPost(string ikey, string apikey = null, string xMsQpsConfigurationEtag = null, int? xMsQpsTransmissionTime = null, IEnumerable<MonitoringDataPoint> monitoringDataPoints = null, CancellationToken cancellationToken = default)
         {
             if (ikey == null)
             {
@@ -91,10 +101,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         if (message.Response.Headers.ContentLength != 0)
                         {
+                            // TODO: This deserialization was auto generated. I assume this is used for filtering.
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         }
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPostHeaders>(value, headers, message.Response);
+                        return new QuickPulseResponse(success: true, message.Response.Headers);
                     }
                 case 400:
                 case 401:
@@ -104,9 +115,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 503:
                     {
                         ServiceError value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceError.DeserializeServiceError(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPostHeaders>(value, headers, message.Response);
+                        if (message.Response.Headers.ContentLength != 0)
+                        {
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            value = ServiceError.DeserializeServiceError(document.RootElement);
+                            LiveMetricsExporterEventSource.Log.PostFailedWithServiceError(message.Response.Status, value);
+                        }
+
+                        Debug.WriteLine($"{DateTime.Now}: Post FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
+                        LiveMetricsExporterEventSource.Log.PostFailed(message.Response);
+                        return new QuickPulseResponse(success: false);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

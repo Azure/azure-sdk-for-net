@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The vm size property. </summary>
     public partial class HDInsightVmSizeProperty
     {
-        /// <summary> Initializes a new instance of HDInsightVmSizeProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVmSizeProperty"/>. </summary>
         internal HDInsightVmSizeProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightVmSizeProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVmSizeProperty"/>. </summary>
         /// <param name="name"> The vm size name. </param>
         /// <param name="cores"> The number of cores that the vm size has. </param>
         /// <param name="dataDiskStorageTier"> The data disk storage tier of the vm size. </param>

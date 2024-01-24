@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,24 +19,25 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkVirtualApplianceSkuData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
         public NetworkVirtualApplianceSkuData()
         {
             AvailableVersions = new ChangeTrackingList<string>();
             AvailableScaleUnits = new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="vendor"> Network Virtual Appliance Sku vendor. </param>
         /// <param name="availableVersions"> Available Network Virtual Appliance versions. </param>
         /// <param name="availableScaleUnits"> The list of scale units available. </param>
-        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags)
+        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Vendor = vendor;

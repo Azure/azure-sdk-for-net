@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> An existing operation for replacing the firewall rules. </summary>
     public partial class ReplaceAllFirewallRulesOperationResult
     {
-        /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllFirewallRulesOperationResult"/>. </summary>
         internal ReplaceAllFirewallRulesOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllFirewallRulesOperationResult"/>. </summary>
         /// <param name="operationId"> The operation ID. </param>
         internal ReplaceAllFirewallRulesOperationResult(string operationId)
         {

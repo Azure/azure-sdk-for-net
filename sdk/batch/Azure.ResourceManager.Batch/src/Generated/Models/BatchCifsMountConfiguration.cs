@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Information used to connect to a CIFS file system. </summary>
     public partial class BatchCifsMountConfiguration
     {
-        /// <summary> Initializes a new instance of BatchCifsMountConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchCifsMountConfiguration"/>. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
@@ -32,19 +65,26 @@ namespace Azure.ResourceManager.Batch.Models
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of BatchCifsMountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchCifsMountConfiguration"/>. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> These are 'net use' options in Windows and 'mount' options in Linux. </param>
         /// <param name="password"> The password to use for authentication against the CIFS file system. </param>
-        internal BatchCifsMountConfiguration(string username, string source, string relativeMountPath, string mountOptions, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchCifsMountConfiguration(string username, string source, string relativeMountPath, string mountOptions, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Source = source;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchCifsMountConfiguration"/> for deserialization. </summary>
+        internal BatchCifsMountConfiguration()
+        {
         }
 
         /// <summary> The user to use for authentication against the CIFS file system. </summary>

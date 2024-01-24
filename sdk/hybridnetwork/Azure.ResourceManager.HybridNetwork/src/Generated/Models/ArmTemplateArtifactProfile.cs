@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Template artifact profile. </summary>
     public partial class ArmTemplateArtifactProfile
     {
-        /// <summary> Initializes a new instance of ArmTemplateArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateArtifactProfile"/>. </summary>
         public ArmTemplateArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmTemplateArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateArtifactProfile"/>. </summary>
         /// <param name="templateName"> Template name. </param>
         /// <param name="templateVersion"> Template version. </param>
         internal ArmTemplateArtifactProfile(string templateName, string templateVersion)

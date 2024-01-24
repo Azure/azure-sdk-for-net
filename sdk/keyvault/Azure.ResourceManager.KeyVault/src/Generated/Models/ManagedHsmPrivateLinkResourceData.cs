@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A private link resource. </summary>
     public partial class ManagedHsmPrivateLinkResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedHsmPrivateLinkResourceData(AzureLocation location) : base(location)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

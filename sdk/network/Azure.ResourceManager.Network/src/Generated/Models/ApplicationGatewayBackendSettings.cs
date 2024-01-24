@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,16 +16,17 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Backend address pool settings of an application gateway. </summary>
     public partial class ApplicationGatewayBackendSettings : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettings"/>. </summary>
         public ApplicationGatewayBackendSettings()
         {
             TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettings"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="port"> The destination port on the backend. </param>
         /// <param name="protocol"> The protocol used to communicate with the backend. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
         /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayBackendSettings(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Port = port;

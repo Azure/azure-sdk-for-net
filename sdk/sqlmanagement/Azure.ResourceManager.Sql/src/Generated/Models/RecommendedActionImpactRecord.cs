@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains information of estimated or observed impact on various metrics for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionImpactRecord
     {
-        /// <summary> Initializes a new instance of RecommendedActionImpactRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionImpactRecord"/>. </summary>
         internal RecommendedActionImpactRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionImpactRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionImpactRecord"/>. </summary>
         /// <param name="dimensionName"> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </param>
         /// <param name="unit"> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </param>
         /// <param name="absoluteValue"> Gets the absolute value of this dimension if applicable. e.g., Number of Queries affected. </param>

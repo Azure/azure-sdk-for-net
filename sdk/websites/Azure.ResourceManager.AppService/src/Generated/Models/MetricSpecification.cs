@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Definition of a single resource metric. </summary>
     public partial class MetricSpecification
     {
-        /// <summary> Initializes a new instance of MetricSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSpecification"/>. </summary>
         internal MetricSpecification()
         {
             Dimensions = new ChangeTrackingList<MetricDimension>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             SupportedAggregationTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MetricSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSpecification"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="displayDescription"></param>

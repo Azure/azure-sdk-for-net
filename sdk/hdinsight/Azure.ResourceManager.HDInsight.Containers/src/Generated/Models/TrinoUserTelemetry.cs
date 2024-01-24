@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> User telemetry. </summary>
     internal partial class TrinoUserTelemetry
     {
-        /// <summary> Initializes a new instance of TrinoUserTelemetry. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoUserTelemetry"/>. </summary>
         public TrinoUserTelemetry()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoUserTelemetry. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoUserTelemetry"/>. </summary>
         /// <param name="storage"> Trino user telemetry definition. </param>
         internal TrinoUserTelemetry(TrinoTelemetryConfig storage)
         {

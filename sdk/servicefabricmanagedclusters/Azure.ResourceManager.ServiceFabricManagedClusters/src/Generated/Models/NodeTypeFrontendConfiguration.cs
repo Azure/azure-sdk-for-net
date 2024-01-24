@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the frontend configurations for the node type. </summary>
     public partial class NodeTypeFrontendConfiguration
     {
-        /// <summary> Initializes a new instance of NodeTypeFrontendConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeFrontendConfiguration"/>. </summary>
         public NodeTypeFrontendConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NodeTypeFrontendConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeFrontendConfiguration"/>. </summary>
         /// <param name="ipAddressType"> The IP address type of this frontend configuration. If omitted the default value is IPv4. </param>
         /// <param name="loadBalancerBackendAddressPoolId"> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/backendAddressPools/&lt;backendAddressPoolName&gt;'. </param>
         /// <param name="loadBalancerInboundNatPoolId"> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroupName&gt;/providers/Microsoft.Network/loadBalancers/&lt;loadBalancerName&gt;/inboundNatPools/&lt;inboundNatPoolName&gt;'. </param>

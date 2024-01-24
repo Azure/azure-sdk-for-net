@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> NetworkInterface represents properties of the network interface. </summary>
     public partial class NetworkCloudNetworkInterface
     {
-        /// <summary> Initializes a new instance of NetworkCloudNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudNetworkInterface"/>. </summary>
         internal NetworkCloudNetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudNetworkInterface"/>. </summary>
         /// <param name="address"> The partial address of Peripheral Component Interconnect (PCI). </param>
         /// <param name="deviceConnectionType"> The connection type of the device. </param>
         /// <param name="model"> The model name of the device. </param>

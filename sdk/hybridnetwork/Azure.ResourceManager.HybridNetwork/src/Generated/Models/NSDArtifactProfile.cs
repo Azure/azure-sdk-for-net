@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact profile properties. </summary>
     public partial class NSDArtifactProfile
     {
-        /// <summary> Initializes a new instance of NSDArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NSDArtifactProfile"/>. </summary>
         public NSDArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NSDArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NSDArtifactProfile"/>. </summary>
         /// <param name="artifactStoreReference"> The artifact store resource id. </param>
         /// <param name="artifactName"> Artifact name. </param>
         /// <param name="artifactVersion"> Artifact version. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Output of check name availability API. </summary>
     public partial class SearchServiceNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of SearchServiceNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNameAvailabilityResult"/>. </summary>
         internal SearchServiceNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchServiceNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> A value indicating whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. 'Invalid' indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). 'AlreadyExists' indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> A message that explains why the name is invalid and provides resource naming requirements. Available only if 'Invalid' is returned in the 'reason' property. </param>

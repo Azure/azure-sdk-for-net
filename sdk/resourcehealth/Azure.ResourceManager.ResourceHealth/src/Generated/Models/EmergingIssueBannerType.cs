@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Banner type of emerging issue. </summary>
     public partial class EmergingIssueBannerType
     {
-        /// <summary> Initializes a new instance of EmergingIssueBannerType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueBannerType"/>. </summary>
         internal EmergingIssueBannerType()
         {
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueBannerType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueBannerType"/>. </summary>
         /// <param name="title"> The banner title. </param>
         /// <param name="message"> The details of banner. </param>
         /// <param name="cloud"> The cloud type of this banner. </param>

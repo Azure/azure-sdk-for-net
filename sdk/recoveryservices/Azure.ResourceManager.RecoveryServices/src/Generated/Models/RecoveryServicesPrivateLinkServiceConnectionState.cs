@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Gets or sets private link service connection state. </summary>
     public partial class RecoveryServicesPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateLinkServiceConnectionState"/>. </summary>
         internal RecoveryServicesPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
         /// <param name="actionsRequired"> Gets or sets actions required. </param>

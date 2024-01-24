@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Describes an EventGrid Resource Sku. </summary>
     internal partial class ResourceSku
     {
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         public ResourceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         /// <param name="name"> The Sku name of the resource. The possible values are: Basic or Premium. </param>
         internal ResourceSku(EventGridSku? name)
         {

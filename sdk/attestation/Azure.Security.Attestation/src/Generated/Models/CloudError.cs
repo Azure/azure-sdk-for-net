@@ -10,12 +10,12 @@ namespace Azure.Security.Attestation.Models
     /// <summary> An error response from Attestation. </summary>
     internal partial class CloudError
     {
-        /// <summary> Initializes a new instance of CloudError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudError"/>. </summary>
         internal CloudError()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudError"/>. </summary>
         /// <param name="error"> An error response from Attestation. </param>
         internal CloudError(CloudErrorBody error)
         {

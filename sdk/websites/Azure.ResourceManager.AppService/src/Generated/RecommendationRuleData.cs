@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class RecommendationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationRuleData"/>. </summary>
         public RecommendationRuleData()
         {
             CategoryTags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The azure async operation response. </summary>
     public partial class HDInsightAsyncOperationResult
     {
-        /// <summary> Initializes a new instance of HDInsightAsyncOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAsyncOperationResult"/>. </summary>
         internal HDInsightAsyncOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAsyncOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAsyncOperationResult"/>. </summary>
         /// <param name="status"> The async operation state. </param>
         /// <param name="error"> The operation error information. </param>
         internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ResponseError error)

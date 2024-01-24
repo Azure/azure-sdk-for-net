@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,20 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The role management policy enablement rule. </summary>
     public partial class RoleManagementPolicyEnablementRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyEnablementRule"/>. </summary>
         public RoleManagementPolicyEnablementRule()
         {
             EnablementRules = new ChangeTrackingList<RoleAssignmentEnablementRuleType>();
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule;
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyEnablementRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="enablementRules"> The list of enabled rules. </param>
-        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<RoleAssignmentEnablementRuleType> enablementRules) : base(id, ruleType, target)
+        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<RoleAssignmentEnablementRuleType> enablementRules) : base(id, ruleType, target, serializedAdditionalRawData)
         {
             EnablementRules = enablementRules;
             RuleType = ruleType;

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class represents details for export jobs workflow. </summary>
     public partial class ExportJobDetails : SiteRecoveryJobDetails
     {
-        /// <summary> Initializes a new instance of ExportJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportJobDetails"/>. </summary>
         internal ExportJobDetails()
         {
             InstanceType = "ExportJobDetails";
         }
 
-        /// <summary> Initializes a new instance of ExportJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <param name="blobUri"> BlobUri of the exported jobs. </param>

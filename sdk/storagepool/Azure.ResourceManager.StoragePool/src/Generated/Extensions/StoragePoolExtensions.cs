@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiskPoolResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DiskPoolResource"/> object. </returns>
         public static DiskPoolResource GetDiskPoolResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableStoragePoolArmClient(client).GetDiskPoolResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource"/> object. </returns>
         public static DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableStoragePoolArmClient(client).GetDiskPoolIscsiTargetResource(id);
         }
 
@@ -75,9 +81,12 @@ namespace Azure.ResourceManager.StoragePool
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
         public static DiskPoolCollection GetDiskPools(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPools();
         }
 
@@ -92,6 +101,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -101,11 +118,13 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="diskPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DiskPoolResource>> GetDiskPoolAsync(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPoolAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -120,6 +139,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,11 +156,13 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="diskPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DiskPoolResource> GetDiskPool(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPool(diskPoolName, cancellationToken);
         }
 
@@ -148,6 +177,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -156,9 +193,12 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
         }
 
@@ -173,6 +213,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -181,9 +229,12 @@ namespace Azure.ResourceManager.StoragePool
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolResource> GetDiskPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPools(cancellationToken);
         }
 
@@ -198,6 +249,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPoolZones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -207,9 +262,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
         }
 
@@ -224,6 +282,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPoolZones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -233,9 +295,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
         }
 
@@ -250,6 +315,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -259,9 +328,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
         }
 
@@ -276,6 +348,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,9 +361,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StoragePoolSkuInfo> GetResourceSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetResourceSkus(location, cancellationToken);
         }
     }

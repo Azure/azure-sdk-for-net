@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class NetworkFeatureData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFeatureData"/>. </summary>
         public NetworkFeatureData()
         {
             HybridConnections = new ChangeTrackingList<RelayServiceConnectionEntityData>();
             HybridConnectionsV2 = new ChangeTrackingList<HybridConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

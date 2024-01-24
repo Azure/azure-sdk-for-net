@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
     /// <summary> The List Custom Locations operation response. </summary>
     internal partial class CustomLocationListResult
     {
-        /// <summary> Initializes a new instance of CustomLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationListResult"/>. </summary>
         internal CustomLocationListResult()
         {
             Value = new ChangeTrackingList<CustomLocationData>();
         }
 
-        /// <summary> Initializes a new instance of CustomLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationListResult"/>. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="value"> The list of Custom Locations. </param>
         internal CustomLocationListResult(string nextLink, IReadOnlyList<CustomLocationData> value)

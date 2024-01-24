@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis variable. </summary>
     public partial class SsisVariable
     {
-        /// <summary> Initializes a new instance of SsisVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisVariable"/>. </summary>
         internal SsisVariable()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisVariable"/>. </summary>
         /// <param name="id"> Variable id. </param>
         /// <param name="name"> Variable name. </param>
         /// <param name="description"> Variable description. </param>

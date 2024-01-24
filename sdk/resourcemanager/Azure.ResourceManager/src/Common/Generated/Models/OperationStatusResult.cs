@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Models
     [TypeReferenceType]
     public partial class OperationStatusResult
     {
-        /// <summary> Initializes a new instance of OperationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         [InitializationConstructor]
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Models
             Operations = new ChangeTrackingList<OperationStatusResult>();
         }
 
-        /// <summary> Initializes a new instance of OperationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Models
             EndOn = endOn;
             Operations = operations;
             Error = error;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/> for deserialization. </summary>
+        protected OperationStatusResult()
+        {
         }
 
         /// <summary> Fully qualified ID for the async operation. </summary>

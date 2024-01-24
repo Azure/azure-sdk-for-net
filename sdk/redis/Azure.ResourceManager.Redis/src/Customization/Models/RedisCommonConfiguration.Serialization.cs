@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
             }
+            if (Optional.IsDefined(IsAadEnabled))
+            {
+                writer.WritePropertyName("aad-enabled"u8);
+                writer.WriteStringValue(IsAadEnabled);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.Redis.Models
             Optional<string> zonalConfiguration = default;
             Optional<string> authnotrequired = default;
             Optional<string> storageSubscriptionId = default;
+            Optional<string> aadEnabled = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,10 +240,15 @@ namespace Azure.ResourceManager.Redis.Models
                     storageSubscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("aad-enabled"u8))
+                {
+                    aadEnabled = property.Value.GetString();
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RedisCommonConfiguration(Optional.ToNullable(rdbBackupEnabled), rdbBackupFrequency.Value, Optional.ToNullable(rdbBackupMaxSnapshotCount), rdbStorageConnectionString.Value, Optional.ToNullable(aofBackupEnabled), aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, storageSubscriptionId.Value, additionalProperties);
+            return new RedisCommonConfiguration(Optional.ToNullable(rdbBackupEnabled), rdbBackupFrequency.Value, Optional.ToNullable(rdbBackupMaxSnapshotCount), rdbStorageConnectionString.Value, Optional.ToNullable(aofBackupEnabled), aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, storageSubscriptionId.Value, aadEnabled.Value, additionalProperties);
         }
     }
 }

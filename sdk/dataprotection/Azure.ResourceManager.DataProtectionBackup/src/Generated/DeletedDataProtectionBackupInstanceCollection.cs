@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedDataProtectionBackupInstanceResource" /> and their operations.
-    /// Each <see cref="DeletedDataProtectionBackupInstanceResource" /> in the collection will belong to the same instance of <see cref="DataProtectionBackupVaultResource" />.
-    /// To get a <see cref="DeletedDataProtectionBackupInstanceCollection" /> instance call the GetDeletedDataProtectionBackupInstances method from an instance of <see cref="DataProtectionBackupVaultResource" />.
+    /// A class representing a collection of <see cref="DeletedDataProtectionBackupInstanceResource"/> and their operations.
+    /// Each <see cref="DeletedDataProtectionBackupInstanceResource"/> in the collection will belong to the same instance of <see cref="DataProtectionBackupVaultResource"/>.
+    /// To get a <see cref="DeletedDataProtectionBackupInstanceCollection"/> instance call the GetDeletedDataProtectionBackupInstances method from an instance of <see cref="DataProtectionBackupVaultResource"/>.
     /// </summary>
     public partial class DeletedDataProtectionBackupInstanceCollection : ArmCollection, IEnumerable<DeletedDataProtectionBackupInstanceResource>, IAsyncEnumerable<DeletedDataProtectionBackupInstanceResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedDataProtectionBackupInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeletedDataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedDataProtectionBackupInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedDataProtectionBackupInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedDataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedDataProtectionBackupInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the deleted backup instance. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

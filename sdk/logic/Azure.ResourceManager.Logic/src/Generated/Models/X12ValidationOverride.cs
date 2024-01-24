@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 validation override settings. </summary>
     public partial class X12ValidationOverride
     {
-        /// <summary> Initializes a new instance of X12ValidationOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12ValidationOverride"/>. </summary>
         /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
         /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>
         /// <param name="validateXsdTypes"> The value indicating whether to validate XSD types. </param>

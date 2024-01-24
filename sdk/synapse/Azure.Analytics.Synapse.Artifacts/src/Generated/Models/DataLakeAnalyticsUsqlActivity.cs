@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Data Lake Analytics U-SQL activity. </summary>
     public partial class DataLakeAnalyticsUsqlActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsUsqlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "DataLakeAnalyticsU-SQL";
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsUsqlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

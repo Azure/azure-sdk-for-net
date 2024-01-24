@@ -14,13 +14,13 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Supported parameters for a PII Entities Recognition task. </summary>
     internal partial class PiiTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskParameters"/>. </summary>
         public PiiTaskParameters()
         {
             PiiCategories = new ChangeTrackingList<PiiEntityCategory>();
         }
 
-        /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="domain"> The PII domain used for PII Entity Recognition. </param>

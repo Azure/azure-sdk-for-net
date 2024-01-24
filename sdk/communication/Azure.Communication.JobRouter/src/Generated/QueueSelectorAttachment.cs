@@ -14,12 +14,12 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of QueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueSelectorAttachment"/>. </summary>
         protected QueueSelectorAttachment()
         {
         }
 
-        /// <summary> Initializes a new instance of QueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         internal QueueSelectorAttachment(QueueSelectorAttachmentKind kind)
         {

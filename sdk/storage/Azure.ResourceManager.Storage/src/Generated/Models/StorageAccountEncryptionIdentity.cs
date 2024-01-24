@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Encryption identity for the storage account. </summary>
     public partial class StorageAccountEncryptionIdentity
     {
-        /// <summary> Initializes a new instance of StorageAccountEncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountEncryptionIdentity"/>. </summary>
         public StorageAccountEncryptionIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountEncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountEncryptionIdentity"/>. </summary>
         /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the storage account. </param>
         /// <param name="encryptionFederatedIdentityClientId"> ClientId of the multi-tenant application to be used in conjunction with the user-assigned identity for cross-tenant customer-managed-keys server-side encryption on the storage account. </param>
         internal StorageAccountEncryptionIdentity(string encryptionUserAssignedIdentity, string encryptionFederatedIdentityClientId)

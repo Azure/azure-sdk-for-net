@@ -84,39 +84,6 @@ namespace Azure.Search.Documents.Tests
                 }
             }
         }
-
-        /// <summary>
-        /// Create a hotels index with the standard test documents and as many
-        /// extra empty documents needed to test.
-        /// </summary>
-        /// <param name="size">The total number of documents in the index.</param>
-        /// <returns>SearchResources for testing.</returns>
-        public async Task<SearchResources> CreateLargeHotelsIndexAsync(int size)
-        {
-            // Start with the standard test hotels
-            SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
-
-            // Create empty hotels with just an ID for the rest
-            int existingDocumentCount = SearchResources.TestDocuments.Length;
-            IEnumerable<string> hotelIds =
-                Enumerable.Range(
-                    existingDocumentCount + 1,
-                    size - existingDocumentCount)
-                .Select(id => id.ToString());
-            List<SearchDocument> hotels = hotelIds.Select(id => new SearchDocument { ["hotelId"] = id }).ToList();
-
-            // Upload the empty hotels in batches of 1000 until we're complete
-            SearchClient client = resources.GetSearchClient();
-            for (int i = 0; i < hotels.Count; i += 1000)
-            {
-                IEnumerable<SearchDocument> nextHotels = hotels.Skip(i).Take(1000);
-                if (!nextHotels.Any()) { break; }
-                await client.IndexDocumentsAsync(IndexDocumentsBatch.Upload(nextHotels));
-                await resources.WaitForIndexingAsync();
-            }
-
-            return resources;
-        }
         #endregion Utilities
 
         [Test]
@@ -268,6 +235,23 @@ namespace Azure.Search.Documents.Tests
                 response,
                 h => h.Document.HotelId,
                 "1", "5");
+        }
+
+        [Test]
+        public async Task TestNormalizer()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    null,
+                    new SearchOptions
+                    {
+                        Filter = "address/city eq 'New york'"
+                    });
+            await AssertKeysEqual(
+                response,
+                h => h.Document.HotelId,
+                "5", "9");
         }
 
         [Test]
@@ -802,7 +786,7 @@ namespace Azure.Search.Documents.Tests
         public async Task CanContinueStatic()
         {
             const int size = 2001;
-            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size);
             SearchClient client = resources.GetQueryClient();
             Response<SearchResults<Hotel>> response =
                 await client.SearchAsync<Hotel>(
@@ -845,7 +829,7 @@ namespace Azure.Search.Documents.Tests
         public async Task CanContinueDynamic()
         {
             const int size = 2001;
-            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size);
             SearchClient client = resources.GetQueryClient();
             Response<SearchResults<SearchDocument>> response =
                 await client.SearchAsync<SearchDocument>(
@@ -888,7 +872,7 @@ namespace Azure.Search.Documents.Tests
         public async Task CanContinueWithoutSize()
         {
             const int size = 167;
-            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size);
             SearchClient client = resources.GetQueryClient();
             Response<SearchResults<SearchDocument>> response =
                 await client.SearchAsync<SearchDocument>(
@@ -948,7 +932,7 @@ namespace Azure.Search.Documents.Tests
         public async Task PagingDynamicDocuments()
         {
             const int size = 2001;
-            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size);
             Response<SearchResults<SearchDocument>> response =
                 await resources.GetQueryClient().SearchAsync<SearchDocument>(
                     "*",
@@ -973,7 +957,7 @@ namespace Azure.Search.Documents.Tests
         public async Task PagingStaticDocuments()
         {
             const int size = 2001;
-            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size);
             Response<SearchResults<Hotel>> response =
                 await resources.GetQueryClient().SearchAsync<Hotel>(
                     "*",
@@ -998,7 +982,7 @@ namespace Azure.Search.Documents.Tests
         public async Task PagingWithoutSize()
         {
             const int size = 167;
-            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size);
             Response<SearchResults<Hotel>> response =
                 await resources.GetQueryClient().SearchAsync<Hotel>(
                     "*",

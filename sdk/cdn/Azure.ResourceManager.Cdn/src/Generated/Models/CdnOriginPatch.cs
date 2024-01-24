@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -12,9 +14,70 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Origin properties needed for origin update. </summary>
     public partial class CdnOriginPatch
     {
-        /// <summary> Initializes a new instance of CdnOriginPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnOriginPatch"/>. </summary>
         public CdnOriginPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnOriginPatch"/>. </summary>
+        /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
+        /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
+        /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
+        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
+        /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
+        /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
+        /// <param name="enabled"> Origin is enabled for load balancing or not. </param>
+        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </param>
+        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
+        /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnOriginPatch(string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HostName = hostName;
+            HttpPort = httpPort;
+            HttpsPort = httpsPort;
+            OriginHostHeader = originHostHeader;
+            Priority = priority;
+            Weight = weight;
+            Enabled = enabled;
+            PrivateLinkAlias = privateLinkAlias;
+            PrivateLinkResourceId = privateLinkResourceId;
+            PrivateLinkLocation = privateLinkLocation;
+            PrivateLinkApprovalMessage = privateLinkApprovalMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>

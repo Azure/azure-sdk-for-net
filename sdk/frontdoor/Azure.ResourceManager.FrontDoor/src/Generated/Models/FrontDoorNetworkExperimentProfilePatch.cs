@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines modifiable attributes of a Profile. </summary>
     public partial class FrontDoorNetworkExperimentProfilePatch
     {
-        /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfilePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfilePatch"/>. </summary>
         public FrontDoorNetworkExperimentProfilePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfilePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="enabledState"> The enabled state of the Profile. </param>
+        internal FrontDoorNetworkExperimentProfilePatch(IDictionary<string, string> tags, FrontDoorExperimentState? enabledState)
+        {
+            Tags = tags;
+            EnabledState = enabledState;
         }
 
         /// <summary> Resource tags. </summary>

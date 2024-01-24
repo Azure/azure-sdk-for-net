@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Auto pause properties. </summary>
     public partial class MachineLearningAutoPauseProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAutoPauseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoPauseProperties"/>. </summary>
         public MachineLearningAutoPauseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAutoPauseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoPauseProperties"/>. </summary>
         /// <param name="delayInMinutes"></param>
         /// <param name="isEnabled"></param>
         internal MachineLearningAutoPauseProperties(int? delayInMinutes, bool? isEnabled)

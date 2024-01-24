@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabArtifactSourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactSourceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactSourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabArtifactSourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactSourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactSourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +75,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="createdOn"> The artifact source's creation date. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArtifactSourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, Uri uri, DevTestLabSourceControlType? sourceType, string folderPath, string armTemplateFolderPath, string branchRef, string securityToken, DevTestLabEnableStatus? status, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             Uri = uri;
@@ -56,6 +89,12 @@ namespace Azure.ResourceManager.DevTestLabs
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactSourceData"/> for deserialization. </summary>
+        internal DevTestLabArtifactSourceData()
+        {
         }
 
         /// <summary> The artifact source's display name. </summary>

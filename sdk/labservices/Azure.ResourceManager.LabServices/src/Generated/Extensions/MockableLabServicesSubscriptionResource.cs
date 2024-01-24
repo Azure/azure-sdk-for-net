@@ -66,11 +66,19 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabPlanResource> GetLabPlansAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LabPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -89,11 +97,19 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabPlanResource> GetLabPlans(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LabPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -112,11 +128,19 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabResource> GetLabsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LabRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -135,11 +159,19 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabResource> GetLabs(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LabRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -158,11 +190,15 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableLabServicesSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableLabServicesSku> GetSkusAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
@@ -181,11 +217,15 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableLabServicesSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableLabServicesSku> GetSkus(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
@@ -204,12 +244,16 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabServicesUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabServicesUsage> GetUsagesAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location, filter);
@@ -228,12 +272,16 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabServicesUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabServicesUsage> GetUsages(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location, filter);

@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The UnknownConnectToSourceSqlServerTaskOutput. </summary>
     internal partial class UnknownConnectToSourceSqlServerTaskOutput : ConnectToSourceSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of UnknownConnectToSourceSqlServerTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectToSourceSqlServerTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
-        internal UnknownConnectToSourceSqlServerTaskOutput(string id, string resultType) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownConnectToSourceSqlServerTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             ResultType = resultType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectToSourceSqlServerTaskOutput"/> for deserialization. </summary>
+        internal UnknownConnectToSourceSqlServerTaskOutput()
+        {
         }
     }
 }

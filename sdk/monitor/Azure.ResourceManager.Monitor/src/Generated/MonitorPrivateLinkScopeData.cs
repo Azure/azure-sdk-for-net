@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorPrivateLinkScopeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="accessModeSettings"> Access mode settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor
             AccessModeSettings = accessModeSettings;
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> An output event timestamp. </summary>
     public partial class LastOutputEventTimestamp
     {
-        /// <summary> Initializes a new instance of LastOutputEventTimestamp. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastOutputEventTimestamp"/>. </summary>
         internal LastOutputEventTimestamp()
         {
         }
 
-        /// <summary> Initializes a new instance of LastOutputEventTimestamp. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastOutputEventTimestamp"/>. </summary>
         /// <param name="lastOutputEventOn"> The last output event time. </param>
         /// <param name="lastUpdatedOn"> The time that the last update happened. </param>
         internal LastOutputEventTimestamp(DateTimeOffset? lastOutputEventOn, DateTimeOffset? lastUpdatedOn)

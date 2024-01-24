@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,16 +14,17 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Task level output for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskOutputTaskLevel : ConnectToSourceSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputTaskLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputTaskLevel()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
             ResultType = "TaskLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputTaskLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databases"> Source databases as a map from database name to database id. </param>
         /// <param name="logins"> Source logins as a map from login name to login id. </param>
         /// <param name="agentJobs"> Source agent jobs as a map from agent job name to id. </param>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerVersion"> Source server version. </param>
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors. </param>
-        internal ConnectToSourceSqlServerTaskOutputTaskLevel(string id, string resultType, string databases, string logins, string agentJobs, string databaseTdeCertificateMapping, string sourceServerVersion, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors) : base(id, resultType)
+        internal ConnectToSourceSqlServerTaskOutputTaskLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databases, string logins, string agentJobs, string databaseTdeCertificateMapping, string sourceServerVersion, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors) : base(id, resultType, serializedAdditionalRawData)
         {
             Databases = databases;
             Logins = logins;

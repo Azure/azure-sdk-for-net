@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Value object for schema results. </summary>
     public partial class OperationalInsightsSearchSchemaValue
     {
-        /// <summary> Initializes a new instance of OperationalInsightsSearchSchemaValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="indexed"> The boolean that indicates the field is searchable as free text. </param>
         /// <param name="stored"> The boolean that indicates whether or not the field is stored. </param>
         /// <param name="facet"> The boolean that indicates whether or not the field is a facet. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             OwnerType = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSearchSchemaValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="name"> The name of the schema. </param>
         /// <param name="displayName"> The display name of the schema. </param>
         /// <param name="searchSchemaValueType"> The type. </param>

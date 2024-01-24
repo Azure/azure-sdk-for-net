@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Enable migration input properties. </summary>
     public partial class EnableMigrationProperties
     {
-        /// <summary> Initializes a new instance of EnableMigrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnableMigrationProperties"/>. </summary>
         /// <param name="policyId"> The policy Id. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.

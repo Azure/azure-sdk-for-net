@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration account maps. </summary>
     internal partial class IntegrationAccountMapListResult
     {
-        /// <summary> Initializes a new instance of IntegrationAccountMapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountMapListResult"/>. </summary>
         internal IntegrationAccountMapListResult()
         {
             Value = new ChangeTrackingList<IntegrationAccountMapData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountMapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountMapListResult"/>. </summary>
         /// <param name="value"> The list of integration account maps. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountMapListResult(IReadOnlyList<IntegrationAccountMapData> value, string nextLink)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,54 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Group specific to the update configuration. </summary>
     public partial class SoftwareUpdateConfigurationTargetProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTargetProperties"/>. </summary>
         public SoftwareUpdateConfigurationTargetProperties()
         {
             AzureQueries = new ChangeTrackingList<AzureQueryProperties>();
             NonAzureQueries = new ChangeTrackingList<NonAzureQueryProperties>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTargetProperties"/>. </summary>
         /// <param name="azureQueries"> List of Azure queries in the software update configuration. </param>
         /// <param name="nonAzureQueries"> List of non Azure queries in the software update configuration. </param>
-        internal SoftwareUpdateConfigurationTargetProperties(IList<AzureQueryProperties> azureQueries, IList<NonAzureQueryProperties> nonAzureQueries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationTargetProperties(IList<AzureQueryProperties> azureQueries, IList<NonAzureQueryProperties> nonAzureQueries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureQueries = azureQueries;
             NonAzureQueries = nonAzureQueries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Azure queries in the software update configuration. </summary>

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.IotHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IotHubDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotHubDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotHubDescriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotHubDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubDescriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubDescriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotHubDescriptionResource"/> object. </returns>
         public virtual IotHubDescriptionResource GetIotHubDescriptionResource(ResourceIdentifier id)
         {
             IotHubDescriptionResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.IotHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubConsumerGroupInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubConsumerGroupInfoResource.CreateResourceIdentifier" /> to create an <see cref="EventHubConsumerGroupInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EventHubConsumerGroupInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubConsumerGroupInfoResource.CreateResourceIdentifier" /> to create an <see cref="EventHubConsumerGroupInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubConsumerGroupInfoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="EventHubConsumerGroupInfoResource"/> object. </returns>
         public virtual EventHubConsumerGroupInfoResource GetEventHubConsumerGroupInfoResource(ResourceIdentifier id)
         {
             EventHubConsumerGroupInfoResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.IotHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IotHubCertificateDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotHubCertificateDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubCertificateDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotHubCertificateDescriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotHubCertificateDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubCertificateDescriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubCertificateDescriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotHubCertificateDescriptionResource"/> object. </returns>
         public virtual IotHubCertificateDescriptionResource GetIotHubCertificateDescriptionResource(ResourceIdentifier id)
         {
             IotHubCertificateDescriptionResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.IotHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IotHubPrivateEndpointGroupInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotHubPrivateEndpointGroupInformationResource.CreateResourceIdentifier" /> to create an <see cref="IotHubPrivateEndpointGroupInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotHubPrivateEndpointGroupInformationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotHubPrivateEndpointGroupInformationResource.CreateResourceIdentifier" /> to create an <see cref="IotHubPrivateEndpointGroupInformationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubPrivateEndpointGroupInformationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotHubPrivateEndpointGroupInformationResource"/> object. </returns>
         public virtual IotHubPrivateEndpointGroupInformationResource GetIotHubPrivateEndpointGroupInformationResource(ResourceIdentifier id)
         {
             IotHubPrivateEndpointGroupInformationResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.IotHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IotHubPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotHubPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotHubPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotHubPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="IotHubPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotHubPrivateEndpointConnectionResource"/> object. </returns>
         public virtual IotHubPrivateEndpointConnectionResource GetIotHubPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             IotHubPrivateEndpointConnectionResource.ValidateResourceId(id);

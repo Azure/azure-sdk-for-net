@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricNeighborGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricNeighborGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkFabricNeighborGroupData(AzureLocation location) : base(location)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkTapRuleIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricNeighborGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

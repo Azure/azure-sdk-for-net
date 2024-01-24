@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Progress details during installation of updates. </summary>
     public partial class UpdateInstallProgress
     {
-        /// <summary> Initializes a new instance of UpdateInstallProgress. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateInstallProgress"/>. </summary>
         internal UpdateInstallProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateInstallProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateInstallProgress"/>. </summary>
         /// <param name="percentComplete"> Percentage completed. </param>
         /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
         /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
-        internal UpdateInstallProgress(int? percentComplete, int? numberOfUpdatesToInstall, int? numberOfUpdatesInstalled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateInstallProgress(int? percentComplete, int? numberOfUpdatesToInstall, int? numberOfUpdatesInstalled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PercentComplete = percentComplete;
             NumberOfUpdatesToInstall = numberOfUpdatesToInstall;
             NumberOfUpdatesInstalled = numberOfUpdatesInstalled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Percentage completed. </summary>

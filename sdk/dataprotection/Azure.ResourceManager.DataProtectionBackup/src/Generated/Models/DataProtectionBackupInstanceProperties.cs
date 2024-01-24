@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Instance. </summary>
     public partial class DataProtectionBackupInstanceProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
         /// <param name="objectType"></param>
@@ -30,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = objectType;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
@@ -50,7 +83,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="objectType"></param>
-        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -64,6 +98,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ValidationType = validationType;
             IdentityDetails = identityDetails;
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupInstanceProperties()
+        {
         }
 
         /// <summary> Gets or sets the Backup Instance friendly name. </summary>

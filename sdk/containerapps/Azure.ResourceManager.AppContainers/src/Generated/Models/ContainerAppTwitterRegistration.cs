@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
     public partial class ContainerAppTwitterRegistration
     {
-        /// <summary> Initializes a new instance of ContainerAppTwitterRegistration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTwitterRegistration"/>. </summary>
         public ContainerAppTwitterRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppTwitterRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTwitterRegistration"/>. </summary>
         /// <param name="consumerKey">
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
@@ -25,10 +60,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
         /// </param>
-        internal ContainerAppTwitterRegistration(string consumerKey, string consumerSecretSettingName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppTwitterRegistration(string consumerKey, string consumerSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConsumerKey = consumerKey;
             ConsumerSecretSettingName = consumerSecretSettingName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

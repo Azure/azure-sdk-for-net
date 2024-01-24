@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Properties of the NewRelic account. </summary>
     public partial class NewRelicAccountProperties
     {
-        /// <summary> Initializes a new instance of NewRelicAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAccountProperties"/>. </summary>
         public NewRelicAccountProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAccountProperties"/>. </summary>
         /// <param name="userId"> User id. </param>
         /// <param name="accountInfo"> NewRelic Account Information. </param>
         /// <param name="organizationInfo"> NewRelic Organization Information. </param>

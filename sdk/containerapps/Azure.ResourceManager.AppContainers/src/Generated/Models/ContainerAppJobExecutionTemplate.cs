@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,54 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Job's execution template, containing container configuration for a job's execution. </summary>
     public partial class ContainerAppJobExecutionTemplate
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionTemplate"/>. </summary>
         public ContainerAppJobExecutionTemplate()
         {
             Containers = new ChangeTrackingList<JobExecutionContainer>();
             InitContainers = new ChangeTrackingList<JobExecutionContainer>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionTemplate"/>. </summary>
         /// <param name="containers"> List of container definitions for the Container Apps Job. </param>
         /// <param name="initContainers"> List of specialized containers that run before job containers. </param>
-        internal ContainerAppJobExecutionTemplate(IList<JobExecutionContainer> containers, IList<JobExecutionContainer> initContainers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppJobExecutionTemplate(IList<JobExecutionContainer> containers, IList<JobExecutionContainer> initContainers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Containers = containers;
             InitContainers = initContainers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of container definitions for the Container Apps Job. </summary>

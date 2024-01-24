@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -18,14 +19,46 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class DeviceUpdateInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DeviceUpdateInstanceData(AzureLocation location) : base(location)
         {
-            IotHubs = new ChangeTrackingList<IotHubSettings>();
+            IotHubs = new ChangeTrackingList<DeviceUpdateIotHubSettings>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,21 +70,28 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="iotHubs"> List of IoT Hubs associated with the account. </param>
         /// <param name="enableDiagnostics"> Enables or Disables the diagnostic logs collection. </param>
         /// <param name="diagnosticStorageProperties"> Customer-initiated diagnostic log collection storage properties. </param>
-        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string accountName, IList<IotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceUpdateProvisioningState? provisioningState, string accountName, IList<DeviceUpdateIotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AccountName = accountName;
             IotHubs = iotHubs;
             EnableDiagnostics = enableDiagnostics;
             DiagnosticStorageProperties = diagnosticStorageProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstanceData"/> for deserialization. </summary>
+        internal DeviceUpdateInstanceData()
+        {
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DeviceUpdateProvisioningState? ProvisioningState { get; }
         /// <summary> Parent Device Update Account name which Instance belongs to. </summary>
         public string AccountName { get; }
         /// <summary> List of IoT Hubs associated with the account. </summary>
-        public IList<IotHubSettings> IotHubs { get; }
+        public IList<DeviceUpdateIotHubSettings> IotHubs { get; }
         /// <summary> Enables or Disables the diagnostic logs collection. </summary>
         public bool? EnableDiagnostics { get; set; }
         /// <summary> Customer-initiated diagnostic log collection storage properties. </summary>

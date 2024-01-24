@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Tests of performance System.ClientModel internal types.</Description>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
+    <ProjectReference Include="..\client\System.ClientModel.Tests.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="..\client\TestData\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

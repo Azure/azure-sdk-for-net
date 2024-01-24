@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// </summary>
     public abstract partial class RouteConfiguration
     {
-        /// <summary> Initializes a new instance of RouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteConfiguration"/>. </summary>
         protected RouteConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteConfiguration"/>. </summary>
         /// <param name="odataType"></param>
         internal RouteConfiguration(string odataType)
         {

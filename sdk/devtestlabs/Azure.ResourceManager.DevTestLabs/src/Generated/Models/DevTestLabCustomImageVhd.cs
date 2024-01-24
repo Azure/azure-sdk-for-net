@@ -5,27 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties for creating a custom image from a VHD. </summary>
     public partial class DevTestLabCustomImageVhd
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/>. </summary>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
         public DevTestLabCustomImageVhd(DevTestLabCustomImageOSType osType)
         {
             OSType = osType;
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/>. </summary>
         /// <param name="imageName"> The image name. </param>
         /// <param name="isSysPrepEnabled"> Indicates whether sysprep has been run on the VHD. </param>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
-        internal DevTestLabCustomImageVhd(string imageName, bool? isSysPrepEnabled, DevTestLabCustomImageOSType osType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCustomImageVhd(string imageName, bool? isSysPrepEnabled, DevTestLabCustomImageOSType osType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageName = imageName;
             IsSysPrepEnabled = isSysPrepEnabled;
             OSType = osType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/> for deserialization. </summary>
+        internal DevTestLabCustomImageVhd()
+        {
         }
 
         /// <summary> The image name. </summary>

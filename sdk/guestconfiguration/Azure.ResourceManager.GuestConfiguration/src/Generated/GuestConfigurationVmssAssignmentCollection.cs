@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GuestConfigurationVmssAssignmentResource" /> and their operations.
-    /// Each <see cref="GuestConfigurationVmssAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="GuestConfigurationVmssAssignmentCollection" /> instance call the GetGuestConfigurationVmssAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="GuestConfigurationVmssAssignmentResource"/> and their operations.
+    /// Each <see cref="GuestConfigurationVmssAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="GuestConfigurationVmssAssignmentCollection"/> instance call the GetGuestConfigurationVmssAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class GuestConfigurationVmssAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationVmssAssignmentResource>, IAsyncEnumerable<GuestConfigurationVmssAssignmentResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GuestConfigurationVmssAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationVmssAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmssAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GuestConfigurationVmssAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationVmssAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A recoverable server resource. </summary>
     public partial class PostgreSqlRecoverableServerResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlRecoverableServerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlRecoverableServerResourceData"/>. </summary>
         public PostgreSqlRecoverableServerResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlRecoverableServerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlRecoverableServerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

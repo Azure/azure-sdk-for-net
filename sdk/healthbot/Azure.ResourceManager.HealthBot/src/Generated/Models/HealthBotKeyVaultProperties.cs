@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HealthBot.Models
     /// <summary> Properties of the key vault. </summary>
     public partial class HealthBotKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of HealthBotKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBotKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="keyVaultUri"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             KeyVaultUri = keyVaultUri;
         }
 
-        /// <summary> Initializes a new instance of HealthBotKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBotKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVersion"> The version of the key vault key. </param>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>

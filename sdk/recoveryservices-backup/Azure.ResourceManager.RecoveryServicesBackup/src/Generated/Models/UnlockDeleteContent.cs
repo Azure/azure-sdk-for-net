@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Request body of unlock delete API. </summary>
     public partial class UnlockDeleteContent
     {
-        /// <summary> Initializes a new instance of UnlockDeleteContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteContent"/>. </summary>
         public UnlockDeleteContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteContent"/>. </summary>
+        /// <param name="resourceGuardOperationRequests"></param>
+        /// <param name="resourceToBeDeleted"></param>
+        internal UnlockDeleteContent(IList<string> resourceGuardOperationRequests, string resourceToBeDeleted)
+        {
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
+            ResourceToBeDeleted = resourceToBeDeleted;
         }
 
         /// <summary> Gets the resource guard operation requests. </summary>

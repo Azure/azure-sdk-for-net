@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Server configurations of a Grafana instance. </summary>
     internal partial class GrafanaConfigurations
     {
-        /// <summary> Initializes a new instance of GrafanaConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaConfigurations"/>. </summary>
         public GrafanaConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of GrafanaConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaConfigurations"/>. </summary>
         /// <param name="smtp">
         /// Email server settings.
         /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMwareToAzStackHCI NIC properties. </summary>
     public partial class VMwareToAzStackHciNicInput
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciNicInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciNicInput"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>
         /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             SelectionTypeForFailover = selectionTypeForFailover;
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciNicInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciNicInput"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Create or Update a dedicated HSM in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the resource belongs. </param>
         /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="data"> Parameters to create or update the dedicated hsm. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Create or Update a dedicated HSM in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the resource belongs. </param>
         /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="data"> Parameters to create or update the dedicated hsm. </param>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Update a dedicated HSM in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="name"> Name of the dedicated HSM. </param>
         /// <param name="patch"> Parameters to patch the dedicated HSM. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Update a dedicated HSM in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="name"> Name of the dedicated HSM. </param>
         /// <param name="patch"> Parameters to patch the dedicated HSM. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Deletes the specified Azure Dedicated HSM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated HSM belongs. </param>
         /// <param name="name"> The name of the dedicated HSM to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Deletes the specified Azure Dedicated HSM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated HSM belongs. </param>
         /// <param name="name"> The name of the dedicated HSM to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Gets the specified Azure dedicated HSM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated hsm belongs. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Gets the specified Azure dedicated HSM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated hsm belongs. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> The List operation gets information about the dedicated hsms associated with the subscription and within the specified resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated HSM belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> The List operation gets information about the dedicated hsms associated with the subscription and within the specified resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated HSM belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> The List operation gets information about the dedicated HSMs associated with the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> The List operation gets information about the dedicated HSMs associated with the subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated hsm belongs. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated hsm belongs. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> The List operation gets information about the dedicated hsms associated with the subscription and within the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated HSM belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> The List operation gets information about the dedicated hsms associated with the subscription and within the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated HSM belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> The List operation gets information about the dedicated HSMs associated with the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> The List operation gets information about the dedicated HSMs associated with the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated hsm belongs. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the dedicated hsm belongs. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

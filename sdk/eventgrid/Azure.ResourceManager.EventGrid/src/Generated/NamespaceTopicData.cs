@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class NamespaceTopicData : ResourceData
     {
-        /// <summary> Initializes a new instance of NamespaceTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicData"/>. </summary>
         public NamespaceTopicData()
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

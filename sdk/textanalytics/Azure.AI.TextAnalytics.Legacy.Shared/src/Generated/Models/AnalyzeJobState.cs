@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The AnalyzeJobState. </summary>
     internal partial class AnalyzeJobState : AnalyzeJobMetadata
     {
-        /// <summary> Initializes a new instance of AnalyzeJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>

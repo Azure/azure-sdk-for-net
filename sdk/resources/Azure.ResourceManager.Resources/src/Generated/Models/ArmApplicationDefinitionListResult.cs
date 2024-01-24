@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of managed application definitions. </summary>
     internal partial class ArmApplicationDefinitionListResult
     {
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionListResult"/>. </summary>
         internal ArmApplicationDefinitionListResult()
         {
             Value = new ChangeTrackingList<ArmApplicationDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionListResult"/>. </summary>
         /// <param name="value"> The array of managed application definitions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ArmApplicationDefinitionListResult(IReadOnlyList<ArmApplicationDefinitionData> value, string nextLink)

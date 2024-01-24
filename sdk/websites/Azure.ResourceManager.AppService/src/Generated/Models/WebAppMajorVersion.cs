@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App stack major version. </summary>
     public partial class WebAppMajorVersion
     {
-        /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
         internal WebAppMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<WebAppMinorVersion>();
         }
 
-        /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
         /// <param name="displayText"> Web App stack major version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>

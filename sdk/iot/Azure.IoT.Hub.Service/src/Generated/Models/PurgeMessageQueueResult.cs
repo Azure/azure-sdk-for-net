@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The result of a device message queue purge operation. </summary>
     public partial class PurgeMessageQueueResult
     {
-        /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurgeMessageQueueResult"/>. </summary>
         internal PurgeMessageQueueResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurgeMessageQueueResult"/>. </summary>
         /// <param name="totalMessagesPurged"> The total number of messages purged. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="moduleId"> The unique identifier of the module. </param>

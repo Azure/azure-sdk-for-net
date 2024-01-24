@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesPrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryServicesPrivateLinkResource"/> object. </returns>
         public static RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableRecoveryServicesArmClient(client).GetRecoveryServicesPrivateLinkResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesVaultResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryServicesVaultResource"/> object. </returns>
         public static RecoveryServicesVaultResource GetRecoveryServicesVaultResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableRecoveryServicesArmClient(client).GetRecoveryServicesVaultResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource"/> object. </returns>
         public static RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableRecoveryServicesArmClient(client).GetRecoveryServicesVaultExtendedInfoResource(id);
         }
 
@@ -91,9 +100,12 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of RecoveryServicesVaultResources and their operations over a RecoveryServicesVaultResource. </returns>
         public static RecoveryServicesVaultCollection GetRecoveryServicesVaults(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).GetRecoveryServicesVaults();
         }
 
@@ -108,6 +120,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -117,11 +137,13 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<RecoveryServicesVaultResource>> GetRecoveryServicesVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).GetRecoveryServicesVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,6 +158,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -145,11 +175,13 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<RecoveryServicesVaultResource> GetRecoveryServicesVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).GetRecoveryServicesVault(vaultName, cancellationToken);
         }
 
@@ -166,6 +198,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -176,9 +212,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).CheckRecoveryServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -195,6 +233,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -205,9 +247,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(this ResourceGroupResource resourceGroupResource, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).CheckRecoveryServicesNameAvailability(location, content, cancellationToken);
         }
 
@@ -222,6 +266,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_Capabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -232,9 +280,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="input"/> is null. </exception>
         public static async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServiceCapabilitiesAsync(location, input, cancellationToken).ConfigureAwait(false);
         }
 
@@ -249,6 +299,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_Capabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -259,9 +313,11 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="input"/> is null. </exception>
         public static Response<CapabilitiesResult> GetRecoveryServiceCapabilities(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
         }
 
@@ -276,6 +332,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -284,9 +348,12 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesVaultsAsync(cancellationToken);
         }
 
@@ -301,6 +368,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -309,9 +384,12 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesVaults(cancellationToken);
         }
     }

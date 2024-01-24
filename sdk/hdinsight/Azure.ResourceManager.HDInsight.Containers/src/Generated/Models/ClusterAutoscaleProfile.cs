@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
     public partial class ClusterAutoscaleProfile
     {
-        /// <summary> Initializes a new instance of ClusterAutoscaleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAutoscaleProfile"/>. </summary>
         /// <param name="isEnabled"> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </param>
         public ClusterAutoscaleProfile(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of ClusterAutoscaleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAutoscaleProfile"/>. </summary>
         /// <param name="isEnabled"> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </param>
         /// <param name="gracefulDecommissionTimeout"> This property is for graceful decommission timeout; It has a default setting of 3600 seconds before forced shutdown takes place. This is the maximal time to wait for running containers and applications to complete before transition a DECOMMISSIONING node into DECOMMISSIONED. The default value is 3600 seconds. Negative value (like -1) is handled as infinite timeout. </param>
         /// <param name="autoscaleType"> User to specify which type of Autoscale to be implemented - Scheduled Based or Load Based. </param>

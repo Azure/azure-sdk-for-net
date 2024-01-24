@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes the progress of a database. </summary>
     public partial class MongoDBDatabaseProgress : MongoDBProgress
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ResultType = MongoDBProgressResultType.Database;
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -49,11 +49,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"></param>
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="collections"> The progress of the collections in the database. The keys are the unqualified names of the collections. </param>
-        internal MongoDBDatabaseProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments, IReadOnlyDictionary<string, MongoDBCollectionProgress> collections) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType, state, totalBytes, totalDocuments)
+        internal MongoDBDatabaseProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, MongoDBCollectionProgress> collections) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData)
         {
             Collections = collections;
             ResultType = resultType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseProgress"/> for deserialization. </summary>
+        internal MongoDBDatabaseProgress()
+        {
         }
 
         /// <summary> The progress of the collections in the database. The keys are the unqualified names of the collections. </summary>

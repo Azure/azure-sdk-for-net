@@ -15,6 +15,7 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+use-model-reader-writer: true
 skip-csproj: true
 
 rename-mapping:
@@ -64,7 +65,7 @@ rename-mapping:
   ScopeType: RoleManagementScopeType
   UserSet: RoleManagementUserInfo
   UserType: RoleManagementUserType
-  
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'applicationId': 'uuid'
@@ -112,9 +113,6 @@ generate-arm-resource-extensions:
   - /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
   - /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
 
-request-path-to-resource-type:
-  /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
-
 directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'
@@ -142,7 +140,7 @@ directive:
     transform: $.operationId = 'AzurePermissionsForResourceGroup_List'
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions'].get
-    transform: $.operationId = 'AzurePermissionsForResource_List' 
+    transform: $.operationId = 'AzurePermissionsForResource_List'
 
   - from: authorization-RoleAssignmentsCalls.json
     where: $.definitions

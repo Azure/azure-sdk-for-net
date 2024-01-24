@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Managed identity generic object. </summary>
     public partial class ManagedServiceIdentity
     {
-        /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/>. </summary>
         /// <param name="identityType"> Type of the managed identity. </param>
         public ManagedServiceIdentity(ManagedServiceIdentityType identityType)
         {
@@ -23,17 +55,24 @@ namespace Azure.ResourceManager.Blueprint.Models
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/>. </summary>
         /// <param name="identityType"> Type of the managed identity. </param>
         /// <param name="principalId"> Azure Active Directory principal ID associated with this Identity. </param>
         /// <param name="tenantId"> ID of the Azure Active Directory. </param>
         /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        internal ManagedServiceIdentity(ManagedServiceIdentityType identityType, string principalId, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceIdentity(ManagedServiceIdentityType identityType, string principalId, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             PrincipalId = principalId;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentity"/> for deserialization. </summary>
+        internal ManagedServiceIdentity()
+        {
         }
 
         /// <summary> Type of the managed identity. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Address details for an order item. </summary>
     public partial class EdgeOrderItemAddressDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressDetails"/>. </summary>
         /// <param name="forwardAddress"> Customer address and contact details. It should be address resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="forwardAddress"/> is null. </exception>
         public EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ForwardAddress = forwardAddress;
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressDetails"/>. </summary>
         /// <param name="forwardAddress"> Customer address and contact details. It should be address resource. </param>
         /// <param name="returnAddress"> Return shipping address. </param>
         internal EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress, EdgeOrderItemAddressProperties returnAddress)

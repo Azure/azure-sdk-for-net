@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscription key parameter names details. </summary>
     public partial class SubscriptionKeyParameterNamesContract
     {
-        /// <summary> Initializes a new instance of SubscriptionKeyParameterNamesContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionKeyParameterNamesContract"/>. </summary>
         public SubscriptionKeyParameterNamesContract()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionKeyParameterNamesContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionKeyParameterNamesContract"/>. </summary>
         /// <param name="header"> Subscription key header name. </param>
         /// <param name="query"> Subscription key query string parameter name. </param>
-        internal SubscriptionKeyParameterNamesContract(string header, string query)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionKeyParameterNamesContract(string header, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Header = header;
             Query = query;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Subscription key header name. </summary>

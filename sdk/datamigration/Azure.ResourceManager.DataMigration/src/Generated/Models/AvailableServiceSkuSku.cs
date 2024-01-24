@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> SKU name, tier, etc. </summary>
     public partial class AvailableServiceSkuSku
     {
-        /// <summary> Initializes a new instance of AvailableServiceSkuSku. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSkuSku"/>. </summary>
         internal AvailableServiceSkuSku()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceSkuSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSkuSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="family"> SKU family. </param>
         /// <param name="size"> SKU size. </param>
         /// <param name="tier"> The tier of the SKU, such as "Basic", "General Purpose", or "Business Critical". </param>
-        internal AvailableServiceSkuSku(string name, string family, string size, string tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableServiceSkuSku(string name, string family, string size, string tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Family = family;
             Size = size;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the SKU. </summary>

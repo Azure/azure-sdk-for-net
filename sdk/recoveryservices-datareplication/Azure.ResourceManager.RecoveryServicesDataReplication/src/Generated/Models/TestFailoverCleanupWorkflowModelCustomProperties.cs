@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Test failover cleanup workflow model custom properties. </summary>
     public partial class TestFailoverCleanupWorkflowModelCustomProperties : WorkflowModelCustomProperties
     {
-        /// <summary> Initializes a new instance of TestFailoverCleanupWorkflowModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestFailoverCleanupWorkflowModelCustomProperties"/>. </summary>
         internal TestFailoverCleanupWorkflowModelCustomProperties()
         {
             InstanceType = "TestFailoverCleanupWorkflowDetails";
         }
 
-        /// <summary> Initializes a new instance of TestFailoverCleanupWorkflowModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestFailoverCleanupWorkflowModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="comments"> Gets or sets the test failover cleanup comments. </param>

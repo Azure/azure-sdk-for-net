@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a BlobContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BlobContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBlobContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BlobServiceResource" /> using the GetBlobContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BlobContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBlobContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BlobServiceResource"/> using the GetBlobContainer method.
     /// </summary>
     public partial class BlobContainerResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Storage
         private readonly BlobContainersRestOperations _blobContainerRestClient;
         private readonly BlobContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices/containers";
+
         /// <summary> Initializes a new instance of the <see cref="BlobContainerResource"/> class for mocking. </summary>
         protected BlobContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BlobContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BlobContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BlobContainerResource(ArmClient client, BlobContainerData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices/containers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets an object representing a ImmutabilityPolicyResource along with the instance operations that can be performed on it in the BlobContainer. </summary>
-        /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ImmutabilityPolicyResource"/> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicy()
         {
             return new ImmutabilityPolicyResource(Client, Id.AppendChildResource("immutabilityPolicies", "default"));
@@ -108,6 +108,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,6 +149,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,6 +188,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,6 +231,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -240,6 +272,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +315,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Properties to update for the blob container. </param>
@@ -308,6 +356,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_SetLegalHold</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,6 +399,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_SetLegalHold</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="legalHold"> The LegalHold property that will be set to a blob container. </param>
@@ -376,6 +440,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_ClearLegalHold</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,6 +483,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_ClearLegalHold</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="legalHold"> The LegalHold property that will be clear from a blob container. </param>
@@ -445,6 +525,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Lease</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Lease Container request body. </param>
@@ -476,6 +564,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Lease</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Lease Container request body. </param>
@@ -506,6 +602,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_ObjectLevelWorm</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -540,6 +644,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_ObjectLevelWorm</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

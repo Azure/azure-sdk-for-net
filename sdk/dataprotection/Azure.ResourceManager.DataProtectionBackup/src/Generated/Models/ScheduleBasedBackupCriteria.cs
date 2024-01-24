@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Schedule based backup criteria. </summary>
     public partial class ScheduleBasedBackupCriteria : DataProtectionBackupCriteria
     {
-        /// <summary> Initializes a new instance of ScheduleBasedBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupCriteria"/>. </summary>
         public ScheduleBasedBackupCriteria()
         {
             AbsoluteCriteria = new ChangeTrackingList<BackupAbsoluteMarker>();
@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "ScheduleBasedBackupCriteria";
         }
 
-        /// <summary> Initializes a new instance of ScheduleBasedBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="absoluteCriteria">
         /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
         /// and should be part of AbsoluteMarker enum
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="monthsOfYear"> It should be January/February/....../December. </param>
         /// <param name="scheduleTimes"> List of schedule times for backup. </param>
         /// <param name="weeksOfMonth"> It should be First/Second/Third/Fourth/Last. </param>
-        internal ScheduleBasedBackupCriteria(string objectType, IList<BackupAbsoluteMarker> absoluteCriteria, IList<DataProtectionBackupDay> daysOfMonth, IList<DataProtectionBackupDayOfWeek> daysOfWeek, IList<DataProtectionBackupMonth> monthsOfYear, IList<DateTimeOffset> scheduleTimes, IList<DataProtectionBackupWeekNumber> weeksOfMonth) : base(objectType)
+        internal ScheduleBasedBackupCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<BackupAbsoluteMarker> absoluteCriteria, IList<DataProtectionBackupDay> daysOfMonth, IList<DataProtectionBackupDayOfWeek> daysOfWeek, IList<DataProtectionBackupMonth> monthsOfYear, IList<DateTimeOffset> scheduleTimes, IList<DataProtectionBackupWeekNumber> weeksOfMonth) : base(objectType, serializedAdditionalRawData)
         {
             AbsoluteCriteria = absoluteCriteria;
             DaysOfMonth = daysOfMonth;

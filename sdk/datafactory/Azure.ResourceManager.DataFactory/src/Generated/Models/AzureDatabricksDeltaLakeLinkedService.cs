@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Databricks Delta Lake linked service. </summary>
     public partial class AzureDatabricksDeltaLakeLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeLinkedService"/>. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksDeltaLakeLinkedService(DataFactoryElement<string> domain)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureDatabricksDeltaLake";
         }
 
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

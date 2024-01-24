@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -19,13 +20,45 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppConnectedEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="staticIP"> Static IP of the connectedEnvironment. </param>
         /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
-        internal ContainerAppConnectedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ContainerAppConnectedEnvironmentProvisioningState? provisioningState, string deploymentErrors, string defaultDomain, IPAddress staticIP, string daprAIConnectionString, ContainerAppCustomDomainConfiguration customDomainConfiguration) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppConnectedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ContainerAppConnectedEnvironmentProvisioningState? provisioningState, string deploymentErrors, string defaultDomain, IPAddress staticIP, string daprAIConnectionString, ContainerAppCustomDomainConfiguration customDomainConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;
@@ -48,6 +82,12 @@ namespace Azure.ResourceManager.AppContainers
             StaticIP = staticIP;
             DaprAIConnectionString = daprAIConnectionString;
             CustomDomainConfiguration = customDomainConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/> for deserialization. </summary>
+        internal ContainerAppConnectedEnvironmentData()
+        {
         }
 
         /// <summary> The complex type of the extended location. </summary>

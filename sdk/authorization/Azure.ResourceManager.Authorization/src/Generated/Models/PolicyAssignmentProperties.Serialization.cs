@@ -6,16 +6,135 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class PolicyAssignmentProperties
+    public partial class PolicyAssignmentProperties : IUtf8JsonSerializable, IJsonModel<PolicyAssignmentProperties>
     {
-        internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAssignmentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolicyAssignmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("policy"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PolicyId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(PolicyId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            {
+                writer.WritePropertyName("lastModifiedBy"u8);
+                writer.WriteObjectValue(LastModifiedBy);
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedDateTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("roleDefinition"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(RoleDefinitionId);
+            }
+            if (Optional.IsDefined(RoleDefinitionDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(RoleDefinitionDisplayName);
+            }
+            if (Optional.IsDefined(RoleType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RoleType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(ScopeId);
+            }
+            if (Optional.IsDefined(ScopeDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(ScopeDisplayName);
+            }
+            if (Optional.IsDefined(ScopeType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ScopeType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyAssignmentProperties IJsonModel<PolicyAssignmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyAssignmentProperties(document.RootElement, options);
+        }
+
+        internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +152,8 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<ResourceIdentifier> id2 = default;
             Optional<string> displayName0 = default;
             Optional<RoleManagementScopeType> type1 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -168,8 +289,44 @@ namespace Azure.ResourceManager.Authorization.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyAssignmentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PolicyAssignmentProperties IPersistableModel<PolicyAssignmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyAssignmentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyAssignmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

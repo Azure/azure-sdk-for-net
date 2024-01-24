@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevBoxDefinitionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevBoxDefinitionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class DeletedSiteData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
         public DeletedSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

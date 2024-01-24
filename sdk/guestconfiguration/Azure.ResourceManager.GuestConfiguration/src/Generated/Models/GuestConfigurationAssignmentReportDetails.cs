@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Details of the guest configuration assignment report. </summary>
     public partial class GuestConfigurationAssignmentReportDetails
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportDetails"/>. </summary>
         internal GuestConfigurationAssignmentReportDetails()
         {
             Resources = new ChangeTrackingList<AssignmentReportResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportDetails"/>. </summary>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="startOn"> Start date and time of the guest configuration assignment compliance status check. </param>
         /// <param name="endOn"> End date and time of the guest configuration assignment compliance status check. </param>

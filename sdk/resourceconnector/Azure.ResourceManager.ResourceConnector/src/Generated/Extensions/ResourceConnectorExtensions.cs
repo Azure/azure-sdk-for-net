@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceConnectorApplianceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceConnectorApplianceResource"/> object. </returns>
         public static ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableResourceConnectorArmClient(client).GetResourceConnectorApplianceResource(id);
         }
 
@@ -59,9 +62,12 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ResourceConnectorApplianceResources and their operations over a ResourceConnectorApplianceResource. </returns>
         public static ResourceConnectorApplianceCollection GetResourceConnectorAppliances(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliances();
         }
 
@@ -76,6 +82,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -85,11 +99,13 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorApplianceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -104,6 +120,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -113,11 +137,13 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ResourceConnectorApplianceResource> GetResourceConnectorAppliance(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliance(resourceName, cancellationToken);
         }
 
@@ -132,6 +158,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -140,9 +174,12 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliancesAsync(cancellationToken);
         }
 
@@ -157,6 +194,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -165,9 +210,12 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliances(cancellationToken);
         }
 
@@ -182,6 +230,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -190,8 +246,11 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigApplianceAsync(cancellationToken).ConfigureAwait(false);
         }
 
@@ -206,6 +265,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -214,8 +281,11 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigAppliance(cancellationToken);
         }
     }

@@ -19,9 +19,9 @@ using Azure.ResourceManager.MySql.Models;
 namespace Azure.ResourceManager.MySql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlWaitStatisticResource" /> and their operations.
-    /// Each <see cref="MySqlWaitStatisticResource" /> in the collection will belong to the same instance of <see cref="MySqlServerResource" />.
-    /// To get a <see cref="MySqlWaitStatisticCollection" /> instance call the GetMySqlWaitStatistics method from an instance of <see cref="MySqlServerResource" />.
+    /// A class representing a collection of <see cref="MySqlWaitStatisticResource"/> and their operations.
+    /// Each <see cref="MySqlWaitStatisticResource"/> in the collection will belong to the same instance of <see cref="MySqlServerResource"/>.
+    /// To get a <see cref="MySqlWaitStatisticCollection"/> instance call the GetMySqlWaitStatistics method from an instance of <see cref="MySqlServerResource"/>.
     /// </summary>
     public partial class MySqlWaitStatisticCollection : ArmCollection
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
@@ -99,6 +107,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,12 +153,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving wait statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MySqlWaitStatisticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlWaitStatisticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlWaitStatisticResource> GetAllAsync(MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
@@ -163,12 +187,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving wait statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        /// <returns> A collection of <see cref="MySqlWaitStatisticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlWaitStatisticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlWaitStatisticResource> GetAll(MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
@@ -188,6 +220,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +264,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
@@ -258,6 +306,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +351,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

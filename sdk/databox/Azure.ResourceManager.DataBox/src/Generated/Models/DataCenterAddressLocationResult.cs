@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,16 +14,17 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Datacenter address for given storage location. </summary>
     public partial class DataCenterAddressLocationResult : DataCenterAddressResult
     {
-        /// <summary> Initializes a new instance of DataCenterAddressLocationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressLocationResult"/>. </summary>
         internal DataCenterAddressLocationResult()
         {
             DataCenterAddressType = DataCenterAddressType.DataCenterAddressLocation;
         }
 
-        /// <summary> Initializes a new instance of DataCenterAddressLocationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressLocationResult"/>. </summary>
         /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="contactPersonName"> Contact person name. </param>
         /// <param name="company"> Company name. </param>
         /// <param name="street1"> Street address line 1. </param>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="phoneExtension"> Phone extension. </param>
         /// <param name="addressType"> Address type. </param>
         /// <param name="additionalShippingInformation"> Special instruction for shipping. </param>
-        internal DataCenterAddressLocationResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, string contactPersonName, string company, string street1, string street2, string street3, string city, string state, string zip, string country, string phone, string phoneExtension, string addressType, string additionalShippingInformation) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation)
+        internal DataCenterAddressLocationResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, string contactPersonName, string company, string street1, string street2, string street3, string city, string state, string zip, string country, string phone, string phoneExtension, string addressType, string additionalShippingInformation) : base(dataCenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
         {
             ContactPersonName = contactPersonName;
             Company = company;

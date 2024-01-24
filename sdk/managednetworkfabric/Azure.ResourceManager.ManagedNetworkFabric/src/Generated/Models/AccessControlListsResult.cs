@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Access Control Lists. </summary>
     internal partial class AccessControlListsResult
     {
-        /// <summary> Initializes a new instance of AccessControlListsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListsResult"/>. </summary>
         internal AccessControlListsResult()
         {
             Value = new ChangeTrackingList<NetworkFabricAccessControlListData>();
         }
 
-        /// <summary> Initializes a new instance of AccessControlListsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListsResult"/>. </summary>
         /// <param name="value"> List of Access Control List resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal AccessControlListsResult(IReadOnlyList<NetworkFabricAccessControlListData> value, string nextLink)

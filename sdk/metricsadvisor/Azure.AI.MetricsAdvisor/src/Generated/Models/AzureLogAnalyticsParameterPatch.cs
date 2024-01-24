@@ -10,9 +10,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureLogAnalyticsParameterPatch. </summary>
     internal partial class AzureLogAnalyticsParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureLogAnalyticsParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureLogAnalyticsParameterPatch"/>. </summary>
         public AzureLogAnalyticsParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureLogAnalyticsParameterPatch"/>. </summary>
+        /// <param name="tenantId"> The tenant id of service principal that have access to this Log Analytics. </param>
+        /// <param name="clientId"> The client id of service principal that have access to this Log Analytics. </param>
+        /// <param name="clientSecret"> The client secret of service principal that have access to this Log Analytics. </param>
+        /// <param name="workspaceId"> The workspace id of this Log Analytics. </param>
+        /// <param name="query"> The KQL (Kusto Query Language) query to fetch data from this Log Analytics. </param>
+        internal AzureLogAnalyticsParameterPatch(string tenantId, string clientId, string clientSecret, string workspaceId, string query)
+        {
+            TenantId = tenantId;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+            WorkspaceId = workspaceId;
+            Query = query;
         }
 
         /// <summary> The tenant id of service principal that have access to this Log Analytics. </summary>

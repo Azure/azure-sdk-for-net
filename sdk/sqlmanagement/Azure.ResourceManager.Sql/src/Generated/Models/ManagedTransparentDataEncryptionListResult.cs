@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of managed transparent data encryptions. </summary>
     internal partial class ManagedTransparentDataEncryptionListResult
     {
-        /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedTransparentDataEncryptionListResult"/>. </summary>
         internal ManagedTransparentDataEncryptionListResult()
         {
             Value = new ChangeTrackingList<ManagedTransparentDataEncryptionData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedTransparentDataEncryptionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ManagedTransparentDataEncryptionListResult(IReadOnlyList<ManagedTransparentDataEncryptionData> value, string nextLink)

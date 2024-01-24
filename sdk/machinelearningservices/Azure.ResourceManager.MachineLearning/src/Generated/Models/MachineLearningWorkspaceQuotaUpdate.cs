@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The properties for update Quota response. </summary>
     public partial class MachineLearningWorkspaceQuotaUpdate
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         internal MachineLearningWorkspaceQuotaUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="updateWorkspaceQuotasType"> Specifies the resource type. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>

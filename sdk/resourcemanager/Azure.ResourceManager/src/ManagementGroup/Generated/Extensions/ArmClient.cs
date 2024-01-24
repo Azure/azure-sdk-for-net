@@ -17,7 +17,7 @@ namespace Azure.ResourceManager
         /// You can use <see cref="ManagementGroupResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagementGroupResource"/> object. </returns>
         public virtual ManagementGroupResource GetManagementGroupResource(ResourceIdentifier id)
         {
             ManagementGroupResource.ValidateResourceId(id);

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
     /// A Class representing a DeletedKeyVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedKeyVaultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedKeyVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedKeyVault method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedKeyVaultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeletedKeyVaultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedKeyVault method.
     /// </summary>
     public partial class DeletedKeyVaultResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.KeyVault
         private readonly VaultsRestOperations _deletedKeyVaultVaultsRestClient;
         private readonly DeletedKeyVaultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedVaults";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedKeyVaultResource"/> class for mocking. </summary>
         protected DeletedKeyVaultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedKeyVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedKeyVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeletedKeyVaultResource(ArmClient client, DeletedKeyVaultData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.KeyVault
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/locations/deletedVaults";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Vaults_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedKeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Vaults_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedKeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_PurgeDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedKeyVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +222,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_PurgeDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedKeyVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

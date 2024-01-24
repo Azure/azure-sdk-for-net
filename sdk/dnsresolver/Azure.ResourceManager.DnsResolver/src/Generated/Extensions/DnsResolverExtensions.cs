@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsResolverResource"/> object. </returns>
         public static DnsResolverResource GetDnsResolverResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDnsResolverArmClient(client).GetDnsResolverResource(id);
         }
 
@@ -60,9 +63,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverInboundEndpointResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsResolverInboundEndpointResource"/> object. </returns>
         public static DnsResolverInboundEndpointResource GetDnsResolverInboundEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDnsResolverArmClient(client).GetDnsResolverInboundEndpointResource(id);
         }
 
@@ -76,9 +82,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverOutboundEndpointResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsResolverOutboundEndpointResource"/> object. </returns>
         public static DnsResolverOutboundEndpointResource GetDnsResolverOutboundEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDnsResolverArmClient(client).GetDnsResolverOutboundEndpointResource(id);
         }
 
@@ -92,9 +101,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsForwardingRulesetResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsForwardingRulesetResource"/> object. </returns>
         public static DnsForwardingRulesetResource GetDnsForwardingRulesetResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDnsResolverArmClient(client).GetDnsForwardingRulesetResource(id);
         }
 
@@ -108,9 +120,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsForwardingRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsForwardingRuleResource"/> object. </returns>
         public static DnsForwardingRuleResource GetDnsForwardingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDnsResolverArmClient(client).GetDnsForwardingRuleResource(id);
         }
 
@@ -124,9 +139,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> object. </returns>
         public static DnsForwardingRulesetVirtualNetworkLinkResource GetDnsForwardingRulesetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDnsResolverArmClient(client).GetDnsForwardingRulesetVirtualNetworkLinkResource(id);
         }
 
@@ -140,9 +158,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkDnsResolverResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualNetworkDnsResolverResource"/> object. </returns>
         public static VirtualNetworkDnsResolverResource GetVirtualNetworkDnsResolverResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDnsResolverArmClient(client).GetVirtualNetworkDnsResolverResource(id);
         }
 
@@ -154,9 +175,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DnsResolverResources and their operations over a DnsResolverResource. </returns>
         public static DnsResolverCollection GetDnsResolvers(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsResolvers();
         }
 
@@ -171,6 +195,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -180,11 +212,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="dnsResolverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DnsResolverResource>> GetDnsResolverAsync(this ResourceGroupResource resourceGroupResource, string dnsResolverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsResolverAsync(dnsResolverName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -199,6 +233,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -208,11 +250,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="dnsResolverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DnsResolverResource> GetDnsResolver(this ResourceGroupResource resourceGroupResource, string dnsResolverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsResolver(dnsResolverName, cancellationToken);
         }
 
@@ -224,9 +268,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DnsForwardingRulesetResources and their operations over a DnsForwardingRulesetResource. </returns>
         public static DnsForwardingRulesetCollection GetDnsForwardingRulesets(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsForwardingRulesets();
         }
 
@@ -241,6 +288,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -250,11 +305,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(this ResourceGroupResource resourceGroupResource, string rulesetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsForwardingRulesetAsync(rulesetName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -269,6 +326,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -278,11 +343,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DnsForwardingRulesetResource> GetDnsForwardingRuleset(this ResourceGroupResource resourceGroupResource, string rulesetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsForwardingRuleset(rulesetName, cancellationToken);
         }
 
@@ -297,6 +364,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -306,9 +381,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsResolverResource> GetDnsResolversAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsResolversAsync(top, cancellationToken);
         }
 
@@ -323,6 +401,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -332,9 +418,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsResolverResource> GetDnsResolvers(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsResolvers(top, cancellationToken);
         }
 
@@ -349,6 +438,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -358,9 +455,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DnsForwardingRulesetResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsForwardingRulesetsAsync(top, cancellationToken);
         }
 
@@ -375,6 +475,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -384,9 +492,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DnsForwardingRulesetResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsForwardingRulesetResource> GetDnsForwardingRulesets(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsForwardingRulesets(top, cancellationToken);
         }
     }

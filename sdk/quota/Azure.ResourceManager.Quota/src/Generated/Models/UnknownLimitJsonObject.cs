@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The UnknownLimitJsonObject. </summary>
     internal partial class UnknownLimitJsonObject : QuotaLimitJsonObject
     {
-        /// <summary> Initializes a new instance of UnknownLimitJsonObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLimitJsonObject"/>. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         internal UnknownLimitJsonObject(LimitType limitObjectType) : base(limitObjectType)
         {

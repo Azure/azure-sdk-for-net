@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Trigger based on range of status codes. </summary>
     public partial class StatusCodesRangeBasedTrigger
     {
-        /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodesRangeBasedTrigger"/>. </summary>
         public StatusCodesRangeBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodesRangeBasedTrigger"/>. </summary>
         /// <param name="statusCodes"> HTTP status code. </param>
         /// <param name="path"></param>
         /// <param name="count"> Request Count. </param>

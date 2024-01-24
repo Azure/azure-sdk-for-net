@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains information for manual implementation for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionImplementationInfo
     {
-        /// <summary> Initializes a new instance of RecommendedActionImplementationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionImplementationInfo"/>. </summary>
         internal RecommendedActionImplementationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionImplementationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionImplementationInfo"/>. </summary>
         /// <param name="method"> Gets the method in which this recommended action can be manually implemented. e.g., TSql, AzurePowerShell. </param>
         /// <param name="script"> Gets the manual implementation script. e.g., T-SQL script that could be executed on the database. </param>
         internal RecommendedActionImplementationInfo(ImplementationMethod? method, string script)

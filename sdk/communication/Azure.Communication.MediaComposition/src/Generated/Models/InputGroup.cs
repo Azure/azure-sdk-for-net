@@ -16,12 +16,12 @@ namespace Azure.Communication.MediaComposition
     /// </summary>
     public abstract partial class InputGroup
     {
-        /// <summary> Initializes a new instance of InputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputGroup"/>. </summary>
         protected InputGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of InputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>

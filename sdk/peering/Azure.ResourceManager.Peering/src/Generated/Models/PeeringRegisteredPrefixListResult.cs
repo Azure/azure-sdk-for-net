@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of peering registered prefixes. </summary>
     internal partial class PeeringRegisteredPrefixListResult
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixListResult"/>. </summary>
         internal PeeringRegisteredPrefixListResult()
         {
             Value = new ChangeTrackingList<PeeringRegisteredPrefixData>();
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixListResult"/>. </summary>
         /// <param name="value"> The list of peering registered prefixes. </param>
         /// <param name="nextLink"> The link to fetch the next page of peering registered prefixes. </param>
         internal PeeringRegisteredPrefixListResult(IReadOnlyList<PeeringRegisteredPrefixData> value, string nextLink)

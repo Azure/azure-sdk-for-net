@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Managed Virtual Network reference type. </summary>
     public partial class ManagedVirtualNetworkReference
     {
-        /// <summary> Initializes a new instance of ManagedVirtualNetworkReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkReference"/>. </summary>
         /// <param name="referenceType"> Managed Virtual Network reference type. </param>
         /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

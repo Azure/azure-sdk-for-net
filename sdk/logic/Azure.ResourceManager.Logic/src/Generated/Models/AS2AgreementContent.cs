@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account AS2 agreement content. </summary>
     public partial class AS2AgreementContent
     {
-        /// <summary> Initializes a new instance of AS2AgreementContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2AgreementContent"/>. </summary>
         /// <param name="receiveAgreement"> The AS2 one-way receive agreement. </param>
         /// <param name="sendAgreement"> The AS2 one-way send agreement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>

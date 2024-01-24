@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Parameter group. </summary>
     public partial class SearchManagementRequestOptions
     {
-        /// <summary> Initializes a new instance of SearchManagementRequestOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchManagementRequestOptions"/>. </summary>
         public SearchManagementRequestOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchManagementRequestOptions"/>. </summary>
+        /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
+        internal SearchManagementRequestOptions(Guid? clientRequestId)
+        {
+            ClientRequestId = clientRequestId;
         }
 
         /// <summary> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </summary>

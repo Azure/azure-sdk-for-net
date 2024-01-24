@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The DeviceProvisioningServicesCertificateResourceDeleteOptions. </summary>
     public partial class DeviceProvisioningServicesCertificateResourceDeleteOptions
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateResourceDeleteOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceDeleteOptions"/>. </summary>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public DeviceProvisioningServicesCertificateResourceDeleteOptions(string ifMatch)
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             IfMatch = ifMatch;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceDeleteOptions"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesCertificateResourceDeleteOptions()
+        {
         }
 
         /// <summary> ETag of the certificate. </summary>

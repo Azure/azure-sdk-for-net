@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
     /// A Class representing a TrafficManagerHeatMap along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TrafficManagerHeatMapResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTrafficManagerHeatMapResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TrafficManagerProfileResource" /> using the GetTrafficManagerHeatMap method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerHeatMapResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTrafficManagerHeatMapResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TrafficManagerProfileResource"/> using the GetTrafficManagerHeatMap method.
     /// </summary>
     public partial class TrafficManagerHeatMapResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.TrafficManager
         private readonly HeatMapRestOperations _trafficManagerHeatMapHeatMapRestClient;
         private readonly TrafficManagerHeatMapData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/heatMaps";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerHeatMapResource"/> class for mocking. </summary>
         protected TrafficManagerHeatMapResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TrafficManagerHeatMapResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerHeatMapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficManagerHeatMapResource(ArmClient client, TrafficManagerHeatMapData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/heatMaps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,6 +144,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

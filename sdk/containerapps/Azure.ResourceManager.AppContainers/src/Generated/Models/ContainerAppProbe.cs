@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic. </summary>
     public partial class ContainerAppProbe
     {
-        /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppProbe"/>. </summary>
         public ContainerAppProbe()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppProbe"/>. </summary>
         /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </param>
         /// <param name="httpGet"> HTTPGet specifies the http request to perform. </param>
         /// <param name="initialDelaySeconds"> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </param>
@@ -25,7 +60,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </param>
         /// <param name="timeoutSeconds"> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </param>
         /// <param name="probeType"> The type of probe. </param>
-        internal ContainerAppProbe(int? failureThreshold, ContainerAppHttpRequestInfo httpGet, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppTcpSocketRequestInfo tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, ContainerAppProbeType? probeType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppProbe(int? failureThreshold, ContainerAppHttpRequestInfo httpGet, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppTcpSocketRequestInfo tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, ContainerAppProbeType? probeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailureThreshold = failureThreshold;
             HttpGet = httpGet;
@@ -36,6 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             TimeoutSeconds = timeoutSeconds;
             ProbeType = probeType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </summary>

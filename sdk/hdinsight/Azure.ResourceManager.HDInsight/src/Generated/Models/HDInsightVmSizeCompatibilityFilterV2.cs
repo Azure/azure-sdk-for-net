@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> This class represent a single filter object that defines a multidimensional set. The dimensions of this set are Regions, ClusterFlavors, NodeTypes and ClusterVersions. The constraint should be defined based on the following: FilterMode (Exclude vs Include), VMSizes (the vm sizes in affect of exclusion/inclusion) and the ordering of the Filters. Later filters override previous settings if conflicted. </summary>
     public partial class HDInsightVmSizeCompatibilityFilterV2
     {
-        /// <summary> Initializes a new instance of HDInsightVmSizeCompatibilityFilterV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVmSizeCompatibilityFilterV2"/>. </summary>
         internal HDInsightVmSizeCompatibilityFilterV2()
         {
             Regions = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             VmSizes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightVmSizeCompatibilityFilterV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVmSizeCompatibilityFilterV2"/>. </summary>
         /// <param name="filterMode"> The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set. </param>
         /// <param name="regions"> The list of regions under the effect of the filter. </param>
         /// <param name="clusterFlavors"> The list of cluster flavors under the effect of the filter. </param>

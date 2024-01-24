@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Extended information of the container. </summary>
     public partial class WorkloadContainerExtendedInfo
     {
-        /// <summary> Initializes a new instance of WorkloadContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerExtendedInfo"/>. </summary>
         public WorkloadContainerExtendedInfo()
         {
             NodesList = new ChangeTrackingList<DistributedNodesInfo>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerExtendedInfo"/>. </summary>
         /// <param name="hostServerName"> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </param>
         /// <param name="inquiryInfo"> Inquiry Status for the container. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>

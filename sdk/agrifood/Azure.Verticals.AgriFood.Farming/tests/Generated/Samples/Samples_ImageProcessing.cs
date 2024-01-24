@@ -22,8 +22,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRasterizeJob_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetRasterizeJob("<jobId>", null);
 
@@ -37,8 +38,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRasterizeJob_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
@@ -52,8 +54,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRasterizeJob_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.GetRasterizeJob("<jobId>", null);
 
@@ -81,8 +84,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRasterizeJob_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
@@ -110,8 +114,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateRasterizeJob_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -135,8 +140,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateRasterizeJob_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -160,8 +166,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateRasterizeJob_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -205,8 +212,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateRasterizeJob_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {

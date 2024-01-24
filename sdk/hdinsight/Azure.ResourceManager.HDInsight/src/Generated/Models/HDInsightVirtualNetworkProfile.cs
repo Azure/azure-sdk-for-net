@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The virtual network properties. </summary>
     public partial class HDInsightVirtualNetworkProfile
     {
-        /// <summary> Initializes a new instance of HDInsightVirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVirtualNetworkProfile"/>. </summary>
         public HDInsightVirtualNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightVirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVirtualNetworkProfile"/>. </summary>
         /// <param name="id"> The ID of the virtual network. </param>
         /// <param name="subnet"> The name of the subnet. </param>
         internal HDInsightVirtualNetworkProfile(ResourceIdentifier id, string subnet)

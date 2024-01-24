@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The response of a Association list operation. </summary>
     internal partial class AssociationListResult
     {
-        /// <summary> Initializes a new instance of AssociationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociationListResult"/>. </summary>
         /// <param name="value"> The Association items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AssociationListResult(IEnumerable<AssociationData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AssociationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociationListResult"/>. </summary>
         /// <param name="value"> The Association items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal AssociationListResult(IReadOnlyList<AssociationData> value, Uri nextLink)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Response for the LTR backup API call. </summary>
     public partial class PostgreSqlFlexibleServerLtrBackupResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupResult"/>. </summary>
         internal PostgreSqlFlexibleServerLtrBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupResult"/>. </summary>
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupName"> Name of Backup operation. </param>

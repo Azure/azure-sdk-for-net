@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Associated rulestack details. </summary>
     public partial class RulestackDetails
     {
-        /// <summary> Initializes a new instance of RulestackDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackDetails"/>. </summary>
         public RulestackDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RulestackDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackDetails"/>. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="rulestackId"> Associated rulestack Id. </param>
         /// <param name="location"> Rulestack location. </param>

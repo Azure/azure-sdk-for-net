@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a RegulatoryComplianceAssessment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RegulatoryComplianceAssessmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRegulatoryComplianceAssessmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RegulatoryComplianceControlResource" /> using the GetRegulatoryComplianceAssessment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RegulatoryComplianceAssessmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRegulatoryComplianceAssessmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RegulatoryComplianceControlResource"/> using the GetRegulatoryComplianceAssessment method.
     /// </summary>
     public partial class RegulatoryComplianceAssessmentResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly RegulatoryComplianceAssessmentsRestOperations _regulatoryComplianceAssessmentRestClient;
         private readonly RegulatoryComplianceAssessmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls/regulatoryComplianceAssessments";
+
         /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceAssessmentResource"/> class for mocking. </summary>
         protected RegulatoryComplianceAssessmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RegulatoryComplianceAssessmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceAssessmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RegulatoryComplianceAssessmentResource(ArmClient client, RegulatoryComplianceAssessmentData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls/regulatoryComplianceAssessments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

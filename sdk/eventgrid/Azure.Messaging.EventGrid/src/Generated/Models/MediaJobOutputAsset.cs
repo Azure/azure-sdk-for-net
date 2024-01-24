@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The event data for a Job output asset. </summary>
     public partial class MediaJobOutputAsset : MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/>. </summary>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
         internal MediaJobOutputAsset(long progress, MediaJobState state) : base(progress, state)
@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             OdataType = "#Microsoft.Media.JobOutputAsset";
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> Gets the Job output error. </param>
         /// <param name="label"> Gets the Job output label. </param>

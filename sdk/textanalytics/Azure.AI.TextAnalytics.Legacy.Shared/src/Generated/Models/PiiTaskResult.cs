@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The PiiTaskResult. </summary>
     internal partial class PiiTaskResult
     {
-        /// <summary> Initializes a new instance of PiiTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskResult"/>. </summary>
         internal PiiTaskResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PiiTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskResult"/>. </summary>
         /// <param name="results"></param>
         internal PiiTaskResult(PiiResult results)
         {

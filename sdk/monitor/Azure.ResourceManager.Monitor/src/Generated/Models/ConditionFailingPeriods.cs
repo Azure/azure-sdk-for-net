@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert. </summary>
     public partial class ConditionFailingPeriods
     {
-        /// <summary> Initializes a new instance of ConditionFailingPeriods. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionFailingPeriods"/>. </summary>
         public ConditionFailingPeriods()
         {
         }
 
-        /// <summary> Initializes a new instance of ConditionFailingPeriods. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionFailingPeriods"/>. </summary>
         /// <param name="numberOfEvaluationPeriods"> The number of aggregated lookback points. The lookback time window is calculated based on the aggregation granularity (windowSize) and the selected number of aggregated points. Default value is 1. </param>
         /// <param name="minFailingPeriodsToAlert"> The number of violations to trigger an alert. Should be smaller or equal to numberOfEvaluationPeriods. Default value is 1. </param>
         internal ConditionFailingPeriods(long? numberOfEvaluationPeriods, long? minFailingPeriodsToAlert)

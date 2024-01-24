@@ -10,16 +10,16 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary>
     /// Information about the destination for an event subscription.
     /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
+    /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
     /// </summary>
     public abstract partial class EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of EventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionDestination"/>. </summary>
         protected EventSubscriptionDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         internal EventSubscriptionDestination(EndpointType endpointType)
         {

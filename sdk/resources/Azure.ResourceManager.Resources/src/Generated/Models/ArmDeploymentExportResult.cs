@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The deployment export result. </summary>
     public partial class ArmDeploymentExportResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExportResult"/>. </summary>
         internal ArmDeploymentExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
         internal ArmDeploymentExportResult(BinaryData template)
         {

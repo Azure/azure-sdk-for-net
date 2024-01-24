@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusNamespaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceBusNamespaceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

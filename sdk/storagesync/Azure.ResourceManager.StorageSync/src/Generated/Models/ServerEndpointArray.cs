@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Array of ServerEndpoint. </summary>
     internal partial class ServerEndpointArray
     {
-        /// <summary> Initializes a new instance of ServerEndpointArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointArray"/>. </summary>
         internal ServerEndpointArray()
         {
             Value = new ChangeTrackingList<StorageSyncServerEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointArray"/>. </summary>
         /// <param name="value"> Collection of ServerEndpoint. </param>
         internal ServerEndpointArray(IReadOnlyList<StorageSyncServerEndpointData> value)
         {

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailablePeriodicNotifications event. </summary>
     public partial class ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData
     {
-        /// <summary> Initializes a new instance of ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/>. </summary>
         internal ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/>. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
         /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,20 +14,54 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes properties of a connected resource. </summary>
     public partial class ConnectedResourceInfo
     {
-        /// <summary> Initializes a new instance of ConnectedResourceInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
         internal ConnectedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
         /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
         /// <param name="tcpPorts"> The allowed tcp ports. </param>
         /// <param name="udpPorts"> The allowed udp ports. </param>
-        internal ConnectedResourceInfo(ResourceIdentifier connectedResourceId, string tcpPorts, string udpPorts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedResourceInfo(ResourceIdentifier connectedResourceId, string tcpPorts, string udpPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectedResourceId = connectedResourceId;
             TcpPorts = tcpPorts;
             UdpPorts = udpPorts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource id of the connected resource. </summary>

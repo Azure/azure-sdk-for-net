@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public partial class BackupRecoveryPointBasedRestoreContent : BackupRestoreContent
     {
-        /// <summary> Initializes a new instance of BackupRecoveryPointBasedRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointBasedRestoreContent"/>. </summary>
         /// <param name="restoreTargetInfo">
         /// Gets or sets the restore target information.
         /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -33,6 +34,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             RecoveryPointId = recoveryPointId;
             ObjectType = "AzureBackupRecoveryPointBasedRestoreRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointBasedRestoreContent"/>. </summary>
+        /// <param name="objectType"></param>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryPointId"></param>
+        internal BackupRecoveryPointBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointId) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData)
+        {
+            RecoveryPointId = recoveryPointId;
+            ObjectType = objectType ?? "AzureBackupRecoveryPointBasedRestoreRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointBasedRestoreContent"/> for deserialization. </summary>
+        internal BackupRecoveryPointBasedRestoreContent()
+        {
         }
 
         /// <summary> Gets the recovery point id. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Api Operation Annotation. </summary>
     public partial class LogicApiOperationAnnotation
     {
-        /// <summary> Initializes a new instance of LogicApiOperationAnnotation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationAnnotation"/>. </summary>
         public LogicApiOperationAnnotation()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiOperationAnnotation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationAnnotation"/>. </summary>
         /// <param name="status"> The status annotation. </param>
         /// <param name="family"> The family. </param>
         /// <param name="revision"> The revision. </param>

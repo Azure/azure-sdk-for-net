@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output of the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskOutput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
         internal GetUserTablesSqlSyncTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
         /// <param name="databasesToSourceTables"> Mapping from database name to list of source tables. </param>
         /// <param name="databasesToTargetTables"> Mapping from database name to list of target tables. </param>
         /// <param name="tableValidationErrors"> Mapping from database name to list of validation errors. </param>
         /// <param name="validationErrors"> Validation errors. </param>
-        internal GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables, string databasesToTargetTables, string tableValidationErrors, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables, string databasesToTargetTables, string tableValidationErrors, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabasesToSourceTables = databasesToSourceTables;
             DatabasesToTargetTables = databasesToTargetTables;
             TableValidationErrors = tableValidationErrors;
             ValidationErrors = validationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Mapping from database name to list of source tables. </summary>

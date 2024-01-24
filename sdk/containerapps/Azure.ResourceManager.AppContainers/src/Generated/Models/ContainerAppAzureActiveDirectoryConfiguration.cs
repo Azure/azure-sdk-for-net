@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the Azure Active directory provider. </summary>
     public partial class ContainerAppAzureActiveDirectoryConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryConfiguration"/>. </summary>
         public ContainerAppAzureActiveDirectoryConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryConfiguration"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Azure Active Directory app registration. </param>
         /// <param name="login"> The configuration settings of the Azure Active Directory login flow. </param>
@@ -25,13 +60,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// This is an internal flag primarily intended to support the Azure Management Portal. Users should not
         /// read or write to this property.
         /// </param>
-        internal ContainerAppAzureActiveDirectoryConfiguration(bool? isEnabled, ContainerAppAzureActiveDirectoryRegistrationConfiguration registration, ContainerAppAzureActiveDirectoryLoginConfiguration login, ContainerAppAzureActiveDirectoryValidationConfiguration validation, bool? isAutoProvisioned)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppAzureActiveDirectoryConfiguration(bool? isEnabled, ContainerAppAzureActiveDirectoryRegistrationConfiguration registration, ContainerAppAzureActiveDirectoryLoginConfiguration login, ContainerAppAzureActiveDirectoryValidationConfiguration validation, bool? isAutoProvisioned, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
             Validation = validation;
             IsAutoProvisioned = isAutoProvisioned;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

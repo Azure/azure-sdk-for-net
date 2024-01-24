@@ -15,48 +15,26 @@ namespace Azure.ResourceManager.Sphere
     /// <summary>
     /// A class representing the SphereDevice data model.
     /// An device resource belonging to a device group resource.
-    /// Serialized Name: Device
     /// </summary>
     public partial class SphereDeviceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceData"/>. </summary>
         public SphereDeviceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deviceId">
-        /// Device ID
-        /// Serialized Name: Device.properties.deviceId
-        /// </param>
-        /// <param name="chipSku">
-        /// SKU of the chip
-        /// Serialized Name: Device.properties.chipSku
-        /// </param>
-        /// <param name="lastAvailableOSVersion">
-        /// OS version available for installation when update requested
-        /// Serialized Name: Device.properties.lastAvailableOsVersion
-        /// </param>
-        /// <param name="lastInstalledOSVersion">
-        /// OS version running on device when update requested
-        /// Serialized Name: Device.properties.lastInstalledOsVersion
-        /// </param>
-        /// <param name="lastOSUpdateUtc">
-        /// Time when update requested and new OS version available
-        /// Serialized Name: Device.properties.lastOsUpdateUtc
-        /// </param>
-        /// <param name="lastUpdateRequestUtc">
-        /// Time when update was last requested
-        /// Serialized Name: Device.properties.lastUpdateRequestUtc
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: Device.properties.provisioningState
-        /// </param>
+        /// <param name="deviceId"> Device ID. </param>
+        /// <param name="chipSku"> SKU of the chip. </param>
+        /// <param name="lastAvailableOSVersion"> OS version available for installation when update requested. </param>
+        /// <param name="lastInstalledOSVersion"> OS version running on device when update requested. </param>
+        /// <param name="lastOSUpdateUtc"> Time when update requested and new OS version available. </param>
+        /// <param name="lastUpdateRequestUtc"> Time when update was last requested. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         internal SphereDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string chipSku, string lastAvailableOSVersion, string lastInstalledOSVersion, DateTimeOffset? lastOSUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             DeviceId = deviceId;
@@ -68,40 +46,19 @@ namespace Azure.ResourceManager.Sphere
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// Device ID
-        /// Serialized Name: Device.properties.deviceId
-        /// </summary>
+        /// <summary> Device ID. </summary>
         public string DeviceId { get; set; }
-        /// <summary>
-        /// SKU of the chip
-        /// Serialized Name: Device.properties.chipSku
-        /// </summary>
+        /// <summary> SKU of the chip. </summary>
         public string ChipSku { get; }
-        /// <summary>
-        /// OS version available for installation when update requested
-        /// Serialized Name: Device.properties.lastAvailableOsVersion
-        /// </summary>
+        /// <summary> OS version available for installation when update requested. </summary>
         public string LastAvailableOSVersion { get; }
-        /// <summary>
-        /// OS version running on device when update requested
-        /// Serialized Name: Device.properties.lastInstalledOsVersion
-        /// </summary>
+        /// <summary> OS version running on device when update requested. </summary>
         public string LastInstalledOSVersion { get; }
-        /// <summary>
-        /// Time when update requested and new OS version available
-        /// Serialized Name: Device.properties.lastOsUpdateUtc
-        /// </summary>
+        /// <summary> Time when update requested and new OS version available. </summary>
         public DateTimeOffset? LastOSUpdateUtc { get; }
-        /// <summary>
-        /// Time when update was last requested
-        /// Serialized Name: Device.properties.lastUpdateRequestUtc
-        /// </summary>
+        /// <summary> Time when update was last requested. </summary>
         public DateTimeOffset? LastUpdateRequestUtc { get; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: Device.properties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public SphereProvisioningState? ProvisioningState { get; }
     }
 }

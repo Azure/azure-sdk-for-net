@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the network interface ip settings. </summary>
     public partial class NicIPSettings
     {
-        /// <summary> Initializes a new instance of NicIPSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NicIPSettings"/>. </summary>
         public NicIPSettings()
         {
             DnsServers = new ChangeTrackingList<string>();
@@ -21,7 +54,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             IPAddressInfo = new ChangeTrackingList<NicIPAddressSettings>();
         }
 
-        /// <summary> Initializes a new instance of NicIPSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPSettings"/>. </summary>
         /// <param name="allocationMethod"> Gets or sets the nic allocation method. </param>
         /// <param name="dnsServers"> Gets or sets the dns servers. </param>
         /// <param name="gateway"> Gets or sets the gateway. </param>
@@ -30,7 +63,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="primaryWinsServer"> Gets or sets the primary server. </param>
         /// <param name="secondaryWinsServer"> Gets or sets the secondary server. </param>
         /// <param name="ipAddressInfo"> Gets or sets the IP address information being reported for this NIC. This contains the same IPv4 information above plus IPV6 information. </param>
-        internal NicIPSettings(IPAddressAllocationMethod? allocationMethod, IList<string> dnsServers, IList<string> gateway, string ipAddress, string subnetMask, string primaryWinsServer, string secondaryWinsServer, IReadOnlyList<NicIPAddressSettings> ipAddressInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NicIPSettings(IPAddressAllocationMethod? allocationMethod, IList<string> dnsServers, IList<string> gateway, string ipAddress, string subnetMask, string primaryWinsServer, string secondaryWinsServer, IReadOnlyList<NicIPAddressSettings> ipAddressInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllocationMethod = allocationMethod;
             DnsServers = dnsServers;
@@ -40,6 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             PrimaryWinsServer = primaryWinsServer;
             SecondaryWinsServer = secondaryWinsServer;
             IPAddressInfo = ipAddressInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the nic allocation method. </summary>

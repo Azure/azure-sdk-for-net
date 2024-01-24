@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Email notification of an autoscale event. </summary>
     public partial class EmailNotification
     {
-        /// <summary> Initializes a new instance of EmailNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailNotification"/>. </summary>
         public EmailNotification()
         {
             CustomEmails = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EmailNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailNotification"/>. </summary>
         /// <param name="sendToSubscriptionAdministrator"> a value indicating whether to send email to subscription administrator. </param>
         /// <param name="sendToSubscriptionCoAdministrators"> a value indicating whether to send email to subscription co-administrators. </param>
         /// <param name="customEmails"> the custom e-mails list. This value can be null or empty, in which case this attribute will be ignored. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> PyTorch distribution configuration. </summary>
     public partial class PyTorchDistributionConfiguration : MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of PyTorchDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PyTorchDistributionConfiguration"/>. </summary>
         public PyTorchDistributionConfiguration()
         {
             DistributionType = DistributionType.PyTorch;
         }
 
-        /// <summary> Initializes a new instance of PyTorchDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PyTorchDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         /// <param name="processCountPerInstance"> Number of processes per node. </param>
         internal PyTorchDistributionConfiguration(DistributionType distributionType, int? processCountPerInstance) : base(distributionType)
