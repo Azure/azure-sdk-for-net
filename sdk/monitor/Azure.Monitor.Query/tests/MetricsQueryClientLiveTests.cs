@@ -373,7 +373,7 @@ namespace Azure.Monitor.Query.Tests
         {
             MetricsClient client = CreateMetricsClient();
 
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ArgumentNullException>(() =>
             {
                 client.QueryResources(
                 resourceIds: null,
