@@ -48,7 +48,10 @@ public class ClientPipelineTests : SyncAsyncTestBase
             new ObservablePolicy("PerCallPolicyB"),
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, perCallPolicies);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: perCallPolicies,
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);

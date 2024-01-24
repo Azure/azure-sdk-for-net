@@ -114,7 +114,7 @@ public abstract class BinaryContent : IDisposable
         {
             get
             {
-                if (_model is IJsonModel<T> && _options.Format == "J")
+                if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
                 {
                     throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
                 }
@@ -126,7 +126,7 @@ public abstract class BinaryContent : IDisposable
 
         public override bool TryComputeLength(out long length)
         {
-            if (_model is IJsonModel<T> && _options.Format == "J")
+            if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
             {
                 return Writer.TryComputeLength(out length);
             }
@@ -142,7 +142,7 @@ public abstract class BinaryContent : IDisposable
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
-            if (_model is IJsonModel<T> && _options.Format == "J")
+            if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
             {
                 Writer.CopyTo(stream, cancellation);
                 return;
@@ -157,7 +157,7 @@ public abstract class BinaryContent : IDisposable
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            if (_model is IJsonModel<T> && _options.Format == "J")
+            if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
             {
                 await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
                 return;
