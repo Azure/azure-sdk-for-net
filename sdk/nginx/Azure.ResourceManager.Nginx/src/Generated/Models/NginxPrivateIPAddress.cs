@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Net;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxPrivateIPAddress. </summary>
@@ -19,7 +22,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="privateIPAddress"></param>
         /// <param name="privateIPAllocationMethod"></param>
         /// <param name="subnetId"></param>
-        internal NginxPrivateIPAddress(string privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, string subnetId)
+        internal NginxPrivateIPAddress(IPAddress privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceIdentifier subnetId)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
@@ -27,10 +30,10 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Gets or sets the private ip address. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
         /// <summary> Gets or sets the private ip allocation method. </summary>
         public NginxPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Gets or sets the subnet id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

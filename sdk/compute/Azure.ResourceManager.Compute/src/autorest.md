@@ -19,6 +19,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 update-required-copy:
   GalleryImage: OSType
@@ -274,6 +275,7 @@ rename-mapping:
   CreationData.elasticSanResourceId: -|arm-id
   NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
   NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
+  CommunityGalleryInfo.publisherUri: PublisherUriString
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -376,4 +378,5 @@ directive:
   - from: restorePoint.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
+    
 ```

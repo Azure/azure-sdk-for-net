@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> TCPSocketAction describes an action based on opening a socket. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of <see cref="AppInstanceTcpSocketAction"/>. </summary>
         /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
-        internal AppInstanceTcpSocketAction(ProbeActionType probeActionType) : base(probeActionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppInstanceTcpSocketAction(ProbeActionType probeActionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(probeActionType, serializedAdditionalRawData)
         {
             ProbeActionType = probeActionType;
         }

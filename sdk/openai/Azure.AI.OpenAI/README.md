@@ -323,7 +323,7 @@ and that all streamed responses should map to a single, common choice index in t
 ```C# Snippet:ChatTools:StreamingChatTools
 Dictionary<int, string> toolCallIdsByIndex = new();
 Dictionary<int, string> functionNamesByIndex = new();
-Dictionary<int, StringBuilder> functionArgmentBuildersByIndex = new();
+Dictionary<int, StringBuilder> functionArgumentBuildersByIndex = new();
 StringBuilder contentBuilder = new();
 
 await foreach (StreamingChatCompletionsUpdate chatUpdate
@@ -342,10 +342,11 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate
         if (functionToolCallUpdate.ArgumentsUpdate != null)
         {
             StringBuilder argumentsBuilder
-                = functionArgmentBuildersByIndex.TryGetValue(
+                = functionArgumentBuildersByIndex.TryGetValue(
                     functionToolCallUpdate.ToolCallIndex,
                     out StringBuilder existingBuilder) ? existingBuilder : new StringBuilder();
             argumentsBuilder.Append(functionToolCallUpdate.ArgumentsUpdate);
+            functionArgumentBuildersByIndex[functionToolCallUpdate.ToolCallIndex] = argumentsBuilder;
         }
     }
     if (chatUpdate.ContentUpdate != null)
@@ -360,7 +361,7 @@ foreach (KeyValuePair<int, string> indexIdPair in toolCallIdsByIndex)
     assistantHistoryMessage.ToolCalls.Add(new ChatCompletionsFunctionToolCall(
         id: indexIdPair.Value,
         functionNamesByIndex[indexIdPair.Key],
-        functionArgmentBuildersByIndex[indexIdPair.Key].ToString()));
+        functionArgumentBuildersByIndex[indexIdPair.Key].ToString()));
 }
 chatCompletionsOptions.Messages.Add(assistantHistoryMessage);
 
@@ -633,15 +634,21 @@ ReadOnlyMemory<float> embedding = item.Embedding;
 ### Generate images with DALL-E image generation models
 
 ```C# Snippet:GenerateImages
-Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAsync(
+Response<ImageGenerations> response = await client.GetImageGenerationsAsync(
     new ImageGenerationOptions()
     {
+        DeploymentName = usingAzure ? "my-azure-openai-dall-e-3-deployment" : "dall-e-3",
         Prompt = "a happy monkey eating a banana, in watercolor",
-        Size = ImageSize.Size256x256,
+        Size = ImageSize.Size1024x1024,
+        Quality = ImageGenerationQuality.Standard
     });
 
-// Image Generations responses provide URLs you can use to retrieve requested images
-Uri imageUri = imageGenerations.Value.Data[0].Url;
+ImageGenerationData generatedImage = response.Value.Data[0];
+if (!string.IsNullOrEmpty(generatedImage.RevisedPrompt))
+{
+    Console.WriteLine($"Input prompt automatically revised to: {generatedImage.RevisedPrompt}");
+}
+Console.WriteLine($"Generated image available at: {generatedImage.Url.AbsoluteUri}");
 ```
 
 ### Transcribe audio data with Whisper speech models
@@ -714,7 +721,7 @@ in the interim:
 ```C# Snippet:GetResponseFromImages
 Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatChoice choice = chatResponse.Value.Choices[0];
-if (choice.FinishDetails is StopFinishDetails stopDetails)
+if (choice.FinishDetails is StopFinishDetails stopDetails || choice.FinishReason == CompletionsFinishReason.Stopped)
 {
     Console.WriteLine($"{choice.Message.Role}: {choice.Message.Content}");
 }

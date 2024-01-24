@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private async Task<DataFactoryDatasetResource> CreateDefaultDataset(DataFactoryResource dataFactory, string datasetName, string linkedServiceName)
         {
             DataFactoryLinkedServiceReference linkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
-            DataFactoryDatasetProperties properties = new DataFactoryDatasetProperties(linkedServiceReference);
+            DataFactoryDatasetProperties properties = new AzureSqlTableDataset(linkedServiceReference);
             DataFactoryDatasetData data = new DataFactoryDatasetData(properties);
             var dataset = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return dataset.Value;
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     FolderPath = "Root\\MyFolder",
                     FileName = "testfilename",
-                    Format = new DatasetStorageFormat() { DatasetStorageFormatType = "Acroformat" }
+                    Format = new DatasetAvroFormat()
                 });
             });
         }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     Key = "sample key",
                     Prefix = "prefix",
                     Version = "1.0.0",
-                    Format = new DatasetStorageFormat() { DatasetStorageFormatType = "ParquetFormat" },
+                    Format = new DatasetParquetFormat(),
                     Compression = new DatasetCompression("Deflate") { Level = "Fastest" }
                 });
             });
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     FolderPath = "fakepath",
                     FileName = "fakename",
-                    Format = new DatasetStorageFormat() { DatasetStorageFormatType = "TextFormat" }
+                    Format = new DatasetTextFormat()
                 });
             });
         }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     RelativeUri = "fakeuri",
                     RequestMethod = "get",
-                    Format = new DatasetStorageFormat() { DatasetStorageFormatType = "Textformat" }
+                    Format = new DatasetTextFormat()
                 });
             });
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A class representing the HybridContainerServiceVirtualNetwork data model.
-    /// The virtualNetworks resource definition.
+    /// The Virtual Network resource definition.
     /// </summary>
     public partial class HybridContainerServiceVirtualNetworkData : TrackedResourceData
     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </param>
-        /// <param name="extendedLocation"></param>
-        internal HybridContainerServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualNetworksProperties properties, VirtualNetworksExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="properties"> Properties of the virtual network resource. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
+        internal HybridContainerServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridContainerServiceVirtualNetworkProperties properties, HybridContainerServiceExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
         }
 
-        /// <summary> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </summary>
-        public VirtualNetworksProperties Properties { get; set; }
-        /// <summary> Gets or sets the extended location. </summary>
-        public VirtualNetworksExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Properties of the virtual network resource. </summary>
+        public HybridContainerServiceVirtualNetworkProperties Properties { get; set; }
+        /// <summary> Extended location pointing to the underlying infrastructure. </summary>
+        public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
     }
 }

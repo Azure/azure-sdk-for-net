@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The type used for update operations of the Catalog.
-    /// Serialized Name: CatalogUpdate
-    /// </summary>
+    /// <summary> The type used for update operations of the Catalog. </summary>
     public partial class SphereCatalogPatch
     {
         /// <summary> Initializes a new instance of <see cref="SphereCatalogPatch"/>. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SphereCatalogPatch"/>. </summary>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: CatalogUpdate.tags
-        /// </param>
+        /// <param name="tags"> Resource tags. </param>
         internal SphereCatalogPatch(IDictionary<string, string> tags)
         {
             Tags = tags;
         }
 
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: CatalogUpdate.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

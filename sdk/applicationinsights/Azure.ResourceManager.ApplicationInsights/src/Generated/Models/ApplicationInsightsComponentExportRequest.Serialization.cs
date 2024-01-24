@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentExportRequest : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentExportRequest : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentExportRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentExportRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationInsightsComponentExportRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecordTypes))
             {
@@ -60,7 +71,144 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ApplicationInsightsComponentExportRequest IJsonModel<ApplicationInsightsComponentExportRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentExportRequest(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentExportRequest DeserializeApplicationInsightsComponentExportRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> recordTypes = default;
+            Optional<string> destinationType = default;
+            Optional<string> destinationAddress = default;
+            Optional<string> isEnabled = default;
+            Optional<string> notificationQueueEnabled = default;
+            Optional<Uri> notificationQueueUri = default;
+            Optional<string> destinationStorageSubscriptionId = default;
+            Optional<string> destinationStorageLocationId = default;
+            Optional<string> destinationAccountId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("RecordTypes"u8))
+                {
+                    recordTypes = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationType"u8))
+                {
+                    destinationType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationAddress"u8))
+                {
+                    destinationAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("IsEnabled"u8))
+                {
+                    isEnabled = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("NotificationQueueEnabled"u8))
+                {
+                    notificationQueueEnabled = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("NotificationQueueUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    notificationQueueUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("DestinationStorageSubscriptionId"u8))
+                {
+                    destinationStorageSubscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationStorageLocationId"u8))
+                {
+                    destinationStorageLocationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationAccountId"u8))
+                {
+                    destinationAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationInsightsComponentExportRequest(recordTypes.Value, destinationType.Value, destinationAddress.Value, isEnabled.Value, notificationQueueEnabled.Value, notificationQueueUri.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ApplicationInsightsComponentExportRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationInsightsComponentExportRequest IPersistableModel<ApplicationInsightsComponentExportRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationInsightsComponentExportRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationInsightsComponentExportRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

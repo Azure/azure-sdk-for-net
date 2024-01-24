@@ -507,7 +507,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DisposIsSafeToCallMultipleTimes()
+        public async Task DisposeIsSafeToCallMultipleTimes()
         {
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>("fqNamespace", "eventHub", Mock.Of<TokenCredential>(), null)
             {
@@ -1656,6 +1656,35 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             Assert.That(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StartPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartPublishingThrowsTaskCanceledExceptionAsEventHubsException()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(1) } };
+
+            var mockConnection = new Mock<EventHubConnection>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), default);
+            mockConnection.Setup(connection => connection.GetPartitionIdsAsync(
+                It.IsAny<EventHubsRetryPolicy>(),
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new TaskCanceledException());
+            var connection = mockConnection.Object;
+
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" }) { CallBase = true };
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            await Task.Yield();
+            var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
+            Assert.True(thrownException.IsTransient, "Exception thrown should be transient");
+            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "Exception thrown should have a reason of ServiceCommunicationProblem.");
         }
 
         /// <summary>

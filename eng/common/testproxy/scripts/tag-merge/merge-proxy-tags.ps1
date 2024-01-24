@@ -1,3 +1,6 @@
+#Requires -Version 6.0
+#Requires -PSEdition Core
+
 <#
 .SYNOPSIS
 Merge multiple asset tagss worth of content into a single asset tag.
@@ -11,7 +14,7 @@ In the case one of the targeted tags exists in the targeted assets.json, that ta
 
 1. test-proxy restore -a <assets-file> -> populate .assets
 2. test-proxy config locate -a <assets-file> -> get location of cloned git repo
-3. walk the incoming tags, cherry-picking their changes directly into the changeset _in context_
+3. walk the incoming tags, merging their changes directly into the changeset _in context_
 4. In the case of a discovered git conflict, the process ends. A list of which tags merged and which didn't will be presented to the user.
   4a. Users should resolve the git conflicts themselves.
   4b. If the conflict was on the final tag, resolve the conflict (leaving it uncommitted tyvm), and test-proxy push, you're done.
@@ -63,27 +66,6 @@ function Git-Command($CommandString, $WorkingDirectory, $HardExit=$true) {
     }
 
     return $result.Output
-}
-
-function Resolve-Proxy {
-    # this script requires the presence of git
-    Test-Exe-In-Path -ExeToLookFor "git" | Out-Null
-
-    $testProxyExe = "test-proxy"
-    # this script requires the presence of the test-proxy on the PATH
-    $proxyToolPresent = Test-Exe-In-Path -ExeToLookFor "test-proxy" -ExitOnError $false
-    $proxyStandalonePresent = Test-Exe-In-Path -ExeToLookFor "Azure.Sdk.Tools.TestProxy" -ExitOnError $false
-
-    if (-not $proxyToolPresent -and -not $proxyStandalonePresent) {
-        Write-Error "This script requires the presence of a test-proxy executable to complete its operations. Exiting."
-        exit 1
-    }
-
-    if (-not $proxyToolPresent) {
-        $testProxyExe = "Azure.Sdk.Tools.TestProxy"
-    }
-
-    return $testProxyExe
 }
 
 function Call-Proxy {
@@ -184,7 +166,13 @@ function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDire
 function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $len = $TargetTags.Length
 
-    Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -NoNewLine
+    if ($TargetTags.GetType().Name -eq "String") {
+        $len = 1
+    }
+
+    $suffix = if ($len -gt 1) { "s" } else { "" }
+
+    Write-Host "`nSuccessfully combined $len tag$suffix. Invoke `"test-proxy push " -NoNewLine
     Write-Host $AssetsJson -ForegroundColor Green -NoNewLine
     Write-Host "`" to push the results as a new tag."
 }
@@ -250,14 +238,17 @@ function Prepare-Assets($ProxyExe, $MountDirectory, $AssetsJson) {
     }
 }
 
-function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
+function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory, $RelativeAssetsJson){
+    $remainingTagString = $RemainingTags -join " "
     foreach($Tag in $RemainingTags) {
         $tagSha = Get-Tag-SHA $Tag $AssetsRepoLocation
         $existingTags = Save-Incomplete-Progress $Tag $MountDirectory
-        $cherryPickResult = Git-Command-With-Result "cherry-pick $tagSha" - $AssetsRepoLocation -HardExit $false
+        $cherryPickResult = Git-Command-With-Result "merge $tagSha" - $AssetsRepoLocation -HardExit $false
 
         if ($cherryPickResult.ExitCode -ne 0) {
-            Write-Host "Conflicts while cherry-picking $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-run this script with the same arguments as before." -ForegroundColor Red
+            $error = "Conflicts while merging $Tag. Resolve the the conflict over in `"$AssetsRepoLocation`", and re-invoke " +
+            "by `"./eng/common/testproxy/scripts/tag-merge/merge-proxy-tags.ps1 $RelativeAssetsJson $remainingTagString`""
+            Write-Host $error -ForegroundColor Red
             exit 1
         }
     }
@@ -270,25 +261,36 @@ function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory){
     # if we have successfully gotten to the end without any non-zero exit codes...delete the mergeprogress file, we're g2g
     Cleanup-Incomplete-Progress $MountDirectory
 
-    return $pushedTags
+    return @($pushedTags)
 }
 
 $ErrorActionPreference = "Stop"
 
-# resolve the proxy location so that we can invoke it easily
+# this script requires the presence of git
+Test-Exe-In-Path -ExeToLookFor "git" | Out-Null
+
+# this script expects at least powershell 6 (core)
+
+if ($PSVersionTable["PSVersion"].Major -lt 6) {
+    Write-Error "This script requires a version of powershell newer than 6. See http://aka.ms/powershell for resolution."
+    exit 1
+}
+
+# resolve the proxy location so that we can invoke it easily, if not present we exit here.
 $proxyExe = Resolve-Proxy
 
+$relativeAssetsJson = $AssetsJson
 $AssetsJson = Resolve-Path $AssetsJson
 
 # figure out where the root of the repo for the passed assets.json is. We need it to properly set the mounting
 # directory so that the test-proxy restore operations work IN PLACE with existing tooling
 $mountDirectory = Get-Repo-Root -StartDir $AssetsJson
 
-# ensure we actually have the .assets folder that we can cherry-pick on top of
+# ensure we actually have the .assets folder that we can merge commits onto
 Prepare-Assets $proxyExe $mountDirectory $AssetsJson
 
 # using the mountingDirectory and the assets.json location, we can figure out where the assets slice actually lives within the .assets folder.
-# we will use this to invoke individual cherry-picks before pushing up the result
+# we will use this to invoke individual SHA merges before pushing up the result
 $assetsRepoLocation = Locate-Assets-Slice $proxyExe $AssetsJson $mountDirectory
 
 # resolve the tags that we will go after. If the target assets.json contains one of these tags, that tag is _already present_
@@ -297,6 +299,6 @@ $tags = Resolve-Target-Tags $AssetsJson $TargetTags $mountDirectory
 
 Start-Message $AssetsJson $Tags $AssetsRepoLocation $mountDirectory
 
-$CombinedTags = Combine-Tags $Tags $AssetsRepoLocation $mountDirectory
+$CombinedTags = Combine-Tags $Tags $AssetsRepoLocation $mountDirectory $relativeAssetsJson
 
 Finish-Message $AssetsJson $CombinedTags $AssetsRepoLocation $mountDirectory

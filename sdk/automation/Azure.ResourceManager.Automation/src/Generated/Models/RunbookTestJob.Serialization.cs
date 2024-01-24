@@ -6,16 +6,142 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class RunbookTestJob
+    public partial class RunbookTestJob : IUtf8JsonSerializable, IJsonModel<RunbookTestJob>
     {
-        internal static RunbookTestJob DeserializeRunbookTestJob(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunbookTestJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RunbookTestJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(StatusDetails))
+            {
+                writer.WritePropertyName("statusDetails"u8);
+                writer.WriteStringValue(StatusDetails);
+            }
+            if (Optional.IsDefined(RunOn))
+            {
+                writer.WritePropertyName("runOn"u8);
+                writer.WriteStringValue(RunOn);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                if (StartOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime");
+                }
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
+            }
+            if (Optional.IsDefined(Exception))
+            {
+                writer.WritePropertyName("exception"u8);
+                writer.WriteStringValue(Exception);
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastStatusModifiedOn))
+            {
+                if (LastStatusModifiedOn != null)
+                {
+                    writer.WritePropertyName("lastStatusModifiedTime"u8);
+                    writer.WriteStringValue(LastStatusModifiedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastStatusModifiedTime");
+                }
+            }
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(LogActivityTrace))
+            {
+                writer.WritePropertyName("logActivityTrace"u8);
+                writer.WriteNumberValue(LogActivityTrace.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RunbookTestJob IJsonModel<RunbookTestJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunbookTestJob(document.RootElement, options);
+        }
+
+        internal static RunbookTestJob DeserializeRunbookTestJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +157,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset?> lastStatusModifiedTime = default;
             Optional<IReadOnlyDictionary<string, string>> parameters = default;
             Optional<int> logActivityTrace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("creationTime"u8))
@@ -124,8 +252,44 @@ namespace Azure.ResourceManager.Automation.Models
                     logActivityTrace = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(logActivityTrace));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RunbookTestJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RunbookTestJob IPersistableModel<RunbookTestJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRunbookTestJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RunbookTestJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

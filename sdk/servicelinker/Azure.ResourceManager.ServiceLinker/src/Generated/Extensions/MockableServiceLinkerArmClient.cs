@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +90,14 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

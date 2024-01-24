@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobConfigurationScheduleTriggerConfig : IUtf8JsonSerializable
+    public partial class JobConfigurationScheduleTriggerConfig : IUtf8JsonSerializable, IJsonModel<JobConfigurationScheduleTriggerConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobConfigurationScheduleTriggerConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JobConfigurationScheduleTriggerConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobConfigurationScheduleTriggerConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaCompletionCount))
             {
@@ -27,11 +38,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobConfigurationScheduleTriggerConfig DeserializeJobConfigurationScheduleTriggerConfig(JsonElement element)
+        JobConfigurationScheduleTriggerConfig IJsonModel<JobConfigurationScheduleTriggerConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobConfigurationScheduleTriggerConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobConfigurationScheduleTriggerConfig(document.RootElement, options);
+        }
+
+        internal static JobConfigurationScheduleTriggerConfig DeserializeJobConfigurationScheduleTriggerConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> replicaCompletionCount = default;
             string cronExpression = default;
             Optional<int> parallelism = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -64,8 +106,44 @@ namespace Azure.ResourceManager.AppContainers.Models
                     parallelism = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobConfigurationScheduleTriggerConfig(Optional.ToNullable(replicaCompletionCount), cronExpression, Optional.ToNullable(parallelism));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JobConfigurationScheduleTriggerConfig(Optional.ToNullable(replicaCompletionCount), cronExpression, Optional.ToNullable(parallelism), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JobConfigurationScheduleTriggerConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobConfigurationScheduleTriggerConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        JobConfigurationScheduleTriggerConfig IPersistableModel<JobConfigurationScheduleTriggerConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobConfigurationScheduleTriggerConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJobConfigurationScheduleTriggerConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JobConfigurationScheduleTriggerConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
