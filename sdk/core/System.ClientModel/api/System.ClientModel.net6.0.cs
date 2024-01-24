@@ -103,16 +103,11 @@ namespace System.ClientModel.Primitives
         protected virtual void WaitCore(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class ErrorClassificationHander
-    {
-        protected ErrorClassificationHander() { }
-        public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError);
-    }
     public partial class ErrorResponseClassifier
     {
         protected internal ErrorResponseClassifier() { }
         public static System.ClientModel.Primitives.ErrorResponseClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
-        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public virtual bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError) { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
@@ -254,8 +249,8 @@ namespace System.ClientModel.Primitives
         public RequestOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
-        public void AddClassifier(System.ClientModel.Primitives.ErrorClassificationHander handler) { }
-        public void AddClassifier(System.ClientModel.Primitives.RetryClassificationHandler handler) { }
+        public void AddClassifier(System.ClientModel.Primitives.ErrorResponseClassifier classifier) { }
+        public void AddClassifier(System.ClientModel.Primitives.RetriableResponseClassifier classifier) { }
         public virtual void AddClassifier(int statusCode, bool isError) { }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
@@ -270,13 +265,6 @@ namespace System.ClientModel.Primitives
     public partial class RetriableResponseClassifier
     {
         public RetriableResponseClassifier() { }
-        public virtual bool IsRetriable(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-        public virtual bool IsRetriable(System.ClientModel.Primitives.PipelineMessage message, System.Exception exception) { throw null; }
-        public virtual bool IsRetriable(System.Exception exception) { throw null; }
-    }
-    public abstract partial class RetryClassificationHandler
-    {
-        protected RetryClassificationHandler() { }
-        public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable);
+        public virtual bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
     }
 }

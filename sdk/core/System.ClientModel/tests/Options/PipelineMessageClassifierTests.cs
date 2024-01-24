@@ -23,7 +23,8 @@ public class PipelineMessageClassifierTests
                 MockPipelineMessage message = new MockPipelineMessage();
                 message.SetResponse(new MockPipelineResponse(code));
 
-                bool isNonError = !classifier.IsErrorResponse(message);
+                classifier.TryClassify(message, out bool isError);
+                bool isNonError = !isError;
 
                 if (nonError == code)
                 {
@@ -50,6 +51,7 @@ public class PipelineMessageClassifierTests
         MockPipelineMessage message = new MockPipelineMessage();
         message.SetResponse(new MockPipelineResponse(code));
 
-        Assert.AreEqual(isError, classifier.IsErrorResponse(message));
+        classifier.TryClassify(message, out bool classifiedAsError);
+        Assert.AreEqual(isError, classifiedAsError);
     }
 }

@@ -165,9 +165,8 @@ public class ClientRetryPolicy : PipelinePolicy
             return false;
         }
 
-        return exception is null ?
-            message.RetryClassifier!.IsRetriable(message) :
-            message.RetryClassifier!.IsRetriable(message, exception);
+        message.RetryClassifier!.TryClassify(message, exception, out bool isRetriable);
+        return isRetriable;
     }
 
     protected virtual ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)

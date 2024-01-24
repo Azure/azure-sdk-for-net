@@ -81,12 +81,12 @@ public class RequestOptions
         throw new NotImplementedException();
     }
 
-    public void AddClassifier(ErrorClassificationHander handler)
+    public void AddClassifier(ErrorResponseClassifier classifier)
     {
         throw new NotImplementedException();
     }
 
-    public void AddClassifier(RetryClassificationHandler handler)
+    public void AddClassifier(RetriableResponseClassifier classifier)
     {
         throw new NotImplementedException();
     }

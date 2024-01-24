@@ -29,7 +29,7 @@ public class MockMessageClassifier : ErrorResponseClassifier
 
     public string Id { get; set; }
 
-    public override bool IsErrorResponse(PipelineMessage message)
+    public override bool TryClassify(PipelineMessage message, out bool isError)
     {
         if (_successCodes is not null)
         {
@@ -37,13 +37,15 @@ public class MockMessageClassifier : ErrorResponseClassifier
             {
                 if (message.Response!.Status == code)
                 {
+                    isError = true;
                     return true;
                 }
             }
 
-            return false;
+            isError = false;
+            return true;
         }
 
-        return base.IsErrorResponse(message);
+        return base.TryClassify(message, out isError);
     }
 }

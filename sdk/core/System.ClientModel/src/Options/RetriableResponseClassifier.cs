@@ -9,10 +9,21 @@ public class RetriableResponseClassifier
 {
     internal static RetriableResponseClassifier Default { get; } = new RetriableResponseClassifier();
 
+    public virtual bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+    {
+        message.AssertResponse();
+
+        isRetriable = exception is null ?
+            IsRetriable(message) :
+            IsRetriable(message, exception);
+
+        return true;
+    }
+
     /// <summary>
     /// Specifies if the request contained in the <paramref name="message"/> should be retried.
     /// </summary>
-    public virtual bool IsRetriable(PipelineMessage message)
+    private bool IsRetriable(PipelineMessage message)
     {
         message.AssertResponse();
 
@@ -44,7 +55,7 @@ public class RetriableResponseClassifier
     /// <summary>
     /// Specifies if the operation that caused the exception should be retried.
     /// </summary>
-    public virtual bool IsRetriable(Exception exception)
+    private bool IsRetriable(Exception exception)
         => (exception is IOException) ||
            (exception is ClientResultException ex && ex.Status == 0);
 
@@ -52,7 +63,7 @@ public class RetriableResponseClassifier
     /// Specifies if the operation that caused the exception should be retried
     /// taking the <see cref="PipelineMessage"/> into consideration.
     /// </summary>
-    public virtual bool IsRetriable(PipelineMessage message, Exception exception)
+    private bool IsRetriable(PipelineMessage message, Exception exception)
         => IsRetriable(exception) ||
             // Retry non-user initiated cancellations
             (exception is OperationCanceledException &&
