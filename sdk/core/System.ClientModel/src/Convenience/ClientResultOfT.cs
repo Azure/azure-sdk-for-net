@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.ComponentModel;
 
 namespace System.ClientModel;
 
-public class ClientResult<T> : OptionalClientResult<T>
+public class ClientResult<T> : ClientResult
 {
     protected internal ClientResult(T value, PipelineResponse response)
-        : base(value, response)
+        : base(response)
     {
+        // TODO: What happens here?  What does this validation look like?
         // Null values must use OptionalClientResult<T>
         if (value is null)
         {
@@ -19,10 +19,11 @@ public class ClientResult<T> : OptionalClientResult<T>
 
             throw new ArgumentNullException(nameof(value), message);
         }
+
+        Value = value;
     }
 
-    public sealed override T Value => base.Value!;
+    public T Value { get; }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed override bool HasValue => true;
+    // Notice: HasValue goes away.
 }
