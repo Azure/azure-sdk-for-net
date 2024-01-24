@@ -153,10 +153,12 @@ namespace Azure.Core
         /// <summary>
         /// TBD.
         /// </summary>
-        protected override void FreezeCore()
+        public override void Freeze()
         {
             Diagnostics.Freeze();
             Retry.Freeze();
+
+            base.Freeze();
         }
     }
 }

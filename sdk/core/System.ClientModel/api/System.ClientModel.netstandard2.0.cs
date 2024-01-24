@@ -81,8 +81,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
-        public void Freeze() { }
-        protected virtual void FreezeCore() { }
+        public virtual void Freeze() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
@@ -252,6 +251,8 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy

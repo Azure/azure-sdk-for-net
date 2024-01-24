@@ -79,7 +79,7 @@ public class RequestOptions
     // Set options on the message before sending it through the pipeline.
     internal void Apply(PipelineMessage message)
     {
-        _frozen = true;
+        Freeze();
 
         // Set the cancellation token on the message so pipeline policies
         // will have access to it as the message flows through the pipeline.
@@ -119,7 +119,9 @@ public class RequestOptions
         }
     }
 
-    private void AssertNotFrozen()
+    public virtual void Freeze() => _frozen = true;
+
+    protected void AssertNotFrozen()
     {
         if (_frozen)
         {

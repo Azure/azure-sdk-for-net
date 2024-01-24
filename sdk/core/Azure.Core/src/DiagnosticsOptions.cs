@@ -229,7 +229,7 @@ namespace Azure.Core
         {
             if (_frozen)
             {
-                throw new InvalidOperationException("Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.");
+                throw new InvalidOperationException("Cannot change a ClientOptions instance after it has been used to create a client.");
             }
         }
     }
